@@ -1,124 +1,12 @@
-<!DOCTYPE html>
-<html lang="no">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hundene våre</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f0f6ff;
-}
-
-.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
-}
-
-.hero {
-  background: linear-gradient(135deg,#1d4ed8,#3b82f6);
-  color: white;
-  padding: 25px;
-  border-radius: 20px;
-}
-
-h1 {
-  margin: 0;
-}
-
-button {
-  padding: 10px 15px;
-  border-radius: 10px;
-  border: none;
-  margin-top: 10px;
-  cursor: pointer;
-}
-
-.btn {
-  background: white;
-  color: #1d4ed8;
-}
-
-.card {
-  background: white;
-  padding: 15px;
-  border-radius: 15px;
-  margin-top: 15px;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 8px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-}
-
-img {
-  width: 100%;
-  border-radius: 10px;
-  margin-top: 10px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="hero">
-<h1>Hundene våre 🐶</h1>
-<p>Møteplassen for hundeglade på Vestlandet</p>
-
-<p>
-Del turer, bilder og opplevelser med hunden din.  
-Se hva andre gjør i nærområdet.
-</p>
-
-<button class="btn" onclick="showFeed()">Se innlegg</button>
-<button class="btn" onclick="showLogin()">Logg inn</button>
-</div>
-
-<div class="card" id="loginBox">
-<h3>Logg inn</h3>
-<input id="email" placeholder="E-post">
-<input id="password" type="password" placeholder="Passord">
-<button onclick="login()">Logg inn</button>
-</div>
-
-<div class="card">
-<h3>Ny fortelling</h3>
-<input id="title" placeholder="Tittel">
-<textarea id="text" placeholder="Skriv noe..."></textarea>
-<input type="file" id="imageFile">
-<button onclick="save()">Lagre</button>
-</div>
-
-<div id="feed"></div>
-
-</div>
-
-<script>
-
-const supabase = window.supabase.createClient(
-"https://kxudiviidwwwclbzgdyx.supabase.co",
-"sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
-);
-
-async function login() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  await supabase.auth.signInWithPassword({ email, password });
-  load();
-}
-
 async function save() {
+
+  const { data: userData } = await supabase.auth.getUser();
+  const user = userData.user;
+
+  if (!user) {
+    alert("Du må logge inn først");
+    return;
+  }
 
   const title = document.getElementById("title").value;
   const text = document.getElementById("text").value;
@@ -126,49 +14,40 @@ async function save() {
 
   let image_url = "";
 
-  if(file){
-    const fileName = Date.now() + file.name;
-    await supabase.storage.from("story-images").upload(fileName, file);
-    image_url = supabase.storage.from("story-images").getPublicUrl(fileName).data.publicUrl;
+  if (file) {
+    const fileName = user.id + "/" + Date.now() + "-" + file.name;
+
+    const upload = await supabase.storage
+      .from("story-images")
+      .upload(fileName, file);
+
+    if (upload.error) {
+      alert("Feil bilde: " + upload.error.message);
+      return;
+    }
+
+    image_url = supabase
+      .storage
+      .from("story-images")
+      .getPublicUrl(fileName).data.publicUrl;
   }
 
-  await supabase.from("stories").insert([{title, text, image_url}]);
+  const insert = await supabase.from("stories").insert([{
+    user_id: user.id,
+    author_email: user.email,
+    title: title,
+    text: text,
+    image_url: image_url,
+    dog: "",
+    place: "",
+    category: "Hverdag"
+  }]);
 
+  if (insert.error) {
+    alert("Feil lagring: " + insert.error.message);
+    return;
+  }
+
+  alert("Lagret!");
   load();
 }
-
-async function load(){
-
-  const { data } = await supabase.from("stories").select("*").order("id",{ascending:false});
-
-  const feed = document.getElementById("feed");
-  feed.innerHTML = "";
-
-  data.forEach(s => {
-
-    feed.innerHTML += `
-    <div class="card">
-      <h3>${s.title}</h3>
-      <p>${s.text}</p>
-      ${s.image_url ? `<img src="${s.image_url}">` : ""}
-    </div>
-    `;
-
-  });
-
-}
-
-function showFeed(){
-  window.scrollTo(0,300);
-}
-
-function showLogin(){
-  document.getElementById("loginBox").scrollIntoView();
-}
-
-load();
-
-</script>
-
-</body>
-</html>
