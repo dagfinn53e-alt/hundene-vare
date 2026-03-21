@@ -8,17 +8,16 @@
 
 <body>
 
-<h1>Hundene våre 🐶</h1>
+<h2>Hundene våre 🐶</h2>
 
-<h3>Logg inn</h3>
 <input id="email" placeholder="E-post">
 <input id="password" type="password" placeholder="Passord">
 <button onclick="login()">Logg inn</button>
 
-<h3>Ny fortelling</h3>
+<hr>
+
 <input id="title" placeholder="Tittel">
-<textarea id="text"></textarea>
-<input type="file" id="imageFile">
+<textarea id="text" placeholder="Skriv om hunden..."></textarea>
 <button onclick="save()">Lagre</button>
 
 <div id="feed"></div>
@@ -33,32 +32,40 @@ const supabase = window.supabase.createClient(
 async function login(){
 const email=document.getElementById("email").value;
 const password=document.getElementById("password").value;
-await supabase.auth.signInWithPassword({email,password});
-alert("innlogget");
+
+const {error}=await supabase.auth.signInWithPassword({email,password});
+
+if(error){alert(error.message);return;}
+
+alert("Innlogget");
 }
 
 async function save(){
 
-const { data } = await supabase.auth.getUser();
-const user = data.user;
+const {data}=await supabase.auth.getUser();
 
-if(!user){
-alert("logg inn først");
+if(!data.user){
+alert("Du må logge inn først");
 return;
 }
 
 const title=document.getElementById("title").value;
 const text=document.getElementById("text").value;
 
-await supabase.from("stories").insert([{title,text}]);
+const {error}=await supabase.from("stories").insert([{title,text}]);
 
-alert("lagret");
+if(error){
+alert(error.message);
+return;
+}
+
+alert("Lagret!");
 
 load();
 }
 
 async function load(){
-const {data}=await supabase.from("stories").select("*").order("id",{ascending:false});
+const {data}=await supabase.from("stories").select("*");
 
 document.getElementById("feed").innerHTML=data.map(s=>`
 <div>
