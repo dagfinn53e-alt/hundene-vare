@@ -121,15 +121,15 @@ async function save() {
   }
 
   const { error } = await supabase.from("stories").insert([{
-    user_id: user.id,
-    author_email: user.email,
-    title: title,
-    dog: "",
-    place: "",
-    category: "Hverdag",
-    text: text,
-    image_url: ""
-  }]);
+  user_id: user.id,
+  author_email: user.email,
+  title: title,
+  dog: "Ikke oppgitt",
+  place: "Ikke oppgitt",
+  category: "Hverdag",
+  text: text,
+  image_url: ""
+}]);
 
   if (error) {
     alert("Feil: " + error.message);
