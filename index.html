@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="no">
 <head>
@@ -6,50 +7,195 @@
   <title>Hundene våre</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    body { font-family: Arial, sans-serif; background: #eef5ff; margin: 0; }
-    .box { max-width: 700px; margin: 30px auto; background: #fff; padding: 24px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.08); }
-    h1, h2 { text-align: center; }
-    input, textarea { width: 100%; box-sizing: border-box; padding: 12px; margin: 8px 0 12px; border: 1px solid #cbd5e1; border-radius: 10px; }
-    textarea { min-height: 120px; resize: vertical; }
-    .row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-    button { padding: 12px 16px; border: none; border-radius: 10px; background: #2563eb; color: white; cursor: pointer; }
-    #status { margin-top: 12px; font-weight: bold; text-align: center; min-height: 24px; }
-    .post { background: #f8fbff; border: 1px solid #dbeafe; border-radius: 12px; padding: 12px; margin-top: 10px; }
-    .meta { color: #64748b; font-size: 14px; }
+    :root{
+      --blue:#2563eb;
+      --blue-dark:#1d4ed8;
+      --bg:#eef5ff;
+      --card:#ffffff;
+      --line:#dbeafe;
+      --text:#0f172a;
+      --muted:#64748b;
+      --ok:#166534;
+      --bad:#b91c1c;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:linear-gradient(180deg,#eaf3ff 0%, #f8fbff 100%);
+      color:var(--text);
+    }
+    .wrap{
+      max-width:900px;
+      margin:0 auto;
+      padding:20px 16px 40px;
+    }
+    .hero{
+      background:linear-gradient(135deg,var(--blue-dark),#3b82f6);
+      color:white;
+      padding:24px;
+      border-radius:24px;
+      box-shadow:0 10px 30px rgba(37,99,235,.18);
+      margin-bottom:18px;
+    }
+    .hero h1{
+      margin:0 0 8px 0;
+      font-size:34px;
+    }
+    .hero p{
+      margin:0;
+      line-height:1.6;
+      opacity:.98;
+    }
+    .row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+      margin-top:16px;
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+      box-shadow:0 8px 24px rgba(15,23,42,.05);
+      margin-bottom:16px;
+    }
+    h2{
+      margin:0 0 12px 0;
+      font-size:22px;
+    }
+    .sub{
+      color:var(--muted);
+      margin-bottom:10px;
+    }
+    input, textarea, select{
+      width:100%;
+      padding:12px 14px;
+      margin:8px 0 12px;
+      border:1px solid #cbd5e1;
+      border-radius:12px;
+      font-size:15px;
+      background:white;
+    }
+    textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+    .btnrow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    button{
+      border:none;
+      border-radius:12px;
+      padding:12px 16px;
+      background:var(--blue-dark);
+      color:white;
+      cursor:pointer;
+      font-weight:700;
+    }
+    button.alt{
+      background:white;
+      color:var(--blue-dark);
+      border:1px solid #bfdbfe;
+    }
+    #status{
+      margin-top:12px;
+      min-height:24px;
+      font-weight:700;
+    }
+    .post{
+      background:#f8fbff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      margin-top:12px;
+    }
+    .post h3{
+      margin:0 0 8px 0;
+      font-size:21px;
+    }
+    .meta{
+      color:var(--muted);
+      font-size:14px;
+      margin-bottom:10px;
+    }
+    .post img{
+      width:100%;
+      border-radius:16px;
+      margin-top:12px;
+      display:block;
+    }
+    .badgebar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .badge{
+      background:rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.22);
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:14px;
+    }
+    @media (max-width: 760px){
+      .row{grid-template-columns:1fr}
+      .hero h1{font-size:28px}
+    }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Hundene våre 🐶</h1>
-
-    <input id="email" type="email" placeholder="E-post">
-    <input id="password" type="password" placeholder="Passord">
-
-    <div class="row">
-      <button type="button" onclick="signupUser()">Lag konto</button>
-      <button type="button" onclick="loginUser()">Logg inn</button>
+  <div class="wrap">
+    <div class="hero">
+      <h1>Hundene våre 🐶</h1>
+      <p>Møteplassen for hundeglade på Vestlandet. Del turer, bilder og opplevelser med hunden din – og la andre bli inspirert av ekte hundeliv.</p>
+      <div class="badgebar">
+        <div class="badge">📸 Bilder</div>
+        <div class="badge">📝 Innlegg</div>
+        <div class="badge">👥 Medlemmer</div>
+      </div>
     </div>
 
-    <div id="status">Klar.</div>
-
-    <hr>
-
-    <h2>Nytt innlegg</h2>
-
-    <input id="title" placeholder="Tittel">
-    <input id="dog" placeholder="Hundens navn">
-    <input id="place" placeholder="Sted">
-    <textarea id="text" placeholder="Skriv om hunden..."></textarea>
-
     <div class="row">
-      <button type="button" onclick="saveStory()">Lagre</button>
-      <button type="button" onclick="loadStories()">Oppdater innlegg</button>
+      <div class="card">
+        <h2>Logg inn / lag konto</h2>
+        <div class="sub">Bruk e-post og passord.</div>
+        <input id="email" type="email" placeholder="E-post">
+        <input id="password" type="password" placeholder="Passord">
+        <div class="btnrow">
+          <button type="button" onclick="signupUser()">Lag konto</button>
+          <button type="button" onclick="loginUser()">Logg inn</button>
+        </div>
+        <div id="status">Klar.</div>
+      </div>
+
+      <div class="card">
+        <h2>Nytt innlegg</h2>
+        <div class="sub">Legg inn hund, sted, tekst og bilde.</div>
+        <input id="title" placeholder="Tittel">
+        <input id="dog" placeholder="Hundens navn">
+        <input id="place" placeholder="Sted">
+        <select id="category">
+          <option>Hverdag</option>
+          <option>Tur</option>
+          <option>Utstilling</option>
+        </select>
+        <textarea id="text" placeholder="Skriv om hunden..."></textarea>
+        <input id="imageFile" type="file" accept="image/*">
+        <div class="btnrow">
+          <button type="button" onclick="saveStory()">Lagre innlegg</button>
+          <button type="button" class="alt" onclick="loadStories()">Oppdater innlegg</button>
+        </div>
+      </div>
     </div>
 
-    <hr>
-
-    <h2>Innlegg</h2>
-    <div id="feed">Laster ...</div>
+    <div class="card">
+      <h2>Innlegg</h2>
+      <div id="feed">Laster ...</div>
+    </div>
   </div>
 
   <script>
@@ -66,50 +212,42 @@
 
     async function signupUser() {
       setStatus("Prøver å opprette konto ...", "blue");
-
       var email = document.getElementById("email").value.trim();
       var password = document.getElementById("password").value.trim();
 
       if (!email || !password) {
-        setStatus("Skriv inn e-post og passord.", "crimson");
+        setStatus("Skriv inn e-post og passord.", "var(--bad)");
         return;
       }
 
-      var result = await supabase.auth.signUp({
-        email: email,
-        password: password
-      });
+      var result = await supabase.auth.signUp({ email: email, password: password });
 
       if (result.error) {
-        setStatus("Feil: " + result.error.message, "crimson");
+        setStatus("Feil: " + result.error.message, "var(--bad)");
         return;
       }
 
-      setStatus("Konto opprettet.", "green");
+      setStatus("Konto opprettet.", "var(--ok)");
     }
 
     async function loginUser() {
       setStatus("Prøver å logge inn ...", "blue");
-
       var email = document.getElementById("email").value.trim();
       var password = document.getElementById("password").value.trim();
 
       if (!email || !password) {
-        setStatus("Skriv inn e-post og passord.", "crimson");
+        setStatus("Skriv inn e-post og passord.", "var(--bad)");
         return;
       }
 
-      var result = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
+      var result = await supabase.auth.signInWithPassword({ email: email, password: password });
 
       if (result.error) {
-        setStatus("Feil: " + result.error.message, "crimson");
+        setStatus("Feil: " + result.error.message, "var(--bad)");
         return;
       }
 
-      setStatus("Innlogget som " + email, "green");
+      setStatus("Innlogget som " + email, "var(--ok)");
     }
 
     async function saveStory() {
@@ -119,18 +257,37 @@
       var user = auth && auth.data ? auth.data.user : null;
 
       if (!user) {
-        setStatus("Du må logge inn først.", "crimson");
+        setStatus("Du må logge inn først.", "var(--bad)");
         return;
       }
 
       var title = document.getElementById("title").value.trim();
       var dog = document.getElementById("dog").value.trim() || "Ikke oppgitt";
       var place = document.getElementById("place").value.trim() || "Ikke oppgitt";
+      var category = document.getElementById("category").value || "Hverdag";
       var text = document.getElementById("text").value.trim();
+      var file = document.getElementById("imageFile").files[0];
 
       if (!title || !text) {
-        setStatus("Skriv inn tittel og tekst.", "crimson");
+        setStatus("Skriv inn tittel og tekst.", "var(--bad)");
         return;
+      }
+
+      var imageUrl = "";
+
+      if (file) {
+        var safeName = Date.now() + "-" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+        var filePath = user.id + "/" + safeName;
+
+        var upload = await supabase.storage.from("story-images").upload(filePath, file);
+
+        if (upload.error) {
+          setStatus("Feil ved bildeopplasting: " + upload.error.message, "var(--bad)");
+          return;
+        }
+
+        var pub = supabase.storage.from("story-images").getPublicUrl(filePath);
+        imageUrl = pub.data.publicUrl;
       }
 
       var insert = await supabase.from("stories").insert([{
@@ -139,13 +296,13 @@
         title: title,
         dog: dog,
         place: place,
-        category: "Hverdag",
+        category: category,
         text: text,
-        image_url: ""
+        image_url: imageUrl
       }]);
 
       if (insert.error) {
-        setStatus("Feil ved lagring: " + insert.error.message, "crimson");
+        setStatus("Feil ved lagring: " + insert.error.message, "var(--bad)");
         return;
       }
 
@@ -153,8 +310,9 @@
       document.getElementById("dog").value = "";
       document.getElementById("place").value = "";
       document.getElementById("text").value = "";
+      document.getElementById("imageFile").value = "";
 
-      setStatus("Lagret!", "green");
+      setStatus("Lagret!", "var(--ok)");
       await loadStories();
     }
 
@@ -180,8 +338,11 @@
         var post = data[i];
         html += '<div class="post">';
         html += '<h3>' + escapeHtml(post.title || "") + '</h3>';
-        html += '<div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + '</div>';
+        html += '<div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + ' · ' + escapeHtml(post.category || "") + '</div>';
         html += '<p>' + escapeHtml(post.text || "") + '</p>';
+        if (post.image_url) {
+          html += '<img src="' + post.image_url + '" alt="Hundebilde">';
+        }
         html += '</div>';
       }
       feed.innerHTML = html;
