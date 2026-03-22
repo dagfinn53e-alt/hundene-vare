@@ -108,12 +108,27 @@ document.getElementById("feed").innerHTML=data.map(s=>`
 }
 
 load();
+async function signup() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
+  const { error } = await supabase.auth.signUp({
+    email: email,
+    password: password
+  });
+
+  if (error) {
+    alert("Feil: " + error.message);
+    return;
+  }
+
+  alert("Konto opprettet! Sjekk e-post.");
+}
 </script>
 
 </body>
 </html>
-async function signup(){
+
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
