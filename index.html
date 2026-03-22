@@ -159,6 +159,41 @@
       if(btn) btn.classList.add('active');
     }
 
+    function getLikes() {
+      try { return JSON.parse(localStorage.getItem("hundene_vare_likes") || "{}"); }
+      catch(e) { return {}; }
+    }
+    function saveLikes(data) { localStorage.setItem("hundene_vare_likes", JSON.stringify(data)); }
+    function getComments() {
+      try { return JSON.parse(localStorage.getItem("hundene_vare_comments") || "{}"); }
+      catch(e) { return {}; }
+    }
+    function saveComments(data) { localStorage.setItem("hundene_vare_comments", JSON.stringify(data)); }
+
+    function likePost(id) {
+      var likes = getLikes();
+      likes[id] = (likes[id] || 0) + 1;
+      saveLikes(likes);
+      loadStories();
+    }
+
+    function addComment(id) {
+      var input = document.getElementById("comment-" + id);
+      if (!input) return;
+      var text = input.value.trim();
+      if (!text) return;
+
+      var comments = getComments();
+      if (!comments[id]) comments[id] = [];
+      comments[id].push({
+        text: text,
+        time: new Date().toLocaleString("no-NO")
+      });
+      saveComments(comments);
+      input.value = "";
+      loadStories();
+    }
+
     async function signupUser() {
       setStatus("Prøver å opprette konto ...", "blue");
       var email = document.getElementById("email").value.trim();
@@ -225,12 +260,10 @@
         var safeName = Date.now() + "-" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
         var filePath = user.id + "/" + safeName;
         var upload = await supabase.storage.from("story-images").upload(filePath, file);
-
         if (upload.error) {
           setStatus("Feil ved bildeopplasting: " + upload.error.message, "crimson");
           return;
         }
-
         var pub = supabase.storage.from("story-images").getPublicUrl(filePath);
         imageUrl = pub.data.publicUrl;
       }
@@ -261,20 +294,6 @@
       await loadProfile();
     }
 
-    function getLikes() {
-      try { return JSON.parse(localStorage.getItem("hundene_vare_likes_dbfree") || "{}"); }
-      catch(e) { return {}; }
-    }
-    function saveLikes(data) {
-      localStorage.setItem("hundene_vare_likes_dbfree", JSON.stringify(data));
-    }
-    function likePost(id) {
-      var likes = getLikes();
-      likes[id] = (likes[id] || 0) + 1;
-      saveLikes(likes);
-      loadStories();
-    }
-
     async function loadStories() {
       var feed = document.getElementById("feed");
       feed.textContent = "Laster ...";
@@ -284,11 +303,6 @@
         feed.textContent = "Feil ved henting: " + result.error.message;
         return;
       }
-
-      var commentsResult = await supabase.from("story_comments").select("*").order("created_at", { ascending: true });
-      var commentsData = commentsResult.data || [];
-      var likesResult = await supabase.from("story_likes").select("*");
-      var likesData = likesResult.data || [];
 
       var data = result.data || [];
       document.getElementById("postCount").textContent = data.length;
@@ -303,7 +317,11 @@
       }
       document.getElementById("memberCount").textContent = Object.keys(members).length;
       document.getElementById("imageCount").textContent = images;
-      document.getElementById("commentCount").textContent = commentsData.length;
+
+      var comments = getComments();
+      var commentTotal = 0;
+      Object.keys(comments).forEach(function(k){ commentTotal += (comments[k] || []).length; });
+      document.getElementById("commentCount").textContent = commentTotal;
 
       var placesHtml = Object.keys(places).length ? Object.keys(places).map(function(p){
         return '<div>📍 ' + escapeHtml(p) + '</div>';
@@ -315,12 +333,13 @@
         return;
       }
 
+      var likes = getLikes();
       var html = "";
       for (var i = 0; i < data.length; i++) {
         var post = data[i];
         var postId = post.id || ("post_" + i);
-        var likeCount = likesData.filter(function(l){ return l.story_id === post.id; }).length;
-        var postComments = commentsData.filter(function(c){ return c.story_id === post.id; });
+        var likeCount = likes[postId] || 0;
+        var postComments = comments[postId] || [];
 
         html += '<div class="post">';
         html += '<h3>' + escapeHtml(post.title || "") + '</h3>';
@@ -328,65 +347,19 @@
         html += '<p>' + escapeHtml(post.text || "") + '</p>';
         if (post.image_url) html += '<img src="' + post.image_url + '" alt="Hundebilde">';
         html += '<div class="likebar">';
-        html += '<button class="likebtn" type="button" onclick="likePostDb(\\'' + post.id + '\\')">❤️ Lik (' + likeCount + ')</button>';
+        html += '<button class="likebtn" type="button" onclick="likePost(\'' + postId + '\')">❤️ Lik (' + likeCount + ')</button>';
         html += '<span class="mini">' + postComments.length + ' kommentar(er)</span>';
         html += '</div>';
         html += '<div class="comments">';
         for (var j = 0; j < postComments.length; j++) {
-          html += '<div class="comment"><div class="commentmeta">' + escapeHtml(postComments[j].author_email || '') + ' · ' + escapeHtml(formatDate(postComments[j].created_at || '')) + '</div><div>' + escapeHtml(postComments[j].comment_text || '') + '</div></div>';
+          html += '<div class="comment"><div class="commentmeta">' + escapeHtml(postComments[j].time || '') + '</div><div>' + escapeHtml(postComments[j].text || '') + '</div></div>';
         }
         html += '<input id="comment-' + postId + '" placeholder="Skriv en kommentar">';
-        html += '<div class="btnrow"><button type="button" class="alt" onclick="addCommentDb(\\'' + post.id + '\\', \\'' + postId + '\\')">Legg til kommentar</button></div>';
+        html += '<div class="btnrow"><button type="button" class="alt" onclick="addComment(\'' + postId + '\')">Legg til kommentar</button></div>';
         html += '</div>';
         html += '</div>';
       }
       feed.innerHTML = html;
-    }
-
-    async function addCommentDb(storyId, inputId) {
-      var auth = await supabase.auth.getUser();
-      var user = auth && auth.data ? auth.data.user : null;
-      if (!user) {
-        setStatus("Du må logge inn for å kommentere.", "crimson");
-        return;
-      }
-
-      var input = document.getElementById("comment-" + inputId);
-      var text = input.value.trim();
-      if (!text) return;
-
-      var ins = await supabase.from("story_comments").insert([{
-        story_id: storyId,
-        user_id: user.id,
-        author_email: user.email,
-        comment_text: text
-      }]);
-
-      if (ins.error) {
-        setStatus("Feil ved kommentar: " + ins.error.message, "crimson");
-        return;
-      }
-
-      input.value = "";
-      setStatus("Kommentar lagret.", "green");
-      loadStories();
-    }
-
-    async function likePostDb(storyId) {
-      var auth = await supabase.auth.getUser();
-      var user = auth && auth.data ? auth.data.user : null;
-      if (!user) {
-        setStatus("Du må logge inn for å like.", "crimson");
-        return;
-      }
-
-      var check = await supabase.from("story_likes").select("id").eq("story_id", storyId).eq("user_id", user.id).maybeSingle();
-      if (check.data) {
-        await supabase.from("story_likes").delete().eq("id", check.data.id);
-      } else {
-        await supabase.from("story_likes").insert([{ story_id: storyId, user_id: user.id }]);
-      }
-      loadStories();
     }
 
     async function loadProfile() {
@@ -440,12 +413,6 @@
       }).catch(function() {
         setStatus("Kunne ikke kopiere linken.", "crimson");
       });
-    }
-
-    function formatDate(dateStr) {
-      if (!dateStr) return '';
-      try { return new Date(dateStr).toLocaleString('no-NO'); }
-      catch(e) { return dateStr; }
     }
 
     function escapeHtml(str) {
