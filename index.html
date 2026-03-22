@@ -1,72 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="no">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hundene våre</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #eef5ff;
+  text-align: center;
+}
+
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+</style>
+
 </head>
+<body>
 
-<body style="max-width:700px;margin:40px auto;font-family:Arial;">
+<div class="container">
 
-<h2>Hundene våre 🐶</h2>
+<h1>Hundene våre 🐶</h1>
 
 <input id="email" placeholder="E-post">
 <input id="password" type="password" placeholder="Passord">
+
 <button onclick="login()">Logg inn</button>
-  <button onclick="signup()">Lag konto</button>
+<button onclick="signup()">Lag konto</button>
 
 <hr>
 
 <input id="title" placeholder="Tittel">
 <textarea id="text" placeholder="Skriv om hunden..."></textarea>
-<button onclick="save()"><button onclick="save()">Lagre</button>
+
+<button onclick="save()">Lagre</button>
 
 <div id="feed"></div>
+
+</div>
 
 <script>
 
 const supabase = window.supabase.createClient(
-"https://kxudiviidwwwclbzgdyx.supabase.co",
-"sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
 );
 
+async function signup(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { error } = await supabase.auth.signUp({ email, password });
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  alert("Konto opprettet!");
+}
+
 async function login(){
-const email=document.getElementById("email").value;
-const password=document.getElementById("password").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-const {error}=await supabase.auth.signInWithPassword({email,password});
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
 
-if(error){alert(error.message);return;}
+  if(error){
+    alert(error.message);
+    return;
+  }
 
-alert("Innlogget");
+  alert("Innlogget!");
 }
 
 async function save(){
-
-const {data}=await supabase.auth.getUser();
-
-if(!data.user){
-alert("Du må logge inn først");
-return;
-}
-
-const title=document.getElementById("title").value;
-const text=document.getElementById("text").value;
-
-const {error}=await supabase.from("stories").insert([{title,text}]);
-
-if(error){
-alert(error.message);
-return;
-}
-
-alert("Lagret!");
-
-load();
-}
-
-async function load(){
-  async function save(){
 
   const { data } = await supabase.auth.getUser();
 
@@ -97,51 +123,21 @@ async function load(){
   alert("Lagret!");
   load();
 }
-const {data}=await supabase.from("stories").select("*");
 
-document.getElementById("feed").innerHTML=data.map(s=>`
-<div>
-<h3>${s.title}</h3>
-<p>${s.text}</p>
-</div>
-`).join("");
+async function load(){
+  const { data } = await supabase.from("stories").select("*").order("id",{ascending:false});
+
+  document.getElementById("feed").innerHTML = data.map(s => `
+    <div style="background:#fff;padding:10px;margin-top:10px;border-radius:10px;">
+      <h3>${s.title}</h3>
+      <p>${s.text}</p>
+    </div>
+  `).join("");
 }
 
 load();
-async function signup() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
 
-  const { error } = await supabase.auth.signUp({
-    email: email,
-    password: password
-  });
-
-  if (error) {
-    alert("Feil: " + error.message);
-    return;
-  }
-
-  alert("Konto opprettet! Sjekk e-post.");
-}
 </script>
 
 </body>
 </html>
-
-
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  const { error } = await supabase.auth.signUp({
-    email: email,
-    password: password
-  });
-
-  if(error){
-    alert("Feil: " + error.message);
-    return;
-  }
-
-  alert("Konto opprettet! Sjekk e-post.");
-}
