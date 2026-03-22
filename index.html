@@ -2,24 +2,53 @@
 <html lang="no">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hundene våre</title>
-
+<title>Hundene våre 🐶</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-body { font-family: Arial; background:#eef5ff; text-align:center; }
-.container { max-width:600px; margin:40px auto; }
-input, textarea { width:100%; padding:10px; margin-top:10px; }
-button { margin-top:10px; padding:10px; cursor:pointer; }
-</style>
+body {
+  font-family: Arial;
+  background:#eef5ff;
+  padding:20px;
+}
 
+.box {
+  max-width:600px;
+  margin:auto;
+  background:white;
+  padding:20px;
+  border-radius:15px;
+}
+
+input, textarea {
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+}
+
+button {
+  padding:10px;
+  background:#2563eb;
+  color:white;
+  border:none;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+.post {
+  background:#fff;
+  margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+}
+</style>
 </head>
+
 <body>
 
-<div class="container">
+<div class="box">
 
-<h1>Hundene våre 🐶</h1>
+<h2>Hundene våre 🐶</h2>
 
 <input id="email" placeholder="E-post">
 <input id="password" type="password" placeholder="Passord">
@@ -29,11 +58,18 @@ button { margin-top:10px; padding:10px; cursor:pointer; }
 
 <hr>
 
+<h3>Nytt innlegg</h3>
+
 <input id="title" placeholder="Tittel">
+<input id="dog" placeholder="Hundens navn">
+<input id="place" placeholder="Sted">
 <textarea id="text" placeholder="Skriv om hunden..."></textarea>
 
 <button onclick="save()">Lagre</button>
 
+<hr>
+
+<h3>Innlegg</h3>
 <div id="feed"></div>
 
 </div>
@@ -41,89 +77,92 @@ button { margin-top:10px; padding:10px; cursor:pointer; }
 <script>
 
 const supabase = window.supabase.createClient(
-  "https://kxudiviidwwwclbzgdyx.supabase.co",
-  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+"https://kxudiviidwwwclbzgdyx.supabase.co",
+"sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
 );
 
-async function signup(){
+async function signup() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  alert("Signup starter");
+  const { error } = await supabase.auth.signUp({
+    email: email,
+    password: password
+  });
 
-  const { error } = await supabase.auth.signUp({ email, password });
-
-  if(error){
+  if (error) {
     alert("Feil: " + error.message);
-    return;
+  } else {
+    alert("Konto opprettet!");
   }
-
-  alert("Konto opprettet");
 }
 
-async function login(){
+async function login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  alert("Login starter");
+  const { error } = await supabase.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-  if(error){
+  if (error) {
     alert("Feil: " + error.message);
-    return;
+  } else {
+    alert("Innlogget!");
+    loadPosts();
   }
-
-  alert("Innlogget");
 }
 
-async function save(){
+async function save() {
+  const { data: userData } = await supabase.auth.getUser();
 
-  alert("Save starter");
-
-  const { data } = await supabase.auth.getUser();
-
-  if(!data.user){
+  if (!userData.user) {
     alert("Du må logge inn først");
     return;
   }
 
   const title = document.getElementById("title").value;
+  const dog = document.getElementById("dog").value;
+  const place = document.getElementById("place").value;
   const text = document.getElementById("text").value;
 
-  const { error } = await supabase.from("stories").insert([{
-    user_id: data.user.id,
-    author_email: data.user.email,
-    title: title,
-    dog: "Test",
-    place: "Test",
-    category: "Hverdag",
-    text: text,
-    image_url: ""
-  }]);
+  const { error } = await supabase.from("stories").insert([
+    {
+      title: title,
+      dog: dog,
+      text: text,
+      place: place,
+      author_email: userData.user.email
+    }
+  ]);
 
-  if(error){
+  if (error) {
     alert("Feil: " + error.message);
-    return;
+  } else {
+    alert("Lagret!");
+    loadPosts();
   }
-
-  alert("Lagret!");
-  load();
 }
 
-async function load(){
+async function loadPosts() {
   const { data } = await supabase.from("stories").select("*");
 
-  document.getElementById("feed").innerHTML =
-    data.map(s => `
-      <div style="background:#fff;padding:10px;margin-top:10px;border-radius:10px;">
-        <h3>${s.title}</h3>
-        <p>${s.text}</p>
+  const feed = document.getElementById("feed");
+  feed.innerHTML = "";
+
+  data.forEach(p => {
+    feed.innerHTML += `
+      <div class="post">
+        <h4>${p.title}</h4>
+        <p>${p.dog} - ${p.place}</p>
+        <p>${p.text}</p>
       </div>
-    `).join("");
+    `;
+  });
 }
 
-load();
+loadPosts();
 
 </script>
 
