@@ -13,6 +13,7 @@
 <input id="email" placeholder="E-post">
 <input id="password" type="password" placeholder="Passord">
 <button onclick="login()">Logg inn</button>
+  <button onclick="signup()">Lag konto</button>
 
 <hr>
 
@@ -112,3 +113,20 @@ load();
 
 </body>
 </html>
+async function signup(){
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { error } = await supabase.auth.signUp({
+    email: email,
+    password: password
+  });
+
+  if(error){
+    alert("Feil: " + error.message);
+    return;
+  }
+
+  alert("Konto opprettet! Sjekk e-post.");
+}
