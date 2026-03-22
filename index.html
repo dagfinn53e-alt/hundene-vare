@@ -1,254 +1,144 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hundene våre</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #eef5ff;
-      color: #111827;
-    }
-    .wrap {
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 20px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,.06);
-      margin-bottom: 16px;
-    }
-    h1, h2 { margin-top: 0; text-align: center; }
-    input, textarea {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 12px;
-      margin: 8px 0 12px 0;
-      border: 1px solid #cbd5e1;
-      border-radius: 10px;
-    }
-    textarea { min-height: 120px; resize: vertical; }
-    .btnrow {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    button {
-      padding: 12px 16px;
-      border: none;
-      border-radius: 10px;
-      background: #1d4ed8;
-      color: white;
-      cursor: pointer;
-    }
-    #status {
-      margin-top: 12px;
-      text-align: center;
-      font-weight: bold;
-    }
-    .post {
-      background: #f8fbff;
-      border: 1px solid #dbeafe;
-      border-radius: 12px;
-      padding: 12px;
-      margin-top: 10px;
-    }
-    .meta {
-      color: #64748b;
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hundene våre</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #eef5ff;
+}
+
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+</style>
+
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <h1>Hundene våre 🐶</h1>
 
-      <input id="email" type="email" placeholder="E-post" />
-      <input id="password" type="password" placeholder="Passord" />
+<div class="container">
 
-      <div class="btnrow">
-        <button type="button" onclick="signup()">Lag konto</button>
-        <button type="button" onclick="login()">Logg inn</button>
+<h1>Hundene våre 🐶</h1>
+
+<input id="email" placeholder="E-post">
+<input id="password" type="password" placeholder="Passord">
+
+<button onclick="signup()">Lag konto</button>
+<button onclick="login()">Logg inn</button>
+
+<hr>
+
+<input id="title" placeholder="Tittel">
+<textarea id="text" placeholder="Skriv om hunden..."></textarea>
+
+<button onclick="save()">Lagre</button>
+
+<div id="feed"></div>
+
+</div>
+
+<script>
+
+const supabase = window.supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+async function signup(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { error } = await supabase.auth.signUp({ email, password });
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  alert("Konto opprettet!");
+}
+
+async function login(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  alert("Innlogget!");
+}
+
+async function save(){
+
+  const { data } = await supabase.auth.getUser();
+
+  if(!data.user){
+    alert("Du må logge inn først");
+    return;
+  }
+
+  const title = document.getElementById("title").value;
+  const text = document.getElementById("text").value;
+
+  const { error } = await supabase.from("stories").insert([{
+    user_id: data.user.id,
+    author_email: data.user.email,
+    title: title,
+    dog: "",
+    place: "",
+    category: "Hverdag",
+    text: text,
+    image_url: ""
+  }]);
+
+  if(error){
+    alert("Feil: " + error.message);
+    return;
+  }
+
+  alert("Lagret!");
+  load();
+}
+
+async function load(){
+  const { data } = await supabase.from("stories").select("*");
+
+  document.getElementById("feed").innerHTML =
+    data.map(s => `
+      <div style="background:#fff;padding:10px;margin-top:10px;border-radius:10px;">
+        <h3>${s.title}</h3>
+        <p>${s.text}</p>
       </div>
+    `).join("");
+}
 
-      <div id="status"></div>
-    </div>
+load();
 
-    <div class="card">
-      <h2>Nytt innlegg</h2>
-      <input id="title" placeholder="Tittel" />
-      <input id="dog" placeholder="Hundens navn" />
-      <input id="place" placeholder="Sted" />
-      <textarea id="text" placeholder="Skriv om hunden..."></textarea>
+</script>
 
-      <div class="btnrow">
-        <button type="button" onclick="savePost()">Lagre</button>
-        <button type="button" onclick="loadPosts()">Oppdater innlegg</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>Innlegg</h2>
-      <div id="feed">Laster ...</div>
-    </div>
-  </div>
-
-  <script>
-    const supabase = window.supabase.createClient(
-      "https://kxudiviidwwwclbzgdyx.supabase.co",
-      "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
-    );
-
-    function setStatus(text, color = "black") {
-      const el = document.getElementById("status");
-      el.textContent = text;
-      el.style.color = color;
-    }
-
-    async function signup() {
-      setStatus("Oppretter konto ...");
-
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-
-      if (!email || !password) {
-        setStatus("Skriv inn e-post og passord.", "crimson");
-        return;
-      }
-
-      const { error } = await supabase.auth.signUp({
-        email: email,
-        password: password
-      });
-
-      if (error) {
-        setStatus("Feil: " + error.message, "crimson");
-        return;
-      }
-
-      setStatus("Konto opprettet. Sjekk e-post hvis bekreftelse er på.", "green");
-    }
-
-    async function login() {
-      setStatus("Logger inn ...");
-
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-
-      if (!email || !password) {
-        setStatus("Skriv inn e-post og passord.", "crimson");
-        return;
-      }
-
-      const { error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
-
-      if (error) {
-        setStatus("Feil: " + error.message, "crimson");
-        return;
-      }
-
-      setStatus("Innlogget.", "green");
-    }
-
-    async function savePost() {
-      setStatus("Lagrer ...");
-
-      const { data: userData } = await supabase.auth.getUser();
-      const user = userData.user;
-
-      if (!user) {
-        setStatus("Du må logge inn først.", "crimson");
-        return;
-      }
-
-      const title = document.getElementById("title").value.trim();
-      const dog = document.getElementById("dog").value.trim();
-      const place = document.getElementById("place").value.trim();
-      const text = document.getElementById("text").value.trim();
-
-      if (!title || !dog || !place || !text) {
-        setStatus("Fyll inn tittel, hund, sted og tekst.", "crimson");
-        return;
-      }
-
-      const { error } = await supabase.from("stories").insert([{
-        user_id: user.id,
-        author_email: user.email,
-        title: title,
-        dog: dog,
-        place: place,
-        category: "Hverdag",
-        text: text,
-        image_url: ""
-      }]);
-
-      if (error) {
-        setStatus("Feil ved lagring: " + error.message, "crimson");
-        return;
-      }
-
-      document.getElementById("title").value = "";
-      document.getElementById("dog").value = "";
-      document.getElementById("place").value = "";
-      document.getElementById("text").value = "";
-
-      setStatus("Lagret!", "green");
-      loadPosts();
-    }
-
-    async function loadPosts() {
-      const feed = document.getElementById("feed");
-      feed.textContent = "Laster ...";
-
-      const { data, error } = await supabase
-        .from("stories")
-        .select("*")
-        .order("id", { ascending: false });
-
-      if (error) {
-        feed.textContent = "Feil ved henting: " + error.message;
-        return;
-      }
-
-      if (!data || !data.length) {
-        feed.textContent = "Ingen innlegg enda.";
-        return;
-      }
-
-      feed.innerHTML = data.map(post => `
-        <div class="post">
-          <h3>${escapeHtml(post.title || "")}</h3>
-          <div class="meta">${escapeHtml(post.dog || "")} · ${escapeHtml(post.place || "")}</div>
-          <p>${escapeHtml(post.text || "")}</p>
-        </div>
-      `).join("");
-    }
-
-    function escapeHtml(str) {
-      return String(str).replace(/[&<>"']/g, function (m) {
-        return {
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#39;"
-        }[m];
-      });
-    }
-
-    load();
-  </script>
 </body>
 </html>
