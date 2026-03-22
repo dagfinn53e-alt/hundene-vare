@@ -7,177 +7,46 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root{
-      --blue:#2563eb;
-      --blue-dark:#1d4ed8;
-      --bg:#eef5ff;
-      --card:#ffffff;
-      --line:#dbeafe;
-      --text:#0f172a;
-      --muted:#64748b;
-      --ok:#166534;
-      --bad:#b91c1c;
+      --blue:#2563eb; --blue-dark:#1d4ed8; --bg:#eef5ff; --card:#fff; --line:#dbeafe;
+      --text:#0f172a; --muted:#64748b; --ok:#166534; --bad:#b91c1c;
     }
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Arial, sans-serif;
-      background:linear-gradient(180deg,#eaf3ff 0%, #f8fbff 100%);
-      color:var(--text);
-    }
-    .wrap{
-      max-width:980px;
-      margin:0 auto;
-      padding:20px 16px 40px;
-    }
-    .hero{
-      background:linear-gradient(135deg,var(--blue-dark),#3b82f6);
-      color:white;
-      padding:24px;
-      border-radius:24px;
-      box-shadow:0 10px 30px rgba(37,99,235,.18);
-      margin-bottom:18px;
-    }
-    .hero h1{
-      margin:0 0 8px 0;
-      font-size:34px;
-    }
-    .hero p{
-      margin:0;
-      line-height:1.6;
-      opacity:.98;
-    }
-    .topstats{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:12px;
-      margin-top:16px;
-    }
-    .stat{
-      background:rgba(255,255,255,.14);
-      border:1px solid rgba(255,255,255,.22);
-      border-radius:18px;
-      padding:12px;
-      text-align:center;
-    }
-    .stat .label{font-size:13px;opacity:.9}
-    .stat .value{font-size:22px;font-weight:700;margin-top:4px}
-    .row{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:16px;
-      margin-top:16px;
-    }
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:20px;
-      padding:18px;
-      box-shadow:0 8px 24px rgba(15,23,42,.05);
-      margin-bottom:16px;
-    }
-    h2{
-      margin:0 0 12px 0;
-      font-size:22px;
-    }
-    .sub{
-      color:var(--muted);
-      margin-bottom:10px;
-    }
-    input, textarea, select{
-      width:100%;
-      padding:12px 14px;
-      margin:8px 0 12px;
-      border:1px solid #cbd5e1;
-      border-radius:12px;
-      font-size:15px;
-      background:white;
-    }
-    textarea{
-      min-height:120px;
-      resize:vertical;
-    }
-    .btnrow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    button{
-      border:none;
-      border-radius:12px;
-      padding:12px 16px;
-      background:var(--blue-dark);
-      color:white;
-      cursor:pointer;
-      font-weight:700;
-    }
-    button.alt{
-      background:white;
-      color:var(--blue-dark);
-      border:1px solid #bfdbfe;
-    }
-    #status{
-      margin-top:12px;
-      min-height:24px;
-      font-weight:700;
-    }
-    .post{
-      background:#f8fbff;
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:14px;
-      margin-top:12px;
-    }
-    .post h3{
-      margin:0 0 8px 0;
-      font-size:21px;
-    }
-    .meta{
-      color:var(--muted);
-      font-size:14px;
-      margin-bottom:10px;
-    }
-    .post img{
-      width:100%;
-      border-radius:16px;
-      margin-top:12px;
-      display:block;
-      max-height:520px;
-      object-fit:cover;
-    }
-    .likebar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      margin-top:12px;
-      flex-wrap:wrap;
-    }
-    .likebtn{
-      background:white;
-      color:var(--blue-dark);
-      border:1px solid #bfdbfe;
-      padding:9px 14px;
-      border-radius:999px;
-      font-weight:700;
-      cursor:pointer;
-    }
-    .sharebox{
-      background:#eff6ff;
-      border:1px solid #bfdbfe;
-      border-radius:18px;
-      padding:14px;
-      margin-top:16px;
-    }
-    .sharelink{
-      word-break:break-all;
-      color:var(--blue-dark);
-      font-weight:700;
-    }
-    @media (max-width: 760px){
-      .row{grid-template-columns:1fr}
-      .topstats{grid-template-columns:repeat(2,1fr)}
-      .hero h1{font-size:28px}
-    }
+    body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(180deg,#eaf3ff 0%,#f8fbff 100%);color:var(--text)}
+    .wrap{max-width:1040px;margin:0 auto;padding:20px 16px 40px}
+    .hero{background:linear-gradient(135deg,var(--blue-dark),#3b82f6);color:#fff;padding:24px;border-radius:24px;box-shadow:0 10px 30px rgba(37,99,235,.18);margin-bottom:18px}
+    .hero h1{margin:0 0 8px 0;font-size:34px}
+    .hero p{margin:0;line-height:1.6}
+    .topstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+    .stat{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:12px;text-align:center}
+    .stat .label{font-size:13px;opacity:.95}.stat .value{font-size:22px;font-weight:700;margin-top:4px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 8px 24px rgba(15,23,42,.05);margin-bottom:16px}
+    h2{margin:0 0 12px 0;font-size:22px} h3{margin:0 0 8px 0}
+    .sub{color:var(--muted);margin-bottom:10px}
+    input,textarea,select{width:100%;padding:12px 14px;margin:8px 0 12px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff}
+    textarea{min-height:110px;resize:vertical}
+    .btnrow{display:flex;gap:10px;flex-wrap:wrap}
+    button{border:none;border-radius:12px;padding:12px 16px;background:var(--blue-dark);color:#fff;cursor:pointer;font-weight:700}
+    button.alt{background:#fff;color:var(--blue-dark);border:1px solid #bfdbfe}
+    #status{margin-top:12px;min-height:24px;font-weight:700}
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px 0}
+    .tabbtn{background:#fff;color:var(--blue-dark);border:1px solid #bfdbfe}
+    .tabbtn.active{background:var(--blue-dark);color:#fff}
+    .tab{display:none}.tab.active{display:block}
+    .post{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:12px}
+    .post h3{font-size:21px}
+    .meta{color:var(--muted);font-size:14px;margin-bottom:10px}
+    .post img{width:100%;border-radius:16px;margin-top:12px;display:block;max-height:520px;object-fit:cover}
+    .likebar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+    .likebtn,.smallbtn{background:#fff;color:var(--blue-dark);border:1px solid #bfdbfe;padding:9px 14px;border-radius:999px;font-weight:700;cursor:pointer}
+    .comments{margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+    .comment{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:10px 12px;margin-top:8px}
+    .commentmeta{font-size:12px;color:var(--muted);margin-bottom:4px}
+    .sharebox,.mapbox,.profilebox{background:#eff6ff;border:1px solid #bfdbfe;border-radius:18px;padding:14px;margin-top:16px}
+    .sharelink{word-break:break-all;color:var(--blue-dark);font-weight:700}
+    .mini{font-size:13px;color:var(--muted)}
+    .profile-list .post{background:#fff}
+    @media (max-width:760px){.row{grid-template-columns:1fr}.topstats{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:28px}}
   </style>
 </head>
 <body>
@@ -185,26 +54,12 @@
     <div class="hero">
       <h1>Hundene våre 🐶</h1>
       <p>Møteplassen for hundeglade på Vestlandet. Del turer, bilder og opplevelser med hunden din – og la andre bli inspirert av ekte hundeliv.</p>
-
       <div class="topstats">
-        <div class="stat">
-          <div class="label">Innlegg</div>
-          <div class="value" id="postCount">0</div>
-        </div>
-        <div class="stat">
-          <div class="label">Medlemmer</div>
-          <div class="value" id="memberCount">0</div>
-        </div>
-        <div class="stat">
-          <div class="label">Bilder</div>
-          <div class="value" id="imageCount">0</div>
-        </div>
-        <div class="stat">
-          <div class="label">Status</div>
-          <div class="value">Live</div>
-        </div>
+        <div class="stat"><div class="label">Innlegg</div><div class="value" id="postCount">0</div></div>
+        <div class="stat"><div class="label">Medlemmer</div><div class="value" id="memberCount">0</div></div>
+        <div class="stat"><div class="label">Bilder</div><div class="value" id="imageCount">0</div></div>
+        <div class="stat"><div class="label">Kommentarer</div><div class="value" id="commentCount">0</div></div>
       </div>
-
       <div class="sharebox">
         <div>Del appen med andre:</div>
         <div class="sharelink" id="shareLink">https://dagfinn53e-alt.github.io/hundene-vare/</div>
@@ -213,6 +68,12 @@
           <button type="button" class="alt" onclick="copyLink()">Kopier link</button>
         </div>
       </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tabbtn active" onclick="openTab('feed', this)">Feed</button>
+      <button class="tabbtn" onclick="openTab('profile', this)">Min profil</button>
+      <button class="tabbtn" onclick="openTab('map', this)">Kart</button>
     </div>
 
     <div class="row">
@@ -224,6 +85,7 @@
         <div class="btnrow">
           <button type="button" onclick="signupUser()">Lag konto</button>
           <button type="button" onclick="loginUser()">Logg inn</button>
+          <button type="button" class="alt" onclick="loadProfile()">Oppdater profil</button>
         </div>
         <div id="status">Klar.</div>
       </div>
@@ -248,9 +110,33 @@
       </div>
     </div>
 
-    <div class="card">
-      <h2>Innlegg</h2>
-      <div id="feed">Laster ...</div>
+    <div id="tab-feed" class="tab active">
+      <div class="card">
+        <h2>Innlegg</h2>
+        <div id="feed">Laster ...</div>
+      </div>
+    </div>
+
+    <div id="tab-profile" class="tab">
+      <div class="card">
+        <h2>Min profil</h2>
+        <div class="profilebox">
+          <div><strong>E-post:</strong> <span id="profileEmail">Ikke innlogget</span></div>
+          <div><strong>Mine innlegg:</strong> <span id="profilePosts">0</span></div>
+        </div>
+        <div id="myPosts" class="profile-list">Ingen innlegg enda.</div>
+      </div>
+    </div>
+
+    <div id="tab-map" class="tab">
+      <div class="card">
+        <h2>Kart / steder</h2>
+        <div class="mapbox">
+          <p><strong>Tursteder fra innlegg:</strong></p>
+          <div id="placesList">Ingen steder enda.</div>
+          <p class="mini" style="margin-top:10px">Dette er første kartsteg: appen samler steder fra innleggene. Senere kan vi lage ekte kartvisning.</p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -266,19 +152,45 @@
       el.style.color = color || "black";
     }
 
+    function openTab(name, btn){
+      document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+      document.querySelectorAll('.tabbtn').forEach(function(b){b.classList.remove('active')});
+      document.getElementById('tab-' + name).classList.add('active');
+      if(btn) btn.classList.add('active');
+    }
+
     function getLikes() {
       try { return JSON.parse(localStorage.getItem("hundene_vare_likes") || "{}"); }
       catch(e) { return {}; }
     }
-
-    function saveLikes(data) {
-      localStorage.setItem("hundene_vare_likes", JSON.stringify(data));
+    function saveLikes(data) { localStorage.setItem("hundene_vare_likes", JSON.stringify(data)); }
+    function getComments() {
+      try { return JSON.parse(localStorage.getItem("hundene_vare_comments") || "{}"); }
+      catch(e) { return {}; }
     }
+    function saveComments(data) { localStorage.setItem("hundene_vare_comments", JSON.stringify(data)); }
 
     function likePost(id) {
       var likes = getLikes();
       likes[id] = (likes[id] || 0) + 1;
       saveLikes(likes);
+      loadStories();
+    }
+
+    function addComment(id) {
+      var input = document.getElementById("comment-" + id);
+      if (!input) return;
+      var text = input.value.trim();
+      if (!text) return;
+
+      var comments = getComments();
+      if (!comments[id]) comments[id] = [];
+      comments[id].push({
+        text: text,
+        time: new Date().toLocaleString("no-NO")
+      });
+      saveComments(comments);
+      input.value = "";
       loadStories();
     }
 
@@ -293,12 +205,10 @@
       }
 
       var result = await supabase.auth.signUp({ email: email, password: password });
-
       if (result.error) {
         setStatus("Feil: " + result.error.message, "crimson");
         return;
       }
-
       setStatus("Konto opprettet.", "green");
     }
 
@@ -313,13 +223,13 @@
       }
 
       var result = await supabase.auth.signInWithPassword({ email: email, password: password });
-
       if (result.error) {
         setStatus("Feil: " + result.error.message, "crimson");
         return;
       }
 
       setStatus("Innlogget som " + email, "green");
+      loadProfile();
     }
 
     async function saveStory() {
@@ -346,18 +256,14 @@
       }
 
       var imageUrl = "";
-
       if (file) {
         var safeName = Date.now() + "-" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
         var filePath = user.id + "/" + safeName;
-
         var upload = await supabase.storage.from("story-images").upload(filePath, file);
-
         if (upload.error) {
           setStatus("Feil ved bildeopplasting: " + upload.error.message, "crimson");
           return;
         }
-
         var pub = supabase.storage.from("story-images").getPublicUrl(filePath);
         imageUrl = pub.data.publicUrl;
       }
@@ -383,9 +289,9 @@
       document.getElementById("place").value = "";
       document.getElementById("text").value = "";
       document.getElementById("imageFile").value = "";
-
       setStatus("Lagret!", "green");
       await loadStories();
+      await loadProfile();
     }
 
     async function loadStories() {
@@ -393,7 +299,6 @@
       feed.textContent = "Laster ...";
 
       var result = await supabase.from("stories").select("*").order("created_at", { ascending: false });
-
       if (result.error) {
         feed.textContent = "Feil ved henting: " + result.error.message;
         return;
@@ -404,12 +309,24 @@
 
       var members = {};
       var images = 0;
+      var places = {};
       for (var i = 0; i < data.length; i++) {
         if (data[i].author_email) members[data[i].author_email] = true;
         if (data[i].image_url) images++;
+        if (data[i].place) places[data[i].place] = true;
       }
       document.getElementById("memberCount").textContent = Object.keys(members).length;
       document.getElementById("imageCount").textContent = images;
+
+      var comments = getComments();
+      var commentTotal = 0;
+      Object.keys(comments).forEach(function(k){ commentTotal += (comments[k] || []).length; });
+      document.getElementById("commentCount").textContent = commentTotal;
+
+      var placesHtml = Object.keys(places).length ? Object.keys(places).map(function(p){
+        return '<div>📍 ' + escapeHtml(p) + '</div>';
+      }).join('') : 'Ingen steder enda.';
+      document.getElementById("placesList").innerHTML = placesHtml;
 
       if (!data.length) {
         feed.textContent = "Ingen innlegg enda.";
@@ -422,30 +339,68 @@
         var post = data[i];
         var postId = post.id || ("post_" + i);
         var likeCount = likes[postId] || 0;
+        var postComments = comments[postId] || [];
 
         html += '<div class="post">';
         html += '<h3>' + escapeHtml(post.title || "") + '</h3>';
         html += '<div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + ' · ' + escapeHtml(post.category || "") + '</div>';
         html += '<p>' + escapeHtml(post.text || "") + '</p>';
-        if (post.image_url) {
-          html += '<img src="' + post.image_url + '" alt="Hundebilde">';
-        }
+        if (post.image_url) html += '<img src="' + post.image_url + '" alt="Hundebilde">';
         html += '<div class="likebar">';
         html += '<button class="likebtn" type="button" onclick="likePost(\'' + postId + '\')">❤️ Lik (' + likeCount + ')</button>';
+        html += '<span class="mini">' + postComments.length + ' kommentar(er)</span>';
+        html += '</div>';
+        html += '<div class="comments">';
+        for (var j = 0; j < postComments.length; j++) {
+          html += '<div class="comment"><div class="commentmeta">' + escapeHtml(postComments[j].time || '') + '</div><div>' + escapeHtml(postComments[j].text || '') + '</div></div>';
+        }
+        html += '<input id="comment-' + postId + '" placeholder="Skriv en kommentar">';
+        html += '<div class="btnrow"><button type="button" class="alt" onclick="addComment(\'' + postId + '\')">Legg til kommentar</button></div>';
         html += '</div>';
         html += '</div>';
       }
       feed.innerHTML = html;
     }
 
+    async function loadProfile() {
+      var auth = await supabase.auth.getUser();
+      var user = auth && auth.data ? auth.data.user : null;
+
+      if (!user) {
+        document.getElementById("profileEmail").textContent = "Ikke innlogget";
+        document.getElementById("profilePosts").textContent = "0";
+        document.getElementById("myPosts").textContent = "Logg inn for å se dine innlegg.";
+        return;
+      }
+
+      document.getElementById("profileEmail").textContent = user.email;
+
+      var result = await supabase.from("stories").select("*").eq("author_email", user.email).order("created_at", { ascending: false });
+      var data = result.data || [];
+      document.getElementById("profilePosts").textContent = String(data.length);
+
+      if (!data.length) {
+        document.getElementById("myPosts").textContent = "Ingen egne innlegg enda.";
+        return;
+      }
+
+      var html = "";
+      for (var i = 0; i < data.length; i++) {
+        var post = data[i];
+        html += '<div class="post">';
+        html += '<h3>' + escapeHtml(post.title || "") + '</h3>';
+        html += '<div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + '</div>';
+        html += '<p>' + escapeHtml(post.text || "") + '</p>';
+        if (post.image_url) html += '<img src="' + post.image_url + '" alt="Hundebilde">';
+        html += '</div>';
+      }
+      document.getElementById("myPosts").innerHTML = html;
+    }
+
     function shareApp() {
       var url = "https://dagfinn53e-alt.github.io/hundene-vare/";
       if (navigator.share) {
-        navigator.share({
-          title: "Hundene våre",
-          text: "Se appen Hundene våre 🐶",
-          url: url
-        }).catch(function(){});
+        navigator.share({ title: "Hundene våre", text: "Se appen Hundene våre 🐶", url: url }).catch(function(){});
       } else {
         copyLink();
       }
@@ -467,6 +422,7 @@
     }
 
     loadStories();
+    loadProfile();
   </script>
 </body>
 </html>
