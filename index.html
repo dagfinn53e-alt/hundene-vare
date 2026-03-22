@@ -26,7 +26,7 @@
       color:var(--text);
     }
     .wrap{
-      max-width:900px;
+      max-width:980px;
       margin:0 auto;
       padding:20px 16px 40px;
     }
@@ -47,6 +47,21 @@
       line-height:1.6;
       opacity:.98;
     }
+    .topstats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-top:16px;
+    }
+    .stat{
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.22);
+      border-radius:18px;
+      padding:12px;
+      text-align:center;
+    }
+    .stat .label{font-size:13px;opacity:.9}
+    .stat .value{font-size:22px;font-weight:700;margin-top:4px}
     .row{
       display:grid;
       grid-template-columns:1fr 1fr;
@@ -127,22 +142,41 @@
       border-radius:16px;
       margin-top:12px;
       display:block;
+      max-height:520px;
+      object-fit:cover;
     }
-    .badgebar{
+    .likebar{
       display:flex;
+      justify-content:space-between;
+      align-items:center;
       gap:10px;
+      margin-top:12px;
       flex-wrap:wrap;
-      margin-top:14px;
     }
-    .badge{
-      background:rgba(255,255,255,.18);
-      border:1px solid rgba(255,255,255,.22);
-      padding:8px 12px;
+    .likebtn{
+      background:white;
+      color:var(--blue-dark);
+      border:1px solid #bfdbfe;
+      padding:9px 14px;
       border-radius:999px;
-      font-size:14px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .sharebox{
+      background:#eff6ff;
+      border:1px solid #bfdbfe;
+      border-radius:18px;
+      padding:14px;
+      margin-top:16px;
+    }
+    .sharelink{
+      word-break:break-all;
+      color:var(--blue-dark);
+      font-weight:700;
     }
     @media (max-width: 760px){
       .row{grid-template-columns:1fr}
+      .topstats{grid-template-columns:repeat(2,1fr)}
       .hero h1{font-size:28px}
     }
   </style>
@@ -152,10 +186,33 @@
     <div class="hero">
       <h1>Hundene våre 🐶</h1>
       <p>Møteplassen for hundeglade på Vestlandet. Del turer, bilder og opplevelser med hunden din – og la andre bli inspirert av ekte hundeliv.</p>
-      <div class="badgebar">
-        <div class="badge">📸 Bilder</div>
-        <div class="badge">📝 Innlegg</div>
-        <div class="badge">👥 Medlemmer</div>
+
+      <div class="topstats">
+        <div class="stat">
+          <div class="label">Innlegg</div>
+          <div class="value" id="postCount">0</div>
+        </div>
+        <div class="stat">
+          <div class="label">Medlemmer</div>
+          <div class="value" id="memberCount">0</div>
+        </div>
+        <div class="stat">
+          <div class="label">Bilder</div>
+          <div class="value" id="imageCount">0</div>
+        </div>
+        <div class="stat">
+          <div class="label">Status</div>
+          <div class="value">Live</div>
+        </div>
+      </div>
+
+      <div class="sharebox">
+        <div>Del appen med andre:</div>
+        <div class="sharelink" id="shareLink">https://dagfinn53e-alt.github.io/hundene-vare/</div>
+        <div class="btnrow" style="margin-top:10px">
+          <button type="button" onclick="shareApp()">Del link</button>
+          <button type="button" class="alt" onclick="copyLink()">Kopier link</button>
+        </div>
       </div>
     </div>
 
@@ -210,24 +267,40 @@
       el.style.color = color || "black";
     }
 
+    function getLikes() {
+      try { return JSON.parse(localStorage.getItem("hundene_vare_likes") || "{}"); }
+      catch(e) { return {}; }
+    }
+
+    function saveLikes(data) {
+      localStorage.setItem("hundene_vare_likes", JSON.stringify(data));
+    }
+
+    function likePost(id) {
+      var likes = getLikes();
+      likes[id] = (likes[id] || 0) + 1;
+      saveLikes(likes);
+      loadStories();
+    }
+
     async function signupUser() {
       setStatus("Prøver å opprette konto ...", "blue");
       var email = document.getElementById("email").value.trim();
       var password = document.getElementById("password").value.trim();
 
       if (!email || !password) {
-        setStatus("Skriv inn e-post og passord.", "var(--bad)");
+        setStatus("Skriv inn e-post og passord.", "crimson");
         return;
       }
 
       var result = await supabase.auth.signUp({ email: email, password: password });
 
       if (result.error) {
-        setStatus("Feil: " + result.error.message, "var(--bad)");
+        setStatus("Feil: " + result.error.message, "crimson");
         return;
       }
 
-      setStatus("Konto opprettet.", "var(--ok)");
+      setStatus("Konto opprettet.", "green");
     }
 
     async function loginUser() {
@@ -236,18 +309,18 @@
       var password = document.getElementById("password").value.trim();
 
       if (!email || !password) {
-        setStatus("Skriv inn e-post og passord.", "var(--bad)");
+        setStatus("Skriv inn e-post og passord.", "crimson");
         return;
       }
 
       var result = await supabase.auth.signInWithPassword({ email: email, password: password });
 
       if (result.error) {
-        setStatus("Feil: " + result.error.message, "var(--bad)");
+        setStatus("Feil: " + result.error.message, "crimson");
         return;
       }
 
-      setStatus("Innlogget som " + email, "var(--ok)");
+      setStatus("Innlogget som " + email, "green");
     }
 
     async function saveStory() {
@@ -257,7 +330,7 @@
       var user = auth && auth.data ? auth.data.user : null;
 
       if (!user) {
-        setStatus("Du må logge inn først.", "var(--bad)");
+        setStatus("Du må logge inn først.", "crimson");
         return;
       }
 
@@ -269,7 +342,7 @@
       var file = document.getElementById("imageFile").files[0];
 
       if (!title || !text) {
-        setStatus("Skriv inn tittel og tekst.", "var(--bad)");
+        setStatus("Skriv inn tittel og tekst.", "crimson");
         return;
       }
 
@@ -282,7 +355,7 @@
         var upload = await supabase.storage.from("story-images").upload(filePath, file);
 
         if (upload.error) {
-          setStatus("Feil ved bildeopplasting: " + upload.error.message, "var(--bad)");
+          setStatus("Feil ved bildeopplasting: " + upload.error.message, "crimson");
           return;
         }
 
@@ -302,7 +375,7 @@
       }]);
 
       if (insert.error) {
-        setStatus("Feil ved lagring: " + insert.error.message, "var(--bad)");
+        setStatus("Feil ved lagring: " + insert.error.message, "crimson");
         return;
       }
 
@@ -312,7 +385,7 @@
       document.getElementById("text").value = "";
       document.getElementById("imageFile").value = "";
 
-      setStatus("Lagret!", "var(--ok)");
+      setStatus("Lagret!", "green");
       await loadStories();
     }
 
@@ -328,14 +401,29 @@
       }
 
       var data = result.data || [];
+      document.getElementById("postCount").textContent = data.length;
+
+      var members = {};
+      var images = 0;
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].author_email) members[data[i].author_email] = true;
+        if (data[i].image_url) images++;
+      }
+      document.getElementById("memberCount").textContent = Object.keys(members).length;
+      document.getElementById("imageCount").textContent = images;
+
       if (!data.length) {
         feed.textContent = "Ingen innlegg enda.";
         return;
       }
 
+      var likes = getLikes();
       var html = "";
       for (var i = 0; i < data.length; i++) {
         var post = data[i];
+        var postId = post.id || ("post_" + i);
+        var likeCount = likes[postId] || 0;
+
         html += '<div class="post">';
         html += '<h3>' + escapeHtml(post.title || "") + '</h3>';
         html += '<div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + ' · ' + escapeHtml(post.category || "") + '</div>';
@@ -343,9 +431,34 @@
         if (post.image_url) {
           html += '<img src="' + post.image_url + '" alt="Hundebilde">';
         }
+        html += '<div class="likebar">';
+        html += '<button class="alt" type="button" onclick="likePost(\'' + postId + '\')">❤️ Lik (' + likeCount + ')</button>';
+        html += '</div>';
         html += '</div>';
       }
       feed.innerHTML = html;
+    }
+
+    function shareApp() {
+      var url = "https://dagfinn53e-alt.github.io/hundene-vare/";
+      if (navigator.share) {
+        navigator.share({
+          title: "Hundene våre",
+          text: "Se appen Hundene våre 🐶",
+          url: url
+        }).catch(function(){});
+      } else {
+        copyLink();
+      }
+    }
+
+    function copyLink() {
+      var url = "https://dagfinn53e-alt.github.io/hundene-vare/";
+      navigator.clipboard.writeText(url).then(function() {
+        setStatus("Link kopiert.", "green");
+      }).catch(function() {
+        setStatus("Kunne ikke kopiere linken.", "crimson");
+      });
     }
 
     function escapeHtml(str) {
