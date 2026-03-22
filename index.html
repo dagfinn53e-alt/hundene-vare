@@ -8,29 +8,10 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial;
-  background: #eef5ff;
-}
-
-.container {
-  max-width: 600px;
-  margin: 40px auto;
-  text-align: center;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-}
-
-button {
-  margin-top: 10px;
-  padding: 10px;
-  cursor: pointer;
-}
+body { font-family: Arial; background:#eef5ff; text-align:center; }
+.container { max-width:600px; margin:40px auto; }
+input, textarea { width:100%; padding:10px; margin-top:10px; }
+button { margin-top:10px; padding:10px; cursor:pointer; }
 </style>
 
 </head>
@@ -43,8 +24,8 @@ button {
 <input id="email" placeholder="E-post">
 <input id="password" type="password" placeholder="Passord">
 
-<button onclick="alert('KNAPP VIRKER')">Lag konto</button>
-<button onclick="alert('LOGIN VIRKER')">Logg inn</button>
+<button onclick="signup()">Lag konto</button>
+<button onclick="login()">Logg inn</button>
 
 <hr>
 
@@ -59,24 +40,20 @@ button {
 
 <script>
 
-<script>
 const supabase = window.supabase.createClient(
   "https://kxudiviidwwwclbzgdyx.supabase.co",
   "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
 );
 
-async function signup() {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
+async function signup(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-  if (!email || !password) {
-    alert("Skriv inn e-post og passord");
-    return;
-  }
+  alert("Signup starter");
 
   const { error } = await supabase.auth.signUp({ email, password });
 
-  if (error) {
+  if(error){
     alert("Feil: " + error.message);
     return;
   }
@@ -84,18 +61,15 @@ async function signup() {
   alert("Konto opprettet");
 }
 
-async function login() {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
+async function login(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-  if (!email || !password) {
-    alert("Skriv inn e-post og passord");
-    return;
-  }
+  alert("Login starter");
 
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
-  if (error) {
+  if(error){
     alert("Feil: " + error.message);
     return;
   }
@@ -103,65 +77,55 @@ async function login() {
   alert("Innlogget");
 }
 
-async function save() {
-  const { data: userData } = await supabase.auth.getUser();
-  const user = userData.user;
+async function save(){
 
-  if (!user) {
+  alert("Save starter");
+
+  const { data } = await supabase.auth.getUser();
+
+  if(!data.user){
     alert("Du må logge inn først");
     return;
   }
 
-  const title = document.getElementById("title").value.trim();
-  const text = document.getElementById("text").value.trim();
-
-  if (!title || !text) {
-    alert("Skriv inn tittel og tekst");
-    return;
-  }
+  const title = document.getElementById("title").value;
+  const text = document.getElementById("text").value;
 
   const { error } = await supabase.from("stories").insert([{
-  user_id: user.id,
-  author_email: user.email,
-  title: title,
-  dog: "Ikke oppgitt",
-  place: "Ikke oppgitt",
-  category: "Hverdag",
-  text: text,
-  image_url: ""
-}]);
+    user_id: data.user.id,
+    author_email: data.user.email,
+    title: title,
+    dog: "Test",
+    place: "Test",
+    category: "Hverdag",
+    text: text,
+    image_url: ""
+  }]);
 
-  if (error) {
+  if(error){
     alert("Feil: " + error.message);
     return;
   }
 
-  alert("Lagret");
+  alert("Lagret!");
   load();
 }
 
-async function load() {
-  const { data, error } = await supabase
-    .from("stories")
-    .select("*")
-    .order("id", { ascending: false });
+async function load(){
+  const { data } = await supabase.from("stories").select("*");
 
-  if (error) {
-    document.getElementById("feed").innerHTML = "Feil ved henting";
-    return;
-  }
-
-  document.getElementById("feed").innerHTML = data.map(s => `
-    <div style="background:#fff;padding:10px;margin-top:10px;border-radius:10px;">
-      <h3>${s.title || ""}</h3>
-      <p>${s.text || ""}</p>
-    </div>
-  `).join("");
+  document.getElementById("feed").innerHTML =
+    data.map(s => `
+      <div style="background:#fff;padding:10px;margin-top:10px;border-radius:10px;">
+        <h3>${s.title}</h3>
+        <p>${s.text}</p>
+      </div>
+    `).join("");
 }
 
 load();
+
 </script>
-  
 
-
-
+</body>
+</html>
