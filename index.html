@@ -7,8 +7,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root{
-      --blue:#2563eb; --blue-dark:#1d4ed8; --bg:#eef5ff; --card:#fff; --line:#dbeafe;
-      --text:#0f172a; --muted:#64748b; --soft:#f8fafc;
+      --blue:#2563eb; --blue-dark:#1d4ed8; --card:#fff; --line:#dbeafe;
+      --text:#0f172a; --muted:#64748b;
       --purple:#f3e8ff; --purple-line:#d8b4fe; --purple-text:#6b21a8;
       --green:#ecfdf5; --green-line:#86efac; --green-text:#166534;
       --red:#fef2f2; --red-line:#fca5a5; --red-text:#b91c1c;
@@ -17,7 +17,7 @@
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(180deg,#eaf3ff 0%,#f8fbff 100%);color:var(--text)}
-    .wrap{max-width:1080px;margin:0 auto;padding:20px 16px 40px}
+    .wrap{max-width:1120px;margin:0 auto;padding:20px 16px 40px}
     .hero{background:linear-gradient(135deg,var(--blue-dark),#3b82f6);color:#fff;padding:24px;border-radius:24px;box-shadow:0 10px 30px rgba(37,99,235,.18);margin-bottom:18px}
     .hero h1{margin:0 0 8px 0;font-size:34px}
     .hero p{margin:0;line-height:1.6}
@@ -45,11 +45,15 @@
     button.alt{background:#dbeafe;color:var(--blue-dark);border:1px solid #93c5fd}
     #status,#bizStatus{margin-top:12px;min-height:24px;font-weight:700}
     .hidden{display:none}
-    .post,.biz-card{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:12px}
+    .post,.biz-card{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:12px}
     .post h3,.biz-card h3{font-size:21px;margin:0 0 8px 0}
     .meta{color:var(--muted);font-size:14px;margin-bottom:10px}
     .post img,.biz-card img{width:100%;border-radius:16px;margin-top:12px;display:block;max-height:520px;object-fit:cover}
-    .biz-logo{max-width:120px!important;max-height:120px!important;object-fit:contain!important;background:#fff;padding:8px;border:1px solid #e2e8f0}
+    .biz-logo{max-width:140px!important;max-height:140px!important;object-fit:contain!important;background:#fff;padding:10px;border:1px solid #e2e8f0}
+    .biz-top{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+    .biz-info{flex:1;min-width:240px}
+    .biz-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .site-link{display:inline-block;text-decoration:none;background:#dbeafe;color:#1d4ed8;border:1px solid #93c5fd;padding:10px 14px;border-radius:999px;font-weight:700}
     .likebar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
     .likebtn{background:#fff;color:var(--blue-dark);border:1px solid #bfdbfe;padding:9px 14px;border-radius:999px;font-weight:700;cursor:pointer}
     .comments{margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
@@ -62,7 +66,12 @@
     .stat{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:12px;text-align:center}
     .stat .label{font-size:13px;opacity:.95}.stat .value{font-size:22px;font-weight:700;margin-top:4px}
     .footer-note{margin-top:18px;padding:14px 16px;border-radius:18px;background:#dbeafe;border:1px solid #93c5fd;color:#1e3a8a;line-height:1.6}
-    @media (max-width:760px){.grid,.menu-grid,.topstats{grid-template-columns:1fr}.hero h1{font-size:28px}}
+    .search-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
+    .map-link{display:inline-block;margin-top:10px;color:#1d4ed8;font-weight:700;text-decoration:none}
+    @media (max-width:760px){
+      .grid,.menu-grid,.topstats,.search-grid{grid-template-columns:1fr}
+      .hero h1{font-size:28px}
+    }
   </style>
 </head>
 <body>
@@ -89,7 +98,7 @@
 
       <div class="card">
         <h2>Hva appen vil tilby</h2>
-        <p class="sub">Hundene våre skal være et ryddig og varmt samlingssted for hundeeiere. Her kan du lese fortellinger, se bilder, dele egne opplevelser og bli kjent med andre hundeglade. Samtidig skal appen etter hvert gjøre det lettere å finne nyttige tjenester i nærområdet.</p>
+        <p class="sub">Hundene våre skal være et ryddig og varmt samlingssted for hundeeiere. Her kan du lese fortellinger, se bilder, dele egne opplevelser og bli kjent med andre hundeglade. Samtidig skal appen gjøre det lettere å finne nyttige tjenester i nærområdet.</p>
         <div class="menu-grid">
           <button class="menu-btn box-stories" onclick="showPage('stories')">
             <h3>📸 Bilder / Fortellinger</h3>
@@ -174,7 +183,14 @@
       <div class="card">
         <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
         <h2>✂️ Frisører</h2>
-        <p class="sub">Denne siden viser registrerte hundefrisører.</p>
+        <div class="search-grid">
+          <input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()">
+          <select id="filterFavoritesGroomers" onchange="loadBusinesses()">
+            <option value="all">Alle</option>
+            <option value="fav">Kun favoritter</option>
+          </select>
+          <input id="mapSearchGroomers" placeholder="Sted for kart-link" oninput="loadBusinesses()">
+        </div>
         <div id="groomerList"></div>
       </div>
     </div>
@@ -183,7 +199,14 @@
       <div class="card">
         <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
         <h2>🐾 Zoo butikker</h2>
-        <p class="sub">Denne siden viser registrerte zoo butikker.</p>
+        <div class="search-grid">
+          <input id="searchShops" placeholder="Søk butikk eller sted" oninput="loadBusinesses()">
+          <select id="filterFavoritesShops" onchange="loadBusinesses()">
+            <option value="all">Alle</option>
+            <option value="fav">Kun favoritter</option>
+          </select>
+          <input id="mapSearchShops" placeholder="Sted for kart-link" oninput="loadBusinesses()">
+        </div>
         <div id="shopList"></div>
       </div>
     </div>
@@ -192,7 +215,14 @@
       <div class="card">
         <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
         <h2>🏥 Veterinærer</h2>
-        <p class="sub">Denne siden viser registrerte veterinærer.</p>
+        <div class="search-grid">
+          <input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()">
+          <select id="filterFavoritesVets" onchange="loadBusinesses()">
+            <option value="all">Alle</option>
+            <option value="fav">Kun favoritter</option>
+          </select>
+          <input id="mapSearchVets" placeholder="Sted for kart-link" oninput="loadBusinesses()">
+        </div>
         <div id="vetList"></div>
       </div>
     </div>
@@ -201,7 +231,7 @@
       <div class="card">
         <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
         <h2>🏪 Registrer bedrift</h2>
-        <div class="sub">Bedrifter lagres nå i Supabase og blir synlige for alle brukere.</div>
+        <div class="sub">Bedrifter lagres i Supabase og blir synlige for alle brukere.</div>
         <select id="bizType">
           <option>Frisør</option>
           <option>Zoo butikk</option>
@@ -264,6 +294,21 @@
       el.style.color = color || "black";
     }
 
+    function getFavoriteBusinesses() {
+      try { return JSON.parse(localStorage.getItem("hundene_vare_fav_businesses") || "[]"); }
+      catch(e) { return []; }
+    }
+    function saveFavoriteBusinesses(list) {
+      localStorage.setItem("hundene_vare_fav_businesses", JSON.stringify(list));
+    }
+    function toggleFavoriteBusiness(id) {
+      var favs = getFavoriteBusinesses();
+      var idx = favs.indexOf(id);
+      if (idx >= 0) favs.splice(idx, 1); else favs.push(id);
+      saveFavoriteBusinesses(favs);
+      loadBusinesses();
+    }
+
     async function uploadBusinessFile(file, folder) {
       if (!file) return "";
       var safeName = Date.now() + "-" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
@@ -277,10 +322,7 @@
     async function saveBusiness() {
       var auth = await supabase.auth.getUser();
       var user = auth && auth.data ? auth.data.user : null;
-      if (!user) {
-        setBizStatus("Du må logge inn først.", "crimson");
-        return;
-      }
+      if (!user) { setBizStatus("Du må logge inn først.", "crimson"); return; }
 
       var bizType = document.getElementById("bizType").value;
       var bizName = document.getElementById("bizName").value.trim();
@@ -314,10 +356,7 @@
           image_url: imageUrl
         }]);
 
-        if (insert.error) {
-          setBizStatus("Feil ved lagring: " + insert.error.message, "crimson");
-          return;
-        }
+        if (insert.error) { setBizStatus("Feil ved lagring: " + insert.error.message, "crimson"); return; }
 
         document.getElementById("bizName").value = "";
         document.getElementById("bizPlace").value = "";
@@ -333,23 +372,53 @@
       }
     }
 
-    function renderBizList(type, targetId, rows) {
+    function buildGoogleMapsLink(place, searchText) {
+      var q = searchText || place || "";
+      if (!q) return "";
+      return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
+    }
+
+    function renderBizList(type, targetId, rows, searchValue, favMode, mapSearch) {
+      var favs = getFavoriteBusinesses();
       var all = rows.filter(function(b){ return b.type === type; });
+
+      if (searchValue) {
+        var s = searchValue.toLowerCase();
+        all = all.filter(function(b){
+          return (b.name || "").toLowerCase().includes(s) || (b.place || "").toLowerCase().includes(s) || (b.description || "").toLowerCase().includes(s);
+        });
+      }
+
+      if (favMode === "fav") {
+        all = all.filter(function(b){ return favs.indexOf(b.id) >= 0; });
+      }
+
       var target = document.getElementById(targetId);
       if (!all.length) {
-        target.innerHTML = '<div class="biz-card">Ingen bedrifter registrert enda.</div>';
+        target.innerHTML = '<div class="biz-card">Ingen bedrifter funnet.</div>';
         return;
       }
+
       var html = '';
       for (var i=0;i<all.length;i++) {
         var b = all[i];
+        var isFav = favs.indexOf(b.id) >= 0;
+        var mapsLink = buildGoogleMapsLink(b.place, mapSearch || b.place);
+
         html += '<div class="biz-card">';
+        html += '<div class="biz-top">';
+        if (b.logo_url) html += '<img class="biz-logo" src="' + b.logo_url + '" alt="Logo">';
+        html += '<div class="biz-info">';
         html += '<h3>' + escapeHtml(b.name || "") + '</h3>';
         html += '<div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div>';
-        if (b.logo_url) html += '<img class="biz-logo" src="' + b.logo_url + '" alt="Logo">';
         html += '<p>' + escapeHtml(b.description || "") + '</p>';
         if (b.phone) html += '<div><strong>Telefon:</strong> ' + escapeHtml(b.phone) + '</div>';
-        if (b.website) html += '<div><strong>Nettside:</strong> ' + escapeHtml(b.website) + '</div>';
+        if (b.website) html += '<div><strong>Nettside:</strong> <a class="site-link" href="' + escapeAttr(b.website) + '" target="_blank" rel="noopener noreferrer">Besøk nettside</a></div>';
+        if (mapsLink) html += '<div><a class="map-link" href="' + mapsLink + '" target="_blank" rel="noopener noreferrer">📍 Åpne i Google Maps</a></div>';
+        html += '<div class="biz-actions">';
+        html += '<button class="alt" type="button" onclick="toggleFavoriteBusiness(\'' + b.id + '\')">' + (isFav ? '❤️ Favoritt lagret' : '🤍 Lagre favoritt') + '</button>';
+        html += '</div>';
+        html += '</div></div>';
         if (b.image_url) html += '<img src="' + b.image_url + '" alt="Bedriftsbilde">';
         html += '</div>';
       }
@@ -359,9 +428,31 @@
     async function loadBusinesses() {
       var result = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
       var rows = result.data || [];
-      renderBizList("Frisør", "groomerList", rows);
-      renderBizList("Zoo butikk", "shopList", rows);
-      renderBizList("Veterinær", "vetList", rows);
+
+      renderBizList(
+        "Frisør",
+        "groomerList",
+        rows,
+        document.getElementById("searchGroomers")?.value || "",
+        document.getElementById("filterFavoritesGroomers")?.value || "all",
+        document.getElementById("mapSearchGroomers")?.value || ""
+      );
+      renderBizList(
+        "Zoo butikk",
+        "shopList",
+        rows,
+        document.getElementById("searchShops")?.value || "",
+        document.getElementById("filterFavoritesShops")?.value || "all",
+        document.getElementById("mapSearchShops")?.value || ""
+      );
+      renderBizList(
+        "Veterinær",
+        "vetList",
+        rows,
+        document.getElementById("searchVets")?.value || "",
+        document.getElementById("filterFavoritesVets")?.value || "all",
+        document.getElementById("mapSearchVets")?.value || ""
+      );
     }
 
     function getLikes() {
@@ -540,6 +631,9 @@
     }
     function escapeHtml(str) {
       return String(str).replace(/[&<>"']/g, function (m) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]; });
+    }
+    function escapeAttr(str) {
+      return String(str).replace(/"/g, "&quot;");
     }
 
     loadStories();
