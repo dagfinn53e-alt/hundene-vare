@@ -8,7 +8,7 @@
   <style>
     :root{
       --blue:#2563eb; --blue-dark:#1d4ed8; --bg:#eef5ff; --card:#fff; --line:#dbeafe;
-      --text:#0f172a; --muted:#64748b; --ok:#166534; --bad:#b91c1c;
+      --text:#0f172a; --muted:#64748b;
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(180deg,#eaf3ff 0%,#f8fbff 100%);color:var(--text)}
@@ -16,69 +16,96 @@
     .hero{background:linear-gradient(135deg,var(--blue-dark),#3b82f6);color:#fff;padding:24px;border-radius:24px;box-shadow:0 10px 30px rgba(37,99,235,.18);margin-bottom:18px}
     .hero h1{margin:0 0 8px 0;font-size:34px}
     .hero p{margin:0;line-height:1.6}
-    .topstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
-    .stat{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:12px;text-align:center}
-    .stat .label{font-size:13px;opacity:.95}.stat .value{font-size:22px;font-weight:700;margin-top:4px}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+    .topbar .brand{font-weight:700}
+    .topbar .actions{display:flex;gap:10px;flex-wrap:wrap}
     .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 8px 24px rgba(15,23,42,.05);margin-bottom:16px}
-    h2{margin:0 0 12px 0;font-size:22px} h3{margin:0 0 8px 0}
-    .sub{color:var(--muted);margin-bottom:10px}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+    .menu-btn{display:block;text-align:left;background:#fff;color:var(--text);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 8px 24px rgba(15,23,42,.05);cursor:pointer}
+    .menu-btn h3{margin:0 0 8px 0;font-size:22px}
+    .menu-btn p{margin:0;color:var(--muted);line-height:1.5}
+    h2{margin:0 0 12px 0;font-size:24px}
+    .sub{color:var(--muted);margin-bottom:12px;line-height:1.6}
     input,textarea,select{width:100%;padding:12px 14px;margin:8px 0 12px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff}
     textarea{min-height:110px;resize:vertical}
     .btnrow{display:flex;gap:10px;flex-wrap:wrap}
     button{border:none;border-radius:12px;padding:12px 16px;background:var(--blue-dark);color:#fff;cursor:pointer;font-weight:700}
     button.alt{background:#fff;color:var(--blue-dark);border:1px solid #bfdbfe}
     #status{margin-top:12px;min-height:24px;font-weight:700}
-    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px 0}
-    .tabbtn{background:#fff;color:var(--blue-dark);border:1px solid #bfdbfe}
-    .tabbtn.active{background:var(--blue-dark);color:#fff}
-    .tab{display:none}.tab.active{display:block}
+    .hidden{display:none}
     .post{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:12px}
-    .post h3{font-size:21px}
+    .post h3{font-size:21px;margin:0 0 8px 0}
     .meta{color:var(--muted);font-size:14px;margin-bottom:10px}
     .post img{width:100%;border-radius:16px;margin-top:12px;display:block;max-height:520px;object-fit:cover}
     .likebar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
-    .likebtn,.smallbtn{background:#fff;color:var(--blue-dark);border:1px solid #bfdbfe;padding:9px 14px;border-radius:999px;font-weight:700;cursor:pointer}
+    .likebtn{background:#fff;color:var(--blue-dark);border:1px solid #bfdbfe;padding:9px 14px;border-radius:999px;font-weight:700;cursor:pointer}
     .comments{margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
     .comment{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:10px 12px;margin-top:8px}
     .commentmeta{font-size:12px;color:var(--muted);margin-bottom:4px}
-    .sharebox,.mapbox,.profilebox{background:#eff6ff;border:1px solid #bfdbfe;border-radius:18px;padding:14px;margin-top:16px}
+    .pillbox{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .pill{background:#eff6ff;border:1px solid #bfdbfe;border-radius:999px;padding:8px 12px;color:var(--blue-dark);font-weight:700}
+    .service-card{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:12px}
+    .service-card h3{margin:0 0 8px 0}
+    .profilebox,.sharebox{background:#eff6ff;border:1px solid #bfdbfe;border-radius:18px;padding:14px;margin-top:16px}
     .sharelink{word-break:break-all;color:var(--blue-dark);font-weight:700}
     .mini{font-size:13px;color:var(--muted)}
-    .profile-list .post{background:#fff}
-    @media (max-width:760px){.row{grid-template-columns:1fr}.topstats{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:28px}}
+    .topstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+    .stat{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:12px;text-align:center}
+    .stat .label{font-size:13px;opacity:.95}.stat .value{font-size:22px;font-weight:700;margin-top:4px}
+    @media (max-width:760px){.grid,.menu-grid,.topstats{grid-template-columns:1fr}.hero h1{font-size:28px}}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="hero">
-      <h1>Hundene våre 🐶</h1>
-      <p>Møteplassen for hundeglade på Vestlandet. Del turer, bilder og opplevelser med hunden din – og la andre bli inspirert av ekte hundeliv.</p>
-      <div class="topstats">
-        <div class="stat"><div class="label">Innlegg</div><div class="value" id="postCount">0</div></div>
-        <div class="stat"><div class="label">Medlemmer</div><div class="value" id="memberCount">0</div></div>
-        <div class="stat"><div class="label">Bilder</div><div class="value" id="imageCount">0</div></div>
-        <div class="stat"><div class="label">Kommentarer</div><div class="value" id="commentCount">0</div></div>
+    <div class="topbar">
+      <div class="brand">Hundene våre 🐶</div>
+      <div class="actions">
+        <button class="alt" type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button>
+        <button class="alt" type="button" onclick="showPage('home')">Forside</button>
       </div>
-      <div class="sharebox">
-        <div>Del appen med andre:</div>
-        <div class="sharelink" id="shareLink">https://dagfinn53e-alt.github.io/hundene-vare/</div>
-        <div class="btnrow" style="margin-top:10px">
-          <button type="button" onclick="shareApp()">Del link</button>
-          <button type="button" class="alt" onclick="copyLink()">Kopier link</button>
+    </div>
+
+    <div id="page-home">
+      <div class="hero">
+        <h1>Hundene våre</h1>
+        <p>En møteplass for hundeglade. Her kan du dele bilder og fortellinger, og finne informasjon om frisører, zoo butikker og veterinærer.</p>
+        <div class="topstats">
+          <div class="stat"><div class="label">Innlegg</div><div class="value" id="postCount">0</div></div>
+          <div class="stat"><div class="label">Medlemmer</div><div class="value" id="memberCount">0</div></div>
+          <div class="stat"><div class="label">Bilder</div><div class="value" id="imageCount">0</div></div>
+          <div class="stat"><div class="label">Kommentarer</div><div class="value" id="commentCount">0</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Hva appen tilbyr</h2>
+        <p class="sub">Hundene våre samler hundefolk og lokale tjenester på ett sted. Du kan lese fortellinger, dele bilder, og etter hvert finne nyttige tjenester for hunden din.</p>
+        <div class="menu-grid">
+          <button class="menu-btn" onclick="showPage('stories')">
+            <h3>📸 Bilder / Fortellinger</h3>
+            <p>Se innlegg, legg inn hunden din, del bilde og skriv små historier fra hverdagen, turer og utstillinger.</p>
+          </button>
+          <button class="menu-btn" onclick="showPage('groomers')">
+            <h3>✂️ Frisører</h3>
+            <p>Her skal hundefrisører kunne vise priser, behandlinger, bilder og kontaktinformasjon.</p>
+          </button>
+          <button class="menu-btn" onclick="showPage('shops')">
+            <h3>🐾 Zoo butikker</h3>
+            <p>Her kan dyrebutikker dele tilbud, nyheter og hundeprodukter for lokale hundeeiere.</p>
+          </button>
+          <button class="menu-btn" onclick="showPage('vets')">
+            <h3>🏥 Veterinærer</h3>
+            <p>Her skal veterinærer kunne ha informasjon om tjenester, åpningstider og kontakt.</p>
+          </button>
         </div>
       </div>
     </div>
 
-    <div class="tabs">
-      <button class="tabbtn active" onclick="openTab('feed', this)">Feed</button>
-      <button class="tabbtn" onclick="openTab('profile', this)">Min profil</button>
-      <button class="tabbtn" onclick="openTab('map', this)">Kart</button>
-    </div>
-
-    <div class="row">
+    <div id="page-auth" class="hidden">
       <div class="card">
-        <h2>Logg inn / lag konto</h2>
+        <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+        <h2>Opprett konto / Logg inn</h2>
         <div class="sub">Bruk e-post og passord.</div>
         <input id="email" type="email" placeholder="E-post">
         <input id="password" type="password" placeholder="Passord">
@@ -89,8 +116,11 @@
         </div>
         <div id="status">Klar.</div>
       </div>
+    </div>
 
+    <div id="page-stories" class="hidden">
       <div class="card">
+        <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
         <h2>Nytt innlegg</h2>
         <div class="sub">Legg inn hund, sted, tekst og bilde.</div>
         <input id="title" placeholder="Tittel">
@@ -108,33 +138,68 @@
           <button type="button" class="alt" onclick="loadStories()">Oppdater innlegg</button>
         </div>
       </div>
-    </div>
 
-    <div id="tab-feed" class="tab active">
-      <div class="card">
-        <h2>Innlegg</h2>
-        <div id="feed">Laster ...</div>
-      </div>
-    </div>
-
-    <div id="tab-profile" class="tab">
       <div class="card">
         <h2>Min profil</h2>
         <div class="profilebox">
           <div><strong>E-post:</strong> <span id="profileEmail">Ikke innlogget</span></div>
           <div><strong>Mine innlegg:</strong> <span id="profilePosts">0</span></div>
         </div>
-        <div id="myPosts" class="profile-list">Ingen innlegg enda.</div>
+        <div id="myPosts">Logg inn for å se dine innlegg.</div>
+      </div>
+
+      <div class="card">
+        <h2>Bilder / Fortellinger</h2>
+        <div id="feed">Laster ...</div>
       </div>
     </div>
 
-    <div id="tab-map" class="tab">
+    <div id="page-groomers" class="hidden">
       <div class="card">
-        <h2>Kart / steder</h2>
-        <div class="mapbox">
-          <p><strong>Tursteder fra innlegg:</strong></p>
-          <div id="placesList">Ingen steder enda.</div>
-          <p class="mini" style="margin-top:10px">Dette er første kartsteg: appen samler steder fra innleggene. Senere kan vi lage ekte kartvisning.</p>
+        <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+        <h2>✂️ Frisører</h2>
+        <p class="sub">Denne siden er klar for hundefrisører som vil være synlige i appen.</p>
+        <div class="service-card">
+          <h3>Hva frisører kan få</h3>
+          <p>Priser, behandlinger, bilder, åpningstider, kontaktinformasjon og etter hvert booking.</p>
+        </div>
+        <div class="pillbox"><div class="pill">Klipp</div><div class="pill">Vask</div><div class="pill">Negleklipp</div><div class="pill">Booking senere</div></div>
+      </div>
+    </div>
+
+    <div id="page-shops" class="hidden">
+      <div class="card">
+        <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+        <h2>🐾 Zoo butikker</h2>
+        <p class="sub">Denne siden er klar for butikker som vil vise produkter og tilbud.</p>
+        <div class="service-card">
+          <h3>Hva butikker kan få</h3>
+          <p>Tilbud, produkter, nyheter, kontaktinformasjon og synlighet mot hundeeiere i nærområdet.</p>
+        </div>
+        <div class="pillbox"><div class="pill">Tilbud</div><div class="pill">Fôr</div><div class="pill">Utstyr</div><div class="pill">Leker</div></div>
+      </div>
+    </div>
+
+    <div id="page-vets" class="hidden">
+      <div class="card">
+        <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+        <h2>🏥 Veterinærer</h2>
+        <p class="sub">Denne siden er klar for veterinærer som vil presentere tjenester og kontakt.</p>
+        <div class="service-card">
+          <h3>Hva veterinærer kan få</h3>
+          <p>Åpningstider, kontakt, tjenester, akuttinformasjon og trygg synlighet i appen.</p>
+        </div>
+        <div class="pillbox"><div class="pill">Sjekk</div><div class="pill">Vaksine</div><div class="pill">Råd</div><div class="pill">Kontakt</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sharebox">
+        <div>Del appen med andre:</div>
+        <div class="sharelink">https://dagfinn53e-alt.github.io/hundene-vare/</div>
+        <div class="btnrow" style="margin-top:10px">
+          <button type="button" onclick="shareApp()">Del link</button>
+          <button type="button" class="alt" onclick="copyLink()">Kopier link</button>
         </div>
       </div>
     </div>
@@ -146,29 +211,94 @@
       "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
     );
 
+    function showPage(name){
+      var pages = ['home','auth','stories','groomers','shops','vets'];
+      for (var i = 0; i < pages.length; i++) {
+        document.getElementById('page-' + pages[i]).classList.add('hidden');
+      }
+      document.getElementById('page-' + name).classList.remove('hidden');
+      if(name === 'stories'){ loadStories(); loadProfile(); }
+    }
+
     function setStatus(text, color) {
       var el = document.getElementById("status");
       el.textContent = text;
       el.style.color = color || "black";
     }
 
-    function openTab(name, btn){
-      document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
-      document.querySelectorAll('.tabbtn').forEach(function(b){b.classList.remove('active')});
-      document.getElementById('tab-' + name).classList.add('active');
-      if(btn) btn.classList.add('active');
+    function getLikes() {
+      try { return JSON.parse(localStorage.getItem("hundene_vare_likes_dbfree") || "{}"); }
+      catch(e) { return {}; }
+    }
+    function saveLikes(data) { localStorage.setItem("hundene_vare_likes_dbfree", JSON.stringify(data)); }
+    function getComments() {
+      try { return JSON.parse(localStorage.getItem("hundene_vare_comments_dbfree") || "{}"); }
+      catch(e) { return {}; }
+    }
+    function saveComments(data) { localStorage.setItem("hundene_vare_comments_dbfree", JSON.stringify(data)); }
+
+    async function signupUser() {
+      setStatus("Prøver å opprette konto ...", "blue");
+      var email = document.getElementById("email").value.trim();
+      var password = document.getElementById("password").value.trim();
+      if (!email || !password) { setStatus("Skriv inn e-post og passord.", "crimson"); return; }
+      var result = await supabase.auth.signUp({ email: email, password: password });
+      if (result.error) { setStatus("Feil: " + result.error.message, "crimson"); return; }
+      setStatus("Konto opprettet.", "green");
     }
 
-    function getLikes() {
-      try { return JSON.parse(localStorage.getItem("hundene_vare_likes") || "{}"); }
-      catch(e) { return {}; }
+    async function loginUser() {
+      setStatus("Prøver å logge inn ...", "blue");
+      var email = document.getElementById("email").value.trim();
+      var password = document.getElementById("password").value.trim();
+      if (!email || !password) { setStatus("Skriv inn e-post og passord.", "crimson"); return; }
+      var result = await supabase.auth.signInWithPassword({ email: email, password: password });
+      if (result.error) { setStatus("Feil: " + result.error.message, "crimson"); return; }
+      setStatus("Innlogget som " + email, "green");
+      loadProfile();
     }
-    function saveLikes(data) { localStorage.setItem("hundene_vare_likes", JSON.stringify(data)); }
-    function getComments() {
-      try { return JSON.parse(localStorage.getItem("hundene_vare_comments") || "{}"); }
-      catch(e) { return {}; }
+
+    async function saveStory() {
+      setStatus("Prøver å lagre ...", "blue");
+      var auth = await supabase.auth.getUser();
+      var user = auth && auth.data ? auth.data.user : null;
+      if (!user) { setStatus("Du må logge inn først.", "crimson"); return; }
+
+      var title = document.getElementById("title").value.trim();
+      var dog = document.getElementById("dog").value.trim() || "Ikke oppgitt";
+      var place = document.getElementById("place").value.trim() || "Ikke oppgitt";
+      var category = document.getElementById("category").value || "Hverdag";
+      var text = document.getElementById("text").value.trim();
+      var file = document.getElementById("imageFile").files[0];
+      if (!title || !text) { setStatus("Skriv inn tittel og tekst.", "crimson"); return; }
+
+      var imageUrl = "";
+      if (file) {
+        var safeName = Date.now() + "-" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+        var filePath = user.id + "/" + safeName;
+        var upload = await supabase.storage.from("story-images").upload(filePath, file);
+        if (upload.error) { setStatus("Feil ved bildeopplasting: " + upload.error.message, "crimson"); return; }
+        var pub = supabase.storage.from("story-images").getPublicUrl(filePath);
+        imageUrl = pub.data.publicUrl;
+      }
+
+      var insert = await supabase.from("stories").insert([{
+        user_id: user.id, author_email: user.email, title: title, dog: dog, place: place,
+        category: category, text: text, image_url: imageUrl
+      }]);
+
+      if (insert.error) { setStatus("Feil ved lagring: " + insert.error.message, "crimson"); return; }
+
+      document.getElementById("title").value = "";
+      document.getElementById("dog").value = "";
+      document.getElementById("place").value = "";
+      document.getElementById("text").value = "";
+      document.getElementById("imageFile").value = "";
+      setStatus("Lagret!", "green");
+      await loadStories();
+      await loadProfile();
+      showPage('stories');
     }
-    function saveComments(data) { localStorage.setItem("hundene_vare_comments", JSON.stringify(data)); }
 
     function likePost(id) {
       var likes = getLikes();
@@ -182,116 +312,12 @@
       if (!input) return;
       var text = input.value.trim();
       if (!text) return;
-
       var comments = getComments();
       if (!comments[id]) comments[id] = [];
-      comments[id].push({
-        text: text,
-        time: new Date().toLocaleString("no-NO")
-      });
+      comments[id].push({ text: text, time: new Date().toLocaleString("no-NO") });
       saveComments(comments);
       input.value = "";
       loadStories();
-    }
-
-    async function signupUser() {
-      setStatus("Prøver å opprette konto ...", "blue");
-      var email = document.getElementById("email").value.trim();
-      var password = document.getElementById("password").value.trim();
-
-      if (!email || !password) {
-        setStatus("Skriv inn e-post og passord.", "crimson");
-        return;
-      }
-
-      var result = await supabase.auth.signUp({ email: email, password: password });
-      if (result.error) {
-        setStatus("Feil: " + result.error.message, "crimson");
-        return;
-      }
-      setStatus("Konto opprettet.", "green");
-    }
-
-    async function loginUser() {
-      setStatus("Prøver å logge inn ...", "blue");
-      var email = document.getElementById("email").value.trim();
-      var password = document.getElementById("password").value.trim();
-
-      if (!email || !password) {
-        setStatus("Skriv inn e-post og passord.", "crimson");
-        return;
-      }
-
-      var result = await supabase.auth.signInWithPassword({ email: email, password: password });
-      if (result.error) {
-        setStatus("Feil: " + result.error.message, "crimson");
-        return;
-      }
-
-      setStatus("Innlogget som " + email, "green");
-      loadProfile();
-    }
-
-    async function saveStory() {
-      setStatus("Prøver å lagre ...", "blue");
-
-      var auth = await supabase.auth.getUser();
-      var user = auth && auth.data ? auth.data.user : null;
-
-      if (!user) {
-        setStatus("Du må logge inn først.", "crimson");
-        return;
-      }
-
-      var title = document.getElementById("title").value.trim();
-      var dog = document.getElementById("dog").value.trim() || "Ikke oppgitt";
-      var place = document.getElementById("place").value.trim() || "Ikke oppgitt";
-      var category = document.getElementById("category").value || "Hverdag";
-      var text = document.getElementById("text").value.trim();
-      var file = document.getElementById("imageFile").files[0];
-
-      if (!title || !text) {
-        setStatus("Skriv inn tittel og tekst.", "crimson");
-        return;
-      }
-
-      var imageUrl = "";
-      if (file) {
-        var safeName = Date.now() + "-" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-        var filePath = user.id + "/" + safeName;
-        var upload = await supabase.storage.from("story-images").upload(filePath, file);
-        if (upload.error) {
-          setStatus("Feil ved bildeopplasting: " + upload.error.message, "crimson");
-          return;
-        }
-        var pub = supabase.storage.from("story-images").getPublicUrl(filePath);
-        imageUrl = pub.data.publicUrl;
-      }
-
-      var insert = await supabase.from("stories").insert([{
-        user_id: user.id,
-        author_email: user.email,
-        title: title,
-        dog: dog,
-        place: place,
-        category: category,
-        text: text,
-        image_url: imageUrl
-      }]);
-
-      if (insert.error) {
-        setStatus("Feil ved lagring: " + insert.error.message, "crimson");
-        return;
-      }
-
-      document.getElementById("title").value = "";
-      document.getElementById("dog").value = "";
-      document.getElementById("place").value = "";
-      document.getElementById("text").value = "";
-      document.getElementById("imageFile").value = "";
-      setStatus("Lagret!", "green");
-      await loadStories();
-      await loadProfile();
     }
 
     async function loadStories() {
@@ -299,65 +325,43 @@
       feed.textContent = "Laster ...";
 
       var result = await supabase.from("stories").select("*").order("created_at", { ascending: false });
-      if (result.error) {
-        feed.textContent = "Feil ved henting: " + result.error.message;
-        return;
-      }
+      if (result.error) { feed.textContent = "Feil ved henting: " + result.error.message; return; }
 
       var data = result.data || [];
       document.getElementById("postCount").textContent = data.length;
-
-      var members = {};
-      var images = 0;
-      var places = {};
+      var members = {}, images = 0, comments = getComments(), commentTotal = 0, likes = getLikes();
       for (var i = 0; i < data.length; i++) {
         if (data[i].author_email) members[data[i].author_email] = true;
         if (data[i].image_url) images++;
-        if (data[i].place) places[data[i].place] = true;
       }
+      Object.keys(comments).forEach(function(k){ commentTotal += (comments[k] || []).length; });
       document.getElementById("memberCount").textContent = Object.keys(members).length;
       document.getElementById("imageCount").textContent = images;
-
-      var comments = getComments();
-      var commentTotal = 0;
-      Object.keys(comments).forEach(function(k){ commentTotal += (comments[k] || []).length; });
       document.getElementById("commentCount").textContent = commentTotal;
 
-      var placesHtml = Object.keys(places).length ? Object.keys(places).map(function(p){
-        return '<div>📍 ' + escapeHtml(p) + '</div>';
-      }).join('') : 'Ingen steder enda.';
-      document.getElementById("placesList").innerHTML = placesHtml;
+      if (!data.length) { feed.textContent = "Ingen innlegg enda."; return; }
 
-      if (!data.length) {
-        feed.textContent = "Ingen innlegg enda.";
-        return;
-      }
-
-      var likes = getLikes();
       var html = "";
       for (var i = 0; i < data.length; i++) {
         var post = data[i];
         var postId = post.id || ("post_" + i);
         var likeCount = likes[postId] || 0;
         var postComments = comments[postId] || [];
-
         html += '<div class="post">';
         html += '<h3>' + escapeHtml(post.title || "") + '</h3>';
         html += '<div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + ' · ' + escapeHtml(post.category || "") + '</div>';
         html += '<p>' + escapeHtml(post.text || "") + '</p>';
         if (post.image_url) html += '<img src="' + post.image_url + '" alt="Hundebilde">';
         html += '<div class="likebar">';
-        html += '<button class="likebtn" type="button" onclick="likePost(\'' + postId + '\')">❤️ Lik (' + likeCount + ')</button>';
+        html += '<button class="likebtn" type="button" onclick="likePost("' + postId + '")">❤️ Lik (' + likeCount + ')</button>';
         html += '<span class="mini">' + postComments.length + ' kommentar(er)</span>';
-        html += '</div>';
-        html += '<div class="comments">';
+        html += '</div><div class="comments">';
         for (var j = 0; j < postComments.length; j++) {
           html += '<div class="comment"><div class="commentmeta">' + escapeHtml(postComments[j].time || '') + '</div><div>' + escapeHtml(postComments[j].text || '') + '</div></div>';
         }
         html += '<input id="comment-' + postId + '" placeholder="Skriv en kommentar">';
         html += '<div class="btnrow"><button type="button" class="alt" onclick="addComment(\'' + postId + '\')">Legg til kommentar</button></div>';
-        html += '</div>';
-        html += '</div>';
+        html += '</div></div>';
       }
       feed.innerHTML = html;
     }
@@ -365,32 +369,21 @@
     async function loadProfile() {
       var auth = await supabase.auth.getUser();
       var user = auth && auth.data ? auth.data.user : null;
-
       if (!user) {
         document.getElementById("profileEmail").textContent = "Ikke innlogget";
         document.getElementById("profilePosts").textContent = "0";
         document.getElementById("myPosts").textContent = "Logg inn for å se dine innlegg.";
         return;
       }
-
       document.getElementById("profileEmail").textContent = user.email;
-
       var result = await supabase.from("stories").select("*").eq("author_email", user.email).order("created_at", { ascending: false });
       var data = result.data || [];
       document.getElementById("profilePosts").textContent = String(data.length);
-
-      if (!data.length) {
-        document.getElementById("myPosts").textContent = "Ingen egne innlegg enda.";
-        return;
-      }
-
+      if (!data.length) { document.getElementById("myPosts").textContent = "Ingen egne innlegg enda."; return; }
       var html = "";
       for (var i = 0; i < data.length; i++) {
         var post = data[i];
-        html += '<div class="post">';
-        html += '<h3>' + escapeHtml(post.title || "") + '</h3>';
-        html += '<div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + '</div>';
-        html += '<p>' + escapeHtml(post.text || "") + '</p>';
+        html += '<div class="post"><h3>' + escapeHtml(post.title || "") + '</h3><div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + '</div><p>' + escapeHtml(post.text || "") + '</p>';
         if (post.image_url) html += '<img src="' + post.image_url + '" alt="Hundebilde">';
         html += '</div>';
       }
@@ -399,26 +392,15 @@
 
     function shareApp() {
       var url = "https://dagfinn53e-alt.github.io/hundene-vare/";
-      if (navigator.share) {
-        navigator.share({ title: "Hundene våre", text: "Se appen Hundene våre 🐶", url: url }).catch(function(){});
-      } else {
-        copyLink();
-      }
+      if (navigator.share) { navigator.share({ title: "Hundene våre", text: "Se appen Hundene våre 🐶", url: url }).catch(function(){}); }
+      else { copyLink(); }
     }
-
     function copyLink() {
       var url = "https://dagfinn53e-alt.github.io/hundene-vare/";
-      navigator.clipboard.writeText(url).then(function() {
-        setStatus("Link kopiert.", "green");
-      }).catch(function() {
-        setStatus("Kunne ikke kopiere linken.", "crimson");
-      });
+      navigator.clipboard.writeText(url).then(function(){ setStatus("Link kopiert.", "green"); }).catch(function(){ setStatus("Kunne ikke kopiere linken.", "crimson"); });
     }
-
     function escapeHtml(str) {
-      return String(str).replace(/[&<>"']/g, function (m) {
-        return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m];
-      });
+      return String(str).replace(/[&<>"']/g, function (m) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]; });
     }
 
     loadStories();
