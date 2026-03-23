@@ -90,7 +90,6 @@
       <div class="card">
         <h2>Hva appen vil tilby</h2>
         <p class="sub">Hundene våre skal være et ryddig og varmt samlingssted for hundeeiere. Her kan du lese fortellinger, se bilder, dele egne opplevelser og bli kjent med andre hundeglade. Samtidig skal appen etter hvert gjøre det lettere å finne nyttige tjenester i nærområdet.</p>
-        <p class="sub">For frisører ønsker vi å vise behandlinger, priser og kontakt. For zoo butikker ønsker vi å vise tilbud, produkter og nyheter. For veterinærer ønsker vi å samle nyttig informasjon om tjenester, åpningstider og kontakt.</p>
         <div class="menu-grid">
           <button class="menu-btn box-stories" onclick="showPage('stories')">
             <h3>📸 Bilder / Fortellinger</h3>
@@ -98,23 +97,23 @@
           </button>
           <button class="menu-btn box-groomers" onclick="showPage('groomers')">
             <h3>✂️ Frisører</h3>
-            <p>Her skal hundefrisører kunne vise priser, behandlinger, bilder og kontaktinformasjon.</p>
+            <p>Registrerte hundefrisører med logo, bilde, kontakt og beskrivelse.</p>
           </button>
           <button class="menu-btn box-shops" onclick="showPage('shops')">
             <h3>🐾 Zoo butikker</h3>
-            <p>Her kan dyrebutikker dele tilbud, nyheter og hundeprodukter for lokale hundeeiere.</p>
+            <p>Registrerte zoo butikker med tilbud, produkter, logo og kontaktinformasjon.</p>
           </button>
           <button class="menu-btn box-vets" onclick="showPage('vets')">
             <h3>🏥 Veterinærer</h3>
-            <p>Her skal veterinærer kunne ha informasjon om tjenester, åpningstider og kontakt.</p>
+            <p>Registrerte veterinærer med tjenester, åpningstider, logo og kontakt.</p>
           </button>
           <button class="menu-btn box-business" onclick="showPage('business')">
             <h3>🏪 Registrer bedrift</h3>
-            <p>Frisører, butikker og veterinærer kan registrere seg, laste opp logo og bilder, og bli vist i appen.</p>
+            <p>Bedrifter kan registrere seg og vises for alle i appen.</p>
           </button>
         </div>
         <div class="footer-note">
-          Hundene våre skal gjøre det enklere å samle hundefolk, dele gode opplevelser og etter hvert knytte sammen hundeeiere med lokale tjenester på en oversiktlig måte.
+          Hundene våre skal gjøre det enklere å samle hundefolk, dele gode opplevelser og knytte sammen hundeeiere med lokale tjenester.
         </div>
       </div>
     </div>
@@ -202,7 +201,7 @@
       <div class="card">
         <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
         <h2>🏪 Registrer bedrift</h2>
-        <div class="sub">Her kan frisører, zoo butikker og veterinærer registrere seg med info, logo og bilder. Denne første versjonen lagrer bedrifter i nettleseren.</div>
+        <div class="sub">Bedrifter lagres nå i Supabase og blir synlige for alle brukere.</div>
         <select id="bizType">
           <option>Frisør</option>
           <option>Zoo butikk</option>
@@ -265,23 +264,24 @@
       el.style.color = color || "black";
     }
 
-    function getBusinesses() {
-      try { return JSON.parse(localStorage.getItem("hundene_vare_businesses") || "[]"); }
-      catch(e) { return []; }
-    }
-    function saveBusinesses(data) {
-      localStorage.setItem("hundene_vare_businesses", JSON.stringify(data));
-    }
-    function fileToDataUrl(file) {
-      return new Promise(function(resolve){
-        if(!file){ resolve(""); return; }
-        var reader = new FileReader();
-        reader.onload = function(e){ resolve(e.target.result || ""); };
-        reader.readAsDataURL(file);
-      });
+    async function uploadBusinessFile(file, folder) {
+      if (!file) return "";
+      var safeName = Date.now() + "-" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      var filePath = "businesses/" + folder + "/" + safeName;
+      var upload = await supabase.storage.from("story-images").upload(filePath, file);
+      if (upload.error) throw new Error(upload.error.message);
+      var pub = supabase.storage.from("story-images").getPublicUrl(filePath);
+      return pub.data.publicUrl || "";
     }
 
     async function saveBusiness() {
+      var auth = await supabase.auth.getUser();
+      var user = auth && auth.data ? auth.data.user : null;
+      if (!user) {
+        setBizStatus("Du må logge inn først.", "crimson");
+        return;
+      }
+
       var bizType = document.getElementById("bizType").value;
       var bizName = document.getElementById("bizName").value.trim();
       var bizPlace = document.getElementById("bizPlace").value.trim();
@@ -296,39 +296,48 @@
         return;
       }
 
-      var logoUrl = await fileToDataUrl(logoFile);
-      var imageUrl = await fileToDataUrl(imageFile);
+      try {
+        setBizStatus("Lagrer bedrift ...", "blue");
+        var logoUrl = await uploadBusinessFile(logoFile, "logos");
+        var imageUrl = await uploadBusinessFile(imageFile, "images");
 
-      var list = getBusinesses();
-      list.unshift({
-        id: Date.now(),
-        type: bizType,
-        name: bizName,
-        place: bizPlace,
-        phone: bizPhone,
-        website: bizWebsite,
-        text: bizText,
-        logoUrl: logoUrl,
-        imageUrl: imageUrl
-      });
-      saveBusinesses(list);
+        var insert = await supabase.from("businesses").insert([{
+          user_id: user.id,
+          author_email: user.email,
+          type: bizType,
+          name: bizName,
+          place: bizPlace,
+          phone: bizPhone,
+          website: bizWebsite,
+          description: bizText,
+          logo_url: logoUrl,
+          image_url: imageUrl
+        }]);
 
-      document.getElementById("bizName").value = "";
-      document.getElementById("bizPlace").value = "";
-      document.getElementById("bizPhone").value = "";
-      document.getElementById("bizWebsite").value = "";
-      document.getElementById("bizText").value = "";
-      document.getElementById("bizLogo").value = "";
-      document.getElementById("bizImage").value = "";
-      setBizStatus("Bedrift lagret.", "green");
-      loadBusinesses();
+        if (insert.error) {
+          setBizStatus("Feil ved lagring: " + insert.error.message, "crimson");
+          return;
+        }
+
+        document.getElementById("bizName").value = "";
+        document.getElementById("bizPlace").value = "";
+        document.getElementById("bizPhone").value = "";
+        document.getElementById("bizWebsite").value = "";
+        document.getElementById("bizText").value = "";
+        document.getElementById("bizLogo").value = "";
+        document.getElementById("bizImage").value = "";
+        setBizStatus("Bedrift lagret.", "green");
+        loadBusinesses();
+      } catch (e) {
+        setBizStatus("Feil ved opplasting: " + e.message, "crimson");
+      }
     }
 
-    function renderBizList(type, targetId) {
-      var all = getBusinesses().filter(function(b){ return b.type === type; });
+    function renderBizList(type, targetId, rows) {
+      var all = rows.filter(function(b){ return b.type === type; });
       var target = document.getElementById(targetId);
       if (!all.length) {
-        target.innerHTML = '<div class="service-card">Ingen bedrifter registrert enda.</div>';
+        target.innerHTML = '<div class="biz-card">Ingen bedrifter registrert enda.</div>';
         return;
       }
       var html = '';
@@ -337,20 +346,22 @@
         html += '<div class="biz-card">';
         html += '<h3>' + escapeHtml(b.name || "") + '</h3>';
         html += '<div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div>';
-        if (b.logoUrl) html += '<img class="biz-logo" src="' + b.logoUrl + '" alt="Logo">';
-        html += '<p>' + escapeHtml(b.text || "") + '</p>';
+        if (b.logo_url) html += '<img class="biz-logo" src="' + b.logo_url + '" alt="Logo">';
+        html += '<p>' + escapeHtml(b.description || "") + '</p>';
         if (b.phone) html += '<div><strong>Telefon:</strong> ' + escapeHtml(b.phone) + '</div>';
         if (b.website) html += '<div><strong>Nettside:</strong> ' + escapeHtml(b.website) + '</div>';
-        if (b.imageUrl) html += '<img src="' + b.imageUrl + '" alt="Bedriftsbilde">';
+        if (b.image_url) html += '<img src="' + b.image_url + '" alt="Bedriftsbilde">';
         html += '</div>';
       }
       target.innerHTML = html;
     }
 
-    function loadBusinesses() {
-      renderBizList("Frisør", "groomerList");
-      renderBizList("Zoo butikk", "shopList");
-      renderBizList("Veterinær", "vetList");
+    async function loadBusinesses() {
+      var result = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
+      var rows = result.data || [];
+      renderBizList("Frisør", "groomerList", rows);
+      renderBizList("Zoo butikk", "shopList", rows);
+      renderBizList("Veterinær", "vetList", rows);
     }
 
     function getLikes() {
