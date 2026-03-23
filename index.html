@@ -15,6 +15,7 @@
       --sky:#eff6ff; --sky-line:#93c5fd; --sky-text:#1d4ed8;
       --orange:#fff7ed; --orange-line:#fdba74; --orange-text:#9a3412;
       --gray:#f8fafc; --gray-line:#cbd5e1;
+      --yellow:#fffbeb; --yellow-line:#fcd34d; --yellow-text:#92400e;
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(180deg,#eaf3ff 0%,#f8fbff 100%);color:var(--text)}
@@ -46,6 +47,7 @@
     button.alt{background:#dbeafe;color:var(--blue-dark);border:1px solid #93c5fd}
     button.warn{background:#fff7ed;color:#9a3412;border:1px solid #fdba74}
     button.danger{background:#b91c1c;color:#fff}
+    button.ok{background:#166534;color:#fff}
     button.small{padding:7px 10px;border-radius:999px}
     #status,#bizStatus,#adminStatus{margin-top:12px;min-height:24px;font-weight:700}
     .hidden{display:none}
@@ -77,6 +79,9 @@
     .admin-grid{grid-template-columns:1fr 1fr}
     .image-actions{position:absolute;top:8px;right:8px}
     .image-actions button{padding:6px 10px;border-radius:999px}
+    .badge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700}
+    .approved{background:#dcfce7;color:#166534;border:1px solid #86efac}
+    .pending{background:var(--yellow);color:var(--yellow-text);border:1px solid var(--yellow-line)}
     @media (max-width:760px){
       .menu-grid,.topstats,.search-grid,.admin-grid,.gallery{grid-template-columns:1fr}
       .hero h1{font-size:28px}
@@ -110,11 +115,11 @@
       <p class="sub">Hundene våre skal være et ryddig og varmt samlingssted for hundeeiere. Her kan du lese fortellinger, se bilder, dele egne opplevelser og bli kjent med andre hundeglade. Samtidig skal appen gjøre det lettere å finne nyttige tjenester i nærområdet.</p>
       <div class="menu-grid">
         <button class="menu-btn box-stories" onclick="showPage('stories')"><h3>📸 Bilder / Fortellinger</h3><p>Se innlegg, legg inn hunden din, del bilder og skriv små historier fra hverdagen, turer og utstillinger.</p></button>
-        <button class="menu-btn box-groomers" onclick="showPage('groomers')"><h3>✂️ Frisører</h3><p>Registrerte hundefrisører med logo, bilde, kontakt og beskrivelse.</p></button>
-        <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3><p>Registrerte zoo butikker med tilbud, produkter, logo og kontaktinformasjon.</p></button>
-        <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3><p>Registrerte veterinærer med tjenester, åpningstider, logo og kontakt.</p></button>
-        <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Registrer / rediger bedrift</h3><p>Bedrifter kan registrere seg, redigere info, laste opp flere bilder og vises for alle i appen.</p></button>
-        <button class="menu-btn box-admin" onclick="showPage('admin')"><h3>🛠️ Admin</h3><p>Her kan du som eier se og slette innlegg og bedrifter.</p></button>
+        <button class="menu-btn box-groomers" onclick="showPage('groomers')"><h3>✂️ Frisører</h3><p>Godkjente hundefrisører med logo, bilde, kontakt og beskrivelse.</p></button>
+        <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3><p>Godkjente zoo butikker med tilbud, produkter, logo og kontaktinformasjon.</p></button>
+        <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3><p>Godkjente veterinærer med tjenester, åpningstider, logo og kontakt.</p></button>
+        <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Registrer / rediger bedrift</h3><p>Bedrifter sendes inn og venter på godkjenning før de vises offentlig.</p></button>
+        <button class="menu-btn box-admin" onclick="showPage('admin')"><h3>🛠️ Admin</h3><p>Godkjenn, avvis og slett bedrifter, og se alle innlegg.</p></button>
       </div>
       <div class="footer-note">Hundene våre skal gjøre det enklere å samle hundefolk, dele gode opplevelser og knytte sammen hundeeiere med lokale tjenester.</div>
     </div>
@@ -161,10 +166,8 @@
         <div><strong>Mine innlegg:</strong> <span id="profilePosts">0</span></div>
         <div><strong>Mine bedrifter:</strong> <span id="profileBusinesses">0</span></div>
       </div>
-
       <h3>Mine bedrifter</h3>
       <div id="myBusinesses">Logg inn for å se dine bedrifter.</div>
-
       <h3 style="margin-top:18px;">Mine innlegg</h3>
       <div id="myPosts">Logg inn for å se dine innlegg.</div>
     </div>
@@ -183,7 +186,7 @@
     <div class="card">
       <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
       <h2>🏪 Registrer / rediger bedrift</h2>
-      <div class="sub">Velg en eksisterende bedrift for å redigere, eller fyll inn ny informasjon for å lage en ny.</div>
+      <div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div>
       <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
       <select id="bizType"><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option></select>
       <input id="bizName" placeholder="Navn på bedrift">
@@ -210,7 +213,7 @@
     <div class="card">
       <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
       <h2>🛠️ Admin</h2>
-      <div class="sub">Her kan du se og slette innlegg og bedrifter. Denne siden er kun for admin-bruker.</div>
+      <div class="sub">Her kan du godkjenne, avvise og slette bedrifter, og se alle innlegg.</div>
       <div id="adminStatus">Klar.</div>
     </div>
     <div class="admin-grid">
@@ -342,7 +345,7 @@
     if (!bizName || !bizPlace || !bizText) { setBizStatus("Skriv inn navn, sted og beskrivelse.", "crimson"); return; }
 
     try {
-      setBizStatus(editId ? "Oppdaterer bedrift ..." : "Lagrer bedrift ...", "blue");
+      setBizStatus(editId ? "Sender oppdatering til godkjenning ..." : "Sender bedrift til godkjenning ...", "blue");
       var existing = null;
       if (editId) {
         var current = await supabase.from("businesses").select("*").eq("id", editId).maybeSingle();
@@ -352,24 +355,24 @@
       var logoUrl = existing && existing.logo_url ? existing.logo_url : "";
       var imageUrl = existing && existing.image_url ? existing.image_url : "";
       var galleryUrls = existing && Array.isArray(existing.gallery_urls) ? existing.gallery_urls : [];
-
       if (logoFile) logoUrl = await uploadFile(logoFile, "businesses/logos");
       if (imageFile) imageUrl = await uploadFile(imageFile, "businesses/images");
       if (galleryFiles.length) galleryUrls = galleryUrls.concat(await uploadMultiple(galleryFiles, "businesses/gallery")).slice(0,5);
 
       var payload = {
         user_id: user.id, author_email: user.email, type: bizType, name: bizName, place: bizPlace,
-        phone: bizPhone, website: bizWebsite, description: bizText, logo_url: logoUrl, image_url: imageUrl, gallery_urls: galleryUrls
+        phone: bizPhone, website: bizWebsite, description: bizText, logo_url: logoUrl, image_url: imageUrl,
+        gallery_urls: galleryUrls, approved: false
       };
 
       if (editId) {
         var update = await supabase.from("businesses").update(payload).eq("id", editId).eq("author_email", user.email);
         if (update.error) { setBizStatus("Feil ved oppdatering: " + update.error.message, "crimson"); return; }
-        setBizStatus("Bedrift oppdatert.", "green");
+        setBizStatus("Bedrift oppdatert og sendt til ny godkjenning.", "green");
       } else {
         var insert = await supabase.from("businesses").insert([payload]);
         if (insert.error) { setBizStatus("Feil ved lagring: " + insert.error.message, "crimson"); return; }
-        setBizStatus("Bedrift lagret.", "green");
+        setBizStatus("Bedrift sendt til godkjenning.", "green");
       }
 
       await loadBusinesses();
@@ -389,7 +392,7 @@
     if (!b || (b.author_email !== user.email && user.email !== ADMIN_EMAIL)) return;
     var gallery = Array.isArray(b.gallery_urls) ? b.gallery_urls.slice() : [];
     gallery.splice(index, 1);
-    var update = await supabase.from("businesses").update({ gallery_urls: gallery }).eq("id", id);
+    var update = await supabase.from("businesses").update({ gallery_urls: gallery, approved: false }).eq("id", id);
     if (!update.error) { loadBusinesses(); loadProfile(); }
   }
 
@@ -421,7 +424,7 @@
 
   async function renderBizList(type, targetId, rows, searchValue, favMode, mapSearch) {
     var favs = getFavoriteBusinesses();
-    var all = rows.filter(function(b){ return b.type === type; });
+    var all = rows.filter(function(b){ return b.type === type && b.approved === true; });
     if (searchValue) {
       var s = searchValue.toLowerCase();
       all = all.filter(function(b){ return (b.name || "").toLowerCase().includes(s) || (b.place || "").toLowerCase().includes(s) || (b.description || "").toLowerCase().includes(s); });
@@ -432,14 +435,14 @@
     var user = auth && auth.data ? auth.data.user : null;
 
     var target = document.getElementById(targetId);
-    if (!all.length) { target.innerHTML = '<div class="biz-card">Ingen bedrifter funnet.</div>'; return; }
+    if (!all.length) { target.innerHTML = '<div class="biz-card">Ingen godkjente bedrifter funnet.</div>'; return; }
 
     var html = '';
     for (var i=0;i<all.length;i++) {
       var b = all[i], isFav = favs.indexOf(b.id) >= 0, mapsLink = buildGoogleMapsLink(b.place, mapSearch || b.place);
       html += '<div class="biz-card"><div class="biz-top">';
       if (b.logo_url) html += '<img class="biz-logo" src="' + b.logo_url + '" alt="Logo">';
-      html += '<div class="biz-info"><h3>' + escapeHtml(b.name || "") + '</h3>';
+      html += '<div class="biz-info"><h3>' + escapeHtml(b.name || "") + ' <span class="badge approved">Godkjent</span></h3>';
       html += '<div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div>';
       html += '<p>' + escapeHtml(b.description || "") + '</p>';
       if (b.phone) html += '<div><strong>Telefon:</strong> ' + escapeHtml(b.phone) + '</div>';
@@ -472,6 +475,20 @@
     await renderBizList("Veterinær","vetList",rows,document.getElementById("searchVets")?.value || "",document.getElementById("filterFavoritesVets")?.value || "all",document.getElementById("mapSearchVets")?.value || "");
   }
 
+  async function approveBusiness(id) {
+    var update = await supabase.from("businesses").update({ approved: true }).eq("id", id);
+    if (update.error) { setAdminStatus("Feil ved godkjenning: " + update.error.message, "crimson"); return; }
+    setAdminStatus("Bedrift godkjent.", "green");
+    loadAdmin(); loadBusinesses(); loadProfile();
+  }
+
+  async function rejectBusiness(id) {
+    var update = await supabase.from("businesses").update({ approved: false }).eq("id", id);
+    if (update.error) { setAdminStatus("Feil ved avvisning: " + update.error.message, "crimson"); return; }
+    setAdminStatus("Bedrift satt som ventende.", "green");
+    loadAdmin(); loadBusinesses(); loadProfile();
+  }
+
   async function loadAdmin() {
     var auth = await supabase.auth.getUser();
     var user = auth && auth.data ? auth.data.user : null;
@@ -497,7 +514,12 @@
     var bhtml = businesses.length ? "" : "Ingen bedrifter.";
     for (var j=0;j<businesses.length;j++) {
       var b = businesses[j];
-      bhtml += '<div class="admin-item"><h3>' + escapeHtml(b.name || "") + '</h3><div class="meta">' + escapeHtml(b.author_email || "") + ' · ' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div><div class="btnrow"><button class="danger" type="button" onclick="deleteBusiness(\'' + b.id + '\')">Slett bedrift</button></div></div>';
+      bhtml += '<div class="admin-item"><h3>' + escapeHtml(b.name || "") + ' ' + (b.approved ? '<span class="badge approved">Godkjent</span>' : '<span class="badge pending">Venter</span>') + '</h3>';
+      bhtml += '<div class="meta">' + escapeHtml(b.author_email || "") + ' · ' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div>';
+      bhtml += '<div class="btnrow">';
+      if (!b.approved) bhtml += '<button class="ok" type="button" onclick="approveBusiness(\'' + b.id + '\')">Godkjenn</button>';
+      if (b.approved) bhtml += '<button class="warn" type="button" onclick="rejectBusiness(\'' + b.id + '\')">Sett ventende</button>';
+      bhtml += '<button class="danger" type="button" onclick="deleteBusiness(\'' + b.id + '\')">Slett bedrift</button></div></div>';
     }
     document.getElementById("adminBusinesses").innerHTML = bhtml;
   }
@@ -506,7 +528,7 @@
     if (!confirm("Slette dette innlegget?")) return;
     var del = await supabase.from("stories").delete().eq("id", id);
     if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
-    setAdminStatus("Innlegg slettet.", "green"); loadAdmin(); loadStories();
+    setAdminStatus("Innlegg slettet.", "green"); loadAdmin(); loadStories(); loadProfile();
   }
 
   async function deleteBusiness(id) {
@@ -681,7 +703,7 @@
         var b = businesses[j];
         bhtml += '<div class="biz-card"><div class="biz-top">';
         if (b.logo_url) bhtml += '<img class="biz-logo" src="' + b.logo_url + '" alt="Logo">';
-        bhtml += '<div class="biz-info"><h3>' + escapeHtml(b.name || "") + '</h3><div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div><p>' + escapeHtml(b.description || "") + '</p>';
+        bhtml += '<div class="biz-info"><h3>' + escapeHtml(b.name || "") + ' ' + (b.approved ? '<span class="badge approved">Godkjent</span>' : '<span class="badge pending">Venter</span>') + '</h3><div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div><p>' + escapeHtml(b.description || "") + '</p>';
         bhtml += '<div class="biz-actions"><button class="alt small" type="button" onclick="openBusinessForEdit(\'' + b.id + '\')">Rediger bedrift</button></div>';
         bhtml += '</div></div>';
         if (b.image_url) bhtml += '<div class="biz-main"><img src="' + b.image_url + '" alt="Bedriftsbilde"></div>';
@@ -703,50 +725,6 @@
     await loadBusinessOptions();
     document.getElementById("editBusinessSelect").value = id;
     loadBusinessIntoForm();
-  }
-
-  async function loadAdmin() {
-    var auth = await supabase.auth.getUser();
-    var user = auth && auth.data ? auth.data.user : null;
-    if (!user || user.email !== ADMIN_EMAIL) {
-      document.getElementById("adminStories").innerHTML = "Du må være innlogget som admin.";
-      document.getElementById("adminBusinesses").innerHTML = "Du må være innlogget som admin.";
-      setAdminStatus("Admin-tilgang mangler.", "crimson");
-      return;
-    }
-
-    setAdminStatus("Admin innlogget som " + user.email, "green");
-    var storiesRes = await supabase.from("stories").select("*").order("created_at", { ascending: false });
-    var businessesRes = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
-    var stories = storiesRes.data || [], businesses = businessesRes.data || [];
-
-    var shtml = stories.length ? "" : "Ingen innlegg.";
-    for (var i=0;i<stories.length;i++) {
-      var s = stories[i];
-      shtml += '<div class="admin-item"><h3>' + escapeHtml(s.title || "") + '</h3><div class="meta">' + escapeHtml(s.author_email || "") + ' · ' + escapeHtml(s.place || "") + '</div><div class="btnrow"><button class="danger" type="button" onclick="deleteStory(\'' + s.id + '\')">Slett innlegg</button></div></div>';
-    }
-    document.getElementById("adminStories").innerHTML = shtml;
-
-    var bhtml = businesses.length ? "" : "Ingen bedrifter.";
-    for (var j=0;j<businesses.length;j++) {
-      var b = businesses[j];
-      bhtml += '<div class="admin-item"><h3>' + escapeHtml(b.name || "") + '</h3><div class="meta">' + escapeHtml(b.author_email || "") + ' · ' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div><div class="btnrow"><button class="danger" type="button" onclick="deleteBusiness(\'' + b.id + '\')">Slett bedrift</button></div></div>';
-    }
-    document.getElementById("adminBusinesses").innerHTML = bhtml;
-  }
-
-  async function deleteStory(id) {
-    if (!confirm("Slette dette innlegget?")) return;
-    var del = await supabase.from("stories").delete().eq("id", id);
-    if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
-    setAdminStatus("Innlegg slettet.", "green"); loadAdmin(); loadStories(); loadProfile();
-  }
-
-  async function deleteBusiness(id) {
-    if (!confirm("Slette denne bedriften?")) return;
-    var del = await supabase.from("businesses").delete().eq("id", id);
-    if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
-    setAdminStatus("Bedrift slettet.", "green"); loadAdmin(); loadBusinesses(); loadBusinessOptions(); loadProfile();
   }
 
   function shareApp() {
