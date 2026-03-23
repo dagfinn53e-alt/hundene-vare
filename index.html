@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hundene våre</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -46,7 +46,7 @@
     button.alt{background:#dbeafe;color:var(--blue-dark);border:1px solid #93c5fd}
     button.warn{background:#fff7ed;color:#9a3412;border:1px solid #fdba74}
     button.danger{background:#b91c1c;color:#fff}
-    button.small{padding:8px 12px;border-radius:999px}
+    button.small{padding:7px 10px;border-radius:999px}
     #status,#bizStatus,#adminStatus{margin-top:12px;min-height:24px;font-weight:700}
     .hidden{display:none}
     .post,.biz-card,.admin-item{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:12px}
@@ -54,7 +54,7 @@
     .meta{color:var(--muted);font-size:14px;margin-bottom:10px}
     .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
     .gallery-item{position:relative}
-    .gallery img,.biz-gallery img,.biz-main img,.post-main img{width:100%;border-radius:16px;display:block;max-height:260px;object-fit:cover}
+    .gallery img,.biz-main img{width:100%;border-radius:16px;display:block;max-height:260px;object-fit:cover}
     .biz-logo{max-width:140px!important;max-height:140px!important;object-fit:contain!important;background:#fff;padding:10px;border:1px solid #e2e8f0}
     .biz-top{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
     .biz-info{flex:1;min-width:240px}
@@ -84,605 +84,687 @@
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand">Hundene våre 🐶</div>
-      <div class="actions">
-        <button type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button>
-        <button type="button" onclick="showPage('home')">Forside</button>
-      </div>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">Hundene våre 🐶</div>
+    <div class="actions">
+      <button type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button>
+      <button type="button" onclick="showPage('home')">Forside</button>
     </div>
+  </div>
 
-    <div id="page-home">
-      <div class="hero">
-        <h1>Hundene våre</h1>
-        <p>En møteplass for hundeglade på Vestlandet. Her kan du dele bilder og fortellinger, og finne informasjon om frisører, zoo butikker og veterinærer.</p>
-        <div class="topstats">
-          <div class="stat"><div class="label">Innlegg</div><div class="value" id="postCount">0</div></div>
-          <div class="stat"><div class="label">Medlemmer</div><div class="value" id="memberCount">0</div></div>
-          <div class="stat"><div class="label">Bilder</div><div class="value" id="imageCount">0</div></div>
-          <div class="stat"><div class="label">Kommentarer</div><div class="value" id="commentCount">0</div></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Hva appen vil tilby</h2>
-        <p class="sub">Hundene våre skal være et ryddig og varmt samlingssted for hundeeiere. Her kan du lese fortellinger, se bilder, dele egne opplevelser og bli kjent med andre hundeglade. Samtidig skal appen gjøre det lettere å finne nyttige tjenester i nærområdet.</p>
-        <div class="menu-grid">
-          <button class="menu-btn box-stories" onclick="showPage('stories')"><h3>📸 Bilder / Fortellinger</h3><p>Se innlegg, legg inn hunden din, del bilder og skriv små historier fra hverdagen, turer og utstillinger.</p></button>
-          <button class="menu-btn box-groomers" onclick="showPage('groomers')"><h3>✂️ Frisører</h3><p>Registrerte hundefrisører med logo, bilde, kontakt og beskrivelse.</p></button>
-          <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3><p>Registrerte zoo butikker med tilbud, produkter, logo og kontaktinformasjon.</p></button>
-          <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3><p>Registrerte veterinærer med tjenester, åpningstider, logo og kontakt.</p></button>
-          <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Registrer / rediger bedrift</h3><p>Bedrifter kan registrere seg, redigere info, laste opp flere bilder og vises for alle i appen.</p></button>
-          <button class="menu-btn box-admin" onclick="showPage('admin')"><h3>🛠️ Admin</h3><p>Her kan du som eier se og slette innlegg og bedrifter.</p></button>
-        </div>
-        <div class="footer-note">Hundene våre skal gjøre det enklere å samle hundefolk, dele gode opplevelser og knytte sammen hundeeiere med lokale tjenester.</div>
-      </div>
-    </div>
-
-    <div id="page-auth" class="hidden">
-      <div class="card">
-        <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-        <h2>Opprett konto / Logg inn</h2>
-        <div class="sub">Bruk e-post og passord.</div>
-        <input id="email" type="email" placeholder="E-post">
-        <input id="password" type="password" placeholder="Passord">
-        <div class="btnrow">
-          <button type="button" onclick="signupUser()">Lag konto</button>
-          <button type="button" onclick="loginUser()">Logg inn</button>
-          <button type="button" class="alt" onclick="loadProfile()">Oppdater profil</button>
-        </div>
-        <div id="status">Klar.</div>
-      </div>
-    </div>
-
-    <div id="page-stories" class="hidden">
-      <div class="card">
-        <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-        <h2>Nytt innlegg</h2>
-        <div class="sub">Legg inn hund, sted, tekst og opptil 5 bilder.</div>
-        <input id="title" placeholder="Tittel">
-        <input id="dog" placeholder="Hundens navn">
-        <input id="place" placeholder="Sted">
-        <select id="category"><option>Hverdag</option><option>Tur</option><option>Utstilling</option></select>
-        <textarea id="text" placeholder="Skriv om hunden..."></textarea>
-        <label>Velg opptil 5 bilder</label>
-        <input id="imageFiles" type="file" accept="image/*" multiple>
-        <div class="btnrow">
-          <button type="button" onclick="saveStory()">Lagre innlegg</button>
-          <button type="button" class="alt" onclick="loadStories()">Oppdater innlegg</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Min profil</h2>
-        <div class="profilebox">
-          <div><strong>E-post:</strong> <span id="profileEmail">Ikke innlogget</span></div>
-          <div><strong>Mine innlegg:</strong> <span id="profilePosts">0</span></div>
-        </div>
-        <div id="myPosts">Logg inn for å se dine innlegg.</div>
-      </div>
-
-      <div class="card">
-        <h2>Bilder / Fortellinger</h2>
-        <div id="feed">Laster ...</div>
-      </div>
-    </div>
-
-    <div id="page-groomers" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>✂️ Frisører</h2><div class="search-grid"><input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()"><select id="filterFavoritesGroomers" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchGroomers" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="groomerList"></div></div></div>
-    <div id="page-shops" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>🐾 Zoo butikker</h2><div class="search-grid"><input id="searchShops" placeholder="Søk butikk eller sted" oninput="loadBusinesses()"><select id="filterFavoritesShops" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchShops" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="shopList"></div></div></div>
-    <div id="page-vets" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>🏥 Veterinærer</h2><div class="search-grid"><input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()"><select id="filterFavoritesVets" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchVets" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="vetList"></div></div></div>
-
-    <div id="page-business" class="hidden">
-      <div class="card">
-        <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-        <h2>🏪 Registrer / rediger bedrift</h2>
-        <div class="sub">Velg en eksisterende bedrift for å redigere, eller fyll inn ny informasjon for å lage en ny.</div>
-        <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
-        <select id="bizType"><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option></select>
-        <input id="bizName" placeholder="Navn på bedrift">
-        <input id="bizPlace" placeholder="Sted">
-        <input id="bizPhone" placeholder="Telefon">
-        <input id="bizWebsite" placeholder="Nettside eller Facebook-link">
-        <textarea id="bizText" placeholder="Beskrivelse av bedriften"></textarea>
-        <label>Last opp ny logo (valgfritt ved redigering)</label>
-        <input id="bizLogo" type="file" accept="image/*">
-        <label>Last opp nytt hovedbilde (valgfritt ved redigering)</label>
-        <input id="bizImage" type="file" accept="image/*">
-        <label>Last opp ekstra bilder for galleri (opptil 5)</label>
-        <input id="bizGalleryFiles" type="file" accept="image/*" multiple>
-        <div class="btnrow">
-          <button type="button" onclick="saveBusiness()">Lagre bedrift</button>
-          <button type="button" class="alt" onclick="loadBusinesses()">Oppdater bedrifter</button>
-          <button type="button" class="warn" onclick="clearBusinessForm()">Tøm skjema</button>
-        </div>
-        <div id="bizStatus">Klar.</div>
-      </div>
-    </div>
-
-    <div id="page-admin" class="hidden">
-      <div class="card">
-        <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-        <h2>🛠️ Admin</h2>
-        <div class="sub">Her kan du se og slette innlegg og bedrifter. Denne siden er kun for admin-bruker.</div>
-        <div id="adminStatus">Klar.</div>
-      </div>
-      <div class="admin-grid">
-        <div class="card"><h2>Innlegg</h2><div id="adminStories">Laster ...</div></div>
-        <div class="card"><h2>Bedrifter</h2><div id="adminBusinesses">Laster ...</div></div>
+  <div id="page-home">
+    <div class="hero">
+      <h1>Hundene våre</h1>
+      <p>En møteplass for hundeglade på Vestlandet. Her kan du dele bilder og fortellinger, og finne informasjon om frisører, zoo butikker og veterinærer.</p>
+      <div class="topstats">
+        <div class="stat"><div class="label">Innlegg</div><div class="value" id="postCount">0</div></div>
+        <div class="stat"><div class="label">Medlemmer</div><div class="value" id="memberCount">0</div></div>
+        <div class="stat"><div class="label">Bilder</div><div class="value" id="imageCount">0</div></div>
+        <div class="stat"><div class="label">Kommentarer</div><div class="value" id="commentCount">0</div></div>
       </div>
     </div>
 
     <div class="card">
-      <div class="sharebox">
-        <div>Del appen med andre:</div>
-        <div class="sharelink">https://dagfinn53e-alt.github.io/hundene-vare/</div>
-        <div class="btnrow" style="margin-top:10px"><button type="button" onclick="shareApp()">Del link</button><button type="button" class="alt" onclick="copyLink()">Kopier link</button></div>
+      <h2>Hva appen vil tilby</h2>
+      <p class="sub">Hundene våre skal være et ryddig og varmt samlingssted for hundeeiere. Her kan du lese fortellinger, se bilder, dele egne opplevelser og bli kjent med andre hundeglade. Samtidig skal appen gjøre det lettere å finne nyttige tjenester i nærområdet.</p>
+      <div class="menu-grid">
+        <button class="menu-btn box-stories" onclick="showPage('stories')"><h3>📸 Bilder / Fortellinger</h3><p>Se innlegg, legg inn hunden din, del bilder og skriv små historier fra hverdagen, turer og utstillinger.</p></button>
+        <button class="menu-btn box-groomers" onclick="showPage('groomers')"><h3>✂️ Frisører</h3><p>Registrerte hundefrisører med logo, bilde, kontakt og beskrivelse.</p></button>
+        <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3><p>Registrerte zoo butikker med tilbud, produkter, logo og kontaktinformasjon.</p></button>
+        <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3><p>Registrerte veterinærer med tjenester, åpningstider, logo og kontakt.</p></button>
+        <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Registrer / rediger bedrift</h3><p>Bedrifter kan registrere seg, redigere info, laste opp flere bilder og vises for alle i appen.</p></button>
+        <button class="menu-btn box-admin" onclick="showPage('admin')"><h3>🛠️ Admin</h3><p>Her kan du som eier se og slette innlegg og bedrifter.</p></button>
       </div>
+      <div class="footer-note">Hundene våre skal gjøre det enklere å samle hundefolk, dele gode opplevelser og knytte sammen hundeeiere med lokale tjenester.</div>
     </div>
   </div>
 
-  <script>
-    var ADMIN_EMAIL = "dagfinn53e@gmail.com";
-    var supabase = window.supabase.createClient(
-      "https://kxudiviidwwwclbzgdyx.supabase.co",
-      "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
-    );
+  <div id="page-auth" class="hidden">
+    <div class="card">
+      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <h2>Opprett konto / Logg inn</h2>
+      <div class="sub">Bruk e-post og passord.</div>
+      <input id="email" type="email" placeholder="E-post">
+      <input id="password" type="password" placeholder="Passord">
+      <div class="btnrow">
+        <button type="button" onclick="signupUser()">Lag konto</button>
+        <button type="button" onclick="loginUser()">Logg inn</button>
+        <button type="button" class="alt" onclick="loadProfile()">Oppdater profil</button>
+      </div>
+      <div id="status">Klar.</div>
+    </div>
+  </div>
 
-    function showPage(name){
-      var pages = ['home','auth','stories','groomers','shops','vets','business','admin'];
-      for (var i = 0; i < pages.length; i++) document.getElementById('page-' + pages[i]).classList.add('hidden');
-      document.getElementById('page-' + name).classList.remove('hidden');
-      if(name === 'stories'){ loadStories(); loadProfile(); }
-      if(name === 'groomers' || name === 'shops' || name === 'vets'){ loadBusinesses(); }
-      if(name === 'business'){ loadBusinessOptions(); }
-      if(name === 'admin'){ loadAdmin(); }
+  <div id="page-stories" class="hidden">
+    <div class="card">
+      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <h2>Nytt innlegg</h2>
+      <div class="sub">Legg inn hund, sted, tekst og opptil 5 bilder.</div>
+      <input id="title" placeholder="Tittel">
+      <input id="dog" placeholder="Hundens navn">
+      <input id="place" placeholder="Sted">
+      <select id="category"><option>Hverdag</option><option>Tur</option><option>Utstilling</option></select>
+      <textarea id="text" placeholder="Skriv om hunden..."></textarea>
+      <label>Velg opptil 5 bilder</label>
+      <input id="imageFiles" type="file" accept="image/*" multiple>
+      <div class="btnrow">
+        <button type="button" onclick="saveStory()">Lagre innlegg</button>
+        <button type="button" class="alt" onclick="loadStories()">Oppdater innlegg</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Min profil</h2>
+      <div class="profilebox">
+        <div><strong>E-post:</strong> <span id="profileEmail">Ikke innlogget</span></div>
+        <div><strong>Mine innlegg:</strong> <span id="profilePosts">0</span></div>
+        <div><strong>Mine bedrifter:</strong> <span id="profileBusinesses">0</span></div>
+      </div>
+
+      <h3>Mine bedrifter</h3>
+      <div id="myBusinesses">Logg inn for å se dine bedrifter.</div>
+
+      <h3 style="margin-top:18px;">Mine innlegg</h3>
+      <div id="myPosts">Logg inn for å se dine innlegg.</div>
+    </div>
+
+    <div class="card">
+      <h2>Bilder / Fortellinger</h2>
+      <div id="feed">Laster ...</div>
+    </div>
+  </div>
+
+  <div id="page-groomers" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>✂️ Frisører</h2><div class="search-grid"><input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()"><select id="filterFavoritesGroomers" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchGroomers" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="groomerList"></div></div></div>
+  <div id="page-shops" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>🐾 Zoo butikker</h2><div class="search-grid"><input id="searchShops" placeholder="Søk butikk eller sted" oninput="loadBusinesses()"><select id="filterFavoritesShops" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchShops" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="shopList"></div></div></div>
+  <div id="page-vets" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>🏥 Veterinærer</h2><div class="search-grid"><input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()"><select id="filterFavoritesVets" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchVets" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="vetList"></div></div></div>
+
+  <div id="page-business" class="hidden">
+    <div class="card">
+      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <h2>🏪 Registrer / rediger bedrift</h2>
+      <div class="sub">Velg en eksisterende bedrift for å redigere, eller fyll inn ny informasjon for å lage en ny.</div>
+      <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
+      <select id="bizType"><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option></select>
+      <input id="bizName" placeholder="Navn på bedrift">
+      <input id="bizPlace" placeholder="Sted">
+      <input id="bizPhone" placeholder="Telefon">
+      <input id="bizWebsite" placeholder="Nettside eller Facebook-link">
+      <textarea id="bizText" placeholder="Beskrivelse av bedriften"></textarea>
+      <label>Last opp ny logo (valgfritt ved redigering)</label>
+      <input id="bizLogo" type="file" accept="image/*">
+      <label>Last opp nytt hovedbilde (valgfritt ved redigering)</label>
+      <input id="bizImage" type="file" accept="image/*">
+      <label>Last opp ekstra bilder for galleri (opptil 5)</label>
+      <input id="bizGalleryFiles" type="file" accept="image/*" multiple>
+      <div class="btnrow">
+        <button type="button" onclick="saveBusiness()">Lagre bedrift</button>
+        <button type="button" class="alt" onclick="loadBusinesses()">Oppdater bedrifter</button>
+        <button type="button" class="warn" onclick="clearBusinessForm()">Tøm skjema</button>
+      </div>
+      <div id="bizStatus">Klar.</div>
+    </div>
+  </div>
+
+  <div id="page-admin" class="hidden">
+    <div class="card">
+      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <h2>🛠️ Admin</h2>
+      <div class="sub">Her kan du se og slette innlegg og bedrifter. Denne siden er kun for admin-bruker.</div>
+      <div id="adminStatus">Klar.</div>
+    </div>
+    <div class="admin-grid">
+      <div class="card"><h2>Innlegg</h2><div id="adminStories">Laster ...</div></div>
+      <div class="card"><h2>Bedrifter</h2><div id="adminBusinesses">Laster ...</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sharebox">
+      <div>Del appen med andre:</div>
+      <div class="sharelink">https://dagfinn53e-alt.github.io/hundene-vare/</div>
+      <div class="btnrow" style="margin-top:10px"><button type="button" onclick="shareApp()">Del link</button><button type="button" class="alt" onclick="copyLink()">Kopier link</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var ADMIN_EMAIL = "dagfinn53e@gmail.com";
+  var supabase = window.supabase.createClient(
+    "https://kxudiviidwwwclbzgdyx.supabase.co",
+    "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+  );
+
+  function showPage(name){
+    var pages = ['home','auth','stories','groomers','shops','vets','business','admin'];
+    for (var i = 0; i < pages.length; i++) document.getElementById('page-' + pages[i]).classList.add('hidden');
+    document.getElementById('page-' + name).classList.remove('hidden');
+    if(name === 'stories'){ loadStories(); loadProfile(); }
+    if(name === 'groomers' || name === 'shops' || name === 'vets'){ loadBusinesses(); }
+    if(name === 'business'){ loadBusinessOptions(); }
+    if(name === 'admin'){ loadAdmin(); }
+  }
+
+  function setStatus(text, color) { var el = document.getElementById("status"); el.textContent = text; el.style.color = color || "black"; }
+  function setBizStatus(text, color) { var el = document.getElementById("bizStatus"); el.textContent = text; el.style.color = color || "black"; }
+  function setAdminStatus(text, color) { var el = document.getElementById("adminStatus"); el.textContent = text; el.style.color = color || "black"; }
+
+  function getFavoriteBusinesses() {
+    try { return JSON.parse(localStorage.getItem("hundene_vare_fav_businesses") || "[]"); } catch(e) { return []; }
+  }
+  function saveFavoriteBusinesses(list) { localStorage.setItem("hundene_vare_fav_businesses", JSON.stringify(list)); }
+  function toggleFavoriteBusiness(id) {
+    var favs = getFavoriteBusinesses(), idx = favs.indexOf(id);
+    if (idx >= 0) favs.splice(idx, 1); else favs.push(id);
+    saveFavoriteBusinesses(favs); loadBusinesses();
+  }
+
+  async function uploadFile(file, folder) {
+    if (!file) return "";
+    var safeName = Date.now() + "-" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    var filePath = folder + "/" + safeName;
+    var upload = await supabase.storage.from("story-images").upload(filePath, file);
+    if (upload.error) throw new Error(upload.error.message);
+    var pub = supabase.storage.from("story-images").getPublicUrl(filePath);
+    return pub.data.publicUrl || "";
+  }
+
+  async function uploadMultiple(files, folder) {
+    var urls = [];
+    for (var i = 0; i < files.length; i++) urls.push(await uploadFile(files[i], folder));
+    return urls;
+  }
+
+  async function loadBusinessOptions() {
+    var auth = await supabase.auth.getUser();
+    var user = auth && auth.data ? auth.data.user : null;
+    var select = document.getElementById("editBusinessSelect");
+    select.innerHTML = '<option value="">Ny bedrift</option>';
+    if (!user) return;
+    var result = await supabase.from("businesses").select("*").eq("author_email", user.email).order("created_at", { ascending: false });
+    var rows = result.data || [];
+    for (var i = 0; i < rows.length; i++) {
+      var opt = document.createElement("option");
+      opt.value = rows[i].id;
+      opt.textContent = rows[i].name + " – " + rows[i].place;
+      opt.dataset.biz = JSON.stringify(rows[i]);
+      select.appendChild(opt);
     }
+  }
 
-    function setStatus(text, color) { var el = document.getElementById("status"); el.textContent = text; el.style.color = color || "black"; }
-    function setBizStatus(text, color) { var el = document.getElementById("bizStatus"); el.textContent = text; el.style.color = color || "black"; }
-    function setAdminStatus(text, color) { var el = document.getElementById("adminStatus"); el.textContent = text; el.style.color = color || "black"; }
+  function clearBusinessForm() {
+    document.getElementById("editBusinessSelect").value = "";
+    document.getElementById("bizType").value = "Frisør";
+    document.getElementById("bizName").value = "";
+    document.getElementById("bizPlace").value = "";
+    document.getElementById("bizPhone").value = "";
+    document.getElementById("bizWebsite").value = "";
+    document.getElementById("bizText").value = "";
+    document.getElementById("bizLogo").value = "";
+    document.getElementById("bizImage").value = "";
+    document.getElementById("bizGalleryFiles").value = "";
+    setBizStatus("Skjema tømt.", "black");
+  }
 
-    function getFavoriteBusinesses() {
-      try { return JSON.parse(localStorage.getItem("hundene_vare_fav_businesses") || "[]"); } catch(e) { return []; }
-    }
-    function saveFavoriteBusinesses(list) { localStorage.setItem("hundene_vare_fav_businesses", JSON.stringify(list)); }
-    function toggleFavoriteBusiness(id) {
-      var favs = getFavoriteBusinesses(), idx = favs.indexOf(id);
-      if (idx >= 0) favs.splice(idx, 1); else favs.push(id);
-      saveFavoriteBusinesses(favs); loadBusinesses();
-    }
+  function loadBusinessIntoForm() {
+    var select = document.getElementById("editBusinessSelect");
+    if (!select.value) { clearBusinessForm(); return; }
+    var opt = select.options[select.selectedIndex];
+    var b = JSON.parse(opt.dataset.biz);
+    document.getElementById("bizType").value = b.type || "Frisør";
+    document.getElementById("bizName").value = b.name || "";
+    document.getElementById("bizPlace").value = b.place || "";
+    document.getElementById("bizPhone").value = b.phone || "";
+    document.getElementById("bizWebsite").value = b.website || "";
+    document.getElementById("bizText").value = b.description || "";
+    document.getElementById("bizLogo").value = "";
+    document.getElementById("bizImage").value = "";
+    document.getElementById("bizGalleryFiles").value = "";
+    setBizStatus("Bedrift lastet inn for redigering.", "green");
+  }
 
-    async function uploadFile(file, folder) {
-      if (!file) return "";
-      var safeName = Date.now() + "-" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-      var filePath = folder + "/" + safeName;
-      var upload = await supabase.storage.from("story-images").upload(filePath, file);
-      if (upload.error) throw new Error(upload.error.message);
-      var pub = supabase.storage.from("story-images").getPublicUrl(filePath);
-      return pub.data.publicUrl || "";
-    }
+  async function saveBusiness() {
+    var auth = await supabase.auth.getUser();
+    var user = auth && auth.data ? auth.data.user : null;
+    if (!user) { setBizStatus("Du må logge inn først.", "crimson"); return; }
 
-    async function uploadMultiple(files, folder) {
-      var urls = [];
-      for (var i = 0; i < files.length; i++) {
-        urls.push(await uploadFile(files[i], folder));
+    var editId = document.getElementById("editBusinessSelect").value;
+    var bizType = document.getElementById("bizType").value;
+    var bizName = document.getElementById("bizName").value.trim();
+    var bizPlace = document.getElementById("bizPlace").value.trim();
+    var bizPhone = document.getElementById("bizPhone").value.trim();
+    var bizWebsite = document.getElementById("bizWebsite").value.trim();
+    var bizText = document.getElementById("bizText").value.trim();
+    var logoFile = document.getElementById("bizLogo").files[0];
+    var imageFile = document.getElementById("bizImage").files[0];
+    var galleryFiles = Array.from(document.getElementById("bizGalleryFiles").files).slice(0,5);
+
+    if (!bizName || !bizPlace || !bizText) { setBizStatus("Skriv inn navn, sted og beskrivelse.", "crimson"); return; }
+
+    try {
+      setBizStatus(editId ? "Oppdaterer bedrift ..." : "Lagrer bedrift ...", "blue");
+      var existing = null;
+      if (editId) {
+        var current = await supabase.from("businesses").select("*").eq("id", editId).maybeSingle();
+        existing = current.data || null;
       }
-      return urls;
-    }
 
-    async function loadBusinessOptions() {
-      var auth = await supabase.auth.getUser();
-      var user = auth && auth.data ? auth.data.user : null;
-      var select = document.getElementById("editBusinessSelect");
-      select.innerHTML = '<option value="">Ny bedrift</option>';
-      if (!user) return;
-      var result = await supabase.from("businesses").select("*").eq("author_email", user.email).order("created_at", { ascending: false });
-      var rows = result.data || [];
-      for (var i = 0; i < rows.length; i++) {
-        var opt = document.createElement("option");
-        opt.value = rows[i].id;
-        opt.textContent = rows[i].name + " – " + rows[i].place;
-        opt.dataset.biz = JSON.stringify(rows[i]);
-        select.appendChild(opt);
+      var logoUrl = existing && existing.logo_url ? existing.logo_url : "";
+      var imageUrl = existing && existing.image_url ? existing.image_url : "";
+      var galleryUrls = existing && Array.isArray(existing.gallery_urls) ? existing.gallery_urls : [];
+
+      if (logoFile) logoUrl = await uploadFile(logoFile, "businesses/logos");
+      if (imageFile) imageUrl = await uploadFile(imageFile, "businesses/images");
+      if (galleryFiles.length) galleryUrls = galleryUrls.concat(await uploadMultiple(galleryFiles, "businesses/gallery")).slice(0,5);
+
+      var payload = {
+        user_id: user.id, author_email: user.email, type: bizType, name: bizName, place: bizPlace,
+        phone: bizPhone, website: bizWebsite, description: bizText, logo_url: logoUrl, image_url: imageUrl, gallery_urls: galleryUrls
+      };
+
+      if (editId) {
+        var update = await supabase.from("businesses").update(payload).eq("id", editId).eq("author_email", user.email);
+        if (update.error) { setBizStatus("Feil ved oppdatering: " + update.error.message, "crimson"); return; }
+        setBizStatus("Bedrift oppdatert.", "green");
+      } else {
+        var insert = await supabase.from("businesses").insert([payload]);
+        if (insert.error) { setBizStatus("Feil ved lagring: " + insert.error.message, "crimson"); return; }
+        setBizStatus("Bedrift lagret.", "green");
       }
+
+      await loadBusinesses();
+      await loadBusinessOptions();
+      await loadProfile();
+    } catch (e) {
+      setBizStatus("Feil ved opplasting: " + e.message, "crimson");
     }
+  }
 
-    function clearBusinessForm() {
-      document.getElementById("editBusinessSelect").value = "";
-      document.getElementById("bizType").value = "Frisør";
-      document.getElementById("bizName").value = "";
-      document.getElementById("bizPlace").value = "";
-      document.getElementById("bizPhone").value = "";
-      document.getElementById("bizWebsite").value = "";
-      document.getElementById("bizText").value = "";
-      document.getElementById("bizLogo").value = "";
-      document.getElementById("bizImage").value = "";
-      document.getElementById("bizGalleryFiles").value = "";
-      setBizStatus("Skjema tømt.", "black");
+  async function deleteBusinessImage(id, index) {
+    var auth = await supabase.auth.getUser();
+    var user = auth && auth.data ? auth.data.user : null;
+    if (!user) return;
+    var current = await supabase.from("businesses").select("*").eq("id", id).maybeSingle();
+    var b = current.data;
+    if (!b || (b.author_email !== user.email && user.email !== ADMIN_EMAIL)) return;
+    var gallery = Array.isArray(b.gallery_urls) ? b.gallery_urls.slice() : [];
+    gallery.splice(index, 1);
+    var update = await supabase.from("businesses").update({ gallery_urls: gallery }).eq("id", id);
+    if (!update.error) { loadBusinesses(); loadProfile(); }
+  }
+
+  async function deleteStoryImage(id, index) {
+    var auth = await supabase.auth.getUser();
+    var user = auth && auth.data ? auth.data.user : null;
+    if (!user) return;
+    var current = await supabase.from("stories").select("*").eq("id", id).maybeSingle();
+    var s = current.data;
+    if (!s || (s.author_email !== user.email && user.email !== ADMIN_EMAIL)) return;
+    var gallery = Array.isArray(s.image_urls) ? s.image_urls.slice() : [];
+    gallery.splice(index, 1);
+    var main = gallery[0] || "";
+    var update = await supabase.from("stories").update({ image_urls: gallery, image_url: main }).eq("id", id);
+    if (!update.error) { loadStories(); loadProfile(); }
+  }
+
+  function buildGoogleMapsLink(place, searchText) {
+    var q = searchText || place || "";
+    if (!q) return "";
+    return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
+  }
+
+  function normalizeUrl(url) {
+    if (!url) return "";
+    if (url.startsWith("http://") || url.startsWith("https://")) return url;
+    return "https://" + url;
+  }
+
+  async function renderBizList(type, targetId, rows, searchValue, favMode, mapSearch) {
+    var favs = getFavoriteBusinesses();
+    var all = rows.filter(function(b){ return b.type === type; });
+    if (searchValue) {
+      var s = searchValue.toLowerCase();
+      all = all.filter(function(b){ return (b.name || "").toLowerCase().includes(s) || (b.place || "").toLowerCase().includes(s) || (b.description || "").toLowerCase().includes(s); });
     }
+    if (favMode === "fav") all = all.filter(function(b){ return favs.indexOf(b.id) >= 0; });
 
-    function loadBusinessIntoForm() {
-      var select = document.getElementById("editBusinessSelect");
-      if (!select.value) { clearBusinessForm(); return; }
-      var opt = select.options[select.selectedIndex];
-      var b = JSON.parse(opt.dataset.biz);
-      document.getElementById("bizType").value = b.type || "Frisør";
-      document.getElementById("bizName").value = b.name || "";
-      document.getElementById("bizPlace").value = b.place || "";
-      document.getElementById("bizPhone").value = b.phone || "";
-      document.getElementById("bizWebsite").value = b.website || "";
-      document.getElementById("bizText").value = b.description || "";
-      document.getElementById("bizLogo").value = "";
-      document.getElementById("bizImage").value = "";
-      document.getElementById("bizGalleryFiles").value = "";
-      setBizStatus("Bedrift lastet inn for redigering.", "green");
-    }
+    var auth = await supabase.auth.getUser();
+    var user = auth && auth.data ? auth.data.user : null;
 
-    async function saveBusiness() {
-      var auth = await supabase.auth.getUser();
-      var user = auth && auth.data ? auth.data.user : null;
-      if (!user) { setBizStatus("Du må logge inn først.", "crimson"); return; }
+    var target = document.getElementById(targetId);
+    if (!all.length) { target.innerHTML = '<div class="biz-card">Ingen bedrifter funnet.</div>'; return; }
 
-      var editId = document.getElementById("editBusinessSelect").value;
-      var bizType = document.getElementById("bizType").value;
-      var bizName = document.getElementById("bizName").value.trim();
-      var bizPlace = document.getElementById("bizPlace").value.trim();
-      var bizPhone = document.getElementById("bizPhone").value.trim();
-      var bizWebsite = document.getElementById("bizWebsite").value.trim();
-      var bizText = document.getElementById("bizText").value.trim();
-      var logoFile = document.getElementById("bizLogo").files[0];
-      var imageFile = document.getElementById("bizImage").files[0];
-      var galleryFiles = Array.from(document.getElementById("bizGalleryFiles").files).slice(0,5);
-
-      if (!bizName || !bizPlace || !bizText) { setBizStatus("Skriv inn navn, sted og beskrivelse.", "crimson"); return; }
-
-      try {
-        setBizStatus(editId ? "Oppdaterer bedrift ..." : "Lagrer bedrift ...", "blue");
-        var existing = null;
-        if (editId) {
-          var current = await supabase.from("businesses").select("*").eq("id", editId).maybeSingle();
-          existing = current.data || null;
-        }
-
-        var logoUrl = existing && existing.logo_url ? existing.logo_url : "";
-        var imageUrl = existing && existing.image_url ? existing.image_url : "";
-        var galleryUrls = existing && existing.gallery_urls ? existing.gallery_urls : [];
-
-        if (logoFile) logoUrl = await uploadFile(logoFile, "businesses/logos");
-        if (imageFile) imageUrl = await uploadFile(imageFile, "businesses/images");
-        if (galleryFiles.length) galleryUrls = galleryUrls.concat(await uploadMultiple(galleryFiles, "businesses/gallery")).slice(0,5);
-
-        var payload = {
-          user_id: user.id, author_email: user.email, type: bizType, name: bizName, place: bizPlace,
-          phone: bizPhone, website: bizWebsite, description: bizText, logo_url: logoUrl, image_url: imageUrl, gallery_urls: galleryUrls
-        };
-
-        if (editId) {
-          var update = await supabase.from("businesses").update(payload).eq("id", editId).eq("author_email", user.email);
-          if (update.error) { setBizStatus("Feil ved oppdatering: " + update.error.message, "crimson"); return; }
-          setBizStatus("Bedrift oppdatert.", "green");
-        } else {
-          var insert = await supabase.from("businesses").insert([payload]);
-          if (insert.error) { setBizStatus("Feil ved lagring: " + insert.error.message, "crimson"); return; }
-          setBizStatus("Bedrift lagret.", "green");
-        }
-
-        await loadBusinesses();
-        await loadBusinessOptions();
-      } catch (e) {
-        setBizStatus("Feil ved opplasting: " + e.message, "crimson");
-      }
-    }
-
-    async function deleteBusinessImage(id, index) {
-      var auth = await supabase.auth.getUser();
-      var user = auth && auth.data ? auth.data.user : null;
-      if (!user) return;
-
-      var current = await supabase.from("businesses").select("*").eq("id", id).maybeSingle();
-      var b = current.data;
-      if (!b || (b.author_email !== user.email && user.email !== ADMIN_EMAIL)) return;
-
-      var gallery = Array.isArray(b.gallery_urls) ? b.gallery_urls.slice() : [];
-      gallery.splice(index, 1);
-      var update = await supabase.from("businesses").update({ gallery_urls: gallery }).eq("id", id);
-      if (!update.error) loadBusinesses();
-    }
-
-    async function deleteStoryImage(id, index) {
-      var auth = await supabase.auth.getUser();
-      var user = auth && auth.data ? auth.data.user : null;
-      if (!user) return;
-
-      var current = await supabase.from("stories").select("*").eq("id", id).maybeSingle();
-      var s = current.data;
-      if (!s || (s.author_email !== user.email && user.email !== ADMIN_EMAIL)) return;
-
-      var gallery = Array.isArray(s.image_urls) ? s.image_urls.slice() : [];
-      gallery.splice(index, 1);
-      var main = gallery[0] || "";
-      var update = await supabase.from("stories").update({ image_urls: gallery, image_url: main }).eq("id", id);
-      if (!update.error) { loadStories(); loadProfile(); }
-    }
-
-    function buildGoogleMapsLink(place, searchText) {
-      var q = searchText || place || "";
-      if (!q) return "";
-      return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
-    }
-
-    function normalizeUrl(url) {
-      if (!url) return "";
-      if (url.startsWith("http://") || url.startsWith("https://")) return url;
-      return "https://" + url;
-    }
-
-    async function canManageEmail(email) {
-      var auth = await supabase.auth.getUser();
-      var user = auth && auth.data ? auth.data.user : null;
-      return !!user && (user.email === email || user.email === ADMIN_EMAIL);
-    }
-
-    async function renderBizList(type, targetId, rows, searchValue, favMode, mapSearch) {
-      var favs = getFavoriteBusinesses();
-      var all = rows.filter(function(b){ return b.type === type; });
-      if (searchValue) {
-        var s = searchValue.toLowerCase();
-        all = all.filter(function(b){ return (b.name || "").toLowerCase().includes(s) || (b.place || "").toLowerCase().includes(s) || (b.description || "").toLowerCase().includes(s); });
-      }
-      if (favMode === "fav") all = all.filter(function(b){ return favs.indexOf(b.id) >= 0; });
-
-      var auth = await supabase.auth.getUser();
-      var user = auth && auth.data ? auth.data.user : null;
-
-      var target = document.getElementById(targetId);
-      if (!all.length) { target.innerHTML = '<div class="biz-card">Ingen bedrifter funnet.</div>'; return; }
-
-      var html = '';
-      for (var i=0;i<all.length;i++) {
-        var b = all[i], isFav = favs.indexOf(b.id) >= 0, mapsLink = buildGoogleMapsLink(b.place, mapSearch || b.place);
-        html += '<div class="biz-card"><div class="biz-top">';
-        if (b.logo_url) html += '<img class="biz-logo" src="' + b.logo_url + '" alt="Logo">';
-        html += '<div class="biz-info"><h3>' + escapeHtml(b.name || "") + '</h3>';
-        html += '<div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div>';
-        html += '<p>' + escapeHtml(b.description || "") + '</p>';
-        if (b.phone) html += '<div><strong>Telefon:</strong> ' + escapeHtml(b.phone) + '</div>';
-        if (b.website) html += '<div><strong>Lenke:</strong> <a class="site-link" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
-        if (mapsLink) html += '<div><a class="map-link" href="' + mapsLink + '" target="_blank" rel="noopener noreferrer">📍 Åpne i Google Maps</a></div>';
-        html += '<div class="biz-actions"><button class="alt small" type="button" onclick="toggleFavoriteBusiness(\'' + b.id + '\')">' + (isFav ? '❤️ Favoritt lagret' : '🤍 Lagre favoritt') + '</button></div>';
-        html += '</div></div>';
-        if (b.image_url) html += '<div class="biz-main"><img src="' + b.image_url + '" alt="Bedriftsbilde"></div>';
-        if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
-          html += '<div class="gallery">';
-          for (var g=0; g<b.gallery_urls.length; g++) {
-            html += '<div class="gallery-item"><img src="' + b.gallery_urls[g] + '" alt="Galleri">';
-            if (user && (user.email === b.author_email || user.email === ADMIN_EMAIL)) {
-              html += '<div class="image-actions"><button class="danger small" type="button" onclick="deleteBusinessImage(\'' + b.id + '\',' + g + ')">Slett</button></div>';
-            }
-            html += '</div>';
+    var html = '';
+    for (var i=0;i<all.length;i++) {
+      var b = all[i], isFav = favs.indexOf(b.id) >= 0, mapsLink = buildGoogleMapsLink(b.place, mapSearch || b.place);
+      html += '<div class="biz-card"><div class="biz-top">';
+      if (b.logo_url) html += '<img class="biz-logo" src="' + b.logo_url + '" alt="Logo">';
+      html += '<div class="biz-info"><h3>' + escapeHtml(b.name || "") + '</h3>';
+      html += '<div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div>';
+      html += '<p>' + escapeHtml(b.description || "") + '</p>';
+      if (b.phone) html += '<div><strong>Telefon:</strong> ' + escapeHtml(b.phone) + '</div>';
+      if (b.website) html += '<div><strong>Lenke:</strong> <a class="site-link" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
+      if (mapsLink) html += '<div><a class="map-link" href="' + mapsLink + '" target="_blank" rel="noopener noreferrer">📍 Åpne i Google Maps</a></div>';
+      html += '<div class="biz-actions"><button class="alt small" type="button" onclick="toggleFavoriteBusiness(\'' + b.id + '\')">' + (isFav ? '❤️ Favoritt lagret' : '🤍 Lagre favoritt') + '</button></div>';
+      html += '</div></div>';
+      if (b.image_url) html += '<div class="biz-main"><img src="' + b.image_url + '" alt="Bedriftsbilde"></div>';
+      if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
+        html += '<div class="gallery">';
+        for (var g=0; g<b.gallery_urls.length; g++) {
+          html += '<div class="gallery-item"><img src="' + b.gallery_urls[g] + '" alt="Galleri">';
+          if (user && (user.email === b.author_email || user.email === ADMIN_EMAIL)) {
+            html += '<div class="image-actions"><button class="danger small" type="button" onclick="deleteBusinessImage(\'' + b.id + '\',' + g + ')">Slett</button></div>';
           }
           html += '</div>';
         }
         html += '</div>';
       }
-      target.innerHTML = html;
+      html += '</div>';
+    }
+    target.innerHTML = html;
+  }
+
+  async function loadBusinesses() {
+    var result = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
+    var rows = result.data || [];
+    await renderBizList("Frisør","groomerList",rows,document.getElementById("searchGroomers")?.value || "",document.getElementById("filterFavoritesGroomers")?.value || "all",document.getElementById("mapSearchGroomers")?.value || "");
+    await renderBizList("Zoo butikk","shopList",rows,document.getElementById("searchShops")?.value || "",document.getElementById("filterFavoritesShops")?.value || "all",document.getElementById("mapSearchShops")?.value || "");
+    await renderBizList("Veterinær","vetList",rows,document.getElementById("searchVets")?.value || "",document.getElementById("filterFavoritesVets")?.value || "all",document.getElementById("mapSearchVets")?.value || "");
+  }
+
+  async function loadAdmin() {
+    var auth = await supabase.auth.getUser();
+    var user = auth && auth.data ? auth.data.user : null;
+    if (!user || user.email !== ADMIN_EMAIL) {
+      document.getElementById("adminStories").innerHTML = "Du må være innlogget som admin.";
+      document.getElementById("adminBusinesses").innerHTML = "Du må være innlogget som admin.";
+      setAdminStatus("Admin-tilgang mangler.", "crimson");
+      return;
     }
 
-    async function loadBusinesses() {
-      var result = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
-      var rows = result.data || [];
-      await renderBizList("Frisør","groomerList",rows,document.getElementById("searchGroomers")?.value || "",document.getElementById("filterFavoritesGroomers")?.value || "all",document.getElementById("mapSearchGroomers")?.value || "");
-      await renderBizList("Zoo butikk","shopList",rows,document.getElementById("searchShops")?.value || "",document.getElementById("filterFavoritesShops")?.value || "all",document.getElementById("mapSearchShops")?.value || "");
-      await renderBizList("Veterinær","vetList",rows,document.getElementById("searchVets")?.value || "",document.getElementById("filterFavoritesVets")?.value || "all",document.getElementById("mapSearchVets")?.value || "");
+    setAdminStatus("Admin innlogget som " + user.email, "green");
+    var storiesRes = await supabase.from("stories").select("*").order("created_at", { ascending: false });
+    var businessesRes = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
+    var stories = storiesRes.data || [], businesses = businessesRes.data || [];
+
+    var shtml = stories.length ? "" : "Ingen innlegg.";
+    for (var i=0;i<stories.length;i++) {
+      var s = stories[i];
+      shtml += '<div class="admin-item"><h3>' + escapeHtml(s.title || "") + '</h3><div class="meta">' + escapeHtml(s.author_email || "") + ' · ' + escapeHtml(s.place || "") + '</div><div class="btnrow"><button class="danger" type="button" onclick="deleteStory(\'' + s.id + '\')">Slett innlegg</button></div></div>';
+    }
+    document.getElementById("adminStories").innerHTML = shtml;
+
+    var bhtml = businesses.length ? "" : "Ingen bedrifter.";
+    for (var j=0;j<businesses.length;j++) {
+      var b = businesses[j];
+      bhtml += '<div class="admin-item"><h3>' + escapeHtml(b.name || "") + '</h3><div class="meta">' + escapeHtml(b.author_email || "") + ' · ' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div><div class="btnrow"><button class="danger" type="button" onclick="deleteBusiness(\'' + b.id + '\')">Slett bedrift</button></div></div>';
+    }
+    document.getElementById("adminBusinesses").innerHTML = bhtml;
+  }
+
+  async function deleteStory(id) {
+    if (!confirm("Slette dette innlegget?")) return;
+    var del = await supabase.from("stories").delete().eq("id", id);
+    if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
+    setAdminStatus("Innlegg slettet.", "green"); loadAdmin(); loadStories();
+  }
+
+  async function deleteBusiness(id) {
+    if (!confirm("Slette denne bedriften?")) return;
+    var del = await supabase.from("businesses").delete().eq("id", id);
+    if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
+    setAdminStatus("Bedrift slettet.", "green"); loadAdmin(); loadBusinesses(); loadBusinessOptions(); loadProfile();
+  }
+
+  function getLikes() { try { return JSON.parse(localStorage.getItem("hundene_vare_likes_dbfree") || "{}"); } catch(e) { return {}; } }
+  function saveLikes(data) { localStorage.setItem("hundene_vare_likes_dbfree", JSON.stringify(data)); }
+  function getComments() { try { return JSON.parse(localStorage.getItem("hundene_vare_comments_dbfree") || "{}"); } catch(e) { return {}; } }
+  function saveComments(data) { localStorage.setItem("hundene_vare_comments_dbfree", JSON.stringify(data)); }
+
+  async function signupUser() {
+    setStatus("Prøver å opprette konto ...", "blue");
+    var email = document.getElementById("email").value.trim(), password = document.getElementById("password").value.trim();
+    if (!email || !password) { setStatus("Skriv inn e-post og passord.", "crimson"); return; }
+    var result = await supabase.auth.signUp({ email: email, password: password });
+    if (result.error) { setStatus("Feil: " + result.error.message, "crimson"); return; }
+    setStatus("Konto opprettet.", "green");
+  }
+
+  async function loginUser() {
+    setStatus("Prøver å logge inn ...", "blue");
+    var email = document.getElementById("email").value.trim(), password = document.getElementById("password").value.trim();
+    if (!email || !password) { setStatus("Skriv inn e-post og passord.", "crimson"); return; }
+    var result = await supabase.auth.signInWithPassword({ email: email, password: password });
+    if (result.error) { setStatus("Feil: " + result.error.message, "crimson"); return; }
+    setStatus("Innlogget som " + email, "green"); loadProfile(); showPage('stories');
+  }
+
+  async function saveStory() {
+    setStatus("Prøver å lagre ...", "blue");
+    var auth = await supabase.auth.getUser();
+    var user = auth && auth.data ? auth.data.user : null;
+    if (!user) { setStatus("Du må logge inn først.", "crimson"); return; }
+
+    var title = document.getElementById("title").value.trim();
+    var dog = document.getElementById("dog").value.trim() || "Ikke oppgitt";
+    var place = document.getElementById("place").value.trim() || "Ikke oppgitt";
+    var category = document.getElementById("category").value || "Hverdag";
+    var text = document.getElementById("text").value.trim();
+    var files = Array.from(document.getElementById("imageFiles").files).slice(0,5);
+    if (!title || !text) { setStatus("Skriv inn tittel og tekst.", "crimson"); return; }
+
+    try {
+      var imageUrls = await uploadMultiple(files, "stories/gallery");
+      var imageUrl = imageUrls[0] || "";
+      var insert = await supabase.from("stories").insert([{
+        user_id:user.id,author_email:user.email,title:title,dog:dog,place:place,category:category,text:text,image_url:imageUrl,image_urls:imageUrls
+      }]);
+      if (insert.error) { setStatus("Feil ved lagring: " + insert.error.message, "crimson"); return; }
+    } catch (e) {
+      setStatus("Feil ved bildeopplasting: " + e.message, "crimson"); return;
     }
 
-    async function loadAdmin() {
-      var auth = await supabase.auth.getUser();
-      var user = auth && auth.data ? auth.data.user : null;
-      if (!user || user.email !== ADMIN_EMAIL) {
-        document.getElementById("adminStories").innerHTML = "Du må være innlogget som admin.";
-        document.getElementById("adminBusinesses").innerHTML = "Du må være innlogget som admin.";
-        setAdminStatus("Admin-tilgang mangler.", "crimson");
-        return;
-      }
+    document.getElementById("title").value = "";
+    document.getElementById("dog").value = "";
+    document.getElementById("place").value = "";
+    document.getElementById("text").value = "";
+    document.getElementById("imageFiles").value = "";
+    setStatus("Lagret!", "green"); await loadStories(); await loadProfile(); showPage('stories');
+  }
 
-      setAdminStatus("Admin innlogget som " + user.email, "green");
-      var storiesRes = await supabase.from("stories").select("*").order("created_at", { ascending: false });
-      var businessesRes = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
-      var stories = storiesRes.data || [], businesses = businessesRes.data || [];
+  function likePost(id) {
+    var likes = getLikes(); likes[id] = (likes[id] || 0) + 1; saveLikes(likes); loadStories();
+  }
 
-      var shtml = stories.length ? "" : "Ingen innlegg.";
-      for (var i=0;i<stories.length;i++) {
-        var s = stories[i];
-        shtml += '<div class="admin-item"><h3>' + escapeHtml(s.title || "") + '</h3><div class="meta">' + escapeHtml(s.author_email || "") + ' · ' + escapeHtml(s.place || "") + '</div><div class="btnrow"><button class="danger" type="button" onclick="deleteStory(\'' + s.id + '\')">Slett innlegg</button></div></div>';
-      }
-      document.getElementById("adminStories").innerHTML = shtml;
-
-      var bhtml = businesses.length ? "" : "Ingen bedrifter.";
-      for (var j=0;j<businesses.length;j++) {
-        var b = businesses[j];
-        bhtml += '<div class="admin-item"><h3>' + escapeHtml(b.name || "") + '</h3><div class="meta">' + escapeHtml(b.author_email || "") + ' · ' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div><div class="btnrow"><button class="danger" type="button" onclick="deleteBusiness(\'' + b.id + '\')">Slett bedrift</button></div></div>';
-      }
-      document.getElementById("adminBusinesses").innerHTML = bhtml;
-    }
-
-    async function deleteStory(id) {
-      if (!confirm("Slette dette innlegget?")) return;
-      var del = await supabase.from("stories").delete().eq("id", id);
-      if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
-      setAdminStatus("Innlegg slettet.", "green"); loadAdmin(); loadStories();
-    }
-
-    async function deleteBusiness(id) {
-      if (!confirm("Slette denne bedriften?")) return;
-      var del = await supabase.from("businesses").delete().eq("id", id);
-      if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
-      setAdminStatus("Bedrift slettet.", "green"); loadAdmin(); loadBusinesses(); loadBusinessOptions();
-    }
-
-    function getLikes() { try { return JSON.parse(localStorage.getItem("hundene_vare_likes_dbfree") || "{}"); } catch(e) { return {}; } }
-    function saveLikes(data) { localStorage.setItem("hundene_vare_likes_dbfree", JSON.stringify(data)); }
-    function getComments() { try { return JSON.parse(localStorage.getItem("hundene_vare_comments_dbfree") || "{}"); } catch(e) { return {}; } }
-    function saveComments(data) { localStorage.setItem("hundene_vare_comments_dbfree", JSON.stringify(data)); }
-
-    async function signupUser() {
-      setStatus("Prøver å opprette konto ...", "blue");
-      var email = document.getElementById("email").value.trim(), password = document.getElementById("password").value.trim();
-      if (!email || !password) { setStatus("Skriv inn e-post og passord.", "crimson"); return; }
-      var result = await supabase.auth.signUp({ email: email, password: password });
-      if (result.error) { setStatus("Feil: " + result.error.message, "crimson"); return; }
-      setStatus("Konto opprettet.", "green");
-    }
-
-    async function loginUser() {
-      setStatus("Prøver å logge inn ...", "blue");
-      var email = document.getElementById("email").value.trim(), password = document.getElementById("password").value.trim();
-      if (!email || !password) { setStatus("Skriv inn e-post og passord.", "crimson"); return; }
-      var result = await supabase.auth.signInWithPassword({ email: email, password: password });
-      if (result.error) { setStatus("Feil: " + result.error.message, "crimson"); return; }
-      setStatus("Innlogget som " + email, "green"); loadProfile(); showPage('stories');
-    }
-
-    async function saveStory() {
-      setStatus("Prøver å lagre ...", "blue");
-      var auth = await supabase.auth.getUser();
-      var user = auth && auth.data ? auth.data.user : null;
-      if (!user) { setStatus("Du må logge inn først.", "crimson"); return; }
-
-      var title = document.getElementById("title").value.trim();
-      var dog = document.getElementById("dog").value.trim() || "Ikke oppgitt";
-      var place = document.getElementById("place").value.trim() || "Ikke oppgitt";
-      var category = document.getElementById("category").value || "Hverdag";
-      var text = document.getElementById("text").value.trim();
-      var files = Array.from(document.getElementById("imageFiles").files).slice(0,5);
-      if (!title || !text) { setStatus("Skriv inn tittel og tekst.", "crimson"); return; }
-
-      try {
-        var imageUrls = await uploadMultiple(files, "stories/gallery");
-        var imageUrl = imageUrls[0] || "";
-        var insert = await supabase.from("stories").insert([{
-          user_id:user.id,author_email:user.email,title:title,dog:dog,place:place,category:category,text:text,image_url:imageUrl,image_urls:imageUrls
-        }]);
-        if (insert.error) { setStatus("Feil ved lagring: " + insert.error.message, "crimson"); return; }
-      } catch (e) {
-        setStatus("Feil ved bildeopplasting: " + e.message, "crimson"); return;
-      }
-
-      document.getElementById("title").value = "";
-      document.getElementById("dog").value = "";
-      document.getElementById("place").value = "";
-      document.getElementById("text").value = "";
-      document.getElementById("imageFiles").value = "";
-      setStatus("Lagret!", "green"); await loadStories(); await loadProfile(); showPage('stories');
-    }
-
-    function likePost(id) {
-      var likes = getLikes(); likes[id] = (likes[id] || 0) + 1; saveLikes(likes); loadStories();
-    }
-
-    function addComment(id) {
-      var input = document.getElementById("comment-" + id);
-      if (!input) return;
-      var text = input.value.trim();
-      if (!text) return;
-      var comments = getComments();
-      if (!comments[id]) comments[id] = [];
-      comments[id].push({ text: text, time: new Date().toLocaleString("no-NO") });
-      saveComments(comments);
-      input.value = "";
-      loadStories();
-    }
-
-    async function loadStories() {
-      var feed = document.getElementById("feed");
-      feed.textContent = "Laster ...";
-      var result = await supabase.from("stories").select("*").order("created_at", { ascending: false });
-      if (result.error) { feed.textContent = "Feil ved henting: " + result.error.message; return; }
-
-      var auth = await supabase.auth.getUser();
-      var user = auth && auth.data ? auth.data.user : null;
-
-      var data = result.data || [];
-      document.getElementById("postCount").textContent = data.length;
-      var members = {}, images = 0, comments = getComments(), commentTotal = 0, likes = getLikes();
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].author_email) members[data[i].author_email] = true;
-        images += Array.isArray(data[i].image_urls) ? data[i].image_urls.length : (data[i].image_url ? 1 : 0);
-      }
-      Object.keys(comments).forEach(function(k){ commentTotal += (comments[k] || []).length; });
-      document.getElementById("memberCount").textContent = Object.keys(members).length;
-      document.getElementById("imageCount").textContent = images;
-      document.getElementById("commentCount").textContent = commentTotal;
-      if (!data.length) { feed.textContent = "Ingen innlegg enda."; return; }
-
-      var html = "";
-      for (var i = 0; i < data.length; i++) {
-        var post = data[i], postId = post.id || ("post_" + i), likeCount = likes[postId] || 0, postComments = comments[postId] || [];
-        var gallery = Array.isArray(post.image_urls) && post.image_urls.length ? post.image_urls : (post.image_url ? [post.image_url] : []);
-        html += '<div class="post"><h3>' + escapeHtml(post.title || "") + '</h3><div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + ' · ' + escapeHtml(post.category || "") + '</div><p>' + escapeHtml(post.text || "") + '</p>';
-        if (gallery.length) {
-          html += '<div class="gallery">';
-          for (var g=0; g<gallery.length; g++) {
-            html += '<div class="gallery-item"><img src="' + gallery[g] + '" alt="Hundebilde">';
-            if (user && (user.email === post.author_email || user.email === ADMIN_EMAIL)) {
-              html += '<div class="image-actions"><button class="danger small" type="button" onclick="deleteStoryImage(\'' + post.id + '\',' + g + ')">Slett</button></div>';
-            }
-            html += '</div>';
-          }
-          html += '</div>';
-        }
-        html += '<div class="likebar"><button class="likebtn" type="button" onclick="likePost(\'' + postId + '\')">❤️ Lik (' + likeCount + ')</button><span class="mini">' + postComments.length + ' kommentar(er)</span></div><div class="comments">';
-        for (var j = 0; j < postComments.length; j++) html += '<div class="comment"><div class="commentmeta">' + escapeHtml(postComments[j].time || '') + '</div><div>' + escapeHtml(postComments[j].text || '') + '</div></div>';
-        html += '<input id="comment-' + postId + '" placeholder="Skriv en kommentar"><div class="btnrow"><button type="button" class="alt" onclick="addComment(\'' + postId + '\')">Legg til kommentar</button></div></div></div>';
-      }
-      feed.innerHTML = html;
-    }
-
-    async function loadProfile() {
-      var auth = await supabase.auth.getUser();
-      var user = auth && auth.data ? auth.data.user : null;
-      if (!user) {
-        document.getElementById("profileEmail").textContent = "Ikke innlogget";
-        document.getElementById("profilePosts").textContent = "0";
-        document.getElementById("myPosts").textContent = "Logg inn for å se dine innlegg.";
-        return;
-      }
-      document.getElementById("profileEmail").textContent = user.email;
-      var result = await supabase.from("stories").select("*").eq("author_email", user.email).order("created_at", { ascending: false });
-      var data = result.data || [];
-      document.getElementById("profilePosts").textContent = String(data.length);
-      if (!data.length) { document.getElementById("myPosts").textContent = "Ingen egne innlegg enda."; return; }
-      var html = "";
-      for (var i = 0; i < data.length; i++) {
-        var post = data[i], gallery = Array.isArray(post.image_urls) && post.image_urls.length ? post.image_urls : (post.image_url ? [post.image_url] : []);
-        html += '<div class="post"><h3>' + escapeHtml(post.title || "") + '</h3><div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + '</div><p>' + escapeHtml(post.text || "") + '</p>';
-        if (gallery.length) {
-          html += '<div class="gallery">';
-          for (var g=0; g<gallery.length; g++) html += '<div class="gallery-item"><img src="' + gallery[g] + '" alt="Hundebilde"></div>';
-          html += '</div>';
-        }
-        html += '</div>';
-      }
-      document.getElementById("myPosts").innerHTML = html;
-    }
-
-    function shareApp() {
-      var url = "https://dagfinn53e-alt.github.io/hundene-vare/";
-      if (navigator.share) navigator.share({ title: "Hundene våre", text: "Se appen Hundene våre 🐶", url: url }).catch(function(){});
-      else copyLink();
-    }
-    function copyLink() {
-      var url = "https://dagfinn53e-alt.github.io/hundene-vare/";
-      navigator.clipboard.writeText(url).then(function(){ setStatus("Link kopiert.", "green"); }).catch(function(){ setStatus("Kunne ikke kopiere linken.", "crimson"); });
-    }
-    function escapeHtml(str) {
-      return String(str).replace(/[&<>"']/g, function (m) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]; });
-    }
-
+  function addComment(id) {
+    var input = document.getElementById("comment-" + id);
+    if (!input) return;
+    var text = input.value.trim();
+    if (!text) return;
+    var comments = getComments();
+    if (!comments[id]) comments[id] = [];
+    comments[id].push({ text: text, time: new Date().toLocaleString("no-NO") });
+    saveComments(comments);
+    input.value = "";
     loadStories();
-    loadProfile();
-    loadBusinesses();
-  </script>
+  }
+
+  async function loadStories() {
+    var feed = document.getElementById("feed");
+    feed.textContent = "Laster ...";
+    var result = await supabase.from("stories").select("*").order("created_at", { ascending: false });
+    if (result.error) { feed.textContent = "Feil ved henting: " + result.error.message; return; }
+
+    var auth = await supabase.auth.getUser();
+    var user = auth && auth.data ? auth.data.user : null;
+
+    var data = result.data || [];
+    document.getElementById("postCount").textContent = data.length;
+    var members = {}, images = 0, comments = getComments(), commentTotal = 0, likes = getLikes();
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].author_email) members[data[i].author_email] = true;
+      images += Array.isArray(data[i].image_urls) ? data[i].image_urls.length : (data[i].image_url ? 1 : 0);
+    }
+    Object.keys(comments).forEach(function(k){ commentTotal += (comments[k] || []).length; });
+    document.getElementById("memberCount").textContent = Object.keys(members).length;
+    document.getElementById("imageCount").textContent = images;
+    document.getElementById("commentCount").textContent = commentTotal;
+    if (!data.length) { feed.textContent = "Ingen innlegg enda."; return; }
+
+    var html = "";
+    for (var i = 0; i < data.length; i++) {
+      var post = data[i], postId = post.id || ("post_" + i), likeCount = likes[postId] || 0, postComments = comments[postId] || [];
+      var gallery = Array.isArray(post.image_urls) && post.image_urls.length ? post.image_urls : (post.image_url ? [post.image_url] : []);
+      html += '<div class="post"><h3>' + escapeHtml(post.title || "") + '</h3><div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + ' · ' + escapeHtml(post.category || "") + '</div><p>' + escapeHtml(post.text || "") + '</p>';
+      if (gallery.length) {
+        html += '<div class="gallery">';
+        for (var g=0; g<gallery.length; g++) {
+          html += '<div class="gallery-item"><img src="' + gallery[g] + '" alt="Hundebilde">';
+          if (user && (user.email === post.author_email || user.email === ADMIN_EMAIL)) {
+            html += '<div class="image-actions"><button class="danger small" type="button" onclick="deleteStoryImage(\'' + post.id + '\',' + g + ')">Slett</button></div>';
+          }
+          html += '</div>';
+        }
+        html += '</div>';
+      }
+      html += '<div class="likebar"><button class="likebtn" type="button" onclick="likePost(\'' + postId + '\')">❤️ Lik (' + likeCount + ')</button><span class="mini">' + postComments.length + ' kommentar(er)</span></div><div class="comments">';
+      for (var j = 0; j < postComments.length; j++) html += '<div class="comment"><div class="commentmeta">' + escapeHtml(postComments[j].time || '') + '</div><div>' + escapeHtml(postComments[j].text || '') + '</div></div>';
+      html += '<input id="comment-' + postId + '" placeholder="Skriv en kommentar"><div class="btnrow"><button type="button" class="alt" onclick="addComment(\'' + postId + '\')">Legg til kommentar</button></div></div></div>';
+    }
+    feed.innerHTML = html;
+  }
+
+  async function loadProfile() {
+    var auth = await supabase.auth.getUser();
+    var user = auth && auth.data ? auth.data.user : null;
+    if (!user) {
+      document.getElementById("profileEmail").textContent = "Ikke innlogget";
+      document.getElementById("profilePosts").textContent = "0";
+      document.getElementById("profileBusinesses").textContent = "0";
+      document.getElementById("myPosts").textContent = "Logg inn for å se dine innlegg.";
+      document.getElementById("myBusinesses").textContent = "Logg inn for å se dine bedrifter.";
+      return;
+    }
+
+    document.getElementById("profileEmail").textContent = user.email;
+
+    var postsRes = await supabase.from("stories").select("*").eq("author_email", user.email).order("created_at", { ascending: false });
+    var posts = postsRes.data || [];
+    document.getElementById("profilePosts").textContent = String(posts.length);
+
+    if (!posts.length) {
+      document.getElementById("myPosts").textContent = "Ingen egne innlegg enda.";
+    } else {
+      var phtml = "";
+      for (var i = 0; i < posts.length; i++) {
+        var post = posts[i], gallery = Array.isArray(post.image_urls) && post.image_urls.length ? post.image_urls : (post.image_url ? [post.image_url] : []);
+        phtml += '<div class="post"><h3>' + escapeHtml(post.title || "") + '</h3><div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + '</div><p>' + escapeHtml(post.text || "") + '</p>';
+        if (gallery.length) {
+          phtml += '<div class="gallery">';
+          for (var g=0; g<gallery.length; g++) phtml += '<div class="gallery-item"><img src="' + gallery[g] + '" alt="Hundebilde"></div>';
+          phtml += '</div>';
+        }
+        phtml += '</div>';
+      }
+      document.getElementById("myPosts").innerHTML = phtml;
+    }
+
+    var bizRes = await supabase.from("businesses").select("*").eq("author_email", user.email).order("created_at", { ascending: false });
+    var businesses = bizRes.data || [];
+    document.getElementById("profileBusinesses").textContent = String(businesses.length);
+
+    if (!businesses.length) {
+      document.getElementById("myBusinesses").textContent = "Ingen egne bedrifter enda.";
+    } else {
+      var bhtml = "";
+      for (var j = 0; j < businesses.length; j++) {
+        var b = businesses[j];
+        bhtml += '<div class="biz-card"><div class="biz-top">';
+        if (b.logo_url) bhtml += '<img class="biz-logo" src="' + b.logo_url + '" alt="Logo">';
+        bhtml += '<div class="biz-info"><h3>' + escapeHtml(b.name || "") + '</h3><div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div><p>' + escapeHtml(b.description || "") + '</p>';
+        bhtml += '<div class="biz-actions"><button class="alt small" type="button" onclick="openBusinessForEdit(\'' + b.id + '\')">Rediger bedrift</button></div>';
+        bhtml += '</div></div>';
+        if (b.image_url) bhtml += '<div class="biz-main"><img src="' + b.image_url + '" alt="Bedriftsbilde"></div>';
+        if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
+          bhtml += '<div class="gallery">';
+          for (var k=0; k<b.gallery_urls.length; k++) {
+            bhtml += '<div class="gallery-item"><img src="' + b.gallery_urls[k] + '" alt="Galleri"><div class="image-actions"><button class="danger small" type="button" onclick="deleteBusinessImage(\'' + b.id + '\',' + k + ')">Slett</button></div></div>';
+          }
+          bhtml += '</div>';
+        }
+        bhtml += '</div>';
+      }
+      document.getElementById("myBusinesses").innerHTML = bhtml;
+    }
+  }
+
+  async function openBusinessForEdit(id) {
+    showPage('business');
+    await loadBusinessOptions();
+    document.getElementById("editBusinessSelect").value = id;
+    loadBusinessIntoForm();
+  }
+
+  async function loadAdmin() {
+    var auth = await supabase.auth.getUser();
+    var user = auth && auth.data ? auth.data.user : null;
+    if (!user || user.email !== ADMIN_EMAIL) {
+      document.getElementById("adminStories").innerHTML = "Du må være innlogget som admin.";
+      document.getElementById("adminBusinesses").innerHTML = "Du må være innlogget som admin.";
+      setAdminStatus("Admin-tilgang mangler.", "crimson");
+      return;
+    }
+
+    setAdminStatus("Admin innlogget som " + user.email, "green");
+    var storiesRes = await supabase.from("stories").select("*").order("created_at", { ascending: false });
+    var businessesRes = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
+    var stories = storiesRes.data || [], businesses = businessesRes.data || [];
+
+    var shtml = stories.length ? "" : "Ingen innlegg.";
+    for (var i=0;i<stories.length;i++) {
+      var s = stories[i];
+      shtml += '<div class="admin-item"><h3>' + escapeHtml(s.title || "") + '</h3><div class="meta">' + escapeHtml(s.author_email || "") + ' · ' + escapeHtml(s.place || "") + '</div><div class="btnrow"><button class="danger" type="button" onclick="deleteStory(\'' + s.id + '\')">Slett innlegg</button></div></div>';
+    }
+    document.getElementById("adminStories").innerHTML = shtml;
+
+    var bhtml = businesses.length ? "" : "Ingen bedrifter.";
+    for (var j=0;j<businesses.length;j++) {
+      var b = businesses[j];
+      bhtml += '<div class="admin-item"><h3>' + escapeHtml(b.name || "") + '</h3><div class="meta">' + escapeHtml(b.author_email || "") + ' · ' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div><div class="btnrow"><button class="danger" type="button" onclick="deleteBusiness(\'' + b.id + '\')">Slett bedrift</button></div></div>';
+    }
+    document.getElementById("adminBusinesses").innerHTML = bhtml;
+  }
+
+  async function deleteStory(id) {
+    if (!confirm("Slette dette innlegget?")) return;
+    var del = await supabase.from("stories").delete().eq("id", id);
+    if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
+    setAdminStatus("Innlegg slettet.", "green"); loadAdmin(); loadStories(); loadProfile();
+  }
+
+  async function deleteBusiness(id) {
+    if (!confirm("Slette denne bedriften?")) return;
+    var del = await supabase.from("businesses").delete().eq("id", id);
+    if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
+    setAdminStatus("Bedrift slettet.", "green"); loadAdmin(); loadBusinesses(); loadBusinessOptions(); loadProfile();
+  }
+
+  function shareApp() {
+    var url = "https://dagfinn53e-alt.github.io/hundene-vare/";
+    if (navigator.share) navigator.share({ title: "Hundene våre", text: "Se appen Hundene våre 🐶", url: url }).catch(function(){});
+    else copyLink();
+  }
+  function copyLink() {
+    var url = "https://dagfinn53e-alt.github.io/hundene-vare/";
+    navigator.clipboard.writeText(url).then(function(){ setStatus("Link kopiert.", "green"); }).catch(function(){ setStatus("Kunne ikke kopiere linken.", "crimson"); });
+  }
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, function (m) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]; });
+  }
+
+  loadStories();
+  loadProfile();
+  loadBusinesses();
+</script>
 </body>
 </html>
