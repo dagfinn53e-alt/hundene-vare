@@ -9,10 +9,15 @@
     :root{
       --blue:#2563eb; --blue-dark:#1d4ed8; --bg:#eef5ff; --card:#fff; --line:#dbeafe;
       --text:#0f172a; --muted:#64748b; --soft:#f8fafc;
+      --purple:#f3e8ff; --purple-line:#d8b4fe; --purple-text:#6b21a8;
+      --green:#ecfdf5; --green-line:#86efac; --green-text:#166534;
+      --red:#fef2f2; --red-line:#fca5a5; --red-text:#b91c1c;
+      --sky:#eff6ff; --sky-line:#93c5fd; --sky-text:#1d4ed8;
+      --orange:#fff7ed; --orange-line:#fdba74; --orange-text:#9a3412;
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(180deg,#eaf3ff 0%,#f8fbff 100%);color:var(--text)}
-    .wrap{max-width:1040px;margin:0 auto;padding:20px 16px 40px}
+    .wrap{max-width:1080px;margin:0 auto;padding:20px 16px 40px}
     .hero{background:linear-gradient(135deg,var(--blue-dark),#3b82f6);color:#fff;padding:24px;border-radius:24px;box-shadow:0 10px 30px rgba(37,99,235,.18);margin-bottom:18px}
     .hero h1{margin:0 0 8px 0;font-size:34px}
     .hero p{margin:0;line-height:1.6}
@@ -22,9 +27,15 @@
     .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 8px 24px rgba(15,23,42,.05);margin-bottom:16px}
     .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
     .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
-    .menu-btn{display:block;text-align:left;background:var(--soft);color:var(--text);border:1px solid #e2e8f0;border-radius:20px;padding:20px;box-shadow:none;cursor:pointer}
+    .menu-btn{display:block;text-align:left;border-radius:20px;padding:20px;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease}
+    .menu-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(15,23,42,.08)}
     .menu-btn h3{margin:0 0 8px 0;font-size:22px}
-    .menu-btn p{margin:0;color:var(--muted);line-height:1.6}
+    .menu-btn p{margin:0;line-height:1.6}
+    .box-stories{background:var(--sky);border:1px solid var(--sky-line);color:var(--sky-text)}
+    .box-groomers{background:var(--purple);border:1px solid var(--purple-line);color:var(--purple-text)}
+    .box-shops{background:var(--green);border:1px solid var(--green-line);color:var(--green-text)}
+    .box-vets{background:var(--red);border:1px solid var(--red-line);color:var(--red-text)}
+    .box-business{background:var(--orange);border:1px solid var(--orange-line);color:var(--orange-text)}
     h2{margin:0 0 12px 0;font-size:24px}
     .sub{color:var(--muted);margin-bottom:12px;line-height:1.6}
     input,textarea,select{width:100%;padding:12px 14px;margin:8px 0 12px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff}
@@ -32,21 +43,18 @@
     .btnrow{display:flex;gap:10px;flex-wrap:wrap}
     button{border:none;border-radius:12px;padding:12px 16px;background:var(--blue-dark);color:#fff;cursor:pointer;font-weight:700}
     button.alt{background:#dbeafe;color:var(--blue-dark);border:1px solid #93c5fd}
-    #status{margin-top:12px;min-height:24px;font-weight:700}
+    #status,#bizStatus{margin-top:12px;min-height:24px;font-weight:700}
     .hidden{display:none}
-    .post{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:12px}
-    .post h3{font-size:21px;margin:0 0 8px 0}
+    .post,.biz-card{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:12px}
+    .post h3,.biz-card h3{font-size:21px;margin:0 0 8px 0}
     .meta{color:var(--muted);font-size:14px;margin-bottom:10px}
-    .post img{width:100%;border-radius:16px;margin-top:12px;display:block;max-height:520px;object-fit:cover}
+    .post img,.biz-card img{width:100%;border-radius:16px;margin-top:12px;display:block;max-height:520px;object-fit:cover}
+    .biz-logo{max-width:120px!important;max-height:120px!important;object-fit:contain!important;background:#fff;padding:8px;border:1px solid #e2e8f0}
     .likebar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
     .likebtn{background:#fff;color:var(--blue-dark);border:1px solid #bfdbfe;padding:9px 14px;border-radius:999px;font-weight:700;cursor:pointer}
     .comments{margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
     .comment{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:10px 12px;margin-top:8px}
     .commentmeta{font-size:12px;color:var(--muted);margin-bottom:4px}
-    .pillbox{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-    .pill{background:#eff6ff;border:1px solid #bfdbfe;border-radius:999px;padding:8px 12px;color:var(--blue-dark);font-weight:700}
-    .service-card{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:12px}
-    .service-card h3{margin:0 0 8px 0}
     .profilebox,.sharebox{background:#eff6ff;border:1px solid #bfdbfe;border-radius:18px;padding:14px;margin-top:16px}
     .sharelink{word-break:break-all;color:var(--blue-dark);font-weight:700}
     .mini{font-size:13px;color:var(--muted)}
@@ -84,21 +92,25 @@
         <p class="sub">Hundene våre skal være et ryddig og varmt samlingssted for hundeeiere. Her kan du lese fortellinger, se bilder, dele egne opplevelser og bli kjent med andre hundeglade. Samtidig skal appen etter hvert gjøre det lettere å finne nyttige tjenester i nærområdet.</p>
         <p class="sub">For frisører ønsker vi å vise behandlinger, priser og kontakt. For zoo butikker ønsker vi å vise tilbud, produkter og nyheter. For veterinærer ønsker vi å samle nyttig informasjon om tjenester, åpningstider og kontakt.</p>
         <div class="menu-grid">
-          <button class="menu-btn" onclick="showPage('stories')">
+          <button class="menu-btn box-stories" onclick="showPage('stories')">
             <h3>📸 Bilder / Fortellinger</h3>
             <p>Se innlegg, legg inn hunden din, del bilder og skriv små historier fra hverdagen, turer og utstillinger.</p>
           </button>
-          <button class="menu-btn" onclick="showPage('groomers')">
+          <button class="menu-btn box-groomers" onclick="showPage('groomers')">
             <h3>✂️ Frisører</h3>
             <p>Her skal hundefrisører kunne vise priser, behandlinger, bilder og kontaktinformasjon.</p>
           </button>
-          <button class="menu-btn" onclick="showPage('shops')">
+          <button class="menu-btn box-shops" onclick="showPage('shops')">
             <h3>🐾 Zoo butikker</h3>
             <p>Her kan dyrebutikker dele tilbud, nyheter og hundeprodukter for lokale hundeeiere.</p>
           </button>
-          <button class="menu-btn" onclick="showPage('vets')">
+          <button class="menu-btn box-vets" onclick="showPage('vets')">
             <h3>🏥 Veterinærer</h3>
             <p>Her skal veterinærer kunne ha informasjon om tjenester, åpningstider og kontakt.</p>
+          </button>
+          <button class="menu-btn box-business" onclick="showPage('business')">
+            <h3>🏪 Registrer bedrift</h3>
+            <p>Frisører, butikker og veterinærer kan registrere seg, laste opp logo og bilder, og bli vist i appen.</p>
           </button>
         </div>
         <div class="footer-note">
@@ -163,12 +175,8 @@
       <div class="card">
         <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
         <h2>✂️ Frisører</h2>
-        <p class="sub">Denne siden er klar for hundefrisører som vil være synlige i appen.</p>
-        <div class="service-card">
-          <h3>Hva frisører kan få</h3>
-          <p>Priser, behandlinger, bilder, åpningstider, kontaktinformasjon og etter hvert booking.</p>
-        </div>
-        <div class="pillbox"><div class="pill">Klipp</div><div class="pill">Vask</div><div class="pill">Negleklipp</div><div class="pill">Booking senere</div></div>
+        <p class="sub">Denne siden viser registrerte hundefrisører.</p>
+        <div id="groomerList"></div>
       </div>
     </div>
 
@@ -176,12 +184,8 @@
       <div class="card">
         <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
         <h2>🐾 Zoo butikker</h2>
-        <p class="sub">Denne siden er klar for butikker som vil vise produkter og tilbud.</p>
-        <div class="service-card">
-          <h3>Hva butikker kan få</h3>
-          <p>Tilbud, produkter, nyheter, kontaktinformasjon og synlighet mot hundeeiere i nærområdet.</p>
-        </div>
-        <div class="pillbox"><div class="pill">Tilbud</div><div class="pill">Fôr</div><div class="pill">Utstyr</div><div class="pill">Leker</div></div>
+        <p class="sub">Denne siden viser registrerte zoo butikker.</p>
+        <div id="shopList"></div>
       </div>
     </div>
 
@@ -189,12 +193,35 @@
       <div class="card">
         <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
         <h2>🏥 Veterinærer</h2>
-        <p class="sub">Denne siden er klar for veterinærer som vil presentere tjenester og kontakt.</p>
-        <div class="service-card">
-          <h3>Hva veterinærer kan få</h3>
-          <p>Åpningstider, kontakt, tjenester, akuttinformasjon og trygg synlighet i appen.</p>
+        <p class="sub">Denne siden viser registrerte veterinærer.</p>
+        <div id="vetList"></div>
+      </div>
+    </div>
+
+    <div id="page-business" class="hidden">
+      <div class="card">
+        <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+        <h2>🏪 Registrer bedrift</h2>
+        <div class="sub">Her kan frisører, zoo butikker og veterinærer registrere seg med info, logo og bilder. Denne første versjonen lagrer bedrifter i nettleseren.</div>
+        <select id="bizType">
+          <option>Frisør</option>
+          <option>Zoo butikk</option>
+          <option>Veterinær</option>
+        </select>
+        <input id="bizName" placeholder="Navn på bedrift">
+        <input id="bizPlace" placeholder="Sted">
+        <input id="bizPhone" placeholder="Telefon">
+        <input id="bizWebsite" placeholder="Nettside / Facebook">
+        <textarea id="bizText" placeholder="Beskrivelse av bedriften"></textarea>
+        <label>Last opp logo</label>
+        <input id="bizLogo" type="file" accept="image/*">
+        <label>Last opp bilde</label>
+        <input id="bizImage" type="file" accept="image/*">
+        <div class="btnrow">
+          <button type="button" onclick="saveBusiness()">Lagre bedrift</button>
+          <button type="button" class="alt" onclick="loadBusinesses()">Oppdater bedrifter</button>
         </div>
-        <div class="pillbox"><div class="pill">Sjekk</div><div class="pill">Vaksine</div><div class="pill">Råd</div><div class="pill">Kontakt</div></div>
+        <div id="bizStatus">Klar.</div>
       </div>
     </div>
 
@@ -217,18 +244,113 @@
     );
 
     function showPage(name){
-      var pages = ['home','auth','stories','groomers','shops','vets'];
+      var pages = ['home','auth','stories','groomers','shops','vets','business'];
       for (var i = 0; i < pages.length; i++) {
         document.getElementById('page-' + pages[i]).classList.add('hidden');
       }
       document.getElementById('page-' + name).classList.remove('hidden');
       if(name === 'stories'){ loadStories(); loadProfile(); }
+      if(name === 'groomers' || name === 'shops' || name === 'vets'){ loadBusinesses(); }
     }
 
     function setStatus(text, color) {
       var el = document.getElementById("status");
       el.textContent = text;
       el.style.color = color || "black";
+    }
+
+    function setBizStatus(text, color) {
+      var el = document.getElementById("bizStatus");
+      el.textContent = text;
+      el.style.color = color || "black";
+    }
+
+    function getBusinesses() {
+      try { return JSON.parse(localStorage.getItem("hundene_vare_businesses") || "[]"); }
+      catch(e) { return []; }
+    }
+    function saveBusinesses(data) {
+      localStorage.setItem("hundene_vare_businesses", JSON.stringify(data));
+    }
+    function fileToDataUrl(file) {
+      return new Promise(function(resolve){
+        if(!file){ resolve(""); return; }
+        var reader = new FileReader();
+        reader.onload = function(e){ resolve(e.target.result || ""); };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function saveBusiness() {
+      var bizType = document.getElementById("bizType").value;
+      var bizName = document.getElementById("bizName").value.trim();
+      var bizPlace = document.getElementById("bizPlace").value.trim();
+      var bizPhone = document.getElementById("bizPhone").value.trim();
+      var bizWebsite = document.getElementById("bizWebsite").value.trim();
+      var bizText = document.getElementById("bizText").value.trim();
+      var logoFile = document.getElementById("bizLogo").files[0];
+      var imageFile = document.getElementById("bizImage").files[0];
+
+      if (!bizName || !bizPlace || !bizText) {
+        setBizStatus("Skriv inn navn, sted og beskrivelse.", "crimson");
+        return;
+      }
+
+      var logoUrl = await fileToDataUrl(logoFile);
+      var imageUrl = await fileToDataUrl(imageFile);
+
+      var list = getBusinesses();
+      list.unshift({
+        id: Date.now(),
+        type: bizType,
+        name: bizName,
+        place: bizPlace,
+        phone: bizPhone,
+        website: bizWebsite,
+        text: bizText,
+        logoUrl: logoUrl,
+        imageUrl: imageUrl
+      });
+      saveBusinesses(list);
+
+      document.getElementById("bizName").value = "";
+      document.getElementById("bizPlace").value = "";
+      document.getElementById("bizPhone").value = "";
+      document.getElementById("bizWebsite").value = "";
+      document.getElementById("bizText").value = "";
+      document.getElementById("bizLogo").value = "";
+      document.getElementById("bizImage").value = "";
+      setBizStatus("Bedrift lagret.", "green");
+      loadBusinesses();
+    }
+
+    function renderBizList(type, targetId) {
+      var all = getBusinesses().filter(function(b){ return b.type === type; });
+      var target = document.getElementById(targetId);
+      if (!all.length) {
+        target.innerHTML = '<div class="service-card">Ingen bedrifter registrert enda.</div>';
+        return;
+      }
+      var html = '';
+      for (var i=0;i<all.length;i++) {
+        var b = all[i];
+        html += '<div class="biz-card">';
+        html += '<h3>' + escapeHtml(b.name || "") + '</h3>';
+        html += '<div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div>';
+        if (b.logoUrl) html += '<img class="biz-logo" src="' + b.logoUrl + '" alt="Logo">';
+        html += '<p>' + escapeHtml(b.text || "") + '</p>';
+        if (b.phone) html += '<div><strong>Telefon:</strong> ' + escapeHtml(b.phone) + '</div>';
+        if (b.website) html += '<div><strong>Nettside:</strong> ' + escapeHtml(b.website) + '</div>';
+        if (b.imageUrl) html += '<img src="' + b.imageUrl + '" alt="Bedriftsbilde">';
+        html += '</div>';
+      }
+      target.innerHTML = html;
+    }
+
+    function loadBusinesses() {
+      renderBizList("Frisør", "groomerList");
+      renderBizList("Zoo butikk", "shopList");
+      renderBizList("Veterinær", "vetList");
     }
 
     function getLikes() {
@@ -411,6 +533,7 @@
 
     loadStories();
     loadProfile();
+    loadBusinesses();
   </script>
 </body>
 </html>
