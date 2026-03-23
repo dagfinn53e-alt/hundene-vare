@@ -43,6 +43,7 @@
     .btnrow{display:flex;gap:10px;flex-wrap:wrap}
     button{border:none;border-radius:12px;padding:12px 16px;background:var(--blue-dark);color:#fff;cursor:pointer;font-weight:700}
     button.alt{background:#dbeafe;color:var(--blue-dark);border:1px solid #93c5fd}
+    button.warn{background:#fff7ed;color:#9a3412;border:1px solid #fdba74}
     #status,#bizStatus{margin-top:12px;min-height:24px;font-weight:700}
     .hidden{display:none}
     .post,.biz-card{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:12px}
@@ -117,8 +118,8 @@
             <p>Registrerte veterinærer med tjenester, åpningstider, logo og kontakt.</p>
           </button>
           <button class="menu-btn box-business" onclick="showPage('business')">
-            <h3>🏪 Registrer bedrift</h3>
-            <p>Bedrifter kan registrere seg og vises for alle i appen.</p>
+            <h3>🏪 Registrer / rediger bedrift</h3>
+            <p>Bedrifter kan registrere seg, redigere info, rette Facebook/nettside og vises for alle i appen.</p>
           </button>
         </div>
         <div class="footer-note">
@@ -230,8 +231,13 @@
     <div id="page-business" class="hidden">
       <div class="card">
         <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-        <h2>🏪 Registrer bedrift</h2>
-        <div class="sub">Bedrifter lagres i Supabase og blir synlige for alle brukere.</div>
+        <h2>🏪 Registrer / rediger bedrift</h2>
+        <div class="sub">Velg en eksisterende bedrift for å redigere, eller fyll inn ny informasjon for å lage en ny.</div>
+
+        <select id="editBusinessSelect" onchange="loadBusinessIntoForm()">
+          <option value="">Ny bedrift</option>
+        </select>
+
         <select id="bizType">
           <option>Frisør</option>
           <option>Zoo butikk</option>
@@ -240,15 +246,16 @@
         <input id="bizName" placeholder="Navn på bedrift">
         <input id="bizPlace" placeholder="Sted">
         <input id="bizPhone" placeholder="Telefon">
-        <input id="bizWebsite" placeholder="Nettside / Facebook">
+        <input id="bizWebsite" placeholder="Nettside eller Facebook-link">
         <textarea id="bizText" placeholder="Beskrivelse av bedriften"></textarea>
-        <label>Last opp logo</label>
+        <label>Last opp ny logo (valgfritt ved redigering)</label>
         <input id="bizLogo" type="file" accept="image/*">
-        <label>Last opp bilde</label>
+        <label>Last opp nytt hovedbilde (valgfritt ved redigering)</label>
         <input id="bizImage" type="file" accept="image/*">
         <div class="btnrow">
           <button type="button" onclick="saveBusiness()">Lagre bedrift</button>
           <button type="button" class="alt" onclick="loadBusinesses()">Oppdater bedrifter</button>
+          <button type="button" class="warn" onclick="clearBusinessForm()">Tøm skjema</button>
         </div>
         <div id="bizStatus">Klar.</div>
       </div>
@@ -280,6 +287,7 @@
       document.getElementById('page-' + name).classList.remove('hidden');
       if(name === 'stories'){ loadStories(); loadProfile(); }
       if(name === 'groomers' || name === 'shops' || name === 'vets'){ loadBusinesses(); }
+      if(name === 'business'){ loadBusinessOptions(); }
     }
 
     function setStatus(text, color) {
@@ -319,11 +327,62 @@
       return pub.data.publicUrl || "";
     }
 
+    async function loadBusinessOptions() {
+      var auth = await supabase.auth.getUser();
+      var user = auth && auth.data ? auth.data.user : null;
+      var select = document.getElementById("editBusinessSelect");
+      select.innerHTML = '<option value="">Ny bedrift</option>';
+      if (!user) return;
+
+      var result = await supabase.from("businesses").select("*").eq("author_email", user.email).order("created_at", { ascending: false });
+      var rows = result.data || [];
+      for (var i = 0; i < rows.length; i++) {
+        var opt = document.createElement("option");
+        opt.value = rows[i].id;
+        opt.textContent = rows[i].name + " – " + rows[i].place;
+        opt.dataset.biz = JSON.stringify(rows[i]);
+        select.appendChild(opt);
+      }
+    }
+
+    function clearBusinessForm() {
+      document.getElementById("editBusinessSelect").value = "";
+      document.getElementById("bizType").value = "Frisør";
+      document.getElementById("bizName").value = "";
+      document.getElementById("bizPlace").value = "";
+      document.getElementById("bizPhone").value = "";
+      document.getElementById("bizWebsite").value = "";
+      document.getElementById("bizText").value = "";
+      document.getElementById("bizLogo").value = "";
+      document.getElementById("bizImage").value = "";
+      setBizStatus("Skjema tømt.", "black");
+    }
+
+    function loadBusinessIntoForm() {
+      var select = document.getElementById("editBusinessSelect");
+      if (!select.value) {
+        clearBusinessForm();
+        return;
+      }
+      var opt = select.options[select.selectedIndex];
+      var b = JSON.parse(opt.dataset.biz);
+      document.getElementById("bizType").value = b.type || "Frisør";
+      document.getElementById("bizName").value = b.name || "";
+      document.getElementById("bizPlace").value = b.place || "";
+      document.getElementById("bizPhone").value = b.phone || "";
+      document.getElementById("bizWebsite").value = b.website || "";
+      document.getElementById("bizText").value = b.description || "";
+      document.getElementById("bizLogo").value = "";
+      document.getElementById("bizImage").value = "";
+      setBizStatus("Bedrift lastet inn for redigering.", "green");
+    }
+
     async function saveBusiness() {
       var auth = await supabase.auth.getUser();
       var user = auth && auth.data ? auth.data.user : null;
       if (!user) { setBizStatus("Du må logge inn først.", "crimson"); return; }
 
+      var editId = document.getElementById("editBusinessSelect").value;
       var bizType = document.getElementById("bizType").value;
       var bizName = document.getElementById("bizName").value.trim();
       var bizPlace = document.getElementById("bizPlace").value.trim();
@@ -339,11 +398,21 @@
       }
 
       try {
-        setBizStatus("Lagrer bedrift ...", "blue");
-        var logoUrl = await uploadBusinessFile(logoFile, "logos");
-        var imageUrl = await uploadBusinessFile(imageFile, "images");
+        setBizStatus(editId ? "Oppdaterer bedrift ..." : "Lagrer bedrift ...", "blue");
 
-        var insert = await supabase.from("businesses").insert([{
+        var existing = null;
+        if (editId) {
+          var current = await supabase.from("businesses").select("*").eq("id", editId).maybeSingle();
+          existing = current.data || null;
+        }
+
+        var logoUrl = existing && existing.logo_url ? existing.logo_url : "";
+        var imageUrl = existing && existing.image_url ? existing.image_url : "";
+
+        if (logoFile) logoUrl = await uploadBusinessFile(logoFile, "logos");
+        if (imageFile) imageUrl = await uploadBusinessFile(imageFile, "images");
+
+        var payload = {
           user_id: user.id,
           author_email: user.email,
           type: bizType,
@@ -354,19 +423,20 @@
           description: bizText,
           logo_url: logoUrl,
           image_url: imageUrl
-        }]);
+        };
 
-        if (insert.error) { setBizStatus("Feil ved lagring: " + insert.error.message, "crimson"); return; }
+        if (editId) {
+          var update = await supabase.from("businesses").update(payload).eq("id", editId).eq("author_email", user.email);
+          if (update.error) { setBizStatus("Feil ved oppdatering: " + update.error.message, "crimson"); return; }
+          setBizStatus("Bedrift oppdatert.", "green");
+        } else {
+          var insert = await supabase.from("businesses").insert([payload]);
+          if (insert.error) { setBizStatus("Feil ved lagring: " + insert.error.message, "crimson"); return; }
+          setBizStatus("Bedrift lagret.", "green");
+        }
 
-        document.getElementById("bizName").value = "";
-        document.getElementById("bizPlace").value = "";
-        document.getElementById("bizPhone").value = "";
-        document.getElementById("bizWebsite").value = "";
-        document.getElementById("bizText").value = "";
-        document.getElementById("bizLogo").value = "";
-        document.getElementById("bizImage").value = "";
-        setBizStatus("Bedrift lagret.", "green");
-        loadBusinesses();
+        await loadBusinesses();
+        await loadBusinessOptions();
       } catch (e) {
         setBizStatus("Feil ved opplasting: " + e.message, "crimson");
       }
@@ -413,7 +483,7 @@
         html += '<div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div>';
         html += '<p>' + escapeHtml(b.description || "") + '</p>';
         if (b.phone) html += '<div><strong>Telefon:</strong> ' + escapeHtml(b.phone) + '</div>';
-        if (b.website) html += '<div><strong>Nettside:</strong> <a class="site-link" href="' + escapeAttr(b.website) + '" target="_blank" rel="noopener noreferrer">Besøk nettside</a></div>';
+        if (b.website) html += '<div><strong>Lenke:</strong> <a class="site-link" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
         if (mapsLink) html += '<div><a class="map-link" href="' + mapsLink + '" target="_blank" rel="noopener noreferrer">📍 Åpne i Google Maps</a></div>';
         html += '<div class="biz-actions">';
         html += '<button class="alt" type="button" onclick="toggleFavoriteBusiness(\'' + b.id + '\')">' + (isFav ? '❤️ Favoritt lagret' : '🤍 Lagre favoritt') + '</button>';
@@ -429,30 +499,15 @@
       var result = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
       var rows = result.data || [];
 
-      renderBizList(
-        "Frisør",
-        "groomerList",
-        rows,
-        document.getElementById("searchGroomers")?.value || "",
-        document.getElementById("filterFavoritesGroomers")?.value || "all",
-        document.getElementById("mapSearchGroomers")?.value || ""
-      );
-      renderBizList(
-        "Zoo butikk",
-        "shopList",
-        rows,
-        document.getElementById("searchShops")?.value || "",
-        document.getElementById("filterFavoritesShops")?.value || "all",
-        document.getElementById("mapSearchShops")?.value || ""
-      );
-      renderBizList(
-        "Veterinær",
-        "vetList",
-        rows,
-        document.getElementById("searchVets")?.value || "",
-        document.getElementById("filterFavoritesVets")?.value || "all",
-        document.getElementById("mapSearchVets")?.value || ""
-      );
+      renderBizList("Frisør","groomerList",rows,document.getElementById("searchGroomers")?.value || "",document.getElementById("filterFavoritesGroomers")?.value || "all",document.getElementById("mapSearchGroomers")?.value || "");
+      renderBizList("Zoo butikk","shopList",rows,document.getElementById("searchShops")?.value || "",document.getElementById("filterFavoritesShops")?.value || "all",document.getElementById("mapSearchShops")?.value || "");
+      renderBizList("Veterinær","vetList",rows,document.getElementById("searchVets")?.value || "",document.getElementById("filterFavoritesVets")?.value || "all",document.getElementById("mapSearchVets")?.value || "");
+    }
+
+    function normalizeUrl(url) {
+      if (!url) return "";
+      if (url.startsWith("http://") || url.startsWith("https://")) return url;
+      return "https://" + url;
     }
 
     function getLikes() {
@@ -631,9 +686,6 @@
     }
     function escapeHtml(str) {
       return String(str).replace(/[&<>"']/g, function (m) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]; });
-    }
-    function escapeAttr(str) {
-      return String(str).replace(/"/g, "&quot;");
     }
 
     loadStories();
