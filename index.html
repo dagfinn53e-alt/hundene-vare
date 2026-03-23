@@ -202,7 +202,8 @@
       color:#8a5a00;
       margin-bottom:10px;
     }
-    </style>
+
+  </style>
 </head>
 <body>
 <div class="wrap">
@@ -358,6 +359,7 @@
     var pages = ['home','auth','stories','groomers','shops','vets','business','admin'];
     for (var i = 0; i < pages.length; i++) document.getElementById('page-' + pages[i]).classList.add('hidden');
     document.getElementById('page-' + name).classList.remove('hidden');
+    if(name === 'home'){ loadUkensHund(); }
     if(name === 'stories'){ loadStories(); loadProfile(); }
     if(name === 'groomers' || name === 'shops' || name === 'vets'){ loadBusinesses(); }
     if(name === 'business'){ loadBusinessOptions(); }
@@ -623,7 +625,10 @@
     var shtml = stories.length ? "" : "Ingen innlegg.";
     for (var i=0;i<stories.length;i++) {
       var s = stories[i];
-      shtml += '<div class="admin-item"><h3>' + escapeHtml(s.title || "") + '</h3><div class="meta">' + escapeHtml(s.author_email || "") + ' · ' + escapeHtml(s.place || "") + '</div><div class="btnrow"><button class="danger" type="button" onclick="deleteStory(\'' + s.id + '\')">Slett innlegg</button></div></div>';
+      shtml += '<div class="admin-item"><h3>' + escapeHtml(s.title || "") + (s.ukens_hund ? ' <span class="badge approved">Ukens Hund</span>' : '') + '</h3><div class="meta">' + escapeHtml(s.author_email || "") + ' · ' + escapeHtml(s.place || "") + '</div><div class="btnrow">';
+      if (!s.ukens_hund) shtml += '<button class="ok" type="button" onclick="setUkensHund(\'' + s.id + '\')">Velg som Ukens Hund</button>';
+      if (s.ukens_hund) shtml += '<button class="warn" type="button" onclick="clearUkensHund(\'' + s.id + '\')">Fjern Ukens Hund</button>';
+      shtml += '<button class="danger" type="button" onclick="deleteStory(\'' + s.id + '\')">Slett innlegg</button></div></div>';
     }
     document.getElementById("adminStories").innerHTML = shtml;
 
@@ -644,7 +649,7 @@
     if (!confirm("Slette dette innlegget?")) return;
     var del = await supabase.from("stories").delete().eq("id", id);
     if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
-    setAdminStatus("Innlegg slettet.", "green"); loadAdmin(); loadStories(); loadProfile();
+    setAdminStatus("Innlegg slettet.", "green"); loadAdmin(); loadStories(); loadProfile(); loadUkensHund();
   }
 
   async function deleteBusiness(id) {
@@ -859,6 +864,7 @@
   loadStories();
   loadProfile();
   loadBusinesses();
+  loadUkensHund();
 </script>
 </body>
 </html>
