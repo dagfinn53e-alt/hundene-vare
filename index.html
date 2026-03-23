@@ -140,7 +140,7 @@
     .likebar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
     .likebtn{
       background:#fff;color:var(--blue-dark);border:1px solid #bfdbfe;padding:10px 15px;
-      border-radius:999px;font-weight:700;cursor:pointer;box-shadow:none
+      border-radius:999px;font-weight:700;cursor:pointer;box-shadow:none;min-height:44px
     }
     .comments{margin-top:16px;border-top:1px solid var(--line);padding-top:16px}
     .comment{
@@ -223,6 +223,8 @@
       .topbar .actions{display:none}
       .bottom-nav{display:grid}
       .wrap{padding-bottom:118px}
+      .section-chipbar{gap:8px}
+      .section-chip{width:100%;justify-content:center}
     }
   </style>
 </head>
@@ -249,7 +251,9 @@
       <div class="section-chipbar">
         <button type="button" class="section-chip" onclick="showPage('stories')">🐶 Fellesskap</button>
         <button type="button" class="section-chip" onclick="showPage('stories')">📸 Bilder</button>
-        <button type="button" class="section-chip" onclick="showPage('groomers')">🏪 Lokale tjenester</button>
+        <button type="button" class="section-chip" onclick="showPage('groomers')">✂️ Frisører</button>
+        <button type="button" class="section-chip" onclick="showPage('shops')">🐾 Butikker</button>
+        <button type="button" class="section-chip" onclick="showPage('vets')">🏥 Veterinærer</button>
       </div>
     </div>
 
