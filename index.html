@@ -14,6 +14,7 @@
       --red:#fef2f2; --red-line:#fca5a5; --red-text:#b91c1c;
       --sky:#eff6ff; --sky-line:#93c5fd; --sky-text:#1d4ed8;
       --orange:#fff7ed; --orange-line:#fdba74; --orange-text:#9a3412;
+      --gray:#f8fafc; --gray-line:#cbd5e1;
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(180deg,#eaf3ff 0%,#f8fbff 100%);color:var(--text)}
@@ -36,6 +37,7 @@
     .box-shops{background:var(--green);border:1px solid var(--green-line);color:var(--green-text)}
     .box-vets{background:var(--red);border:1px solid var(--red-line);color:var(--red-text)}
     .box-business{background:var(--orange);border:1px solid var(--orange-line);color:var(--orange-text)}
+    .box-admin{background:var(--gray);border:1px solid var(--gray-line);color:#334155}
     h2{margin:0 0 12px 0;font-size:24px}
     .sub{color:var(--muted);margin-bottom:12px;line-height:1.6}
     input,textarea,select{width:100%;padding:12px 14px;margin:8px 0 12px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff}
@@ -44,10 +46,11 @@
     button{border:none;border-radius:12px;padding:12px 16px;background:var(--blue-dark);color:#fff;cursor:pointer;font-weight:700}
     button.alt{background:#dbeafe;color:var(--blue-dark);border:1px solid #93c5fd}
     button.warn{background:#fff7ed;color:#9a3412;border:1px solid #fdba74}
-    #status,#bizStatus{margin-top:12px;min-height:24px;font-weight:700}
+    button.danger{background:#b91c1c;color:#fff}
+    #status,#bizStatus,#adminStatus{margin-top:12px;min-height:24px;font-weight:700}
     .hidden{display:none}
-    .post,.biz-card{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:12px}
-    .post h3,.biz-card h3{font-size:21px;margin:0 0 8px 0}
+    .post,.biz-card,.admin-item{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:12px}
+    .post h3,.biz-card h3,.admin-item h3{font-size:21px;margin:0 0 8px 0}
     .meta{color:var(--muted);font-size:14px;margin-bottom:10px}
     .post img,.biz-card img{width:100%;border-radius:16px;margin-top:12px;display:block;max-height:520px;object-fit:cover}
     .biz-logo{max-width:140px!important;max-height:140px!important;object-fit:contain!important;background:#fff;padding:10px;border:1px solid #e2e8f0}
@@ -69,8 +72,9 @@
     .footer-note{margin-top:18px;padding:14px 16px;border-radius:18px;background:#dbeafe;border:1px solid #93c5fd;color:#1e3a8a;line-height:1.6}
     .search-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
     .map-link{display:inline-block;margin-top:10px;color:#1d4ed8;font-weight:700;text-decoration:none}
+    .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     @media (max-width:760px){
-      .grid,.menu-grid,.topstats,.search-grid{grid-template-columns:1fr}
+      .grid,.menu-grid,.topstats,.search-grid,.admin-grid{grid-template-columns:1fr}
       .hero h1{font-size:28px}
     }
   </style>
@@ -120,6 +124,10 @@
           <button class="menu-btn box-business" onclick="showPage('business')">
             <h3>🏪 Registrer / rediger bedrift</h3>
             <p>Bedrifter kan registrere seg, redigere info, rette Facebook/nettside og vises for alle i appen.</p>
+          </button>
+          <button class="menu-btn box-admin" onclick="showPage('admin')">
+            <h3>🛠️ Admin</h3>
+            <p>Her kan du som eier se og slette innlegg og bedrifter.</p>
           </button>
         </div>
         <div class="footer-note">
@@ -180,69 +188,19 @@
       </div>
     </div>
 
-    <div id="page-groomers" class="hidden">
-      <div class="card">
-        <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-        <h2>✂️ Frisører</h2>
-        <div class="search-grid">
-          <input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()">
-          <select id="filterFavoritesGroomers" onchange="loadBusinesses()">
-            <option value="all">Alle</option>
-            <option value="fav">Kun favoritter</option>
-          </select>
-          <input id="mapSearchGroomers" placeholder="Sted for kart-link" oninput="loadBusinesses()">
-        </div>
-        <div id="groomerList"></div>
-      </div>
-    </div>
+    <div id="page-groomers" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>✂️ Frisører</h2><div class="search-grid"><input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()"><select id="filterFavoritesGroomers" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchGroomers" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="groomerList"></div></div></div>
 
-    <div id="page-shops" class="hidden">
-      <div class="card">
-        <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-        <h2>🐾 Zoo butikker</h2>
-        <div class="search-grid">
-          <input id="searchShops" placeholder="Søk butikk eller sted" oninput="loadBusinesses()">
-          <select id="filterFavoritesShops" onchange="loadBusinesses()">
-            <option value="all">Alle</option>
-            <option value="fav">Kun favoritter</option>
-          </select>
-          <input id="mapSearchShops" placeholder="Sted for kart-link" oninput="loadBusinesses()">
-        </div>
-        <div id="shopList"></div>
-      </div>
-    </div>
+    <div id="page-shops" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>🐾 Zoo butikker</h2><div class="search-grid"><input id="searchShops" placeholder="Søk butikk eller sted" oninput="loadBusinesses()"><select id="filterFavoritesShops" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchShops" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="shopList"></div></div></div>
 
-    <div id="page-vets" class="hidden">
-      <div class="card">
-        <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-        <h2>🏥 Veterinærer</h2>
-        <div class="search-grid">
-          <input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()">
-          <select id="filterFavoritesVets" onchange="loadBusinesses()">
-            <option value="all">Alle</option>
-            <option value="fav">Kun favoritter</option>
-          </select>
-          <input id="mapSearchVets" placeholder="Sted for kart-link" oninput="loadBusinesses()">
-        </div>
-        <div id="vetList"></div>
-      </div>
-    </div>
+    <div id="page-vets" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>🏥 Veterinærer</h2><div class="search-grid"><input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()"><select id="filterFavoritesVets" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchVets" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="vetList"></div></div></div>
 
     <div id="page-business" class="hidden">
       <div class="card">
         <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
         <h2>🏪 Registrer / rediger bedrift</h2>
         <div class="sub">Velg en eksisterende bedrift for å redigere, eller fyll inn ny informasjon for å lage en ny.</div>
-
-        <select id="editBusinessSelect" onchange="loadBusinessIntoForm()">
-          <option value="">Ny bedrift</option>
-        </select>
-
-        <select id="bizType">
-          <option>Frisør</option>
-          <option>Zoo butikk</option>
-          <option>Veterinær</option>
-        </select>
+        <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
+        <select id="bizType"><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option></select>
         <input id="bizName" placeholder="Navn på bedrift">
         <input id="bizPlace" placeholder="Sted">
         <input id="bizPhone" placeholder="Telefon">
@@ -261,6 +219,25 @@
       </div>
     </div>
 
+    <div id="page-admin" class="hidden">
+      <div class="card">
+        <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+        <h2>🛠️ Admin</h2>
+        <div class="sub">Her kan du se og slette innlegg og bedrifter. Denne siden er kun for admin-bruker.</div>
+        <div id="adminStatus">Klar.</div>
+      </div>
+      <div class="admin-grid">
+        <div class="card">
+          <h2>Innlegg</h2>
+          <div id="adminStories">Laster ...</div>
+        </div>
+        <div class="card">
+          <h2>Bedrifter</h2>
+          <div id="adminBusinesses">Laster ...</div>
+        </div>
+      </div>
+    </div>
+
     <div class="card">
       <div class="sharebox">
         <div>Del appen med andre:</div>
@@ -274,20 +251,20 @@
   </div>
 
   <script>
+    var ADMIN_EMAIL = "dagfinn53e@gmail.com";
     var supabase = window.supabase.createClient(
       "https://kxudiviidwwwclbzgdyx.supabase.co",
       "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
     );
 
     function showPage(name){
-      var pages = ['home','auth','stories','groomers','shops','vets','business'];
-      for (var i = 0; i < pages.length; i++) {
-        document.getElementById('page-' + pages[i]).classList.add('hidden');
-      }
+      var pages = ['home','auth','stories','groomers','shops','vets','business','admin'];
+      for (var i = 0; i < pages.length; i++) document.getElementById('page-' + pages[i]).classList.add('hidden');
       document.getElementById('page-' + name).classList.remove('hidden');
       if(name === 'stories'){ loadStories(); loadProfile(); }
       if(name === 'groomers' || name === 'shops' || name === 'vets'){ loadBusinesses(); }
       if(name === 'business'){ loadBusinessOptions(); }
+      if(name === 'admin'){ loadAdmin(); }
     }
 
     function setStatus(text, color) {
@@ -295,9 +272,13 @@
       el.textContent = text;
       el.style.color = color || "black";
     }
-
     function setBizStatus(text, color) {
       var el = document.getElementById("bizStatus");
+      el.textContent = text;
+      el.style.color = color || "black";
+    }
+    function setAdminStatus(text, color) {
+      var el = document.getElementById("adminStatus");
       el.textContent = text;
       el.style.color = color || "black";
     }
@@ -360,10 +341,7 @@
 
     function loadBusinessIntoForm() {
       var select = document.getElementById("editBusinessSelect");
-      if (!select.value) {
-        clearBusinessForm();
-        return;
-      }
+      if (!select.value) { clearBusinessForm(); return; }
       var opt = select.options[select.selectedIndex];
       var b = JSON.parse(opt.dataset.biz);
       document.getElementById("bizType").value = b.type || "Frisør";
@@ -391,15 +369,10 @@
       var bizText = document.getElementById("bizText").value.trim();
       var logoFile = document.getElementById("bizLogo").files[0];
       var imageFile = document.getElementById("bizImage").files[0];
-
-      if (!bizName || !bizPlace || !bizText) {
-        setBizStatus("Skriv inn navn, sted og beskrivelse.", "crimson");
-        return;
-      }
+      if (!bizName || !bizPlace || !bizText) { setBizStatus("Skriv inn navn, sted og beskrivelse.", "crimson"); return; }
 
       try {
         setBizStatus(editId ? "Oppdaterer bedrift ..." : "Lagrer bedrift ...", "blue");
-
         var existing = null;
         if (editId) {
           var current = await supabase.from("businesses").select("*").eq("id", editId).maybeSingle();
@@ -408,21 +381,12 @@
 
         var logoUrl = existing && existing.logo_url ? existing.logo_url : "";
         var imageUrl = existing && existing.image_url ? existing.image_url : "";
-
         if (logoFile) logoUrl = await uploadBusinessFile(logoFile, "logos");
         if (imageFile) imageUrl = await uploadBusinessFile(imageFile, "images");
 
         var payload = {
-          user_id: user.id,
-          author_email: user.email,
-          type: bizType,
-          name: bizName,
-          place: bizPlace,
-          phone: bizPhone,
-          website: bizWebsite,
-          description: bizText,
-          logo_url: logoUrl,
-          image_url: imageUrl
+          user_id: user.id, author_email: user.email, type: bizType, name: bizName, place: bizPlace,
+          phone: bizPhone, website: bizWebsite, description: bizText, logo_url: logoUrl, image_url: imageUrl
         };
 
         if (editId) {
@@ -451,43 +415,31 @@
     function renderBizList(type, targetId, rows, searchValue, favMode, mapSearch) {
       var favs = getFavoriteBusinesses();
       var all = rows.filter(function(b){ return b.type === type; });
-
       if (searchValue) {
         var s = searchValue.toLowerCase();
         all = all.filter(function(b){
           return (b.name || "").toLowerCase().includes(s) || (b.place || "").toLowerCase().includes(s) || (b.description || "").toLowerCase().includes(s);
         });
       }
-
-      if (favMode === "fav") {
-        all = all.filter(function(b){ return favs.indexOf(b.id) >= 0; });
-      }
+      if (favMode === "fav") all = all.filter(function(b){ return favs.indexOf(b.id) >= 0; });
 
       var target = document.getElementById(targetId);
-      if (!all.length) {
-        target.innerHTML = '<div class="biz-card">Ingen bedrifter funnet.</div>';
-        return;
-      }
+      if (!all.length) { target.innerHTML = '<div class="biz-card">Ingen bedrifter funnet.</div>'; return; }
 
       var html = '';
       for (var i=0;i<all.length;i++) {
         var b = all[i];
         var isFav = favs.indexOf(b.id) >= 0;
         var mapsLink = buildGoogleMapsLink(b.place, mapSearch || b.place);
-
-        html += '<div class="biz-card">';
-        html += '<div class="biz-top">';
+        html += '<div class="biz-card"><div class="biz-top">';
         if (b.logo_url) html += '<img class="biz-logo" src="' + b.logo_url + '" alt="Logo">';
-        html += '<div class="biz-info">';
-        html += '<h3>' + escapeHtml(b.name || "") + '</h3>';
+        html += '<div class="biz-info"><h3>' + escapeHtml(b.name || "") + '</h3>';
         html += '<div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div>';
         html += '<p>' + escapeHtml(b.description || "") + '</p>';
         if (b.phone) html += '<div><strong>Telefon:</strong> ' + escapeHtml(b.phone) + '</div>';
         if (b.website) html += '<div><strong>Lenke:</strong> <a class="site-link" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
         if (mapsLink) html += '<div><a class="map-link" href="' + mapsLink + '" target="_blank" rel="noopener noreferrer">📍 Åpne i Google Maps</a></div>';
-        html += '<div class="biz-actions">';
-        html += '<button class="alt" type="button" onclick="toggleFavoriteBusiness(\'' + b.id + '\')">' + (isFav ? '❤️ Favoritt lagret' : '🤍 Lagre favoritt') + '</button>';
-        html += '</div>';
+        html += '<div class="biz-actions"><button class="alt" type="button" onclick="toggleFavoriteBusiness(\'' + b.id + '\')">' + (isFav ? '❤️ Favoritt lagret' : '🤍 Lagre favoritt') + '</button></div>';
         html += '</div></div>';
         if (b.image_url) html += '<img src="' + b.image_url + '" alt="Bedriftsbilde">';
         html += '</div>';
@@ -498,7 +450,6 @@
     async function loadBusinesses() {
       var result = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
       var rows = result.data || [];
-
       renderBizList("Frisør","groomerList",rows,document.getElementById("searchGroomers")?.value || "",document.getElementById("filterFavoritesGroomers")?.value || "all",document.getElementById("mapSearchGroomers")?.value || "");
       renderBizList("Zoo butikk","shopList",rows,document.getElementById("searchShops")?.value || "",document.getElementById("filterFavoritesShops")?.value || "all",document.getElementById("mapSearchShops")?.value || "");
       renderBizList("Veterinær","vetList",rows,document.getElementById("searchVets")?.value || "",document.getElementById("filterFavoritesVets")?.value || "all",document.getElementById("mapSearchVets")?.value || "");
@@ -508,6 +459,60 @@
       if (!url) return "";
       if (url.startsWith("http://") || url.startsWith("https://")) return url;
       return "https://" + url;
+    }
+
+    async function loadAdmin() {
+      var auth = await supabase.auth.getUser();
+      var user = auth && auth.data ? auth.data.user : null;
+      if (!user || user.email !== ADMIN_EMAIL) {
+        document.getElementById("adminStories").innerHTML = "Du må være innlogget som admin.";
+        document.getElementById("adminBusinesses").innerHTML = "Du må være innlogget som admin.";
+        setAdminStatus("Admin-tilgang mangler.", "crimson");
+        return;
+      }
+
+      setAdminStatus("Admin innlogget som " + user.email, "green");
+
+      var storiesRes = await supabase.from("stories").select("*").order("created_at", { ascending: false });
+      var businessesRes = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
+
+      var stories = storiesRes.data || [];
+      var businesses = businessesRes.data || [];
+
+      var shtml = "";
+      if (!stories.length) shtml = "Ingen innlegg.";
+      for (var i=0;i<stories.length;i++) {
+        var s = stories[i];
+        shtml += '<div class="admin-item"><h3>' + escapeHtml(s.title || "") + '</h3><div class="meta">' + escapeHtml(s.author_email || "") + ' · ' + escapeHtml(s.place || "") + '</div><div class="btnrow"><button class="danger" type="button" onclick="deleteStory(\'' + s.id + '\')">Slett innlegg</button></div></div>';
+      }
+      document.getElementById("adminStories").innerHTML = shtml;
+
+      var bhtml = "";
+      if (!businesses.length) bhtml = "Ingen bedrifter.";
+      for (var j=0;j<businesses.length;j++) {
+        var b = businesses[j];
+        bhtml += '<div class="admin-item"><h3>' + escapeHtml(b.name || "") + '</h3><div class="meta">' + escapeHtml(b.author_email || "") + ' · ' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div><div class="btnrow"><button class="danger" type="button" onclick="deleteBusiness(\'' + b.id + '\')">Slett bedrift</button></div></div>';
+      }
+      document.getElementById("adminBusinesses").innerHTML = bhtml;
+    }
+
+    async function deleteStory(id) {
+      if (!confirm("Slette dette innlegget?")) return;
+      var del = await supabase.from("stories").delete().eq("id", id);
+      if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
+      setAdminStatus("Innlegg slettet.", "green");
+      loadAdmin();
+      loadStories();
+    }
+
+    async function deleteBusiness(id) {
+      if (!confirm("Slette denne bedriften?")) return;
+      var del = await supabase.from("businesses").delete().eq("id", id);
+      if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
+      setAdminStatus("Bedrift slettet.", "green");
+      loadAdmin();
+      loadBusinesses();
+      loadBusinessOptions();
     }
 
     function getLikes() {
@@ -548,7 +553,6 @@
       var auth = await supabase.auth.getUser();
       var user = auth && auth.data ? auth.data.user : null;
       if (!user) { setStatus("Du må logge inn først.", "crimson"); return; }
-
       var title = document.getElementById("title").value.trim();
       var dog = document.getElementById("dog").value.trim() || "Ikke oppgitt";
       var place = document.getElementById("place").value.trim() || "Ikke oppgitt";
@@ -567,11 +571,7 @@
         imageUrl = pub.data.publicUrl;
       }
 
-      var insert = await supabase.from("stories").insert([{
-        user_id: user.id, author_email: user.email, title: title, dog: dog, place: place,
-        category: category, text: text, image_url: imageUrl
-      }]);
-
+      var insert = await supabase.from("stories").insert([{user_id:user.id,author_email:user.email,title:title,dog:dog,place:place,category:category,text:text,image_url:imageUrl}]);
       if (insert.error) { setStatus("Feil ved lagring: " + insert.error.message, "crimson"); return; }
 
       document.getElementById("title").value = "";
@@ -608,7 +608,6 @@
     async function loadStories() {
       var feed = document.getElementById("feed");
       feed.textContent = "Laster ...";
-
       var result = await supabase.from("stories").select("*").order("created_at", { ascending: false });
       if (result.error) { feed.textContent = "Feil ved henting: " + result.error.message; return; }
 
@@ -623,7 +622,6 @@
       document.getElementById("memberCount").textContent = Object.keys(members).length;
       document.getElementById("imageCount").textContent = images;
       document.getElementById("commentCount").textContent = commentTotal;
-
       if (!data.length) { feed.textContent = "Ingen innlegg enda."; return; }
 
       var html = "";
@@ -632,21 +630,13 @@
         var postId = post.id || ("post_" + i);
         var likeCount = likes[postId] || 0;
         var postComments = comments[postId] || [];
-        html += '<div class="post">';
-        html += '<h3>' + escapeHtml(post.title || "") + '</h3>';
-        html += '<div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + ' · ' + escapeHtml(post.category || "") + '</div>';
-        html += '<p>' + escapeHtml(post.text || "") + '</p>';
+        html += '<div class="post"><h3>' + escapeHtml(post.title || "") + '</h3><div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + ' · ' + escapeHtml(post.category || "") + '</div><p>' + escapeHtml(post.text || "") + '</p>';
         if (post.image_url) html += '<img src="' + post.image_url + '" alt="Hundebilde">';
-        html += '<div class="likebar">';
-        html += '<button class="likebtn" type="button" onclick="likePost(\'' + postId + '\')">❤️ Lik (' + likeCount + ')</button>';
-        html += '<span class="mini">' + postComments.length + ' kommentar(er)</span>';
-        html += '</div><div class="comments">';
+        html += '<div class="likebar"><button class="likebtn" type="button" onclick="likePost(\'' + postId + '\')">❤️ Lik (' + likeCount + ')</button><span class="mini">' + postComments.length + ' kommentar(er)</span></div><div class="comments">';
         for (var j = 0; j < postComments.length; j++) {
           html += '<div class="comment"><div class="commentmeta">' + escapeHtml(postComments[j].time || '') + '</div><div>' + escapeHtml(postComments[j].text || '') + '</div></div>';
         }
-        html += '<input id="comment-' + postId + '" placeholder="Skriv en kommentar">';
-        html += '<div class="btnrow"><button type="button" class="alt" onclick="addComment(\'' + postId + '\')">Legg til kommentar</button></div>';
-        html += '</div></div>';
+        html += '<input id="comment-' + postId + '" placeholder="Skriv en kommentar"><div class="btnrow"><button type="button" class="alt" onclick="addComment(\'' + postId + '\')">Legg til kommentar</button></div></div></div>';
       }
       feed.innerHTML = html;
     }
