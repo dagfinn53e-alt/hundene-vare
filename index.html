@@ -8,7 +8,7 @@
   <style>
     :root{
       --blue:#2563eb; --blue-dark:#1d4ed8; --bg:#eef5ff; --card:#fff; --line:#dbeafe;
-      --text:#0f172a; --muted:#64748b;
+      --text:#0f172a; --muted:#64748b; --soft:#f8fafc;
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(180deg,#eaf3ff 0%,#f8fbff 100%);color:var(--text)}
@@ -22,16 +22,16 @@
     .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 8px 24px rgba(15,23,42,.05);margin-bottom:16px}
     .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
     .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
-    .menu-btn{display:block;text-align:left;background:#fff;color:var(--text);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 8px 24px rgba(15,23,42,.05);cursor:pointer}
+    .menu-btn{display:block;text-align:left;background:var(--soft);color:var(--text);border:1px solid #e2e8f0;border-radius:20px;padding:20px;box-shadow:none;cursor:pointer}
     .menu-btn h3{margin:0 0 8px 0;font-size:22px}
-    .menu-btn p{margin:0;color:var(--muted);line-height:1.5}
+    .menu-btn p{margin:0;color:var(--muted);line-height:1.6}
     h2{margin:0 0 12px 0;font-size:24px}
     .sub{color:var(--muted);margin-bottom:12px;line-height:1.6}
     input,textarea,select{width:100%;padding:12px 14px;margin:8px 0 12px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff}
     textarea{min-height:110px;resize:vertical}
     .btnrow{display:flex;gap:10px;flex-wrap:wrap}
     button{border:none;border-radius:12px;padding:12px 16px;background:var(--blue-dark);color:#fff;cursor:pointer;font-weight:700}
-    button.alt{background:#fff;color:var(--blue-dark);border:1px solid #bfdbfe}
+    button.alt{background:#dbeafe;color:var(--blue-dark);border:1px solid #93c5fd}
     #status{margin-top:12px;min-height:24px;font-weight:700}
     .hidden{display:none}
     .post{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:12px}
@@ -53,6 +53,7 @@
     .topstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
     .stat{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:12px;text-align:center}
     .stat .label{font-size:13px;opacity:.95}.stat .value{font-size:22px;font-weight:700;margin-top:4px}
+    .footer-note{margin-top:18px;padding:14px 16px;border-radius:18px;background:#dbeafe;border:1px solid #93c5fd;color:#1e3a8a;line-height:1.6}
     @media (max-width:760px){.grid,.menu-grid,.topstats{grid-template-columns:1fr}.hero h1{font-size:28px}}
   </style>
 </head>
@@ -61,15 +62,15 @@
     <div class="topbar">
       <div class="brand">Hundene våre 🐶</div>
       <div class="actions">
-        <button class="alt" type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button>
-        <button class="alt" type="button" onclick="showPage('home')">Forside</button>
+        <button type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button>
+        <button type="button" onclick="showPage('home')">Forside</button>
       </div>
     </div>
 
     <div id="page-home">
       <div class="hero">
         <h1>Hundene våre</h1>
-        <p>En møteplass for hundeglade. Her kan du dele bilder og fortellinger, og finne informasjon om frisører, zoo butikker og veterinærer.</p>
+        <p>En møteplass for hundeglade på Vestlandet. Her kan du dele bilder og fortellinger, og finne informasjon om frisører, zoo butikker og veterinærer.</p>
         <div class="topstats">
           <div class="stat"><div class="label">Innlegg</div><div class="value" id="postCount">0</div></div>
           <div class="stat"><div class="label">Medlemmer</div><div class="value" id="memberCount">0</div></div>
@@ -79,12 +80,13 @@
       </div>
 
       <div class="card">
-        <h2>Hva appen tilbyr</h2>
-        <p class="sub">Hundene våre samler hundefolk og lokale tjenester på ett sted. Du kan lese fortellinger, dele bilder, og etter hvert finne nyttige tjenester for hunden din.</p>
+        <h2>Hva appen vil tilby</h2>
+        <p class="sub">Hundene våre skal være et ryddig og varmt samlingssted for hundeeiere. Her kan du lese fortellinger, se bilder, dele egne opplevelser og bli kjent med andre hundeglade. Samtidig skal appen etter hvert gjøre det lettere å finne nyttige tjenester i nærområdet.</p>
+        <p class="sub">For frisører ønsker vi å vise behandlinger, priser og kontakt. For zoo butikker ønsker vi å vise tilbud, produkter og nyheter. For veterinærer ønsker vi å samle nyttig informasjon om tjenester, åpningstider og kontakt.</p>
         <div class="menu-grid">
           <button class="menu-btn" onclick="showPage('stories')">
             <h3>📸 Bilder / Fortellinger</h3>
-            <p>Se innlegg, legg inn hunden din, del bilde og skriv små historier fra hverdagen, turer og utstillinger.</p>
+            <p>Se innlegg, legg inn hunden din, del bilder og skriv små historier fra hverdagen, turer og utstillinger.</p>
           </button>
           <button class="menu-btn" onclick="showPage('groomers')">
             <h3>✂️ Frisører</h3>
@@ -98,6 +100,9 @@
             <h3>🏥 Veterinærer</h3>
             <p>Her skal veterinærer kunne ha informasjon om tjenester, åpningstider og kontakt.</p>
           </button>
+        </div>
+        <div class="footer-note">
+          Hundene våre skal gjøre det enklere å samle hundefolk, dele gode opplevelser og etter hvert knytte sammen hundeeiere med lokale tjenester på en oversiktlig måte.
         </div>
       </div>
     </div>
@@ -256,6 +261,7 @@
       if (result.error) { setStatus("Feil: " + result.error.message, "crimson"); return; }
       setStatus("Innlogget som " + email, "green");
       loadProfile();
+      showPage('stories');
     }
 
     async function saveStory() {
@@ -353,7 +359,7 @@
         html += '<p>' + escapeHtml(post.text || "") + '</p>';
         if (post.image_url) html += '<img src="' + post.image_url + '" alt="Hundebilde">';
         html += '<div class="likebar">';
-        html += '<button class="likebtn" type="button" onclick="likePost("' + postId + '")">❤️ Lik (' + likeCount + ')</button>';
+        html += '<button class="likebtn" type="button" onclick="likePost(\'' + postId + '\')">❤️ Lik (' + likeCount + ')</button>';
         html += '<span class="mini">' + postComments.length + ' kommentar(er)</span>';
         html += '</div><div class="comments">';
         for (var j = 0; j < postComments.length; j++) {
