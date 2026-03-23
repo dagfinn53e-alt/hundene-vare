@@ -18,7 +18,7 @@
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(180deg,#eaf3ff 0%,#f8fbff 100%);color:var(--text)}
-    .wrap{max-width:1120px;margin:0 auto;padding:20px 16px 40px}
+    .wrap{max-width:1140px;margin:0 auto;padding:20px 16px 40px}
     .hero{background:linear-gradient(135deg,var(--blue-dark),#3b82f6);color:#fff;padding:24px;border-radius:24px;box-shadow:0 10px 30px rgba(37,99,235,.18);margin-bottom:18px}
     .hero h1{margin:0 0 8px 0;font-size:34px}
     .hero p{margin:0;line-height:1.6}
@@ -26,8 +26,7 @@
     .topbar .brand{font-weight:700}
     .topbar .actions{display:flex;gap:10px;flex-wrap:wrap}
     .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 8px 24px rgba(15,23,42,.05);margin-bottom:16px}
-    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-    .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+    .menu-grid,.admin-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
     .menu-btn{display:block;text-align:left;border-radius:20px;padding:20px;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease}
     .menu-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(15,23,42,.08)}
     .menu-btn h3{margin:0 0 8px 0;font-size:22px}
@@ -47,12 +46,15 @@
     button.alt{background:#dbeafe;color:var(--blue-dark);border:1px solid #93c5fd}
     button.warn{background:#fff7ed;color:#9a3412;border:1px solid #fdba74}
     button.danger{background:#b91c1c;color:#fff}
+    button.small{padding:8px 12px;border-radius:999px}
     #status,#bizStatus,#adminStatus{margin-top:12px;min-height:24px;font-weight:700}
     .hidden{display:none}
     .post,.biz-card,.admin-item{background:#f8fbff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:12px}
     .post h3,.biz-card h3,.admin-item h3{font-size:21px;margin:0 0 8px 0}
     .meta{color:var(--muted);font-size:14px;margin-bottom:10px}
-    .post img,.biz-card img{width:100%;border-radius:16px;margin-top:12px;display:block;max-height:520px;object-fit:cover}
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+    .gallery-item{position:relative}
+    .gallery img,.biz-gallery img,.biz-main img,.post-main img{width:100%;border-radius:16px;display:block;max-height:260px;object-fit:cover}
     .biz-logo{max-width:140px!important;max-height:140px!important;object-fit:contain!important;background:#fff;padding:10px;border:1px solid #e2e8f0}
     .biz-top{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
     .biz-info{flex:1;min-width:240px}
@@ -72,9 +74,11 @@
     .footer-note{margin-top:18px;padding:14px 16px;border-radius:18px;background:#dbeafe;border:1px solid #93c5fd;color:#1e3a8a;line-height:1.6}
     .search-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
     .map-link{display:inline-block;margin-top:10px;color:#1d4ed8;font-weight:700;text-decoration:none}
-    .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .admin-grid{grid-template-columns:1fr 1fr}
+    .image-actions{position:absolute;top:8px;right:8px}
+    .image-actions button{padding:6px 10px;border-radius:999px}
     @media (max-width:760px){
-      .grid,.menu-grid,.topstats,.search-grid,.admin-grid{grid-template-columns:1fr}
+      .menu-grid,.topstats,.search-grid,.admin-grid,.gallery{grid-template-columns:1fr}
       .hero h1{font-size:28px}
     }
   </style>
@@ -105,34 +109,14 @@
         <h2>Hva appen vil tilby</h2>
         <p class="sub">Hundene våre skal være et ryddig og varmt samlingssted for hundeeiere. Her kan du lese fortellinger, se bilder, dele egne opplevelser og bli kjent med andre hundeglade. Samtidig skal appen gjøre det lettere å finne nyttige tjenester i nærområdet.</p>
         <div class="menu-grid">
-          <button class="menu-btn box-stories" onclick="showPage('stories')">
-            <h3>📸 Bilder / Fortellinger</h3>
-            <p>Se innlegg, legg inn hunden din, del bilder og skriv små historier fra hverdagen, turer og utstillinger.</p>
-          </button>
-          <button class="menu-btn box-groomers" onclick="showPage('groomers')">
-            <h3>✂️ Frisører</h3>
-            <p>Registrerte hundefrisører med logo, bilde, kontakt og beskrivelse.</p>
-          </button>
-          <button class="menu-btn box-shops" onclick="showPage('shops')">
-            <h3>🐾 Zoo butikker</h3>
-            <p>Registrerte zoo butikker med tilbud, produkter, logo og kontaktinformasjon.</p>
-          </button>
-          <button class="menu-btn box-vets" onclick="showPage('vets')">
-            <h3>🏥 Veterinærer</h3>
-            <p>Registrerte veterinærer med tjenester, åpningstider, logo og kontakt.</p>
-          </button>
-          <button class="menu-btn box-business" onclick="showPage('business')">
-            <h3>🏪 Registrer / rediger bedrift</h3>
-            <p>Bedrifter kan registrere seg, redigere info, rette Facebook/nettside og vises for alle i appen.</p>
-          </button>
-          <button class="menu-btn box-admin" onclick="showPage('admin')">
-            <h3>🛠️ Admin</h3>
-            <p>Her kan du som eier se og slette innlegg og bedrifter.</p>
-          </button>
+          <button class="menu-btn box-stories" onclick="showPage('stories')"><h3>📸 Bilder / Fortellinger</h3><p>Se innlegg, legg inn hunden din, del bilder og skriv små historier fra hverdagen, turer og utstillinger.</p></button>
+          <button class="menu-btn box-groomers" onclick="showPage('groomers')"><h3>✂️ Frisører</h3><p>Registrerte hundefrisører med logo, bilde, kontakt og beskrivelse.</p></button>
+          <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3><p>Registrerte zoo butikker med tilbud, produkter, logo og kontaktinformasjon.</p></button>
+          <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3><p>Registrerte veterinærer med tjenester, åpningstider, logo og kontakt.</p></button>
+          <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Registrer / rediger bedrift</h3><p>Bedrifter kan registrere seg, redigere info, laste opp flere bilder og vises for alle i appen.</p></button>
+          <button class="menu-btn box-admin" onclick="showPage('admin')"><h3>🛠️ Admin</h3><p>Her kan du som eier se og slette innlegg og bedrifter.</p></button>
         </div>
-        <div class="footer-note">
-          Hundene våre skal gjøre det enklere å samle hundefolk, dele gode opplevelser og knytte sammen hundeeiere med lokale tjenester.
-        </div>
+        <div class="footer-note">Hundene våre skal gjøre det enklere å samle hundefolk, dele gode opplevelser og knytte sammen hundeeiere med lokale tjenester.</div>
       </div>
     </div>
 
@@ -156,17 +140,14 @@
       <div class="card">
         <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
         <h2>Nytt innlegg</h2>
-        <div class="sub">Legg inn hund, sted, tekst og bilde.</div>
+        <div class="sub">Legg inn hund, sted, tekst og opptil 5 bilder.</div>
         <input id="title" placeholder="Tittel">
         <input id="dog" placeholder="Hundens navn">
         <input id="place" placeholder="Sted">
-        <select id="category">
-          <option>Hverdag</option>
-          <option>Tur</option>
-          <option>Utstilling</option>
-        </select>
+        <select id="category"><option>Hverdag</option><option>Tur</option><option>Utstilling</option></select>
         <textarea id="text" placeholder="Skriv om hunden..."></textarea>
-        <input id="imageFile" type="file" accept="image/*">
+        <label>Velg opptil 5 bilder</label>
+        <input id="imageFiles" type="file" accept="image/*" multiple>
         <div class="btnrow">
           <button type="button" onclick="saveStory()">Lagre innlegg</button>
           <button type="button" class="alt" onclick="loadStories()">Oppdater innlegg</button>
@@ -189,9 +170,7 @@
     </div>
 
     <div id="page-groomers" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>✂️ Frisører</h2><div class="search-grid"><input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()"><select id="filterFavoritesGroomers" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchGroomers" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="groomerList"></div></div></div>
-
     <div id="page-shops" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>🐾 Zoo butikker</h2><div class="search-grid"><input id="searchShops" placeholder="Søk butikk eller sted" oninput="loadBusinesses()"><select id="filterFavoritesShops" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchShops" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="shopList"></div></div></div>
-
     <div id="page-vets" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>🏥 Veterinærer</h2><div class="search-grid"><input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()"><select id="filterFavoritesVets" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchVets" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="vetList"></div></div></div>
 
     <div id="page-business" class="hidden">
@@ -210,6 +189,8 @@
         <input id="bizLogo" type="file" accept="image/*">
         <label>Last opp nytt hovedbilde (valgfritt ved redigering)</label>
         <input id="bizImage" type="file" accept="image/*">
+        <label>Last opp ekstra bilder for galleri (opptil 5)</label>
+        <input id="bizGalleryFiles" type="file" accept="image/*" multiple>
         <div class="btnrow">
           <button type="button" onclick="saveBusiness()">Lagre bedrift</button>
           <button type="button" class="alt" onclick="loadBusinesses()">Oppdater bedrifter</button>
@@ -227,14 +208,8 @@
         <div id="adminStatus">Klar.</div>
       </div>
       <div class="admin-grid">
-        <div class="card">
-          <h2>Innlegg</h2>
-          <div id="adminStories">Laster ...</div>
-        </div>
-        <div class="card">
-          <h2>Bedrifter</h2>
-          <div id="adminBusinesses">Laster ...</div>
-        </div>
+        <div class="card"><h2>Innlegg</h2><div id="adminStories">Laster ...</div></div>
+        <div class="card"><h2>Bedrifter</h2><div id="adminBusinesses">Laster ...</div></div>
       </div>
     </div>
 
@@ -242,10 +217,7 @@
       <div class="sharebox">
         <div>Del appen med andre:</div>
         <div class="sharelink">https://dagfinn53e-alt.github.io/hundene-vare/</div>
-        <div class="btnrow" style="margin-top:10px">
-          <button type="button" onclick="shareApp()">Del link</button>
-          <button type="button" class="alt" onclick="copyLink()">Kopier link</button>
-        </div>
+        <div class="btnrow" style="margin-top:10px"><button type="button" onclick="shareApp()">Del link</button><button type="button" class="alt" onclick="copyLink()">Kopier link</button></div>
       </div>
     </div>
   </div>
@@ -267,45 +239,36 @@
       if(name === 'admin'){ loadAdmin(); }
     }
 
-    function setStatus(text, color) {
-      var el = document.getElementById("status");
-      el.textContent = text;
-      el.style.color = color || "black";
-    }
-    function setBizStatus(text, color) {
-      var el = document.getElementById("bizStatus");
-      el.textContent = text;
-      el.style.color = color || "black";
-    }
-    function setAdminStatus(text, color) {
-      var el = document.getElementById("adminStatus");
-      el.textContent = text;
-      el.style.color = color || "black";
-    }
+    function setStatus(text, color) { var el = document.getElementById("status"); el.textContent = text; el.style.color = color || "black"; }
+    function setBizStatus(text, color) { var el = document.getElementById("bizStatus"); el.textContent = text; el.style.color = color || "black"; }
+    function setAdminStatus(text, color) { var el = document.getElementById("adminStatus"); el.textContent = text; el.style.color = color || "black"; }
 
     function getFavoriteBusinesses() {
-      try { return JSON.parse(localStorage.getItem("hundene_vare_fav_businesses") || "[]"); }
-      catch(e) { return []; }
+      try { return JSON.parse(localStorage.getItem("hundene_vare_fav_businesses") || "[]"); } catch(e) { return []; }
     }
-    function saveFavoriteBusinesses(list) {
-      localStorage.setItem("hundene_vare_fav_businesses", JSON.stringify(list));
-    }
+    function saveFavoriteBusinesses(list) { localStorage.setItem("hundene_vare_fav_businesses", JSON.stringify(list)); }
     function toggleFavoriteBusiness(id) {
-      var favs = getFavoriteBusinesses();
-      var idx = favs.indexOf(id);
+      var favs = getFavoriteBusinesses(), idx = favs.indexOf(id);
       if (idx >= 0) favs.splice(idx, 1); else favs.push(id);
-      saveFavoriteBusinesses(favs);
-      loadBusinesses();
+      saveFavoriteBusinesses(favs); loadBusinesses();
     }
 
-    async function uploadBusinessFile(file, folder) {
+    async function uploadFile(file, folder) {
       if (!file) return "";
       var safeName = Date.now() + "-" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-      var filePath = "businesses/" + folder + "/" + safeName;
+      var filePath = folder + "/" + safeName;
       var upload = await supabase.storage.from("story-images").upload(filePath, file);
       if (upload.error) throw new Error(upload.error.message);
       var pub = supabase.storage.from("story-images").getPublicUrl(filePath);
       return pub.data.publicUrl || "";
+    }
+
+    async function uploadMultiple(files, folder) {
+      var urls = [];
+      for (var i = 0; i < files.length; i++) {
+        urls.push(await uploadFile(files[i], folder));
+      }
+      return urls;
     }
 
     async function loadBusinessOptions() {
@@ -314,7 +277,6 @@
       var select = document.getElementById("editBusinessSelect");
       select.innerHTML = '<option value="">Ny bedrift</option>';
       if (!user) return;
-
       var result = await supabase.from("businesses").select("*").eq("author_email", user.email).order("created_at", { ascending: false });
       var rows = result.data || [];
       for (var i = 0; i < rows.length; i++) {
@@ -336,6 +298,7 @@
       document.getElementById("bizText").value = "";
       document.getElementById("bizLogo").value = "";
       document.getElementById("bizImage").value = "";
+      document.getElementById("bizGalleryFiles").value = "";
       setBizStatus("Skjema tømt.", "black");
     }
 
@@ -352,6 +315,7 @@
       document.getElementById("bizText").value = b.description || "";
       document.getElementById("bizLogo").value = "";
       document.getElementById("bizImage").value = "";
+      document.getElementById("bizGalleryFiles").value = "";
       setBizStatus("Bedrift lastet inn for redigering.", "green");
     }
 
@@ -369,6 +333,8 @@
       var bizText = document.getElementById("bizText").value.trim();
       var logoFile = document.getElementById("bizLogo").files[0];
       var imageFile = document.getElementById("bizImage").files[0];
+      var galleryFiles = Array.from(document.getElementById("bizGalleryFiles").files).slice(0,5);
+
       if (!bizName || !bizPlace || !bizText) { setBizStatus("Skriv inn navn, sted og beskrivelse.", "crimson"); return; }
 
       try {
@@ -381,12 +347,15 @@
 
         var logoUrl = existing && existing.logo_url ? existing.logo_url : "";
         var imageUrl = existing && existing.image_url ? existing.image_url : "";
-        if (logoFile) logoUrl = await uploadBusinessFile(logoFile, "logos");
-        if (imageFile) imageUrl = await uploadBusinessFile(imageFile, "images");
+        var galleryUrls = existing && existing.gallery_urls ? existing.gallery_urls : [];
+
+        if (logoFile) logoUrl = await uploadFile(logoFile, "businesses/logos");
+        if (imageFile) imageUrl = await uploadFile(imageFile, "businesses/images");
+        if (galleryFiles.length) galleryUrls = galleryUrls.concat(await uploadMultiple(galleryFiles, "businesses/gallery")).slice(0,5);
 
         var payload = {
           user_id: user.id, author_email: user.email, type: bizType, name: bizName, place: bizPlace,
-          phone: bizPhone, website: bizWebsite, description: bizText, logo_url: logoUrl, image_url: imageUrl
+          phone: bizPhone, website: bizWebsite, description: bizText, logo_url: logoUrl, image_url: imageUrl, gallery_urls: galleryUrls
         };
 
         if (editId) {
@@ -406,31 +375,73 @@
       }
     }
 
+    async function deleteBusinessImage(id, index) {
+      var auth = await supabase.auth.getUser();
+      var user = auth && auth.data ? auth.data.user : null;
+      if (!user) return;
+
+      var current = await supabase.from("businesses").select("*").eq("id", id).maybeSingle();
+      var b = current.data;
+      if (!b || (b.author_email !== user.email && user.email !== ADMIN_EMAIL)) return;
+
+      var gallery = Array.isArray(b.gallery_urls) ? b.gallery_urls.slice() : [];
+      gallery.splice(index, 1);
+      var update = await supabase.from("businesses").update({ gallery_urls: gallery }).eq("id", id);
+      if (!update.error) loadBusinesses();
+    }
+
+    async function deleteStoryImage(id, index) {
+      var auth = await supabase.auth.getUser();
+      var user = auth && auth.data ? auth.data.user : null;
+      if (!user) return;
+
+      var current = await supabase.from("stories").select("*").eq("id", id).maybeSingle();
+      var s = current.data;
+      if (!s || (s.author_email !== user.email && user.email !== ADMIN_EMAIL)) return;
+
+      var gallery = Array.isArray(s.image_urls) ? s.image_urls.slice() : [];
+      gallery.splice(index, 1);
+      var main = gallery[0] || "";
+      var update = await supabase.from("stories").update({ image_urls: gallery, image_url: main }).eq("id", id);
+      if (!update.error) { loadStories(); loadProfile(); }
+    }
+
     function buildGoogleMapsLink(place, searchText) {
       var q = searchText || place || "";
       if (!q) return "";
       return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
     }
 
-    function renderBizList(type, targetId, rows, searchValue, favMode, mapSearch) {
+    function normalizeUrl(url) {
+      if (!url) return "";
+      if (url.startsWith("http://") || url.startsWith("https://")) return url;
+      return "https://" + url;
+    }
+
+    async function canManageEmail(email) {
+      var auth = await supabase.auth.getUser();
+      var user = auth && auth.data ? auth.data.user : null;
+      return !!user && (user.email === email || user.email === ADMIN_EMAIL);
+    }
+
+    async function renderBizList(type, targetId, rows, searchValue, favMode, mapSearch) {
       var favs = getFavoriteBusinesses();
       var all = rows.filter(function(b){ return b.type === type; });
       if (searchValue) {
         var s = searchValue.toLowerCase();
-        all = all.filter(function(b){
-          return (b.name || "").toLowerCase().includes(s) || (b.place || "").toLowerCase().includes(s) || (b.description || "").toLowerCase().includes(s);
-        });
+        all = all.filter(function(b){ return (b.name || "").toLowerCase().includes(s) || (b.place || "").toLowerCase().includes(s) || (b.description || "").toLowerCase().includes(s); });
       }
       if (favMode === "fav") all = all.filter(function(b){ return favs.indexOf(b.id) >= 0; });
+
+      var auth = await supabase.auth.getUser();
+      var user = auth && auth.data ? auth.data.user : null;
 
       var target = document.getElementById(targetId);
       if (!all.length) { target.innerHTML = '<div class="biz-card">Ingen bedrifter funnet.</div>'; return; }
 
       var html = '';
       for (var i=0;i<all.length;i++) {
-        var b = all[i];
-        var isFav = favs.indexOf(b.id) >= 0;
-        var mapsLink = buildGoogleMapsLink(b.place, mapSearch || b.place);
+        var b = all[i], isFav = favs.indexOf(b.id) >= 0, mapsLink = buildGoogleMapsLink(b.place, mapSearch || b.place);
         html += '<div class="biz-card"><div class="biz-top">';
         if (b.logo_url) html += '<img class="biz-logo" src="' + b.logo_url + '" alt="Logo">';
         html += '<div class="biz-info"><h3>' + escapeHtml(b.name || "") + '</h3>';
@@ -439,9 +450,20 @@
         if (b.phone) html += '<div><strong>Telefon:</strong> ' + escapeHtml(b.phone) + '</div>';
         if (b.website) html += '<div><strong>Lenke:</strong> <a class="site-link" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
         if (mapsLink) html += '<div><a class="map-link" href="' + mapsLink + '" target="_blank" rel="noopener noreferrer">📍 Åpne i Google Maps</a></div>';
-        html += '<div class="biz-actions"><button class="alt" type="button" onclick="toggleFavoriteBusiness(\'' + b.id + '\')">' + (isFav ? '❤️ Favoritt lagret' : '🤍 Lagre favoritt') + '</button></div>';
+        html += '<div class="biz-actions"><button class="alt small" type="button" onclick="toggleFavoriteBusiness(\'' + b.id + '\')">' + (isFav ? '❤️ Favoritt lagret' : '🤍 Lagre favoritt') + '</button></div>';
         html += '</div></div>';
-        if (b.image_url) html += '<img src="' + b.image_url + '" alt="Bedriftsbilde">';
+        if (b.image_url) html += '<div class="biz-main"><img src="' + b.image_url + '" alt="Bedriftsbilde"></div>';
+        if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
+          html += '<div class="gallery">';
+          for (var g=0; g<b.gallery_urls.length; g++) {
+            html += '<div class="gallery-item"><img src="' + b.gallery_urls[g] + '" alt="Galleri">';
+            if (user && (user.email === b.author_email || user.email === ADMIN_EMAIL)) {
+              html += '<div class="image-actions"><button class="danger small" type="button" onclick="deleteBusinessImage(\'' + b.id + '\',' + g + ')">Slett</button></div>';
+            }
+            html += '</div>';
+          }
+          html += '</div>';
+        }
         html += '</div>';
       }
       target.innerHTML = html;
@@ -450,15 +472,9 @@
     async function loadBusinesses() {
       var result = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
       var rows = result.data || [];
-      renderBizList("Frisør","groomerList",rows,document.getElementById("searchGroomers")?.value || "",document.getElementById("filterFavoritesGroomers")?.value || "all",document.getElementById("mapSearchGroomers")?.value || "");
-      renderBizList("Zoo butikk","shopList",rows,document.getElementById("searchShops")?.value || "",document.getElementById("filterFavoritesShops")?.value || "all",document.getElementById("mapSearchShops")?.value || "");
-      renderBizList("Veterinær","vetList",rows,document.getElementById("searchVets")?.value || "",document.getElementById("filterFavoritesVets")?.value || "all",document.getElementById("mapSearchVets")?.value || "");
-    }
-
-    function normalizeUrl(url) {
-      if (!url) return "";
-      if (url.startsWith("http://") || url.startsWith("https://")) return url;
-      return "https://" + url;
+      await renderBizList("Frisør","groomerList",rows,document.getElementById("searchGroomers")?.value || "",document.getElementById("filterFavoritesGroomers")?.value || "all",document.getElementById("mapSearchGroomers")?.value || "");
+      await renderBizList("Zoo butikk","shopList",rows,document.getElementById("searchShops")?.value || "",document.getElementById("filterFavoritesShops")?.value || "all",document.getElementById("mapSearchShops")?.value || "");
+      await renderBizList("Veterinær","vetList",rows,document.getElementById("searchVets")?.value || "",document.getElementById("filterFavoritesVets")?.value || "all",document.getElementById("mapSearchVets")?.value || "");
     }
 
     async function loadAdmin() {
@@ -472,23 +488,18 @@
       }
 
       setAdminStatus("Admin innlogget som " + user.email, "green");
-
       var storiesRes = await supabase.from("stories").select("*").order("created_at", { ascending: false });
       var businessesRes = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
+      var stories = storiesRes.data || [], businesses = businessesRes.data || [];
 
-      var stories = storiesRes.data || [];
-      var businesses = businessesRes.data || [];
-
-      var shtml = "";
-      if (!stories.length) shtml = "Ingen innlegg.";
+      var shtml = stories.length ? "" : "Ingen innlegg.";
       for (var i=0;i<stories.length;i++) {
         var s = stories[i];
         shtml += '<div class="admin-item"><h3>' + escapeHtml(s.title || "") + '</h3><div class="meta">' + escapeHtml(s.author_email || "") + ' · ' + escapeHtml(s.place || "") + '</div><div class="btnrow"><button class="danger" type="button" onclick="deleteStory(\'' + s.id + '\')">Slett innlegg</button></div></div>';
       }
       document.getElementById("adminStories").innerHTML = shtml;
 
-      var bhtml = "";
-      if (!businesses.length) bhtml = "Ingen bedrifter.";
+      var bhtml = businesses.length ? "" : "Ingen bedrifter.";
       for (var j=0;j<businesses.length;j++) {
         var b = businesses[j];
         bhtml += '<div class="admin-item"><h3>' + escapeHtml(b.name || "") + '</h3><div class="meta">' + escapeHtml(b.author_email || "") + ' · ' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div><div class="btnrow"><button class="danger" type="button" onclick="deleteBusiness(\'' + b.id + '\')">Slett bedrift</button></div></div>';
@@ -500,36 +511,24 @@
       if (!confirm("Slette dette innlegget?")) return;
       var del = await supabase.from("stories").delete().eq("id", id);
       if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
-      setAdminStatus("Innlegg slettet.", "green");
-      loadAdmin();
-      loadStories();
+      setAdminStatus("Innlegg slettet.", "green"); loadAdmin(); loadStories();
     }
 
     async function deleteBusiness(id) {
       if (!confirm("Slette denne bedriften?")) return;
       var del = await supabase.from("businesses").delete().eq("id", id);
       if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
-      setAdminStatus("Bedrift slettet.", "green");
-      loadAdmin();
-      loadBusinesses();
-      loadBusinessOptions();
+      setAdminStatus("Bedrift slettet.", "green"); loadAdmin(); loadBusinesses(); loadBusinessOptions();
     }
 
-    function getLikes() {
-      try { return JSON.parse(localStorage.getItem("hundene_vare_likes_dbfree") || "{}"); }
-      catch(e) { return {}; }
-    }
+    function getLikes() { try { return JSON.parse(localStorage.getItem("hundene_vare_likes_dbfree") || "{}"); } catch(e) { return {}; } }
     function saveLikes(data) { localStorage.setItem("hundene_vare_likes_dbfree", JSON.stringify(data)); }
-    function getComments() {
-      try { return JSON.parse(localStorage.getItem("hundene_vare_comments_dbfree") || "{}"); }
-      catch(e) { return {}; }
-    }
+    function getComments() { try { return JSON.parse(localStorage.getItem("hundene_vare_comments_dbfree") || "{}"); } catch(e) { return {}; } }
     function saveComments(data) { localStorage.setItem("hundene_vare_comments_dbfree", JSON.stringify(data)); }
 
     async function signupUser() {
       setStatus("Prøver å opprette konto ...", "blue");
-      var email = document.getElementById("email").value.trim();
-      var password = document.getElementById("password").value.trim();
+      var email = document.getElementById("email").value.trim(), password = document.getElementById("password").value.trim();
       if (!email || !password) { setStatus("Skriv inn e-post og passord.", "crimson"); return; }
       var result = await supabase.auth.signUp({ email: email, password: password });
       if (result.error) { setStatus("Feil: " + result.error.message, "crimson"); return; }
@@ -538,14 +537,11 @@
 
     async function loginUser() {
       setStatus("Prøver å logge inn ...", "blue");
-      var email = document.getElementById("email").value.trim();
-      var password = document.getElementById("password").value.trim();
+      var email = document.getElementById("email").value.trim(), password = document.getElementById("password").value.trim();
       if (!email || !password) { setStatus("Skriv inn e-post og passord.", "crimson"); return; }
       var result = await supabase.auth.signInWithPassword({ email: email, password: password });
       if (result.error) { setStatus("Feil: " + result.error.message, "crimson"); return; }
-      setStatus("Innlogget som " + email, "green");
-      loadProfile();
-      showPage('stories');
+      setStatus("Innlogget som " + email, "green"); loadProfile(); showPage('stories');
     }
 
     async function saveStory() {
@@ -553,43 +549,36 @@
       var auth = await supabase.auth.getUser();
       var user = auth && auth.data ? auth.data.user : null;
       if (!user) { setStatus("Du må logge inn først.", "crimson"); return; }
+
       var title = document.getElementById("title").value.trim();
       var dog = document.getElementById("dog").value.trim() || "Ikke oppgitt";
       var place = document.getElementById("place").value.trim() || "Ikke oppgitt";
       var category = document.getElementById("category").value || "Hverdag";
       var text = document.getElementById("text").value.trim();
-      var file = document.getElementById("imageFile").files[0];
+      var files = Array.from(document.getElementById("imageFiles").files).slice(0,5);
       if (!title || !text) { setStatus("Skriv inn tittel og tekst.", "crimson"); return; }
 
-      var imageUrl = "";
-      if (file) {
-        var safeName = Date.now() + "-" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-        var filePath = user.id + "/" + safeName;
-        var upload = await supabase.storage.from("story-images").upload(filePath, file);
-        if (upload.error) { setStatus("Feil ved bildeopplasting: " + upload.error.message, "crimson"); return; }
-        var pub = supabase.storage.from("story-images").getPublicUrl(filePath);
-        imageUrl = pub.data.publicUrl;
+      try {
+        var imageUrls = await uploadMultiple(files, "stories/gallery");
+        var imageUrl = imageUrls[0] || "";
+        var insert = await supabase.from("stories").insert([{
+          user_id:user.id,author_email:user.email,title:title,dog:dog,place:place,category:category,text:text,image_url:imageUrl,image_urls:imageUrls
+        }]);
+        if (insert.error) { setStatus("Feil ved lagring: " + insert.error.message, "crimson"); return; }
+      } catch (e) {
+        setStatus("Feil ved bildeopplasting: " + e.message, "crimson"); return;
       }
-
-      var insert = await supabase.from("stories").insert([{user_id:user.id,author_email:user.email,title:title,dog:dog,place:place,category:category,text:text,image_url:imageUrl}]);
-      if (insert.error) { setStatus("Feil ved lagring: " + insert.error.message, "crimson"); return; }
 
       document.getElementById("title").value = "";
       document.getElementById("dog").value = "";
       document.getElementById("place").value = "";
       document.getElementById("text").value = "";
-      document.getElementById("imageFile").value = "";
-      setStatus("Lagret!", "green");
-      await loadStories();
-      await loadProfile();
-      showPage('stories');
+      document.getElementById("imageFiles").value = "";
+      setStatus("Lagret!", "green"); await loadStories(); await loadProfile(); showPage('stories');
     }
 
     function likePost(id) {
-      var likes = getLikes();
-      likes[id] = (likes[id] || 0) + 1;
-      saveLikes(likes);
-      loadStories();
+      var likes = getLikes(); likes[id] = (likes[id] || 0) + 1; saveLikes(likes); loadStories();
     }
 
     function addComment(id) {
@@ -611,12 +600,15 @@
       var result = await supabase.from("stories").select("*").order("created_at", { ascending: false });
       if (result.error) { feed.textContent = "Feil ved henting: " + result.error.message; return; }
 
+      var auth = await supabase.auth.getUser();
+      var user = auth && auth.data ? auth.data.user : null;
+
       var data = result.data || [];
       document.getElementById("postCount").textContent = data.length;
       var members = {}, images = 0, comments = getComments(), commentTotal = 0, likes = getLikes();
       for (var i = 0; i < data.length; i++) {
         if (data[i].author_email) members[data[i].author_email] = true;
-        if (data[i].image_url) images++;
+        images += Array.isArray(data[i].image_urls) ? data[i].image_urls.length : (data[i].image_url ? 1 : 0);
       }
       Object.keys(comments).forEach(function(k){ commentTotal += (comments[k] || []).length; });
       document.getElementById("memberCount").textContent = Object.keys(members).length;
@@ -626,16 +618,22 @@
 
       var html = "";
       for (var i = 0; i < data.length; i++) {
-        var post = data[i];
-        var postId = post.id || ("post_" + i);
-        var likeCount = likes[postId] || 0;
-        var postComments = comments[postId] || [];
+        var post = data[i], postId = post.id || ("post_" + i), likeCount = likes[postId] || 0, postComments = comments[postId] || [];
+        var gallery = Array.isArray(post.image_urls) && post.image_urls.length ? post.image_urls : (post.image_url ? [post.image_url] : []);
         html += '<div class="post"><h3>' + escapeHtml(post.title || "") + '</h3><div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + ' · ' + escapeHtml(post.category || "") + '</div><p>' + escapeHtml(post.text || "") + '</p>';
-        if (post.image_url) html += '<img src="' + post.image_url + '" alt="Hundebilde">';
-        html += '<div class="likebar"><button class="likebtn" type="button" onclick="likePost(\'' + postId + '\')">❤️ Lik (' + likeCount + ')</button><span class="mini">' + postComments.length + ' kommentar(er)</span></div><div class="comments">';
-        for (var j = 0; j < postComments.length; j++) {
-          html += '<div class="comment"><div class="commentmeta">' + escapeHtml(postComments[j].time || '') + '</div><div>' + escapeHtml(postComments[j].text || '') + '</div></div>';
+        if (gallery.length) {
+          html += '<div class="gallery">';
+          for (var g=0; g<gallery.length; g++) {
+            html += '<div class="gallery-item"><img src="' + gallery[g] + '" alt="Hundebilde">';
+            if (user && (user.email === post.author_email || user.email === ADMIN_EMAIL)) {
+              html += '<div class="image-actions"><button class="danger small" type="button" onclick="deleteStoryImage(\'' + post.id + '\',' + g + ')">Slett</button></div>';
+            }
+            html += '</div>';
+          }
+          html += '</div>';
         }
+        html += '<div class="likebar"><button class="likebtn" type="button" onclick="likePost(\'' + postId + '\')">❤️ Lik (' + likeCount + ')</button><span class="mini">' + postComments.length + ' kommentar(er)</span></div><div class="comments">';
+        for (var j = 0; j < postComments.length; j++) html += '<div class="comment"><div class="commentmeta">' + escapeHtml(postComments[j].time || '') + '</div><div>' + escapeHtml(postComments[j].text || '') + '</div></div>';
         html += '<input id="comment-' + postId + '" placeholder="Skriv en kommentar"><div class="btnrow"><button type="button" class="alt" onclick="addComment(\'' + postId + '\')">Legg til kommentar</button></div></div></div>';
       }
       feed.innerHTML = html;
@@ -657,9 +655,13 @@
       if (!data.length) { document.getElementById("myPosts").textContent = "Ingen egne innlegg enda."; return; }
       var html = "";
       for (var i = 0; i < data.length; i++) {
-        var post = data[i];
+        var post = data[i], gallery = Array.isArray(post.image_urls) && post.image_urls.length ? post.image_urls : (post.image_url ? [post.image_url] : []);
         html += '<div class="post"><h3>' + escapeHtml(post.title || "") + '</h3><div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + '</div><p>' + escapeHtml(post.text || "") + '</p>';
-        if (post.image_url) html += '<img src="' + post.image_url + '" alt="Hundebilde">';
+        if (gallery.length) {
+          html += '<div class="gallery">';
+          for (var g=0; g<gallery.length; g++) html += '<div class="gallery-item"><img src="' + gallery[g] + '" alt="Hundebilde"></div>';
+          html += '</div>';
+        }
         html += '</div>';
       }
       document.getElementById("myPosts").innerHTML = html;
@@ -667,8 +669,8 @@
 
     function shareApp() {
       var url = "https://dagfinn53e-alt.github.io/hundene-vare/";
-      if (navigator.share) { navigator.share({ title: "Hundene våre", text: "Se appen Hundene våre 🐶", url: url }).catch(function(){}); }
-      else { copyLink(); }
+      if (navigator.share) navigator.share({ title: "Hundene våre", text: "Se appen Hundene våre 🐶", url: url }).catch(function(){});
+      else copyLink();
     }
     function copyLink() {
       var url = "https://dagfinn53e-alt.github.io/hundene-vare/";
