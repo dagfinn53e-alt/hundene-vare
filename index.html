@@ -174,35 +174,6 @@
       .card{padding:21px}
       .biz-top{gap:16px}
     }
-  
-    .ukens-card{
-      background:linear-gradient(180deg,#ffffff 0%,#fffef6 100%);
-      border:1px solid #ffe08a;
-      border-radius:26px;
-      padding:18px;
-      box-shadow:0 12px 26px rgba(15,23,42,.06);
-    }
-    .ukens-card img{
-      width:100%;
-      max-height:340px;
-      object-fit:cover;
-      display:block;
-      border-radius:22px;
-      margin-bottom:14px;
-      box-shadow:0 14px 26px rgba(15,23,42,.08);
-    }
-    .ukens-badge{
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:700;
-      background:#fff3bf;
-      border:1px solid #ffd666;
-      color:#8a5a00;
-      margin-bottom:10px;
-    }
-
   </style>
 </head>
 <body>
@@ -359,7 +330,6 @@
     var pages = ['home','auth','stories','groomers','shops','vets','business','admin'];
     for (var i = 0; i < pages.length; i++) document.getElementById('page-' + pages[i]).classList.add('hidden');
     document.getElementById('page-' + name).classList.remove('hidden');
-    if(name === 'home'){ loadUkensHund(); }
     if(name === 'stories'){ loadStories(); loadProfile(); }
     if(name === 'groomers' || name === 'shops' || name === 'vets'){ loadBusinesses(); }
     if(name === 'business'){ loadBusinessOptions(); }
@@ -625,10 +595,7 @@
     var shtml = stories.length ? "" : "Ingen innlegg.";
     for (var i=0;i<stories.length;i++) {
       var s = stories[i];
-      shtml += '<div class="admin-item"><h3>' + escapeHtml(s.title || "") + (s.ukens_hund ? ' <span class="badge approved">Ukens Hund</span>' : '') + '</h3><div class="meta">' + escapeHtml(s.author_email || "") + ' · ' + escapeHtml(s.place || "") + '</div><div class="btnrow">';
-      if (!s.ukens_hund) shtml += '<button class="ok" type="button" onclick="setUkensHund(\'' + s.id + '\')">Velg som Ukens Hund</button>';
-      if (s.ukens_hund) shtml += '<button class="warn" type="button" onclick="clearUkensHund(\'' + s.id + '\')">Fjern Ukens Hund</button>';
-      shtml += '<button class="danger" type="button" onclick="deleteStory(\'' + s.id + '\')">Slett innlegg</button></div></div>';
+      shtml += '<div class="admin-item"><h3>' + escapeHtml(s.title || "") + '</h3><div class="meta">' + escapeHtml(s.author_email || "") + ' · ' + escapeHtml(s.place || "") + '</div><div class="btnrow"><button class="danger" type="button" onclick="deleteStory(\'' + s.id + '\')">Slett innlegg</button></div></div>';
     }
     document.getElementById("adminStories").innerHTML = shtml;
 
@@ -649,7 +616,7 @@
     if (!confirm("Slette dette innlegget?")) return;
     var del = await supabase.from("stories").delete().eq("id", id);
     if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
-    setAdminStatus("Innlegg slettet.", "green"); loadAdmin(); loadStories(); loadProfile(); loadUkensHund();
+    setAdminStatus("Innlegg slettet.", "green"); loadAdmin(); loadStories(); loadProfile();
   }
 
   async function deleteBusiness(id) {
@@ -864,7 +831,6 @@
   loadStories();
   loadProfile();
   loadBusinesses();
-  loadUkensHund();
 </script>
 </body>
 </html>
