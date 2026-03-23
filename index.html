@@ -21,6 +21,7 @@
       --shadow-lg:0 34px 72px rgba(37,99,235,.20);
     }
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;font-family:Arial,sans-serif;color:var(--text);
       background:
@@ -28,7 +29,20 @@
         radial-gradient(circle at 90% 0%, #e8f2ff 0%, transparent 24%),
         linear-gradient(180deg,#edf5ff 0%,#f9fbff 100%)
     }
-    .wrap{max-width:1140px;margin:0 auto;padding:32px 16px 68px}
+    .wrap{max-width:1140px;margin:0 auto;padding:22px 16px 104px}
+    .topbar{
+      position:sticky;top:10px;z-index:50;
+      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+      margin-bottom:16px;padding:10px 12px;border-radius:24px;
+      background:rgba(255,255,255,.78);backdrop-filter:blur(12px);
+      border:1px solid rgba(219,234,254,.9);box-shadow:var(--shadow-sm)
+    }
+    .topbar .brand{
+      font-weight:800;font-size:20px;color:#194cc7;
+      background:linear-gradient(180deg,#ffffff,#f8fbff);border:1px solid #dbeafe;border-radius:20px;
+      padding:12px 16px;box-shadow:0 6px 16px rgba(15,23,42,.05)
+    }
+    .topbar .actions{display:flex;gap:10px;flex-wrap:wrap}
     .hero{
       background:
         radial-gradient(circle at 85% 15%, rgba(255,255,255,.18) 0%, rgba(255,255,255,0) 30%),
@@ -46,13 +60,6 @@
     }
     .hero h1{margin:0 0 12px 0;font-size:48px;position:relative;z-index:1;letter-spacing:-.04em}
     .hero p{margin:0;line-height:1.95;max-width:760px;position:relative;z-index:1;font-size:16px}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-    .topbar .brand{
-      font-weight:800;font-size:20px;color:#194cc7;
-      background:linear-gradient(180deg,#ffffff,#f8fbff);border:1px solid #dbeafe;border-radius:22px;
-      padding:13px 17px;box-shadow:var(--shadow-sm)
-    }
-    .topbar .actions{display:flex;gap:10px;flex-wrap:wrap}
     .card{
       background:linear-gradient(180deg,#ffffff 0%,#fbfdff 100%);
       border:1px solid var(--line);border-radius:34px;padding:28px;
@@ -167,12 +174,41 @@
     .badge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700}
     .approved{background:#dcfce7;color:#166534;border:1px solid #86efac}
     .pending{background:var(--yellow);color:var(--yellow-text);border:1px solid var(--yellow-line)}
+
+    .bottom-nav{
+      position:fixed;left:50%;transform:translateX(-50%);
+      bottom:14px;z-index:60;
+      width:min(760px,calc(100% - 20px));
+      display:none;grid-template-columns:repeat(5,1fr);gap:8px;
+      padding:10px;border-radius:24px;
+      background:rgba(255,255,255,.86);backdrop-filter:blur(14px);
+      border:1px solid rgba(219,234,254,.95);
+      box-shadow:0 18px 36px rgba(15,23,42,.12)
+    }
+    .bottom-nav button{
+      background:#f8fbff;color:#23418a;border:1px solid #d8e7ff;
+      border-radius:18px;padding:10px 8px;box-shadow:none;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:4px;font-size:12px;line-height:1.1;min-height:58px
+    }
+    .bottom-nav button span.icon{font-size:18px;line-height:1}
+    .section-chipbar{
+      display:flex;gap:10px;flex-wrap:wrap;margin-top:16px
+    }
+    .section-chip{
+      background:#fff;border:1px solid #dbeafe;color:#1d4ed8;
+      border-radius:999px;padding:9px 13px;font-size:13px;font-weight:700
+    }
+
     @media (max-width:760px){
       .menu-grid,.topstats,.search-grid,.admin-grid,.gallery{grid-template-columns:1fr}
       .hero h1{font-size:35px}
       .post h3,.biz-card h3,.admin-item h3{font-size:24px}
       .card{padding:21px}
       .biz-top{gap:16px}
+      .topbar .actions{display:none}
+      .bottom-nav{display:grid}
+      .wrap{padding-bottom:110px}
     }
   </style>
 </head>
@@ -195,6 +231,11 @@
         <div class="stat"><div class="label">Medlemmer</div><div class="value" id="memberCount">0</div></div>
         <div class="stat"><div class="label">Bilder</div><div class="value" id="imageCount">0</div></div>
         <div class="stat"><div class="label">Kommentarer</div><div class="value" id="commentCount">0</div></div>
+      </div>
+      <div class="section-chipbar">
+        <div class="section-chip">🐶 Fellesskap</div>
+        <div class="section-chip">📸 Bilder</div>
+        <div class="section-chip">🏪 Lokale tjenester</div>
       </div>
     </div>
 
