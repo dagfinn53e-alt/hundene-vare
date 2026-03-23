@@ -226,6 +226,28 @@
       .section-chipbar{gap:8px}
       .section-chip{width:100%;justify-content:center}
     }
+  
+    .rating-wrap{
+      margin-top:14px;padding-top:14px;border-top:1px solid #e6eefc
+    }
+    .rating-line{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap
+    }
+    .rating-stars{
+      display:flex;gap:6px;flex-wrap:wrap
+    }
+    .star-btn{
+      border:1px solid #d7e6ff;background:#fff;color:#d19a00;
+      border-radius:12px;padding:7px 9px;cursor:pointer;font-size:18px;line-height:1;
+      box-shadow:none
+    }
+    .star-btn.active{
+      background:#fff7d6;border-color:#ffd666
+    }
+    .rating-summary{
+      font-size:14px;color:var(--muted);font-weight:700
+    }
+
   </style>
 </head>
 <body>
@@ -578,49 +600,62 @@
   }
 
   async function renderBizList(type, targetId, rows, searchValue, favMode, mapSearch) {
-    var favs = getFavoriteBusinesses();
-    var all = rows.filter(function(b){ return b.type === type && b.approved === true; });
-    if (searchValue) {
-      var s = searchValue.toLowerCase();
-      all = all.filter(function(b){ return (b.name || "").toLowerCase().includes(s) || (b.place || "").toLowerCase().includes(s) || (b.description || "").toLowerCase().includes(s); });
+  const favs = getFavoriteBusinesses();
+  let all = rows.filter(b => b.type === type && b.approved === true);
+  if (searchValue) {
+    const s = searchValue.toLowerCase();
+    all = all.filter(b => (b.name || "").toLowerCase().includes(s) || (b.place || "").toLowerCase().includes(s) || (b.description || "").toLowerCase().includes(s));
+  }
+  if (favMode === "fav") all = all.filter(b => favs.indexOf(b.id) >= 0);
+
+  const auth = await supabase.auth.getUser();
+  const user = auth?.data?.user;
+  const target = document.getElementById(targetId);
+  if (!all.length) { target.innerHTML = '<div class="biz-card">Ingen godkjente bedrifter funnet.</div>'; return; }
+
+  let html = '';
+  for (const b of all) {
+    const isFav = favs.indexOf(b.id) >= 0;
+    const mapsLink = buildGoogleMapsLink(b.place, mapSearch || b.place);
+    const summary = await getBusinessRatingSummary(b.id);
+
+    html += '<div class="biz-card"><div class="biz-top">';
+    if (b.logo_url) html += '<img class="biz-logo" src="' + b.logo_url + '" alt="Logo">';
+    html += '<div class="biz-info"><h3>' + escapeHtml(b.name || "") + ' <span class="badge approved">Godkjent</span></h3>';
+    html += '<div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div>';
+    html += '<p>' + escapeHtml(b.description || "") + '</p>';
+    if (b.phone) html += '<div><strong>Telefon:</strong> ' + escapeHtml(b.phone) + '</div>';
+    if (b.website) html += '<div><strong>Lenke:</strong> <a class="site-link" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
+    if (mapsLink) html += '<div><a class="map-link" href="' + mapsLink + '" target="_blank" rel="noopener noreferrer">📍 Åpne i Google Maps</a></div>';
+
+    html += '<div class="rating-wrap">';
+    html += '<div class="rating-line">';
+    html += '<div class="rating-summary">Vurdering: ' + renderStars(summary.avg) + ' ' + (summary.count ? summary.avg.toFixed(1).replace(".", ",") : "0,0") + ' (' + summary.count + ')</div>';
+    html += '<div class="rating-stars">';
+    for (let star = 1; star <= 5; star++) {
+      html += '<button class="star-btn" type="button" onclick="rateBusiness(\'' + b.id + '\',' + star + ')">★</button>';
     }
-    if (favMode === "fav") all = all.filter(function(b){ return favs.indexOf(b.id) >= 0; });
+    html += '</div></div></div>';
 
-    var auth = await supabase.auth.getUser();
-    var user = auth && auth.data ? auth.data.user : null;
+    html += '<div class="biz-actions"><button class="alt small" type="button" onclick="toggleFavoriteBusiness(\'' + b.id + '\')">' + (isFav ? '❤️ Favoritt lagret' : '🤍 Lagre favoritt') + '</button></div>';
+    html += '</div></div>';
 
-    var target = document.getElementById(targetId);
-    if (!all.length) { target.innerHTML = '<div class="biz-card">Ingen godkjente bedrifter funnet.</div>'; return; }
-
-    var html = '';
-    for (var i=0;i<all.length;i++) {
-      var b = all[i], isFav = favs.indexOf(b.id) >= 0, mapsLink = buildGoogleMapsLink(b.place, mapSearch || b.place);
-      html += '<div class="biz-card"><div class="biz-top">';
-      if (b.logo_url) html += '<img class="biz-logo" src="' + b.logo_url + '" alt="Logo">';
-      html += '<div class="biz-info"><h3>' + escapeHtml(b.name || "") + ' <span class="badge approved">Godkjent</span></h3>';
-      html += '<div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div>';
-      html += '<p>' + escapeHtml(b.description || "") + '</p>';
-      if (b.phone) html += '<div><strong>Telefon:</strong> ' + escapeHtml(b.phone) + '</div>';
-      if (b.website) html += '<div><strong>Lenke:</strong> <a class="site-link" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
-      if (mapsLink) html += '<div><a class="map-link" href="' + mapsLink + '" target="_blank" rel="noopener noreferrer">📍 Åpne i Google Maps</a></div>';
-      html += '<div class="biz-actions"><button class="alt small" type="button" onclick="toggleFavoriteBusiness(\'' + b.id + '\')">' + (isFav ? '❤️ Favoritt lagret' : '🤍 Lagre favoritt') + '</button></div>';
-      html += '</div></div>';
-      if (b.image_url) html += '<div class="biz-main"><img src="' + b.image_url + '" alt="Bedriftsbilde"></div>';
-      if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
-        html += '<div class="gallery">';
-        for (var g=0; g<b.gallery_urls.length; g++) {
-          html += '<div class="gallery-item"><img src="' + b.gallery_urls[g] + '" alt="Galleri">';
-          if (user && (user.email === b.author_email || user.email === ADMIN_EMAIL)) {
-            html += '<div class="image-actions"><button class="danger small" type="button" onclick="deleteBusinessImage(\'' + b.id + '\',' + g + ')">Slett</button></div>';
-          }
-          html += '</div>';
+    if (b.image_url) html += '<div class="biz-main"><img src="' + b.image_url + '" alt="Bedriftsbilde"></div>';
+    if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
+      html += '<div class="gallery">';
+      for (let g = 0; g < b.gallery_urls.length; g++) {
+        html += '<div class="gallery-item"><img src="' + b.gallery_urls[g] + '" alt="Galleri">';
+        if (user && (user.email === b.author_email || user.email === ADMIN_EMAIL)) {
+          html += '<div class="image-actions"><button class="danger small" type="button" onclick="deleteBusinessImage(\'' + b.id + '\',' + g + ')">Slett</button></div>';
         }
         html += '</div>';
       }
       html += '</div>';
     }
-    target.innerHTML = html;
+    html += '</div>';
   }
+  target.innerHTML = html;
+}
 
   async function loadBusinesses() {
     var result = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
