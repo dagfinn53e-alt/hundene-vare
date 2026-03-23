@@ -210,7 +210,8 @@
     }
     .section-chip{
       background:#fff;border:1px solid #dbeafe;color:#1d4ed8;
-      border-radius:999px;padding:9px 13px;font-size:13px;font-weight:700
+      border-radius:999px;padding:9px 13px;font-size:13px;font-weight:700;
+      cursor:pointer;box-shadow:none
     }
 
     @media (max-width:760px){
@@ -246,9 +247,9 @@
         <div class="stat"><div class="label">Kommentarer</div><div class="value" id="commentCount">0</div></div>
       </div>
       <div class="section-chipbar">
-        <div class="section-chip">🐶 Fellesskap</div>
-        <div class="section-chip">📸 Bilder</div>
-        <div class="section-chip">🏪 Lokale tjenester</div>
+        <button type="button" class="section-chip" onclick="showPage('stories')">🐶 Fellesskap</button>
+        <button type="button" class="section-chip" onclick="showPage('stories')">📸 Bilder</button>
+        <button type="button" class="section-chip" onclick="showPage('groomers')">🏪 Lokale tjenester</button>
       </div>
     </div>
 
