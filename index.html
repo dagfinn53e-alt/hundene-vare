@@ -180,9 +180,7 @@
       border-radius:22px;
       padding:16px;
     }
-    .collapsed-form{display:none}
-    .collapsed-form.show{display:block}
-    .feed-first-note{
+        .feed-first-note{
       color:#64748b;
       font-size:14px;
       margin-bottom:10px;
@@ -381,15 +379,10 @@
     </div>
 
     <div class="card">
-      <div class="post-toggle-box">
-        <h2 class="section-title" style="font-size:24px;">Nytt innlegg</h2>
-        <div class="sub">Trykk for å åpne skjemaet når du vil legge inn nytt bilde eller en ny historie.</div>
-        <div class="btnrow">
-          <button type="button" onclick="toggleNewPostForm()">Åpne / skjul skjema</button>
-        </div>
-      </div>
+      <h2 class="section-title" style="font-size:24px;">Nytt innlegg</h2>
+      <div class="sub">Legg inn nytt bilde og en ny historie her.</div>
 
-      <div id="newPostForm" class="collapsed-form" style="margin-top:16px;">
+      <div id="newPostForm" style="margin-top:16px;">
         <input id="title" placeholder="Tittel">
         <input id="dog" placeholder="Hundens navn">
         <input id="place" placeholder="Sted">
