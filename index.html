@@ -174,6 +174,19 @@
       box-shadow:0 4px 12px rgba(15,23,42,.03)
     }
     .commentmeta{font-size:12px;color:var(--muted);margin-bottom:4px}
+    .post-toggle-box{
+      background:linear-gradient(180deg,#f8fbff,#eef5ff);
+      border:1px solid #dbeafe;
+      border-radius:22px;
+      padding:16px;
+    }
+    .collapsed-form{display:none}
+    .collapsed-form.show{display:block}
+    .feed-first-note{
+      color:#64748b;
+      font-size:14px;
+      margin-bottom:10px;
+    }
     .comments-title{
       font-size:14px;
       font-weight:800;
@@ -263,7 +276,7 @@
       .biz-top{gap:16px}
       .topbar{padding:8px 10px;border-radius:20px}
       .topbar .brand{font-size:18px;padding:10px 13px}
-      .topbar .actions{display:none}
+      .topbar .actions{display:flex}
       .bottom-nav{display:grid}
       .wrap{padding-bottom:124px}
       .section-chipbar{gap:8px}
@@ -356,40 +369,50 @@
     </div>
   </div>
 
+  
   <div id="page-stories" class="hidden">
     <div class="card">
       <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-      <h2>Nytt innlegg</h2>
-      <div class="sub">Legg inn hund, sted, tekst og opptil 5 bilder.</div>
-      <input id="title" placeholder="Tittel">
-      <input id="dog" placeholder="Hundens navn">
-      <input id="place" placeholder="Sted">
-      <select id="category"><option>Hverdag</option><option>Tur</option><option>Utstilling</option></select>
-      <textarea id="text" placeholder="Skriv om hunden..."></textarea>
-      <label>Velg opptil 5 bilder</label>
-      <input id="imageFiles" type="file" accept="image/*" multiple>
-      <div class="btnrow">
-        <button type="button" onclick="saveStory()">Lagre innlegg</button>
-        <button type="button" class="alt" onclick="loadStories()">Oppdater innlegg</button>
+      <h2 class="section-title">Bilder / Fortellinger</h2>
+      <div class="feed-first-note">Se innleggene først. Du kan åpne skjema for nytt innlegg når du vil.</div>
+      <div id="feed">Laster ...</div>
+    </div>
+
+    <div class="card">
+      <div class="post-toggle-box">
+        <h2 class="section-title" style="font-size:24px;">Nytt innlegg</h2>
+        <div class="sub">Trykk for å åpne skjemaet når du vil legge inn nytt bilde eller en ny historie.</div>
+        <div class="btnrow">
+          <button type="button" onclick="toggleNewPostForm()">Åpne / skjul skjema</button>
+        </div>
+      </div>
+
+      <div id="newPostForm" class="collapsed-form" style="margin-top:16px;">
+        <input id="title" placeholder="Tittel">
+        <input id="dog" placeholder="Hundens navn">
+        <input id="place" placeholder="Sted">
+        <select id="category"><option>Hverdag</option><option>Tur</option><option>Utstilling</option></select>
+        <textarea id="text" placeholder="Skriv om hunden..."></textarea>
+        <label>Velg opptil 5 bilder</label>
+        <input id="imageFiles" type="file" accept="image/*" multiple>
+        <div class="btnrow">
+          <button type="button" onclick="saveStory()">Lagre innlegg</button>
+          <button type="button" class="alt" onclick="loadStories()">Oppdater innlegg</button>
+        </div>
       </div>
     </div>
 
     <div class="card">
-      <h2>Min profil</h2>
+      <h2 class="section-title">Min profil</h2>
       <div class="profilebox">
         <div><strong>E-post:</strong> <span id="profileEmail">Ikke innlogget</span></div>
         <div><strong>Mine innlegg:</strong> <span id="profilePosts">0</span></div>
         <div><strong>Mine bedrifter:</strong> <span id="profileBusinesses">0</span></div>
       </div>
-      <h3>Mine bedrifter</h3>
+      <h3 style="margin-top:18px;font-size:24px;">Mine bedrifter</h3>
       <div id="myBusinesses">Logg inn for å se dine bedrifter.</div>
       <h3 style="margin-top:22px;font-size:24px;">Mine innlegg</h3>
       <div id="myPosts">Logg inn for å se dine innlegg.</div>
-    </div>
-
-    <div class="card">
-      <h2>Bilder / Fortellinger</h2>
-      <div id="feed">Laster ...</div>
     </div>
   </div>
 
