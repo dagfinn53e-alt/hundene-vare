@@ -146,15 +146,9 @@
       padding-bottom:10px;border-bottom:1px dashed #d8e5fb
     }
     .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
-    .gallery-item{position:relative;background:#f8fafc;border-radius:28px;padding:6px}
+    .gallery-item{position:relative}
     .gallery img,.biz-main img{
-      width:100%;
-      height:240px;
-      border-radius:28px;
-      display:block;
-      object-fit:contain;
-      object-position:center;
-      background:#f1f5f9;
+      width:100%;border-radius:28px;display:block;max-height:320px;object-fit:cover;
       box-shadow:0 18px 32px rgba(15,23,42,.08)
     }
     .biz-main{margin-top:18px}
@@ -581,7 +575,7 @@
 
   async function uploadMultiple(files, folder) {
     var urls = [];
-    for (var i = 0; i < files.length; i++) urls.push(await uploadFile(files[i], folder));
+    for (var i = 0; i < fixedFiles.length; i++) urls.push(await uploadFile(fixedFiles[i], folder));
     return urls;
   }
 
@@ -868,7 +862,33 @@
     setStatus("Innlogget som " + email, "green"); loadProfile(); showPage('stories');
   }
 
-  async function saveStory() {
+  
+async function fixImageOrientation(file) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      img.onload = function () {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        ctx.drawImage(img, 0, 0);
+
+        canvas.toBlob((blob) => {
+          resolve(blob);
+        }, "image/jpeg", 0.9);
+      };
+      img.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+async function saveStory() {
     setStatus("Prøver å lagre ...", "blue");
     var auth = await supabase.auth.getUser();
     var user = auth && auth.data ? auth.data.user : null;
