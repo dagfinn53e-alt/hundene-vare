@@ -285,17 +285,7 @@
       input,textarea,select{font-size:16px}
       button{min-height:44px}
     }
-  
-    .lock-hint{
-      margin-top:6px;
-      font-size:13px;
-      color:#64748b;
-      font-weight:600;
-    }
-    .lock-hint::before{
-      content:"🔒 ";
-    }
-    </style>
+  </style>
 </head>
 <body>
 <div class="wrap">
@@ -326,9 +316,11 @@
       <div style="position:relative;z-index:1;">
         <h1 style="font-size:42px;margin-bottom:10px;">Hundene våre 🐾</h1>
         <p style="font-size:18px;max-width:600px;">
-          En varm møteplass for deg som elsker hunder.
-          Del øyeblikk, oppdag historier og bli en del av fellesskapet.
-        </p>
+      Her kan du dele hundebilder, historier og opplevelser.<br>
+      Logg inn og bli med i fellesskapet.<br><br>
+      👉 Snart kan du også finne frisører, butikker og veterinærer i ditt område.<br><br>
+      <strong>Lag konto eller logg inn for å dele egne bilder og historier.</strong>
+    </p>
 
         <div class="topstats">
           <div class="stat"><div class="label">Innlegg</div><div class="value" id="postCount">0</div></div>
@@ -353,10 +345,10 @@
     <div class="card">
       <h2 class="section-title">Utforsk appen</h2>
       <div class="menu-grid">
-        <button class="menu-btn box-stories" onclick="showPage('stories')"><h3>📸 Bilder / Fortellinger</h3><div class="lock-hint">Logg inn for full tilgang</div></button>
-        <button class="menu-btn box-groomers" onclick="showPage('groomers')"><h3>✂️ Frisører</h3><div class="lock-hint">Logg inn for full tilgang</div></button>
-        <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3><div class="lock-hint">Logg inn for full tilgang</div></button>
-        <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3><div class="lock-hint">Logg inn for full tilgang</div></button>
+        <button class="menu-btn box-stories" onclick="showPage('stories')"><h3>📸 Bilder / Fortellinger</h3></button>
+        <button class="menu-btn box-groomers" onclick="showPage('groomers')"><h3>✂️ Frisører</h3></button>
+        <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3></button>
+        <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3></button>
         <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Bedrift</h3></button>
         <button class="menu-btn box-admin" onclick="showPage('admin')"><h3>🛠️ Admin</h3></button>
       </div>
@@ -552,23 +544,12 @@
     if (active) active.classList.add('active');
   }
 
-  function updateLockHints(){
-  try{
-    const emailEl = document.getElementById("profileEmail");
-    const loggedIn = emailEl && emailEl.textContent && emailEl.textContent !== "Ikke innlogget";
-    const hints = document.querySelectorAll(".lock-hint");
-    hints.forEach(h => {
-      h.style.display = loggedIn ? "none" : "block";
-    });
-  }catch(e){}
-}
-
-function showPage(name){
+  function showPage(name){
     var pages = ['home','auth','stories','groomers','shops','vets','business','admin'];
     for (var i = 0; i < pages.length; i++) document.getElementById('page-' + pages[i]).classList.add('hidden');
     document.getElementById('page-' + name).classList.remove('hidden');
     setBottomNavActive(name);
-    if(name === 'stories'){ loadStories(); updateLockHints(); loadProfile(); }
+    if(name === 'stories'){ loadStories(); loadProfile(); }
     if(name === 'groomers' || name === 'shops' || name === 'vets'){ loadBusinesses(); }
     if(name === 'business'){ loadBusinessOptions(); }
     if(name === 'admin'){ loadAdmin(); }
