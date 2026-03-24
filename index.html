@@ -193,7 +193,7 @@
     .profilebox div{padding:7px 0}
     .sharelink{word-break:break-all;color:var(--blue-dark);font-weight:700}
     .mini{font-size:13px;color:var(--muted)}
-    .topstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+    .topstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px;align-items:stretch}
     .stat{
       background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.18);border-radius:30px;
       padding:16px;text-align:center;backdrop-filter:blur(6px)
@@ -253,7 +253,8 @@
     }
 
     @media (max-width:760px){
-      .menu-grid,.topstats,.search-grid,.admin-grid,.gallery{grid-template-columns:1fr}
+      .menu-grid,.search-grid,.admin-grid,.gallery{grid-template-columns:1fr}
+      .topstats{grid-template-columns:repeat(4,1fr)}
       .hero{padding:30px;border-radius:30px}
       .hero h1{font-size:35px}
       .hero p{font-size:15px;line-height:1.8}
@@ -315,6 +316,7 @@
       <div class="mobile-quick-title">Hurtigvalg</div>
       <div class="section-chipbar">
         <button type="button" class="section-chip" onclick="showPage('about')">ℹ️ Om oss</button>
+        <button type="button" class="section-chip" onclick="showPage('favorites')">❤️ Favoritter</button>
         <button type="button" class="section-chip" onclick="showPage('stories')">🐶 Fellesskap</button>
         <button type="button" class="section-chip" onclick="showPage('stories')">📸 Bilder</button>
         <button type="button" class="section-chip" onclick="showPage('groomers')">✂️ Frisører</button>
@@ -332,7 +334,7 @@
         <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3></button>
         <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Bedrift</h3></button>
         <button class="menu-btn box-admin" onclick="showPage('admin')"><h3>🛠️ Admin</h3></button>
-        <button class="menu-btn box-stories" onclick="showPage('favorites')"><h3>❤️ Favoritter</h3></button>
+
       </div>
       <div class="footer-note">Hundene våre skal gjøre det enklere å samle hundefolk, dele gode opplevelser og knytte sammen hundeeiere med lokale tjenester.</div>
     </div>
