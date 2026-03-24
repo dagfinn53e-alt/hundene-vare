@@ -575,7 +575,7 @@
 
   async function uploadMultiple(files, folder) {
     var urls = [];
-    for (var i = 0; i < fixedFiles.length; i++) urls.push(await uploadFile(fixedFiles[i], folder));
+    for (var i = 0; i < files.length; i++) urls.push(await uploadFile(files[i], folder));
     return urls;
   }
 
@@ -862,33 +862,7 @@
     setStatus("Innlogget som " + email, "green"); loadProfile(); showPage('stories');
   }
 
-  
-async function fixImageOrientation(file) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    const reader = new FileReader();
-
-    reader.onload = function (e) {
-      img.onload = function () {
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-
-        canvas.width = img.width;
-        canvas.height = img.height;
-
-        ctx.drawImage(img, 0, 0);
-
-        canvas.toBlob((blob) => {
-          resolve(blob);
-        }, "image/jpeg", 0.9);
-      };
-      img.src = e.target.result;
-    };
-
-    reader.readAsDataURL(file);
-  });
-}
-async function saveStory() {
+  async function saveStory() {
     setStatus("Prøver å lagre ...", "blue");
     var auth = await supabase.auth.getUser();
     var user = auth && auth.data ? auth.data.user : null;
