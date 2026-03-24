@@ -285,60 +285,6 @@
       input,textarea,select{font-size:16px}
       button{min-height:44px}
     }
-  
-    .hero-wow-card{
-      position:relative;
-      z-index:1;
-      max-width:680px;
-      background:rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.22);
-      backdrop-filter:blur(6px);
-      border-radius:28px;
-      padding:24px;
-      box-shadow:0 18px 40px rgba(0,0,0,.12);
-    }
-    .hero-wow-kicker{
-      display:inline-block;
-      padding:8px 12px;
-      border-radius:999px;
-      background:rgba(255,255,255,.18);
-      border:1px solid rgba(255,255,255,.28);
-      font-size:13px;
-      font-weight:800;
-      letter-spacing:.04em;
-      text-transform:uppercase;
-      margin-bottom:14px;
-    }
-    .hero-wow-cta{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:16px;
-    }
-    .hero-wow-btn{
-      display:inline-block;
-      text-decoration:none;
-      padding:12px 16px;
-      border-radius:999px;
-      font-weight:800;
-      font-size:14px;
-      border:1px solid rgba(255,255,255,.28);
-    }
-    .hero-wow-btn.primary{
-      background:#ffffff;
-      color:#1d4ed8;
-      box-shadow:0 10px 22px rgba(0,0,0,.10);
-    }
-    .hero-wow-btn.secondary{
-      background:rgba(255,255,255,.14);
-      color:#ffffff;
-      backdrop-filter:blur(6px);
-    }
-    @media (max-width:760px){
-      .hero-wow-card{padding:18px;border-radius:22px}
-      .hero-wow-kicker{font-size:12px}
-      .hero-wow-btn{width:100%;text-align:center}
-    }
   </style>
 </head>
 <body>
@@ -368,41 +314,15 @@
       "></div>
 
       <div style="position:relative;z-index:1;">
-    <div class="hero-wow-card">
-      <div class="hero-wow-kicker">Velkommen til fellesskapet</div>
-      <h1 style="font-size:44px;margin:0 0 12px 0;line-height:1.05;">Hundene våre 🐾</h1>
-      <p style="font-size:19px;max-width:620px;line-height:1.8;margin:0;">
-        Her kan du dele hundebilder, historier og opplevelser.<br>
-        Logg inn og bli med i fellesskapet.
-      </p>
-      <p style="font-size:16px;max-width:620px;line-height:1.8;margin:14px 0 0 0;">
-        <strong>Lag konto eller logg inn for å dele egne bilder og historier.</strong>
-      </p>
-      <div class="hero-wow-cta">
-        <a href="javascript:void(0)" class="hero-wow-btn primary" onclick="showPage('auth')">Lag konto / Logg inn</a>
-        <a href="javascript:void(0)" class="hero-wow-btn secondary" onclick="showPage('stories')">Se bilder og fortellinger</a>
-      </div>
-    </div>
+        <h1 style="font-size:42px;margin-bottom:10px;">Hundene våre 🐾</h1>
+    <p style="font-size:18px;max-width:600px;">
+      Her kan du dele hundebilder, historier og opplevelser.<br>
+      Logg inn og bli med i fellesskapet.<br><br>
+      <strong>Lag konto eller logg inn for å dele egne bilder og historier.</strong>
+    </p>
 
-    <div class="topstats">
-      <div class="stat"><div class="label">Innlegg</div><div class="value" id="postCount">0</div></div>
-      <div class="stat"><div class="label">Medlemmer</div><div class="value" id="memberCount">0</div></div>
-      <div class="stat"><div class="label">Bilder</div><div class="value" id="imageCount">0</div></div>
-      <div class="stat"><div class="label">Kommentarer</div><div class="value" id="commentCount">0</div></div>
-    </div>
-
-    <div class="mobile-quick-title">Hurtigvalg</div>
-    <div class="section-chipbar">
-      <button type="button" class="section-chip" onclick="showPage('about')">ℹ️ Om oss</button>
-      <button type="button" class="section-chip" onclick="showPage('favorites')">❤️ Favoritter</button>
-      <button type="button" class="section-chip" onclick="showPage('stories')">🐶 Fellesskap</button>
-      <button type="button" class="section-chip" onclick="showPage('stories')">📸 Bilder</button>
-      <button type="button" class="section-chip" onclick="showPage('groomers')">✂️ Frisører</button>
-      <button type="button" class="section-chip" onclick="showPage('shops')">🐾 Butikker</button>
-      <button type="button" class="section-chip" onclick="showPage('vets')">🏥 Veterinærer</button>
-    </div>
-  </div>
-</div>
+        <div class="topstats">
+          <div class="stat"><div class="label">Innlegg</div><div class="value" id="postCount">0</div></div>
           <div class="stat"><div class="label">Medlemmer</div><div class="value" id="memberCount">0</div></div>
           <div class="stat"><div class="label">Bilder</div><div class="value" id="imageCount">0</div></div>
           <div class="stat"><div class="label">Kommentarer</div><div class="value" id="commentCount">0</div></div>
