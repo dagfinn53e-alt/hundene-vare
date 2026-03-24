@@ -313,6 +313,8 @@
         <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3><p>Godkjente veterinærer med tjenester, åpningstider, logo og kontakt.</p></button>
         <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Registrer / rediger bedrift</h3><p>Bedrifter sendes inn og venter på godkjenning før de vises offentlig.</p></button>
         <button class="menu-btn box-admin" onclick="showPage('admin')"><h3>🛠️ Admin</h3><p>Godkjenn, avvis og slett bedrifter, og se alle innlegg.</p></button>
+        <button class="menu-btn box-stories" onclick="showPage('favorites')"><h3>❤️ Mine favoritter</h3><p>Se alle lagrede favoritter samlet på ett sted.</p></button>
+        <button class="menu-btn box-business" onclick="showPage('about')"><h3>ℹ️ Om oss</h3><p>Les hva Hundene våre er og hva appen ønsker å tilby.</p></button>
       </div>
       <div class="footer-note">Hundene våre skal gjøre det enklere å samle hundefolk, dele gode opplevelser og knytte sammen hundeeiere med lokale tjenester.</div>
     </div>
@@ -415,7 +417,38 @@
     </div>
   </div>
 
-  <div class="card">
+  
+  <div id="page-favorites" class="hidden">
+    <div class="card">
+      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <h2 class="section-title">❤️ Mine favoritter</h2>
+      <div class="sub">Her ser du bedrifter du har lagret som favoritter.</div>
+      <div id="favoritesList">Laster favoritter ...</div>
+    </div>
+  </div>
+
+  <div id="page-about" class="hidden">
+    <div class="card">
+      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <h2 class="section-title">ℹ️ Om oss</h2>
+      <div class="sub">
+        Hundene våre er laget som en varm og trygg møteplass for hundeglade på Vestlandet.
+        Her kan du dele bilder, fortellinger og opplevelser, og etter hvert finne lokale tjenester
+        som frisører, butikker og veterinærer.
+      </div>
+      <div class="profilebox">
+        <div><strong>Vår idé:</strong> Å samle hundefolk på ett sted.</div>
+        <div><strong>Vårt mål:</strong> Å gjøre appen nyttig, hyggelig og enkel å bruke.</div>
+        <div><strong>Innhold:</strong> Bilder, historier, fellesskap og lokale tjenester.</div>
+      </div>
+      <div class="footer-note" style="margin-top:18px;">
+        Hundene våre skal være en app der små historier, store hundeøyeblikk og lokale tilbud
+        kan møtes i samme feed — på en enkel og vennlig måte.
+      </div>
+    </div>
+  </div>
+
+<div class="card">
     <div class="sharebox">
       <div>Del appen med andre:</div>
       <div class="sharelink">https://dagfinn53e-alt.github.io/hundene-vare/</div>
@@ -447,6 +480,7 @@
     if(name === 'groomers' || name === 'shops' || name === 'vets'){ loadBusinesses(); }
     if(name === 'business'){ loadBusinessOptions(); }
     if(name === 'admin'){ loadAdmin(); }
+    if(name === 'favorites'){ loadFavoritesPage(); }
   }
 
   function setStatus(text, color) { var el = document.getElementById("status"); el.textContent = text; el.style.color = color || "black"; }
