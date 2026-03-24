@@ -283,58 +283,7 @@
       input,textarea,select{font-size:16px}
       button{min-height:44px}
     }
-  
-    .image-modal{
-      display:none;
-      position:fixed;
-      inset:0;
-      z-index:9999;
-      background:rgba(15,23,42,.82);
-      padding:20px;
-      align-items:center;
-      justify-content:center;
-    }
-    .image-modal.show{
-      display:flex;
-    }
-    .image-modal-inner{
-      position:relative;
-      max-width:min(1000px,96vw);
-      max-height:92vh;
-      width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .image-modal img{
-      max-width:100%;
-      max-height:92vh;
-      width:auto;
-      height:auto;
-      display:block;
-      border-radius:20px;
-      box-shadow:0 18px 44px rgba(0,0,0,.35);
-      background:#fff;
-    }
-    .image-modal-close{
-      position:absolute;
-      top:-8px;
-      right:-8px;
-      width:40px;
-      height:40px;
-      border-radius:999px;
-      border:none;
-      background:#fff;
-      color:#0f172a;
-      font-size:22px;
-      font-weight:700;
-      cursor:pointer;
-      box-shadow:0 10px 24px rgba(0,0,0,.25);
-    }
-    .clickable-image{
-      cursor:pointer;
-    }
-    
+  </style>
 </head>
 <body>
 <div class="wrap">
@@ -802,11 +751,11 @@
       if (mapsLink) html += '<div><a class="map-link" href="' + mapsLink + '" target="_blank" rel="noopener noreferrer">📍 Åpne i Google Maps</a></div>';
       html += '<div class="biz-actions"><button class="alt small" type="button" onclick="toggleFavoriteBusiness(\'' + b.id + '\')">' + (isFav ? '❤️ Favoritt lagret' : '🤍 Lagre favoritt') + '</button></div>';
       html += '</div></div>';
-      if (b.image_url) html += '<div class="biz-main"><img class="clickable-image" src="' + b.image_url + '" alt="Bedriftsbilde" onclick="openImageModal(this.src)"></div>';
+      if (b.image_url) html += '<div class="biz-main"><img src="' + b.image_url + '" alt="Bedriftsbilde"></div>';
       if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
         html += '<div class="gallery">';
         for (var g=0; g<b.gallery_urls.length; g++) {
-          html += '<div class="gallery-item"><img class="clickable-image" src="' + b.gallery_urls[g] + '" alt="Galleri" onclick="openImageModal(this.src)">';
+          html += '<div class="gallery-item"><img src="' + b.gallery_urls[g] + '" alt="Galleri">';
           if (user && (user.email === b.author_email || user.email === ADMIN_EMAIL)) {
             html += '';
           }
@@ -993,7 +942,7 @@
       if (gallery.length) {
         html += '<div class="gallery">';
         for (var g=0; g<gallery.length; g++) {
-          html += '<div class="gallery-item"><img class="clickable-image" src="' + gallery[g] + '" alt="Hundebilde" onclick="openImageModal(this.src)">';
+          html += '<div class="gallery-item"><img src="' + gallery[g] + '" alt="Hundebilde">';
           if (user && (user.email === post.author_email || user.email === ADMIN_EMAIL)) {
             html += '';
           }
@@ -1037,7 +986,7 @@
         phtml += '<div class="post"><h3>' + escapeHtml(post.title || "") + '</h3><div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + '</div><p>' + escapeHtml(post.text || "") + '</p>';
         if (gallery.length) {
           phtml += '<div class="gallery">';
-          for (var g=0; g<gallery.length; g++) phtml += '<div class="gallery-item"><img class="clickable-image" src="' + gallery[g] + '" alt="Hundebilde" onclick="openImageModal(this.src)"></div>';
+          for (var g=0; g<gallery.length; g++) phtml += '<div class="gallery-item"><img src="' + gallery[g] + '" alt="Hundebilde"></div>';
           phtml += '</div></div>';
         }
         phtml += '</div></div>';
@@ -1060,11 +1009,11 @@
         bhtml += '<div class="biz-info"><h3>' + escapeHtml(b.name || "") + ' ' + (b.approved ? '<span class="badge approved">Godkjent</span>' : '<span class="badge pending">Venter</span>') + '</h3><div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div><p>' + escapeHtml(b.description || "") + '</p>';
         bhtml += '<div class="biz-actions"><button class="alt small" type="button" onclick="openBusinessForEdit(\'' + b.id + '\')">Rediger bedrift</button></div>';
         bhtml += '</div></div>';
-        if (b.image_url) bhtml += '<div class="biz-main"><img class="clickable-image" src="' + b.image_url + '" alt="Bedriftsbilde" onclick="openImageModal(this.src)"></div>';
+        if (b.image_url) bhtml += '<div class="biz-main"><img src="' + b.image_url + '" alt="Bedriftsbilde"></div>';
         if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
           bhtml += '<div class="gallery">';
           for (var k=0; k<b.gallery_urls.length; k++) {
-            bhtml += '<div class="gallery-item"><img class="clickable-image" src="' + b.gallery_urls[k] + '" alt="Galleri" onclick="openImageModal(this.src)"></div>';
+            bhtml += '<div class="gallery-item"><img src="' + b.gallery_urls[k] + '" alt="Galleri"></div>';
           }
           bhtml += '</div></div>';
         }
@@ -1099,13 +1048,5 @@
   loadProfile();
   loadBusinesses();
 </script>
-
-<div id="imageModal" class="image-modal" onclick="closeImageModal(event)">
-  <div class="image-modal-inner">
-    <button class="image-modal-close" type="button" onclick="closeImageModal(event)">×</button>
-    <img id="imageModalImg" src="" alt="Stort bilde">
-  </div>
-</div>
-
 </body>
 </html>
