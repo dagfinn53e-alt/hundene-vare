@@ -283,86 +283,7 @@
       input,textarea,select{font-size:16px}
       button{min-height:44px}
     }
-  
-    .profile-header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:14px;
-    }
-    .profile-title{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .profile-avatar{
-      width:54px;
-      height:54px;
-      border-radius:999px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:linear-gradient(180deg,#eaf2ff,#dbeafe);
-      color:#1d4ed8;
-      font-size:24px;
-      font-weight:800;
-      border:1px solid #bfdbfe;
-      box-shadow:0 8px 18px rgba(37,99,235,.12);
-    }
-    .profile-topline{
-      font-size:13px;
-      font-weight:800;
-      color:#31538f;
-      letter-spacing:.04em;
-      text-transform:uppercase;
-      margin-bottom:4px;
-    }
-    .profile-main-title{
-      font-size:28px;
-      font-weight:800;
-      color:#0f172a;
-      line-height:1.1;
-    }
-    .profile-stats{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-      margin-top:14px;
-    }
-    .profile-stat{
-      background:#ffffff;
-      border:1px solid #dbeafe;
-      border-radius:18px;
-      padding:14px;
-      text-align:center;
-      box-shadow:0 10px 22px rgba(15,23,42,.04);
-    }
-    .profile-stat-value{
-      font-size:22px;
-      font-weight:800;
-      color:#1d4ed8;
-      line-height:1;
-      margin-bottom:6px;
-    }
-    .profile-stat-label{
-      font-size:13px;
-      color:#64748b;
-      font-weight:700;
-    }
-    .profile-section-title{
-      margin-top:22px;
-      margin-bottom:10px;
-      font-size:22px;
-      font-weight:800;
-      color:#0f172a;
-    }
-    @media (max-width:760px){
-      .profile-stats{grid-template-columns:1fr}
-      .profile-main-title{font-size:24px}
-    }
-    </style>
+  </style>
 </head>
 <body>
 <div class="wrap">
@@ -410,8 +331,8 @@
         <div class="section-chipbar">
           <button type="button" class="section-chip" onclick="showPage('about')">ℹ️ Om oss</button>
           <button type="button" class="section-chip" onclick="showPage('favorites')">❤️ Favoritter</button>
-          <button type="button" class="section-chip" onclick="showPage('stories')">🐶 Fellesskap</button>
-          <button type="button" class="section-chip" onclick="showPage('stories')">📸 Bilder</button>
+          <button type="button" class="section-chip" onclick="showPage('stories'); setTimeout(()=>{const el=document.querySelector('.profilebox'); if(el) el.scrollIntoView({behavior:'smooth'});},200);">🐶 Fellesskap</button>
+          <button type="button" class="section-chip" onclick="showPage('stories'); setTimeout(()=>{const el=document.querySelector('.profilebox'); if(el) el.scrollIntoView({behavior:'smooth'});},200);">📸 Bilder</button>
           <button type="button" class="section-chip" onclick="showPage('groomers')">✂️ Frisører</button>
           <button type="button" class="section-chip" onclick="showPage('shops')">🐾 Butikker</button>
           <button type="button" class="section-chip" onclick="showPage('vets')">🏥 Veterinærer</button>
@@ -422,7 +343,7 @@
     <div class="card">
       <h2 class="section-title">Utforsk appen</h2>
       <div class="menu-grid">
-        <button class="menu-btn box-stories" onclick="showPage('stories')"><h3>📸 Bilder / Fortellinger</h3></button>
+        <button class="menu-btn box-stories" onclick="showPage('stories'); setTimeout(()=>{const el=document.querySelector('.profilebox'); if(el) el.scrollIntoView({behavior:'smooth'});},200);"><h3>📸 Bilder / Fortellinger</h3></button>
         <button class="menu-btn box-groomers" onclick="showPage('groomers')"><h3>✂️ Frisører</h3></button>
         <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3></button>
         <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3></button>
@@ -477,39 +398,15 @@
     </div>
 
     <div class="card">
-      <div class="profile-header">
-        <div class="profile-title">
-          <div class="profile-avatar">👤</div>
-          <div>
-            <div class="profile-topline">Din side</div>
-            <div class="profile-main-title">Min profil</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="profilebox" style="background:#f8fbff;padding:18px;border-radius:22px;">
+      <h2 class="section-title">Min profil</h2>
+      <div class="profilebox">
         <div><strong>E-post:</strong> <span id="profileEmail">Ikke innlogget</span></div>
-
-        <div class="profile-stats">
-          <div class="profile-stat">
-            <div class="profile-stat-value" id="profilePosts">0</div>
-            <div class="profile-stat-label">Mine innlegg</div>
-          </div>
-          <div class="profile-stat">
-            <div class="profile-stat-value" id="profileBusinesses">0</div>
-            <div class="profile-stat-label">Mine bedrifter</div>
-          </div>
-          <div class="profile-stat">
-            <div class="profile-stat-value" id="profileCommentCount">–</div>
-            <div class="profile-stat-label">Kommentarer</div>
-          </div>
-        </div>
+        <div><strong>Mine innlegg:</strong> <span id="profilePosts">0</span></div>
+        <div><strong>Mine bedrifter:</strong> <span id="profileBusinesses">0</span></div>
       </div>
-
-      <div class="profile-section-title">Mine bedrifter</div>
+      <h3 style="margin-top:18px;font-size:24px;">Mine bedrifter</h3>
       <div id="myBusinesses">Logg inn for å se dine bedrifter.</div>
-
-      <div class="profile-section-title">Mine innlegg</div>
+      <h3 style="margin-top:22px;font-size:24px;">Mine innlegg</h3>
       <div id="myPosts">Logg inn for å se dine innlegg.</div>
     </div>
   </div>
@@ -944,26 +841,8 @@
 
   function getLikes() { try { return JSON.parse(localStorage.getItem("hundene_vare_likes_dbfree") || "{}"); } catch(e) { return {}; } }
   function saveLikes(data) { localStorage.setItem("hundene_vare_likes_dbfree", JSON.stringify(data)); }
-  function formatCommentTime(value) {
-    try {
-      return new Date(value).toLocaleString("no-NO");
-    } catch (e) {
-      return value || "";
-    }
-  }
-
-  async function loadCommentsMap() {
-    var result = await supabase.from("comments").select("*").order("created_at", { ascending: true });
-    if (result.error) return {};
-    var rows = result.data || [];
-    var map = {};
-    for (var i = 0; i < rows.length; i++) {
-      var row = rows[i];
-      if (!map[row.story_id]) map[row.story_id] = [];
-      map[row.story_id].push(row);
-    }
-    return map;
-  }
+  function getComments() { try { return JSON.parse(localStorage.getItem("hundene_vare_comments_dbfree") || "{}"); } catch(e) { return {}; } }
+  function saveComments(data) { localStorage.setItem("hundene_vare_comments_dbfree", JSON.stringify(data)); }
 
   async function signupUser() {
     setStatus("Prøver å opprette konto ...", "blue");
@@ -1020,31 +899,15 @@
     var likes = getLikes(); likes[id] = (likes[id] || 0) + 1; saveLikes(likes); loadStories();
   }
 
-  async function addComment(id) {
+  function addComment(id) {
     var input = document.getElementById("comment-" + id);
     if (!input) return;
     var text = input.value.trim();
     if (!text) return;
-
-    var auth = await supabase.auth.getUser();
-    var user = auth && auth.data ? auth.data.user : null;
-    if (!user) {
-      setStatus("Du må logge inn for å kommentere.", "crimson");
-      showPage('auth');
-      return;
-    }
-
-    var result = await supabase.from("comments").insert([{
-      story_id: id,
-      user_email: user.email,
-      text: text
-    }]);
-
-    if (result.error) {
-      setStatus("Feil ved lagring av kommentar: " + result.error.message, "crimson");
-      return;
-    }
-
+    var comments = getComments();
+    if (!comments[id]) comments[id] = [];
+    comments[id].push({ text: text, time: new Date().toLocaleString("no-NO") });
+    saveComments(comments);
     input.value = "";
     loadStories();
   }
@@ -1059,9 +922,8 @@
     var user = auth && auth.data ? auth.data.user : null;
 
     var data = result.data || [];
-    var comments = await loadCommentsMap();
     document.getElementById("postCount").textContent = data.length;
-    var members = {}, images = 0, commentTotal = 0, likes = getLikes();
+    var members = {}, images = 0, comments = getComments(), commentTotal = 0, likes = getLikes();
     for (var i = 0; i < data.length; i++) {
       if (data[i].author_email) members[data[i].author_email] = true;
       images += Array.isArray(data[i].image_urls) ? data[i].image_urls.length : (data[i].image_url ? 1 : 0);
@@ -1090,9 +952,7 @@
       }
       html += '<div class="likebar"><button class="likebtn" type="button" onclick="likePost(\'' + postId + '\')">❤️ Lik (' + likeCount + ')</button><span class="mini">' + postComments.length + ' kommentar(er)</span></div><div class="comments">';
       html += '<div class="comments-title">💬 Kommentarer</div>';
-      for (var j = 0; j < postComments.length; j++) {
-        html += '<div class="comment"><div class="commentmeta">' + escapeHtml((postComments[j].user_email || 'Bruker') + ' · ' + formatCommentTime(postComments[j].created_at || '')) + '</div><div>' + escapeHtml(postComments[j].text || '') + '</div></div>';
-      }
+      for (var j = 0; j < postComments.length; j++) html += '<div class="comment"><div class="commentmeta">' + escapeHtml(postComments[j].time || '') + '</div><div>' + escapeHtml(postComments[j].text || '') + '</div></div>';
       html += '<input class="comment-input" id="comment-' + postId + '" placeholder="Skriv en kommentar">';
       html += '<div class="btnrow"><button type="button" class="alt" onclick="addComment(\'' + postId + '\')">Publiser kommentar</button></div></div></div>';
     }
@@ -1106,7 +966,6 @@
       document.getElementById("profileEmail").textContent = "Ikke innlogget";
       document.getElementById("profilePosts").textContent = "0";
       document.getElementById("profileBusinesses").textContent = "0";
-      if (document.getElementById("profileCommentCount")) document.getElementById("profileCommentCount").textContent = "0";
       document.getElementById("myPosts").textContent = "Logg inn for å se dine innlegg.";
       document.getElementById("myBusinesses").textContent = "Logg inn for å se dine bedrifter.";
       return;
@@ -1138,12 +997,6 @@
     var bizRes = await supabase.from("businesses").select("*").eq("author_email", user.email).order("created_at", { ascending: false });
     var businesses = bizRes.data || [];
     document.getElementById("profileBusinesses").textContent = String(businesses.length);
-
-    if (document.getElementById("profileCommentCount")) {
-      var commentsRes = await supabase.from("comments").select("id", { count: "exact", head: false }).eq("user_email", user.email);
-      var commentCount = commentsRes && commentsRes.data ? commentsRes.data.length : 0;
-      document.getElementById("profileCommentCount").textContent = String(commentCount);
-    }
 
     if (!businesses.length) {
       document.getElementById("myBusinesses").textContent = "Ingen egne bedrifter enda.";
