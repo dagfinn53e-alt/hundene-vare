@@ -180,7 +180,9 @@
       border-radius:22px;
       padding:16px;
     }
-        .feed-first-note{
+    .collapsed-form{display:none}
+    .collapsed-form.show{display:block}
+    .feed-first-note{
       color:#64748b;
       font-size:14px;
       margin-bottom:10px;
@@ -291,6 +293,8 @@
     <div class="brand">Hundene våre 🐶</div>
     <div class="actions">
       <button type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button>
+      <button type="button" onclick="showPage('stories')">Profil</button>
+      <button type="button" onclick="logoutUser()">Logg ut</button>
       <button type="button" onclick="showPage('home')">Forside</button>
     </div>
   </div>
@@ -379,10 +383,15 @@
     </div>
 
     <div class="card">
-      <h2 class="section-title" style="font-size:24px;">Nytt innlegg</h2>
-      <div class="sub">Legg inn nytt bilde og en ny historie her.</div>
+      <div class="post-toggle-box">
+        <h2 class="section-title" style="font-size:24px;">Nytt innlegg</h2>
+        <div class="sub">Trykk for å åpne skjemaet når du vil legge inn nytt bilde eller en ny historie.</div>
+        <div class="btnrow">
+          <button type="button" onclick="toggleNewPostForm()">Åpne / skjul skjema</button>
+        </div>
+      </div>
 
-      <div id="newPostForm" style="margin-top:16px;">
+      <div id="newPostForm" class="collapsed-form" style="margin-top:16px;">
         <input id="title" placeholder="Tittel">
         <input id="dog" placeholder="Hundens navn">
         <input id="place" placeholder="Sted">
@@ -757,7 +766,7 @@
         for (var g=0; g<b.gallery_urls.length; g++) {
           html += '<div class="gallery-item"><img src="' + b.gallery_urls[g] + '" alt="Galleri">';
           if (user && (user.email === b.author_email || user.email === ADMIN_EMAIL)) {
-            html += '';
+            html += '<div class="image-actions"><button class="danger small" type="button" onclick="deleteBusinessImage(\'' + b.id + '\',' + g + ')">Slett</button></div>';
           }
           html += '</div></div>';
         }
@@ -944,7 +953,7 @@
         for (var g=0; g<gallery.length; g++) {
           html += '<div class="gallery-item"><img src="' + gallery[g] + '" alt="Hundebilde">';
           if (user && (user.email === post.author_email || user.email === ADMIN_EMAIL)) {
-            html += '';
+            html += '<div class="image-actions"><button class="danger small" type="button" onclick="deleteStoryImage(\'' + post.id + '\',' + g + ')">Slett</button></div>';
           }
           html += '</div></div>';
         }
@@ -1013,7 +1022,7 @@
         if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
           bhtml += '<div class="gallery">';
           for (var k=0; k<b.gallery_urls.length; k++) {
-            bhtml += '<div class="gallery-item"><img src="' + b.gallery_urls[k] + '" alt="Galleri"></div>';
+            bhtml += '<div class="gallery-item"><img src="' + b.gallery_urls[k] + '" alt="Galleri"><div class="image-actions"><button class="danger small" type="button" onclick="deleteBusinessImage(\'' + b.id + '\',' + k + ')">Slett</button></div></div>';
           }
           bhtml += '</div></div>';
         }
