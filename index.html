@@ -283,46 +283,13 @@
       input,textarea,select{font-size:16px}
       button{min-height:44px}
     }
-  
-    .notif-wrap{
-      position:relative;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .notif-btn{
-      min-width:44px;
-      min-height:44px;
-      border-radius:999px;
-      padding:10px 12px;
-    }
-    .notif-badge{
-      position:absolute;
-      top:-6px;
-      right:-6px;
-      min-width:22px;
-      height:22px;
-      border-radius:999px;
-      background:#ef4444;
-      color:#fff;
-      font-size:12px;
-      font-weight:800;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      box-shadow:0 8px 18px rgba(239,68,68,.3);
-    }
-    </style>
+  </style>
 </head>
 <body>
 <div class="wrap">
   <div class="topbar">
     <div class="brand">Hundene våre 🐶</div>
     <div class="actions">
-      <div class="notif-wrap">
-        <button type="button" class="notif-btn alt" onclick="resetNotifications()">🔔</button>
-        <div id="notifBadge" class="notif-badge" style="display:none;">0</div>
-      </div>
       <button type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button>
       <button type="button" onclick="showPage('home')">Forside</button>
     </div>
@@ -956,7 +923,6 @@
 
     var data = result.data || [];
     document.getElementById("postCount").textContent = data.length;
-  updateNotificationBadge(data.length);
     var members = {}, images = 0, comments = getComments(), commentTotal = 0, likes = getLikes();
     for (var i = 0; i < data.length; i++) {
       if (data[i].author_email) members[data[i].author_email] = true;
