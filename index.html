@@ -757,7 +757,7 @@
         for (var g=0; g<b.gallery_urls.length; g++) {
           html += '<div class="gallery-item"><img src="' + b.gallery_urls[g] + '" alt="Galleri">';
           if (user && (user.email === b.author_email || user.email === ADMIN_EMAIL)) {
-            html += '<div class="image-actions"><button class="danger small" type="button" onclick="deleteBusinessImage(\'' + b.id + '\',' + g + ')">Slett</button></div>';
+            html += '';
           }
           html += '</div></div>';
         }
@@ -944,7 +944,7 @@
         for (var g=0; g<gallery.length; g++) {
           html += '<div class="gallery-item"><img src="' + gallery[g] + '" alt="Hundebilde">';
           if (user && (user.email === post.author_email || user.email === ADMIN_EMAIL)) {
-            html += '<div class="image-actions"><button class="danger small" type="button" onclick="deleteStoryImage(\'' + post.id + '\',' + g + ')">Slett</button></div>';
+            html += '';
           }
           html += '</div></div>';
         }
@@ -1013,7 +1013,7 @@
         if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
           bhtml += '<div class="gallery">';
           for (var k=0; k<b.gallery_urls.length; k++) {
-            bhtml += '<div class="gallery-item"><img src="' + b.gallery_urls[k] + '" alt="Galleri"><div class="image-actions"><button class="danger small" type="button" onclick="deleteBusinessImage(\'' + b.id + '\',' + k + ')">Slett</button></div></div>';
+            bhtml += '<div class="gallery-item"><img src="' + b.gallery_urls[k] + '" alt="Galleri"></div>';
           }
           bhtml += '</div></div>';
         }
