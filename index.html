@@ -283,7 +283,86 @@
       input,textarea,select{font-size:16px}
       button{min-height:44px}
     }
-  </style>
+  
+    .profile-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .profile-title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .profile-avatar{
+      width:54px;
+      height:54px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(180deg,#eaf2ff,#dbeafe);
+      color:#1d4ed8;
+      font-size:24px;
+      font-weight:800;
+      border:1px solid #bfdbfe;
+      box-shadow:0 8px 18px rgba(37,99,235,.12);
+    }
+    .profile-topline{
+      font-size:13px;
+      font-weight:800;
+      color:#31538f;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      margin-bottom:4px;
+    }
+    .profile-main-title{
+      font-size:28px;
+      font-weight:800;
+      color:#0f172a;
+      line-height:1.1;
+    }
+    .profile-stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:14px;
+    }
+    .profile-stat{
+      background:#ffffff;
+      border:1px solid #dbeafe;
+      border-radius:18px;
+      padding:14px;
+      text-align:center;
+      box-shadow:0 10px 22px rgba(15,23,42,.04);
+    }
+    .profile-stat-value{
+      font-size:22px;
+      font-weight:800;
+      color:#1d4ed8;
+      line-height:1;
+      margin-bottom:6px;
+    }
+    .profile-stat-label{
+      font-size:13px;
+      color:#64748b;
+      font-weight:700;
+    }
+    .profile-section-title{
+      margin-top:22px;
+      margin-bottom:10px;
+      font-size:22px;
+      font-weight:800;
+      color:#0f172a;
+    }
+    @media (max-width:760px){
+      .profile-stats{grid-template-columns:1fr}
+      .profile-main-title{font-size:24px}
+    }
+    </style>
 </head>
 <body>
 <div class="wrap">
@@ -398,15 +477,39 @@
     </div>
 
     <div class="card">
-      <h2 class="section-title">Min profil</h2>
-      <div class="profilebox">
-        <div><strong>E-post:</strong> <span id="profileEmail">Ikke innlogget</span></div>
-        <div><strong>Mine innlegg:</strong> <span id="profilePosts">0</span></div>
-        <div><strong>Mine bedrifter:</strong> <span id="profileBusinesses">0</span></div>
+      <div class="profile-header">
+        <div class="profile-title">
+          <div class="profile-avatar">👤</div>
+          <div>
+            <div class="profile-topline">Din side</div>
+            <div class="profile-main-title">Min profil</div>
+          </div>
+        </div>
       </div>
-      <h3 style="margin-top:18px;font-size:24px;">Mine bedrifter</h3>
+
+      <div class="profilebox" style="background:#f8fbff;padding:18px;border-radius:22px;">
+        <div><strong>E-post:</strong> <span id="profileEmail">Ikke innlogget</span></div>
+
+        <div class="profile-stats">
+          <div class="profile-stat">
+            <div class="profile-stat-value" id="profilePosts">0</div>
+            <div class="profile-stat-label">Mine innlegg</div>
+          </div>
+          <div class="profile-stat">
+            <div class="profile-stat-value" id="profileBusinesses">0</div>
+            <div class="profile-stat-label">Mine bedrifter</div>
+          </div>
+          <div class="profile-stat">
+            <div class="profile-stat-value" id="profileCommentCount">–</div>
+            <div class="profile-stat-label">Kommentarer</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-section-title">Mine bedrifter</div>
       <div id="myBusinesses">Logg inn for å se dine bedrifter.</div>
-      <h3 style="margin-top:22px;font-size:24px;">Mine innlegg</h3>
+
+      <div class="profile-section-title">Mine innlegg</div>
       <div id="myPosts">Logg inn for å se dine innlegg.</div>
     </div>
   </div>
@@ -1003,6 +1106,7 @@
       document.getElementById("profileEmail").textContent = "Ikke innlogget";
       document.getElementById("profilePosts").textContent = "0";
       document.getElementById("profileBusinesses").textContent = "0";
+      if (document.getElementById("profileCommentCount")) document.getElementById("profileCommentCount").textContent = "0";
       document.getElementById("myPosts").textContent = "Logg inn for å se dine innlegg.";
       document.getElementById("myBusinesses").textContent = "Logg inn for å se dine bedrifter.";
       return;
@@ -1034,6 +1138,12 @@
     var bizRes = await supabase.from("businesses").select("*").eq("author_email", user.email).order("created_at", { ascending: false });
     var businesses = bizRes.data || [];
     document.getElementById("profileBusinesses").textContent = String(businesses.length);
+
+    if (document.getElementById("profileCommentCount")) {
+      var commentsRes = await supabase.from("comments").select("id", { count: "exact", head: false }).eq("user_email", user.email);
+      var commentCount = commentsRes && commentsRes.data ? commentsRes.data.length : 0;
+      document.getElementById("profileCommentCount").textContent = String(commentCount);
+    }
 
     if (!businesses.length) {
       document.getElementById("myBusinesses").textContent = "Ingen egne bedrifter enda.";
