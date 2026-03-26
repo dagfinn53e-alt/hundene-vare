@@ -841,8 +841,26 @@
 
   function getLikes() { try { return JSON.parse(localStorage.getItem("hundene_vare_likes_dbfree") || "{}"); } catch(e) { return {}; } }
   function saveLikes(data) { localStorage.setItem("hundene_vare_likes_dbfree", JSON.stringify(data)); }
-  function getComments() { try { return JSON.parse(localStorage.getItem("hundene_vare_comments_dbfree") || "{}"); } catch(e) { return {}; } }
-  function saveComments(data) { localStorage.setItem("hundene_vare_comments_dbfree", JSON.stringify(data)); }
+  function formatCommentTime(value) {
+    try {
+      return new Date(value).toLocaleString("no-NO");
+    } catch (e) {
+      return value || "";
+    }
+  }
+
+  async function loadCommentsMap() {
+    var result = await supabase.from("comments").select("*").order("created_at", { ascending: true });
+    if (result.error) return {};
+    var rows = result.data || [];
+    var map = {};
+    for (var i = 0; i < rows.length; i++) {
+      var row = rows[i];
+      if (!map[row.story_id]) map[row.story_id] = [];
+      map[row.story_id].push(row);
+    }
+    return map;
+  }
 
   async function signupUser() {
     setStatus("Prøver å opprette konto ...", "blue");
@@ -899,15 +917,31 @@
     var likes = getLikes(); likes[id] = (likes[id] || 0) + 1; saveLikes(likes); loadStories();
   }
 
-  function addComment(id) {
+  async function addComment(id) {
     var input = document.getElementById("comment-" + id);
     if (!input) return;
     var text = input.value.trim();
     if (!text) return;
-    var comments = getComments();
-    if (!comments[id]) comments[id] = [];
-    comments[id].push({ text: text, time: new Date().toLocaleString("no-NO") });
-    saveComments(comments);
+
+    var auth = await supabase.auth.getUser();
+    var user = auth && auth.data ? auth.data.user : null;
+    if (!user) {
+      setStatus("Du må logge inn for å kommentere.", "crimson");
+      showPage('auth');
+      return;
+    }
+
+    var result = await supabase.from("comments").insert([{
+      story_id: id,
+      user_email: user.email,
+      text: text
+    }]);
+
+    if (result.error) {
+      setStatus("Feil ved lagring av kommentar: " + result.error.message, "crimson");
+      return;
+    }
+
     input.value = "";
     loadStories();
   }
@@ -922,8 +956,9 @@
     var user = auth && auth.data ? auth.data.user : null;
 
     var data = result.data || [];
+    var comments = await loadCommentsMap();
     document.getElementById("postCount").textContent = data.length;
-    var members = {}, images = 0, comments = getComments(), commentTotal = 0, likes = getLikes();
+    var members = {}, images = 0, commentTotal = 0, likes = getLikes();
     for (var i = 0; i < data.length; i++) {
       if (data[i].author_email) members[data[i].author_email] = true;
       images += Array.isArray(data[i].image_urls) ? data[i].image_urls.length : (data[i].image_url ? 1 : 0);
@@ -936,7 +971,7 @@
 
     var html = "";
     for (var i = 0; i < data.length; i++) {
-      var post = data[i], postId = post.id || ("post_" + i), likeCount = likes[postId] || 0, postComments = comments[postId] || [];
+      var post = data[i], postId = post.id, likeCount = likes[postId] || 0, postComments = comments[postId] || [];
       var gallery = Array.isArray(post.image_urls) && post.image_urls.length ? post.image_urls : (post.image_url ? [post.image_url] : []);
       html += '<div class="post"><h3>' + escapeHtml(post.title || "") + '</h3><div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + ' · ' + escapeHtml(post.category || "") + '</div><p>' + escapeHtml(post.text || "") + '</p>';
       if (gallery.length) {
@@ -952,7 +987,9 @@
       }
       html += '<div class="likebar"><button class="likebtn" type="button" onclick="likePost(\'' + postId + '\')">❤️ Lik (' + likeCount + ')</button><span class="mini">' + postComments.length + ' kommentar(er)</span></div><div class="comments">';
       html += '<div class="comments-title">💬 Kommentarer</div>';
-      for (var j = 0; j < postComments.length; j++) html += '<div class="comment"><div class="commentmeta">' + escapeHtml(postComments[j].time || '') + '</div><div>' + escapeHtml(postComments[j].text || '') + '</div></div>';
+      for (var j = 0; j < postComments.length; j++) {
+        html += '<div class="comment"><div class="commentmeta">' + escapeHtml((postComments[j].user_email || 'Bruker') + ' · ' + formatCommentTime(postComments[j].created_at || '')) + '</div><div>' + escapeHtml(postComments[j].text || '') + '</div></div>';
+      }
       html += '<input class="comment-input" id="comment-' + postId + '" placeholder="Skriv en kommentar">';
       html += '<div class="btnrow"><button type="button" class="alt" onclick="addComment(\'' + postId + '\')">Publiser kommentar</button></div></div></div>';
     }
@@ -1050,3 +1087,4 @@
 </script>
 </body>
 </html>
+
