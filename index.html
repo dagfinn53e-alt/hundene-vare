@@ -336,7 +336,7 @@
           <button type="button" class="section-chip" onclick="showPage('groomers')">✂️ Frisører</button>
           <button type="button" class="section-chip" onclick="showPage('shops')">🐾 Butikker</button>
           <button type="button" class="section-chip" onclick="showPage('vets')">🏥 Veterinærer</button>
-<button onclick="showPage('admin')"></button>
+<button onclick="showPage('admin')">🐶 Hundeklubber</button>
         </div>
       </div>
     </div>
@@ -349,7 +349,7 @@
         <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3></button>
         <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3></button>
         <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Bedrift</h3></button>
-        <button class="menu-btn box-admin" onclick="showPage('admin')"><h3>🛠️ </h3></button>
+        <button class="menu-btn box-admin" onclick="showPage('admin')"><h3>🛠️ Admin</h3></button>
       </div>
     </div>
   </div>
@@ -446,7 +446,7 @@
   <div id="page-admin" class="hidden">
     <div class="card">
       <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-      <h2>🛠️ </h2>
+      <h2>🛠️ Admin</h2>
       <div class="sub">Her kan du godkjenne, avvise og slette bedrifter, og se alle innlegg.</div>
       <div id="adminStatus">Klar.</div>
     </div>
@@ -546,13 +546,13 @@
     if(name === 'stories'){ window.scrollTo(0,0); loadStories(); loadProfile(); }
     if(name === 'groomers' || name === 'shops' || name === 'vets'){ loadBusinesses(); }
     if(name === 'business'){ loadBusinessOptions(); }
-    if(name === 'admin'){ load(); }
+    if(name === 'admin'){ loadAdmin(); }
     if(name === 'favorites'){ loadFavoritesPage(); }
   }
 
   function setStatus(text, color) { var el = document.getElementById("status"); el.textContent = text; el.style.color = color || "black"; }
   function setBizStatus(text, color) { var el = document.getElementById("bizStatus"); el.textContent = text; el.style.color = color || "black"; }
-  function setStatus(text, color) { var el = document.getElementById("adminStatus"); el.textContent = text; el.style.color = color || "black"; }
+  function setAdminStatus(text, color) { var el = document.getElementById("adminStatus"); el.textContent = text; el.style.color = color || "black"; }
 
   function getFavoriteBusinesses() {
     try { return JSON.parse(localStorage.getItem("hundene_vare_fav_businesses") || "[]"); } catch(e) { return []; }
@@ -779,29 +779,29 @@
 
   async function approveBusiness(id) {
     var update = await supabase.from("businesses").update({ approved: true }).eq("id", id);
-    if (update.error) { setStatus("Feil ved godkjenning: " + update.error.message, "crimson"); return; }
-    setStatus("Bedrift godkjent.", "green");
-    load(); loadBusinesses(); loadProfile();
+    if (update.error) { setAdminStatus("Feil ved godkjenning: " + update.error.message, "crimson"); return; }
+    setAdminStatus("Bedrift godkjent.", "green");
+    loadAdmin(); loadBusinesses(); loadProfile();
   }
 
   async function rejectBusiness(id) {
     var update = await supabase.from("businesses").update({ approved: false }).eq("id", id);
-    if (update.error) { setStatus("Feil ved avvisning: " + update.error.message, "crimson"); return; }
-    setStatus("Bedrift satt som ventende.", "green");
-    load(); loadBusinesses(); loadProfile();
+    if (update.error) { setAdminStatus("Feil ved avvisning: " + update.error.message, "crimson"); return; }
+    setAdminStatus("Bedrift satt som ventende.", "green");
+    loadAdmin(); loadBusinesses(); loadProfile();
   }
 
-  async function load() {
+  async function loadAdmin() {
     var auth = await supabase.auth.getUser();
     var user = auth && auth.data ? auth.data.user : null;
     if (!user || user.email !== ADMIN_EMAIL) {
       document.getElementById("adminStories").innerHTML = "Du må være innlogget som admin.";
       document.getElementById("adminBusinesses").innerHTML = "Du må være innlogget som admin.";
-      setStatus("-tilgang mangler.", "crimson");
+      setAdminStatus("Admin-tilgang mangler.", "crimson");
       return;
     }
 
-    setStatus(" innlogget som " + user.email, "green");
+    setAdminStatus("Admin innlogget som " + user.email, "green");
     var storiesRes = await supabase.from("stories").select("*").order("created_at", { ascending: false });
     var businessesRes = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
     var stories = storiesRes.data || [], businesses = businessesRes.data || [];
@@ -829,15 +829,15 @@
   async function deleteStory(id) {
     if (!confirm("Slette dette innlegget?")) return;
     var del = await supabase.from("stories").delete().eq("id", id);
-    if (del.error) { setStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
-    setStatus("Innlegg slettet.", "green"); load(); loadStories(); loadProfile();
+    if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
+    setAdminStatus("Innlegg slettet.", "green"); loadAdmin(); loadStories(); loadProfile();
   }
 
   async function deleteBusiness(id) {
     if (!confirm("Slette denne bedriften?")) return;
     var del = await supabase.from("businesses").delete().eq("id", id);
-    if (del.error) { setStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
-    setStatus("Bedrift slettet.", "green"); load(); loadBusinesses(); loadBusinessOptions(); loadProfile();
+    if (del.error) { setAdminStatus("Feil ved sletting: " + del.error.message, "crimson"); return; }
+    setAdminStatus("Bedrift slettet.", "green"); loadAdmin(); loadBusinesses(); loadBusinessOptions(); loadProfile();
   }
 
   function getLikes() { try { return JSON.parse(localStorage.getItem("hundene_vare_likes_dbfree") || "{}"); } catch(e) { return {}; } }
