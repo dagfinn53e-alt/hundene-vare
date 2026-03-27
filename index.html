@@ -524,32 +524,17 @@
     </div>
 
     <div class="card">
-      <h3 style="margin-top:0;">Registrerte hundeklubber</h3>
-      <div class="sub" style="margin-bottom:12px;">Her vises klubbene som er lagret i appen.</div>
-      <div id="dogClubsList">Laster klubber ...</div>
+      <h3 style="margin-top:0;">Karmøy Hundeklubb</h3>
+      <div class="sub" style="margin-bottom:12px;">Lokal hundeklubb for hundeglade med interesse for aktivitet, miljø og fellesskap.</div>
+      <div class="profilebox">
+        <div><strong>Om:</strong> Treff, trening, kurs og aktiviteter for hund og eier.</div>
+        <div><strong>Område:</strong> Karmøy / nærområdet</div>
+        <div><strong>Status:</strong> Første klubb lagt inn i appen</div>
+      </div>
     </div>
 
     <div class="card">
-      <h3 style="margin-top:0;">
-
-<div class="card">
-  <h3>➕ Legg til hundeklubb</h3>
-  <div class="sub">Fyll ut informasjon om klubb. Logo-opplasting tar vi i neste steg.</div>
-  <form onsubmit="event.preventDefault(); window.saveDogClub();">
-    <input id="clubName" placeholder="Klubbnavn" required style="width:100%;margin:6px 0;padding:8px;">
-    <input id="clubLocation" placeholder="Område" required style="width:100%;margin:6px 0;padding:8px;">
-    <textarea id="clubDescription" placeholder="Beskrivelse" style="width:100%;margin:6px 0;padding:8px;"></textarea>
-    <input id="clubWebsite" placeholder="Nettside / Facebook" style="width:100%;margin:6px 0;padding:8px;">
-    <div class="btnrow" style="margin-top:10px;">
-      <button type="submit">Lagre klubb</button>
-      <button type="button" class="alt" onclick="loadDogClubs()">Oppdater liste</button>
-    </div>
-    <div id="clubStatus" style="margin-top:10px;font-weight:700;"></div>
-  </form>
-</div>
-
-
-Flere klubber kommer</h3>
+      <h3 style="margin-top:0;">Flere klubber kommer</h3>
       <div class="sub">Her kan du senere legge inn flere hundeklubber, treningsgrupper, valpekurs og lokale aktiviteter.</div>
       <div class="menu-grid" style="margin-top:14px;">
         <div class="menu-btn box-stories" style="cursor:default;"><h3>🐾 Valpekurs</h3></div>
@@ -593,7 +578,6 @@ Flere klubber kommer</h3>
     if(name === 'business'){ loadBusinessOptions(); }
     if(name === 'admin'){ loadAdmin(); }
     if(name === 'favorites'){ loadFavoritesPage(); }
-    if(name === 'hundeklubber'){ window.scrollTo(0,0); loadDogClubs(); }
   }
 
   function setStatus(text, color) { var el = document.getElementById("status"); el.textContent = text; el.style.color = color || "black"; }
@@ -1094,8 +1078,6 @@ Flere klubber kommer</h3>
   loadStories();
   loadProfile();
   loadBusinesses();
-  loadDogClubs();
-  loadDogClubs();
 </script>
 </body>
 </html>
