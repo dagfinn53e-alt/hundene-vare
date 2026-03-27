@@ -534,14 +534,14 @@
     <div class="card">
       <h3 style="margin-top:0;">➕ Legg til hundeklubb</h3>
       <div class="sub" style="margin-bottom:12px;">Fyll inn klubbnavn, område, beskrivelse og link. Logo tar vi i neste steg.</div>
-      <form onsubmit="event.preventDefault(); saveDogClub();">
+      <form onsubmit="event.preventDefault(); window.saveDogClub();">
         <input id="clubName" placeholder="Klubbnavn" required>
         <input id="clubLocation" placeholder="Område / sted" required>
         <textarea id="clubDescription" placeholder="Beskrivelse"></textarea>
         <input id="clubWebsite" placeholder="Nettside / Facebook-link">
         <div class="btnrow">
           <button type="submit">Lagre klubb</button>
-          <button type="button" class="alt" onclick="loadDogClubs()">Oppdater liste</button>
+          <button type="button" class="alt" onclick="window.loadDogClubs()">Oppdater liste</button>
         </div>
         <div id="clubStatus" class="mini" style="margin-top:10px;"></div>
       </form>
@@ -592,7 +592,7 @@
     if(name === 'business'){ loadBusinessOptions(); }
     if(name === 'admin'){ loadAdmin(); }
     if(name === 'favorites'){ loadFavoritesPage(); }
-    if(name === 'hundeklubber'){ loadDogClubs(); }
+    if(name === 'hundeklubber'){ window.loadDogClubs(); }
   }
 
   function setStatus(text, color) { var el = document.getElementById("status"); el.textContent = text; el.style.color = color || "black"; }
@@ -1075,6 +1075,83 @@
     document.getElementById("editBusinessSelect").value = id;
     loadBusinessIntoForm();
   }
+
+  
+  function setClubStatus(text, color) {
+    var el = document.getElementById("clubStatus");
+    if (!el) return;
+    el.textContent = text;
+    el.style.color = color || "black";
+  }
+
+  async function saveDogClub() {
+    var name = (document.getElementById("clubName")?.value || "").trim();
+    var location = (document.getElementById("clubLocation")?.value || "").trim();
+    var description = (document.getElementById("clubDescription")?.value || "").trim();
+    var website = (document.getElementById("clubWebsite")?.value || "").trim();
+
+    if (!name || !location) {
+      setClubStatus("Skriv inn klubbnavn og område.", "crimson");
+      return;
+    }
+
+    setClubStatus("Lagrer klubb ...", "#1d4ed8");
+
+    var result = await supabase.from("dog_clubs").insert([{
+      name: name,
+      location: location,
+      description: description,
+      website: website
+    }]);
+
+    if (result.error) {
+      setClubStatus("Feil ved lagring: " + result.error.message, "crimson");
+      return;
+    }
+
+    document.getElementById("clubName").value = "";
+    document.getElementById("clubLocation").value = "";
+    document.getElementById("clubDescription").value = "";
+    document.getElementById("clubWebsite").value = "";
+    setClubStatus("Klubb lagret.", "green");
+    loadDogClubs();
+  }
+
+  async function loadDogClubs() {
+    var container = document.getElementById("dogClubsList");
+    if (!container) return;
+
+    container.innerHTML = '<div class="profilebox"><div>Laster klubber ...</div></div>';
+
+    var result = await supabase.from("dog_clubs").select("*").order("created_at", { ascending: false });
+
+    if (result.error) {
+      container.innerHTML = '<div class="profilebox"><div>Feil ved henting: ' + escapeHtml(result.error.message || '') + '</div></div>';
+      return;
+    }
+
+    var data = result.data || [];
+    if (!data.length) {
+      container.innerHTML = '<div class="profilebox"><div>Ingen hundeklubber lagt inn enda.</div></div>';
+      return;
+    }
+
+    var out = "";
+    for (var i = 0; i < data.length; i++) {
+      var club = data[i];
+      out += '<div class="post" style="margin-top:14px;">';
+      out += '<h3>' + escapeHtml(club.name || "") + '</h3>';
+      out += '<div class="meta">' + escapeHtml(club.location || "") + '</div>';
+      if (club.description) out += '<p>' + escapeHtml(club.description) + '</p>';
+      if (club.website) out += '<div><a class="sharelink" href="' + normalizeUrl(club.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
+      out += '</div>';
+    }
+    container.innerHTML = out;
+  }
+
+  window.saveDogClub = saveDogClub;
+  window.loadDogClubs = loadDogClubs;
+
 
   function shareApp() {
     var url = "https://dagfinn53e-alt.github.io/hundene-vare/";
