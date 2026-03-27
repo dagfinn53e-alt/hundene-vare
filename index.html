@@ -524,13 +524,27 @@
     </div>
 
     <div class="card">
-      <h3 style="margin-top:0;">Karmøy Hundeklubb</h3>
-      <div class="sub" style="margin-bottom:12px;">Lokal hundeklubb for hundeglade med interesse for aktivitet, miljø og fellesskap.</div>
-      <div class="profilebox">
-        <div><strong>Om:</strong> Treff, trening, kurs og aktiviteter for hund og eier.</div>
-        <div><strong>Område:</strong> Karmøy / nærområdet</div>
-        <div><strong>Status:</strong> Første klubb lagt inn i appen</div>
+      <h3 style="margin-top:0;">Registrerte hundeklubber</h3>
+      <div class="sub" style="margin-bottom:12px;">Her vises klubbene som er lagret i appen.</div>
+      <div id="dogClubsList">
+        <div class="profilebox"><div>Ingen hundeklubber lagt inn enda.</div></div>
       </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0;">➕ Legg til hundeklubb</h3>
+      <div class="sub" style="margin-bottom:12px;">Fyll inn klubbnavn, område, beskrivelse og link. Logo tar vi i neste steg.</div>
+      <form onsubmit="event.preventDefault(); saveDogClub();">
+        <input id="clubName" placeholder="Klubbnavn" required>
+        <input id="clubLocation" placeholder="Område / sted" required>
+        <textarea id="clubDescription" placeholder="Beskrivelse"></textarea>
+        <input id="clubWebsite" placeholder="Nettside / Facebook-link">
+        <div class="btnrow">
+          <button type="submit">Lagre klubb</button>
+          <button type="button" class="alt" onclick="loadDogClubs()">Oppdater liste</button>
+        </div>
+        <div id="clubStatus" class="mini" style="margin-top:10px;"></div>
+      </form>
     </div>
 
     <div class="card">
@@ -578,6 +592,7 @@
     if(name === 'business'){ loadBusinessOptions(); }
     if(name === 'admin'){ loadAdmin(); }
     if(name === 'favorites'){ loadFavoritesPage(); }
+    if(name === 'hundeklubber'){ loadDogClubs(); }
   }
 
   function setStatus(text, color) { var el = document.getElementById("status"); el.textContent = text; el.style.color = color || "black"; }
@@ -1078,6 +1093,7 @@
   loadStories();
   loadProfile();
   loadBusinesses();
+  loadDogClubs();
 </script>
 </body>
 </html>
