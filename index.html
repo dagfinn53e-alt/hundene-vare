@@ -535,7 +535,7 @@
 <div class="card">
   <h3>➕ Legg til hundeklubb</h3>
   <div class="sub">Fyll ut informasjon om klubb. Logo-opplasting tar vi i neste steg.</div>
-  <form onsubmit="event.preventDefault(); saveDogClub();">
+  <form onsubmit="event.preventDefault(); window.saveDogClub();">
     <input id="clubName" placeholder="Klubbnavn" required style="width:100%;margin:6px 0;padding:8px;">
     <input id="clubLocation" placeholder="Område" required style="width:100%;margin:6px 0;padding:8px;">
     <textarea id="clubDescription" placeholder="Beskrivelse" style="width:100%;margin:6px 0;padding:8px;"></textarea>
@@ -593,7 +593,7 @@ Flere klubber kommer</h3>
     if(name === 'business'){ loadBusinessOptions(); }
     if(name === 'admin'){ loadAdmin(); }
     if(name === 'favorites'){ loadFavoritesPage(); }
-    if(name === 'hundeklubber'){ loadDogClubs(); }
+    if(name === 'hundeklubber'){ window.scrollTo(0,0); loadDogClubs(); }
   }
 
   function setStatus(text, color) { var el = document.getElementById("status"); el.textContent = text; el.style.color = color || "black"; }
@@ -1094,6 +1094,7 @@ Flere klubber kommer</h3>
   loadStories();
   loadProfile();
   loadBusinesses();
+  loadDogClubs();
   loadDogClubs();
 </script>
 </body>
