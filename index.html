@@ -423,7 +423,6 @@
       <div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div>
       <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
       <select id="bizType"><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option></select>
-      <select id="bizActivity"><option value="">Velg aktivitet (valgfritt)</option><option>Valpekurs</option><option>Utstilling</option><option>Agility / trening</option><option>Fellesturer</option><option>Kurs / samlinger</option></select>
       <input id="bizName" placeholder="Navn på bedrift">
       <input id="bizPlace" placeholder="Sted">
       <input id="bizPhone" placeholder="Telefon">
@@ -525,13 +524,27 @@
     </div>
 
     <div class="card">
-      <h3 style="margin-top:0;">Karmøy Hundeklubb</h3>
-      <div class="sub" style="margin-bottom:12px;">Lokal hundeklubb for hundeglade med interesse for aktivitet, miljø og fellesskap.</div>
-      <div class="profilebox">
-        <div><strong>Om:</strong> Treff, trening, kurs og aktiviteter for hund og eier.</div>
-        <div><strong>Område:</strong> Karmøy / nærområdet</div>
-        <div><strong>Status:</strong> Første klubb lagt inn i appen</div>
+      <h3 style="margin-top:0;">Registrerte hundeklubber</h3>
+      <div class="sub" style="margin-bottom:12px;">Her vises klubbene som er lagret i appen.</div>
+      <div id="dogClubsList">
+        <div class="profilebox"><div>Ingen hundeklubber lagt inn enda.</div></div>
       </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0;">➕ Legg til hundeklubb</h3>
+      <div class="sub" style="margin-bottom:12px;">Fyll inn klubbnavn, område, beskrivelse og link. Logo tar vi i neste steg.</div>
+      <form onsubmit="event.preventDefault(); window.saveDogClub();">
+        <input id="clubName" placeholder="Klubbnavn" required>
+        <input id="clubLocation" placeholder="Område / sted" required>
+        <textarea id="clubDescription" placeholder="Beskrivelse"></textarea>
+        <input id="clubWebsite" placeholder="Nettside / Facebook-link">
+        <div class="btnrow">
+          <button type="submit">Lagre klubb</button>
+          <button type="button" class="alt" onclick="window.loadDogClubs()">Oppdater liste</button>
+        </div>
+        <div id="clubStatus" class="mini" style="margin-top:10px;"></div>
+      </form>
     </div>
 
     <div class="card">
@@ -579,6 +592,7 @@
     if(name === 'business'){ loadBusinessOptions(); }
     if(name === 'admin'){ loadAdmin(); }
     if(name === 'favorites'){ loadFavoritesPage(); }
+    if(name === 'hundeklubber'){ window.loadDogClubs(); }
   }
 
   function setStatus(text, color) { var el = document.getElementById("status"); el.textContent = text; el.style.color = color || "black"; }
@@ -631,7 +645,6 @@
   function clearBusinessForm() {
     document.getElementById("editBusinessSelect").value = "";
     document.getElementById("bizType").value = "Frisør";
-    if (document.getElementById("bizActivity")) document.getElementById("bizActivity").value = "";
     document.getElementById("bizName").value = "";
     document.getElementById("bizPlace").value = "";
     document.getElementById("bizPhone").value = "";
@@ -649,7 +662,6 @@
     var opt = select.options[select.selectedIndex];
     var b = JSON.parse(opt.dataset.biz);
     document.getElementById("bizType").value = b.type || "Frisør";
-    if (document.getElementById("bizActivity")) document.getElementById("bizActivity").value = b.activity_type || "";
     document.getElementById("bizName").value = b.name || "";
     document.getElementById("bizPlace").value = b.place || "";
     document.getElementById("bizPhone").value = b.phone || "";
@@ -668,7 +680,6 @@
 
     var editId = document.getElementById("editBusinessSelect").value;
     var bizType = document.getElementById("bizType").value;
-    var bizActivity = (document.getElementById("bizActivity")?.value || "").trim();
     var bizName = document.getElementById("bizName").value.trim();
     var bizPlace = document.getElementById("bizPlace").value.trim();
     var bizPhone = document.getElementById("bizPhone").value.trim();
@@ -696,7 +707,7 @@
       if (galleryFiles.length) galleryUrls = galleryUrls.concat(await uploadMultiple(galleryFiles, "businesses/gallery")).slice(0,5);
 
       var payload = {
-        user_id: user.id, author_email: user.email, type: bizType, activity_type: bizActivity, name: bizName, place: bizPlace,
+        user_id: user.id, author_email: user.email, type: bizType, name: bizName, place: bizPlace,
         phone: bizPhone, website: bizWebsite, description: bizText, logo_url: logoUrl, image_url: imageUrl,
         gallery_urls: galleryUrls, approved: false
       };
@@ -780,7 +791,6 @@
       if (b.logo_url) html += '<img class="biz-logo" src="' + b.logo_url + '" alt="Logo">';
       html += '<div class="biz-info"><h3>' + escapeHtml(b.name || "") + ' <span class="badge approved">Godkjent</span></h3>';
       html += '<div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div>';
-      if (b.activity_type) html += '<div class="mini"><strong>Aktivitet:</strong> ' + escapeHtml(b.activity_type) + '</div>';
       html += '<p>' + escapeHtml(b.description || "") + '</p>';
       if (b.phone) html += '<div><strong>Telefon:</strong> ' + escapeHtml(b.phone) + '</div>';
       if (b.website) html += '<div><strong>Lenke:</strong> <a class="site-link" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
@@ -1066,6 +1076,83 @@
     loadBusinessIntoForm();
   }
 
+  
+  function setClubStatus(text, color) {
+    var el = document.getElementById("clubStatus");
+    if (!el) return;
+    el.textContent = text;
+    el.style.color = color || "black";
+  }
+
+  async function saveDogClub() {
+    var name = (document.getElementById("clubName")?.value || "").trim();
+    var location = (document.getElementById("clubLocation")?.value || "").trim();
+    var description = (document.getElementById("clubDescription")?.value || "").trim();
+    var website = (document.getElementById("clubWebsite")?.value || "").trim();
+
+    if (!name || !location) {
+      setClubStatus("Skriv inn klubbnavn og område.", "crimson");
+      return;
+    }
+
+    setClubStatus("Lagrer klubb ...", "#1d4ed8");
+
+    var result = await supabase.from("dog_clubs").insert([{
+      name: name,
+      location: location,
+      description: description,
+      website: website
+    }]);
+
+    if (result.error) {
+      setClubStatus("Feil ved lagring: " + result.error.message, "crimson");
+      return;
+    }
+
+    document.getElementById("clubName").value = "";
+    document.getElementById("clubLocation").value = "";
+    document.getElementById("clubDescription").value = "";
+    document.getElementById("clubWebsite").value = "";
+    setClubStatus("Klubb lagret.", "green");
+    loadDogClubs();
+  }
+
+  async function loadDogClubs() {
+    var container = document.getElementById("dogClubsList");
+    if (!container) return;
+
+    container.innerHTML = '<div class="profilebox"><div>Laster klubber ...</div></div>';
+
+    var result = await supabase.from("dog_clubs").select("*").order("created_at", { ascending: false });
+
+    if (result.error) {
+      container.innerHTML = '<div class="profilebox"><div>Feil ved henting: ' + escapeHtml(result.error.message || '') + '</div></div>';
+      return;
+    }
+
+    var data = result.data || [];
+    if (!data.length) {
+      container.innerHTML = '<div class="profilebox"><div>Ingen hundeklubber lagt inn enda.</div></div>';
+      return;
+    }
+
+    var out = "";
+    for (var i = 0; i < data.length; i++) {
+      var club = data[i];
+      out += '<div class="post" style="margin-top:14px;">';
+      out += '<h3>' + escapeHtml(club.name || "") + '</h3>';
+      out += '<div class="meta">' + escapeHtml(club.location || "") + '</div>';
+      if (club.description) out += '<p>' + escapeHtml(club.description) + '</p>';
+      if (club.website) out += '<div><a class="sharelink" href="' + normalizeUrl(club.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
+      out += '</div>';
+    }
+    container.innerHTML = out;
+  }
+
+  window.saveDogClub = saveDogClub;
+  window.loadDogClubs = loadDogClubs;
+
+
   function shareApp() {
     var url = "https://dagfinn53e-alt.github.io/hundene-vare/";
     if (navigator.share) navigator.share({ title: "Hundene våre", text: "Se appen Hundene våre 🐶", url: url }).catch(function(){});
@@ -1083,6 +1170,7 @@
   loadStories();
   loadProfile();
   loadBusinesses();
+  loadDogClubs();
 </script>
 </body>
 </html>
