@@ -374,12 +374,6 @@
 
       <div style="position:relative;z-index:1;">
         <h1 style="font-size:42px;margin-bottom:10px;">Hundene våre 🐾</h1>
-<p style="margin-top:10px; max-width:600px;">
-  Del bilder, historier og opplevelser med hunden din 🐶<br>
-  Finn hundeklubber, tjenester og bli en del av et lokalt fellesskap.<br><br>
-  <strong>Det er helt gratis å bruke appen.</strong>
-</p>
-
         <p style="font-size:18px;max-width:600px;">
       Her kan du dele hundebilder, historier og opplevelser.<br>
       Logg inn og bli med i fellesskapet.<br><br>
@@ -419,27 +413,6 @@
         <button class="menu-btn box-admin" onclick="showPage('hundeklubber')"><h3>🐶 Hundeklubber</h3></button>
       </div>
     </div>
-
-    <div class="card" style="margin-top:20px;">
-      <h3>📘 Slik bruker du appen</h3>
-
-      <p><strong>1. Del din hund</strong><br>
-      Legg ut bilde og skriv litt om hunden din.</p>
-
-      <p><strong>2. Se og kommenter</strong><br>
-      Utforsk hva andre deler og legg igjen kommentarer.</p>
-
-      <p><strong>3. Finn lokale tilbud</strong><br>
-      Oppdag hundefrisører, veterinærer og butikker i nærheten.</p>
-
-      <p><strong>4. Utforsk hundeklubber</strong><br>
-      Finn kurs, trening og aktiviteter der du bor.</p>
-
-      <p style="margin-top:10px; font-weight:bold;">
-        🐾 Jo flere som deler – jo bedre blir appen!
-      </p>
-    </div>
-
   </div>
 
   <div id="page-auth" class="hidden">
@@ -510,7 +483,8 @@
       <h2>🏪 Registrer / rediger bedrift</h2>
       <div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div>
       <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
-      <select id="bizType"><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option></select>
+      <select id="bizType">
+  <option>Hundeklubb</option><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option></select>
       <input id="bizName" placeholder="Navn på bedrift">
       <input id="bizPlace" placeholder="Sted">
       <input id="bizPhone" placeholder="Telefon">
