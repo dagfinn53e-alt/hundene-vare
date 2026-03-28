@@ -1185,22 +1185,36 @@
 
     container.innerHTML = '<div class="profilebox"><div>Laster klubber ...</div></div>';
 
-    var result = await supabase.from("dog_clubs").select("*").order("created_at", { ascending: false });
+    var clubsRes = await supabase.from("dog_clubs").select("*").order("created_at", { ascending: false });
+    var bizRes = await supabase.from("businesses").select("*").eq("type", "Hundeklubb").order("created_at", { ascending: false });
 
-    if (result.error) {
-      container.innerHTML = '<div class="profilebox"><div>Feil ved henting: ' + escapeHtml(result.error.message || '') + '</div></div>';
+    if (clubsRes.error && bizRes.error) {
+      container.innerHTML = '<div class="profilebox"><div>Feil ved henting av hundeklubber.</div></div>';
       return;
     }
 
-    var data = result.data || [];
-    if (!data.length) {
+    var clubs = clubsRes.data || [];
+    var businesses = bizRes.data || [];
+    if (!clubs.length && !businesses.length) {
       container.innerHTML = '<div class="profilebox"><div>Ingen hundeklubber lagt inn enda.</div></div>';
       return;
     }
 
     var out = "";
-    for (var i = 0; i < data.length; i++) {
-      var club = data[i];
+
+    for (var i = 0; i < businesses.length; i++) {
+      var b = businesses[i];
+      out += '<div class="post" style="margin-top:14px;">';
+      if (b.logo_url) out += '<div style="margin-bottom:10px;"><img src="' + b.logo_url + '" alt="Logo" style="max-width:90px; max-height:90px; border-radius:16px;"></div>';
+      out += '<h3>' + escapeHtml(b.name || "") + '</h3>';
+      out += '<div class="meta">' + escapeHtml(b.place || "") + '</div>';
+      if (b.description) out += '<p>' + escapeHtml(b.description) + '</p>';
+      if (b.website) out += '<div><a class="sharelink" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
+      out += '</div>';
+    }
+
+    for (var j = 0; j < clubs.length; j++) {
+      var club = clubs[j];
       out += '<div class="post" style="margin-top:14px;">';
       out += '<h3>' + escapeHtml(club.name || "") + '</h3>';
       out += '<div class="meta">' + escapeHtml(club.location || "") + '</div>';
@@ -1208,6 +1222,7 @@
       if (club.website) out += '<div><a class="sharelink" href="' + normalizeUrl(club.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
       out += '</div>';
     }
+
     container.innerHTML = out;
   }
 
