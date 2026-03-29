@@ -484,18 +484,7 @@
       <div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div>
       <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
       <select id="bizType">
-  <option>Frisør</option>
-  <option>Zoo butikk</option>
-  <option>Veterinær</option>
-  <option>Hundeklubb</option>
-</select>
-<select id="bizActivity">
-  <option value="">Velg aktivitet</option>
-  <option value="Valpekurs">Valpekurs</option>
-  <option value="Utstilling">Utstilling</option>
-  <option value="Agility / trening">Agility / trening</option>
-  <option value="Fellesturer">Fellesturer</option>
-</select><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option></select>
+  <option>Hundeklubb</option><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option></select>
       <input id="bizName" placeholder="Navn på bedrift">
       <input id="bizPlace" placeholder="Sted">
       <input id="bizPhone" placeholder="Telefon">
@@ -753,7 +742,6 @@
 
     var editId = document.getElementById("editBusinessSelect").value;
     var bizType = document.getElementById("bizType").value;
-var bizActivity = document.getElementById("bizActivity").value;
     var bizName = document.getElementById("bizName").value.trim();
     var bizPlace = document.getElementById("bizPlace").value.trim();
     var bizPhone = document.getElementById("bizPhone").value.trim();
@@ -781,7 +769,7 @@ var bizActivity = document.getElementById("bizActivity").value;
       if (galleryFiles.length) galleryUrls = galleryUrls.concat(await uploadMultiple(galleryFiles, "businesses/gallery")).slice(0,5);
 
       var payload = {
-        user_id: user.id, author_email: user.email, type: bizType, activity_type: bizActivity, name: bizName, place: bizPlace,
+        user_id: user.id, author_email: user.email, type: bizType, name: bizName, place: bizPlace,
         phone: bizPhone, website: bizWebsite, description: bizText, logo_url: logoUrl, image_url: imageUrl,
         gallery_urls: galleryUrls, approved: false
       };
@@ -1197,22 +1185,36 @@ var bizActivity = document.getElementById("bizActivity").value;
 
     container.innerHTML = '<div class="profilebox"><div>Laster klubber ...</div></div>';
 
-    var result = await supabase.from("dog_clubs").select("*").order("created_at", { ascending: false });
+    var clubsRes = await supabase.from("dog_clubs").select("*").order("created_at", { ascending: false });
+    var bizRes = await supabase.from("businesses").select("*").eq("type", "Hundeklubb").order("created_at", { ascending: false });
 
-    if (result.error) {
-      container.innerHTML = '<div class="profilebox"><div>Feil ved henting: ' + escapeHtml(result.error.message || '') + '</div></div>';
+    if (clubsRes.error && bizRes.error) {
+      container.innerHTML = '<div class="profilebox"><div>Feil ved henting av hundeklubber.</div></div>';
       return;
     }
 
-    var data = result.data || [];
-    if (!data.length) {
+    var clubs = clubsRes.data || [];
+    var businesses = bizRes.data || [];
+    if (!clubs.length && !businesses.length) {
       container.innerHTML = '<div class="profilebox"><div>Ingen hundeklubber lagt inn enda.</div></div>';
       return;
     }
 
     var out = "";
-    for (var i = 0; i < data.length; i++) {
-      var club = data[i];
+
+    for (var i = 0; i < businesses.length; i++) {
+      var b = businesses[i];
+      out += '<div class="post" style="margin-top:14px;">';
+      if (b.logo_url) out += '<div style="margin-bottom:10px;"><img src="' + b.logo_url + '" alt="Logo" style="max-width:90px; max-height:90px; border-radius:16px;"></div>';
+      out += '<h3>' + escapeHtml(b.name || "") + '</h3>';
+      out += '<div class="meta">' + escapeHtml(b.place || "") + '</div>';
+      if (b.description) out += '<p>' + escapeHtml(b.description) + '</p>';
+      if (b.website) out += '<div><a class="sharelink" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
+      out += '</div>';
+    }
+
+    for (var j = 0; j < clubs.length; j++) {
+      var club = clubs[j];
       out += '<div class="post" style="margin-top:14px;">';
       out += '<h3>' + escapeHtml(club.name || "") + '</h3>';
       out += '<div class="meta">' + escapeHtml(club.location || "") + '</div>';
@@ -1220,6 +1222,7 @@ var bizActivity = document.getElementById("bizActivity").value;
       if (club.website) out += '<div><a class="sharelink" href="' + normalizeUrl(club.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
       out += '</div>';
     }
+
     container.innerHTML = out;
   }
 
