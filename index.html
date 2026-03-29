@@ -4,38 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hundene våre</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-async function savePoster(){
-  var type = document.getElementById("posterType").value;
-  var title = document.getElementById("posterTitle").value;
-  var file = document.getElementById("posterImage").files[0];
-
-  if(!file){ document.getElementById("posterStatus").innerText="Velg bilde"; return;}
-
-  var path = "posters/" + Date.now() + "-" + file.name;
-  var up = await supabase.storage.from("story-images").upload(path, file);
-  if(up.error){ document.getElementById("posterStatus").innerText="Feil"; return;}
-
-  var url = supabase.storage.from("story-images").getPublicUrl(path).data.publicUrl;
-
-  await supabase.from("posters").insert([{type:type,title:title,image_url:url}]);
-
-  document.getElementById("posterStatus").innerText="Lagret!";
-  loadPosters();
-}
-
-async function loadPosters(){
-  var res = await supabase.from("posters").select("*");
-  var data = res.data || [];
-
-  var container = document.getElementById("dogClubsList");
-
-  data.forEach(p=>{
-    container.innerHTML += '<div class="card"><h3>'+p.type+'</h3><img src="'+p.image_url+'" style="max-width:100%"></div>';
-  });
-}
-
-</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root{
       --blue:#2563eb; --blue-dark:#1d4ed8; --card:#fff; --line:#dbeafe;
@@ -620,21 +589,6 @@ async function loadPosters(){
       <h3 style="margin-top:0;">Registrerte hundeklubber</h3>
       <div class="sub" style="margin-bottom:12px;">Her vises klubbene som er lagret i appen.</div>
       <div id="dogClubsList">
-
-<div class="card">
-  <h3>📌 Legg til plakat</h3>
-  <select id="posterType">
-    <option>Utstilling</option>
-    <option>Valpekurs</option>
-    <option>Agility / trening</option>
-    <option>Fellesturer</option>
-  </select>
-  <input id="posterTitle" placeholder="Tittel">
-  <input id="posterImage" type="file" accept="image/*">
-  <button onclick="savePoster()">Lagre plakat</button>
-  <div id="posterStatus"></div>
-</div>
-
         <div class="profilebox"><div>Ingen hundeklubber lagt inn enda.</div></div>
       </div>
     </div>
@@ -1294,37 +1248,6 @@ async function loadPosters(){
   loadProfile();
   loadBusinesses();
   loadDogClubs();
-
-async function savePoster(){
-  var type = document.getElementById("posterType").value;
-  var title = document.getElementById("posterTitle").value;
-  var file = document.getElementById("posterImage").files[0];
-
-  if(!file){ document.getElementById("posterStatus").innerText="Velg bilde"; return;}
-
-  var path = "posters/" + Date.now() + "-" + file.name;
-  var up = await supabase.storage.from("story-images").upload(path, file);
-  if(up.error){ document.getElementById("posterStatus").innerText="Feil"; return;}
-
-  var url = supabase.storage.from("story-images").getPublicUrl(path).data.publicUrl;
-
-  await supabase.from("posters").insert([{type:type,title:title,image_url:url}]);
-
-  document.getElementById("posterStatus").innerText="Lagret!";
-  loadPosters();
-}
-
-async function loadPosters(){
-  var res = await supabase.from("posters").select("*");
-  var data = res.data || [];
-
-  var container = document.getElementById("dogClubsList");
-
-  data.forEach(p=>{
-    container.innerHTML += '<div class="card"><h3>'+p.type+'</h3><img src="'+p.image_url+'" style="max-width:100%"></div>';
-  });
-}
-
 </script>
 </body>
 </html>
