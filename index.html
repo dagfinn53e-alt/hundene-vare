@@ -4,7 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hundene våre</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+async function savePoster(){
+  var type = document.getElementById("posterType").value;
+  var title = document.getElementById("posterTitle").value;
+  var file = document.getElementById("posterImage").files[0];
+
+  if(!file){ document.getElementById("posterStatus").innerText="Velg bilde"; return;}
+
+  var path = "posters/" + Date.now() + "-" + file.name;
+  var up = await supabase.storage.from("story-images").upload(path, file);
+  if(up.error){ document.getElementById("posterStatus").innerText="Feil"; return;}
+
+  var url = supabase.storage.from("story-images").getPublicUrl(path).data.publicUrl;
+
+  await supabase.from("posters").insert([{type:type,title:title,image_url:url}]);
+
+  document.getElementById("posterStatus").innerText="Lagret!";
+  loadPosters();
+}
+
+async function loadPosters(){
+  var res = await supabase.from("posters").select("*");
+  var data = res.data || [];
+
+  var container = document.getElementById("dogClubsList");
+
+  data.forEach(p=>{
+    container.innerHTML += '<div class="card"><h3>'+p.type+'</h3><img src="'+p.image_url+'" style="max-width:100%"></div>';
+  });
+}
+
+</script>
   <style>
     :root{
       --blue:#2563eb; --blue-dark:#1d4ed8; --card:#fff; --line:#dbeafe;
@@ -483,7 +514,8 @@
       <h2>🏪 Registrer / rediger bedrift</h2>
       <div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div>
       <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
-      <select id="bizType"><option>Hundeklubb</option><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option></select>
+      <select id="bizType">
+  <option>Hundeklubb</option><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option></select>
       <input id="bizName" placeholder="Navn på bedrift">
       <input id="bizPlace" placeholder="Sted">
       <input id="bizPhone" placeholder="Telefon">
@@ -588,6 +620,21 @@
       <h3 style="margin-top:0;">Registrerte hundeklubber</h3>
       <div class="sub" style="margin-bottom:12px;">Her vises klubbene som er lagret i appen.</div>
       <div id="dogClubsList">
+
+<div class="card">
+  <h3>📌 Legg til plakat</h3>
+  <select id="posterType">
+    <option>Utstilling</option>
+    <option>Valpekurs</option>
+    <option>Agility / trening</option>
+    <option>Fellesturer</option>
+  </select>
+  <input id="posterTitle" placeholder="Tittel">
+  <input id="posterImage" type="file" accept="image/*">
+  <button onclick="savePoster()">Lagre plakat</button>
+  <div id="posterStatus"></div>
+</div>
+
         <div class="profilebox"><div>Ingen hundeklubber lagt inn enda.</div></div>
       </div>
     </div>
@@ -615,7 +662,7 @@
         <div class="menu-btn box-stories" style="cursor:default;"><h3>🐾 Valpekurs</h3></div>
         <div class="menu-btn box-groomers" style="cursor:default;"><h3>🏃 Agility / trening</h3></div>
         <div class="menu-btn box-shops" style="cursor:default;"><h3>🚶 Fellesturer</h3></div>
-        <div class="menu-btn box-vets" style="cursor:default;"><h3>🎓 Utstilling</h3></div>
+        <div class="menu-btn box-vets" style="cursor:default;"><h3>🎓 Kurs / samlinger</h3></div>
       </div>
     </div>
   </div>
@@ -1184,22 +1231,36 @@
 
     container.innerHTML = '<div class="profilebox"><div>Laster klubber ...</div></div>';
 
-    var result = await supabase.from("dog_clubs").select("*").order("created_at", { ascending: false });
+    var clubsRes = await supabase.from("dog_clubs").select("*").order("created_at", { ascending: false });
+    var bizRes = await supabase.from("businesses").select("*").eq("type", "Hundeklubb").order("created_at", { ascending: false });
 
-    if (result.error) {
-      container.innerHTML = '<div class="profilebox"><div>Feil ved henting: ' + escapeHtml(result.error.message || '') + '</div></div>';
+    if (clubsRes.error && bizRes.error) {
+      container.innerHTML = '<div class="profilebox"><div>Feil ved henting av hundeklubber.</div></div>';
       return;
     }
 
-    var data = result.data || [];
-    if (!data.length) {
+    var clubs = clubsRes.data || [];
+    var businesses = bizRes.data || [];
+    if (!clubs.length && !businesses.length) {
       container.innerHTML = '<div class="profilebox"><div>Ingen hundeklubber lagt inn enda.</div></div>';
       return;
     }
 
     var out = "";
-    for (var i = 0; i < data.length; i++) {
-      var club = data[i];
+
+    for (var i = 0; i < businesses.length; i++) {
+      var b = businesses[i];
+      out += '<div class="post" style="margin-top:14px;">';
+      if (b.logo_url) out += '<div style="margin-bottom:10px;"><img src="' + b.logo_url + '" alt="Logo" style="max-width:90px; max-height:90px; border-radius:16px;"></div>';
+      out += '<h3>' + escapeHtml(b.name || "") + '</h3>';
+      out += '<div class="meta">' + escapeHtml(b.place || "") + '</div>';
+      if (b.description) out += '<p>' + escapeHtml(b.description) + '</p>';
+      if (b.website) out += '<div><a class="sharelink" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
+      out += '</div>';
+    }
+
+    for (var j = 0; j < clubs.length; j++) {
+      var club = clubs[j];
       out += '<div class="post" style="margin-top:14px;">';
       out += '<h3>' + escapeHtml(club.name || "") + '</h3>';
       out += '<div class="meta">' + escapeHtml(club.location || "") + '</div>';
@@ -1207,6 +1268,7 @@
       if (club.website) out += '<div><a class="sharelink" href="' + normalizeUrl(club.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
       out += '</div>';
     }
+
     container.innerHTML = out;
   }
 
@@ -1232,6 +1294,37 @@
   loadProfile();
   loadBusinesses();
   loadDogClubs();
+
+async function savePoster(){
+  var type = document.getElementById("posterType").value;
+  var title = document.getElementById("posterTitle").value;
+  var file = document.getElementById("posterImage").files[0];
+
+  if(!file){ document.getElementById("posterStatus").innerText="Velg bilde"; return;}
+
+  var path = "posters/" + Date.now() + "-" + file.name;
+  var up = await supabase.storage.from("story-images").upload(path, file);
+  if(up.error){ document.getElementById("posterStatus").innerText="Feil"; return;}
+
+  var url = supabase.storage.from("story-images").getPublicUrl(path).data.publicUrl;
+
+  await supabase.from("posters").insert([{type:type,title:title,image_url:url}]);
+
+  document.getElementById("posterStatus").innerText="Lagret!";
+  loadPosters();
+}
+
+async function loadPosters(){
+  var res = await supabase.from("posters").select("*");
+  var data = res.data || [];
+
+  var container = document.getElementById("dogClubsList");
+
+  data.forEach(p=>{
+    container.innerHTML += '<div class="card"><h3>'+p.type+'</h3><img src="'+p.image_url+'" style="max-width:100%"></div>';
+  });
+}
+
 </script>
 </body>
 </html>
