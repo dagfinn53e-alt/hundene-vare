@@ -484,14 +484,18 @@
       <div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div>
       <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
       <select id="bizType">
-  <option>Hundeklubb</option><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option></select>
-      <select id="bizActivity">
-        <option value="">Velg aktivitet (valgfritt)</option>
-        <option>Valpekurs</option>
-        <option>Agility / trening</option>
-        <option>Fellesturer</option>
-        <option>Utstilling</option>
-      </select>
+  <option>Frisør</option>
+  <option>Zoo butikk</option>
+  <option>Veterinær</option>
+  <option>Hundeklubb</option>
+</select>
+<select id="bizActivity">
+  <option value="">Velg aktivitet</option>
+  <option value="Valpekurs">Valpekurs</option>
+  <option value="Utstilling">Utstilling</option>
+  <option value="Agility / trening">Agility / trening</option>
+  <option value="Fellesturer">Fellesturer</option>
+</select><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option></select>
       <input id="bizName" placeholder="Navn på bedrift">
       <input id="bizPlace" placeholder="Sted">
       <input id="bizPhone" placeholder="Telefon">
@@ -602,20 +606,28 @@
 
     <div class="card">
       <h3 style="margin-top:0;">➕ Legg til hundeklubb</h3>
-      <div class="sub" style="margin-bottom:12px;">Bruk Bedrift-skjemaet for å legge inn hundeklubber med logo, beskrivelse og link. Velg deretter ønsket aktivitet.</div>
-      <div class="btnrow">
-        <button type="button" onclick="openBusinessForActivity('')">Åpne skjema</button>
-      </div>
+      <div class="sub" style="margin-bottom:12px;">Fyll inn klubbnavn, område, beskrivelse og link. Logo tar vi i neste steg.</div>
+      <form onsubmit="event.preventDefault(); window.saveDogClub();">
+        <input id="clubName" placeholder="Klubbnavn" required>
+        <input id="clubLocation" placeholder="Område / sted" required>
+        <textarea id="clubDescription" placeholder="Beskrivelse"></textarea>
+        <input id="clubWebsite" placeholder="Nettside / Facebook-link">
+        <div class="btnrow">
+          <button type="submit">Lagre klubb</button>
+          <button type="button" class="alt" onclick="window.loadDogClubs()">Oppdater liste</button>
+        </div>
+        <div id="clubStatus" class="mini" style="margin-top:10px;"></div>
+      </form>
     </div>
 
     <div class="card">
       <h3 style="margin-top:0;">Flere klubber kommer</h3>
       <div class="sub">Her kan du senere legge inn flere hundeklubber, treningsgrupper, valpekurs og lokale aktiviteter.</div>
       <div class="menu-grid" style="margin-top:14px;">
-        <button class="menu-btn box-stories" type="button" onclick="openBusinessForActivity('Valpekurs')"><h3>🐾 Valpekurs</h3></button>
-        <button class="menu-btn box-groomers" type="button" onclick="openBusinessForActivity('Agility / trening')"><h3>🏃 Agility / trening</h3></button>
-        <button class="menu-btn box-shops" type="button" onclick="openBusinessForActivity('Fellesturer')"><h3>🚶 Fellesturer</h3></button>
-        <button class="menu-btn box-vets" type="button" onclick="openBusinessForActivity('Utstilling')"><h3>🎓 Utstilling</h3></button>
+        <div class="menu-btn box-stories" style="cursor:default;"><h3>🐾 Valpekurs</h3></div>
+        <div class="menu-btn box-groomers" style="cursor:default;"><h3>🏃 Agility / trening</h3></div>
+        <div class="menu-btn box-shops" style="cursor:default;"><h3>🚶 Fellesturer</h3></div>
+        <div class="menu-btn box-vets" style="cursor:default;"><h3>🎓 Kurs / samlinger</h3></div>
       </div>
     </div>
   </div>
@@ -706,7 +718,6 @@
   function clearBusinessForm() {
     document.getElementById("editBusinessSelect").value = "";
     document.getElementById("bizType").value = "Frisør";
-    if (document.getElementById("bizActivity")) document.getElementById("bizActivity").value = "";
     document.getElementById("bizName").value = "";
     document.getElementById("bizPlace").value = "";
     document.getElementById("bizPhone").value = "";
@@ -724,7 +735,6 @@
     var opt = select.options[select.selectedIndex];
     var b = JSON.parse(opt.dataset.biz);
     document.getElementById("bizType").value = b.type || "Frisør";
-    if (document.getElementById("bizActivity")) document.getElementById("bizActivity").value = b.activity_type || "";
     document.getElementById("bizName").value = b.name || "";
     document.getElementById("bizPlace").value = b.place || "";
     document.getElementById("bizPhone").value = b.phone || "";
@@ -743,7 +753,7 @@
 
     var editId = document.getElementById("editBusinessSelect").value;
     var bizType = document.getElementById("bizType").value;
-    var bizActivity = (document.getElementById("bizActivity")?.value || "").trim();
+var bizActivity = document.getElementById("bizActivity").value;
     var bizName = document.getElementById("bizName").value.trim();
     var bizPlace = document.getElementById("bizPlace").value.trim();
     var bizPhone = document.getElementById("bizPhone").value.trim();
@@ -855,8 +865,6 @@
       if (b.logo_url) html += '<img class="biz-logo" src="' + b.logo_url + '" alt="Logo">';
       html += '<div class="biz-info"><h3>' + escapeHtml(b.name || "") + ' <span class="badge approved">Godkjent</span></h3>';
       html += '<div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div>';
-      if (b.activity_type) html += '<div class="mini"><strong>Aktivitet:</strong> ' + escapeHtml(b.activity_type) + '</div>';
-      if (b.activity_type) html += '<div class="mini"><strong>Aktivitet:</strong> ' + escapeHtml(b.activity_type) + '</div>';
       html += '<p>' + escapeHtml(b.description || "") + '</p>';
       if (b.phone) html += '<div><strong>Telefon:</strong> ' + escapeHtml(b.phone) + '</div>';
       if (b.website) html += '<div><strong>Lenke:</strong> <a class="site-link" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
@@ -1189,91 +1197,37 @@
 
     container.innerHTML = '<div class="profilebox"><div>Laster klubber ...</div></div>';
 
-    var clubsRes = await supabase.from("dog_clubs").select("*").order("created_at", { ascending: false });
-    var bizRes = await supabase.from("businesses").select("*").eq("type", "Hundeklubb").order("created_at", { ascending: false });
+    var result = await supabase.from("dog_clubs").select("*").order("created_at", { ascending: false });
 
-    if (clubsRes.error && bizRes.error) {
-      container.innerHTML = '<div class="profilebox"><div>Feil ved henting av hundeklubber.</div></div>';
+    if (result.error) {
+      container.innerHTML = '<div class="profilebox"><div>Feil ved henting: ' + escapeHtml(result.error.message || '') + '</div></div>';
       return;
     }
 
-    var clubs = clubsRes.data || [];
-    var businesses = bizRes.data || [];
-    if (!clubs.length && !businesses.length) {
+    var data = result.data || [];
+    if (!data.length) {
       container.innerHTML = '<div class="profilebox"><div>Ingen hundeklubber lagt inn enda.</div></div>';
       return;
     }
 
-    function renderClubCard(title, place, description, website, logoUrl, activity){
-      var card = '<div class="post" style="margin-top:14px;">';
-      if (logoUrl) card += '<div style="margin-bottom:10px;"><img src="' + logoUrl + '" alt="Logo" style="max-width:90px; max-height:90px; border-radius:16px;"></div>';
-      card += '<h3>' + escapeHtml(title || "") + '</h3>';
-      if (place) card += '<div class="meta">' + escapeHtml(place) + '</div>';
-      if (activity) card += '<div class="mini"><strong>Aktivitet:</strong> ' + escapeHtml(activity) + '</div>';
-      if (description) card += '<p>' + escapeHtml(description) + '</p>';
-      if (website) card += '<div><a class="sharelink" href="' + normalizeUrl(website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
-      card += '</div>';
-      return card;
-    }
-
-    var out = '';
-
-    if (businesses.length) {
-      var groups = ['Valpekurs','Agility / trening','Fellesturer','Utstilling'];
-      for (var g = 0; g < groups.length; g++) {
-        var activity = groups[g];
-        var items = businesses.filter(function(b){ return (b.activity_type || '') === activity; });
-        if (!items.length) continue;
-        out += '<div class="card" style="margin-top:14px;"><h3 style="margin-top:0;">' + escapeHtml(activity) + '</h3>';
-        for (var i = 0; i < items.length; i++) {
-          var b = items[i];
-          out += renderClubCard(b.name, b.place, b.description, b.website, b.logo_url, b.activity_type);
-        }
-        out += '</div>';
-      }
-
-      var other = businesses.filter(function(b){ return !(b.activity_type === 'Valpekurs' || b.activity_type === 'Agility / trening' || b.activity_type === 'Fellesturer' || b.activity_type === 'Utstilling'); });
-      if (other.length) {
-        out += '<div class="card" style="margin-top:14px;"><h3 style="margin-top:0;">Andre hundeklubber</h3>';
-        for (var j = 0; j < other.length; j++) {
-          var o = other[j];
-          out += renderClubCard(o.name, o.place, o.description, o.website, o.logo_url, o.activity_type);
-        }
-        out += '</div>';
-      }
-    }
-
-    if (clubs.length) {
-      out += '<div class="card" style="margin-top:14px;"><h3 style="margin-top:0;">Tidligere registrerte hundeklubber</h3>';
-      for (var k = 0; k < clubs.length; k++) {
-        var c = clubs[k];
-        out += renderClubCard(c.name, c.location, c.description, c.website, c.logo_url || '', '');
-      }
+    var out = "";
+    for (var i = 0; i < data.length; i++) {
+      var club = data[i];
+      out += '<div class="post" style="margin-top:14px;">';
+      out += '<h3>' + escapeHtml(club.name || "") + '</h3>';
+      out += '<div class="meta">' + escapeHtml(club.location || "") + '</div>';
+      if (club.description) out += '<p>' + escapeHtml(club.description) + '</p>';
+      if (club.website) out += '<div><a class="sharelink" href="' + normalizeUrl(club.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
       out += '</div>';
     }
-
-    container.innerHTML = out || '<div class="profilebox"><div>Ingen hundeklubber lagt inn enda.</div></div>';
+    container.innerHTML = out;
   }
 
   window.saveDogClub = saveDogClub;
   window.loadDogClubs = loadDogClubs;
 
 
-  
-  function openBusinessForActivity(activity){
-    showPage('business');
-    setTimeout(function(){
-      var typeEl = document.getElementById('bizType');
-      var actEl = document.getElementById('bizActivity');
-      if (typeEl) typeEl.value = 'Hundeklubb';
-      if (actEl) actEl.value = activity || '';
-      setBizStatus(activity ? ('Klar for ny hundeklubb under: ' + activity) : 'Klar for ny hundeklubb.', '#1d4ed8');
-      var nameEl = document.getElementById('bizName');
-      if (nameEl) nameEl.focus();
-    }, 150);
-  }
-
-function shareApp() {
+  function shareApp() {
     var url = "https://dagfinn53e-alt.github.io/hundene-vare/";
     if (navigator.share) navigator.share({ title: "Hundene våre", text: "Se appen Hundene våre 🐶", url: url }).catch(function(){});
     else copyLink();
