@@ -1193,11 +1193,37 @@
     loadDogClubs();
   }
 
-  async function loadDogClubs() {
-    var container = document.getElementById("dogClubsList");
-    if (!container) return;
+  
+async function loadDogClubs() {
+  var container = document.getElementById("dogClubsList");
+  if (!container) return;
 
-    container.innerHTML = '<div class="profilebox"><div>Laster klubber ...</div></div>';
+  var res = await supabase.from("businesses").select("*").eq("type","Hundeklubb");
+  var data = res.data || [];
+
+  var out = "";
+
+  function renderGroup(title, list){
+    if(!list.length) return "";
+    var html = "<div class='card'><h3>"+title+"</h3>";
+    list.forEach(b=>{
+      html += "<div class='post'>";
+      if(b.image_url) html += "<img src='"+b.image_url+"' style='max-width:100%; border-radius:10px; margin-bottom:10px'>";
+      html += "<h3>"+ (b.name||"") +"</h3>";
+      html += "</div>";
+    });
+    html += "</div>";
+    return html;
+  }
+
+  out += renderGroup("🎓 Utstilling", data.filter(b=>b.activity_type==="Utstilling"));
+  out += renderGroup("🐾 Valpekurs", data.filter(b=>b.activity_type==="Valpekurs"));
+  out += renderGroup("🏃 Agility / trening", data.filter(b=>b.activity_type==="Agility / trening"));
+  out += renderGroup("🚶 Fellesturer", data.filter(b=>b.activity_type==="Fellesturer"));
+
+  container.innerHTML = out || "Ingen plakater enda";
+}
+
 
     var clubsRes = await supabase.from("dog_clubs").select("*").order("created_at", { ascending: false });
     var bizRes = await supabase.from("businesses").select("*").eq("type", "Hundeklubb").order("created_at", { ascending: false });
