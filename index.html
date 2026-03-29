@@ -484,18 +484,6 @@
       <div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div>
       <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
       <select id="bizType">
-  <option>Hundeklubb</option>
-  <option>Frisør</option>
-  <option>Zoo butikk</option>
-  <option>Veterinær</option>
-</select>
-<select id="bizActivity">
-  <option value="">Velg aktivitet</option>
-  <option>Valpekurs</option>
-  <option>Utstilling</option>
-  <option>Agility / trening</option>
-  <option>Fellesturer</option>
-</select>
   <option>Hundeklubb</option><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option></select>
       <input id="bizName" placeholder="Navn på bedrift">
       <input id="bizPlace" placeholder="Sted">
@@ -628,7 +616,6 @@
         <div class="menu-btn box-stories" style="cursor:default;"><h3>🐾 Valpekurs</h3></div>
         <div class="menu-btn box-groomers" style="cursor:default;"><h3>🏃 Agility / trening</h3></div>
         <div class="menu-btn box-shops" style="cursor:default;"><h3>🚶 Fellesturer</h3></div>
-        <div class="menu-btn box-vets" style="cursor:default;"><h3>🎓 Utstilling</h3></div>
         <div class="menu-btn box-vets" style="cursor:default;"><h3>🎓 Kurs / samlinger</h3></div>
       </div>
     </div>
@@ -755,7 +742,6 @@
 
     var editId = document.getElementById("editBusinessSelect").value;
     var bizType = document.getElementById("bizType").value;
-    var bizActivity = document.getElementById("bizActivity") ? document.getElementById("bizActivity").value : "";
     var bizName = document.getElementById("bizName").value.trim();
     var bizPlace = document.getElementById("bizPlace").value.trim();
     var bizPhone = document.getElementById("bizPhone").value.trim();
@@ -783,7 +769,7 @@
       if (galleryFiles.length) galleryUrls = galleryUrls.concat(await uploadMultiple(galleryFiles, "businesses/gallery")).slice(0,5);
 
       var payload = {
-        user_id: user.id, author_email: user.email, type: bizType, activity_type: bizActivity, name: bizName, place: bizPlace,
+        user_id: user.id, author_email: user.email, type: bizType, name: bizName, place: bizPlace,
         phone: bizPhone, website: bizWebsite, description: bizText, logo_url: logoUrl, image_url: imageUrl,
         gallery_urls: galleryUrls, approved: false
       };
@@ -1193,37 +1179,11 @@
     loadDogClubs();
   }
 
-  
-async function loadDogClubs() {
-  var container = document.getElementById("dogClubsList");
-  if (!container) return;
+  async function loadDogClubs() {
+    var container = document.getElementById("dogClubsList");
+    if (!container) return;
 
-  var res = await supabase.from("businesses").select("*").eq("type","Hundeklubb");
-  var data = res.data || [];
-
-  var out = "";
-
-  function renderGroup(title, list){
-    if(!list.length) return "";
-    var html = "<div class='card'><h3>"+title+"</h3>";
-    list.forEach(b=>{
-      html += "<div class='post'>";
-      if(b.image_url) html += "<img src='"+b.image_url+"' style='max-width:100%; border-radius:10px; margin-bottom:10px'>";
-      html += "<h3>"+ (b.name||"") +"</h3>";
-      html += "</div>";
-    });
-    html += "</div>";
-    return html;
-  }
-
-  out += renderGroup("🎓 Utstilling", data.filter(b=>b.activity_type==="Utstilling"));
-  out += renderGroup("🐾 Valpekurs", data.filter(b=>b.activity_type==="Valpekurs"));
-  out += renderGroup("🏃 Agility / trening", data.filter(b=>b.activity_type==="Agility / trening"));
-  out += renderGroup("🚶 Fellesturer", data.filter(b=>b.activity_type==="Fellesturer"));
-
-  container.innerHTML = out || "Ingen plakater enda";
-}
-
+    container.innerHTML = '<div class="profilebox"><div>Laster klubber ...</div></div>';
 
     var clubsRes = await supabase.from("dog_clubs").select("*").order("created_at", { ascending: false });
     var bizRes = await supabase.from("businesses").select("*").eq("type", "Hundeklubb").order("created_at", { ascending: false });
@@ -1245,7 +1205,6 @@ async function loadDogClubs() {
     for (var i = 0; i < businesses.length; i++) {
       var b = businesses[i];
       out += '<div class="post" style="margin-top:14px;">';
-      if (b.activity_type) out += '<div class="mini"><strong>'+b.activity_type+'</strong></div>';
       if (b.logo_url) out += '<div style="margin-bottom:10px;"><img src="' + b.logo_url + '" alt="Logo" style="max-width:90px; max-height:90px; border-radius:16px;"></div>';
       out += '<h3>' + escapeHtml(b.name || "") + '</h3>';
       out += '<div class="meta">' + escapeHtml(b.place || "") + '</div>';
@@ -1257,7 +1216,6 @@ async function loadDogClubs() {
     for (var j = 0; j < clubs.length; j++) {
       var club = clubs[j];
       out += '<div class="post" style="margin-top:14px;">';
-      if (b.activity_type) out += '<div class="mini"><strong>'+b.activity_type+'</strong></div>';
       out += '<h3>' + escapeHtml(club.name || "") + '</h3>';
       out += '<div class="meta">' + escapeHtml(club.location || "") + '</div>';
       if (club.description) out += '<p>' + escapeHtml(club.description) + '</p>';
