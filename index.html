@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="no">
 <head>
@@ -1219,7 +1218,7 @@
     for (var i = 0; i < businesses.length; i++) {
       var b = businesses[i];
       out += '<div class="post" style="margin-top:14px;">';
-      if (b.image_url) out += "<img src='" + b.image_url + "' style='max-width:100%;border-radius:10px;margin-bottom:10px'>";
+      if (b.image_url) out += "<img src='" + b.image_url + "' style='width:100%;max-width:700px;height:auto;object-fit:contain;border-radius:10px;margin:0 auto 10px auto;display:block'>";
       if (b.logo_url) out += '<div style="margin-bottom:10px;"><img src="' + b.logo_url + '" alt="Logo" style="max-width:90px; max-height:90px; border-radius:16px;"></div>';
       out += '<h3>' + escapeHtml(b.name || "") + '</h3>';
       out += '<div class="meta">' + escapeHtml(b.place || "") + '</div>';
@@ -1231,7 +1230,7 @@
     for (var j = 0; j < clubs.length; j++) {
       var club = clubs[j];
       out += '<div class="post" style="margin-top:14px;">';
-      if (b.image_url) out += "<img src='" + b.image_url + "' style='max-width:100%;border-radius:10px;margin-bottom:10px'>";
+      if (b.image_url) out += "<img src='" + b.image_url + "' style='width:100%;max-width:700px;height:auto;object-fit:contain;border-radius:10px;margin:0 auto 10px auto;display:block'>";
       out += '<h3>' + escapeHtml(club.name || "") + '</h3>';
       out += '<div class="meta">' + escapeHtml(club.location || "") + '</div>';
       if (club.description) out += '<p>' + escapeHtml(club.description) + '</p>';
