@@ -998,6 +998,22 @@ button{
     businesses.forEach(function(b){
       var key = (b.name || "Ukjent klubb").trim();
       if (!grouped[key]) grouped[key] = { clubInfo: null, items: [] };
+
+      if (!grouped[key].clubInfo) {
+        grouped[key].clubInfo = {
+          name: b.name || "",
+          location: b.place || "",
+          description: b.description || "",
+          website: b.website || "",
+          logo_url: b.logo_url || ""
+        };
+      } else {
+        if (!grouped[key].clubInfo.logo_url && b.logo_url) grouped[key].clubInfo.logo_url = b.logo_url;
+        if (!grouped[key].clubInfo.location && b.place) grouped[key].clubInfo.location = b.place;
+        if (!grouped[key].clubInfo.website && b.website) grouped[key].clubInfo.website = b.website;
+        if (!grouped[key].clubInfo.description && b.description) grouped[key].clubInfo.description = b.description;
+      }
+
       grouped[key].items.push({
         title: b.activity || b.name,
         place: b.place,
