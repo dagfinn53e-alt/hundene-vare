@@ -1012,7 +1012,9 @@ button{
     var out = "";
     names.forEach(function(name){
       var g = grouped[name];
-      out += '<section class="club-section"><div class="club-top"><div><h3 style="margin:0 0 8px 0;font-size:32px;color:#1d4ed8;">' + escapeHtml(name) + '</h3>';
+      out += '<section class="club-section"><div class="club-top"><div>';
+      if (g.clubInfo && g.clubInfo.logo_url) out += '<div style="margin-bottom:10px;"><img src="' + g.clubInfo.logo_url + '" alt="Logo" style="max-width:80px;max-height:80px;border-radius:16px;display:block;"></div>';
+      out += '<h3 style="margin:0 0 8px 0;font-size:32px;color:#1d4ed8;">' + escapeHtml(name) + '</h3>';
       if (g.clubInfo && g.clubInfo.location) out += '<div class="mini">' + escapeHtml(g.clubInfo.location) + '</div>';
       out += '</div><div class="club-count">' + String(g.items.length || 0) + ' aktivitet(er)</div></div>';
       if (g.clubInfo && g.clubInfo.description) out += '<div class="sub" style="margin-bottom:14px;">' + escapeHtml(g.clubInfo.description) + '</div>';
