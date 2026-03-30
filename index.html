@@ -830,6 +830,168 @@ body{
   }
 }
 
+
+/* IMAGE LIGHTBOX */
+.clickable-image{
+  cursor:zoom-in;
+}
+#imageModal{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.82);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:5000;
+  padding:24px;
+}
+#imageModal.open{
+  display:flex;
+}
+#imageModalInner{
+  position:relative;
+  max-width:min(1200px,96vw);
+  max-height:92vh;
+  width:auto;
+}
+#imageModal img{
+  display:block;
+  max-width:100%;
+  max-height:86vh;
+  width:auto;
+  height:auto;
+  border-radius:20px;
+  box-shadow:0 22px 50px rgba(0,0,0,.35);
+  background:#fff;
+}
+#imageModalClose{
+  position:absolute;
+  top:-14px;
+  right:-14px;
+  width:42px;
+  height:42px;
+  border-radius:999px;
+  border:none;
+  background:#fff;
+  color:#0f172a;
+  font-size:24px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 10px 24px rgba(0,0,0,.25);
+}
+
+/* AKTIVITETER SIDE */
+.activity-hero{
+  background:linear-gradient(135deg,#1d4ed8 0%,#3b82f6 52%,#7dd3fc 100%);
+  color:#fff;
+  border-radius:28px;
+  padding:22px;
+  box-shadow:0 18px 38px rgba(37,99,235,.18);
+  margin-bottom:16px;
+}
+.activity-hero h2{
+  margin:0 0 8px 0;
+  color:#fff;
+}
+.activity-toolbar{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:12px;
+  margin-top:14px;
+}
+.activity-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:16px;
+}
+.activity-card{
+  background:linear-gradient(180deg,#ffffff 0%,#fbfdff 100%);
+  border:1px solid #deebff;
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:0 14px 28px rgba(15,23,42,.07);
+}
+.activity-card img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  display:block;
+}
+.activity-card-content{
+  padding:15px;
+}
+.activity-source{
+  display:inline-block;
+  font-size:12px;
+  font-weight:700;
+  border-radius:999px;
+  padding:6px 10px;
+  margin-bottom:10px;
+}
+.activity-source.club{
+  background:#eaf2ff;
+  color:#1d4ed8;
+  border:1px solid #bfd7ff;
+}
+.activity-source.shop{
+  background:#eefcf1;
+  color:#166534;
+  border:1px solid #b7ebc3;
+}
+.activity-title{
+  margin:0 0 8px 0;
+  font-size:20px;
+  line-height:1.2;
+}
+.activity-meta{
+  color:#64748b;
+  font-size:13px;
+  margin-bottom:10px;
+  padding-bottom:8px;
+  border-bottom:1px dashed #dde9fb;
+}
+.activity-text{
+  color:#475569;
+  font-size:14px;
+  line-height:1.65;
+  margin:0 0 12px 0;
+}
+.activity-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+@media (max-width:760px){
+  #imageModal{
+    padding:14px;
+  }
+  #imageModal img{
+    max-height:80vh;
+    border-radius:16px;
+  }
+  #imageModalClose{
+    top:-10px;
+    right:-6px;
+    width:38px;
+    height:38px;
+  }
+  .activity-hero{
+    border-radius:22px;
+    padding:16px;
+  }
+  .activity-toolbar{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+  .activity-card img{
+    height:200px;
+  }
+  .activity-title{
+    font-size:18px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -865,6 +1027,7 @@ body{
           <button type="button" class="alt" onclick="showPage('about')">ℹ️ Om oss</button>
           <button type="button" class="alt" onclick="showPage('favorites')">❤️ Favoritter</button>
           <button type="button" class="alt" onclick="showPage('stories')">🐶 Fellesskap</button>
+          <button type="button" class="alt" onclick="showPage('activities')">📅 Aktiviteter</button>
           <button type="button" class="alt" onclick="showPage('groomers')">✂️ Frisører</button>
           <button type="button" class="alt" onclick="showPage('shops')">🐾 Butikker</button>
           <button type="button" class="alt" onclick="showPage('vets')">🏥 Veterinærer</button>
@@ -877,6 +1040,7 @@ body{
       <h2>Utforsk appen</h2>
       <div class="menu-grid">
         <button class="menu-btn box-stories" onclick="showPage('stories')"><h3>📸 Bilder / Fortellinger</h3></button>
+        <button class="menu-btn box-stories" onclick="showPage('activities')"><h3>📅 Aktiviteter</h3></button>
         <button class="menu-btn box-groomers" onclick="showPage('groomers')"><h3>✂️ Frisører</h3></button>
         <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3></button>
         <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3></button>
@@ -957,6 +1121,32 @@ body{
     </div>
   </div>
   <div id="page-vets" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>🏥 Veterinærer</h2><div class="search-grid"><input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()"><select id="filterFavoritesVets" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchVets" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="vetList"></div></div></div>
+
+
+  <div id="page-activities" class="hidden">
+    <div class="card">
+      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <div class="activity-hero">
+        <h2>📅 Aktiviteter i området</h2>
+        <div>Her samles aktiviteter fra hundeklubber og zoo butikker på én side.</div>
+        <div class="activity-toolbar">
+          <input id="activitySearch" placeholder="Søk aktivitet, klubb, butikk eller sted" oninput="loadActivities()">
+          <select id="activityTypeFilter" onchange="loadActivities()">
+            <option value="all">Alle</option>
+            <option value="club">Kun hundeklubber</option>
+            <option value="shop">Kun zoo butikker</option>
+          </select>
+          <select id="activitySort" onchange="loadActivities()">
+            <option value="name">Sorter A–Å</option>
+            <option value="type">Sorter etter type</option>
+            <option value="place">Sorter etter sted</option>
+          </select>
+        </div>
+      </div>
+      <div id="activitiesList" class="activity-list">Laster aktiviteter ...</div>
+    </div>
+  </div>
+
 
   <div id="page-business" class="hidden">
     <div class="card">
@@ -1089,6 +1279,15 @@ body{
   </div>
 </div>
 
+
+<div id="imageModal" onclick="closeImageModal(event)">
+  <div id="imageModalInner">
+    <button id="imageModalClose" type="button" onclick="closeImageModal(event)">×</button>
+    <img id="imageModalImg" src="" alt="Forstørret bilde">
+  </div>
+</div>
+
+
 <script>
   var ADMIN_EMAIL = "dagfinn53e@gmail.com";
   var supabase = window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
@@ -1096,7 +1295,7 @@ body{
   function setBottomNavActive(name){}
 
   function showPage(name){
-    var pages = ['home','auth','stories','groomers','shops','vets','business','admin','favorites','about','hundeklubber'];
+    var pages = ['home','auth','stories','activities','groomers','shops','vets','business','admin','favorites','about','hundeklubber'];
     for (var i = 0; i < pages.length; i++) {
       var el = document.getElementById('page-' + pages[i]);
       if (el) el.classList.add('hidden');
@@ -1110,6 +1309,7 @@ body{
     if(name === 'admin'){ loadAdmin(); }
     if(name === 'favorites'){ loadFavoritesPage(); }
     if(name === 'hundeklubber'){ loadDogClubs(); }
+    if(name === 'activities'){ loadActivities(); }
   }
 
   function setStatus(text, color) { var el = document.getElementById("status"); if (el) { el.textContent = text; el.style.color = color || "black"; } }
@@ -1288,10 +1488,10 @@ body{
       if (mapsLink) html += '<div><a class="map-link" href="' + mapsLink + '" target="_blank" rel="noopener noreferrer">📍 Åpne i Google Maps</a></div>';
       html += '<div class="biz-actions"><button class="alt small" type="button" onclick="toggleFavoriteBusiness(\'' + b.id + '\')">' + (isFav ? '❤️ Favoritt lagret' : '🤍 Lagre favoritt') + '</button></div>';
       html += '</div></div>';
-      if (b.image_url) html += '<div class="biz-main"><img src="' + b.image_url + '" alt="Bedriftsbilde"></div>';
+      if (b.image_url) html += '<div class="biz-main"><img class="clickable-image" src="' + b.image_url + '" alt="Bedriftsbilde" onclick="openImageModal(this.src)"></div>';
       if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
         html += '<div class="gallery">';
-        for (var g=0; g<b.gallery_urls.length; g++) html += '<div><img src="' + b.gallery_urls[g] + '" alt="Galleri"></div>';
+        for (var g=0; g<b.gallery_urls.length; g++) html += '<div><img class="clickable-image" src="' + b.gallery_urls[g] + '" alt="Galleri" onclick="openImageModal(this.src)"></div>';
         html += '</div>';
       }
       html += '</div>';
@@ -1336,7 +1536,7 @@ body{
       html += '<section class="zoo-section">';
       html += '<div class="zoo-top">';
       html += '<div class="zoo-head">';
-      if (b.logo_url) html += '<img class="zoo-logo" src="' + b.logo_url + '" alt="Logo">';
+      if (b.logo_url) html += '<img class="zoo-logo clickable-image" src="' + b.logo_url + '" alt="Logo" onclick="openImageModal(this.src)">';
       html += '<div><h3 class="zoo-title">' + escapeHtml(b.name || "") + '</h3>';
       html += '<div class="zoo-place">' + escapeHtml(b.place || "") + '</div></div>';
       html += '</div>';
@@ -1353,7 +1553,7 @@ body{
 
       html += '<div class="zoo-grid">';
       html += '<article class="zoo-card">';
-      if (b.image_url) html += '<img src="' + b.image_url + '" alt="Butikkbilde">';
+      if (b.image_url) html += '<img class="clickable-image" src="' + b.image_url + '" alt="Butikkbilde" onclick="openImageModal(this.src)">';
       html += '<div class="zoo-card-content">';
       html += '<div class="zoo-muted">' + escapeHtml(b.place || "") + '</div>';
       html += '<h4 class="zoo-card-title">' + escapeHtml(b.activity || b.name || "") + '</h4>';
@@ -1364,7 +1564,7 @@ body{
       if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
         for (var g = 0; g < b.gallery_urls.length; g++) {
           html += '<article class="zoo-card">';
-          html += '<img src="' + b.gallery_urls[g] + '" alt="Galleri">';
+          html += '<img class="clickable-image" src="' + b.gallery_urls[g] + '" alt="Galleri" onclick="openImageModal(this.src)">';
           html += '<div class="zoo-card-content">';
           html += '<div class="zoo-muted">' + escapeHtml(b.place || "") + '</div>';
           html += '<h4 class="zoo-card-title">' + escapeHtml(b.name || "") + '</h4>';
@@ -1541,7 +1741,7 @@ body{
       html += '<div class="post"><div class="post-content"><h3>' + escapeHtml(post.title || "") + '</h3><div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + ' · ' + escapeHtml(post.category || "") + '</div><p>' + escapeHtml(post.text || "") + '</p></div>';
       if (gallery.length) {
         html += '<div class="gallery" style="padding:0 18px 18px 18px;">';
-        for (var g=0; g<gallery.length; g++) html += '<div><img src="' + gallery[g] + '" alt="Hundebilde"></div>';
+        for (var g=0; g<gallery.length; g++) html += '<div><img class="clickable-image" src="' + gallery[g] + '" alt="Hundebilde" onclick="openImageModal(this.src)"></div>';
         html += '</div>';
       }
       html += '<div class="post-content"><div class="likebar"><button class="likebtn" type="button" onclick="likePost(\'' + postId + '\')">❤️ Lik (' + likeCount + ')</button><span class="mini">' + postComments.length + ' kommentar(er)</span></div><div class="comments"><div class="comments-title">💬 Kommentarer</div>';
@@ -1577,7 +1777,7 @@ body{
         phtml += '<div class="post"><div class="post-content"><h3>' + escapeHtml(post.title || "") + '</h3><div class="meta">' + escapeHtml(post.dog || "") + ' · ' + escapeHtml(post.place || "") + '</div><p>' + escapeHtml(post.text || "") + '</p></div>';
         if (gallery.length) {
           phtml += '<div class="gallery" style="padding:0 18px 18px 18px;">';
-          for (var g=0; g<gallery.length; g++) phtml += '<div><img src="' + gallery[g] + '" alt="Hundebilde"></div>';
+          for (var g=0; g<gallery.length; g++) phtml += '<div><img class="clickable-image" src="' + gallery[g] + '" alt="Hundebilde" onclick="openImageModal(this.src)"></div>';
           phtml += '</div>';
         }
         phtml += '</div>';
@@ -1597,7 +1797,7 @@ body{
         bhtml += '<div class="biz-card"><div class="biz-top">';
         if (b.logo_url) bhtml += '<img class="biz-logo" src="' + b.logo_url + '" alt="Logo">';
         bhtml += '<div class="biz-info"><h3>' + escapeHtml(b.name || "") + ' ' + (b.approved ? '<span class="badge approved">Godkjent</span>' : '<span class="badge pending">Venter</span>') + '</h3><div class="meta">' + escapeHtml(b.type || "") + ' · ' + escapeHtml(b.place || "") + '</div><p>' + escapeHtml(b.description || "") + '</p><div class="biz-actions"><button class="alt small" type="button" onclick="openBusinessForEdit(\'' + b.id + '\')">Rediger bedrift</button></div></div></div>';
-        if (b.image_url) bhtml += '<div class="biz-main"><img src="' + b.image_url + '" alt="Bedriftsbilde"></div>';
+        if (b.image_url) bhtml += '<div class="biz-main"><img class="clickable-image" src="' + b.image_url + '" alt="Bedriftsbilde" onclick="openImageModal(this.src)"></div>';
         if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
           bhtml += '<div class="gallery">';
           for (var k=0; k<b.gallery_urls.length; k++) bhtml += '<div><img src="' + b.gallery_urls[k] + '" alt="Galleri"></div>';
@@ -1631,11 +1831,12 @@ body{
     document.getElementById("clubWebsite").value = "";
     setClubStatus("Klubb lagret.", "green");
     loadDogClubs();
+  loadActivities();
   }
 
   function renderClubCard(item) {
     var html = '<div class="club-post">';
-    if (item.image_url) html += '<img src="' + item.image_url + '" alt="Klubb">';
+    if (item.image_url) html += '<img class="clickable-image" src="' + item.image_url + '" alt="Klubb" onclick="openImageModal(this.src)">';
     html += '<div class="club-post-content"><div class="meta">' + escapeHtml(item.place || item.location || '') + (item.activity ? ' · ' + escapeHtml(item.activity) : '') + '</div><h4>' + escapeHtml(item.title || item.name || 'Uten tittel') + '</h4>';
     if (item.description) html += '<p>' + escapeHtml(item.description) + '</p>';
     if (item.website) html += '<div style="margin-top:12px;"><a class="site-link" href="' + normalizeUrl(item.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';
@@ -1704,7 +1905,7 @@ body{
     names.forEach(function(name){
       var g = grouped[name];
       out += '<section class="club-section"><div class="club-top"><div>';
-      if (g.clubInfo && g.clubInfo.logo_url) out += '<div style="margin-bottom:10px;"><img src="' + g.clubInfo.logo_url + '" alt="Logo" style="max-width:80px;max-height:80px;border-radius:16px;display:block;"></div>';
+      if (g.clubInfo && g.clubInfo.logo_url) out += '<div style="margin-bottom:10px;"><img class="clickable-image" src="' + g.clubInfo.logo_url + '" alt="Logo" style="max-width:80px;max-height:80px;border-radius:16px;display:block;" onclick="openImageModal(this.src)"></div>';
       out += '<h3 style="margin:0 0 8px 0;font-size:32px;color:#1d4ed8;">' + escapeHtml(name) + '</h3>';
       if (g.clubInfo && g.clubInfo.location) out += '<div class="mini">' + escapeHtml(g.clubInfo.location) + '</div>';
       out += '</div><div class="club-count">' + String(g.items.length || 0) + ' aktivitet(er)</div></div>';
@@ -1739,6 +1940,111 @@ body{
     });
     target.innerHTML = html;
   }
+
+
+  function openImageModal(src) {
+    var modal = document.getElementById("imageModal");
+    var img = document.getElementById("imageModalImg");
+    if (!modal || !img || !src) return;
+    img.src = src;
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeImageModal(event) {
+    if (event) event.stopPropagation();
+    var modal = document.getElementById("imageModal");
+    var img = document.getElementById("imageModalImg");
+    if (!modal || !img) return;
+    modal.classList.remove("open");
+    img.src = "";
+    document.body.style.overflow = "";
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape") closeImageModal();
+  });
+
+  async function loadActivities() {
+    var target = document.getElementById("activitiesList");
+    if (!target) return;
+    target.innerHTML = "Laster aktiviteter ...";
+
+    var searchValue = (document.getElementById("activitySearch")?.value || "").toLowerCase().trim();
+    var typeFilter = document.getElementById("activityTypeFilter")?.value || "all";
+    var sortMode = document.getElementById("activitySort")?.value || "name";
+
+    var bizRes = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
+    var rows = bizRes.data || [];
+
+    var activities = [];
+
+    rows.forEach(function(b){
+      if (b.approved !== true) return;
+      if (b.type === "Hundeklubb" && (b.activity || b.description || b.image_url)) {
+        activities.push({
+          sourceType: "club",
+          sourceName: b.name || "Hundeklubb",
+          title: b.activity || b.name || "Aktivitet",
+          place: b.place || "",
+          text: b.description || "",
+          image_url: b.image_url || "",
+          website: b.website || ""
+        });
+      }
+      if (b.type === "Zoo butikk" && (b.activity || b.description || b.image_url)) {
+        activities.push({
+          sourceType: "shop",
+          sourceName: b.name || "Zoo butikk",
+          title: b.activity || b.name || "Butikkaktivitet",
+          place: b.place || "",
+          text: b.description || "",
+          image_url: b.image_url || "",
+          website: b.website || ""
+        });
+      }
+    });
+
+    if (typeFilter !== "all") {
+      activities = activities.filter(function(a){ return a.sourceType === typeFilter; });
+    }
+
+    if (searchValue) {
+      activities = activities.filter(function(a){
+        var text = [a.sourceName, a.title, a.place, a.text].join(" ").toLowerCase();
+        return text.includes(searchValue);
+      });
+    }
+
+    activities.sort(function(a,b){
+      if (sortMode === "type") return a.sourceType.localeCompare(b.sourceType, "no");
+      if (sortMode === "place") return (a.place || "").localeCompare(b.place || "", "no");
+      return (a.title || "").localeCompare(b.title || "", "no");
+    });
+
+    if (!activities.length) {
+      target.innerHTML = '<div class="empty-box">Ingen aktiviteter funnet ennå.</div>';
+      return;
+    }
+
+    var html = "";
+    for (var i = 0; i < activities.length; i++) {
+      var a = activities[i];
+      html += '<article class="activity-card">';
+      if (a.image_url) html += '<img class="clickable-image" src="' + a.image_url + '" alt="Aktivitet" onclick="openImageModal(this.src)">';
+      html += '<div class="activity-card-content">';
+      html += '<div class="activity-source ' + (a.sourceType === "club" ? 'club' : 'shop') + '">' + (a.sourceType === "club" ? 'Hundeklubb' : 'Zoo butikk') + '</div>';
+      html += '<h3 class="activity-title">' + escapeHtml(a.title || "") + '</h3>';
+      html += '<div class="activity-meta">' + escapeHtml(a.sourceName || "") + ' · ' + escapeHtml(a.place || "") + '</div>';
+      if (a.text) html += '<p class="activity-text">' + escapeHtml(a.text) + '</p>';
+      html += '<div class="activity-actions">';
+      if (a.website) html += '<a class="site-link" href="' + normalizeUrl(a.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
+      html += '</div></div></article>';
+    }
+
+    target.innerHTML = html;
+  }
+
 
   function shareApp() {
     var url = "https://dagfinn53e-alt.github.io/hundene-vare/";
