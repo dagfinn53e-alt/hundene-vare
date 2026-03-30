@@ -344,50 +344,6 @@
       }
     }
 
-  
-    @media (min-width: 980px){
-      #dogClubsList{
-        display:grid;
-        grid-template-columns:repeat(2,minmax(0,1fr));
-        gap:18px;
-        align-items:start;
-      }
-      #dogClubsList .post{
-        border-radius:22px;
-        padding:18px;
-        box-shadow:0 12px 28px rgba(37,99,235,0.10);
-        background:#fff;
-      }
-      #dogClubsList .post img{
-        width:100%;
-        max-width:none !important;
-        max-height:760px;
-        object-fit:contain;
-        border-radius:16px;
-        margin:0 auto 14px auto !important;
-        display:block;
-        background:#f8fbff;
-      }
-      #dogClubsList .post h3{
-        font-size:28px;
-        margin-top:8px;
-      }
-      #dogClubsList .meta{
-        font-size:16px;
-      }
-      #dogClubsList .mini{
-        font-size:15px;
-        margin-bottom:8px;
-      }
-    }
-
-    @media (max-width: 979px){
-      #dogClubsList .post img{
-        width:100%;
-        max-width:500px;
-      }
-    }
-
   </style>
 </head>
 <body>
@@ -642,7 +598,7 @@
     </div>
 
     <div class="card">
-      <h3 style="margin-top:0;">Registrerte hundeklubber</h3><div class="sub" style="margin-bottom:12px;">Plakater og aktiviteter vises ryddig under hver oppføring.</div>
+      <h3 style="margin-top:0;">Registrerte hundeklubber</h3>
       <div class="sub" style="margin-bottom:12px;">Her vises klubbene som er lagret i appen.</div>
       <div id="dogClubsList">
         <div class="profilebox"><div>Ingen hundeklubber lagt inn enda.</div></div>
