@@ -619,6 +619,145 @@ body{
   }
 }
 
+
+/* ZOO BUTIKK PRO DESIGN */
+.zoo-section{
+  margin-top:18px;
+  padding:16px;
+  border-radius:24px;
+  background:linear-gradient(180deg,#ffffff 0%,#f7fcf7 100%);
+  border:1px solid #d9f3df;
+  box-shadow:0 14px 30px rgba(22,101,52,.08);
+}
+.zoo-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  padding-bottom:10px;
+  margin-bottom:10px;
+  border-bottom:1px solid #e3f4e7;
+}
+.zoo-head{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+.zoo-logo{
+  width:56px;
+  height:56px;
+  object-fit:cover;
+  border-radius:18px;
+  border:3px solid #fff;
+  box-shadow:0 8px 18px rgba(22,101,52,.14);
+  background:#fff;
+}
+.zoo-title{
+  margin:0;
+  font-size:22px;
+  line-height:1.15;
+  color:#166534;
+  letter-spacing:-0.02em;
+}
+.zoo-place{
+  color:#64748b;
+  font-size:14px;
+  margin-top:3px;
+}
+.zoo-badge{
+  display:inline-block;
+  padding:8px 12px;
+  border-radius:999px;
+  background:linear-gradient(180deg,#16a34a,#22c55e);
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+  box-shadow:0 8px 18px rgba(22,101,52,.16);
+}
+.zoo-desc{
+  color:#475569;
+  line-height:1.65;
+  margin-bottom:12px;
+}
+.zoo-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:14px;
+  margin-top:12px;
+}
+.zoo-card{
+  background:#fff;
+  border:1px solid #e2f2e6;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 10px 22px rgba(15,23,42,.06);
+}
+.zoo-card img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  display:block;
+}
+.zoo-card-content{
+  padding:14px;
+}
+.zoo-card-title{
+  margin:0 0 8px 0;
+  font-size:20px;
+  line-height:1.2;
+  color:#0f172a;
+}
+.zoo-muted{
+  color:#64748b;
+  font-size:13px;
+  margin-bottom:10px;
+  padding-bottom:8px;
+  border-bottom:1px dashed #d9eadf;
+}
+.zoo-text{
+  color:#475569;
+  line-height:1.6;
+  font-size:14px;
+  margin:0 0 10px 0;
+}
+.zoo-link{
+  display:inline-block;
+  text-decoration:none;
+  background:linear-gradient(180deg,#16a34a,#22c55e);
+  color:#fff;
+  padding:9px 14px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:700;
+  box-shadow:0 8px 18px rgba(22,101,52,.16);
+}
+@media (max-width:760px){
+  .zoo-section{
+    padding:14px;
+    border-radius:20px;
+  }
+  .zoo-logo{
+    width:48px;
+    height:48px;
+    border-radius:16px;
+  }
+  .zoo-title{
+    font-size:18px;
+  }
+  .zoo-grid{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+  .zoo-card img{
+    height:200px;
+  }
+  .zoo-card-title{
+    font-size:17px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -732,7 +871,19 @@ body{
   </div>
 
   <div id="page-groomers" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>✂️ Frisører</h2><div class="search-grid"><input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()"><select id="filterFavoritesGroomers" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchGroomers" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="groomerList"></div></div></div>
-  <div id="page-shops" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>🐾 Zoo butikker</h2><div class="search-grid"><input id="searchShops" placeholder="Søk butikk eller sted" oninput="loadBusinesses()"><select id="filterFavoritesShops" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchShops" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="shopList"></div></div></div>
+  <div id="page-shops" class="hidden">
+    <div class="card">
+      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <h2>🐾 Zoo butikker</h2>
+      <div class="sub">Her kan zoo butikker vise frem butikken sin, legge inn tilbud, nyheter og aktiviteter – uten å forstyrre resten av appen.</div>
+      <div class="search-grid">
+        <input id="searchShops" placeholder="Søk butikk eller sted" oninput="loadBusinesses()">
+        <select id="filterFavoritesShops" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select>
+        <input id="mapSearchShops" placeholder="Sted for kart-link" oninput="loadBusinesses()">
+      </div>
+      <div id="shopList"></div>
+    </div>
+  </div>
   <div id="page-vets" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>🏥 Veterinærer</h2><div class="search-grid"><input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()"><select id="filterFavoritesVets" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchVets" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="vetList"></div></div></div>
 
   <div id="page-business" class="hidden">
@@ -1076,11 +1227,93 @@ body{
     target.innerHTML = html;
   }
 
+
+  async function renderZooShopsPro(rows, searchValue, favMode, mapSearch) {
+    var target = document.getElementById("shopList");
+    if (!target) return;
+
+    var favs = getFavoriteBusinesses();
+    var shops = rows.filter(function(b){ return b.type === "Zoo butikk" && b.approved === true; });
+
+    if (searchValue) {
+      var s = searchValue.toLowerCase();
+      shops = shops.filter(function(b){
+        return (b.name || "").toLowerCase().includes(s) ||
+               (b.place || "").toLowerCase().includes(s) ||
+               (b.description || "").toLowerCase().includes(s) ||
+               (b.activity || "").toLowerCase().includes(s);
+      });
+    }
+
+    if (favMode === "fav") {
+      shops = shops.filter(function(b){ return favs.indexOf(b.id) >= 0; });
+    }
+
+    if (!shops.length) {
+      target.innerHTML = '<div class="empty-box">Ingen godkjente zoo butikker funnet.</div>';
+      return;
+    }
+
+    var html = "";
+    for (var i = 0; i < shops.length; i++) {
+      var b = shops[i];
+      var isFav = favs.indexOf(b.id) >= 0;
+      var mapsLink = buildGoogleMapsLink(b.place, mapSearch || b.place);
+      var countText = b.activity ? "1 aktivitet" : "Butikkside";
+
+      html += '<section class="zoo-section">';
+      html += '<div class="zoo-top">';
+      html += '<div class="zoo-head">';
+      if (b.logo_url) html += '<img class="zoo-logo" src="' + b.logo_url + '" alt="Logo">';
+      html += '<div><h3 class="zoo-title">' + escapeHtml(b.name || "") + '</h3>';
+      html += '<div class="zoo-place">' + escapeHtml(b.place || "") + '</div></div>';
+      html += '</div>';
+      html += '<div class="zoo-badge">' + countText + '</div>';
+      html += '</div>';
+
+      if (b.description) html += '<div class="zoo-desc">' + escapeHtml(b.description) + '</div>';
+
+      html += '<div class="btnrow" style="margin-bottom:12px;">';
+      if (b.website) html += '<a class="zoo-link" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne butikk</a>';
+      if (mapsLink) html += '<a class="site-link" href="' + mapsLink + '" target="_blank" rel="noopener noreferrer">📍 Kart</a>';
+      html += '<button class="alt small" type="button" onclick="toggleFavoriteBusiness(\'' + b.id + '\')">' + (isFav ? '❤️ Favoritt lagret' : '🤍 Lagre favoritt') + '</button>';
+      html += '</div>';
+
+      html += '<div class="zoo-grid">';
+      html += '<article class="zoo-card">';
+      if (b.image_url) html += '<img src="' + b.image_url + '" alt="Butikkbilde">';
+      html += '<div class="zoo-card-content">';
+      html += '<div class="zoo-muted">' + escapeHtml(b.place || "") + '</div>';
+      html += '<h4 class="zoo-card-title">' + escapeHtml(b.activity || b.name || "") + '</h4>';
+      html += '<p class="zoo-text">' + escapeHtml(b.description || "") + '</p>';
+      if (b.website) html += '<a class="zoo-link" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
+      html += '</div></article>';
+
+      if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
+        for (var g = 0; g < b.gallery_urls.length; g++) {
+          html += '<article class="zoo-card">';
+          html += '<img src="' + b.gallery_urls[g] + '" alt="Galleri">';
+          html += '<div class="zoo-card-content">';
+          html += '<div class="zoo-muted">' + escapeHtml(b.place || "") + '</div>';
+          html += '<h4 class="zoo-card-title">' + escapeHtml(b.name || "") + '</h4>';
+          html += '<p class="zoo-text">' + escapeHtml(b.description || "") + '</p>';
+          if (b.website) html += '<a class="zoo-link" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
+          html += '</div></article>';
+        }
+      }
+
+      html += '</div>';
+      html += '</section>';
+    }
+
+    target.innerHTML = html;
+  }
+
   async function loadBusinesses() {
     var result = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
     var rows = result.data || [];
     await renderBizList("Frisør","groomerList",rows,document.getElementById("searchGroomers")?.value || "",document.getElementById("filterFavoritesGroomers")?.value || "all",document.getElementById("mapSearchGroomers")?.value || "");
-    await renderBizList("Zoo butikk","shopList",rows,document.getElementById("searchShops")?.value || "",document.getElementById("filterFavoritesShops")?.value || "all",document.getElementById("mapSearchShops")?.value || "");
+    await renderZooShopsPro(rows,document.getElementById("searchShops")?.value || "",document.getElementById("filterFavoritesShops")?.value || "all",document.getElementById("mapSearchShops")?.value || "");
     await renderBizList("Veterinær","vetList",rows,document.getElementById("searchVets")?.value || "",document.getElementById("filterFavoritesVets")?.value || "all",document.getElementById("mapSearchVets")?.value || "");
   }
 
