@@ -1070,6 +1070,20 @@ body{
   }
 }
 
+
+/* DATO STEG 1 */
+.date-chip{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  color:#1d4ed8;
+  font-size:12px;
+  font-weight:700;
+  margin:0 0 10px 0;
+}
+
 </style>
 </head>
 <body>
@@ -2116,7 +2130,8 @@ body{
           place: b.place || "",
           text: b.description || "",
           image_url: b.image_url || "",
-          website: b.website || ""
+          website: b.website || "",
+          activity_date: b.activity_date || ""
         });
       }
       if (b.type === "Zoo butikk" && (b.activity || b.description || b.image_url)) {
@@ -2127,7 +2142,8 @@ body{
           place: b.place || "",
           text: b.description || "",
           image_url: b.image_url || "",
-          website: b.website || ""
+          website: b.website || "",
+          activity_date: b.activity_date || ""
         });
       }
     });
@@ -2176,6 +2192,7 @@ body{
       html += '<div class="activity-card-content">';
       html += '<div class="activity-source ' + (a.sourceType === "club" ? 'club' : 'shop') + '">' + (a.sourceType === "club" ? 'Hundeklubb' : 'Zoo butikk') + '</div>';
       html += '<h3 class="activity-title">' + escapeHtml(a.title || "") + '</h3>';
+      html += (a.activity_date ? '<div class="date-chip">📅 ' + escapeHtml(a.activity_date) + '</div>' : '');
       html += '<div class="activity-meta">' + escapeHtml(a.sourceName || "") + ' · ' + escapeHtml(a.place || "") + '</div>';
       if (a.text) html += '<p class="activity-text">' + escapeHtml(a.text) + '</p>';
       html += '<div class="activity-actions">';
