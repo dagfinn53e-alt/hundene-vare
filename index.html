@@ -992,6 +992,51 @@ body{
   }
 }
 
+
+/* FREMHEVET AKTIVITET */
+.featured-activity{
+  display:grid;
+  grid-template-columns:minmax(320px, 1.15fr) minmax(280px, 0.95fr);
+  gap:18px;
+  margin:18px 0 20px 0;
+  background:linear-gradient(135deg,#0f172a 0%,#1d4ed8 48%,#60a5fa 100%);
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 22px 48px rgba(15,23,42,.18);
+  color:#fff;
+}
+.featured-activity.hidden{display:none !important;}
+.featured-image-wrap{min-height:320px;background:rgba(255,255,255,.08);}
+.featured-image{
+  width:100%;height:100%;min-height:320px;object-fit:cover;display:block;cursor:zoom-in;
+}
+.featured-content{
+  padding:22px 22px 22px 8px;display:flex;flex-direction:column;justify-content:center;
+}
+.featured-badge{
+  display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+  padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.22);font-size:12px;font-weight:700;margin-bottom:12px;
+}
+.featured-title{font-size:34px;line-height:1.05;margin:0 0 10px 0;letter-spacing:-0.03em;}
+.featured-meta{font-size:15px;color:rgba(255,255,255,.92);margin-bottom:12px;}
+.featured-text{font-size:15px;line-height:1.7;color:rgba(255,255,255,.96);margin:0 0 16px 0;max-width:48ch;}
+.featured-actions{display:flex;gap:10px;flex-wrap:wrap;}
+.featured-btn{
+  display:inline-block;text-decoration:none;padding:10px 14px;border-radius:999px;
+  font-size:13px;font-weight:700;background:#fff;color:#1d4ed8;box-shadow:0 10px 24px rgba(0,0,0,.18);
+}
+.featured-btn.alt{
+  background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.22);box-shadow:none;
+}
+@media (max-width:900px){
+  .featured-activity{grid-template-columns:1fr;gap:0;border-radius:22px;}
+  .featured-image-wrap,.featured-image{min-height:220px;}
+  .featured-content{padding:16px;}
+  .featured-title{font-size:24px;}
+  .featured-meta,.featured-text{font-size:14px;}
+}
+
 </style>
 </head>
 <body>
@@ -1143,6 +1188,7 @@ body{
           </select>
         </div>
       </div>
+      <div id="featuredActivity" class="featured-activity hidden"></div>
       <div id="activitiesList" class="activity-list">Laster aktiviteter ...</div>
     </div>
   </div>
@@ -1965,6 +2011,54 @@ body{
     if (e.key === "Escape") closeImageModal();
   });
 
+
+  function pickFeaturedActivity(list) {
+    if (!Array.isArray(list) || !list.length) return null;
+    var priorityWords = ["valpekurs", "sommerutstilling", "utstilling", "agility", "kurs", "stevne", "dugnad"];
+    for (var p = 0; p < priorityWords.length; p++) {
+      for (var i = 0; i < list.length; i++) {
+        var hay = [list[i].title || "", list[i].text || "", list[i].sourceName || ""].join(" ").toLowerCase();
+        if (hay.includes(priorityWords[p])) return list[i];
+      }
+    }
+    return list[0];
+  }
+
+  function renderFeaturedActivity(activity) {
+    var box = document.getElementById("featuredActivity");
+    if (!box) return;
+    if (!activity) {
+      box.classList.add("hidden");
+      box.innerHTML = "";
+      return;
+    }
+
+    var sourceLabel = activity.sourceType === "club" ? "Hundeklubb" : "Zoo butikk";
+    var imageHtml = activity.image_url
+      ? '<div class="featured-image-wrap"><img class="featured-image" src="' + activity.image_url + '" alt="Fremhevet aktivitet" onclick="openImageModal(this.src)"></div>'
+      : '<div class="featured-image-wrap"></div>';
+
+    var secondButton = '';
+    if (activity.image_url) {
+      secondButton = '<a class="featured-btn alt" href="javascript:void(0)" onclick="openImageModal(this.dataset.src)" data-src="' + activity.image_url + '">Se bilde stort</a>';
+    }
+
+    box.innerHTML =
+      imageHtml +
+      '<div class="featured-content">' +
+      '<div class="featured-badge">⭐ Fremhevet aktivitet · ' + sourceLabel + '</div>' +
+      '<h3 class="featured-title">' + escapeHtml(activity.title || "") + '</h3>' +
+      '<div class="featured-meta">' + escapeHtml(activity.sourceName || "") + ' · ' + escapeHtml(activity.place || "") + '</div>' +
+      '<p class="featured-text">' + escapeHtml(activity.text || "") + '</p>' +
+      '<div class="featured-actions">' +
+      (activity.website ? '<a class="featured-btn" href="' + normalizeUrl(activity.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a>' : '') +
+      secondButton +
+      '</div></div>';
+
+    box.classList.remove("hidden");
+  }
+
+
   async function loadActivities() {
     var target = document.getElementById("activitiesList");
     if (!target) return;
@@ -2023,13 +2117,27 @@ body{
     });
 
     if (!activities.length) {
+      renderFeaturedActivity(null);
       target.innerHTML = '<div class="empty-box">Ingen aktiviteter funnet ennå.</div>';
       return;
     }
 
+    var featured = pickFeaturedActivity(activities);
+    renderFeaturedActivity(featured);
+
+    var listToShow = activities.filter(function(a){
+      if (!featured) return true;
+      return !(a.title === featured.title && a.sourceName === featured.sourceName && a.place === featured.place && a.image_url === featured.image_url);
+    });
+
+    if (!listToShow.length) {
+      target.innerHTML = '<div class="empty-box">Bare den fremhevede aktiviteten er tilgjengelig akkurat nå.</div>';
+      return;
+    }
+
     var html = "";
-    for (var i = 0; i < activities.length; i++) {
-      var a = activities[i];
+    for (var i = 0; i < listToShow.length; i++) {
+      var a = listToShow[i];
       html += '<article class="activity-card">';
       if (a.image_url) html += '<img class="clickable-image" src="' + a.image_url + '" alt="Aktivitet" onclick="openImageModal(this.src)">';
       html += '<div class="activity-card-content">';
