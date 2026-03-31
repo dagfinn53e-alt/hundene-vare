@@ -1070,20 +1070,6 @@ body{
   }
 }
 
-
-/* DATO STEG 1 */
-.date-chip{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:999px;
-  background:#eff6ff;
-  border:1px solid #bfdbfe;
-  color:#1d4ed8;
-  font-size:12px;
-  font-weight:700;
-  margin:0 0 10px 0;
-}
-
 </style>
 </head>
 <body>
@@ -1254,9 +1240,6 @@ body{
         <option>Veterinær</option>
       </select>
       <select id="bizActivity">
-</select>
-<input id="bizDate" type="date" style="margin-top:10px;">
-<select id="bizActivity">
         <option value="">Velg aktivitet</option>
         <option>Valpekurs</option>
         <option>Utstilling</option>
@@ -1515,7 +1498,6 @@ body{
     var bizPhone = document.getElementById("bizPhone").value.trim();
     var bizWebsite = document.getElementById("bizWebsite").value.trim();
     var bizText = document.getElementById("bizText").value.trim();
-    var bizDate = document.getElementById("bizDate") ? document.getElementById("bizDate").value : "";
     var logoFile = document.getElementById("bizLogo").files[0];
     var imageFile = document.getElementById("bizImage").files[0];
     var galleryFiles = Array.from(document.getElementById("bizGalleryFiles").files).slice(0,5);
@@ -1540,7 +1522,7 @@ body{
       var payload = {
         user_id: user.id, author_email: user.email, type: bizType, activity: bizActivity, name: bizName, place: bizPlace,
         phone: bizPhone, website: bizWebsite, description: bizText, logo_url: logoUrl, image_url: imageUrl,
-        gallery_urls: galleryUrls, activity_date: bizDate, approved: false
+        gallery_urls: galleryUrls, approved: false
       };
 
       if (editId) {
@@ -2134,8 +2116,7 @@ body{
           place: b.place || "",
           text: b.description || "",
           image_url: b.image_url || "",
-          website: b.website || "",
-          activity_date: b.activity_date || ""
+          website: b.website || ""
         });
       }
       if (b.type === "Zoo butikk" && (b.activity || b.description || b.image_url)) {
@@ -2146,8 +2127,7 @@ body{
           place: b.place || "",
           text: b.description || "",
           image_url: b.image_url || "",
-          website: b.website || "",
-          activity_date: b.activity_date || ""
+          website: b.website || ""
         });
       }
     });
@@ -2164,9 +2144,6 @@ body{
     }
 
     activities.sort(function(a,b){
-      if(a.activity_date && b.activity_date){
-        return a.activity_date.localeCompare(b.activity_date);
-      }
       if (sortMode === "type") return a.sourceType.localeCompare(b.sourceType, "no");
       if (sortMode === "place") return (a.place || "").localeCompare(b.place || "", "no");
       return (a.title || "").localeCompare(b.title || "", "no");
@@ -2199,7 +2176,6 @@ body{
       html += '<div class="activity-card-content">';
       html += '<div class="activity-source ' + (a.sourceType === "club" ? 'club' : 'shop') + '">' + (a.sourceType === "club" ? 'Hundeklubb' : 'Zoo butikk') + '</div>';
       html += '<h3 class="activity-title">' + escapeHtml(a.title || "") + '</h3>';
-      html += (a.activity_date ? '<div class="date-chip">📅 ' + escapeHtml(a.activity_date) + '</div>' : '');
       html += '<div class="activity-meta">' + escapeHtml(a.sourceName || "") + ' · ' + escapeHtml(a.place || "") + '</div>';
       if (a.text) html += '<p class="activity-text">' + escapeHtml(a.text) + '</p>';
       html += '<div class="activity-actions">';
