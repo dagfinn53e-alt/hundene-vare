@@ -1070,6 +1070,111 @@ body{
   }
 }
 
+
+/* VARSLING 1 / SISTE NYTT */
+.news-strip{
+  margin:0 0 16px 0;
+  padding:14px;
+  border-radius:22px;
+  background:linear-gradient(135deg,#fff7ed 0%,#ffffff 60%);
+  border:1px solid #fed7aa;
+  box-shadow:0 14px 28px rgba(154,52,18,.08);
+}
+.news-strip-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+}
+.news-strip-title{
+  margin:0;
+  font-size:22px;
+  color:#9a3412;
+}
+.news-strip-sub{
+  color:#7c2d12;
+  font-size:13px;
+}
+.news-list{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+.news-item{
+  background:#fff;
+  border:1px solid #fde0c1;
+  border-radius:18px;
+  padding:12px;
+  box-shadow:0 8px 18px rgba(15,23,42,.04);
+}
+.news-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+}
+.news-badge{
+  display:inline-block;
+  padding:6px 9px;
+  border-radius:999px;
+  background:#ef4444;
+  color:#fff;
+  font-size:11px;
+  font-weight:700;
+}
+.news-type{
+  display:inline-block;
+  padding:6px 9px;
+  border-radius:999px;
+  background:#fff7ed;
+  color:#9a3412;
+  border:1px solid #fed7aa;
+  font-size:11px;
+  font-weight:700;
+}
+.news-item-title{
+  margin:0 0 6px 0;
+  font-size:17px;
+  line-height:1.25;
+  color:#0f172a;
+}
+.news-item-meta{
+  color:#64748b;
+  font-size:12px;
+  margin-bottom:8px;
+}
+.news-item-text{
+  color:#475569;
+  font-size:13px;
+  line-height:1.55;
+  margin:0 0 10px 0;
+}
+.news-link{
+  display:inline-block;
+  text-decoration:none;
+  padding:8px 12px;
+  border-radius:999px;
+  background:#ea580c;
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+}
+@media (max-width:900px){
+  .news-list{
+    grid-template-columns:1fr;
+  }
+  .news-strip{
+    border-radius:18px;
+    padding:12px;
+  }
+  .news-strip-title{
+    font-size:19px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1221,6 +1326,7 @@ body{
           </select>
         </div>
       </div>
+      <div id="latestNews" class="news-strip hidden"></div>
       <div id="featuredActivity" class="featured-activity hidden"></div>
       <div id="activitiesList" class="activity-list">Laster aktiviteter ...</div>
     </div>
@@ -2045,6 +2151,42 @@ body{
   });
 
 
+
+  function renderLatestNews(items) {
+    var box = document.getElementById("latestNews");
+    if (!box) return;
+    if (!Array.isArray(items) || !items.length) {
+      box.classList.add("hidden");
+      box.innerHTML = "";
+      return;
+    }
+
+    var topItems = items.slice(0, 3);
+    var html = '<div class="news-strip-head">';
+    html += '<div><h3 class="news-strip-title">🔔 Siste nytt</h3><div class="news-strip-sub">Nyeste aktiviteter og oppdateringer i appen</div></div>';
+    html += '</div>';
+    html += '<div class="news-list">';
+
+    for (var i = 0; i < topItems.length; i++) {
+      var item = topItems[i];
+      var typeLabel = item.sourceType === "club" ? "Hundeklubb" : "Zoo butikk";
+      html += '<article class="news-item">';
+      html += '<div class="news-top"><span class="news-type">' + typeLabel + '</span><span class="news-badge">Ny</span></div>';
+      html += '<h4 class="news-item-title">' + escapeHtml(item.title || "") + '</h4>';
+      html += '<div class="news-item-meta">' + escapeHtml(item.sourceName || "") + ' · ' + escapeHtml(item.place || "") + '</div>';
+      html += '<p class="news-item-text">' + escapeHtml((item.text || "").slice(0, 120)) + '</p>';
+      if (item.website) {
+        html += '<a class="news-link" href="' + normalizeUrl(item.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
+      }
+      html += '</article>';
+    }
+
+    html += '</div>';
+    box.innerHTML = html;
+    box.classList.remove("hidden");
+  }
+
+
   function pickFeaturedActivity(list) {
     if (!Array.isArray(list) || !list.length) return null;
     var priorityWords = ["valpekurs", "sommerutstilling", "utstilling", "agility", "kurs", "stevne", "dugnad"];
@@ -2150,11 +2292,13 @@ body{
     });
 
     if (!activities.length) {
+      renderLatestNews(null);
       renderFeaturedActivity(null);
       target.innerHTML = '<div class="empty-box">Ingen aktiviteter funnet ennå.</div>';
       return;
     }
 
+    renderLatestNews(activities);
     var featured = pickFeaturedActivity(activities);
     renderFeaturedActivity(featured);
 
