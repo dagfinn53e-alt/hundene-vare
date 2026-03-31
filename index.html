@@ -2188,8 +2188,9 @@ body{
       html += '<h4 class="news-item-title">' + escapeHtml(item.title || "") + '</h4>';
       html += '<div class="news-item-meta">' + escapeHtml(item.sourceName || "") + ' · ' + escapeHtml(item.place || "") + '</div>';
       html += '<p class="news-item-text">' + escapeHtml((item.text || "").slice(0, 120)) + '</p>';
-      if (item.website) {
-        html += '<a class="news-link" href="' + normalizeUrl(item.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
+      var url = item.website || item.sourceWebsite || '';
+      if (url) {
+        html += '<a class="news-link" href="' + normalizeUrl(url) + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
       }
       html += '</article>';
     }
