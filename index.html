@@ -1084,6 +1084,29 @@ body{
   margin:0 0 10px 0;
 }
 
+
+/* FREMHEVET MANUELT */
+.featured-toggle{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 14px;
+  border:1px solid #cfe1ff;
+  border-radius:16px;
+  background:#f8fbff;
+  margin:8px 0 12px 0;
+}
+.featured-toggle input{
+  width:auto;
+  margin:0;
+  transform:scale(1.15);
+}
+.featured-toggle label{
+  margin:0;
+  font-weight:700;
+  color:#1d4ed8;
+}
+
 </style>
 </head>
 <body>
@@ -1262,6 +1285,7 @@ body{
       </select>
       <label>Dato for aktivitet</label>
       <input id="bizDate" type="date">
+      <div class="featured-toggle"><input id="bizFeatured" type="checkbox"><label for="bizFeatured">Sett denne som fremhevet aktivitet</label></div>
       <input id="bizName" placeholder="Navn på bedrift">
       <input id="bizPlace" placeholder="Sted">
       <input id="bizPhone" placeholder="Telefon">
@@ -1481,6 +1505,7 @@ body{
     document.getElementById("bizImage").value = "";
     document.getElementById("bizGalleryFiles").value = "";
     if (document.getElementById("bizDate")) document.getElementById("bizDate").value = "";
+    if (document.getElementById("bizFeatured")) document.getElementById("bizFeatured").checked = false;
     setBizStatus("Skjema tømt.", "black");
   }
 
@@ -1500,6 +1525,7 @@ body{
     document.getElementById("bizImage").value = "";
     document.getElementById("bizGalleryFiles").value = "";
     if (document.getElementById("bizDate")) document.getElementById("bizDate").value = b.activity_date || "";
+    if (document.getElementById("bizFeatured")) document.getElementById("bizFeatured").checked = !!b.featured;
     setBizStatus("Bedrift lastet inn for redigering.", "green");
   }
 
@@ -1517,6 +1543,7 @@ body{
     var bizWebsite = document.getElementById("bizWebsite").value.trim();
     var bizText = document.getElementById("bizText").value.trim();
     var bizDate = document.getElementById("bizDate") ? document.getElementById("bizDate").value : "";
+    var bizFeatured = document.getElementById("bizFeatured") ? document.getElementById("bizFeatured").checked : false;
     var logoFile = document.getElementById("bizLogo").files[0];
     var imageFile = document.getElementById("bizImage").files[0];
     var galleryFiles = Array.from(document.getElementById("bizGalleryFiles").files).slice(0,5);
@@ -2066,11 +2093,16 @@ body{
 
   function pickFeaturedActivity(list) {
     if (!Array.isArray(list) || !list.length) return null;
+
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].featured) return list[i];
+    }
+
     var priorityWords = ["valpekurs", "sommerutstilling", "utstilling", "agility", "kurs", "stevne", "dugnad"];
     for (var p = 0; p < priorityWords.length; p++) {
-      for (var i = 0; i < list.length; i++) {
-        var hay = [list[i].title || "", list[i].text || "", list[i].sourceName || ""].join(" ").toLowerCase();
-        if (hay.includes(priorityWords[p])) return list[i];
+      for (var j = 0; j < list.length; j++) {
+        var hay = [list[j].title || "", list[j].text || "", list[j].sourceName || ""].join(" ").toLowerCase();
+        if (hay.includes(priorityWords[p])) return list[j];
       }
     }
     return list[0];
@@ -2136,7 +2168,8 @@ body{
           text: b.description || "",
           image_url: b.image_url || "",
           website: b.website || "",
-          activity_date: b.activity_date || ""
+          activity_date: b.activity_date || "",
+          featured: !!b.featured
         });
       }
       if (b.type === "Zoo butikk" && (b.activity || b.description || b.image_url)) {
@@ -2148,7 +2181,8 @@ body{
           text: b.description || "",
           image_url: b.image_url || "",
           website: b.website || "",
-          activity_date: b.activity_date || ""
+          activity_date: b.activity_date || "",
+          featured: !!b.featured
         });
       }
     });
