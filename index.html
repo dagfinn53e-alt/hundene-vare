@@ -4,20 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hundene våre</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-// MAKE NEWS ITEMS CLICKABLE (BEST: image + link)
-document.addEventListener("click", function(e){
-  var card = e.target.closest(".news-item");
-  if(!card) return;
-
-  var linkBtn = card.querySelector(".news-link");
-
-  if(linkBtn && linkBtn.href){
-    window.open(linkBtn.href, "_blank");
-  }
-});
-
-</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root{
       --blue:#2563eb; --blue-dark:#1d4ed8; --card:#fff; --line:#dbeafe;
@@ -1115,7 +1102,7 @@ body{
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:12px;
 }
-.news-item{cursor:pointer;
+.news-item{
   background:#fff;
   border:1px solid #fde0c1;
   border-radius:18px;
@@ -1339,7 +1326,6 @@ body{
           </select>
         </div>
       </div>
-      <div id="latestNews" class="news-strip hidden"></div>
       <div id="featuredActivity" class="featured-activity hidden"></div>
       <div id="activitiesList" class="activity-list">Laster aktiviteter ...</div>
     </div>
@@ -1359,6 +1345,10 @@ body{
         <option>Veterinær</option>
       </select>
       <select id="bizActivity">
+  <option value="">Velg aktivitet</option>
+</select>
+<input id="bizDate" type="date" placeholder="Dato for aktivitet">
+<select id="bizActivity">
         <option value="">Velg aktivitet</option>
         <option>Valpekurs</option>
         <option>Utstilling</option>
@@ -1617,6 +1607,7 @@ body{
     var bizPhone = document.getElementById("bizPhone").value.trim();
     var bizWebsite = document.getElementById("bizWebsite").value.trim();
     var bizText = document.getElementById("bizText").value.trim();
+    var bizDate = document.getElementById("bizDate")?.value || '';
     var logoFile = document.getElementById("bizLogo").files[0];
     var imageFile = document.getElementById("bizImage").files[0];
     var galleryFiles = Array.from(document.getElementById("bizGalleryFiles").files).slice(0,5);
@@ -1641,7 +1632,7 @@ body{
       var payload = {
         user_id: user.id, author_email: user.email, type: bizType, activity: bizActivity, name: bizName, place: bizPlace,
         phone: bizPhone, website: bizWebsite, description: bizText, logo_url: logoUrl, image_url: imageUrl,
-        gallery_urls: galleryUrls, approved: false
+        gallery_urls: galleryUrls, activity_date: bizDate, approved: false
       };
 
       if (editId) {
@@ -2165,16 +2156,7 @@ body{
 
 
 
-  function renderLatestNews(items) {
-    var box = document.getElementById("latestNews");
-    if (!box) return;
-    if (!Array.isArray(items) || !items.length) {
-      box.classList.add("hidden");
-      box.innerHTML = "";
-      return;
-    }
-
-    var topItems = items.slice(0, 3);
+      var topItems = items.slice(0, 3);
     var html = '<div class="news-strip-head">';
     html += '<div><h3 class="news-strip-title">🔔 Siste nytt</h3><div class="news-strip-sub">Nyeste aktiviteter og oppdateringer i appen</div></div>';
     html += '</div>';
@@ -2188,9 +2170,8 @@ body{
       html += '<h4 class="news-item-title">' + escapeHtml(item.title || "") + '</h4>';
       html += '<div class="news-item-meta">' + escapeHtml(item.sourceName || "") + ' · ' + escapeHtml(item.place || "") + '</div>';
       html += '<p class="news-item-text">' + escapeHtml((item.text || "").slice(0, 120)) + '</p>';
-      var url = item.website || item.sourceWebsite || '';
-      if (url) {
-        html += '<a class="news-link" href="' + normalizeUrl(url) + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
+      if (item.website) {
+        html += '<a class="news-link" href="' + normalizeUrl(item.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
       }
       html += '</article>';
     }
@@ -2300,19 +2281,23 @@ body{
     }
 
     activities.sort(function(a,b){
+      var da = a.activity_date || "";
+      var db = b.activity_date || "";
+      if (da && db) return da.localeCompare(db);
+
       if (sortMode === "type") return a.sourceType.localeCompare(b.sourceType, "no");
       if (sortMode === "place") return (a.place || "").localeCompare(b.place || "", "no");
       return (a.title || "").localeCompare(b.title || "", "no");
     });
 
     if (!activities.length) {
-      renderLatestNews(null);
+      
       renderFeaturedActivity(null);
       target.innerHTML = '<div class="empty-box">Ingen aktiviteter funnet ennå.</div>';
       return;
     }
 
-    renderLatestNews(activities);
+    
     var featured = pickFeaturedActivity(activities);
     renderFeaturedActivity(featured);
 
@@ -2334,7 +2319,9 @@ body{
       html += '<div class="activity-card-content">';
       html += '<div class="activity-source ' + (a.sourceType === "club" ? 'club' : 'shop') + '">' + (a.sourceType === "club" ? 'Hundeklubb' : 'Zoo butikk') + '</div>';
       html += '<h3 class="activity-title">' + escapeHtml(a.title || "") + '</h3>';
-      html += '<div class="activity-meta">' + escapeHtml(a.sourceName || "") + ' · ' + escapeHtml(a.place || "") + '</div>';
+      html += '<div class="activity-meta">' + 
+      (a.activity_date ? '📅 ' + escapeHtml(a.activity_date) + ' · ' : '') +
+      escapeHtml(a.sourceName || "") + ' · ' + escapeHtml(a.place || "") + '</div>';
       if (a.text) html += '<p class="activity-text">' + escapeHtml(a.text) + '</p>';
       html += '<div class="activity-actions">';
       if (a.website) html += '<a class="site-link" href="' + normalizeUrl(a.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
@@ -2362,19 +2349,6 @@ body{
   loadProfile();
   loadBusinesses();
   loadDogClubs();
-
-// MAKE NEWS ITEMS CLICKABLE (BEST: image + link)
-document.addEventListener("click", function(e){
-  var card = e.target.closest(".news-item");
-  if(!card) return;
-
-  var linkBtn = card.querySelector(".news-link");
-
-  if(linkBtn && linkBtn.href){
-    window.open(linkBtn.href, "_blank");
-  }
-});
-
 </script>
 </body>
 </html>
