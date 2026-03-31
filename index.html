@@ -1070,111 +1070,6 @@ body{
   }
 }
 
-
-/* VARSLING 1 / SISTE NYTT */
-.news-strip{
-  margin:0 0 16px 0;
-  padding:14px;
-  border-radius:22px;
-  background:linear-gradient(135deg,#fff7ed 0%,#ffffff 60%);
-  border:1px solid #fed7aa;
-  box-shadow:0 14px 28px rgba(154,52,18,.08);
-}
-.news-strip-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-bottom:10px;
-}
-.news-strip-title{
-  margin:0;
-  font-size:22px;
-  color:#9a3412;
-}
-.news-strip-sub{
-  color:#7c2d12;
-  font-size:13px;
-}
-.news-list{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:12px;
-}
-.news-item{
-  background:#fff;
-  border:1px solid #fde0c1;
-  border-radius:18px;
-  padding:12px;
-  box-shadow:0 8px 18px rgba(15,23,42,.04);
-}
-.news-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:8px;
-}
-.news-badge{
-  display:inline-block;
-  padding:6px 9px;
-  border-radius:999px;
-  background:#ef4444;
-  color:#fff;
-  font-size:11px;
-  font-weight:700;
-}
-.news-type{
-  display:inline-block;
-  padding:6px 9px;
-  border-radius:999px;
-  background:#fff7ed;
-  color:#9a3412;
-  border:1px solid #fed7aa;
-  font-size:11px;
-  font-weight:700;
-}
-.news-item-title{
-  margin:0 0 6px 0;
-  font-size:17px;
-  line-height:1.25;
-  color:#0f172a;
-}
-.news-item-meta{
-  color:#64748b;
-  font-size:12px;
-  margin-bottom:8px;
-}
-.news-item-text{
-  color:#475569;
-  font-size:13px;
-  line-height:1.55;
-  margin:0 0 10px 0;
-}
-.news-link{
-  display:inline-block;
-  text-decoration:none;
-  padding:8px 12px;
-  border-radius:999px;
-  background:#ea580c;
-  color:#fff;
-  font-size:12px;
-  font-weight:700;
-}
-@media (max-width:900px){
-  .news-list{
-    grid-template-columns:1fr;
-  }
-  .news-strip{
-    border-radius:18px;
-    padding:12px;
-  }
-  .news-strip-title{
-    font-size:19px;
-  }
-}
-
 </style>
 </head>
 <body>
@@ -1345,10 +1240,6 @@ body{
         <option>Veterinær</option>
       </select>
       <select id="bizActivity">
-  <option value="">Velg aktivitet</option>
-</select>
-<input id="bizDate" type="date" placeholder="Dato for aktivitet">
-<select id="bizActivity">
         <option value="">Velg aktivitet</option>
         <option>Valpekurs</option>
         <option>Utstilling</option>
@@ -1607,7 +1498,6 @@ body{
     var bizPhone = document.getElementById("bizPhone").value.trim();
     var bizWebsite = document.getElementById("bizWebsite").value.trim();
     var bizText = document.getElementById("bizText").value.trim();
-    var bizDate = document.getElementById("bizDate")?.value || '';
     var logoFile = document.getElementById("bizLogo").files[0];
     var imageFile = document.getElementById("bizImage").files[0];
     var galleryFiles = Array.from(document.getElementById("bizGalleryFiles").files).slice(0,5);
@@ -1632,7 +1522,7 @@ body{
       var payload = {
         user_id: user.id, author_email: user.email, type: bizType, activity: bizActivity, name: bizName, place: bizPlace,
         phone: bizPhone, website: bizWebsite, description: bizText, logo_url: logoUrl, image_url: imageUrl,
-        gallery_urls: galleryUrls, activity_date: bizDate, approved: false
+        gallery_urls: galleryUrls, approved: false
       };
 
       if (editId) {
@@ -2155,33 +2045,6 @@ body{
   });
 
 
-
-      var topItems = items.slice(0, 3);
-    var html = '<div class="news-strip-head">';
-    html += '<div><h3 class="news-strip-title">🔔 Siste nytt</h3><div class="news-strip-sub">Nyeste aktiviteter og oppdateringer i appen</div></div>';
-    html += '</div>';
-    html += '<div class="news-list">';
-
-    for (var i = 0; i < topItems.length; i++) {
-      var item = topItems[i];
-      var typeLabel = item.sourceType === "club" ? "Hundeklubb" : "Zoo butikk";
-      html += '<article class="news-item">';
-      html += '<div class="news-top"><span class="news-type">' + typeLabel + '</span><span class="news-badge">Ny</span></div>';
-      html += '<h4 class="news-item-title">' + escapeHtml(item.title || "") + '</h4>';
-      html += '<div class="news-item-meta">' + escapeHtml(item.sourceName || "") + ' · ' + escapeHtml(item.place || "") + '</div>';
-      html += '<p class="news-item-text">' + escapeHtml((item.text || "").slice(0, 120)) + '</p>';
-      if (item.website) {
-        html += '<a class="news-link" href="' + normalizeUrl(item.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
-      }
-      html += '</article>';
-    }
-
-    html += '</div>';
-    box.innerHTML = html;
-    box.classList.remove("hidden");
-  }
-
-
   function pickFeaturedActivity(list) {
     if (!Array.isArray(list) || !list.length) return null;
     var priorityWords = ["valpekurs", "sommerutstilling", "utstilling", "agility", "kurs", "stevne", "dugnad"];
@@ -2281,23 +2144,17 @@ body{
     }
 
     activities.sort(function(a,b){
-      var da = a.activity_date || "";
-      var db = b.activity_date || "";
-      if (da && db) return da.localeCompare(db);
-
       if (sortMode === "type") return a.sourceType.localeCompare(b.sourceType, "no");
       if (sortMode === "place") return (a.place || "").localeCompare(b.place || "", "no");
       return (a.title || "").localeCompare(b.title || "", "no");
     });
 
     if (!activities.length) {
-      
       renderFeaturedActivity(null);
       target.innerHTML = '<div class="empty-box">Ingen aktiviteter funnet ennå.</div>';
       return;
     }
 
-    
     var featured = pickFeaturedActivity(activities);
     renderFeaturedActivity(featured);
 
@@ -2319,9 +2176,7 @@ body{
       html += '<div class="activity-card-content">';
       html += '<div class="activity-source ' + (a.sourceType === "club" ? 'club' : 'shop') + '">' + (a.sourceType === "club" ? 'Hundeklubb' : 'Zoo butikk') + '</div>';
       html += '<h3 class="activity-title">' + escapeHtml(a.title || "") + '</h3>';
-      html += '<div class="activity-meta">' + 
-      (a.activity_date ? '📅 ' + escapeHtml(a.activity_date) + ' · ' : '') +
-      escapeHtml(a.sourceName || "") + ' · ' + escapeHtml(a.place || "") + '</div>';
+      html += '<div class="activity-meta">' + escapeHtml(a.sourceName || "") + ' · ' + escapeHtml(a.place || "") + '</div>';
       if (a.text) html += '<p class="activity-text">' + escapeHtml(a.text) + '</p>';
       html += '<div class="activity-actions">';
       if (a.website) html += '<a class="site-link" href="' + normalizeUrl(a.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
