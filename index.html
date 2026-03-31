@@ -10,9 +10,10 @@ document.addEventListener("click", function(e){
   var card = e.target.closest(".news-item");
   if(!card) return;
 
-  var link = card.querySelector("a.news-link");
-  if(link){
-    window.open(link.href, "_blank");
+  var linkBtn = card.querySelector(".news-link");
+
+  if(linkBtn && linkBtn.href){
+    window.open(linkBtn.href, "_blank");
   }
 });
 
@@ -2366,9 +2367,10 @@ document.addEventListener("click", function(e){
   var card = e.target.closest(".news-item");
   if(!card) return;
 
-  var link = card.querySelector("a.news-link");
-  if(link){
-    window.open(link.href, "_blank");
+  var linkBtn = card.querySelector(".news-link");
+
+  if(linkBtn && linkBtn.href){
+    window.open(linkBtn.href, "_blank");
   }
 });
 
