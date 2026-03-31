@@ -1108,7 +1108,10 @@ body{
 }
 
 
-/* ZOO BILDE UNDER TEKST */
+/* FINAL ZOO FIX */
+.zoo-card > img{
+  display:none !important;
+}
 .zoo-card-img-under{
   margin-top:12px;
   border-radius:16px;
@@ -1698,12 +1701,13 @@ body{
 
       html += '<div class="zoo-grid">';
       html += '<article class="zoo-card">';
+      if (b.image_url) html += '<img class="clickable-image" src="' + b.image_url + '" alt="Butikkbilde" onclick="openImageModal(this.src)">';
       html += '<div class="zoo-card-content">';
       html += '<div class="zoo-muted">' + escapeHtml(b.place || "") + '</div>';
       html += '<h4 class="zoo-card-title">' + escapeHtml(b.activity || b.name || "") + '</h4>';
       html += '<p class="zoo-text">' + escapeHtml(b.description || "") + '</p>';
       if (b.website) html += '<a class="zoo-link" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
-      if (b.image_url) html += '<div class="zoo-card-img-under"><img class="clickable-image" src="' + b.image_url + '" alt="Butikkbilde" onclick="openImageModal(this.src)"></div>';
+      if (b.image_url) html += '<div class="zoo-card-img-under"><img class="clickable-image" src="' + b.image_url + '" onclick="openImageModal(this.src)"></div>';
       html += '</div></article>';
 
       if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
