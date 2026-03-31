@@ -1070,6 +1070,20 @@ body{
   }
 }
 
+
+/* TRYGG DATO-VERSJON */
+.date-chip{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  color:#1d4ed8;
+  font-size:12px;
+  font-weight:700;
+  margin:0 0 10px 0;
+}
+
 </style>
 </head>
 <body>
@@ -1246,6 +1260,8 @@ body{
         <option>Agility / trening</option>
         <option>Fellesturer</option>
       </select>
+      <label>Dato for aktivitet</label>
+      <input id="bizDate" type="date">
       <input id="bizName" placeholder="Navn på bedrift">
       <input id="bizPlace" placeholder="Sted">
       <input id="bizPhone" placeholder="Telefon">
@@ -1464,6 +1480,7 @@ body{
     document.getElementById("bizLogo").value = "";
     document.getElementById("bizImage").value = "";
     document.getElementById("bizGalleryFiles").value = "";
+    if (document.getElementById("bizDate")) document.getElementById("bizDate").value = "";
     setBizStatus("Skjema tømt.", "black");
   }
 
@@ -1482,6 +1499,7 @@ body{
     document.getElementById("bizLogo").value = "";
     document.getElementById("bizImage").value = "";
     document.getElementById("bizGalleryFiles").value = "";
+    if (document.getElementById("bizDate")) document.getElementById("bizDate").value = b.activity_date || "";
     setBizStatus("Bedrift lastet inn for redigering.", "green");
   }
 
@@ -1498,6 +1516,7 @@ body{
     var bizPhone = document.getElementById("bizPhone").value.trim();
     var bizWebsite = document.getElementById("bizWebsite").value.trim();
     var bizText = document.getElementById("bizText").value.trim();
+    var bizDate = document.getElementById("bizDate") ? document.getElementById("bizDate").value : "";
     var logoFile = document.getElementById("bizLogo").files[0];
     var imageFile = document.getElementById("bizImage").files[0];
     var galleryFiles = Array.from(document.getElementById("bizGalleryFiles").files).slice(0,5);
@@ -2116,7 +2135,8 @@ body{
           place: b.place || "",
           text: b.description || "",
           image_url: b.image_url || "",
-          website: b.website || ""
+          website: b.website || "",
+          activity_date: b.activity_date || ""
         });
       }
       if (b.type === "Zoo butikk" && (b.activity || b.description || b.image_url)) {
@@ -2127,7 +2147,8 @@ body{
           place: b.place || "",
           text: b.description || "",
           image_url: b.image_url || "",
-          website: b.website || ""
+          website: b.website || "",
+          activity_date: b.activity_date || ""
         });
       }
     });
@@ -2146,6 +2167,13 @@ body{
     activities.sort(function(a,b){
       if (sortMode === "type") return a.sourceType.localeCompare(b.sourceType, "no");
       if (sortMode === "place") return (a.place || "").localeCompare(b.place || "", "no");
+
+      var da = a.activity_date || "";
+      var db = b.activity_date || "";
+      if (da && db) return da.localeCompare(db);
+      if (da && !db) return -1;
+      if (!da && db) return 1;
+
       return (a.title || "").localeCompare(b.title || "", "no");
     });
 
@@ -2176,6 +2204,7 @@ body{
       html += '<div class="activity-card-content">';
       html += '<div class="activity-source ' + (a.sourceType === "club" ? 'club' : 'shop') + '">' + (a.sourceType === "club" ? 'Hundeklubb' : 'Zoo butikk') + '</div>';
       html += '<h3 class="activity-title">' + escapeHtml(a.title || "") + '</h3>';
+      html += (a.activity_date ? '<div class="date-chip">📅 ' + escapeHtml(a.activity_date) + '</div>' : '');
       html += '<div class="activity-meta">' + escapeHtml(a.sourceName || "") + ' · ' + escapeHtml(a.place || "") + '</div>';
       if (a.text) html += '<p class="activity-text">' + escapeHtml(a.text) + '</p>';
       html += '<div class="activity-actions">';
