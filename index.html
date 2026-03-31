@@ -1108,27 +1108,25 @@ body{
 }
 
 
-/* MATCH HUNDEKLUBB STIL */
+/* FINAL ZOO FIX */
 .zoo-card > img{
   display:none !important;
 }
 .zoo-card-img-under{
-  margin-top:10px;
+  margin-top:12px;
+  border-radius:16px;
+  overflow:hidden;
 }
 .zoo-card-img-under img{
   width:100%;
-  height:160px;
+  height:220px !important;
   object-fit:cover;
-  border-radius:12px;
-  cursor:pointer;
-  transition:0.2s;
+  display:block;
+  border-radius:16px;
 }
-.zoo-card-img-under img:hover{
-  transform:scale(1.02);
-}
-@media (max-width:600px){
+@media (max-width:900px){
   .zoo-card-img-under img{
-    height:130px;
+    height:190px !important;
   }
 }
 
@@ -1709,12 +1707,7 @@ body{
       html += '<h4 class="zoo-card-title">' + escapeHtml(b.activity || b.name || "") + '</h4>';
       html += '<p class="zoo-text">' + escapeHtml(b.description || "") + '</p>';
       if (b.website) html += '<a class="zoo-link" href="' + normalizeUrl(b.website) + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
-      if (b.image_url) {
-        html += '<div class="zoo-card-img-under">';
-        html += '<a href="'+ (b.website ? b.website : "#") +'" target="_blank">';
-        html += '<img src="'+ b.image_url +'" alt="Butikkbilde">';
-        html += '</a></div>';
-      }
+      if (b.image_url) html += '<div class="zoo-card-img-under"><img class="clickable-image" src="' + b.image_url + '" onclick="openImageModal(this.src)"></div>';
       html += '</div></article>';
 
       if (Array.isArray(b.gallery_urls) && b.gallery_urls.length) {
