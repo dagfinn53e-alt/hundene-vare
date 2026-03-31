@@ -2203,6 +2203,10 @@ body{
       if (sortMode === "type") return a.sourceType.localeCompare(b.sourceType, "no");
       if (sortMode === "place") return (a.place || "").localeCompare(b.place || "", "no");
 
+      // fremhevet aktivitet alltid først
+      if (a.featured && !b.featured) return -1;
+      if (!a.featured && b.featured) return 1;
+
       var da = a.activity_date || "";
       var db = b.activity_date || "";
       if (da && db) return da.localeCompare(db);
