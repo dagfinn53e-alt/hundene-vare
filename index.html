@@ -4,7 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hundene våre</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+// MAKE NEWS ITEMS CLICKABLE (BEST: image + link)
+document.addEventListener("click", function(e){
+  var card = e.target.closest(".news-item");
+  if(!card) return;
+
+  var link = card.querySelector("a.news-link");
+  if(link){
+    window.open(link.href, "_blank");
+  }
+});
+
+</script>
   <style>
     :root{
       --blue:#2563eb; --blue-dark:#1d4ed8; --card:#fff; --line:#dbeafe;
@@ -1102,7 +1114,7 @@ body{
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:12px;
 }
-.news-item{
+.news-item{cursor:pointer;
   background:#fff;
   border:1px solid #fde0c1;
   border-radius:18px;
@@ -2348,6 +2360,18 @@ body{
   loadProfile();
   loadBusinesses();
   loadDogClubs();
+
+// MAKE NEWS ITEMS CLICKABLE (BEST: image + link)
+document.addEventListener("click", function(e){
+  var card = e.target.closest(".news-item");
+  if(!card) return;
+
+  var link = card.querySelector("a.news-link");
+  if(link){
+    window.open(link.href, "_blank");
+  }
+});
+
 </script>
 </body>
 </html>
