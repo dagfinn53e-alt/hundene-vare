@@ -1108,12 +1108,249 @@ body{
 }
 
 
-/* TRYGG ZOO FIX – KUN STØRRELSE */
-.zoo-card-img-under img{
-  width:100%;
-  max-height:160px;
-  object-fit:cover;
-  border-radius:12px;
+/* MOBIL DESIGN PRO */
+@media (max-width:760px){
+  .wrap{
+    padding:12px 10px 110px !important;
+  }
+
+  .topbar{
+    padding:8px 10px !important;
+    border-radius:18px !important;
+    gap:8px !important;
+  }
+
+  .topbar .brand{
+    font-size:17px !important;
+    padding:9px 12px !important;
+  }
+
+  .topbar .actions{
+    gap:8px !important;
+    width:100% !important;
+  }
+
+  .topbar .actions button{
+    flex:1 1 auto !important;
+    min-height:42px !important;
+    font-size:14px !important;
+    padding:10px 12px !important;
+  }
+
+  .hero{
+    padding:20px !important;
+    border-radius:22px !important;
+    margin-bottom:16px !important;
+  }
+
+  .hero h1{
+    font-size:30px !important;
+    line-height:1.1 !important;
+    margin-bottom:8px !important;
+  }
+
+  .hero p{
+    font-size:14px !important;
+    line-height:1.6 !important;
+  }
+
+  .topstats{
+    grid-template-columns:repeat(2,1fr) !important;
+    gap:10px !important;
+  }
+
+  .stat{
+    border-radius:20px !important;
+    padding:12px !important;
+  }
+
+  .stat .value{
+    font-size:24px !important;
+  }
+
+  .card{
+    padding:16px !important;
+    border-radius:20px !important;
+    margin-bottom:16px !important;
+  }
+
+  h2{
+    font-size:22px !important;
+    line-height:1.2 !important;
+    margin-bottom:10px !important;
+  }
+
+  .sub{
+    font-size:14px !important;
+    line-height:1.65 !important;
+  }
+
+  .menu-grid{
+    gap:10px !important;
+  }
+
+  .menu-btn{
+    min-height:72px !important;
+    border-radius:18px !important;
+    padding:14px 12px !important;
+  }
+
+  .menu-btn h3{
+    font-size:18px !important;
+    line-height:1.2 !important;
+  }
+
+  input, textarea, select{
+    padding:13px 14px !important;
+    border-radius:14px !important;
+    font-size:16px !important;
+    margin:6px 0 10px !important;
+  }
+
+  button{
+    min-height:42px !important;
+    padding:10px 14px !important;
+    font-size:14px !important;
+  }
+
+  .btnrow{
+    gap:8px !important;
+  }
+
+  .post,
+  .club-post,
+  .zoo-card,
+  .activity-card,
+  .biz-card{
+    border-radius:18px !important;
+  }
+
+  .post img,
+  .club-post img,
+  .activity-card img,
+  .zoo-card img,
+  .gallery img,
+  .biz-main img{
+    height:180px !important;
+    max-height:180px !important;
+    object-fit:cover !important;
+    border-radius:16px !important;
+  }
+
+  .post-content,
+  .club-post-content,
+  .activity-card-content,
+  .zoo-card-content{
+    padding:12px !important;
+  }
+
+  .post h3,
+  .club-post-content h4,
+  .activity-title,
+  .zoo-card-title{
+    font-size:17px !important;
+    line-height:1.25 !important;
+    margin-bottom:6px !important;
+  }
+
+  .post p,
+  .club-post-content p,
+  .activity-text,
+  .zoo-text{
+    font-size:14px !important;
+    line-height:1.6 !important;
+  }
+
+  .meta,
+  .activity-meta,
+  .zoo-muted{
+    font-size:12px !important;
+    margin-bottom:8px !important;
+    padding-bottom:7px !important;
+  }
+
+  .club-section,
+  .zoo-section{
+    padding:14px !important;
+    border-radius:20px !important;
+    margin-top:14px !important;
+  }
+
+  .club-top,
+  .zoo-top{
+    gap:10px !important;
+    margin-bottom:10px !important;
+    padding-bottom:8px !important;
+  }
+
+  .club-top img,
+  .zoo-logo{
+    width:48px !important;
+    height:48px !important;
+    border-radius:14px !important;
+  }
+
+  .club-section h3,
+  #dogClubsList h3,
+  .zoo-title{
+    font-size:17px !important;
+    line-height:1.18 !important;
+    margin:0 0 4px 0 !important;
+  }
+
+  .club-count,
+  .club-badge,
+  .zoo-badge,
+  .date-chip{
+    font-size:11px !important;
+    padding:6px 8px !important;
+  }
+
+  .gallery{
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+  }
+
+  .activity-hero{
+    padding:14px !important;
+    border-radius:20px !important;
+  }
+
+  .activity-toolbar{
+    grid-template-columns:1fr !important;
+    gap:8px !important;
+  }
+
+  .featured-activity{
+    border-radius:20px !important;
+    gap:0 !important;
+    margin:14px 0 16px 0 !important;
+  }
+
+  .featured-image-wrap,
+  .featured-image{
+    min-height:200px !important;
+    max-height:200px !important;
+  }
+
+  .featured-content{
+    padding:14px !important;
+  }
+
+  .featured-title{
+    font-size:22px !important;
+    line-height:1.1 !important;
+  }
+
+  .featured-meta,
+  .featured-text{
+    font-size:14px !important;
+    line-height:1.55 !important;
+  }
+
+  .featured-actions{
+    gap:8px !important;
+  }
 }
 
 </style>
