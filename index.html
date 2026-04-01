@@ -2459,3 +2459,42 @@ body{
 </script>
 </body>
 </html>
+/* ===== FINAL FIX PC + MOBIL ===== */
+
+.hero {
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 20px auto !important;
+}
+
+.hero-content {
+  width: 100% !important;
+}
+
+/* PC */
+@media (min-width: 900px) {
+
+  .hero {
+    padding: 30px !important;
+  }
+
+  .stats {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 15px;
+  }
+
+  .stat-box {
+    padding: 20px !important;
+  }
+
+}
+
+/* Mobil */
+@media (max-width: 600px) {
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+}
