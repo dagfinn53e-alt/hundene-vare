@@ -1158,6 +1158,7 @@ body{
         <button class="menu-btn box-stories" onclick="showPage('activities')"><h3>📅 Aktiviteter</h3></button>
         <button class="menu-btn box-groomers" onclick="showPage('groomers')"><h3>✂️ Frisører</h3></button>
         <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3></button>
+        <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🏡 Hund pensjonat</h3></button>
         <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3></button>
         <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Bedrift</h3></button>
         <button class="menu-btn box-admin" onclick="showPage('hundeklubber')"><h3>🐶 Hundeklubber</h3></button>
@@ -1222,24 +1223,6 @@ body{
   </div>
 
   <div id="page-groomers" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>✂️ Frisører</h2><div class="search-grid"><input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()"><select id="filterFavoritesGroomers" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchGroomers" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="groomerList"></div></div></div>
-  
-  <div id="page-pensjonat" class="hidden">
-    <div class="card">
-      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-      <h2>🏡 Hund pensjonat</h2>
-      <div class="sub">Her finner du hund pensjonat og steder for pass av hund.</div>
-      <div class="search-grid">
-        <input id="searchPensjonat" placeholder="Søk pensjonat eller sted" oninput="loadPensjonat()">
-        <select id="filterFavoritesPensjonat" onchange="loadPensjonat()">
-          <option value="all">Alle</option>
-          <option value="fav">Kun favoritter</option>
-        </select>
-        <input id="mapSearchPensjonat" placeholder="Sted for kart-link" oninput="loadPensjonat()">
-      </div>
-      <div id="pensjonatList"></div>
-    </div>
-  </div>
-
   <div id="page-shops" class="hidden">
     <div class="card">
       <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
@@ -1432,7 +1415,7 @@ body{
   function setBottomNavActive(name){}
 
   function showPage(name){
-    var pages = ['home','auth','stories','activities','groomers','shops','pensjonat','vets','business','admin','favorites','about','hundeklubber'];
+    var pages = ['home','auth','stories','activities','groomers','shops','vets','business','admin','favorites','about','hundeklubber'];
     for (var i = 0; i < pages.length; i++) {
       var el = document.getElementById('page-' + pages[i]);
       if (el) el.classList.add('hidden');
@@ -1442,7 +1425,6 @@ body{
 
     if(name === 'stories'){ window.scrollTo(0,0); loadStories(); loadProfile(); }
     if(name === 'groomers' || name === 'shops' || name === 'vets'){ loadBusinesses(); }
-    if(name === 'pensjonat'){ loadPensjonat(); }
     if(name === 'business'){ loadBusinessOptions(); }
     if(name === 'admin'){ loadAdmin(); }
     if(name === 'favorites'){ loadFavoritesPage(); }
@@ -1723,42 +1705,6 @@ body{
     }
 
     target.innerHTML = html;
-  }
-
-  
-  async function loadPensjonat(){
-    var result = await supabase.from("businesses").select("*").order("created_at",{ascending:false});
-    var rows = result.data || [];
-    var list = document.getElementById("pensjonatList");
-    if(!list) return;
-    list.innerHTML = "";
-
-    var pensjonat = rows.filter(function(b){
-      return b.type === "Hund pensjonat" && b.approved === true;
-    });
-
-    if(pensjonat.length === 0){
-      list.innerHTML = '<div class="empty-box">Ingen hund pensjonat lagt inn enda.</div>';
-      return;
-    }
-
-    pensjonat.forEach(function(b){
-      var el = document.createElement("div");
-      el.className = "zoo-section";
-      el.innerHTML = `
-        <div class="zoo-top">
-          <div class="zoo-head">
-            <img src="${b.logo_url || ''}" class="zoo-logo">
-            <div>
-              <div class="zoo-title">${b.name}</div>
-              <div class="zoo-place">${b.place}</div>
-            </div>
-          </div>
-        </div>
-        <div class="zoo-desc">${b.description || ''}</div>
-      `;
-      list.appendChild(el);
-    });
   }
 
   async function loadBusinesses() {
