@@ -1158,7 +1158,7 @@ body{
         <button class="menu-btn box-stories" onclick="showPage('activities')"><h3>📅 Aktiviteter</h3></button>
         <button class="menu-btn box-groomers" onclick="showPage('groomers')"><h3>✂️ Frisører</h3></button>
         <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3></button>
-        <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🏡 Hund pensjonat</h3></button>
+        <button class="menu-btn box-shops" onclick="showPage('pensjonat')"><h3>🏡 Hund pensjonat</h3></button>
         <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3></button>
         <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Bedrift</h3></button>
         <button class="menu-btn box-admin" onclick="showPage('hundeklubber')"><h3>🐶 Hundeklubber</h3></button>
@@ -1223,6 +1223,24 @@ body{
   </div>
 
   <div id="page-groomers" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>✂️ Frisører</h2><div class="search-grid"><input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()"><select id="filterFavoritesGroomers" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchGroomers" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="groomerList"></div></div></div>
+
+  <div id="page-pensjonat" class="hidden">
+    <div class="card">
+      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <h2>🏡 Hund pensjonat</h2>
+      <div class="sub">Her finner du hund pensjonat og steder som tilbyr pass av hund.</div>
+      <div class="search-grid">
+        <input id="searchPensjonat" placeholder="Søk pensjonat eller sted" oninput="loadBusinesses()">
+        <select id="filterFavoritesPensjonat" onchange="loadBusinesses()">
+          <option value="all">Alle</option>
+          <option value="fav">Kun favoritter</option>
+        </select>
+        <input id="mapSearchPensjonat" placeholder="Sted for kart-link" oninput="loadBusinesses()">
+      </div>
+      <div id="pensjonatList"></div>
+    </div>
+  </div>
+
   <div id="page-shops" class="hidden">
     <div class="card">
       <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
@@ -1276,6 +1294,7 @@ body{
         <option>Frisør</option>
         <option>Zoo butikk</option>
         <option>Veterinær</option>
+        <option>Hund pensjonat</option>
       </select>
       <select id="bizActivity">
         <option value="">Velg aktivitet</option>
@@ -1415,7 +1434,7 @@ body{
   function setBottomNavActive(name){}
 
   function showPage(name){
-    var pages = ['home','auth','stories','activities','groomers','shops','vets','business','admin','favorites','about','hundeklubber'];
+    var pages = ['home','auth','stories','activities','groomers','shops','pensjonat','vets','business','admin','favorites','about','hundeklubber'];
     for (var i = 0; i < pages.length; i++) {
       var el = document.getElementById('page-' + pages[i]);
       if (el) el.classList.add('hidden');
@@ -1424,7 +1443,7 @@ body{
     if (active) active.classList.remove('hidden');
 
     if(name === 'stories'){ window.scrollTo(0,0); loadStories(); loadProfile(); }
-    if(name === 'groomers' || name === 'shops' || name === 'vets'){ loadBusinesses(); }
+    if(name === 'groomers' || name === 'shops' || name === 'vets' || name === 'pensjonat'){ loadBusinesses(); }
     if(name === 'business'){ loadBusinessOptions(); }
     if(name === 'admin'){ loadAdmin(); }
     if(name === 'favorites'){ loadFavoritesPage(); }
@@ -1712,6 +1731,7 @@ body{
     var rows = result.data || [];
     await renderBizList("Frisør","groomerList",rows,document.getElementById("searchGroomers")?.value || "",document.getElementById("filterFavoritesGroomers")?.value || "all",document.getElementById("mapSearchGroomers")?.value || "");
     await renderZooShopsPro(rows,document.getElementById("searchShops")?.value || "",document.getElementById("filterFavoritesShops")?.value || "all",document.getElementById("mapSearchShops")?.value || "");
+    await renderBizList("Hund pensjonat","pensjonatList",rows,document.getElementById("searchPensjonat")?.value || "",document.getElementById("filterFavoritesPensjonat")?.value || "all",document.getElementById("mapSearchPensjonat")?.value || "");
     await renderBizList("Veterinær","vetList",rows,document.getElementById("searchVets")?.value || "",document.getElementById("filterFavoritesVets")?.value || "all",document.getElementById("mapSearchVets")?.value || "");
   }
 
