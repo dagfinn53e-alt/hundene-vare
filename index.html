@@ -1315,6 +1315,8 @@ body{
       <input id="bizLogo" type="file" accept="image/*">
       <label>Last opp nytt hovedbilde (valgfritt ved redigering)</label>
       <input id="bizImage" type="file" accept="image/*">
+      <label>Last opp video (valgfritt)</label>
+      <input id="bizVideo" type="file" accept="video/*">
       <label>Last opp ekstra bilder for galleri (opptil 5)</label>
       <input id="bizGalleryFiles" type="file" accept="image/*" multiple>
       <div class="btnrow">
@@ -1523,6 +1525,7 @@ body{
     document.getElementById("bizText").value = "";
     document.getElementById("bizLogo").value = "";
     document.getElementById("bizImage").value = "";
+    if (document.getElementById("bizVideo")) document.getElementById("bizVideo").value = "";
     document.getElementById("bizGalleryFiles").value = "";
     if (document.getElementById("bizDate")) document.getElementById("bizDate").value = "";
     if (document.getElementById("bizFeatured")) document.getElementById("bizFeatured").checked = false;
@@ -1566,6 +1569,7 @@ body{
     var bizFeatured = document.getElementById("bizFeatured") ? document.getElementById("bizFeatured").checked : false;
     var logoFile = document.getElementById("bizLogo").files[0];
     var imageFile = document.getElementById("bizImage").files[0];
+    var videoFile = document.getElementById("bizVideo") ? document.getElementById("bizVideo").files[0] : null;
     var galleryFiles = Array.from(document.getElementById("bizGalleryFiles").files).slice(0,5);
 
     if (!bizName || !bizPlace || !bizText) { setBizStatus("Skriv inn navn, sted og beskrivelse.", "crimson"); return; }
@@ -1581,13 +1585,15 @@ body{
       var logoUrl = existing && existing.logo_url ? existing.logo_url : "";
       var imageUrl = existing && existing.image_url ? existing.image_url : "";
       var galleryUrls = existing && Array.isArray(existing.gallery_urls) ? existing.gallery_urls : [];
+      var videoUrl = existing && existing.video_url ? existing.video_url : "";
       if (logoFile) logoUrl = await uploadFile(logoFile, "businesses/logos");
       if (imageFile) imageUrl = await uploadFile(imageFile, "businesses/images");
+      if (videoFile) videoUrl = await uploadFile(videoFile, "businesses/videos");
       if (galleryFiles.length) galleryUrls = galleryUrls.concat(await uploadMultiple(galleryFiles, "businesses/gallery")).slice(0,5);
 
       var payload = {
         user_id: user.id, author_email: user.email, type: bizType, activity: bizActivity, name: bizName, place: bizPlace,
-        phone: bizPhone, website: bizWebsite, description: bizText, logo_url: logoUrl, image_url: imageUrl,
+        phone: bizPhone, website: bizWebsite, description: bizText, logo_url: logoUrl, image_url: imageUrl, video_url: videoUrl,
         gallery_urls: galleryUrls, approved: false
       };
 
