@@ -1158,6 +1158,7 @@ body{
         <button class="menu-btn box-stories" onclick="showPage('activities')"><h3>📅 Aktiviteter</h3></button>
         <button class="menu-btn box-groomers" onclick="showPage('groomers')"><h3>✂️ Frisører</h3></button>
         <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3></button>
+        <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🏡 Hund pensjonat</h3></button>
         <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3></button>
         <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Bedrift</h3></button>
         <button class="menu-btn box-admin" onclick="showPage('hundeklubber')"><h3>🐶 Hundeklubber</h3></button>
@@ -1226,7 +1227,7 @@ body{
     <div class="card">
       <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
       <h2>🐾 Zoo butikker</h2>
-      <div class="sub">Her kan zoo butikker og hund pensjonat vise frem tilbud, ledige plasser, nyheter og aktiviteter – uten å forstyrre resten av appen.</div>
+      <div class="sub">Her kan zoo butikker vise frem butikken sin, legge inn tilbud, nyheter og aktiviteter – uten å forstyrre resten av appen.</div>
       <div class="search-grid">
         <input id="searchShops" placeholder="Søk butikk eller sted" oninput="loadBusinesses()">
         <select id="filterFavoritesShops" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select>
@@ -1275,7 +1276,6 @@ body{
         <option>Frisør</option>
         <option>Zoo butikk</option>
         <option>Veterinær</option>
-        <option>Hund pensjonat</option>
       </select>
       <select id="bizActivity">
         <option value="">Velg aktivitet</option>
@@ -1631,7 +1631,7 @@ body{
     if (!target) return;
 
     var favs = getFavoriteBusinesses();
-    var shops = rows.filter(function(b){ return (b.type === "Zoo butikk" || b.type === "Hund pensjonat") && b.approved === true; });
+    var shops = rows.filter(function(b){ return b.type === "Zoo butikk" && b.approved === true; });
 
     if (searchValue) {
       var s = searchValue.toLowerCase();
@@ -1657,7 +1657,7 @@ body{
       var b = shops[i];
       var isFav = favs.indexOf(b.id) >= 0;
       var mapsLink = buildGoogleMapsLink(b.place, mapSearch || b.place);
-      var countText = b.activity ? "1 aktivitet" : (b.type === "Hund pensjonat" ? "Pensjonat" : "Butikkside");
+      var countText = b.activity ? "1 aktivitet" : "Butikkside";
 
       html += '<section class="zoo-section">';
       html += '<div class="zoo-top">';
