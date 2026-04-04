@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hundene våre</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-loadFeaturedBusiness();
-</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root{
       --blue:#2563eb; --blue-dark:#1d4ed8; --card:#fff; --line:#dbeafe;
@@ -1109,135 +1107,6 @@ body{
   color:#1d4ed8;
 }
 
-
-
-/* Featured business */
-#featuredBusinessBox{
-  display:none;
-}
-.featured-business-card{
-  background:linear-gradient(180deg,#ffffff 0%,#fbfdff 100%);
-  border:1px solid #dbeafe;
-  border-radius:28px;
-  padding:20px;
-  box-shadow:0 14px 30px rgba(15,23,42,.06);
-}
-.featured-business-top{
-  display:flex;
-  gap:18px;
-  align-items:flex-start;
-  flex-wrap:wrap;
-}
-.featured-business-logo{
-  width:92px;
-  height:92px;
-  border-radius:22px;
-  object-fit:cover;
-  background:#fff;
-  border:1px solid #e2e8f0;
-  padding:8px;
-  box-shadow:0 10px 22px rgba(15,23,42,.06);
-}
-.featured-business-info{
-  flex:1;
-  min-width:240px;
-}
-.featured-business-info h3{
-  margin:8px 0 8px 0;
-  font-size:28px;
-}
-.featured-business-text{
-  color:#334155;
-  line-height:1.7;
-}
-.featured-business-actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:14px;
-}
-.featured-business-image{
-  margin-top:16px;
-}
-.featured-business-image img{
-  width:100%;
-  max-height:360px;
-  object-fit:cover;
-  border-radius:24px;
-  display:block;
-  box-shadow:0 18px 32px rgba(15,23,42,.08);
-}
-@media (max-width:760px){
-  .featured-business-card{
-    padding:16px;
-    border-radius:22px;
-  }
-  .featured-business-top{
-    gap:12px;
-  }
-  .featured-business-logo{
-    width:74px;
-    height:74px;
-    border-radius:18px;
-  }
-  .featured-business-info{
-    min-width:0;
-  }
-  .featured-business-info h3{
-    font-size:22px;
-    line-height:1.2;
-  }
-  .featured-business-text{
-    font-size:14px;
-    line-height:1.6;
-  }
-  .featured-business-actions{
-    gap:8px;
-  }
-  .featured-business-actions .site-link{
-    width:100%;
-    text-align:center;
-  }
-  .featured-business-image img{
-    max-height:240px;
-    border-radius:18px;
-  }
-}
-
-
-@media (max-width:760px){
-  .featured-business-card{
-    padding:14px !important;
-  }
-  .featured-business-top{
-    display:block !important;
-  }
-  .featured-business-logo{
-    width:64px !important;
-    height:64px !important;
-    margin-bottom:10px !important;
-  }
-  .featured-business-info h3{
-    font-size:20px !important;
-    margin:6px 0 !important;
-  }
-  .featured-mobile-meta{
-    font-size:12px !important;
-    line-height:1.4 !important;
-    color:#64748b !important;
-    margin-bottom:8px !important;
-  }
-  .featured-mobile-text{
-    font-size:14px !important;
-    line-height:1.5 !important;
-    color:#334155 !important;
-    display:-webkit-box !important;
-    -webkit-line-clamp:5 !important;
-    -webkit-box-orient:vertical !important;
-    overflow:hidden !important;
-  }
-}
-
 </style>
 </head>
 <body>
@@ -1282,11 +1151,6 @@ body{
       </div>
     </div>
 
-    <div class="card" id="featuredBusinessBox" style="display:none;">
-      <h2>⭐ Fremhevet bedrift</h2>
-      <div id="featuredBusinessContent"></div>
-    </div>
-
     <div class="card">
       <h2>Utforsk appen</h2>
       <div class="menu-grid">
@@ -1294,7 +1158,7 @@ body{
         <button class="menu-btn box-stories" onclick="showPage('activities')"><h3>📅 Aktiviteter</h3></button>
         <button class="menu-btn box-groomers" onclick="showPage('groomers')"><h3>✂️ Frisører</h3></button>
         <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3></button>
-        <button class="menu-btn box-shops" onclick="showPage('pensjonat')"><h3>🏡 Hund pensjonat</h3></button>
+        <button class="menu-btn box-shops" onclick="showPage('pensjonat')"><h3>🐶 Hundepensjonat & Hundepass</h3></button>
         <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3></button>
         <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Bedrift</h3></button>
         <button class="menu-btn box-admin" onclick="showPage('hundeklubber')"><h3>🐶 Hundeklubber</h3></button>
@@ -1363,8 +1227,8 @@ body{
   <div id="page-pensjonat" class="hidden">
     <div class="card">
       <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-      <h2>🏡 Hund pensjonat</h2>
-      <div class="sub">Her finner du hund pensjonat og steder som tilbyr pass av hund.</div>
+      <h2>🐶 Hundepensjonat & Hundepass</h2>
+      <div class="sub">Her finner du hundepensjonat og hundepass i området.</div>
       <div class="search-grid">
         <input id="searchPensjonat" placeholder="Søk pensjonat eller sted" oninput="loadBusinesses()">
         <select id="filterFavoritesPensjonat" onchange="loadBusinesses()">
@@ -1430,7 +1294,7 @@ body{
         <option>Frisør</option>
         <option>Zoo butikk</option>
         <option>Veterinær</option>
-        <option>Hund pensjonat</option>
+        <option>Hundepensjonat & Hundepass</option>
       </select>
       <select id="bizActivity">
         <option value="">Velg aktivitet</option>
@@ -1569,63 +1433,6 @@ body{
 
   function setBottomNavActive(name){}
 
-  async function loadFeaturedBusiness(){
-    try{
-      var box = document.getElementById("featuredBusinessBox");
-      var content = document.getElementById("featuredBusinessContent");
-      if(!box || !content) return;
-
-      var result = await supabase
-        .from("businesses")
-        .select("*")
-        .eq("approved", true)
-        .eq("featured", true)
-        .order("created_at", { ascending: false })
-        .limit(1);
-
-      var rows = result.data || [];
-
-      if(!rows.length){
-        var fallback = await supabase
-          .from("businesses")
-          .select("*")
-          .eq("approved", true)
-          .order("created_at", { ascending: false })
-          .limit(1);
-        rows = fallback.data || [];
-      }
-
-      if(!rows.length){
-        box.style.display = "none";
-        content.innerHTML = "";
-        return;
-      }
-
-      var b = rows[0];
-      var link = b.website ? normalizeUrl(b.website) : "";
-      var mapsLink = buildGoogleMapsLink(b.place, b.place);
-
-      var out = '<div class="featured-business-card">';
-      out += '<div class="featured-business-top">';
-      if (b.logo_url) out += '<img class="featured-business-logo" src="' + b.logo_url + '" alt="Logo">';
-      out += '<div class="featured-business-info">';
-      out += '<span class="badge approved">Sist godkjent</span>';
-      out += '<h3>' + escapeHtml(b.name || "") + '</h3>';
-      out += '<div class="meta featured-mobile-meta">' + escapeHtml(b.type || "") + (b.place ? ' · ' + escapeHtml(b.place) : '') + '</div>';
-      out += '<div class="featured-business-text featured-mobile-text">' + escapeHtml(b.description || "") + '</div>';
-      out += '<div class="featured-business-actions">';
-      if (link) out += '<a class="site-link" href="' + link + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
-      if (mapsLink) out += '<a class="site-link" href="' + mapsLink + '" target="_blank" rel="noopener noreferrer">Åpne i Google Maps</a>';
-      out += '</div>';
-      out += '</div></div>';
-      if (b.image_url) out += '<div class="featured-business-image"><img src="' + b.image_url + '" alt="Bedriftsbilde"></div>';
-      out += '</div>';
-
-      content.innerHTML = out;
-      box.style.display = "block";
-    }catch(e){}
-  }
-
   function showPage(name){
     var pages = ['home','auth','stories','activities','groomers','shops','pensjonat','vets','business','admin','favorites','about','hundeklubber'];
     for (var i = 0; i < pages.length; i++) {
@@ -1642,7 +1449,6 @@ body{
     if(name === 'favorites'){ loadFavoritesPage(); }
     if(name === 'hundeklubber'){ loadDogClubs(); }
     if(name === 'activities'){ loadActivities(); }
-    if(name === 'home'){ loadFeaturedBusiness(); }
   }
 
   function setStatus(text, color) { var el = document.getElementById("status"); if (el) { el.textContent = text; el.style.color = color || "black"; } }
@@ -1930,11 +1736,9 @@ body{
   }
 
   async function approveBusiness(id) {
-    var clearPrev = await supabase.from("businesses").update({ featured: false }).neq("id", id);
-    var update = await supabase.from("businesses").update({ approved: true, featured: true }).eq("id", id);
+    var update = await supabase.from("businesses").update({ approved: true }).eq("id", id);
     if (update.error) { setAdminStatus("Feil ved godkjenning: " + update.error.message, "crimson"); return; }
-    setAdminStatus("Bedrift godkjent og satt som fremhevet.", "green"); 
-    loadAdmin(); loadBusinesses(); loadProfile(); loadDogClubs(); loadFeaturedBusiness();
+    setAdminStatus("Bedrift godkjent.", "green"); loadAdmin(); loadBusinesses(); loadProfile(); loadDogClubs();
   }
   async function rejectBusiness(id) {
     var update = await supabase.from("businesses").update({ approved: false }).eq("id", id);
