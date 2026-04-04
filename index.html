@@ -1173,13 +1173,12 @@ body{
     border-radius:22px;
   }
   .featured-business-top{
-    display:block;
+    gap:12px;
   }
   .featured-business-logo{
     width:74px;
     height:74px;
     border-radius:18px;
-    margin-bottom:12px;
   }
   .featured-business-info{
     min-width:0;
@@ -1187,17 +1186,10 @@ body{
   .featured-business-info h3{
     font-size:22px;
     line-height:1.2;
-    margin:8px 0 6px 0;
-  }
-  .featured-business-info .meta{
-    font-size:12px !important;
-    line-height:1.45 !important;
-    word-break:break-word;
   }
   .featured-business-text{
     font-size:14px;
     line-height:1.6;
-    word-break:break-word;
   }
   .featured-business-actions{
     gap:8px;
@@ -1209,6 +1201,40 @@ body{
   .featured-business-image img{
     max-height:240px;
     border-radius:18px;
+  }
+}
+
+
+@media (max-width:760px){
+  .featured-business-card{
+    padding:14px !important;
+  }
+  .featured-business-top{
+    display:block !important;
+  }
+  .featured-business-logo{
+    width:64px !important;
+    height:64px !important;
+    margin-bottom:10px !important;
+  }
+  .featured-business-info h3{
+    font-size:20px !important;
+    margin:6px 0 !important;
+  }
+  .featured-mobile-meta{
+    font-size:12px !important;
+    line-height:1.4 !important;
+    color:#64748b !important;
+    margin-bottom:8px !important;
+  }
+  .featured-mobile-text{
+    font-size:14px !important;
+    line-height:1.5 !important;
+    color:#334155 !important;
+    display:-webkit-box !important;
+    -webkit-line-clamp:5 !important;
+    -webkit-box-orient:vertical !important;
+    overflow:hidden !important;
   }
 }
 
@@ -1585,8 +1611,8 @@ body{
       out += '<div class="featured-business-info">';
       out += '<span class="badge approved">Sist godkjent</span>';
       out += '<h3>' + escapeHtml(b.name || "") + '</h3>';
-      out += '<div class="meta">' + escapeHtml(b.type || "") + (b.place ? ' · ' + escapeHtml(b.place) : '') + '</div>';
-      out += '<div class="featured-business-text">' + escapeHtml(b.description || "") + '</div>';
+      out += '<div class="meta featured-mobile-meta">' + escapeHtml(b.type || "") + (b.place ? ' · ' + escapeHtml(b.place) : '') + '</div>';
+      out += '<div class="featured-business-text featured-mobile-text">' + escapeHtml(b.description || "") + '</div>';
       out += '<div class="featured-business-actions">';
       if (link) out += '<a class="site-link" href="' + link + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
       if (mapsLink) out += '<a class="site-link" href="' + mapsLink + '" target="_blank" rel="noopener noreferrer">Åpne i Google Maps</a>';
