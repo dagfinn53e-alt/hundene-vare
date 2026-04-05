@@ -1108,38 +1108,42 @@ body{
 }
 
 
-/* MOBIL KOMPAKT DESIGN */
+/* KOMPAKT MOBIL + MINDRE TOPPAVSTAND */
 @media (max-width:760px){
-  .menu-grid{
-    gap:8px !important;
-  }
-  .menu-btn{
-    padding:14px 10px !important;
-    min-height:70px !important;
-    border-radius:18px !important;
-  }
-  .menu-btn h3{
-    font-size:16px !important;
-  }
-  .card{
-    padding:16px !important;
-  }
-}
 
-
-/* EKSTRA KOMPAKT - 2 KOLONNER */
-@media (max-width:760px){
   .menu-grid{
     grid-template-columns:repeat(2,1fr) !important;
     gap:6px !important;
   }
+
   .menu-btn{
     padding:10px 6px !important;
     min-height:60px !important;
+    border-radius:16px !important;
   }
+
   .menu-btn h3{
     font-size:14px !important;
   }
+
+  .hero{
+    margin-top:10px !important;
+    padding:18px !important;
+  }
+
+  .hero-content{
+    padding-bottom:10px !important;
+  }
+
+  .stats{
+    margin-top:10px !important;
+  }
+
+  .card{
+    padding:14px !important;
+    margin-top:12px !important;
+  }
+
 }
 
 </style>
@@ -1193,7 +1197,7 @@ body{
         <button class="menu-btn box-stories" onclick="showPage('activities')"><h3>📅 Aktiviteter</h3></button>
         <button class="menu-btn box-groomers" onclick="showPage('groomers')"><h3>✂️ Frisører</h3></button>
         <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3></button>
-        <button class="menu-btn box-shops" onclick="showPage('pensjonat')"><h3>🏡 Hund pensjonat</h3></button>
+        <button class="menu-btn box-shops" onclick="showPage('pensjonat')"><h3>🏡 Hundepensjonat & Hundepass</h3></button>
         <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3></button>
         <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Bedrift</h3></button>
         <button class="menu-btn box-admin" onclick="showPage('hundeklubber')"><h3>🐶 Hundeklubber</h3></button>
@@ -1262,7 +1266,7 @@ body{
   <div id="page-pensjonat" class="hidden">
     <div class="card">
       <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-      <h2>🏡 Hund pensjonat</h2>
+      <h2>🏡 Hundepensjonat & Hundepass</h2>
       <div class="sub">Her finner du hund pensjonat og steder som tilbyr pass av hund.</div>
       <div class="search-grid">
         <input id="searchPensjonat" placeholder="Søk pensjonat eller sted" oninput="loadBusinesses()">
@@ -1329,7 +1333,7 @@ body{
         <option>Frisør</option>
         <option>Zoo butikk</option>
         <option>Veterinær</option>
-        <option>Hund pensjonat</option>
+        <option>Hundepensjonat & Hundepass</option>
       </select>
       <select id="bizActivity">
         <option value="">Velg aktivitet</option>
@@ -1766,7 +1770,7 @@ body{
     var rows = result.data || [];
     await renderBizList("Frisør","groomerList",rows,document.getElementById("searchGroomers")?.value || "",document.getElementById("filterFavoritesGroomers")?.value || "all",document.getElementById("mapSearchGroomers")?.value || "");
     await renderZooShopsPro(rows,document.getElementById("searchShops")?.value || "",document.getElementById("filterFavoritesShops")?.value || "all",document.getElementById("mapSearchShops")?.value || "");
-    await renderBizList("Hund pensjonat","pensjonatList",rows,document.getElementById("searchPensjonat")?.value || "",document.getElementById("filterFavoritesPensjonat")?.value || "all",document.getElementById("mapSearchPensjonat")?.value || "");
+    await renderBizList("Hundepensjonat & Hundepass","pensjonatList",rows,document.getElementById("searchPensjonat")?.value || "",document.getElementById("filterFavoritesPensjonat")?.value || "all",document.getElementById("mapSearchPensjonat")?.value || "");
     await renderBizList("Veterinær","vetList",rows,document.getElementById("searchVets")?.value || "",document.getElementById("filterFavoritesVets")?.value || "all",document.getElementById("mapSearchVets")?.value || "");
   }
 
