@@ -1107,75 +1107,6 @@ body{
   color:#1d4ed8;
 }
 
-
-/* KOMPAKT MOBIL + MINDRE TOPPAVSTAND */
-@media (max-width:760px){
-  .menu-grid{
-    grid-template-columns:repeat(2,1fr) !important;
-    gap:6px !important;
-  }
-  .menu-btn{
-    padding:10px 6px !important;
-    min-height:60px !important;
-    border-radius:16px !important;
-  }
-  .menu-btn h3{
-    font-size:14px !important;
-  }
-  .hero{
-    margin-top:10px !important;
-    padding:18px !important;
-  }
-  .card{
-    padding:14px !important;
-    margin-top:12px !important;
-  }
-}
-
-
-/* ENKLERE FORSIDE */
-.hero-title-clean{
-  font-size:36px !important;
-  line-height:1.08 !important;
-  margin:0 0 10px 0 !important;
-  letter-spacing:-0.03em !important;
-}
-.hero-text-clean{
-  font-size:17px !important;
-  line-height:1.6 !important;
-  max-width:520px !important;
-  margin:0 !important;
-}
-@media (max-width:760px){
-  .hero{
-    padding:18px !important;
-    border-radius:26px !important;
-  }
-  .hero-title-clean{
-    font-size:28px !important;
-    margin-bottom:8px !important;
-  }
-  .hero-text-clean{
-    font-size:15px !important;
-    line-height:1.5 !important;
-    max-width:none !important;
-  }
-  .topstats{
-    margin-top:14px !important;
-    gap:10px !important;
-  }
-  .stat{
-    border-radius:24px !important;
-    padding:14px 10px !important;
-  }
-  .stat .label{
-    font-size:12px !important;
-  }
-  .stat .value{
-    font-size:26px !important;
-  }
-}
-
 </style>
 </head>
 <body>
@@ -1192,10 +1123,12 @@ body{
     <div class="hero" style="background-image:url('https://images.unsplash.com/photo-1517849845537-4d257902454a');background-size:cover;background-position:center;color:#fff;position:relative;">
       <div style="position:absolute;inset:0;background:rgba(0,0,0,0.35);border-radius:42px;"></div>
       <div style="position:relative;z-index:1;">
-        <h1 class="hero-title-clean">Hundene våre 🐾</h1>
-        <p class="hero-text-clean">
-          Del hundebilder, historier og opplevelser.<br>
-          Logg inn og bli med i fellesskapet.
+        <h1 style="font-size:42px;margin-bottom:10px;">Hundene våre 🐾</h1>
+        <p style="font-size:18px;max-width:600px;">
+          Her kan du dele hundebilder, historier og opplevelser.<br>
+          Logg inn og bli med i fellesskapet.<br><br>
+          👉 Snart kan du også finne frisører, butikker og veterinærer i ditt område.<br><br>
+          <strong>Lag konto eller logg inn for å dele egne bilder og historier.</strong>
         </p>
 
         <div class="topstats">
@@ -1205,8 +1138,16 @@ body{
           <div class="stat"><div class="label">Kommentarer</div><div class="value" id="commentCount">0</div></div>
         </div>
 
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
+          <button type="button" class="alt" onclick="showPage('about')">ℹ️ Om oss</button>
+          <button type="button" class="alt" onclick="showPage('favorites')">❤️ Favoritter</button>
+          <button type="button" class="alt" onclick="showPage('stories')">🐶 Fellesskap</button>
+          <button type="button" class="alt" onclick="showPage('activities')">📅 Aktiviteter</button>
+          <button type="button" class="alt" onclick="showPage('groomers')">✂️ Frisører</button>
+          <button type="button" class="alt" onclick="showPage('shops')">🐾 Butikker</button>
+          <button type="button" class="alt" onclick="showPage('vets')">🏥 Veterinærer</button>
           <button type="button" onclick="showPage('admin')">Admin</button>
+<button type="button" onclick="showPage('shops')">Butikk</button>
         </div>
       </div>
     </div>
@@ -1217,11 +1158,11 @@ body{
         <button class="menu-btn box-stories" onclick="showPage('stories')"><h3>📸 Bilder / Fortellinger</h3></button>
         <button class="menu-btn box-stories" onclick="showPage('activities')"><h3>📅 Aktiviteter</h3></button>
         <button class="menu-btn box-groomers" onclick="showPage('groomers')"><h3>✂️ Frisører</h3></button>
-        <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Zoo butikker</h3></button>
-        <button class="menu-btn box-shops" onclick="showPage('pensjonat')"><h3>🐶 Hundepensjonat & Hundepass</h3></button>
+        <button class="menu-btn box-shops" onclick="showPage('shops')"><h3>🐾 Diverse & Kurser</h3></button>
+        <button class="menu-btn box-shops" onclick="showPage('pensjonat')"><h3>🏡 Hund pensjonat</h3></button>
         <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3></button>
         <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Bedrift</h3></button>
-        <button class="menu-btn box-admin" onclick="showPage('hundeklubber')"><h3>🐶 Hundeklubber &amp; Raseklubber</h3></button>
+        <button class="menu-btn box-admin" onclick="showPage('hundeklubber')"><h3>🐶 Hundeklubber</h3></button>
       </div>
     </div>
   </div>
@@ -1287,8 +1228,8 @@ body{
   <div id="page-pensjonat" class="hidden">
     <div class="card">
       <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-      <h2>🐶 Hundepensjonat & Hundepass</h2>
-      <div class="sub">Her finner du hundepensjonat og hundepass i området.</div>
+      <h2>🏡 Hund pensjonat</h2>
+      <div class="sub">Her finner du hund pensjonat og steder som tilbyr pass av hund.</div>
       <div class="search-grid">
         <input id="searchPensjonat" placeholder="Søk pensjonat eller sted" oninput="loadBusinesses()">
         <select id="filterFavoritesPensjonat" onchange="loadBusinesses()">
@@ -1304,7 +1245,7 @@ body{
   <div id="page-shops" class="hidden">
     <div class="card">
       <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-      <h2>🐾 Zoo butikker</h2>
+      <h2>🐾 Diverse & Kurser</h2>
       <div class="sub">Her kan zoo butikker vise frem butikken sin, legge inn tilbud, nyheter og aktiviteter – uten å forstyrre resten av appen.</div>
       <div class="search-grid">
         <input id="searchShops" placeholder="Søk butikk eller sted" oninput="loadBusinesses()">
@@ -1351,9 +1292,8 @@ body{
       <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
       <select id="bizType">
         <option>Hundeklubb</option>
-        <option>Raseklubb</option>
         <option>Frisør</option>
-        <option>Zoo butikk</option>
+        <option>Diverse & Kurs</option>
         <option>Veterinær</option>
         <option>Hund pensjonat</option>
       </select>
@@ -1440,7 +1380,7 @@ body{
   <div id="page-hundeklubber" class="hidden">
     <div class="card">
       <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-      <h2>🐶 Hundeklubber &amp; Raseklubber</h2>
+      <h2>🐶 Hundeklubber</h2>
       <div class="sub">Her finner du lokale hundeklubber, kurs og aktiviteter. Nå vises klubbene sortert i egne seksjoner.</div>
     </div>
 
@@ -1711,7 +1651,7 @@ body{
     if (!target) return;
 
     var favs = getFavoriteBusinesses();
-    var shops = rows.filter(function(b){ return b.type === "Zoo butikk" && b.approved === true; });
+    var shops = rows.filter(function(b){ return b.type === "Diverse & Kurs" && b.approved === true; });
 
     if (searchValue) {
       var s = searchValue.toLowerCase();
@@ -2200,7 +2140,7 @@ body{
       return;
     }
 
-    var sourceLabel = activity.sourceType === "club" ? "Hundeklubb" : "Zoo butikk";
+    var sourceLabel = activity.sourceType === "club" ? "Hundeklubb" : "Diverse & Kurs";
     var imageHtml = activity.image_url
       ? '<div class="featured-image-wrap"><img class="featured-image" src="' + activity.image_url + '" alt="Fremhevet aktivitet" onclick="openImageModal(this.src)"></div>'
       : '<div class="featured-image-wrap"></div>';
@@ -2255,10 +2195,10 @@ body{
           featured: !!b.featured
         });
       }
-      if (b.type === "Zoo butikk" && (b.activity || b.description || b.image_url)) {
+      if (b.type === "Diverse & Kurs" && (b.activity || b.description || b.image_url)) {
         activities.push({
           sourceType: "shop",
-          sourceName: b.name || "Zoo butikk",
+          sourceName: b.name || "Diverse & Kurs",
           title: b.activity || b.name || "Butikkaktivitet",
           place: b.place || "",
           text: b.description || "",
@@ -2323,7 +2263,7 @@ body{
       html += '<article class="activity-card">';
       if (a.image_url) html += '<img class="clickable-image" src="' + a.image_url + '" alt="Aktivitet" onclick="openImageModal(this.src)">';
       html += '<div class="activity-card-content">';
-      html += '<div class="activity-source ' + (a.sourceType === "club" ? 'club' : 'shop') + '">' + (a.sourceType === "club" ? 'Hundeklubb' : 'Zoo butikk') + '</div>';
+      html += '<div class="activity-source ' + (a.sourceType === "club" ? 'club' : 'shop') + '">' + (a.sourceType === "club" ? 'Hundeklubb' : 'Diverse & Kurs') + '</div>';
       html += '<h3 class="activity-title">' + escapeHtml(a.title || "") + '</h3>';
       html += (a.activity_date ? '<div class="date-chip">📅 ' + escapeHtml(a.activity_date) + '</div>' : '');
       html += '<div class="activity-meta">' + escapeHtml(a.sourceName || "") + ' · ' + escapeHtml(a.place || "") + '</div>';
