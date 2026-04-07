@@ -1221,7 +1221,7 @@ body{
         <button class="menu-btn box-shops" onclick="showPage('pensjonat')"><h3>🐶 Hundepensjonat & Hundepass</h3></button>
         <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3></button>
         <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Bedrift</h3></button>
-        <button class="menu-btn box-admin" onclick="showPage('hundeklubber')"><h3>🐶 Hundeklubber & Raseklubber</h3></button>
+        <button class="menu-btn box-admin" onclick="showPage('hundeklubber')"><h3>🐶 Hundeklubber</h3></button>
       </div>
     </div>
   </div>
@@ -1257,7 +1257,8 @@ body{
         <input id="title" placeholder="Tittel">
         <input id="dog" placeholder="Hundens navn">
         <input id="place" placeholder="Sted">
-        <select id="category"><option>Hverdag</option><option>Tur</option><option>Utstilling</option></select>
+        <select id="category"><option>Hverdag</option><option>Tur</option><option>Utstilling</option>  <option value="Raseklubb">Raseklubb</option>
+</select>
         <textarea id="text" placeholder="Skriv om hunden..."></textarea>
         <label>Velg opptil 5 bilder</label>
         <input id="imageFiles" type="file" accept="image/*" multiple>
@@ -1282,7 +1283,8 @@ body{
     </div>
   </div>
 
-  <div id="page-groomers" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>✂️ Frisører</h2><div class="search-grid"><input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()"><select id="filterFavoritesGroomers" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchGroomers" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="groomerList"></div></div></div>
+  <div id="page-groomers" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>✂️ Frisører</h2><div class="search-grid"><input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()"><select id="filterFavoritesGroomers" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option>  <option value="Raseklubb">Raseklubb</option>
+</select><input id="mapSearchGroomers" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="groomerList"></div></div></div>
 
   <div id="page-pensjonat" class="hidden">
     <div class="card">
@@ -1294,7 +1296,8 @@ body{
         <select id="filterFavoritesPensjonat" onchange="loadBusinesses()">
           <option value="all">Alle</option>
           <option value="fav">Kun favoritter</option>
-        </select>
+          <option value="Raseklubb">Raseklubb</option>
+</select>
         <input id="mapSearchPensjonat" placeholder="Sted for kart-link" oninput="loadBusinesses()">
       </div>
       <div id="pensjonatList"></div>
@@ -1308,13 +1311,15 @@ body{
       <div class="sub">Her kan zoo butikker vise frem butikken sin, legge inn tilbud, nyheter og aktiviteter – uten å forstyrre resten av appen.</div>
       <div class="search-grid">
         <input id="searchShops" placeholder="Søk butikk eller sted" oninput="loadBusinesses()">
-        <select id="filterFavoritesShops" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select>
+        <select id="filterFavoritesShops" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option>  <option value="Raseklubb">Raseklubb</option>
+</select>
         <input id="mapSearchShops" placeholder="Sted for kart-link" oninput="loadBusinesses()">
       </div>
       <div id="shopList"></div>
     </div>
   </div>
-  <div id="page-vets" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>🏥 Veterinærer</h2><div class="search-grid"><input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()"><select id="filterFavoritesVets" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchVets" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="vetList"></div></div></div>
+  <div id="page-vets" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div><h2>🏥 Veterinærer</h2><div class="search-grid"><input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()"><select id="filterFavoritesVets" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option>  <option value="Raseklubb">Raseklubb</option>
+</select><input id="mapSearchVets" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="vetList"></div></div></div>
 
 
   <div id="page-activities" class="hidden">
@@ -1329,12 +1334,14 @@ body{
             <option value="all">Alle</option>
             <option value="club">Kun hundeklubber</option>
             <option value="shop">Kun zoo butikker</option>
-          </select>
+            <option value="Raseklubb">Raseklubb</option>
+</select>
           <select id="activitySort" onchange="loadActivities()">
             <option value="name">Sorter A–Å</option>
             <option value="type">Sorter etter type</option>
             <option value="place">Sorter etter sted</option>
-          </select>
+            <option value="Raseklubb">Raseklubb</option>
+</select>
         </div>
       </div>
       <div id="featuredActivity" class="featured-activity hidden"></div>
@@ -1348,21 +1355,24 @@ body{
       <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
       <h2>🏪 Registrer / rediger bedrift</h2>
       <div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div>
-      <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
+      <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option>  <option value="Raseklubb">Raseklubb</option>
+</select>
       <select id="bizType">
         <option>Hundeklubb</option>
         <option>Frisør</option>
         <option>Zoo butikk</option>
         <option>Veterinær</option>
         <option>Hund pensjonat</option>
-      </select>
+        <option value="Raseklubb">Raseklubb</option>
+</select>
       <select id="bizActivity">
         <option value="">Velg aktivitet</option>
         <option>Valpekurs</option>
         <option>Utstilling</option>
         <option>Agility / trening</option>
         <option>Fellesturer</option>
-      </select>
+        <option value="Raseklubb">Raseklubb</option>
+</select>
       <label>Dato for aktivitet</label>
       <input id="bizDate" type="date">
       <div class="featured-toggle"><input id="bizFeatured" type="checkbox"><label for="bizFeatured">Sett denne som fremhevet aktivitet</label></div>
@@ -1439,7 +1449,7 @@ body{
   <div id="page-hundeklubber" class="hidden">
     <div class="card">
       <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-      <h2>🐶 Hundeklubber & Raseklubber</h2>
+      <h2>🐶 Hundeklubber</h2>
       <div class="sub">Her finner du lokale hundeklubber, kurs og aktiviteter. Nå vises klubbene sortert i egne seksjoner.</div>
     </div>
 
