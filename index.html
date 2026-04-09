@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hundene våre</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-loadFeaturedBusiness();
-</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root{
       --blue:#2563eb; --blue-dark:#1d4ed8; --card:#fff; --line:#dbeafe;
@@ -1135,89 +1133,46 @@ body{
 }
 
 
-/* FREMHEVET BEDRIFT - STABIL */
-.featured-business-card{
-  background:linear-gradient(180deg,#ffffff 0%,#fbfdff 100%);
-  border:1px solid #dbeafe;
-  border-radius:24px;
-  padding:18px;
-  box-shadow:0 14px 28px rgba(15,23,42,.06);
+/* ENKLERE FORSIDE */
+.hero-title-clean{
+  font-size:36px !important;
+  line-height:1.08 !important;
+  margin:0 0 10px 0 !important;
+  letter-spacing:-0.03em !important;
 }
-.featured-business-top{
-  display:flex;
-  gap:16px;
-  align-items:flex-start;
-  flex-wrap:wrap;
-}
-.featured-business-logo{
-  width:84px;
-  height:84px;
-  border-radius:20px;
-  object-fit:cover;
-  background:#fff;
-  border:1px solid #e2e8f0;
-  padding:8px;
-}
-.featured-business-info{
-  flex:1;
-  min-width:220px;
-}
-.featured-business-info h3{
-  margin:8px 0 8px 0;
-  font-size:26px;
-}
-.featured-business-text{
-  color:#334155;
-  line-height:1.7;
-}
-.featured-business-actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:14px;
-}
-.featured-business-image{
-  margin-top:14px;
-}
-.featured-business-image img{
-  width:100%;
-  max-height:320px;
-  object-fit:cover;
-  border-radius:20px;
-  display:block;
+.hero-text-clean{
+  font-size:17px !important;
+  line-height:1.6 !important;
+  max-width:520px !important;
+  margin:0 !important;
 }
 @media (max-width:760px){
-  .featured-business-card{
-    padding:14px;
-    border-radius:20px;
+  .hero{
+    padding:18px !important;
+    border-radius:26px !important;
   }
-  .featured-business-top{
-    display:block;
+  .hero-title-clean{
+    font-size:28px !important;
+    margin-bottom:8px !important;
   }
-  .featured-business-logo{
-    width:68px;
-    height:68px;
-    margin-bottom:10px;
+  .hero-text-clean{
+    font-size:15px !important;
+    line-height:1.5 !important;
+    max-width:none !important;
   }
-  .featured-business-info{
-    min-width:0;
+  .topstats{
+    margin-top:14px !important;
+    gap:10px !important;
   }
-  .featured-business-info h3{
-    font-size:20px;
-    line-height:1.2;
-    margin:6px 0;
+  .stat{
+    border-radius:24px !important;
+    padding:14px 10px !important;
   }
-  .featured-business-text{
-    font-size:14px;
-    line-height:1.55;
+  .stat .label{
+    font-size:12px !important;
   }
-  .featured-business-actions .site-link{
-    width:100%;
-    text-align:center;
-  }
-  .featured-business-image img{
-    max-height:220px;
-    border-radius:16px;
+  .stat .value{
+    font-size:26px !important;
   }
 }
 
@@ -1237,12 +1192,10 @@ body{
     <div class="hero" style="background-image:url('https://images.unsplash.com/photo-1517849845537-4d257902454a');background-size:cover;background-position:center;color:#fff;position:relative;">
       <div style="position:absolute;inset:0;background:rgba(0,0,0,0.35);border-radius:42px;"></div>
       <div style="position:relative;z-index:1;">
-        <h1 style="font-size:42px;margin-bottom:10px;">Hundene våre 🐾</h1>
-        <p style="font-size:18px;max-width:600px;">
-          Her kan du dele hundebilder, historier og opplevelser.<br>
-          Logg inn og bli med i fellesskapet.<br><br>
-          👉 Snart kan du også finne frisører, butikker og veterinærer i ditt område.<br><br>
-          <strong>Lag konto eller logg inn for å dele egne bilder og historier.</strong>
+        <h1 class="hero-title-clean">Hundene våre 🐾</h1>
+        <p class="hero-text-clean">
+          Del hundebilder, historier og opplevelser.<br>
+          Logg inn og bli med i fellesskapet.
         </p>
 
         <div class="topstats">
@@ -1252,22 +1205,10 @@ body{
           <div class="stat"><div class="label">Kommentarer</div><div class="value" id="commentCount">0</div></div>
         </div>
 
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
-          <button type="button" class="alt" onclick="showPage('about')">ℹ️ Om oss</button>
-          <button type="button" class="alt" onclick="showPage('favorites')">❤️ Favoritter</button>
-          <button type="button" class="alt" onclick="showPage('stories')">🐶 Fellesskap</button>
-          <button type="button" class="alt" onclick="showPage('activities')">📅 Aktiviteter</button>
-          <button type="button" class="alt" onclick="showPage('groomers')">✂️ Frisører</button>
-          <button type="button" class="alt" onclick="showPage('shops')">🐾 Butikker</button>
-          <button type="button" class="alt" onclick="showPage('vets')">🏥 Veterinærer</button>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">
           <button type="button" onclick="showPage('admin')">Admin</button>
         </div>
       </div>
-    </div>
-
-    <div class="card" id="featuredBusinessBox" style="display:none;">
-      <h2>⭐ Fremhevet bedrift</h2>
-      <div id="featuredBusinessContent"></div>
     </div>
 
     <div class="card">
@@ -1280,7 +1221,7 @@ body{
         <button class="menu-btn box-shops" onclick="showPage('pensjonat')"><h3>🐶 Hundepensjonat & Hundepass</h3></button>
         <button class="menu-btn box-vets" onclick="showPage('vets')"><h3>🏥 Veterinærer</h3></button>
         <button class="menu-btn box-business" onclick="showPage('business')"><h3>🏪 Bedrift</h3></button>
-        <button class="menu-btn box-admin" onclick="showPage('hundeklubber')"><h3>🐶 Hundeklubber</h3></button>
+        <button class="menu-btn box-admin" onclick="showPage('hundeklubber')"><h3>🐶 Hundeklubber & Raseklubber</h3></button>
       </div>
     </div>
   </div>
@@ -1498,7 +1439,7 @@ body{
   <div id="page-hundeklubber" class="hidden">
     <div class="card">
       <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
-      <h2>🐶 Hundeklubber</h2>
+      <h2>🐶 Hundeklubber & Raseklubber</h2>
       <div class="sub">Her finner du lokale hundeklubber, kurs og aktiviteter. Nå vises klubbene sortert i egne seksjoner.</div>
     </div>
 
@@ -1552,51 +1493,6 @@ body{
 
   function setBottomNavActive(name){}
 
-  async function loadFeaturedBusiness(){
-    try{
-      var box = document.getElementById("featuredBusinessBox");
-      var content = document.getElementById("featuredBusinessContent");
-      if(!box || !content) return;
-
-      var result = await supabase
-        .from("businesses")
-        .select("*")
-        .eq("approved", true)
-        .order("created_at", { ascending: false })
-        .limit(1);
-
-      var rows = result.data || [];
-      if(!rows.length){
-        box.style.display = "none";
-        content.innerHTML = "";
-        return;
-      }
-
-      var b = rows[0];
-      var link = b.website ? normalizeUrl(b.website) : "";
-      var mapsLink = buildGoogleMapsLink(b.place, b.place);
-
-      var out = '<div class="featured-business-card">';
-      out += '<div class="featured-business-top">';
-      if (b.logo_url) out += '<img class="featured-business-logo" src="' + b.logo_url + '" alt="Logo">';
-      out += '<div class="featured-business-info">';
-      out += '<span class="badge approved">Sist godkjent</span>';
-      out += '<h3>' + escapeHtml(b.name || "") + '</h3>';
-      out += '<div class="meta">' + escapeHtml(b.type || "") + (b.place ? ' · ' + escapeHtml(b.place) : '') + '</div>';
-      out += '<div class="featured-business-text">' + escapeHtml(b.description || "") + '</div>';
-      out += '<div class="featured-business-actions">';
-      if (link) out += '<a class="site-link" href="' + link + '" target="_blank" rel="noopener noreferrer">Åpne link</a>';
-      if (mapsLink) out += '<a class="site-link" href="' + mapsLink + '" target="_blank" rel="noopener noreferrer">Åpne i Google Maps</a>';
-      out += '</div>';
-      out += '</div></div>';
-      if (b.image_url) out += '<div class="featured-business-image"><img src="' + b.image_url + '" alt="Bedriftsbilde"></div>';
-      out += '</div>';
-
-      content.innerHTML = out;
-      box.style.display = "block";
-    }catch(e){}
-  }
-
   function showPage(name){
     var pages = ['home','auth','stories','activities','groomers','shops','pensjonat','vets','business','admin','favorites','about','hundeklubber'];
     for (var i = 0; i < pages.length; i++) {
@@ -1613,7 +1509,6 @@ body{
     if(name === 'favorites'){ loadFavoritesPage(); }
     if(name === 'hundeklubber'){ loadDogClubs(); }
     if(name === 'activities'){ loadActivities(); }
-    if(name === 'home'){ loadFeaturedBusiness(); }
   }
 
   function setStatus(text, color) { var el = document.getElementById("status"); if (el) { el.textContent = text; el.style.color = color || "black"; } }
