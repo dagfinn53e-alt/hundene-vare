@@ -1,156 +1,89 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ukens tilbud</title>
-  <style>
-    body{
-      margin:0;
-      font-family:Arial,sans-serif;
-      background:#f4f8ff;
-      color:#0f172a;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ukens tilbud</title>
 
-    .wrap{
-      max-width:720px;
-      margin:0 auto;
-      padding:16px 14px 36px;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#f4f8ff;
+}
 
-    .back{
-      display:inline-block;
-      background:#2563eb;
-      color:#fff;
-      text-decoration:none;
-      padding:10px 16px;
-      border-radius:999px;
-      font-weight:700;
-      margin-bottom:14px;
-    }
+.wrap{
+  max-width:600px;
+  margin:auto;
+  padding:15px;
+}
 
-    .title{
-      text-align:center;
-      color:#2563eb;
-      margin:0 0 6px 0;
-      font-size:34px;
-    }
+.back{
+  display:inline-block;
+  background:#2563eb;
+  color:#fff;
+  padding:10px 16px;
+  border-radius:20px;
+  text-decoration:none;
+  margin-bottom:15px;
+}
 
-    .sub{
-      text-align:center;
-      color:#64748b;
-      margin:0 0 20px 0;
-      font-size:15px;
-    }
+h1{
+  text-align:center;
+  color:#2563eb;
+}
 
-    .offer{
-      background:#fff;
-      border-radius:18px;
-      overflow:hidden;
-      box-shadow:0 10px 24px rgba(15,23,42,.10);
-      margin-bottom:20px;
-      border:1px solid #dbeafe;
-    }
+.box{
+  background:#fff;
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:20px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
 
-    .offer-label{
-      background:#2563eb;
-      color:#fff;
-      text-align:center;
-      font-size:13px;
-      font-weight:700;
-      padding:8px 10px;
-    }
+.box img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+}
 
-    .offer img{
-      width:100%;
-      height:190px;
-      object-fit:cover;
-      display:block;
-    }
+.content{
+  padding:12px;
+  text-align:center;
+}
 
-    .content{
-      padding:14px 16px 18px;
-      text-align:center;
-    }
-
-    .content h2{
-      margin:0 0 8px 0;
-      font-size:30px;
-    }
-
-    .line{
-      margin:6px 0;
-      font-size:17px;
-      line-height:1.45;
-    }
-
-    .muted{
-      color:#64748b;
-      font-size:14px;
-    }
-
-    .btn{
-      display:inline-block;
-      margin-top:10px;
-      background:#2563eb;
-      color:#fff;
-      text-decoration:none;
-      padding:10px 16px;
-      border-radius:999px;
-      font-weight:700;
-    }
-
-    @media (max-width:640px){
-      .title{font-size:28px;}
-      .offer img{height:170px;}
-      .content h2{font-size:24px;}
-      .line{font-size:16px;}
-    }
-  </style>
+.btn{
+  background:#2563eb;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:20px;
+  text-decoration:none;
+  display:inline-block;
+  margin-top:10px;
+}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <a href="index.html" class="back">← Tilbake til forsiden</a>
 
-    <h1 class="title">Ukens tilbud 🐾</h1>
-    <p class="sub">Lokale tilbud for hundeeiere</p>
+<div class="wrap">
 
-    <div class="offer">
-      <div class="offer-label">Ukens tilbud</div>
-      <img src="Buddy%20tilbud.jpg" alt="Buddy Raglamyr tilbud">
-      <div class="content">
-        <h2>Buddy Raglamyr</h2>
-        <div class="line">🩷 -40% på alle Woolf NooHide-produkter</div>
-        <div class="line">🩷 Alle besøkende hunder får smaksprøve på en Woolf NooHide-stick small</div>
-        <div class="line muted">📍 Raglamyr</div>
-        <div class="line muted">Gjelder denne uken</div>
-        <a href="#" class="btn">Se tilbud i butikk</a>
-      </div>
-    </div>
+<a href="index.html" class="back">← Tilbake</a>
 
-    <div class="offer">
-      <div class="offer-label">Tilbud</div>
-      <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1200&q=80" alt="Hundesalong tilbud">
-      <div class="content">
-        <h2>Hundesalong Bella</h2>
-        <div class="line">-30% på klipp ✂️</div>
-        <div class="line muted">📍 Kopervik</div>
-        <div class="line muted">Gjelder: 12. april – 25. april</div>
-        <a href="#" class="btn">Bestill time</a>
-      </div>
-    </div>
+<h1>Ukens tilbud 🐾</h1>
 
-    <div class="offer">
-      <div class="offer-label">Tilbud</div>
-      <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80" alt="Veterinær tilbud">
-      <div class="content">
-        <h2>Veterinær Karmøy</h2>
-        <div class="line">Gratis helsesjekk for hund 🩺</div>
-        <div class="line muted">📍 Åkra</div>
-        <div class="line muted">Gjelder: 15. april – 30. april</div>
-        <a href="#" class="btn">Les mer</a>
-      </div>
-    </div>
-  </div>
+<div class="box">
+<img src="Buddy%20tilbud.jpg">
+<div class="content">
+<h3>Buddy Raglamyr</h3>
+<p>🩷 -40% på alle Woolf NooHide-produkter</p>
+<p>🩷 Smaksprøve til alle hunder</p>
+<p>📍 Raglamyr</p>
+<a href="#" class="btn">Se tilbud</a>
+</div>
+</div>
+
+</div>
+
 </body>
 </html>
