@@ -1264,8 +1264,8 @@ body{
 
         <div class="region-bar">
   <div class="region-label">Velg område</div>
-  <button type="button" id="regionHaugalandet" class="region-chip active" onclick="setRegion('Haugalandet')">Haugalandet</button>
-  <button type="button" id="regionStavanger" class="region-chip" onclick=")function setRegion(region){
+  <button type="button" id="regionHaugalandet" class="region-chip active" 
+  <button type="button" id="regionStavanger" class="region-chip" 
   alert("Knappen virker: " + region);
 
   currentRegion = region;
@@ -1328,6 +1328,13 @@ body{
   if(typeof loadActivities === "function") loadActivities();
 }">Stavanger</button>
   <button type="button" onclick="showPage('admin')">Admin</button>
+          document.getElementById("regionHaugalandet").addEventListener("click", function(){
+  setRegion("Haugalandet");
+});
+
+document.getElementById("regionStavanger").addEventListener("click", function(){
+  setRegion("Stavanger");
+});
 </div>
           
         </div>
