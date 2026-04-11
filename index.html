@@ -1262,8 +1262,13 @@ body{
           <div class="stat"><div class="label">Kommentarer</div><div class="value" id="commentCount">0</div></div>
         </div>
 
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">
-          <button type="button" onclick="showPage('admin')">Admin</button>
+        <div class="region-bar">
+  <div class="region-label">Velg område</div>
+  <button type="button" id="regionHaugalandet" class="region-chip active" onclick="setRegion('Haugalandet')">Haugalandet</button>
+  <button type="button" id="regionStavanger" class="region-chip" onclick="setRegion('Stavanger')">Stavanger</button>
+  <button type="button" onclick="showPage('admin')">Admin</button>
+</div>
+          
         </div>
       </div>
     </div>
