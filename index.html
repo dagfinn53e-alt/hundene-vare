@@ -6,150 +6,323 @@
 <title>Hundene våre</title>
 
 <style>
-body{font-family:Arial;margin:0;background:#f5f9ff;}
-.wrap{max-width:1000px;margin:auto;padding:15px;}
-.hero{
-  background:#2563eb;
-  color:#fff;
-  padding:25px;
-  border-radius:20px;
-}
-.region-bar{
-  margin-top:15px;
-}
-.region-chip{
-  background:#ffffff33;
-  border:none;
-  padding:8px 14px;
-  border-radius:20px;
-  margin-right:8px;
-  color:#fff;
-  cursor:pointer;
-}
-.region-chip.active{
-  background:#fff;
-  color:#2563eb;
-}
-.card{
-  background:#fff;
-  padding:15px;
-  border-radius:20px;
-  margin-top:15px;
-}
-button{
-  padding:10px;
-  border-radius:15px;
-  border:none;
-  background:#2563eb;
-  color:#fff;
-}
-input,select,textarea{
-  width:100%;
-  padding:10px;
-  margin:5px 0;
-  border-radius:10px;
-}
-.hidden{display:none;}
+  body{
+    font-family:Arial,sans-serif;
+    margin:0;
+    background:#f5f9ff;
+    color:#0f172a;
+  }
+
+  .wrap{
+    max-width:1000px;
+    margin:auto;
+    padding:15px;
+  }
+
+  .hero{
+    background:linear-gradient(135deg,#2563eb,#4f8df7);
+    color:#fff;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(37,99,235,0.18);
+  }
+
+  .hero h1{
+    margin:0 0 8px 0;
+    font-size:34px;
+  }
+
+  .hero p{
+    margin:0;
+    opacity:.95;
+    line-height:1.5;
+  }
+
+  .region-bar{
+    margin-top:15px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+  }
+
+  .region-label{
+    font-size:14px;
+    font-weight:700;
+    margin-right:4px;
+  }
+
+  .region-chip{
+    background:#ffffff33;
+    border:none;
+    padding:8px 14px;
+    border-radius:20px;
+    color:#fff;
+    cursor:pointer;
+    font-weight:700;
+  }
+
+  .region-chip.active{
+    background:#fff;
+    color:#2563eb;
+  }
+
+  .card{
+    background:#fff;
+    padding:15px;
+    border-radius:20px;
+    margin-top:15px;
+    box-shadow:0 6px 18px rgba(15,23,42,0.06);
+  }
+
+  .offer-link{
+    display:inline-block;
+    text-decoration:none;
+    background:#2563eb;
+    color:#fff;
+    padding:10px 16px;
+    border-radius:999px;
+    font-weight:700;
+  }
+
+  .card h2,
+  .card h3{
+    margin-top:0;
+  }
+
+  .sub{
+    color:#64748b;
+    font-size:14px;
+    line-height:1.5;
+  }
+
+  button{
+    padding:10px 14px;
+    border-radius:15px;
+    border:none;
+    background:#2563eb;
+    color:#fff;
+    cursor:pointer;
+    font-weight:700;
+  }
+
+  input,select,textarea{
+    width:100%;
+    padding:12px;
+    margin:6px 0 10px 0;
+    border-radius:10px;
+    border:1px solid #cbd5e1;
+    box-sizing:border-box;
+    font-size:15px;
+    background:#fff;
+  }
+
+  textarea{
+    min-height:110px;
+    resize:vertical;
+  }
+
+  .list-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .business-card{
+    background:#fff;
+    border:1px solid #dbeafe;
+    border-radius:16px;
+    padding:14px;
+    margin-top:12px;
+  }
+
+  .business-card h3{
+    margin:0 0 6px 0;
+    font-size:20px;
+  }
+
+  .business-meta{
+    color:#64748b;
+    font-size:14px;
+    margin-bottom:8px;
+  }
+
+  .empty{
+    color:#64748b;
+    border:1px dashed #cbd5e1;
+    border-radius:14px;
+    padding:14px;
+    margin-top:12px;
+    background:#fff;
+  }
+
+  .small-note{
+    color:#64748b;
+    font-size:13px;
+    margin-top:6px;
+  }
+
+  @media (max-width:700px){
+    .hero h1{
+      font-size:28px;
+    }
+  }
 </style>
 </head>
 
 <body>
 <div class="wrap">
 
-<div class="hero">
-<h1>Hundene våre 🐾</h1>
+  <div class="hero">
+    <h1>Hundene våre 🐾</h1>
+    <p>Del hundeglede og finn lokale butikker og tjenester i ditt område.</p>
 
-<div class="region-bar">
-<button id="r1" class="region-chip active" onclick="setRegion('Haugalandet')">Haugalandet</button>
-<button id="r2" class="region-chip" onclick="setRegion('Stavanger')">Stavanger</button>
+    <div class="region-bar">
+      <div class="region-label">Velg område:</div>
+      <button id="r1" class="region-chip active" onclick="setRegion('Haugalandet')">Haugalandet</button>
+      <button id="r2" class="region-chip" onclick="setRegion('Stavanger')">Stavanger</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <a href="tilbud.html" class="offer-link">🐾 Se Ukens tilbud</a>
+    <div class="small-note">Åpner tilbudssiden du allerede har laget.</div>
+  </div>
+
+  <div class="card">
+    <h3>🏪 Registrer bedrift</h3>
+    <div class="sub">Legg inn ny bedrift og velg hvilket område den hører til.</div>
+
+    <select id="bizType">
+      <option>Zoo butikk</option>
+      <option>Frisør</option>
+      <option>Veterinær</option>
+      <option>Hundeklubb</option>
+      <option>Hund pensjonat</option>
+    </select>
+
+    <select id="bizRegion">
+      <option>Haugalandet</option>
+      <option>Stavanger</option>
+    </select>
+
+    <input id="bizName" placeholder="Navn på bedrift">
+    <input id="bizPlace" placeholder="Sted">
+    <textarea id="bizText" placeholder="Beskrivelse"></textarea>
+
+    <button onclick="save()">Lagre</button>
+  </div>
+
+  <div class="card">
+    <div class="list-title">
+      <h3 id="listHeading">Bedrifter i Haugalandet</h3>
+    </div>
+    <div class="sub">Her vises bare bedrifter fra valgt område.</div>
+    <div id="list"></div>
+  </div>
+
 </div>
 
-</div>
-
-<div class="card">
-<a href="tilbud.html">🐾 Se Ukens tilbud</a>
-</div>
-
-<div class="card">
-<h3>🏪 Registrer bedrift</h3>
-
-<select id="bizType">
-<option>Zoo butikk</option>
-<option>Frisør</option>
-<option>Veterinær</option>
-</select>
-
-<select id="bizRegion">
-<option>Haugalandet</option>
-<option>Stavanger</option>
-</select>
-
-<input id="bizName" placeholder="Navn">
-<input id="bizPlace" placeholder="Sted">
-<textarea id="bizText" placeholder="Beskrivelse"></textarea>
-
-<button onclick="save()">Lagre</button>
-</div>
 <script>
-let region="Haugalandet";
+let region = localStorage.getItem("region") || "Haugalandet";
 
-function setRegion(r){
-  region=r;
-  localStorage.setItem("region",r);
-
+function updateButtons(){
   document.getElementById("r1").classList.remove("active");
   document.getElementById("r2").classList.remove("active");
 
-  if(r==="Haugalandet"){document.getElementById("r1").classList.add("active");}
-  if(r==="Stavanger"){document.getElementById("r2").classList.add("active");}
+  if(region === "Haugalandet"){
+    document.getElementById("r1").classList.add("active");
+  } else if(region === "Stavanger"){
+    document.getElementById("r2").classList.add("active");
+  }
 
+  document.getElementById("listHeading").textContent = "Bedrifter i " + region;
+}
+
+function setRegion(r){
+  region = r;
+  localStorage.setItem("region", r);
+  updateButtons();
   load();
 }
 
 function save(){
-  let data={
-    name:document.getElementById("bizName").value,
-    place:document.getElementById("bizPlace").value,
-    text:document.getElementById("bizText").value,
-    type:document.getElementById("bizType").value,
-    region:document.getElementById("bizRegion").value
+  let name = document.getElementById("bizName").value.trim();
+  let place = document.getElementById("bizPlace").value.trim();
+  let text = document.getElementById("bizText").value.trim();
+  let type = document.getElementById("bizType").value;
+  let bizRegion = document.getElementById("bizRegion").value;
+
+  if(!name || !place || !text){
+    alert("Fyll inn navn, sted og beskrivelse.");
+    return;
+  }
+
+  let data = {
+    name: name,
+    place: place,
+    text: text,
+    type: type,
+    region: bizRegion
   };
 
-  let list=JSON.parse(localStorage.getItem("biz")||"[]");
+  let list = JSON.parse(localStorage.getItem("biz") || "[]");
   list.push(data);
-  localStorage.setItem("biz",JSON.stringify(list));
+  localStorage.setItem("biz", JSON.stringify(list));
+
+  document.getElementById("bizName").value = "";
+  document.getElementById("bizPlace").value = "";
+  document.getElementById("bizText").value = "";
+  document.getElementById("bizType").value = "Zoo butikk";
+  document.getElementById("bizRegion").value = region;
 
   alert("Lagret!");
   load();
 }
 
 function load(){
-  let list=JSON.parse(localStorage.getItem("biz")||"[]");
+  let list = JSON.parse(localStorage.getItem("biz") || "[]");
+  let html = "";
 
-  let html="";
-  list.forEach(b=>{
-    if(b.region!==region) return;
+  list.forEach(function(b){
+    if(b.region !== region) return;
 
-    html+=`
-    <div class="card">
-    <h3>${b.name}</h3>
-    <p>${b.place}</p>
-    <p>${b.text}</p>
-    </div>
+    html += `
+      <div class="business-card">
+        <h3>${escapeHtml(b.name)}</h3>
+        <div class="business-meta">${escapeHtml(b.type)} · ${escapeHtml(b.place)} · ${escapeHtml(b.region)}</div>
+        <div>${escapeHtml(b.text)}</div>
+      </div>
     `;
   });
 
-  document.getElementById("list").innerHTML=html;
+  if(!html){
+    html = '<div class="empty">Ingen bedrifter registrert i dette området ennå.</div>';
+  }
+
+  document.getElementById("list").innerHTML = html;
 }
 
-window.onload=()=>{
-  let saved=localStorage.getItem("region");
-  if(saved){setRegion(saved);}else{load();}
+function escapeHtml(str){
+  return String(str || "").replace(/[&<>"']/g, function(m){
+    return {
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      "\"":"&quot;",
+      "'":"&#39;"
+    }[m];
+  });
 }
+
+window.onload = function(){
+  document.getElementById("bizRegion").value = region;
+  updateButtons();
+  load();
+};
 </script>
 
-<div id="list"></div>
-
-</div>
 </body>
 </html>
