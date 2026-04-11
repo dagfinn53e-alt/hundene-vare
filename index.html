@@ -1264,27 +1264,8 @@ body{
 
         <div class="region-bar">
   <div class="region-label">Velg område</div>
-  <button type="button" id="regionHaugalandet" class="region-chip active" 
-  <button type="button" id="regionStavanger" class="region-chip" 
-  alert("Knappen virker: " + region);
-
-  currentRegion = region;
-  localStorage.setItem("region", region);
-
-  document.getElementById("regionHaugalandet")?.classList.remove("active");
-  document.getElementById("regionStavanger")?.classList.remove("active");
-
-  if(region === "Haugalandet"){
-    document.getElementById("regionHaugalandet")?.classList.add("active");
-  }
-
-  if(region === "Stavanger"){
-    document.getElementById("regionStavanger")?.classList.add("active");
-  }
-
-  if(typeof loadBusinesses === "function") loadBusinesses();
-  if(typeof loadActivities === "function") loadActivities();
-}
+  <button type="button" id="regionHaugalandet" class="region-chip active" onclick="setRegion('Haugalandet')">Haugalandet</button>
+  <button type="button" id="regionStavanger" class="region-chip" onclick=")function setRegion(region){
   currentRegion = region;
 
   // lagre valg
@@ -1326,24 +1307,8 @@ body{
   // last inn på nytt (VIKTIG!)
   if(typeof loadBusinesses === "function") loadBusinesses();
   if(typeof loadActivities === "function") loadActivities();
-}if(region === "Stavanger"){
-  document.getElementById("regionStavanger")?.classList.add("active");
-}
-
-// last inn på nytt
-if(typeof loadBusinesses === "function") loadBusinesses();
-if(typeof loadActivities === "function") loadActivities();
-
-}
-
-});
-
-
-});
-});
-
-
-});
+}">Stavanger</button>
+  <button type="button" onclick="showPage('admin')">Admin</button>
 </div>
           
         </div>
