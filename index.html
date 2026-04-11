@@ -9,6 +9,60 @@
   <title>Hundene våre</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
+    /* OMRÅDEVELGER */
+.region-bar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-top:18px;
+}
+.region-label{
+  font-size:14px;
+  font-weight:700;
+  color:#1e3a8a;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.24);
+  padding:10px 14px;
+  border-radius:999px;
+}
+.region-chip{
+  border:none;
+  border-radius:999px;
+  padding:10px 16px;
+  font-weight:700;
+  cursor:pointer;
+  background:rgba(255,255,255,.16);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:none;
+}
+.region-chip.active{
+  background:#fff;
+  color:#1d4ed8;
+}
+.region-select-wrap{
+  margin:10px 0 14px 0;
+  padding:12px;
+  border:1px solid #dbeafe;
+  border-radius:16px;
+  background:#f8fbff;
+}
+.region-note{
+  font-size:13px;
+  color:#64748b;
+  margin-top:4px;
+}
+@media (max-width:760px){
+  .region-bar{
+    gap:8px;
+  }
+  .region-label,
+  .region-chip{
+    font-size:13px;
+    padding:9px 12px;
+  }
+}
     :root{
       --blue:#2563eb; --blue-dark:#1d4ed8; --card:#fff; --line:#dbeafe;
       --text:#0f172a; --muted:#64748b;
