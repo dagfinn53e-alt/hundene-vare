@@ -1,6 +1,6 @@
 
-
-
+  🐾 Se Ukens tilbud
+</a>
 <!DOCTYPE html>
 <html lang="no">
 <head>
@@ -1409,24 +1409,17 @@ body{
 
 
   <div id="page-business" class="hidden">
-    <select id="bizType">
-  <option>Hundeklubb</option>
-  <option>Frisør</option>
-  <option>Zoo butikk</option>
-  <option>Veterinær</option>
-  <option>Hund pensjonat</option>
-</select>
-
-<div class="region-select-wrap">
-  <label for="bizRegion"><strong>Område</strong></label>
-  <select id="bizRegion">
-    <option>Haugalandet</option>
-    <option>Stavanger</option>
-  </select>
-  <div class="region-note">Velg hvilket område bedriften hører til.</div>
-</div>
-
-<select id="bizActivity">
+    <div class="card">
+      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <h2>🏪 Registrer / rediger bedrift</h2>
+      <div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div>
+      <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
+      <select id="bizType">
+        <option>Hundeklubb</option>
+        <option>Frisør</option>
+        <option>Zoo butikk</option>
+        <option>Veterinær</option>
+        <option>Hund pensjonat</option>
       </select>
       <select id="bizActivity">
         <option value="">Velg aktivitet</option>
