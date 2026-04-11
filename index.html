@@ -1326,14 +1326,19 @@ body{
   // last inn på nytt (VIKTIG!)
   if(typeof loadBusinesses === "function") loadBusinesses();
   if(typeof loadActivities === "function") loadActivities();
-}">Stavanger</button>
-  <button type="button" onclick="showPage('admin')">Admin</button>
-document.getElementById("regionHaugalandet").addEventListener("click", function(){
-  setRegion("Haugalandet");
+}if(region === "Stavanger"){
+  document.getElementById("regionStavanger")?.classList.add("active");
+}
+
+// last inn på nytt
+if(typeof loadBusinesses === "function") loadBusinesses();
+if(typeof loadActivities === "function") loadActivities();
+
+}
+
 });
 
-document.getElementById("regionStavanger").addEventListener("click", function(){
-  setRegion("Stavanger");
+
 });
 });
 
