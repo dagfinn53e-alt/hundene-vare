@@ -90,3 +90,66 @@ input,select,textarea{
 
 <button onclick="save()">Lagre</button>
 </div>
+<script>
+let region="Haugalandet";
+
+function setRegion(r){
+  region=r;
+  localStorage.setItem("region",r);
+
+  document.getElementById("r1").classList.remove("active");
+  document.getElementById("r2").classList.remove("active");
+
+  if(r==="Haugalandet"){document.getElementById("r1").classList.add("active");}
+  if(r==="Stavanger"){document.getElementById("r2").classList.add("active");}
+
+  load();
+}
+
+function save(){
+  let data={
+    name:document.getElementById("bizName").value,
+    place:document.getElementById("bizPlace").value,
+    text:document.getElementById("bizText").value,
+    type:document.getElementById("bizType").value,
+    region:document.getElementById("bizRegion").value
+  };
+
+  let list=JSON.parse(localStorage.getItem("biz")||"[]");
+  list.push(data);
+  localStorage.setItem("biz",JSON.stringify(list));
+
+  alert("Lagret!");
+  load();
+}
+
+function load(){
+  let list=JSON.parse(localStorage.getItem("biz")||"[]");
+
+  let html="";
+  list.forEach(b=>{
+    if(b.region!==region) return;
+
+    html+=`
+    <div class="card">
+    <h3>${b.name}</h3>
+    <p>${b.place}</p>
+    <p>${b.text}</p>
+    </div>
+    `;
+  });
+
+  document.getElementById("list").innerHTML=html;
+}
+
+window.onload=()=>{
+  let saved=localStorage.getItem("region");
+  if(saved){setRegion(saved);}else{load();}
+}
+</script>
+
+<div id="list"></div>
+
+</div>
+</body>
+</html>
