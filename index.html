@@ -1268,24 +1268,23 @@ body{
   <button type=<button id="regionStavanger" class="region-chip" onclick="setRegion('Stavanger')">Stavanger</button>
   
 
-  // lagre valg
+
   
 
-  // oppdater knapper
-  document.getElementById("regionHaugalandet")?.classList.remove("active");
-  document.getElementById("regionStavanger")?.classList.remove("active");
 
-  if(region === "Haugalandet"){
-    document.getElementById("regionHaugalandet")?.classList.add("active");
-  }
+  
+  
 
-  if(region === "Stavanger"){
-    document.getElementById("regionStavanger")?.classList.add("active");
-  }
+  
+    
+  
 
-  // oppdater innhold
-  if(typeof loadBusinesses === "function") loadBusinesses();
-  if(typeof loadActivities === "function") loadActivities();
+    
+  
+
+  
+  
+
 }
   currentRegion = region;
 
