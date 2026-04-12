@@ -1265,32 +1265,49 @@ body{
         <div class="region-bar">
   <div class="region-label">Velg område</div>
   <button type="button" id="regionHaugalandet" class="region-chip active" onclick="setRegion('Haugalandet')">Haugalandet</button>
-  <button type=<button id="regionStavanger" class="region-chip" onclick="setRegion('Stavanger')">Stavanger</button>
-  
+  <button type="button" id="regionStavanger" class="region-chip" onclick=")function setRegion(region){
+  currentRegion = region;
 
+  // lagre valg
+  localStorage.setItem("region", region);
 
-  
+  // oppdater knapper
+  document.getElementById("regionHaugalandet")?.classList.remove("active");
+  document.getElementById("regionStavanger")?.classList.remove("active");
 
+  if(region === "Haugalandet"){
+    document.getElementById("regionHaugalandet")?.classList.add("active");
+  }
 
-  
-  
+  if(region === "Stavanger"){
+    document.getElementById("regionStavanger")?.classList.add("active");
+  }
 
-  
-    
-  
+  // oppdater innhold
+  if(typeof loadBusinesses === "function") loadBusinesses();
+  if(typeof loadActivities === "function") loadActivities();
+}
+  currentRegion = region;
 
-    
-  
+  // lagre
+  localStorage.setItem("region", region);
 
-  
-  
+  // oppdater knapper
+  document.getElementById("regionHaugalandet")?.classList.remove("active");
+  document.getElementById("regionStavanger")?.classList.remove("active");
 
+  if(region === "Haugalandet"){
+    document.getElementById("regionHaugalandet")?.classList.add("active");
+  }
 
+  if(region === "Stavanger"){
+    document.getElementById("regionStavanger")?.classList.add("active");
+  }
 
-
-  
-
-  
+  // last inn på nytt (VIKTIG!)
+  if(typeof loadBusinesses === "function") loadBusinesses();
+  if(typeof loadActivities === "function") loadActivities();
+}">Stavanger</button>
   <button type="button" onclick="showPage('admin')">Admin</button>
 </div>
           
@@ -2451,28 +2468,6 @@ body{
   loadProfile();
   loadBusinesses();
   loadDogClubs();
-  <script>
-function setRegion(r){
-  // lagre valg
-  localStorage.setItem("region", r);
-
-  // fjern aktiv
-  document.getElementById("regionHaugalandet")?.classList.remove("active");
-  document.getElementById("regionStavanger")?.classList.remove("active");
-
-  // sett aktiv
-  if(r === "Haugalandet"){
-    document.getElementById("regionHaugalandet")?.classList.add("active");
-  }
-
-  if(r === "Stavanger"){
-    document.getElementById("regionStavanger")?.classList.add("active");
-  }
-
-  // reload innhold hvis finnes
-  if(typeof loadBusinesses === "function") loadBusinesses();
-}
-</script>
 </script>
 </body>
 </html>
