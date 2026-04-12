@@ -1285,27 +1285,12 @@ body{
   
   
 
-}
-  currentRegion = region;
 
 
 
-  // oppdater knapper
-  document.getElementById("regionHaugalandet")?.classList.remove("active");
-  document.getElementById("regionStavanger")?.classList.remove("active");
+  
 
-  if(region === "Haugalandet"){
-    document.getElementById("regionHaugalandet")?.classList.add("active");
-  }
-
-  if(region === "Stavanger"){
-    document.getElementById("regionStavanger")?.classList.add("active");
-  }
-
-  // last inn på nytt (VIKTIG!)
-  if(typeof loadBusinesses === "function") loadBusinesses();
-  if(typeof loadActivities === "function") loadActivities();
-}">Stavanger</button>
+  
   <button type="button" onclick="showPage('admin')">Admin</button>
 </div>
           
