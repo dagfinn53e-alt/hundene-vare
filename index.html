@@ -2451,6 +2451,28 @@ body{
   loadProfile();
   loadBusinesses();
   loadDogClubs();
+  <script>
+function setRegion(r){
+  // lagre valg
+  localStorage.setItem("region", r);
+
+  // fjern aktiv
+  document.getElementById("regionHaugalandet")?.classList.remove("active");
+  document.getElementById("regionStavanger")?.classList.remove("active");
+
+  // sett aktiv
+  if(r === "Haugalandet"){
+    document.getElementById("regionHaugalandet")?.classList.add("active");
+  }
+
+  if(r === "Stavanger"){
+    document.getElementById("regionStavanger")?.classList.add("active");
+  }
+
+  // reload innhold hvis finnes
+  if(typeof loadBusinesses === "function") loadBusinesses();
+}
+</script>
 </script>
 </body>
 </html>
