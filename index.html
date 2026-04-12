@@ -1,6 +1,5 @@
 
-  🐾 Se Ukens tilbud
-</a>
+
 <!DOCTYPE html>
 <html lang="no">
 <head>
@@ -10,7 +9,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     /* OMRÅDEVELGER */
-.region-bar{
+<div class="region-bar">
+  <div class="region-label">Velg område</div>
+  <button type="button" id="regionHaugalandet" class="region-chip active" onclick="setRegion('Haugalandet')">Haugalandet</button>
+  <button type="button" id="regionStavanger" class="region-chip" onclick="setRegion('Stavanger')">Stavanger</button>
+  <button type="button" onclick="showPage('admin')">Admin</button>
+</div>
   display:flex;
   gap:10px;
   flex-wrap:wrap;
@@ -1457,20 +1461,23 @@ body{
       <div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div>
       <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
       <select id="bizType">
-        <option>Hundeklubb</option>
-        <option>Frisør</option>
-        <option>Zoo butikk</option>
-        <option>Veterinær</option>
-        <option>Hund pensjonat</option>
-        <label><strong>Område</strong></label>
-<select id="bizRegion">
+        <select id="bizType">
+  <option>Hundeklubb</option>
+  <option>Frisør</option>
+  <option>Zoo butikk</option>
+  <option>Veterinær</option>
+  <option>Hund pensjonat</option>
+</select>
+
+<div class="region-select-wrap">
   <label><strong>Område</strong></label>
-<select id="bizRegion">
-  <option value="Haugalandet">Haugalandet</option>
-  <option value="Stavanger">Stavanger</option>
-</select>
-</select>
-      </select>
+  <select id="bizRegion">
+    <option value="Haugalandet">Haugalandet</option>
+    <option value="Stavanger">Stavanger</option>
+  </select>
+  <div class="region-note">Velg hvilket område bedriften hører til.</div>
+</div>
+
       <select id="bizActivity">
         <option value="">Velg aktivitet</option>
         <option>Valpekurs</option>
@@ -1604,8 +1611,89 @@ body{
 
 <script>
   var ADMIN_EMAIL = "dagfinn53e@gmail.com";
-  var supabase = window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
+  var supabase = window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH")
+  var currentRegion = localStorage.getItem("hundene_vare_region") || "Haugalandet";
 
+function inferRegionFromBusiness(b) {
+  var explicit = (b && (b.region || b.area || b.omrade || b["område"] || "")).toString().trim();
+  if (explicit === "Stavanger" || explicit === "Haugalandet") return explicit;
+
+  var hay = [
+    b && b.place ? b.place : "",
+    b && b.name ? b.name : "",
+    b && b.description ? b.description : "",
+    b && b.website ? b.website : ""
+  ].join(" ").toLowerCase();
+
+  if (/(stavanger|sandnes|sola|randaberg|hillevåg|hillevaag|klepp|bryne|jæren|jaeren|time)/.test(hay)) {
+    return "Stavanger";
+  }
+  return "Haugalandet";
+}
+
+function businessMatchesRegion(b) {
+  return inferRegionFromBusiness(b) === currentRegion;
+}
+
+function applyRegionButtons() {
+  var haugesundBtn = document.getElementById("regionHaugalandet");
+  var stavangerBtn = document.getElementById("regionStavanger");
+  if (haugesundBtn) haugesundBtn.classList.toggle("active", currentRegion === "Haugalandet");
+  if (stavangerBtn) stavangerBtn.classList.toggle("active", currentRegion === "Stavanger");
+
+  var bizRegion = document.getElementById("bizRegion");
+  if (bizRegion) bizRegion.value = currentRegion;
+}
+
+function setRegion(region) {
+  currentRegion = region;
+  localStorage.setItem("hundene_vare_region", region);
+  applyRegionButtons();
+  if (typeof loadBusinesses === "function") loadBusinesses();
+  if (typeof loadActivities === "function") loadActivities();
+  if (typeof loadDogClubs === "function") loadDogClubs();
+}
+var currentRegion = localStorage.getItem("hundene_vare_region") || "Haugalandet";
+
+function inferRegionFromBusiness(b) {
+  var explicit = (b && (b.region || b.area || b.omrade || b["område"] || "")).toString().trim();
+  if (explicit === "Stavanger" || explicit === "Haugalandet") return explicit;
+
+  var hay = [
+    b && b.place ? b.place : "",
+    b && b.name ? b.name : "",
+    b && b.description ? b.description : "",
+    b && b.website ? b.website : ""
+  ].join(" ").toLowerCase();
+
+  if (/(stavanger|sandnes|sola|randaberg|hillevåg|hillevaag|klepp|bryne|jæren|jaeren|time)/.test(hay)) {
+    return "Stavanger";
+  }
+  return "Haugalandet";
+}
+
+function businessMatchesRegion(b) {
+  return inferRegionFromBusiness(b) === currentRegion;
+}
+
+function applyRegionButtons() {
+  var haugesundBtn = document.getElementById("regionHaugalandet");
+  var stavangerBtn = document.getElementById("regionStavanger");
+  if (haugesundBtn) haugesundBtn.classList.toggle("active", currentRegion === "Haugalandet");
+  if (stavangerBtn) stavangerBtn.classList.toggle("active", currentRegion === "Stavanger");
+
+  var bizRegion = document.getElementById("bizRegion");
+  if (bizRegion) bizRegion.value = currentRegion;
+}
+
+function setRegion(region) {
+  currentRegion = region;
+  localStorage.setItem("hundene_vare_region", region);
+  applyRegionButtons();
+  if (typeof loadBusinesses === "function") loadBusinesses();
+  if (typeof loadActivities === "function") loadActivities();
+  if (typeof loadDogClubs === "function") loadDogClubs();
+}
   function setBottomNavActive(name){}
 
   function showPage(name){
@@ -1725,23 +1813,87 @@ body{
   }
 
   async function saveBusiness() {
-    var auth = await supabase.auth.getUser();
-    var user = auth && auth.data ? auth.data.user : null;
-    if (!user) { setBizStatus("Du må logge inn først.", "crimson"); return; }
+    async function saveBusiness() {
+  var auth = await supabase.auth.getUser();
+  var user = auth && auth.data ? auth.data.user : null;
+  if (!user) { setBizStatus("Du må logge inn først.", "crimson"); return; }
 
-    var editId = document.getElementById("editBusinessSelect").value;
-    var bizType = document.getElementById("bizType").value;
-    var bizActivity = document.getElementById("bizActivity").value;
-    var bizName = document.getElementById("bizName").value.trim();
-    var bizPlace = document.getElementById("bizPlace").value.trim();
-    var bizPhone = document.getElementById("bizPhone").value.trim();
-    var bizWebsite = document.getElementById("bizWebsite").value.trim();
-    var bizText = document.getElementById("bizText").value.trim();
-    var bizDate = document.getElementById("bizDate") ? document.getElementById("bizDate").value : "";
-    var bizFeatured = document.getElementById("bizFeatured") ? document.getElementById("bizFeatured").checked : false;
-    var logoFile = document.getElementById("bizLogo").files[0];
-    var imageFile = document.getElementById("bizImage").files[0];
-    var galleryFiles = Array.from(document.getElementById("bizGalleryFiles").files).slice(0,5);
+  var editId = document.getElementById("editBusinessSelect").value;
+  var bizType = document.getElementById("bizType").value;
+  var bizRegion = document.getElementById("bizRegion") ? document.getElementById("bizRegion").value : currentRegion;
+  var bizActivity = document.getElementById("bizActivity").value;
+  var bizName = document.getElementById("bizName").value.trim();
+  var bizPlace = document.getElementById("bizPlace").value.trim();
+  var bizPhone = document.getElementById("bizPhone").value.trim();
+  var bizWebsite = document.getElementById("bizWebsite").value.trim();
+  var bizText = document.getElementById("bizText").value.trim();
+  var bizDate = document.getElementById("bizDate") ? document.getElementById("bizDate").value : "";
+  var bizFeatured = document.getElementById("bizFeatured") ? document.getElementById("bizFeatured").checked : false;
+  var logoFile = document.getElementById("bizLogo").files[0];
+  var imageFile = document.getElementById("bizImage").files[0];
+  var galleryFiles = Array.from(document.getElementById("bizGalleryFiles").files).slice(0,5);
+
+  if (!bizName || !bizPlace || !bizText) { setBizStatus("Skriv inn navn, sted og beskrivelse.", "crimson"); return; }
+
+  try {
+    setBizStatus(editId ? "Sender oppdatering til godkjenning ..." : "Sender bedrift til godkjenning ...", "blue");
+    var existing = null;
+    if (editId) {
+      var current = await supabase.from("businesses").select("*").eq("id", editId).maybeSingle();
+      existing = current.data || null;
+    }
+
+    var logoUrl = existing && existing.logo_url ? existing.logo_url : "";
+    var imageUrl = existing && existing.image_url ? existing.image_url : "";
+    var galleryUrls = existing && Array.isArray(existing.gallery_urls) ? existing.gallery_urls : [];
+    if (logoFile) logoUrl = await uploadFile(logoFile, "businesses/logos");
+    if (imageFile) imageUrl = await uploadFile(imageFile, "businesses/images");
+    if (galleryFiles.length) galleryUrls = galleryUrls.concat(await uploadMultiple(galleryFiles, "businesses/gallery")).slice(0,5);
+
+    var payload = {
+      user_id: user.id,
+      author_email: user.email,
+      type: bizType,
+      region: bizRegion,
+      activity: bizActivity,
+      name: bizName,
+      place: bizPlace,
+      phone: bizPhone,
+      website: bizWebsite,
+      description: bizText,
+      logo_url: logoUrl,
+      image_url: imageUrl,
+      gallery_urls: galleryUrls,
+      approved: false
+    };
+
+    if (editId) {
+      var update = await supabase.from("businesses").update(payload).eq("id", editId).eq("author_email", user.email);
+      if (update.error && /column .*region|schema cache|region/i.test(update.error.message || "")) {
+        delete payload.region;
+        update = await supabase.from("businesses").update(payload).eq("id", editId).eq("author_email", user.email);
+      }
+      if (update.error) { setBizStatus("Feil ved oppdatering: " + update.error.message, "crimson"); return; }
+      setBizStatus("Bedrift oppdatert og sendt til ny godkjenning.", "green");
+    } else {
+      var insert = await supabase.from("businesses").insert([payload]);
+      if (insert.error && /column .*region|schema cache|region/i.test(insert.error.message || "")) {
+        delete payload.region;
+        insert = await supabase.from("businesses").insert([payload]);
+      }
+      if (insert.error) { setBizStatus("Feil ved lagring: " + insert.error.message, "crimson"); return; }
+      setBizStatus("Bedrift sendt til godkjenning.", "green");
+    }
+
+    await loadBusinesses();
+    await loadBusinessOptions();
+    await loadProfile();
+    await loadDogClubs();
+    clearBusinessForm();
+  } catch (e) {
+    setBizStatus("Feil ved opplasting: " + e.message, "crimson");
+  }
+}
 
     if (!bizName || !bizPlace || !bizText) { setBizStatus("Skriv inn navn, sted og beskrivelse.", "crimson"); return; }
 
@@ -1784,7 +1936,9 @@ body{
 
   async function renderBizList(type, targetId, rows, searchValue, favMode, mapSearch) {
     var favs = getFavoriteBusinesses();
-    var all = rows.filter(function(b){ return b.type === type && b.approved === true; });
+    var all = rows.filter(function(b){
+  return b.type === type && b.approved === true && businessMatchesRegion(b);
+});
     if (searchValue) {
       var s = searchValue.toLowerCase();
       all = all.filter(function(b){ return (b.name || "").toLowerCase().includes(s) || (b.place || "").toLowerCase().includes(s) || (b.description || "").toLowerCase().includes(s); });
@@ -1825,7 +1979,9 @@ body{
     if (!target) return;
 
     var favs = getFavoriteBusinesses();
-    var shops = rows.filter(function(b){ return b.type === "Zoo butikk" && b.approved === true; });
+    var shops = rows.filter(function(b){
+  return b.type === "Zoo butikk" && b.approved === true && businessMatchesRegion(b);
+});
 
     if (searchValue) {
       var s = searchValue.toLowerCase();
@@ -1916,7 +2072,18 @@ body{
     setAdminStatus("Bedrift godkjent.", "green"); loadAdmin(); loadBusinesses(); loadProfile(); loadDogClubs();
   }
   async function rejectBusiness(id) {
-    var update = await supabase.from("businesses").update({ approved: false }).eq("id", id);
+    var clubs = (clubsRes.data || []).filter(function(club){
+  return businessMatchesRegion({
+    place: club.location || "",
+    name: club.name || "",
+    description: club.description || "",
+    website: club.website || ""
+  });
+});
+
+var businesses = (bizRes.data || []).filter(function(b){
+  return b.approved !== false && businessMatchesRegion(b);
+});
     if (update.error) { setAdminStatus("Feil ved avvisning: " + update.error.message, "crimson"); return; }
     setAdminStatus("Bedrift satt som ventende.", "green"); loadAdmin(); loadBusinesses(); loadProfile(); loadDogClubs();
   }
@@ -2192,7 +2359,8 @@ body{
       if (!grouped[key]) grouped[key] = { clubInfo: null, items: [] };
       grouped[key].clubInfo = club;
     });
-    businesses.forEach(function(b){
+    rows.forEach(function(b){
+  if (!businessMatchesRegion(b)) return;
       var key = (b.name || "Ukjent klubb").trim();
       if (!grouped[key]) grouped[key] = { clubInfo: null, items: [] };
 
@@ -2463,11 +2631,13 @@ body{
 
   window.saveDogClub = saveDogClub;
   window.loadDogClubs = loadDogClubs;
-
-  loadStories();
-  loadProfile();
-  loadBusinesses();
-  loadDogClubs();
+applyRegionButtons();
+loadStories();
+loadProfile();
+loadBusinesses();
+loadDogClubs();
+loadActivities();
+ 
 </script>
 </body>
 </html>
