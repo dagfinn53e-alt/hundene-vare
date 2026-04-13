@@ -174,7 +174,7 @@
     <div class="brand">Hundene våre 🐶</div>
     <div class="acti
       <button type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button>
-      <button type="button" onclick="showPage('home')">Forside</button>
+      <button type="button" onclick="goHome()"">Forside</button>
     </div>
   </div>
 
@@ -210,7 +210,7 @@
 
   <div id="page-auth" class="hidden">
     <div class="card">
-      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <div class="btnrow"><button class="alt" ">← Tilbake til forsiden<onclick="goHome()"/button></div>
       <h2>Opprett konto / Logg inn</h2>
       <div class="sub">Bruk e-post og passord.</div>
       <input id="email" type="email" placeholder="E-post">
@@ -226,7 +226,7 @@
 
   <div id="page-stories" class="hidden">
     <div class="card">
-      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <div class="btnrow"><button class="alt" ">← Tilbake til forsiden<onclick="goHome()"/button></div>
       <h2>Bilder / Fortellinger</h2>
       <div class="sub">Del bilder og historier om hunden din.</div>
       <div id="feed">Laster ...</div>
@@ -264,7 +264,7 @@
 
   <div id="page-groomers" class="hidden">
     <div class="card">
-      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <div class="btnrow"><button class="alt" ">←onclick="goHome()" Tilbake til forsiden</button></div>
       <h2>✂️ Frisører</h2>
       <div class="search-grid">
         <input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()">
@@ -277,7 +277,7 @@
 
   <div id="page-shops" class="hidden">
     <div class="card">
-      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <div class="btnrow"><button class="altonclick="goHome()" ">← Tilbake til forsiden</button></div>
       <h2>🐾 Zoo butikker</h2>
       <div class="sub">Butikker kan vise fram tilbud, nyheter og kampanjer.</div>
       <div class="search-grid">
@@ -291,7 +291,7 @@
 
   <div id="page-pensjonat" class="hidden">
     <div class="card">
-      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <div class="btnrow"><button class="alt" ">← onclick="goHome()"Tilbake til forsiden</button></div>
       <h2>🐶 Hundepensjonat & Hundepass</h2>
       <div class="search-grid">
         <input id="searchPensjonat" placeholder="Søk pensjonat eller sted" oninput="loadBusinesses()">
@@ -304,7 +304,7 @@
 
   <div id="page-vets" class="hidden">
     <div class="card">
-      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <div class="btnrow"><button class="alt" )onclick="goHome()"">← Tilbake til forsideonclick="
       <h2>🏥 Veterinærer</h2>
       <div class="search-grid">
         <input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()">
@@ -317,7 +317,7 @@
 
   <div id="page-activities" class="hidden">
     <div class="card">
-      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <div class="btnrow"><button class="alt" ">onclick="goHome()"← Tilbake til forsiden</button></div>
       <h2>📅 Aktiviteter</h2>
       <div class="sub">Her samles aktiviteter og kampanjer fra hundeklubber og zoo butikker.</div>
       <div class="search-grid">
@@ -331,7 +331,7 @@
 
   <div id="page-business" class="hidden">
     <div class="card">
-      <div class="btnrow"><button class="alt" onclick="showPage('home')">← Tilbake til forsiden</button></div>
+      <div class="btnrow"><button class="alt" "onclick="goHome()">← Tilbake til forsiden</button></div>
       <h2>🏪 Registrer / rediger bedrift</h2>
       <div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div>
 
