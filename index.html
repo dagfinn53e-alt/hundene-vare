@@ -131,27 +131,22 @@
       .hero h1{font-size:32px}
       h2{font-size:28px}
     }
-    @media (max-width:760px){
-  .menu-grid{
-    grid-template-columns:repeat(2,1fr) !important;
-    gap:10px !important;
-  }
-  .menu-btn{
-    padding:14px 8px !important;
-    min-height:82px !important;
-    border-radius:16px !important;
-  }
-  .menu-btn h3{
-    font-size:16px !important;
-    line-height:1.25 !important;
-  }
+    @media (max-width: 760px){
+      .menu-grid,.search-grid,.gallery,.topstats,.activity-list{grid-template-columns:1fr}
+      .wrap{padding:12px 10px 50px}
+      .hero{padding:20px}
+      .topbar{padding:8px 10px}
+      .brand{font-size:18px}
+      .menu-btn h3{font-size:16px}
+      .biz-logo{width:90px;max-height:90px}
+    }
   </style>
 </head>
 <body>
 <div class="wrap">
   <div class="topbar">
     <div class="brand">Hundene våre 🐶</div>
-    <div class="acti
+    <div class="actions">
       <button type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button>
       <button type="button" onclick="showPage('home')">Forside</button>
     </div>
