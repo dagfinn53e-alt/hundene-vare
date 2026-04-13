@@ -1903,11 +1903,50 @@ body{
 
   async function loadBusinesses() {
     var result = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
-    var rows = result.data || [];
-    await renderBizList("Frisør","groomerList",rows,document.getElementById("searchGroomers")?.value || "",document.getElementById("filterFavoritesGroomers")?.value || "all",document.getElementById("mapSearchGroomers")?.value || "");
-    await renderZooShopsPro(rows,document.getElementById("searchShops")?.value || "",document.getElementById("filterFavoritesShops")?.value || "all",document.getElementById("mapSearchShops")?.value || "");
-    await renderBizList("Hund pensjonat","pensjonatList",rows,document.getElementById("searchPensjonat")?.value || "",document.getElementById("filterFavoritesPensjonat")?.value || "all",document.getElementById("mapSearchPensjonat")?.value || "");
-    await renderBizList("Veterinær","vetList",rows,document.getElementById("searchVets")?.value || "",document.getElementById("filterFavoritesVets")?.value || "all",document.getElementById("mapSearchVets")?.value || "");
+    var rows = result.data 
+    async function loadBusinesses() {
+  var result = await supabase.from("businesses").select("*").order("created_at", { ascending: false });
+  var rows = result.data || [];
+
+  // 🔥 NYTT: filtrer på region
+  var filtered = rows;
+
+  if (currentRegion === "Stavanger") {
+    filtered = rows.filter(function(b){
+      return (b.place || "").toLowerCase().includes("stavanger");
+    });
+  }
+
+  if (currentRegion === "Haugalandet") {
+    filtered = rows.filter(function(b){
+      return !(b.place || "").toLowerCase().includes("stavanger");
+    });
+  }
+
+  await renderBizList("Frisør","groomerList",filtered,
+    document.getElementById("searchGroomers")?.value || "",
+    document.getElementById("filterFavoritesGroomers")?.value || "all",
+    document.getElementById("mapSearchGroomers")?.value || ""
+  );
+
+  await renderZooShopsPro(filtered,
+    document.getElementById("searchShops")?.value || "",
+    document.getElementById("filterFavoritesShops")?.value || "all",
+    document.getElementById("mapSearchShops")?.value || ""
+  );
+
+  await renderBizList("Hund pensjonat","pensjonatList",filtered,
+    document.getElementById("searchPensjonat")?.value || "",
+    document.getElementById("filterFavoritesPensjonat")?.value || "all",
+    document.getElementById("mapSearchPensjonat")?.value || ""
+  );
+
+  await renderBizList("Veterinær","vetList",filtered,
+    document.getElementById("searchVets")?.value || "",
+    document.getElementById("filterFavoritesVets")?.value || "all",
+    document.getElementById("mapSearchVets")?.value || ""
+  );
+}
   }
 
   async function approveBusiness(id) {
