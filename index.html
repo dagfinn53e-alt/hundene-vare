@@ -473,7 +473,19 @@
     "https://kxudiviidwwwclbzgdyx.supabase.co",
     "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
   );
+function goHome() {
+  var pages = ['home','auth','stories','activities','groomers','shops','pensjonat','vets','business','admin','favorites','about','hundeklubber'];
 
+  for (var i = 0; i < pages.length; i++) {
+    var el = document.getElementById('page-' + pages[i]);
+    if (el) el.classList.add('hidden');
+  }
+
+  var home = document.getElementById('page-home');
+  if (home) home.classList.remove('hidden');
+
+  window.scrollTo(0, 0);
+}
   function showPage(name){
     var pages = ['home','auth','stories','activities','groomers','shops','pensjonat','vets','business','admin','favorites','about','hundeklubber'];
     for (var i = 0; i < pages.length; i++) {
