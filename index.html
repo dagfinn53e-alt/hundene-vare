@@ -2435,6 +2435,11 @@ body{
     for (var i = 0; i < listToShow.length; i++) {
       var a = listToShow[i];
       html += '<article class="activity-card">';
+      var isOffer = (a.text || "").toLowerCase().includes("tilbud");
+
+if(isOffer){
+  html += '<div style="background:#16a34a;color:#fff;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:bold;display:inline-block;margin-bottom:8px;">🔥 TILBUD</div>';
+}
       if (a.image_url) html += '<img class="clickable-image" src="' + a.image_url + '" alt="Aktivitet" onclick="openImageModal(this.src)">';
       html += '<div class="activity-card-content">';
       html += '<div class="activity-source ' + (a.sourceType === "club" ? 'club' : 'shop') + '">' + (a.sourceType === "club" ? 'Hundeklubb' : 'Zoo butikk') + '</div>';
