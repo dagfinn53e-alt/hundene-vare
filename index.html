@@ -40,4 +40,29 @@
     </button>
 
   </div>
-</div>
+</div>.pro-menu{
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.pro-menu .menu-btn{
+  min-height: 90px;
+  font-size: 15px;
+  line-height: 1.2;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:6px;
+  transition: all 0.2s ease;
+}
+
+.pro-menu .menu-btn span{
+  font-size:14px;
+  font-weight:700;
+}
+
+.pro-menu .menu-btn:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
