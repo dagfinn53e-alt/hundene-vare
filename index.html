@@ -1,99 +1,165 @@
-
 <!DOCTYPE html>
 <html lang="no">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hundene våre</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-body{font-family:Arial;margin:0;background:#f4f7fb}
-.wrap{max-width:900px;margin:auto;padding:15px}
-.card{background:#fff;padding:15px;border-radius:12px;margin-bottom:15px}
-button{padding:10px;border:none;border-radius:8px;background:#2563eb;color:#fff}
-input,textarea,select{width:100%;padding:10px;margin:5px 0}
-.hidden{display:none}
+body{
+  margin:0;
+  font-family:Arial;
+  background:#f3f7ff;
+}
+
+/* TOP BAR */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  padding:12px;
+  background:white;
+  border-bottom:1px solid #ddd;
+}
+
+.brand{
+  font-weight:bold;
+  font-size:20px;
+}
+
+button{
+  border:none;
+  padding:10px 14px;
+  border-radius:20px;
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+}
+
+/* CARD */
+.card{
+  background:white;
+  margin:20px;
+  padding:20px;
+  border-radius:20px;
+}
+
+/* PRO MENU */
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:15px;
+}
+
+.menu-btn{
+  background:#eef4ff;
+  border-radius:18px;
+  padding:15px;
+  text-align:center;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.menu-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 16px rgba(0,0,0,0.1);
+}
+
+.menu-btn span{
+  display:block;
+  margin-top:5px;
+  font-size:14px;
+}
+
+/* COLORS */
+.groom{background:#f3e8ff;}
+.shop{background:#ecfdf5;}
+.vet{background:#fff1f2;}
+.business{background:#fff7ed;}
+.club{background:#f1f5f9;}
+.activity{background:#e0f2fe;}
+
+.sub{
+  color:#666;
+  margin-bottom:10px;
+}
 </style>
 </head>
+
 <body>
-<div class="wrap">
 
-<h2>Hundene våre 🐶</h2>
-
-<button onclick="showPage('turtips')">🥾 Turtips</button>
-
-<div id="page-turtips" class="card">
-<h3>🥾 Turtips</h3>
-<div id="turtipsList">Laster...</div>
+<div class="topbar">
+  <div class="brand">Hundene våre 🐶</div>
+  <div>
+    <button onclick="showPage('auth')">Logg inn</button>
+    <button onclick="goHome()">Forside</button>
+    <button onclick="showPage('admin')">Admin</button>
+  </div>
 </div>
 
 <div class="card">
-<h3>➕ Legg inn turtips</h3>
-<input id="title" placeholder="Tittel">
-<input id="place" placeholder="Sted">
-<textarea id="description" placeholder="Beskrivelse"></textarea>
-<input id="parking" placeholder="Parkering">
-<input id="length" placeholder="Lengde">
-<select id="difficulty">
-<option>Lett</option>
-<option>Middels</option>
-<option>Krevende</option>
-</select>
-<input type="file" id="image">
-<button onclick="saveTurtips()">Lagre turtips</button>
-</div>
+  <a href="tilbud.html">🐾 Se Ukens tilbud</a>
 
+  <h2>Utforsk appen</h2>
+  <div class="sub">Søk etter sted, f.eks: Stavanger, Haugesund eller Stord</div>
+
+  <div class="menu-grid">
+
+    <div class="menu-btn" onclick="showPage('stories')">
+      📸
+      <span>Bilder</span>
+    </div>
+
+    <div class="menu-btn activity" onclick="showPage('activities')">
+      📅
+      <span>Aktiviteter</span>
+    </div>
+
+    <div class="menu-btn groom" onclick="showPage('groomers')">
+      ✂️
+      <span>Frisører</span>
+    </div>
+
+    <div class="menu-btn shop" onclick="showPage('shops')">
+      🐾
+      <span>Butikker</span>
+    </div>
+
+    <div class="menu-btn shop" onclick="showPage('pensjonat')">
+      🐶
+      <span>Pensjonat</span>
+    </div>
+
+    <div class="menu-btn vet" onclick="showPage('vets')">
+      🏥
+      <span>Veterinær</span>
+    </div>
+
+    <div class="menu-btn business" onclick="showPage('business')">
+      🏪
+      <span>Bedrift</span>
+    </div>
+
+    <div class="menu-btn club" onclick="showPage('hundeklubber')">
+      🐕
+      <span>Hundeklubber</span>
+    </div>
+
+  </div>
 </div>
 
 <script>
-var supabase = window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
-
-function showPage(page){document.getElementById('page-turtips').classList.remove('hidden');loadTurtips();}
-
-async function uploadImage(file){
-if(!file) return "";
-var name=Date.now()+"-"+file.name;
-var {error}=await supabase.storage.from("story-images").upload("turtips/"+name,file);
-if(error) return "";
-return supabase.storage.from("story-images").getPublicUrl("turtips/"+name).data.publicUrl;
+function showPage(name){
+  alert("Side: " + name);
 }
 
-async function saveTurtips(){
-var title=document.getElementById('title').value;
-var place=document.getElementById('place').value;
-var description=document.getElementById('description').value;
-var parking=document.getElementById('parking').value;
-var length=document.getElementById('length').value;
-var difficulty=document.getElementById('difficulty').value;
-var file=document.getElementById('image').files[0];
-
-var image_url=await uploadImage(file);
-
-await supabase.from('turtips').insert([{title,place,description,parking,length,difficulty,image_url}]);
-
-alert('Lagret!');
-loadTurtips();
+function goHome(){
+  location.reload();
 }
-
-async function loadTurtips(){
-var {data}=await supabase.from('turtips').select('*').order('created_at',{ascending:false});
-var html="";
-(data||[]).forEach(t=>{
-html+=`<div class="card">
-<h4>${t.title}</h4>
-<p>${t.place}</p>
-<p>${t.description}</p>
-<p>Parkering: ${t.parking}</p>
-<p>Lengde: ${t.length}</p>
-<p>${t.difficulty}</p>
-${t.image_url?`<img src="${t.image_url}" style="width:100%">`:""}
-</div>`;
-});
-
-document.getElementById('turtipsList').innerHTML=html||"Ingen turtips enda";
-}
-
-loadTurtips();
 </script>
+
 </body>
 </html>
