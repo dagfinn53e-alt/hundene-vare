@@ -1,40 +1,79 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hundene våre</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-  body{font-family:Arial;margin:0;background:#f0f6ff}
-  .wrap{max-width:1000px;margin:auto;padding:20px}
-  .menu-btn{padding:12px;margin:5px;border:none;border-radius:12px;background:#2563eb;color:#fff;font-weight:bold;cursor:pointer}
-  .card{background:#fff;padding:15px;border-radius:15px;margin-top:15px}
-  .hidden{display:none}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hundene våre</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{font-family:Arial;margin:0;background:#eef6ff}
+.wrap{max-width:1000px;margin:auto;padding:20px}
+.card{background:#fff;padding:15px;border-radius:15px;margin-top:15px}
+.menu-btn{padding:12px;margin:5px;border:none;border-radius:12px;background:#2563eb;color:#fff;font-weight:bold;cursor:pointer}
+.hidden{display:none}
+img{width:100%;border-radius:12px;margin-top:10px}
+</style>
 </head>
+
 <body>
 <div class="wrap">
 
 <h1>Hundene våre 🐶</h1>
 
+<!-- MENY -->
 <div>
 <button class="menu-btn" onclick="showPage('home')">Forside</button>
+<button class="menu-btn" onclick="showPage('offers')">💰 Tilbud</button>
+<button class="menu-btn" onclick="showPage('turtips')">🥾 Turtips</button>
 <button class="menu-btn" onclick="showPage('stavanger')">📍 Stavanger</button>
 </div>
 
+<!-- HOME -->
 <div id="page-home" class="card">
 <h2>Velkommen</h2>
-<p>Velg område</p>
+<p>Velg funksjon</p>
 </div>
 
+<!-- TILBUD -->
+<div id="page-offers" class="card hidden">
+<h2>💰 Tilbud</h2>
+
+<input id="title" placeholder="Tittel">
+<input id="place" placeholder="Sted">
+<input id="from" type="date">
+<input id="to" type="date">
+<textarea id="text" placeholder="Beskrivelse"></textarea>
+<input id="image" type="file">
+
+<button class="menu-btn" onclick="saveOffer()">Lagre</button>
+
+<div id="offerList"></div>
+</div>
+
+<!-- TURTIPS -->
+<div id="page-turtips" class="card hidden">
+<h2>🥾 Turtips</h2>
+
+<input id="ttTitle" placeholder="Tittel">
+<input id="ttPlace" placeholder="Sted">
+<textarea id="ttText" placeholder="Beskrivelse"></textarea>
+<input id="ttImage" type="file">
+
+<button class="menu-btn" onclick="saveTurtip()">Lagre</button>
+
+<div id="turtipList"></div>
+</div>
+
+<!-- STAVANGER -->
 <div id="page-stavanger" class="card hidden">
 <h2>📍 Stavanger</h2>
 
 <button class="menu-btn" onclick="loadStavanger('Frisør')">Frisører</button>
 <button class="menu-btn" onclick="loadStavanger('Zoo butikk')">Zoo butikker</button>
-<button class="menu-btn" onclick="loadStavanger('Hund pensjonat')">Hundepensjonat</button>
-<button class="menu-btn" onclick="loadStavanger('Veterinær')">Veterinærer</button>
+<button class="menu-btn" onclick="loadStavanger('Hund pensjonat')">Pensjonat</button>
+<button class="menu-btn" onclick="loadStavanger('Veterinær')">Veterinær</button>
 
 <div id="stavangerList"></div>
 </div>
@@ -48,41 +87,116 @@ var supabase = window.supabase.createClient(
 );
 
 function showPage(page){
-document.getElementById("page-home").classList.add("hidden");
-document.getElementById("page-stavanger").classList.add("hidden");
+document.querySelectorAll("[id^=page-]").forEach(p=>p.classList.add("hidden"));
 document.getElementById("page-"+page).classList.remove("hidden");
 }
 
-async function loadStavanger(type){
-var target = document.getElementById("stavangerList");
-target.innerHTML = "Laster...";
+//////////////////////
+// TILBUD
+//////////////////////
 
-var result = await supabase
-.from("businesses")
+async function saveOffer(){
+let file = document.getElementById("image").files[0];
+let url = "";
+
+if(file){
+let upload = await supabase.storage.from("story-images").upload(Date.now()+file.name,file);
+url = supabase.storage.from("story-images").getPublicUrl(upload.data.path).data.publicUrl;
+}
+
+await supabase.from("stories").insert([{
+title: title.value,
+place: place.value,
+text: text.value,
+image_url: url,
+category:"Tilbud"
+}]);
+
+loadOffers();
+}
+
+async function loadOffers(){
+let res = await supabase.from("stories").select("*").eq("category","Tilbud").order("created_at",{ascending:false});
+let html="";
+res.data.forEach(p=>{
+html+=`
+<div class="card">
+<h3>${p.title}</h3>
+<p>${p.place}</p>
+<p>${p.text}</p>
+${p.image_url?`<img src="${p.image_url}">`:""}
+</div>`;
+});
+offerList.innerHTML=html;
+}
+
+//////////////////////
+// TURTIPS
+//////////////////////
+
+async function saveTurtip(){
+let file = document.getElementById("ttImage").files[0];
+let url = "";
+
+if(file){
+let upload = await supabase.storage.from("story-images").upload(Date.now()+file.name,file);
+url = supabase.storage.from("story-images").getPublicUrl(upload.data.path).data.publicUrl;
+}
+
+await supabase.from("turtips").insert([{
+title: ttTitle.value,
+place: ttPlace.value,
+description: ttText.value,
+image_url: url
+}]);
+
+loadTurtips();
+}
+
+async function loadTurtips(){
+let res = await supabase.from("turtips").select("*").order("created_at",{ascending:false});
+let html="";
+res.data.forEach(t=>{
+html+=`
+<div class="card">
+<h3>${t.title}</h3>
+<p>${t.place}</p>
+<p>${t.description}</p>
+${t.image_url?`<img src="${t.image_url}">`:""}
+</div>`;
+});
+turtipList.innerHTML=html;
+}
+
+//////////////////////
+// STAVANGER
+//////////////////////
+
+async function loadStavanger(type){
+let res = await supabase.from("businesses")
 .select("*")
 .eq("region","Stavanger")
-.eq("type", type)
-.eq("approved", true);
+.eq("type",type)
+.eq("approved",true);
 
-if(result.error){
-target.innerHTML = result.error.message;
-return;
-}
-
-var rows = result.data;
-
-if(!rows.length){
-target.innerHTML = "Ingen funnet";
-return;
-}
-
-var html = "";
-rows.forEach(function(b){
-html += "<div class='card'><h3>"+b.name+"</h3><p>"+b.place+"</p></div>";
+let html="";
+res.data.forEach(b=>{
+html+=`
+<div class="card">
+<h3>${b.name}</h3>
+<p>${b.place}</p>
+${b.image_url?`<img src="${b.image_url}">`:""}
+</div>`;
 });
 
-target.innerHTML = html;
+stavangerList.innerHTML = html || "Ingen funnet";
 }
+
+//////////////////////
+
+loadOffers();
+loadTurtips();
+
 </script>
 
 </body>
