@@ -111,6 +111,29 @@
   <div id="page-hundeklubber" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🐶 Hundeklubber</h2><div class="sub">Lokale hundeklubber og aktiviteter.</div><div id="dogClubsList"><div class="empty-box">Laster klubber ...</div></div></div><div class="card"><h2 style="font-size:24px;">➕ Legg til hundeklubb</h2><input id="clubName" placeholder="Klubbnavn"><input id="clubLocation" placeholder="Område / sted"><textarea id="clubDescription" placeholder="Beskrivelse"></textarea><input id="clubWebsite" placeholder="Nettside / Facebook-link"><div class="btnrow"><button type="button" onclick="saveDogClub()">Lagre klubb</button><button type="button" class="alt" onclick="loadDogClubs()">Oppdater liste</button></div><div id="clubStatus" class="status"></div></div></div>
 
   <div class="card"><div class="sharebox"><div>Del appen med andre:</div><div class="sharelink">https://dagfinn53e-alt.github.io/hundene-vare/</div><div class="btnrow"><button type="button" onclick="shareApp()">Del link</button><button type="button" class="alt" onclick="copyLink()">Kopier link</button></div></div></div>
+
+<div id="page-haugalandet" class="hidden">
+  <div class="card">
+    <div class="btnrow">
+      <button class="alt" onclick="goHome()">← Tilbake til forsiden</button>
+    </div>
+    <h2>📍 Haugalandet</h2>
+    <div class="sub">Velg kategori for å vise kun det du vil se i Haugalandet.</div>
+
+    <div class="menu-grid">
+      <button class="menu-btn shop" onclick="loadHaugalandetCategory('Zoo butikk')">🐾 Zoo butikker</button>
+      <button class="menu-btn groom" onclick="loadHaugalandetCategory('Frisør')">✂️ Frisører</button>
+      <button class="menu-btn vet" onclick="loadHaugalandetCategory('Veterinær')">🏥 Veterinærer</button>
+      <button class="menu-btn shop" onclick="loadHaugalandetCategory('Hund pensjonat')">🐶 Hundepensjonat</button>
+    </div>
+
+    <div id="haugalandetCategoryTitle" class="sub" style="margin-top:14px;">Velg en kategori over.</div>
+    <div id="haugalandetContent">
+      <div class="empty-box">Ingen kategori valgt ennå.</div>
+    </div>
+  </div>
+</div>
+
 </div>
 <div id="imageModal" onclick="closeImageModal(event)"><button id="imageModalClose" type="button" onclick="closeImageModal(event)">×</button><img id="imageModalImg" src="" alt="Forstørret bilde"></div>
 <script>
@@ -119,7 +142,46 @@ var supabase=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase
 function qs(id){return document.getElementById(id)}
 function setStatusText(id,text,color){var el=qs(id);if(el){el.textContent=text;el.style.color=color||"black"}}
 function goHome(){var pages=['home','auth','stories','turtips','stavanger','groomers','shops','pensjonat','vets','business','admin','favorites','hundeklubber'];for(var i=0;i<pages.length;i++){var el=qs('page-'+pages[i]);if(el) el.classList.add('hidden')}var home=qs('page-home');if(home) home.classList.remove('hidden');window.scrollTo(0,0)}
-function showPage(name){if(name==='home'){goHome();return;}var pages=['home','auth','stories','turtips','stavanger','groomers','shops','pensjonat','vets','business','admin','favorites','hundeklubber'];for(var i=0;i<pages.length;i++){var el=qs('page-'+pages[i]);if(el) el.classList.add('hidden')}var active=qs('page-'+name);if(active) active.classList.remove('hidden');if(name==='stories'){loadStories();loadProfile()}if(name==='turtips'){loadTurtips()}if(name==='stavanger'){loadStavangerPage()}if(name==='shops'){if(qs('searchShops')) qs('searchShops').value='';if(qs('mapSearchShops')) qs('mapSearchShops').value='';if(qs('filterFavoritesShops')) qs('filterFavoritesShops').value='all';loadBusinesses()}if(name==='groomers'||name==='vets'||name==='pensjonat'){loadBusinesses()}if(name==='business'){loadBusinessOptions()}if(name==='admin'){loadAdmin()}if(name==='favorites'){loadFavoritesPage()}if(name==='hundeklubber'){loadDogClubs()}window.scrollTo(0,0)}
+function showPage(name){if(name==='home'){
+function getHaugalandetLabel(type){
+  if(type==="Zoo butikk") return "🐾 Zoo butikker";
+  if(type==="Frisør") return "✂️ Frisører";
+  if(type==="Veterinær") return "🏥 Veterinærer";
+  if(type==="Hund pensjonat") return "🐶 Hundepensjonat";
+  return type||"";
+}
+
+async function loadHaugalandetCategory(type){
+  var title=qs("haugalandetCategoryTitle");
+  var target=qs("haugalandetContent");
+  if(!target) return;
+  target.innerHTML='Laster ...';
+  if(title) title.textContent='Viser: '+getHaugalandetLabel(type);
+
+  var result=await supabase.from("businesses")
+    .select("*")
+    .eq("approved",true)
+    .eq("region","Haugalandet")
+    .eq("type",type)
+    .order("created_at",{ascending:false});
+
+  if(result.error){
+    target.innerHTML='<div class="empty-box">Feil: '+result.error.message+'</div>';
+    return;
+  }
+
+  var rows=result.data||[];
+  if(!rows.length){
+    target.innerHTML='<div class="empty-box">Ingen funnet.</div>';
+    return;
+  }
+
+  target.innerHTML = rows.map(function(b){
+    return '<div class="biz-card"><div class="biz-content"><h3>'+b.name+'</h3><div>'+b.place+'</div></div></div>';
+  }).join('');
+}
+
+goHome();return;}var pages=['home','auth','stories','turtips','stavanger','groomers','shops','pensjonat','vets','business','admin','favorites','hundeklubber'];for(var i=0;i<pages.length;i++){var el=qs('page-'+pages[i]);if(el) el.classList.add('hidden')}var active=qs('page-'+name);if(active) active.classList.remove('hidden');if(name==='stories'){loadStories();loadProfile()}if(name==='turtips'){loadTurtips()}if(name==='stavanger'){loadStavangerPage()}if(name==='shops'){if(qs('searchShops')) qs('searchShops').value='';if(qs('mapSearchShops')) qs('mapSearchShops').value='';if(qs('filterFavoritesShops')) qs('filterFavoritesShops').value='all';loadBusinesses()}if(name==='groomers'||name==='vets'||name==='pensjonat'){loadBusinesses()}if(name==='business'){loadBusinessOptions()}if(name==='admin'){loadAdmin()}if(name==='favorites'){loadFavoritesPage()}if(name==='hundeklubber'){loadDogClubs()}window.scrollTo(0,0)}
 function quickHaugalandet(){showPage('shops');setTimeout(function(){var input=document.getElementById('searchShops');if(input){input.value='Haugalandet';loadBusinesses();}},300)}
 function quickStavanger(){showPage('stavanger')}
 function escapeHtml(str){return String(str||"").replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]})}
@@ -176,6 +238,45 @@ async function signupUser(){setStatusText("status","Prøver å opprette konto ..
 async function loginUser(){setStatusText("status","Prøver å logge inn ...","blue");var email=qs("email").value.trim();var password=qs("password").value.trim();if(!email||!password){setStatusText("status","Skriv inn e-post og passord.","crimson");return;}var result=await supabase.auth.signInWithPassword({email:email,password:password});if(result.error){setStatusText("status","Feil: "+result.error.message,"crimson");return;}setStatusText("status","Innlogget som "+email,"green");loadProfile();goHome()}
 function shareApp(){var url="https://dagfinn53e-alt.github.io/hundene-vare/";if(navigator.share){navigator.share({title:"Hundene våre",text:"Se appen Hundene våre 🐶",url:url}).catch(function(){})} else {copyLink()}}
 function copyLink(){var url="https://dagfinn53e-alt.github.io/hundene-vare/";navigator.clipboard.writeText(url).then(function(){setStatusText("status","Link kopiert.","green")}).catch(function(){setStatusText("status","Kunne ikke kopiere linken.","crimson")})}
+
+function getHaugalandetLabel(type){
+  if(type==="Zoo butikk") return "🐾 Zoo butikker";
+  if(type==="Frisør") return "✂️ Frisører";
+  if(type==="Veterinær") return "🏥 Veterinærer";
+  if(type==="Hund pensjonat") return "🐶 Hundepensjonat";
+  return type||"";
+}
+
+async function loadHaugalandetCategory(type){
+  var title=qs("haugalandetCategoryTitle");
+  var target=qs("haugalandetContent");
+  if(!target) return;
+  target.innerHTML='Laster ...';
+  if(title) title.textContent='Viser: '+getHaugalandetLabel(type);
+
+  var result=await supabase.from("businesses")
+    .select("*")
+    .eq("approved",true)
+    .eq("region","Haugalandet")
+    .eq("type",type)
+    .order("created_at",{ascending:false});
+
+  if(result.error){
+    target.innerHTML='<div class="empty-box">Feil: '+result.error.message+'</div>';
+    return;
+  }
+
+  var rows=result.data||[];
+  if(!rows.length){
+    target.innerHTML='<div class="empty-box">Ingen funnet.</div>';
+    return;
+  }
+
+  target.innerHTML = rows.map(function(b){
+    return '<div class="biz-card"><div class="biz-content"><h3>'+b.name+'</h3><div>'+b.place+'</div></div></div>';
+  }).join('');
+}
+
 goHome();loadStories();loadProfile();loadBusinesses();loadDogClubs();loadTurtips();
 </script>
 </body>
