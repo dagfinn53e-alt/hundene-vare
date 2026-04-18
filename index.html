@@ -6,24 +6,83 @@
   <title>Hundene våre</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    :root{--blue:#2563eb;--blue-dark:#1d4ed8;--line:#dbeafe;--text:#0f172a;--muted:#64748b;--card:#fff;--shadow:0 12px 30px rgba(15,23,42,.08)}
+    :root{
+      --blue:#2563eb;
+      --blue-dark:#1d4ed8;
+      --line:#dbeafe;
+      --text:#0f172a;
+      --muted:#64748b;
+      --card:#ffffff;
+      --bg1:#eef6ff;
+      --bg2:#f8fbff;
+      --shadow:0 12px 30px rgba(15,23,42,.08);
+      --shadow-soft:0 8px 20px rgba(37,99,235,.10);
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:radial-gradient(circle at top left,#dbeafe 0%,transparent 30%),linear-gradient(180deg,#eff6ff 0%,#f8fbff 100%)}
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(37,99,235,.12) 0%, transparent 28%),
+        radial-gradient(circle at top right, rgba(14,165,233,.10) 0%, transparent 24%),
+        linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 100%);
+    }
     .wrap{max-width:1100px;margin:0 auto;padding:18px 14px 60px}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px;padding:12px 14px;border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.9);box-shadow:var(--shadow);position:sticky;top:8px;z-index:50}
-    .brand{font-size:20px;font-weight:800;color:var(--blue-dark);padding:10px 14px;border-radius:999px;border:1px solid #cfe0ff;background:#fff}
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+      padding:12px 14px;
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:rgba(255,255,255,.92);
+      box-shadow:var(--shadow);
+      position:sticky;
+      top:8px;
+      z-index:50;
+      backdrop-filter:blur(8px);
+    }
+    .brand{
+      font-size:20px;
+      font-weight:800;
+      color:var(--blue-dark);
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid #cfe0ff;
+      background:#fff;
+      box-shadow:0 4px 14px rgba(37,99,235,.08);
+    }
     .actions{display:flex;gap:10px;flex-wrap:wrap}
-    .hero{position:relative;overflow:hidden;border-radius:30px;min-height:260px;padding:28px;color:#fff;box-shadow:var(--shadow);background:linear-gradient(rgba(0,0,0,.40),rgba(0,0,0,.40)),url("https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;margin-bottom:18px}
-    .hero h1{margin:0 0 10px 0;font-size:42px;line-height:1.05}
-    .hero p{margin:0;max-width:560px;line-height:1.6;font-size:16px}
-    .topstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
-    .stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:22px;padding:14px;text-align:center}
-    .stat .label{font-size:13px}.stat .value{font-size:34px;font-weight:800;margin-top:4px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:22px;box-shadow:var(--shadow);margin-bottom:18px}
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:22px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
     h2{margin:0 0 10px 0;font-size:32px}
     .sub{color:var(--muted);line-height:1.6;margin-bottom:14px}
     .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
-    .menu-btn{border:none;border-radius:22px;min-height:72px;padding:12px 10px;font-size:15px;font-weight:800;cursor:pointer;background:#eef4ff;color:var(--blue-dark);border:1px solid #d9e6ff}
+    .menu-btn{
+      border:none;
+      border-radius:22px;
+      min-height:72px;
+      padding:12px 10px;
+      font-size:15px;
+      font-weight:800;
+      cursor:pointer;
+      background:#eef4ff;
+      color:var(--blue-dark);
+      border:1px solid #d9e6ff;
+      box-shadow:0 6px 16px rgba(15,23,42,.05);
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+    .menu-btn:hover{transform:translateY(-1px);box-shadow:0 10px 20px rgba(15,23,42,.08)}
     .menu-btn.offers{background:#dbeafe;color:#1d4ed8;border-color:#93c5fd}
     .menu-btn.groom{background:#f8f1ff;color:#6d28d9;border-color:#e9d5ff}
     .menu-btn.shop{background:#effcf3;color:#166534;border-color:#bbf7d0}
@@ -31,18 +90,58 @@
     .menu-btn.business{background:#fff7ed;color:#c2410c;border-color:#fed7aa}
     .menu-btn.club{background:#f8fafc;color:#334155;border-color:#cbd5e1}
     .menu-btn.activity{background:#eefcff;color:#0369a1;border-color:#bae6fd}
-    .offer-link{display:inline-block;text-decoration:none;background:var(--blue);color:#fff;font-weight:800;padding:10px 18px;border-radius:999px;margin-bottom:14px}
+    .menu-btn.location{
+      background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);
+      color:#1d4ed8;
+      border-color:#93c5fd;
+      box-shadow:0 10px 24px rgba(37,99,235,.12);
+    }
+    .offer-link{
+      display:inline-block;
+      text-decoration:none;
+      background:linear-gradient(135deg,var(--blue) 0%, var(--blue-dark) 100%);
+      color:#fff;
+      font-weight:800;
+      padding:12px 20px;
+      border-radius:999px;
+      margin-bottom:14px;
+      box-shadow:var(--shadow-soft);
+    }
     .hidden{display:none!important}
     .btnrow{display:flex;gap:10px;flex-wrap:wrap}
-    button{border:none;border-radius:999px;padding:11px 16px;background:var(--blue);color:#fff;font-weight:700;cursor:pointer}
-    button.alt{background:#eaf2ff;color:var(--blue-dark);border:1px solid #bfd7ff}
-    button.warn{background:#fff7ed;color:#9a3412;border:1px solid #fdba74}
+    button{
+      border:none;
+      border-radius:999px;
+      padding:11px 16px;
+      background:var(--blue);
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:0 6px 16px rgba(37,99,235,.15);
+    }
+    button.alt{background:#eaf2ff;color:var(--blue-dark);border:1px solid #bfd7ff;box-shadow:none}
+    button.warn{background:#fff7ed;color:#9a3412;border:1px solid #fdba74;box-shadow:none}
     button.danger{background:#b91c1c;color:#fff}
     button.ok{background:#166534;color:#fff}
-    input,select,textarea{width:100%;padding:14px 15px;border:1px solid #cbd5e1;border-radius:16px;font-size:15px;margin:8px 0 12px;background:#fff}
+    input,select,textarea{
+      width:100%;
+      padding:14px 15px;
+      border:1px solid #cbd5e1;
+      border-radius:16px;
+      font-size:15px;
+      margin:8px 0 12px;
+      background:#fff;
+    }
     textarea{min-height:110px;resize:vertical}
     .status{font-weight:700;min-height:22px}
-    .post,.biz-card,.admin-item,.turtip-card{background:#fff;border:1px solid #e2e8f0;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(15,23,42,.06);margin-top:14px}
+    .post,.biz-card,.admin-item,.turtip-card{
+      background:#fff;
+      border:1px solid #e2e8f0;
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:0 8px 24px rgba(15,23,42,.06);
+      margin-top:14px;
+    }
     .post-content,.biz-content,.admin-content,.turtip-content{padding:16px}
     .meta{color:var(--muted);font-size:13px;margin:4px 0 10px 0}
     .post img,.biz-main img,.club-card img,.turtip-card img{width:100%;display:block;object-fit:cover;max-height:320px;background:#f1f5f9}
@@ -75,16 +174,306 @@
     #imageModal img{max-width:95vw;max-height:90vh;border-radius:18px;width:auto;height:auto;object-fit:contain}
     #imageModalClose{position:absolute;top:14px;right:18px;width:42px;height:42px;border-radius:999px;background:#fff;color:#111827;font-size:24px;padding:0}
     .clickable-image{cursor:zoom-in}
-    @media (max-width:760px){.wrap{padding:14px 12px 40px}.topbar{padding:10px 12px;border-radius:20px}.brand{font-size:18px}.hero{padding:20px;border-radius:24px;min-height:auto}.hero h1{font-size:30px}.topstats{grid-template-columns:repeat(2,1fr)}.menu-grid{grid-template-columns:repeat(2,1fr);gap:10px}.menu-btn{min-height:74px;font-size:14px}.search-grid,.gallery{grid-template-columns:1fr}.gallery img{height:220px}h2{font-size:26px}.turtip-card img{height:200px}}
-    @media (min-width:761px){.menu-grid{grid-template-columns:repeat(3,1fr)}}
-    @media (min-width:980px){.wrap{max-width:960px}#feed,.card,.post{max-width:900px;margin-left:auto;margin-right:auto}.post img,.biz-main img,.club-card img,.turtip-card img{max-height:260px}.gallery img{height:160px}.menu-grid{grid-template-columns:repeat(3,1fr)}}
+
+    /* Forside – ny moderne stil */
+    .home-shell{
+      display:grid;
+      gap:18px;
+    }
+    .home-hero{
+      position:relative;
+      overflow:hidden;
+      border-radius:34px;
+      padding:26px;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.55) 0%, transparent 28%),
+        radial-gradient(circle at bottom right, rgba(191,219,254,.45) 0%, transparent 24%),
+        linear-gradient(135deg, #dff2ff 0%, #edf5ff 38%, #f8fbff 100%);
+      border:1px solid #cfe0ff;
+      box-shadow:0 18px 40px rgba(37,99,235,.10);
+    }
+    .home-hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(59,130,246,.08) 0%, transparent 18%),
+        radial-gradient(circle at 80% 25%, rgba(14,165,233,.08) 0%, transparent 18%),
+        radial-gradient(circle at 50% 80%, rgba(56,189,248,.06) 0%, transparent 16%);
+      pointer-events:none;
+    }
+    .home-topline{
+      position:relative;
+      z-index:1;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .home-logo-badge{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.8);
+      border:1px solid #dbeafe;
+      box-shadow:0 8px 20px rgba(37,99,235,.08);
+      font-weight:800;
+      color:var(--blue-dark);
+    }
+    .home-logo-dot{
+      width:42px;height:42px;border-radius:999px;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,#60a5fa 0%, #2563eb 100%);
+      color:#fff;font-size:22px;
+      box-shadow:0 8px 18px rgba(37,99,235,.24);
+    }
+    .home-locations{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .home-location-btn{
+      border:none;
+      border-radius:999px;
+      padding:13px 18px;
+      font-size:16px;
+      font-weight:800;
+      cursor:pointer;
+      min-width:180px;
+      color:#fff;
+      box-shadow:0 12px 24px rgba(15,23,42,.12);
+    }
+    .home-location-btn.haug{
+      background:linear-gradient(135deg,#38bdf8 0%, #2563eb 100%);
+    }
+    .home-location-btn.stav{
+      background:linear-gradient(135deg,#fb923c 0%, #ef4444 100%);
+    }
+    .home-main{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .home-copy{
+      padding:8px 4px 4px 4px;
+    }
+    .home-copy h1{
+      margin:0 0 10px 0;
+      font-size:48px;
+      line-height:1.02;
+      color:#1d4ed8;
+      letter-spacing:-1px;
+    }
+    .home-copy p{
+      margin:0 0 18px 0;
+      max-width:620px;
+      font-size:16px;
+      line-height:1.7;
+      color:#334155;
+    }
+    .home-cta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .home-cta a{
+      text-decoration:none;
+    }
+    .home-highlight-row{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+    .home-stat{
+      background:rgba(255,255,255,.82);
+      border:1px solid #dbeafe;
+      border-radius:22px;
+      padding:14px 12px;
+      box-shadow:0 8px 18px rgba(37,99,235,.07);
+    }
+    .home-stat .label{
+      font-size:13px;
+      color:#475569;
+      font-weight:700;
+      margin-bottom:4px;
+    }
+    .home-stat .value{
+      font-size:30px;
+      font-weight:800;
+      color:#1d4ed8;
+      line-height:1;
+    }
+    .home-side-card{
+      background:rgba(255,255,255,.82);
+      border:1px solid #dbeafe;
+      border-radius:28px;
+      padding:18px;
+      box-shadow:0 12px 24px rgba(37,99,235,.08);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      min-height:100%;
+    }
+    .home-side-card h3{
+      margin:0 0 8px 0;
+      font-size:24px;
+      color:#1d4ed8;
+    }
+    .home-side-card p{
+      margin:0 0 14px 0;
+      color:#475569;
+      line-height:1.6;
+    }
+    .home-mini-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+    .home-mini{
+      padding:14px;
+      border-radius:20px;
+      background:#f8fbff;
+      border:1px solid #dbeafe;
+      font-weight:800;
+      color:#1e3a8a;
+      text-align:center;
+    }
+    .home-menu-card{
+      background:#fff;
+      border:1px solid #dbeafe;
+      border-radius:30px;
+      padding:22px;
+      box-shadow:0 14px 32px rgba(15,23,42,.07);
+    }
+
+    @media (max-width:760px){
+      .wrap{padding:14px 12px 40px}
+      .topbar{padding:10px 12px;border-radius:20px}
+      .brand{font-size:18px}
+      .menu-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+      .menu-btn{min-height:74px;font-size:14px}
+      .search-grid,.gallery{grid-template-columns:1fr}
+      .gallery img{height:220px}
+      h2{font-size:26px}
+      .turtip-card img{height:200px}
+
+      .home-hero{padding:18px;border-radius:26px}
+      .home-topline{align-items:stretch}
+      .home-logo-badge{width:100%;justify-content:center}
+      .home-locations{width:100%;display:grid;grid-template-columns:1fr 1fr}
+      .home-location-btn{min-width:0;width:100%}
+      .home-main{grid-template-columns:1fr}
+      .home-copy h1{font-size:34px}
+      .home-highlight-row{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (min-width:761px){
+      .menu-grid{grid-template-columns:repeat(3,1fr)}
+    }
+    @media (min-width:980px){
+      .wrap{max-width:960px}
+      #feed,.card,.post{max-width:900px;margin-left:auto;margin-right:auto}
+      .post img,.biz-main img,.club-card img,.turtip-card img{max-height:260px}
+      .gallery img{height:160px}
+      .menu-grid{grid-template-columns:repeat(3,1fr)}
+    }
   </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="topbar"><div class="brand">Hundene våre 🐶</div><div class="actions"><button type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button><button type="button" onclick="goHome()">Forside</button><button type="button" onclick="showPage('admin')">Admin</button></div></div>
+  <div class="topbar">
+    <div class="brand">Hundene våre 🐶</div>
+    <div class="actions">
+      <button type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button>
+      <button type="button" onclick="goHome()">Forside</button>
+      <button type="button" onclick="showPage('admin')">Admin</button>
+    </div>
+  </div>
 
-  <div id="page-home"><div class="hero"><h1>Hundene våre 🐾</h1><p>Del hundebilder, historier og opplevelser. Logg inn og bli med i fellesskapet.</p><div class="topstats"><div class="stat"><div class="label">Innlegg</div><div class="value" id="postCount">0</div></div><div class="stat"><div class="label">Medlemmer</div><div class="value" id="memberCount">0</div></div><div class="stat"><div class="label">Bilder</div><div class="value" id="imageCount">0</div></div><div class="stat"><div class="label">Kommentarer</div><div class="value" id="commentCount">0</div></div></div></div><div class="card"><a class="offer-link" href="#" onclick="showPage('weekly'); return false;">🐾 Se Ukens tilbud</a><h2>Utforsk appen</h2><div class="sub">Søk etter sted, f.eks: Stavanger, Haugesund eller Stord</div><div class="menu-grid"><button class="menu-btn activity" onclick="showPage('haugalandet')">📍 Haugalandet</button><button class="menu-btn activity" onclick="showPage('stavanger')">📍 Stavanger</button><button class="menu-btn offers" onclick="showPage('stories')">📰 Nyheter fra butikk</button><button class="menu-btn activity" onclick="showPage('turtips')">🥾 Turtips</button><button class="menu-btn groom" onclick="showPage('groomers')">✂️ Frisører</button><button class="menu-btn shop" onclick="showPage('shops')">🐾 Zoo butikker</button><button class="menu-btn shop" onclick="showPage('pensjonat')">🐶 Hundepensjonat</button><button class="menu-btn vet" onclick="showPage('vets')">🏥 Veterinærer</button><button class="menu-btn business" onclick="showPage('business')">🏪 Bedrift</button><button class="menu-btn club" onclick="showPage('hundeklubber')">🐶 Hundeklubber</button></div></div></div>
+  <div id="page-home">
+    <div class="home-shell">
+      <div class="home-hero">
+        <div class="home-topline">
+          <div class="home-logo-badge">
+            <div class="home-logo-dot">🐾</div>
+            <div>Hundene våre</div>
+          </div>
+          <div class="home-locations">
+            <button class="home-location-btn haug" type="button" onclick="showPage('haugalandet')">📍 Haugalandet</button>
+            <button class="home-location-btn stav" type="button" onclick="showPage('stavanger')">📍 Stavanger</button>
+          </div>
+        </div>
+
+        <div class="home-main">
+          <div class="home-copy">
+            <h1>Hundene våre 🐾</h1>
+            <p>Del hundebilder, historier og opplevelser. Finn butikker, turtips, hundeklubber, veterinærer og lokale tjenester — samlet på ett sted for deg og hunden din.</p>
+
+            <div class="home-cta">
+              <a class="offer-link" href="#" onclick="showPage('weekly'); return false;">⭐ Se Ukens tilbud</a>
+            </div>
+
+            <div class="home-highlight-row">
+              <div class="home-stat">
+                <div class="label">Innlegg</div>
+                <div class="value" id="postCount">0</div>
+              </div>
+              <div class="home-stat">
+                <div class="label">Medlemmer</div>
+                <div class="value" id="memberCount">0</div>
+              </div>
+              <div class="home-stat">
+                <div class="label">Bilder</div>
+                <div class="value" id="imageCount">0</div>
+              </div>
+              <div class="home-stat">
+                <div class="label">Kommentarer</div>
+                <div class="value" id="commentCount">0</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="home-side-card">
+            <div>
+              <h3>Utforsk appen</h3>
+              <p>Her finner du innhold og tjenester for hundeeiere. Alle sidene under fungerer som før — vi har bare gjort fremsiden penere og ryddigere.</p>
+            </div>
+            <div class="home-mini-grid">
+              <div class="home-mini">📰 Nyheter</div>
+              <div class="home-mini">🥾 Turtips</div>
+              <div class="home-mini">🏥 Veterinærer</div>
+              <div class="home-mini">🐶 Hundeklubber</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="home-menu-card">
+        <h2>Velg hva du vil se</h2>
+        <div class="sub">Alt innhold ligger på plass som før. Her er snarveiene til sidene dine.</div>
+
+        <div class="menu-grid">
+          <button class="menu-btn location" onclick="showPage('haugalandet')">📍 Haugalandet</button>
+          <button class="menu-btn location" onclick="showPage('stavanger')">📍 Stavanger</button>
+          <button class="menu-btn offers" onclick="showPage('stories')">📰 Nyheter fra butikk</button>
+          <button class="menu-btn activity" onclick="showPage('turtips')">🥾 Turtips</button>
+          <button class="menu-btn groom" onclick="showPage('groomers')">✂️ Frisører</button>
+          <button class="menu-btn shop" onclick="showPage('shops')">🐾 Zoo butikker</button>
+          <button class="menu-btn vet" onclick="showPage('vets')">🏥 Veterinærer</button>
+          <button class="menu-btn shop" onclick="showPage('pensjonat')">🐶 Hundepensjonat</button>
+          <button class="menu-btn club" onclick="showPage('hundeklubber')">🐶 Hundeklubber</button>
+          <button class="menu-btn business" onclick="showPage('business')">🏪 Bedrift</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="page-auth" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>Opprett konto / Logg inn</h2><div class="sub">Bruk e-post og passord.</div><input id="email" type="email" placeholder="E-post"><input id="password" type="password" placeholder="Passord"><div class="btnrow"><button type="button" onclick="signupUser()">Lag konto</button><button type="button" onclick="loginUser()">Logg inn</button><button type="button" class="alt" onclick="loadProfile()">Oppdater profil</button></div><div id="status" class="status">Klar.</div></div></div>
 
@@ -116,7 +505,9 @@
 
   <div class="card"><div class="sharebox"><div>Del appen med andre:</div><div class="sharelink">https://dagfinn53e-alt.github.io/hundene-vare/</div><div class="btnrow"><button type="button" onclick="shareApp()">Del link</button><button type="button" class="alt" onclick="copyLink()">Kopier link</button></div></div></div>
 </div>
+
 <div id="imageModal" onclick="closeImageModal(event)"><button id="imageModalClose" type="button" onclick="closeImageModal(event)">×</button><img id="imageModalImg" src="" alt="Forstørret bilde"></div>
+
 <script>
 var ADMIN_EMAIL="dagfinn53e@gmail.com";
 var supabase=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
