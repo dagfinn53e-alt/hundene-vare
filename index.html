@@ -35,118 +35,46 @@
       padding:10px 14px;
       border-radius:999px;
       border:1px solid #cfe0ff;
-      background:#fff;
-      white-space:nowrap
-    }
-
-    .topbar-banner{
-      flex:1 1 320px;
-      min-width:260px;
-      display:flex;
-      align-items:center
-    }
-
-    .promo-banner{
-      width:100%;
-      min-height:68px;
-      border-radius:20px;
-      overflow:hidden;
-      border:1px solid #cfe0ff;
-      background:linear-gradient(135deg,#dbeafe 0%,#eff6ff 100%);
-      box-shadow:0 8px 20px rgba(37,99,235,.10);
-      cursor:pointer;
-      position:relative
-    }
-
-    .promo-banner-inner{
-      min-height:68px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:12px 16px
-    }
-
-    .promo-banner.fallback .promo-banner-inner{
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,.55) 0%, transparent 35%),
-        linear-gradient(135deg,#dbeafe 0%,#bfdbfe 45%,#eff6ff 100%);
-    }
-
-    .promo-banner-image{
-      background-size:cover;
-      background-position:center;
-      position:relative
-    }
-
-    .promo-banner-image::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(90deg, rgba(15,23,42,.68) 0%, rgba(15,23,42,.40) 45%, rgba(15,23,42,.10) 100%);
-    }
-
-    .promo-banner-image .promo-banner-inner{
-      position:relative;
-      z-index:1
-    }
-
-    .promo-copy{
-      color:#0f172a
-    }
-
-    .promo-banner-image .promo-copy{
-      color:#fff
-    }
-
-    .promo-kicker{
-      font-size:12px;
-      font-weight:800;
-      letter-spacing:.2px;
-      opacity:.95;
-      margin-bottom:4px
-    }
-
-    .promo-title{
-      font-size:18px;
-      font-weight:800;
-      line-height:1.2;
-      margin-bottom:3px
-    }
-
-    .promo-sub{
-      font-size:13px;
-      opacity:.9
-    }
-
-    .promo-pill{
-      flex:0 0 auto;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:98px;
-      padding:10px 14px;
-      border-radius:999px;
-      font-weight:800;
-      background:#2563eb;
-      color:#fff;
-      box-shadow:0 8px 18px rgba(37,99,235,.18)
-    }
-
-    .promo-banner-image .promo-pill{
-      background:rgba(255,255,255,.94);
-      color:#1d4ed8
+      background:#fff
     }
 
     .actions{display:flex;gap:10px;flex-wrap:wrap}
 
-    .hero{position:relative;overflow:hidden;border-radius:30px;min-height:220px;padding:28px;color:#fff;box-shadow:var(--shadow);background:linear-gradient(rgba(0,0,0,.40),rgba(0,0,0,.40)),url("https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;margin-bottom:18px}
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-radius:30px;
+      min-height:220px;
+      padding:28px;
+      color:#fff;
+      box-shadow:var(--shadow);
+      background:linear-gradient(rgba(0,0,0,.40),rgba(0,0,0,.40)),url("https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;
+      margin-bottom:18px
+    }
+
     .hero h1{margin:0 0 10px 0;font-size:42px;line-height:1.05}
     .hero p{margin:0;max-width:560px;line-height:1.6;font-size:16px}
 
     .card{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:22px;box-shadow:var(--shadow);margin-bottom:18px}
     h2{margin:0 0 10px 0;font-size:32px}
     .sub{color:var(--muted);line-height:1.6;margin-bottom:14px}
+
+    .home-intro{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:16px;
+      align-items:start;
+      margin-bottom:18px
+    }
+
+    .home-intro-left{
+      min-width:0
+    }
+
+    .home-intro-right{
+      min-width:0
+    }
+
     .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
     .menu-btn{border:none;border-radius:22px;min-height:72px;padding:12px 10px;font-size:15px;font-weight:800;cursor:pointer;background:#eef4ff;color:var(--blue-dark);border:1px solid #d9e6ff}
     .menu-btn.offers{background:#dbeafe;color:#1d4ed8;border-color:#93c5fd}
@@ -156,7 +84,114 @@
     .menu-btn.business{background:#fff7ed;color:#c2410c;border-color:#fed7aa}
     .menu-btn.club{background:#f8fafc;color:#334155;border-color:#cbd5e1}
     .menu-btn.activity{background:#eefcff;color:#0369a1;border-color:#bae6fd}
-    .offer-link{display:inline-block;text-decoration:none;background:var(--blue);color:#fff;font-weight:800;padding:10px 18px;border-radius:999px;margin-bottom:14px}
+
+    .offer-link{
+      display:inline-block;
+      text-decoration:none;
+      background:var(--blue);
+      color:#fff;
+      font-weight:800;
+      padding:10px 18px;
+      border-radius:999px;
+      margin-bottom:14px
+    }
+
+    .promo-inline{
+      width:100%;
+      min-height:138px;
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid #cfe0ff;
+      background:linear-gradient(135deg,#dbeafe 0%,#eff6ff 100%);
+      box-shadow:0 8px 20px rgba(37,99,235,.10);
+      cursor:pointer;
+      position:relative
+    }
+
+    .promo-inline-inner{
+      min-height:138px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:10px;
+      padding:16px
+    }
+
+    .promo-inline.fallback .promo-inline-inner{
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.55) 0%, transparent 35%),
+        linear-gradient(135deg,#dbeafe 0%,#bfdbfe 45%,#eff6ff 100%);
+    }
+
+    .promo-inline-image{
+      background-size:cover;
+      background-position:center;
+      position:relative
+    }
+
+    .promo-inline-image::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(15,23,42,.28) 0%, rgba(15,23,42,.62) 100%);
+    }
+
+    .promo-inline-image .promo-inline-inner{
+      position:relative;
+      z-index:1
+    }
+
+    .promo-inline-copy{
+      color:#0f172a
+    }
+
+    .promo-inline-image .promo-inline-copy{
+      color:#fff
+    }
+
+    .promo-kicker{
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.3px;
+      opacity:.95;
+      margin-bottom:4px
+    }
+
+    .promo-title{
+      font-size:20px;
+      font-weight:800;
+      line-height:1.2;
+      margin-bottom:5px
+    }
+
+    .promo-sub{
+      font-size:13px;
+      opacity:.92
+    }
+
+    .promo-bottom{
+      display:flex;
+      justify-content:flex-end
+    }
+
+    .promo-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:94px;
+      padding:9px 14px;
+      border-radius:999px;
+      font-weight:800;
+      background:#2563eb;
+      color:#fff;
+      box-shadow:0 8px 18px rgba(37,99,235,.18)
+    }
+
+    .promo-inline-image .promo-pill{
+      background:rgba(255,255,255,.95);
+      color:#1d4ed8
+    }
+
     .hidden{display:none!important}
     .btnrow{display:flex;gap:10px;flex-wrap:wrap}
     button{border:none;border-radius:999px;padding:11px 16px;background:var(--blue);color:#fff;font-weight:700;cursor:pointer}
@@ -201,10 +236,6 @@
     #imageModalClose{position:absolute;top:14px;right:18px;width:42px;height:42px;border-radius:999px;background:#fff;color:#111827;font-size:24px;padding:0}
     .clickable-image{cursor:zoom-in}
 
-    @media (max-width:900px){
-      .topbar-banner{order:3;flex:1 1 100%}
-    }
-
     @media (max-width:760px){
       .wrap{padding:14px 12px 40px}
       .topbar{padding:10px 12px;border-radius:20px}
@@ -213,13 +244,13 @@
       .hero h1{font-size:30px}
       .menu-grid{grid-template-columns:repeat(2,1fr);gap:10px}
       .menu-btn{min-height:74px;font-size:14px}
-      .search-grid,.gallery{grid-template-columns:1fr}
+      .search-grid,.gallery,.home-intro{grid-template-columns:1fr}
       .gallery img{height:220px}
       h2{font-size:26px}
       .turtip-card img{height:200px}
-      .promo-title{font-size:16px}
+      .promo-inline,.promo-inline-inner{min-height:120px}
+      .promo-title{font-size:17px}
       .promo-sub{font-size:12px}
-      .promo-pill{min-width:88px;padding:9px 12px}
     }
 
     @media (min-width:761px){
@@ -239,20 +270,6 @@
 <div class="wrap">
   <div class="topbar">
     <div class="brand">Hundene våre 🐶</div>
-
-    <div class="topbar-banner">
-      <div id="promoTopBanner" class="promo-banner fallback" onclick="showPage('weekly')">
-        <div class="promo-banner-inner">
-          <div class="promo-copy">
-            <div class="promo-kicker">UKENS TILBUD</div>
-            <div class="promo-title">Plass til butikktilbud 🐾</div>
-            <div class="promo-sub">Nyeste tilbudsbilde kan vises automatisk her</div>
-          </div>
-          <div class="promo-pill">Se nå</div>
-        </div>
-      </div>
-    </div>
-
     <div class="actions">
       <button type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button>
       <button type="button" onclick="goHome()">Forside</button>
@@ -267,9 +284,29 @@
     </div>
 
     <div class="card">
-      <a class="offer-link" href="#" onclick="showPage('weekly'); return false;">🐾 Se Ukens tilbud</a>
-      <h2>Utforsk appen</h2>
-      <div class="sub">Søk etter sted, f.eks: Stavanger, Haugesund eller Stord</div>
+      <div class="home-intro">
+        <div class="home-intro-left">
+          <a class="offer-link" href="#" onclick="showPage('weekly'); return false;">🐾 Se Ukens tilbud</a>
+          <h2>Utforsk appen</h2>
+          <div class="sub">Søk etter sted, f.eks: Stavanger, Haugesund eller Stord</div>
+        </div>
+
+        <div class="home-intro-right">
+          <div id="promoInlineBanner" class="promo-inline fallback" onclick="showPage('weekly')">
+            <div class="promo-inline-inner">
+              <div class="promo-inline-copy">
+                <div class="promo-kicker">UKENS TILBUD</div>
+                <div class="promo-title">Plass til butikktilbud 🐾</div>
+                <div class="promo-sub">Nyeste tilbudsbilde kan vises automatisk her</div>
+              </div>
+              <div class="promo-bottom">
+                <div class="promo-pill">Se nå</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="menu-grid">
         <button class="menu-btn offers" onclick="showPage('stories')">📰 Nyheter fra butikk</button>
         <button class="menu-btn activity" onclick="showPage('turtips')">🥾 Turtips</button>
@@ -342,8 +379,8 @@ function saveTurtipComments(data){localStorage.setItem("hundene_vare_turtip_comm
 async function uploadFile(file,folder){if(!file) return ""; var safeName=Date.now()+"-"+file.name.replace(/[^a-zA-Z0-9._-]/g,"_"); var filePath=folder+"/"+safeName; var upload=await supabase.storage.from("story-images").upload(filePath,file); if(upload.error) throw new Error(upload.error.message); return supabase.storage.from("story-images").getPublicUrl(filePath).data.publicUrl||""}
 async function uploadMultiple(files,folder){var urls=[]; for(var i=0;i<files.length;i++){urls.push(await uploadFile(files[i],folder))} return urls}
 
-async function loadTopPromoBanner(){
-  var el=qs("promoTopBanner");
+async function loadInlinePromoBanner(){
+  var el=qs("promoInlineBanner");
   if(!el) return;
   try{
     var result=await supabase.from("stories").select("*").eq("category","Ukens tilbud").order("created_at",{ascending:false});
@@ -362,42 +399,42 @@ async function loadTopPromoBanner(){
     }
 
     if(best){
-      el.className="promo-banner promo-banner-image";
+      el.className="promo-inline promo-inline-image";
       el.innerHTML=
-        '<div class="promo-banner-inner">'+
-          '<div class="promo-copy">'+
+        '<div class="promo-inline-inner">'+
+          '<div class="promo-inline-copy">'+
             '<div class="promo-kicker">UKENS TILBUD</div>'+
             '<div class="promo-title">'+escapeHtml(best.title)+'</div>'+
             '<div class="promo-sub">'+escapeHtml(best.dog||best.place||'Klikk for å se tilbudet')+'</div>'+
           '</div>'+
-          '<div class="promo-pill">Se nå</div>'+
+          '<div class="promo-bottom"><div class="promo-pill">Se nå</div></div>'+
         '</div>';
       el.style.backgroundImage='url("'+best.image.replace(/"/g,'&quot;')+'")';
       el.style.backgroundSize='cover';
       el.style.backgroundPosition='center';
     }else{
-      el.className="promo-banner fallback";
+      el.className="promo-inline fallback";
       el.innerHTML=
-        '<div class="promo-banner-inner">'+
-          '<div class="promo-copy">'+
+        '<div class="promo-inline-inner">'+
+          '<div class="promo-inline-copy">'+
             '<div class="promo-kicker">UKENS TILBUD</div>'+
             '<div class="promo-title">Plass til butikktilbud 🐾</div>'+
             '<div class="promo-sub">Nyeste tilbudsbilde kan vises automatisk her</div>'+
           '</div>'+
-          '<div class="promo-pill">Se nå</div>'+
+          '<div class="promo-bottom"><div class="promo-pill">Se nå</div></div>'+
         '</div>';
       el.style.backgroundImage='none';
     }
   }catch(e){
-    el.className="promo-banner fallback";
+    el.className="promo-inline fallback";
     el.innerHTML=
-      '<div class="promo-banner-inner">'+
-        '<div class="promo-copy">'+
+      '<div class="promo-inline-inner">'+
+        '<div class="promo-inline-copy">'+
           '<div class="promo-kicker">UKENS TILBUD</div>'+
           '<div class="promo-title">Plass til butikktilbud 🐾</div>'+
           '<div class="promo-sub">Nyeste tilbudsbilde kan vises automatisk her</div>'+
         '</div>'+
-        '<div class="promo-pill">Se nå</div>'+
+        '<div class="promo-bottom"><div class="promo-pill">Se nå</div></div>'+
       '</div>';
     el.style.backgroundImage='none';
   }
@@ -411,7 +448,7 @@ async function saveBusiness(){var auth=await supabase.auth.getUser();var user=au
 
 async function saveStory(){setStatusText("storiesStatus","Prøver å lagre nyhet ...","blue");var auth=await supabase.auth.getUser();var user=auth&&auth.data?auth.data.user:null;if(!user){setStatusText("storiesStatus","Du må logge inn først.","crimson");return;}var title=qs("title").value.trim();var businessName=qs("dog").value.trim()||"Ikke oppgitt";var place=qs("place").value.trim()||"Ikke oppgitt";var offerFrom=qs("offerFrom")&&qs("offerFrom").value?qs("offerFrom").value:"";var offerTo=qs("offerTo")&&qs("offerTo").value?qs("offerTo").value:"";var text=qs("text").value.trim();var files=Array.from(qs("imageFiles").files).slice(0,5);if(!title||!text){setStatusText("storiesStatus","Skriv inn tittel og tekst.","crimson");return;}var fullText=text;if(offerFrom||offerTo){fullText="Tilbud fra: "+(offerFrom||"-")+" | Til: "+(offerTo||"-")+"\n\n"+text}try{var imageUrls=await uploadMultiple(files,"stories/gallery");var imageUrl=imageUrls[0]||"";var result=await supabase.from("stories").insert([{user_id:user.id,author_email:user.email,title:title,dog:businessName,place:place,category:"Nyhet",text:fullText,image_url:imageUrl,image_urls:imageUrls}]);if(result.error){setStatusText("storiesStatus","Feil ved lagring: "+result.error.message,"crimson");return;}}catch(e){setStatusText("storiesStatus","Feil ved bildeopplasting: "+e.message,"crimson");return;}qs("title").value="";qs("dog").value="";qs("place").value="";if(qs("offerFrom")) qs("offerFrom").value="";if(qs("offerTo")) qs("offerTo").value="";qs("text").value="";qs("imageFiles").value="";setStatusText("storiesStatus","Nyhet lagret!","green");await loadStories();await loadProfile();showPage('stories')}
 
-async function saveWeeklyOffer(){setStatusText("weeklyStatus","Prøver å lagre Ukens tilbud ...","blue");var auth=await supabase.auth.getUser();var user=auth&&auth.data?auth.data.user:null;if(!user){setStatusText("weeklyStatus","Du må logge inn først.","crimson");return;}var title=qs("weeklyTitle").value.trim();var businessName=qs("weeklyDog").value.trim()||"Ikke oppgitt";var place=qs("weeklyPlace").value.trim()||"Ikke oppgitt";var offerFrom=qs("weeklyOfferFrom")&&qs("weeklyOfferFrom").value?qs("weeklyOfferFrom").value:"";var offerTo=qs("weeklyOfferTo")&&qs("weeklyOfferTo").value?qs("weeklyOfferTo").value:"";var text=qs("weeklyText").value.trim();var files=Array.from(qs("weeklyImageFiles").files).slice(0,5);if(!title||!text){setStatusText("weeklyStatus","Skriv inn tittel og tekst.","crimson");return;}var fullText=text;if(offerFrom||offerTo){fullText="Tilbud fra: "+(offerFrom||"-")+" | Til: "+(offerTo||"-")+"\n\n"+text}try{var imageUrls=await uploadMultiple(files,"stories/gallery");var imageUrl=imageUrls[0]||"";var result=await supabase.from("stories").insert([{user_id:user.id,author_email:user.email,title:title,dog:businessName,place:place,category:"Ukens tilbud",text:fullText,image_url:imageUrl,image_urls:imageUrls}]);if(result.error){setStatusText("weeklyStatus","Feil ved lagring: "+result.error.message,"crimson");return;}}catch(e){setStatusText("weeklyStatus","Feil ved bildeopplasting: "+e.message,"crimson");return;}qs("weeklyTitle").value="";qs("weeklyDog").value="";qs("weeklyPlace").value="";if(qs("weeklyOfferFrom")) qs("weeklyOfferFrom").value="";if(qs("weeklyOfferTo")) qs("weeklyOfferTo").value="";qs("weeklyText").value="";qs("weeklyImageFiles").value="";setStatusText("weeklyStatus","Ukens tilbud lagret!","green");await loadWeeklyOffers();await loadTopPromoBanner();showPage('weekly')}
+async function saveWeeklyOffer(){setStatusText("weeklyStatus","Prøver å lagre Ukens tilbud ...","blue");var auth=await supabase.auth.getUser();var user=auth&&auth.data?auth.data.user:null;if(!user){setStatusText("weeklyStatus","Du må logge inn først.","crimson");return;}var title=qs("weeklyTitle").value.trim();var businessName=qs("weeklyDog").value.trim()||"Ikke oppgitt";var place=qs("weeklyPlace").value.trim()||"Ikke oppgitt";var offerFrom=qs("weeklyOfferFrom")&&qs("weeklyOfferFrom").value?qs("weeklyOfferFrom").value:"";var offerTo=qs("weeklyOfferTo")&&qs("weeklyOfferTo").value?qs("weeklyOfferTo").value:"";var text=qs("weeklyText").value.trim();var files=Array.from(qs("weeklyImageFiles").files).slice(0,5);if(!title||!text){setStatusText("weeklyStatus","Skriv inn tittel og tekst.","crimson");return;}var fullText=text;if(offerFrom||offerTo){fullText="Tilbud fra: "+(offerFrom||"-")+" | Til: "+(offerTo||"-")+"\n\n"+text}try{var imageUrls=await uploadMultiple(files,"stories/gallery");var imageUrl=imageUrls[0]||"";var result=await supabase.from("stories").insert([{user_id:user.id,author_email:user.email,title:title,dog:businessName,place:place,category:"Ukens tilbud",text:fullText,image_url:imageUrl,image_urls:imageUrls}]);if(result.error){setStatusText("weeklyStatus","Feil ved lagring: "+result.error.message,"crimson");return;}}catch(e){setStatusText("weeklyStatus","Feil ved bildeopplasting: "+e.message,"crimson");return;}qs("weeklyTitle").value="";qs("weeklyDog").value="";qs("weeklyPlace").value="";if(qs("weeklyOfferFrom")) qs("weeklyOfferFrom").value="";if(qs("weeklyOfferTo")) qs("weeklyOfferTo").value="";qs("weeklyText").value="";qs("weeklyImageFiles").value="";setStatusText("weeklyStatus","Ukens tilbud lagret!","green");await loadWeeklyOffers();await loadInlinePromoBanner();showPage('weekly')}
 
 async function loadWeeklyOffers(){var feed=qs("weeklyFeed");if(!feed) return;feed.textContent="Laster ...";var result=await supabase.from("stories").select("*").eq("category","Ukens tilbud").order("created_at",{ascending:false});if(result.error){feed.textContent="Feil ved henting: "+result.error.message;return;}var data=result.data||[];var likes=getLikes();var comments=getComments();if(!data.length){feed.innerHTML="Ingen Ukens tilbud enda.";return;}var html='';data.forEach(function(post,i){var postId=post.id||('weekly_'+i);var likeCount=likes[postId]||0;var postComments=comments[postId]||[];var gallery=Array.isArray(post.image_urls)&&post.image_urls.length?post.image_urls:(post.image_url?[post.image_url]:[]);var rawText=String(post.text||'');var offerLine='';var descText=rawText;if(rawText.indexOf('Tilbud fra:')===0){var parts=rawText.split('\n\n');offerLine=parts[0]||'';descText=parts.slice(1).join('\n\n')||''}html+='<div class="post"><div class="post-content"><span class="badge approved">Ukens tilbud</span><h3 style="margin:8px 0 6px 0;">'+escapeHtml(post.title||'')+'</h3><div class="meta">'+escapeHtml(post.dog||'')+' · '+escapeHtml(post.place||'')+'</div>'+(offerLine?'<div class="meta"><strong>'+escapeHtml(offerLine)+'</strong></div>':'')+'<div>'+escapeHtml(descText||'')+'</div></div>';if(gallery.length){if(gallery.length===1){html+='<img class="clickable-image" src="'+gallery[0]+'" alt="Ukens tilbud" onclick="openImageModal(this.src)">' } else {html+='<div class="gallery">';gallery.forEach(function(url){html+='<img class="clickable-image" src="'+url+'" alt="Ukens tilbud" onclick="openImageModal(this.src)">' });html+='</div>'}}html+='<div class="post-content"><div class="likebar"><button class="alt" type="button" onclick="likePost(\''+postId+'\')">❤️ Lik ('+likeCount+')</button><span class="meta">'+postComments.length+' kommentar(er)</span></div><div style="margin-top:12px;">';postComments.forEach(function(c){html+='<div class="comment"><div class="commentmeta">'+escapeHtml(c.time||'')+'</div><div>'+escapeHtml(c.text||'')+'</div></div>'});html+='<input id="comment-'+postId+'" placeholder="Skriv en kommentar"><div class="btnrow"><button type="button" class="alt" onclick="addComment(\''+postId+'\')">Publiser kommentar</button></div></div></div></div>'});feed.innerHTML=html}
 
@@ -444,7 +481,7 @@ async function loadBusinesses(){var result=await supabase.from("businesses").sel
 async function approveBusiness(id){var result=await supabase.from("businesses").update({approved:true}).eq("id",id);if(result.error){setStatusText("adminStatus","Feil ved godkjenning: "+result.error.message,"crimson");return;}setStatusText("adminStatus","Bedrift godkjent.","green");loadAdmin();loadBusinesses();loadProfile();loadDogClubs();loadStavangerPage();loadHaugalandetPage()}
 async function rejectBusiness(id){var result=await supabase.from("businesses").update({approved:false}).eq("id",id);if(result.error){setStatusText("adminStatus","Feil ved avvisning: "+result.error.message,"crimson");return;}setStatusText("adminStatus","Bedrift satt som ventende.","green");loadAdmin();loadBusinesses();loadProfile();loadDogClubs();loadStavangerPage();loadHaugalandetPage()}
 async function deleteBusiness(id){if(!confirm("Slette denne bedriften?")) return;var result=await supabase.from("businesses").delete().eq("id",id);if(result.error){setStatusText("adminStatus","Feil ved sletting: "+result.error.message,"crimson");return;}setStatusText("adminStatus","Bedrift slettet.","green");loadAdmin();loadBusinesses();loadBusinessOptions();loadProfile();loadDogClubs();loadStavangerPage();loadHaugalandetPage()}
-async function deleteStory(id){if(!confirm("Slette dette innlegget?")) return;var result=await supabase.from("stories").delete().eq("id",id);if(result.error){setStatusText("adminStatus","Feil ved sletting: "+result.error.message,"crimson");return;}setStatusText("adminStatus","Innlegg slettet.","green");loadAdmin();loadStories();loadProfile();loadTopPromoBanner()}
+async function deleteStory(id){if(!confirm("Slette dette innlegget?")) return;var result=await supabase.from("stories").delete().eq("id",id);if(result.error){setStatusText("adminStatus","Feil ved sletting: "+result.error.message,"crimson");return;}setStatusText("adminStatus","Innlegg slettet.","green");loadAdmin();loadStories();loadProfile();loadInlinePromoBanner()}
 async function loadAdmin(){var auth=await supabase.auth.getUser();var user=auth&&auth.data?auth.data.user:null;if(!user||user.email!==ADMIN_EMAIL){qs("adminStories").innerHTML="Du må være innlogget som admin.";qs("adminBusinesses").innerHTML="Du må være innlogget som admin.";setStatusText("adminStatus","Admin-tilgang mangler.","crimson");return;}setStatusText("adminStatus","Admin innlogget som "+user.email,"green");var storiesRes=await supabase.from("stories").select("*").order("created_at",{ascending:false});var businessesRes=await supabase.from("businesses").select("*").order("created_at",{ascending:false});var stories=storiesRes.data||[];var businesses=businessesRes.data||[];qs("adminStories").innerHTML=stories.length?stories.map(function(s){return '<div class="admin-item"><div class="admin-content"><h3 style="margin:0 0 6px 0;">'+escapeHtml(s.title||"")+'</h3><div class="meta">'+escapeHtml(s.author_email||"")+' · '+escapeHtml(s.place||"")+'</div><div class="btnrow"><button class="danger" type="button" onclick="deleteStory(\''+s.id+'\')">Slett innlegg</button></div></div></div>'}).join(""):"Ingen innlegg.";qs("adminBusinesses").innerHTML=businesses.length?businesses.map(function(b){var buttons='';if(!b.approved) buttons+='<button class="ok" type="button" onclick="approveBusiness(\''+b.id+'\')">Godkjenn</button>';if(b.approved) buttons+='<button class="warn" type="button" onclick="rejectBusiness(\''+b.id+'\')">Sett ventende</button>';buttons+='<button class="danger" type="button" onclick="deleteBusiness(\''+b.id+'\')">Slett bedrift</button>';return '<div class="admin-item"><div class="admin-content"><h3 style="margin:0 0 6px 0;">'+escapeHtml(b.name||"")+' '+(b.approved?'<span class="badge approved">Godkjent</span>':'<span class="badge pending">Venter</span>')+'</h3><div class="meta">'+escapeHtml(b.author_email||"")+' · '+escapeHtml(b.type||"")+' · '+escapeHtml(b.place||"")+(b.region?' · '+escapeHtml(b.region):'')+'</div><div class="btnrow">'+buttons+'</div></div></div>'}).join(""):"Ingen bedrifter."}
 async function loadProfile(){var auth=await supabase.auth.getUser();var user=auth&&auth.data?auth.data.user:null;if(!user){qs("profileEmail").textContent="Ikke innlogget";qs("profilePosts").textContent="0";qs("profileBusinesses").textContent="0";qs("myPosts").textContent="Logg inn for å se dine nyheter.";qs("myBusinesses").textContent="Logg inn for å se dine bedrifter.";return;}qs("profileEmail").textContent=user.email;var postsRes=await supabase.from("stories").select("*").eq("author_email",user.email).eq("category","Nyhet").order("created_at",{ascending:false});var posts=postsRes.data||[];qs("profilePosts").textContent=String(posts.length);qs("myPosts").innerHTML=posts.length?posts.map(function(post){var gallery=Array.isArray(post.image_urls)&&post.image_urls.length?post.image_urls:(post.image_url?[post.image_url]:[]);var rawText=String(post.text||"");var offerLine="";var descText=rawText;if(rawText.indexOf("Tilbud fra:")===0){var parts=rawText.split("\n\n");offerLine=parts[0]||"";descText=parts.slice(1).join("\n\n")||""}var html='<div class="post"><div class="post-content"><span class="badge approved">Nyhet</span><h3 style="margin:8px 0 6px 0;">'+escapeHtml(post.title||"")+'</h3><div class="meta">'+escapeHtml(post.dog||"")+' · '+escapeHtml(post.place||"")+'</div>'+(offerLine?'<div class="meta"><strong>'+escapeHtml(offerLine)+'</strong></div>':'')+'<div>'+escapeHtml(descText||"")+'</div></div>';if(gallery.length){if(gallery.length===1){html+='<img class="clickable-image" src="'+gallery[0]+'" alt="Nyhetsbilde" onclick="openImageModal(this.src)">' } else {html+='<div class="gallery">';gallery.forEach(function(url){html+='<img class="clickable-image" src="'+url+'" alt="Nyhetsbilde" onclick="openImageModal(this.src)">' });html+='</div>'}}html+='</div>';return html}).join(""):"Ingen egne nyheter enda.";var bizRes=await supabase.from("businesses").select("*").eq("author_email",user.email).order("created_at",{ascending:false});var businesses=bizRes.data||[];qs("profileBusinesses").textContent=String(businesses.length);qs("myBusinesses").innerHTML=businesses.length?businesses.map(function(b){var html='<div class="biz-card"><div class="biz-content"><div class="biz-top">';if(b.logo_url) html+='<img class="biz-logo clickable-image" src="'+b.logo_url+'" alt="Logo" onclick="openImageModal(this.src)">';html+='<div style="flex:1;min-width:240px"><h3 style="margin:0 0 6px 0;">'+escapeHtml(b.name||"")+' '+(b.approved?'<span class="badge approved">Godkjent</span>':'<span class="badge pending">Venter</span>')+'</h3><div class="meta">'+escapeHtml(b.type||"")+' · '+escapeHtml(b.place||"")+(b.region?' · '+escapeHtml(b.region):'')+'</div><div>'+escapeHtml(b.description||"")+'</div><div class="biz-actions"><button class="alt" type="button" onclick="openBusinessForEdit(\''+b.id+'\')">Rediger bedrift</button></div></div></div></div>';if(b.image_url) html+='<div class="biz-main"><img class="clickable-image" src="'+b.image_url+'" alt="Bedriftsbilde" onclick="openImageModal(this.src)"></div>';if(Array.isArray(b.gallery_urls)&&b.gallery_urls.length){html+='<div class="gallery">';b.gallery_urls.forEach(function(url){html+='<img class="clickable-image" src="'+url+'" alt="Galleri" onclick="openImageModal(this.src)">' });html+='</div>'}html+='</div>';return html}).join(""):"Ingen egne bedrifter enda."}
 async function openBusinessForEdit(id){showPage('business');await loadBusinessOptions();qs("editBusinessSelect").value=id;loadBusinessIntoForm()}
@@ -467,7 +504,7 @@ loadProfile();
 loadBusinesses();
 loadDogClubs();
 loadTurtips();
-loadTopPromoBanner();
+loadInlinePromoBanner();
 </script>
 </body>
 </html>
