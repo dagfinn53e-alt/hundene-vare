@@ -80,7 +80,6 @@
       margin-bottom:12px
     }
 
-    /* TETT OG RYDDIG TILBUDSOMRÅDE */
     .offers-panel{
       display:block;
       margin-bottom:14px
@@ -182,7 +181,6 @@
     }
     .promo-inline-image .promo-pill{background:rgba(255,255,255,.96);color:#1d4ed8}
 
-    /* LOKALE TILBUDSBOKSER */
     .local-offers-grid{
       display:grid;
       grid-template-columns:repeat(3,1fr);
@@ -277,6 +275,24 @@
       color:#1d4ed8
     }
 
+    .invite-box{
+      margin-top:14px;
+      padding:18px;
+      border:1px solid #dbeafe;
+      border-radius:22px;
+      background:#f8fbff
+    }
+
+    .invite-preview{
+      min-height:180px;
+      white-space:pre-wrap;
+      line-height:1.6;
+      background:#fff;
+      border:1px solid #cfe0ff;
+      border-radius:16px;
+      padding:14px
+    }
+
     .hidden{display:none!important}
     .btnrow{display:flex;gap:10px;flex-wrap:wrap}
     button{border:none;border-radius:999px;padding:11px 16px;background:var(--blue);color:#fff;font-weight:700;cursor:pointer}
@@ -321,7 +337,6 @@
     #imageModalClose{position:absolute;top:14px;right:18px;width:42px;height:42px;border-radius:999px;background:#fff;color:#111827;font-size:24px;padding:0}
     .clickable-image{cursor:zoom-in}
 
-    /* FINERE UKENS TILBUD-KORT */
     .weekly-card{
       background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
       border:1px solid #cfe0ff;
@@ -400,7 +415,6 @@
     .weekly-comment-input{margin:12px 0 10px 0!important;background:#fff;border:1px solid #cfe0ff}
     .weekly-comment-btn{background:#2563eb;color:#fff}
 
-    /* OMRÅDEKNAPPER */
     .region-tabs{
       display:grid;
       grid-template-columns:repeat(3,1fr);
@@ -682,7 +696,70 @@
 
   <div id="page-vets" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🏥 Veterinærer</h2><div class="search-grid"><input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()"><select id="filterFavoritesVets" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchVets" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="vetList"></div></div></div>
 
-  <div id="page-business" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🏪 Registrer / rediger bedrift</h2><div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div><select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select><label><strong>Type</strong></label><select id="bizType"><option>Hundeklubb</option><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option><option>Hund pensjonat</option></select><label><strong>Område</strong></label><select id="bizRegion"><option value="Haugalandet">Haugalandet</option><option value="Stavanger">Stavanger</option></select><label><strong>Aktivitet</strong></label><select id="bizActivity"><option value="">Velg aktivitet</option><option>Tilbud</option><option>Valpekurs</option><option>Utstilling</option><option>Agility / trening</option><option>Fellesturer</option></select><label>Dato for aktivitet</label><input id="bizDate" type="date"><input id="bizName" placeholder="Navn på bedrift"><input id="bizPlace" placeholder="Sted"><input id="bizPhone" placeholder="Telefon"><input id="bizWebsite" placeholder="Nettside eller Facebook-link"><textarea id="bizText" placeholder="Beskrivelse av bedriften"></textarea><label>Last opp ny logo (valgfritt ved redigering)</label><input id="bizLogo" type="file" accept="image/*"><label>Last opp nytt hovedbilde (valgfritt ved redigering)</label><input id="bizImage" type="file" accept="image/*"><label>Last opp ekstra bilder for galleri (opptil 5)</label><input id="bizGalleryFiles" type="file" accept="image/*" multiple><div class="btnrow"><button type="button" onclick="saveBusiness()">Lagre bedrift</button><button type="button" class="alt" onclick="loadBusinesses()">Oppdater bedrifter</button><button type="button" class="warn" onclick="clearBusinessForm()">Tøm skjema</button></div><div id="bizStatus" class="status">Klar.</div></div></div>
+  <div id="page-business" class="hidden">
+    <div class="card">
+      <div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div>
+      <h2>🏪 Registrer / rediger bedrift</h2>
+      <div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div>
+      <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
+      <label><strong>Type</strong></label>
+      <select id="bizType"><option>Hundeklubb</option><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option><option>Hund pensjonat</option></select>
+      <label><strong>Område</strong></label>
+      <select id="bizRegion"><option value="Haugalandet">Haugalandet</option><option value="Stavanger">Stavanger</option></select>
+      <label><strong>Aktivitet</strong></label>
+      <select id="bizActivity"><option value="">Velg aktivitet</option><option>Tilbud</option><option>Valpekurs</option><option>Utstilling</option><option>Agility / trening</option><option>Fellesturer</option></select>
+      <label>Dato for aktivitet</label><input id="bizDate" type="date">
+      <input id="bizName" placeholder="Navn på bedrift">
+      <input id="bizPlace" placeholder="Sted">
+      <input id="bizPhone" placeholder="Telefon">
+      <input id="bizWebsite" placeholder="Nettside eller Facebook-link">
+      <textarea id="bizText" placeholder="Beskrivelse av bedriften"></textarea>
+      <label>Last opp ny logo (valgfritt ved redigering)</label><input id="bizLogo" type="file" accept="image/*">
+      <label>Last opp nytt hovedbilde (valgfritt ved redigering)</label><input id="bizImage" type="file" accept="image/*">
+      <label>Last opp ekstra bilder for galleri (opptil 5)</label><input id="bizGalleryFiles" type="file" accept="image/*" multiple>
+      <div class="btnrow">
+        <button type="button" onclick="saveBusiness()">Lagre bedrift</button>
+        <button type="button" class="alt" onclick="loadBusinesses()">Oppdater bedrifter</button>
+        <button type="button" class="warn" onclick="clearBusinessForm()">Tøm skjema</button>
+      </div>
+      <div id="bizStatus" class="status">Klar.</div>
+    </div>
+
+    <div class="card">
+      <h2 style="font-size:24px;">📩 Inviter butikk</h2>
+      <div class="sub">Lag en ferdig melding du kan kopiere og sende til butikker.</div>
+      <div class="btnrow">
+        <button type="button" onclick="toggleInviteBox()">Inviter butikk</button>
+      </div>
+
+      <div id="inviteBox" class="invite-box hidden">
+        <label><strong>Butikknavn</strong></label>
+        <input id="inviteShopName" placeholder="Skriv butikknavn" oninput="updateInviteMessage()">
+
+        <label><strong>Sted</strong></label>
+        <input id="invitePlace" placeholder="F.eks. Stavanger" oninput="updateInviteMessage()">
+
+        <label><strong>Kontaktperson</strong></label>
+        <input id="inviteContact" placeholder="Valgfritt" oninput="updateInviteMessage()">
+
+        <label><strong>Område</strong></label>
+        <select id="inviteRegion" onchange="updateInviteMessage()">
+          <option value="Stavanger">Stavanger</option>
+          <option value="Haugalandet">Haugalandet</option>
+          <option value="Stord">Stord</option>
+        </select>
+
+        <label><strong>Ferdig invitasjon</strong></label>
+        <div id="invitePreview" class="invite-preview"></div>
+
+        <div class="btnrow" style="margin-top:12px;">
+          <button type="button" onclick="copyInviteMessage()">Kopier invitasjon</button>
+          <button type="button" class="alt" onclick="updateInviteMessage()">Oppdater tekst</button>
+        </div>
+        <div id="inviteStatus" class="status"></div>
+      </div>
+    </div>
+  </div>
 
   <div id="page-admin" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🛠️ Admin</h2><div id="adminStatus" class="status">Klar.</div></div><div class="card"><h2 style="font-size:24px;">Innlegg</h2><div id="adminStories">Laster ...</div></div><div class="card"><h2 style="font-size:24px;">Bedrifter</h2><div id="adminBusinesses">Laster ...</div></div></div>
 
@@ -745,7 +822,10 @@ function showPage(name){
     loadBusinesses();
   }
   if(name==='groomers'||name==='vets'||name==='pensjonat'){loadBusinesses();}
-  if(name==='business'){loadBusinessOptions();}
+  if(name==='business'){
+    loadBusinessOptions();
+    updateInviteMessage();
+  }
   if(name==='admin'){loadAdmin();}
   if(name==='favorites'){loadFavoritesPage();}
   if(name==='hundeklubber'){loadDogClubs();}
@@ -882,6 +962,58 @@ function updateWeeklyRegionUI(){
 function openWeeklyRegion(region){
   currentWeeklyRegion=region;
   showPage('weekly');
+}
+
+function toggleInviteBox(){
+  var box=qs("inviteBox");
+  if(!box) return;
+  box.classList.toggle("hidden");
+  updateInviteMessage();
+}
+
+function updateInviteMessage(){
+  var name=qs("inviteShopName") ? qs("inviteShopName").value.trim() : "";
+  var place=qs("invitePlace") ? qs("invitePlace").value.trim() : "";
+  var contact=qs("inviteContact") ? qs("inviteContact").value.trim() : "";
+  var region=qs("inviteRegion") ? qs("inviteRegion").value : "Stavanger";
+  var target=qs("invitePreview");
+  if(!target) return;
+
+  var line1="Hei" + (contact ? " " + contact : "") + " 😊";
+  var line2="";
+  if(name){
+    line2="Jeg holder på å bygge appen Hundene våre, og jeg tror " + name + " kunne passet veldig fint inn der.";
+  } else {
+    line2="Jeg holder på å bygge appen Hundene våre, og jeg tror butikken deres kunne passet veldig fint inn der.";
+  }
+
+  var line3="Det er en lokal app for hundeeiere i " + region + ", hvor butikker kan vises med informasjon, bilder, nyheter og tilbud.";
+  var line4="Det er gratis å være med nå, og jeg kan ordne hele oppføringen for dere.";
+  var line5="Dere kan få synlighet lokalt, plass under riktig område, og mulighet til å vise nyheter og tilbud.";
+  var line6=place ? "Jeg ser at dere holder til i " + place + ", og derfor tenkte jeg at dette kunne være ekstra aktuelt for dere." : "";
+  var line7="Gi meg gjerne en tilbakemelding hvis dette er interessant, så ordner jeg resten.";
+  var line8="";
+  var line9="Mvh";
+  var line10="Dagfinn";
+
+  var message=[line1,"",line2,line3,"",line4,line5,line6 ? line6 : "", "", line7, "", line9, line10]
+    .filter(function(line, index, arr){
+      return !(line==="" && arr[index-1]==="");
+    })
+    .join("\n");
+
+  target.textContent=message;
+}
+
+function copyInviteMessage(){
+  var target=qs("invitePreview");
+  if(!target) return;
+  var text=target.textContent||"";
+  navigator.clipboard.writeText(text).then(function(){
+    setStatusText("inviteStatus","Invitasjon kopiert.","green");
+  }).catch(function(){
+    setStatusText("inviteStatus","Kunne ikke kopiere invitasjonen.","crimson");
+  });
 }
 
 async function loadInlinePromoBanner(){
@@ -1287,6 +1419,7 @@ loadDogClubs();
 loadTurtips();
 loadInlinePromoBanner();
 loadLocalOfferBoxes();
+updateInviteMessage();
 </script>
 </body>
 </html>
