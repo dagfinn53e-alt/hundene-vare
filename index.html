@@ -75,9 +75,10 @@
       background:var(--blue);
       color:#fff;
       font-weight:800;
-      padding:10px 18px;
+      padding:12px 20px;
       border-radius:999px;
-      margin-bottom:12px
+      margin-bottom:12px;
+      box-shadow:0 10px 24px rgba(37,99,235,.18)
     }
 
     .offers-panel{
@@ -89,23 +90,23 @@
       display:flex;
       align-items:center;
       justify-content:flex-start;
-      margin-bottom:12px
+      margin-bottom:14px
     }
 
     .offers-stack{
       display:flex;
       flex-direction:column;
-      gap:10px
+      gap:12px
     }
 
     .promo-inline{
       width:100%;
-      min-height:170px;
+      min-height:190px;
       border-radius:24px;
       overflow:hidden;
       border:1px solid #bfd7ff;
       background:linear-gradient(135deg,#dbeafe 0%,#eff6ff 100%);
-      box-shadow:0 12px 26px rgba(37,99,235,.12);
+      box-shadow:0 14px 32px rgba(37,99,235,.14);
       cursor:pointer;
       position:relative;
       transition:transform .18s ease, box-shadow .18s ease
@@ -113,16 +114,16 @@
 
     .promo-inline:hover{
       transform:translateY(-1px);
-      box-shadow:0 16px 30px rgba(37,99,235,.16)
+      box-shadow:0 18px 34px rgba(37,99,235,.18)
     }
 
     .promo-inline-inner{
-      min-height:170px;
+      min-height:190px;
       display:flex;
       flex-direction:column;
       justify-content:space-between;
-      gap:10px;
-      padding:16px
+      gap:12px;
+      padding:18px
     }
 
     .promo-inline.fallback .promo-inline-inner{
@@ -136,50 +137,51 @@
       content:"";
       position:absolute;
       inset:0;
-      background:linear-gradient(180deg, rgba(15,23,42,.18) 0%, rgba(15,23,42,.72) 100%);
+      background:linear-gradient(180deg, rgba(15,23,42,.12) 0%, rgba(15,23,42,.76) 100%);
     }
 
     .promo-inline-image .promo-inline-inner{position:relative;z-index:1}
-    .promo-inline-copy{color:#0f172a;max-width:88%}
+    .promo-inline-copy{color:#0f172a;max-width:82%}
     .promo-inline-image .promo-inline-copy{color:#fff}
 
     .promo-kicker{
       display:inline-block;
       font-size:11px;
-      font-weight:800;
+      font-weight:900;
       letter-spacing:.45px;
       opacity:.98;
       margin-bottom:8px;
-      padding:6px 10px;
+      padding:7px 11px;
       border-radius:999px;
-      background:rgba(255,255,255,.72);
+      background:rgba(255,255,255,.88);
       color:#1d4ed8;
-      border:1px solid rgba(191,215,255,.9)
+      border:1px solid rgba(191,215,255,.95)
     }
 
     .promo-inline-image .promo-kicker{
-      background:rgba(255,255,255,.92);
+      background:rgba(255,255,255,.94);
       color:#1d4ed8;
-      border-color:rgba(255,255,255,.95)
+      border-color:rgba(255,255,255,.98)
     }
 
-    .promo-title{font-size:21px;font-weight:800;line-height:1.2;margin-bottom:6px;text-shadow:0 1px 2px rgba(0,0,0,.08)}
-    .promo-sub{font-size:13px;opacity:.96;line-height:1.35}
-    .promo-inline-image .promo-sub{text-shadow:0 1px 2px rgba(0,0,0,.18)}
+    .promo-title{font-size:26px;font-weight:900;line-height:1.15;margin-bottom:6px;text-shadow:0 2px 10px rgba(0,0,0,.20)}
+    .promo-sub{font-size:15px;opacity:.98;line-height:1.35}
+    .promo-inline-image .promo-sub{text-shadow:0 1px 4px rgba(0,0,0,.25)}
     .promo-bottom{display:flex;justify-content:flex-end}
     .promo-pill{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-width:98px;
-      padding:10px 15px;
+      min-width:122px;
+      padding:13px 20px;
       border-radius:999px;
-      font-weight:800;
+      font-weight:900;
+      font-size:18px;
       background:#2563eb;
       color:#fff;
-      box-shadow:0 8px 18px rgba(37,99,235,.18)
+      box-shadow:0 12px 24px rgba(37,99,235,.26)
     }
-    .promo-inline-image .promo-pill{background:rgba(255,255,255,.96);color:#1d4ed8}
+    .promo-inline-image .promo-pill{background:rgba(255,255,255,.97);color:#1d4ed8}
 
     .local-offers-grid{
       display:grid;
@@ -188,12 +190,12 @@
     }
 
     .local-offer-card{
-      min-height:116px;
-      border-radius:18px;
+      min-height:126px;
+      border-radius:20px;
       overflow:hidden;
       border:1px solid #cfe0ff;
       background:linear-gradient(135deg,#dbeafe 0%,#eff6ff 100%);
-      box-shadow:0 8px 20px rgba(37,99,235,.10);
+      box-shadow:0 10px 24px rgba(37,99,235,.12);
       cursor:pointer;
       position:relative;
       transition:transform .18s ease, box-shadow .18s ease
@@ -201,7 +203,7 @@
 
     .local-offer-card:hover{
       transform:translateY(-1px);
-      box-shadow:0 12px 24px rgba(37,99,235,.14)
+      box-shadow:0 14px 26px rgba(37,99,235,.16)
     }
 
     .local-offer-card.image{
@@ -214,7 +216,7 @@
       content:"";
       position:absolute;
       inset:0;
-      background:linear-gradient(180deg, rgba(15,23,42,.16) 0%, rgba(15,23,42,.72) 100%);
+      background:linear-gradient(180deg, rgba(15,23,42,.10) 0%, rgba(15,23,42,.78) 100%);
     }
 
     .local-offer-card.fallback{
@@ -227,7 +229,7 @@
     .local-offer-inner{
       position:relative;
       z-index:1;
-      min-height:116px;
+      min-height:126px;
       display:flex;
       flex-direction:column;
       justify-content:space-between;
@@ -236,24 +238,28 @@
 
     .local-offer-kicker{
       font-size:10px;
-      font-weight:800;
-      letter-spacing:.4px;
+      font-weight:900;
+      letter-spacing:.5px;
       text-transform:uppercase;
-      opacity:.95
+      opacity:.98
     }
 
     .local-offer-region{
-      font-size:18px;
-      font-weight:800;
-      line-height:1.15;
+      font-size:17px;
+      font-weight:900;
+      line-height:1.1;
       margin-top:4px
     }
 
     .local-offer-sub{
-      font-size:12px;
+      font-size:11px;
       line-height:1.25;
-      opacity:.95;
-      margin-top:4px
+      opacity:.96;
+      margin-top:4px;
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
+      overflow:hidden
     }
 
     .local-offer-pill{
@@ -261,17 +267,18 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-width:72px;
-      padding:7px 10px;
+      min-width:80px;
+      padding:8px 14px;
       border-radius:999px;
-      font-size:12px;
-      font-weight:800;
+      font-size:13px;
+      font-weight:900;
       background:#2563eb;
-      color:#fff
+      color:#fff;
+      box-shadow:0 8px 18px rgba(37,99,235,.22)
     }
 
     .local-offer-card.image .local-offer-pill{
-      background:rgba(255,255,255,.96);
+      background:rgba(255,255,255,.97);
       color:#1d4ed8
     }
 
@@ -475,11 +482,12 @@
       .gallery img{height:220px}
       h2{font-size:26px}
       .turtip-card img{height:200px}
-      .promo-inline,.promo-inline-inner{min-height:140px}
-      .promo-title{font-size:17px}
+      .promo-inline,.promo-inline-inner{min-height:170px}
+      .promo-title{font-size:18px}
       .promo-sub{font-size:12px}
       .promo-inline-copy{max-width:100%}
       .promo-kicker{margin-bottom:7px;padding:5px 9px;font-size:10px}
+      .promo-pill{min-width:108px;font-size:16px;padding:12px 18px}
       .weekly-title{font-size:22px}
       .weekly-gallery img{height:220px}
       .weekly-head,.weekly-footer{padding-left:14px;padding-right:14px}
@@ -487,8 +495,24 @@
       .region-tabs{grid-template-columns:1fr 1fr 1fr;gap:8px}
       .region-tabs-4{grid-template-columns:1fr 1fr;gap:8px}
       .region-tab{font-size:13px;min-height:52px;padding:10px 8px}
-      .local-offers-grid{grid-template-columns:1fr}
-      .local-offer-card,.local-offer-inner{min-height:96px}
+      .local-offers-grid{
+        display:flex;
+        gap:10px;
+        overflow-x:auto;
+        padding-bottom:6px;
+        scroll-snap-type:x mandatory
+      }
+      .local-offers-grid::-webkit-scrollbar{display:none}
+      .local-offer-card{
+        min-width:158px;
+        flex-shrink:0;
+        scroll-snap-align:start;
+        min-height:118px
+      }
+      .local-offer-inner{min-height:118px;padding:10px}
+      .local-offer-region{font-size:15px}
+      .local-offer-sub{font-size:10px;-webkit-line-clamp:2}
+      .local-offer-pill{min-width:68px;padding:7px 12px;font-size:12px}
     }
 
     @media (min-width:761px){
@@ -1421,26 +1445,5 @@ loadInlinePromoBanner();
 loadLocalOfferBoxes();
 updateInviteMessage();
 </script>
-  <!-- LEGG DENNE HELT NEDERST I DIN FIL, RETT FØR </body> -->
-
-<style>
-/* SWIPE LOKALE TILBUD – TRYGG FIX */
-.local-offers-grid{
-  display:flex !important;
-  gap:10px;
-  overflow-x:auto;
-  padding-bottom:6px;
-}
-
-.local-offers-grid::-webkit-scrollbar{
-  display:none;
-}
-
-.local-offers-grid > div{
-  min-width:140px;
-  flex-shrink:0;
-  border-radius:16px;
-}
-</style>
 </body>
 </html>
