@@ -61,7 +61,7 @@
 
     .home-intro{
       display:grid;
-      grid-template-columns:1.2fr .8fr;
+      grid-template-columns:1.05fr .95fr;
       gap:16px;
       align-items:start;
       margin-bottom:18px
@@ -98,18 +98,24 @@
 
     .promo-inline{
       width:100%;
-      min-height:138px;
-      border-radius:22px;
+      min-height:150px;
+      border-radius:24px;
       overflow:hidden;
-      border:1px solid #cfe0ff;
+      border:1px solid #bfd7ff;
       background:linear-gradient(135deg,#dbeafe 0%,#eff6ff 100%);
-      box-shadow:0 8px 20px rgba(37,99,235,.10);
+      box-shadow:0 12px 26px rgba(37,99,235,.12);
       cursor:pointer;
-      position:relative
+      position:relative;
+      transition:transform .18s ease, box-shadow .18s ease
+    }
+
+    .promo-inline:hover{
+      transform:translateY(-1px);
+      box-shadow:0 16px 30px rgba(37,99,235,.16)
     }
 
     .promo-inline-inner{
-      min-height:138px;
+      min-height:150px;
       display:flex;
       flex-direction:column;
       justify-content:space-between;
@@ -119,7 +125,7 @@
 
     .promo-inline.fallback .promo-inline-inner{
       background:
-        radial-gradient(circle at top left, rgba(255,255,255,.55) 0%, transparent 35%),
+        radial-gradient(circle at top left, rgba(255,255,255,.62) 0%, transparent 35%),
         linear-gradient(135deg,#dbeafe 0%,#bfdbfe 45%,#eff6ff 100%);
     }
 
@@ -133,7 +139,7 @@
       content:"";
       position:absolute;
       inset:0;
-      background:linear-gradient(180deg, rgba(15,23,42,.28) 0%, rgba(15,23,42,.62) 100%);
+      background:linear-gradient(180deg, rgba(15,23,42,.18) 0%, rgba(15,23,42,.72) 100%);
     }
 
     .promo-inline-image .promo-inline-inner{
@@ -142,7 +148,8 @@
     }
 
     .promo-inline-copy{
-      color:#0f172a
+      color:#0f172a;
+      max-width:88%
     }
 
     .promo-inline-image .promo-inline-copy{
@@ -150,23 +157,41 @@
     }
 
     .promo-kicker{
-      font-size:12px;
+      display:inline-block;
+      font-size:11px;
       font-weight:800;
-      letter-spacing:.3px;
-      opacity:.95;
-      margin-bottom:4px
+      letter-spacing:.45px;
+      opacity:.98;
+      margin-bottom:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.72);
+      color:#1d4ed8;
+      border:1px solid rgba(191,215,255,.9)
+    }
+
+    .promo-inline-image .promo-kicker{
+      background:rgba(255,255,255,.92);
+      color:#1d4ed8;
+      border-color:rgba(255,255,255,.95)
     }
 
     .promo-title{
-      font-size:20px;
+      font-size:21px;
       font-weight:800;
       line-height:1.2;
-      margin-bottom:5px
+      margin-bottom:6px;
+      text-shadow:0 1px 2px rgba(0,0,0,.08)
     }
 
     .promo-sub{
       font-size:13px;
-      opacity:.92
+      opacity:.96;
+      line-height:1.35
+    }
+
+    .promo-inline-image .promo-sub{
+      text-shadow:0 1px 2px rgba(0,0,0,.18)
     }
 
     .promo-bottom{
@@ -178,8 +203,8 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-width:94px;
-      padding:9px 14px;
+      min-width:98px;
+      padding:10px 15px;
       border-radius:999px;
       font-weight:800;
       background:#2563eb;
@@ -188,7 +213,7 @@
     }
 
     .promo-inline-image .promo-pill{
-      background:rgba(255,255,255,.95);
+      background:rgba(255,255,255,.96);
       color:#1d4ed8
     }
 
@@ -248,9 +273,11 @@
       .gallery img{height:220px}
       h2{font-size:26px}
       .turtip-card img{height:200px}
-      .promo-inline,.promo-inline-inner{min-height:120px}
+      .promo-inline,.promo-inline-inner{min-height:128px}
       .promo-title{font-size:17px}
       .promo-sub{font-size:12px}
+      .promo-inline-copy{max-width:100%}
+      .promo-kicker{margin-bottom:7px;padding:5px 9px;font-size:10px}
     }
 
     @media (min-width:761px){
