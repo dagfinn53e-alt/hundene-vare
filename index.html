@@ -1421,5 +1421,26 @@ loadInlinePromoBanner();
 loadLocalOfferBoxes();
 updateInviteMessage();
 </script>
+  <!-- LEGG DENNE HELT NEDERST I DIN FIL, RETT FØR </body> -->
+
+<style>
+/* SWIPE LOKALE TILBUD – TRYGG FIX */
+.local-offers-grid{
+  display:flex !important;
+  gap:10px;
+  overflow-x:auto;
+  padding-bottom:6px;
+}
+
+.local-offers-grid::-webkit-scrollbar{
+  display:none;
+}
+
+.local-offers-grid > div{
+  min-width:140px;
+  flex-shrink:0;
+  border-radius:16px;
+}
+</style>
 </body>
 </html>
