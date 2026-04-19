@@ -13,13 +13,9 @@
     .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px;padding:12px 14px;border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.9);box-shadow:var(--shadow);position:sticky;top:8px;z-index:50}
     .brand{font-size:20px;font-weight:800;color:var(--blue-dark);padding:10px 14px;border-radius:999px;border:1px solid #cfe0ff;background:#fff}
     .actions{display:flex;gap:10px;flex-wrap:wrap}
-    .hero{position:relative;overflow:hidden;border-radius:30px;min-height:260px;padding:28px;color:#fff;box-shadow:var(--shadow);background:linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.35)),url("https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;margin-bottom:18px}
+    .hero{position:relative;overflow:hidden;border-radius:30px;min-height:220px;padding:28px;color:#fff;box-shadow:var(--shadow);background:linear-gradient(rgba(0,0,0,.40),rgba(0,0,0,.40)),url("https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;margin-bottom:18px}
     .hero h1{margin:0 0 10px 0;font-size:42px;line-height:1.05}
     .hero p{margin:0;max-width:560px;line-height:1.6;font-size:16px}
-    .topstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
-    .stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:22px;padding:14px;text-align:center}
-    .stat .label{font-size:13px}
-    .stat .value{font-size:34px;font-weight:800;margin-top:4px;min-height:40px}
     .card{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:22px;box-shadow:var(--shadow);margin-bottom:18px}
     h2{margin:0 0 10px 0;font-size:32px}
     .sub{color:var(--muted);line-height:1.6;margin-bottom:14px}
@@ -76,7 +72,7 @@
     #imageModal img{max-width:95vw;max-height:90vh;border-radius:18px;width:auto;height:auto;object-fit:contain}
     #imageModalClose{position:absolute;top:14px;right:18px;width:42px;height:42px;border-radius:999px;background:#fff;color:#111827;font-size:24px;padding:0}
     .clickable-image{cursor:zoom-in}
-    @media (max-width:760px){.wrap{padding:14px 12px 40px}.topbar{padding:10px 12px;border-radius:20px}.brand{font-size:18px}.hero{padding:20px;border-radius:24px;min-height:auto}.hero h1{font-size:30px}.topstats{grid-template-columns:repeat(2,1fr)}.menu-grid{grid-template-columns:repeat(2,1fr);gap:10px}.menu-btn{min-height:74px;font-size:14px}.search-grid,.gallery{grid-template-columns:1fr}.gallery img{height:220px}h2{font-size:26px}.turtip-card img{height:200px}}
+    @media (max-width:760px){.wrap{padding:14px 12px 40px}.topbar{padding:10px 12px;border-radius:20px}.brand{font-size:18px}.hero{padding:20px;border-radius:24px;min-height:auto}.hero h1{font-size:30px}.menu-grid{grid-template-columns:repeat(2,1fr);gap:10px}.menu-btn{min-height:74px;font-size:14px}.search-grid,.gallery{grid-template-columns:1fr}.gallery img{height:220px}h2{font-size:26px}.turtip-card img{height:200px}}
     @media (min-width:761px){.menu-grid{grid-template-columns:repeat(3,1fr)}}
     @media (min-width:980px){.wrap{max-width:960px}#feed,.card,.post{max-width:900px;margin-left:auto;margin-right:auto}.post img,.biz-main img,.club-card img,.turtip-card img{max-height:260px}.gallery img{height:160px}.menu-grid{grid-template-columns:repeat(3,1fr)}}
   </style>
@@ -85,7 +81,29 @@
 <div class="wrap">
   <div class="topbar"><div class="brand">Hundene våre 🐶</div><div class="actions"><button type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button><button type="button" onclick="goHome()">Forside</button><button type="button" onclick="showPage('admin')">Admin</button></div></div>
 
-  <div id="page-home"><div class="hero"><h1>Hundene våre 🐾</h1><p>Del hundebilder, historier og opplevelser. Logg inn og bli med i fellesskapet.</p><div class="topstats"><div class="stat"><div class="label">Innlegg</div><div class="value" id="postCount"></div></div><div class="stat"><div class="label">Medlemmer</div><div class="value" id="memberCount"></div></div><div class="stat"><div class="label">Bilder</div><div class="value" id="imageCount"></div></div><div class="stat"><div class="label">Kommentarer</div><div class="value" id="commentCount"></div></div></div></div><div class="card"><a class="offer-link" href="#" onclick="showPage('weekly'); return false;">🐾 Se Ukens tilbud</a><h2>Utforsk appen</h2><div class="sub">Søk etter sted, f.eks: Stavanger, Haugesund eller Stord</div><div class="menu-grid"><button class="menu-btn offers" onclick="showPage('stories')">📰 Nyheter fra butikk</button><button class="menu-btn activity" onclick="showPage('turtips')">🥾 Turtips</button><button class="menu-btn groom" onclick="showPage('groomers')">✂️ Frisører</button><button class="menu-btn shop" onclick="showPage('shops')">🐾 Zoo butikker</button><button class="menu-btn shop" onclick="showPage('pensjonat')">🐶 Hundepensjonat</button><button class="menu-btn vet" onclick="showPage('vets')">🏥 Veterinærer</button><button class="menu-btn business" onclick="showPage('business')">🏪 Bedrift</button><button class="menu-btn club" onclick="showPage('hundeklubber')">🐶 Hundeklubber</button><button class="menu-btn activity" onclick="showPage('haugalandet')">📍 Butikker Haugalandet</button><button class="menu-btn activity" onclick="showPage('stavanger')">📍 Stavanger</button></div></div></div>
+  <div id="page-home">
+    <div class="hero">
+      <h1>Hundene våre 🐾</h1>
+      <p>Del hundebilder, historier og opplevelser. Logg inn og bli med i fellesskapet.</p>
+    </div>
+    <div class="card">
+      <a class="offer-link" href="#" onclick="showPage('weekly'); return false;">🐾 Se Ukens tilbud</a>
+      <h2>Utforsk appen</h2>
+      <div class="sub">Søk etter sted, f.eks: Stavanger, Haugesund eller Stord</div>
+      <div class="menu-grid">
+        <button class="menu-btn offers" onclick="showPage('stories')">📰 Nyheter fra butikk</button>
+        <button class="menu-btn activity" onclick="showPage('turtips')">🥾 Turtips</button>
+        <button class="menu-btn groom" onclick="showPage('groomers')">✂️ Frisører</button>
+        <button class="menu-btn shop" onclick="showPage('shops')">🐾 Zoo butikker</button>
+        <button class="menu-btn shop" onclick="showPage('pensjonat')">🐶 Hundepensjonat</button>
+        <button class="menu-btn vet" onclick="showPage('vets')">🏥 Veterinærer</button>
+        <button class="menu-btn business" onclick="showPage('business')">🏪 Bedrift</button>
+        <button class="menu-btn club" onclick="showPage('hundeklubber')">🐶 Hundeklubber</button>
+        <button class="menu-btn activity" onclick="showPage('haugalandet')">📍 Butikker Haugalandet</button>
+        <button class="menu-btn activity" onclick="showPage('stavanger')">📍 Stavanger</button>
+      </div>
+    </div>
+  </div>
 
   <div id="page-auth" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>Opprett konto / Logg inn</h2><div class="sub">Bruk e-post og passord.</div><input id="email" type="email" placeholder="E-post"><input id="password" type="password" placeholder="Passord"><div class="btnrow"><button type="button" onclick="signupUser()">Lag konto</button><button type="button" onclick="loginUser()">Logg inn</button><button type="button" class="alt" onclick="loadProfile()">Oppdater profil</button></div><div id="status" class="status">Klar.</div></div></div>
 
