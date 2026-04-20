@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hundene våre</title>
+  <meta name="theme-color" content="#2563eb">
+  <link rel="manifest" href="manifest.json">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root{--blue:#2563eb;--blue-dark:#1d4ed8;--line:#dbeafe;--text:#0f172a;--muted:#64748b;--card:#fff;--shadow:0 12px 30px rgba(15,23,42,.08)}
@@ -1431,6 +1433,13 @@ async function signupUser(){setStatusText("status","Prøver å opprette konto ..
 async function loginUser(){setStatusText("status","Prøver å logge inn ...","blue");var email=qs("email").value.trim();var password=qs("password").value.trim();if(!email||!password){setStatusText("status","Skriv inn e-post og passord.","crimson");return;}var result=await supabase.auth.signInWithPassword({email:email,password:password});if(result.error){setStatusText("status","Feil: "+result.error.message,"crimson");return;}setStatusText("status","Innlogget som "+email,"green");loadProfile();goHome()}
 function shareApp(){var url="https://dagfinn53e-alt.github.io/hundene-vare/";if(navigator.share){navigator.share({title:"Hundene våre",text:"Se appen Hundene våre 🐶",url:url}).catch(function(){})} else {copyLink()}}
 function copyLink(){var url="https://dagfinn53e-alt.github.io/hundene-vare/";navigator.clipboard.writeText(url).then(function(){setStatusText("status","Link kopiert.","green")}).catch(function(){setStatusText("status","Kunne ikke kopiere linken.","crimson")})}
+
+
+if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  });
+}
 
 goHome();
 updateStoriesRegionUI();
