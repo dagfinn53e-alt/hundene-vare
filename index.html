@@ -517,7 +517,8 @@
     }
 
     @media (min-width:761px){
-      .menu-grid{grid-template-columns:repeat(3,1fr)}
+      .menu-grid{grid-template-columns:repeat(2,1fr)}
+      .region-grid{grid-template-columns:repeat(2,1fr)}
     }
 
     @media (min-width:980px){
@@ -525,7 +526,8 @@
       #feed,.card,.post{max-width:900px;margin-left:auto;margin-right:auto}
       .post img,.biz-main img,.club-card img,.turtip-card img{max-height:260px}
       .gallery img{height:160px}
-      .menu-grid{grid-template-columns:repeat(3,1fr)}
+      .menu-grid{grid-template-columns:repeat(2,1fr)}
+      .region-grid{grid-template-columns:repeat(4,1fr)}
     }
   </style>
 </head>
@@ -603,6 +605,29 @@
         </div>
       </div>
 
+      <div class="region-grid">
+        <button class="region-card haugalandet" onclick="showPage('haugalandet')">
+          <div class="region-icon">📍</div>
+          <div class="region-title">Haugalandet</div>
+          <div class="region-sub">Se butikker og tjenester i området</div>
+        </button>
+        <button class="region-card stavanger" onclick="showPage('stavanger')">
+          <div class="region-icon">🏙️</div>
+          <div class="region-title">Stavanger</div>
+          <div class="region-sub">Se tilbud og steder i området</div>
+        </button>
+        <button class="region-card stord" onclick="showPage('stord')">
+          <div class="region-icon">🌉</div>
+          <div class="region-title">Stord</div>
+          <div class="region-sub">Finn butikker og tjenester på Stord</div>
+        </button>
+        <button class="region-card cafe" onclick="showPage('cafes')">
+          <div class="region-icon">☕</div>
+          <div class="region-title">Kaféer</div>
+          <div class="region-sub">Steder der du kan ha med hund</div>
+        </button>
+      </div>
+
       <div class="menu-grid">
         <button class="menu-btn offers" onclick="showPage('stories')">📰 Nyheter fra butikk</button>
         <button class="menu-btn activity" onclick="showPage('turtips')">🥾 Turtips</button>
@@ -612,8 +637,6 @@
         <button class="menu-btn vet" onclick="showPage('vets')">🏥 Veterinærer</button>
         <button class="menu-btn business" onclick="showPage('business')">🏪 Bedrift</button>
         <button class="menu-btn club" onclick="showPage('hundeklubber')">🐶 Hundeklubber</button>
-        <button class="menu-btn cafe" onclick="showPage('cafes')">☕ Kaféer med hund</button>
-        <button class="menu-btn activity" onclick="showPage('stavanger')">📍 Stavanger</button>
       </div>
     </div>
   </div>
