@@ -68,6 +68,7 @@
     .menu-btn.business{background:#fff7ed;color:#c2410c;border-color:#fed7aa}
     .menu-btn.club{background:#f8fafc;color:#334155;border-color:#cbd5e1}
     .menu-btn.activity{background:#eefcff;color:#0369a1;border-color:#bae6fd}
+    .menu-btn.cafe{background:#fff7ed;color:#9a3412;border-color:#fdba74}
 
     .offer-link{
       display:inline-block;
@@ -611,9 +612,8 @@
         <button class="menu-btn vet" onclick="showPage('vets')">🏥 Veterinærer</button>
         <button class="menu-btn business" onclick="showPage('business')">🏪 Bedrift</button>
         <button class="menu-btn club" onclick="showPage('hundeklubber')">🐶 Hundeklubber</button>
-        <button class="menu-btn activity" onclick="showPage('haugalandet')">📍 Butikker Haugalandet</button>
-        <button class="menu-btn activity" onclick="showPage('stavanger')">📍 Stavanger</button>
         <button class="menu-btn cafe" onclick="showPage('cafes')">☕ Kaféer med hund</button>
+        <button class="menu-btn activity" onclick="showPage('stavanger')">📍 Stavanger</button>
       </div>
     </div>
   </div>
@@ -713,6 +713,7 @@
 
   <div id="page-haugalandet" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>📍 Haugalandet</h2><div class="sub">Velg kategori for å vise kun det du vil se i Haugalandet.</div><div class="menu-grid"><button class="menu-btn shop" type="button" onclick="loadHaugalandetCategory('Zoo butikk')">🐾 Zoo butikker</button><button class="menu-btn groom" type="button" onclick="loadHaugalandetCategory('Frisør')">✂️ Frisører</button><button class="menu-btn vet" type="button" onclick="loadHaugalandetCategory('Veterinær')">🏥 Veterinærer</button><button class="menu-btn shop" type="button" onclick="loadHaugalandetCategory('Hund pensjonat')">🐶 Hundepensjonat</button></div><div id="haugalandetCategoryTitle" class="sub" style="margin-top:14px;">Velg en kategori over.</div><div id="haugalandetContent"><div class="empty-box">Ingen kategori valgt ennå.</div></div></div></div>
 
+  <div id="page-stord" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>📍 Stord</h2><div class="sub">Velg kategori for å vise kun det du vil se på Stord.</div><div class="menu-grid"><button class="menu-btn shop" type="button" onclick="loadStordCategory('Zoo butikk')">🐾 Zoo butikker</button><button class="menu-btn groom" type="button" onclick="loadStordCategory('Frisør')">✂️ Frisører</button><button class="menu-btn vet" type="button" onclick="loadStordCategory('Veterinær')">🏥 Veterinærer</button><button class="menu-btn shop" type="button" onclick="loadStordCategory('Hund pensjonat')">🐶 Hundepensjonat</button></div><div id="stordCategoryTitle" class="sub" style="margin-top:14px;">Velg en kategori over.</div><div id="stordContent"><div class="empty-box">Ingen kategori valgt ennå.</div></div></div></div>
 
   <div id="page-cafes" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>☕ Kaféer med hund</h2><div class="sub">Finn kaféer og steder der du kan ha med hund. Velg område under.</div><div class="menu-grid"><button class="menu-btn activity" type="button" onclick="loadCafeRegion('Haugalandet')">📍 Haugalandet</button><button class="menu-btn activity" type="button" onclick="loadCafeRegion('Stavanger')">📍 Stavanger</button><button class="menu-btn activity" type="button" onclick="loadCafeRegion('Stord')">📍 Stord</button></div><div id="cafesCategoryTitle" class="sub" style="margin-top:14px;">Velg et område over.</div><div id="cafesContent"><div class="empty-box">Ingen område valgt ennå.</div></div></div></div>
 
@@ -810,7 +811,7 @@ function qs(id){return document.getElementById(id)}
 function setStatusText(id,text,color){var el=qs(id);if(el){el.textContent=text;el.style.color=color||"black"}}
 
 function goHome(){
-  var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','cafes','groomers','shops','pensjonat','vets','business','admin','favorites','hundeklubber'];
+  var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','stord','cafes','groomers','shops','pensjonat','vets','business','admin','favorites','hundeklubber'];
   for(var i=0;i<pages.length;i++){
     var el=qs('page-'+pages[i]);
     if(el) el.classList.add('hidden');
@@ -822,7 +823,7 @@ function goHome(){
 
 function showPage(name){
   if(name==='home'){goHome();return;}
-  var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','cafes','groomers','shops','pensjonat','vets','business','admin','favorites','hundeklubber'];
+  var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','stord','cafes','groomers','shops','pensjonat','vets','business','admin','favorites','hundeklubber'];
   for(var i=0;i<pages.length;i++){
     var el=qs('page-'+pages[i]);
     if(el) el.classList.add('hidden');
@@ -843,6 +844,7 @@ function showPage(name){
   if(name==='turtips'){loadTurtips();}
   if(name==='stavanger'){loadStavangerPage();}
   if(name==='haugalandet'){loadHaugalandetPage();}
+  if(name==='stord'){loadStordPage();}
   if(name==='shops'){
     if(qs('searchShops')) qs('searchShops').value='';
     if(qs('mapSearchShops')) qs('mapSearchShops').value='';
@@ -1418,6 +1420,11 @@ async function loadHaugalandetCategory(type){var title=qs("haugalandetCategoryTi
 
 async function loadCafePage(){var title=qs("cafesCategoryTitle");var target=qs("cafesContent");if(title) title.textContent="Velg et område over.";if(target) target.innerHTML='<div class="empty-box">Ingen område valgt ennå.</div>'}
 async function loadCafeRegion(region){var title=qs("cafesCategoryTitle");var target=qs("cafesContent");if(!target) return;target.innerHTML='Laster ...';if(title) title.textContent='Viser: ☕ Kaféer i '+region;var result=await supabase.from("businesses").select("*").eq("approved",true).eq("region",region).eq("type","Kafé").order("created_at",{ascending:false});if(result.error){target.innerHTML='<div class="empty-box">Feil ved henting: '+escapeHtml(result.error.message)+'</div>';return;}var rows=(result.data||[]).filter(function(b){return b.activity!=="Tilbud"});if(!rows.length){target.innerHTML='<div class="empty-box">Ingen kaféer lagt inn i dette området ennå.</div>';return;}target.innerHTML=renderStavangerGroup('☕ Kaféer i '+region,rows)}
+
+
+async function loadStordPage(){var title=qs("stordCategoryTitle");var target=qs("stordContent");if(title) title.textContent="Velg en kategori over.";if(target) target.innerHTML='<div class="empty-box">Ingen kategori valgt ennå.</div>';}
+async function loadStordCategory(type){var title=qs("stordCategoryTitle");var target=qs("stordContent");if(!target) return;target.innerHTML='Laster ...';if(title) title.textContent='Viser: '+getStavangerLabel(type);var result=await supabase.from("businesses").select("*").eq("approved",true).eq("region","Stord").eq("type",type).order("created_at",{ascending:false});if(result.error){target.innerHTML='<div class="empty-box">Feil ved henting: '+escapeHtml(result.error.message)+'</div>';return;}var rows=(result.data||[]).filter(function(b){return b.activity!=="Tilbud"});if(!rows.length){target.innerHTML='<div class="empty-box">Ingen funnet i denne kategorien.</div>';return;}target.innerHTML=renderStavangerGroup(getStavangerLabel(type),rows);}
+async function loadCafePage(region){var title=qs("cafeCategoryTitle");var target=qs("cafeContent");if(!target) return;target.innerHTML='Laster ...';if(title) title.textContent='Viser: '+escapeHtml(region);var result=await supabase.from("businesses").select("*").eq("approved",true).eq("region",region).eq("type","Kafé").order("created_at",{ascending:false});if(result.error){target.innerHTML='<div class="empty-box">Feil ved henting: '+escapeHtml(result.error.message)+'</div>';return;}var rows=result.data||[];if(!rows.length){target.innerHTML='<div class="empty-box">Ingen kaféer funnet i dette området ennå.</div>';return;}target.innerHTML=renderStavangerGroup('☕ Kaféer med hund – '+region,rows);}
 
 async function loadBusinesses(){var result=await supabase.from("businesses").select("*").order("created_at",{ascending:false});var rows=result.data||[];await renderBizList("Frisør","groomerList",rows,qs("searchGroomers")?.value||"",qs("filterFavoritesGroomers")?.value||"all",qs("mapSearchGroomers")?.value||"");await renderZooShops(rows,qs("searchShops")?.value||"",qs("filterFavoritesShops")?.value||"all",qs("mapSearchShops")?.value||"");await renderBizList("Hund pensjonat","pensjonatList",rows,qs("searchPensjonat")?.value||"",qs("filterFavoritesPensjonat")?.value||"all",qs("mapSearchPensjonat")?.value||"");await renderBizList("Veterinær","vetList",rows,qs("searchVets")?.value||"",qs("filterFavoritesVets")?.value||"all",qs("mapSearchVets")?.value||"")}
 async function approveBusiness(id){var result=await supabase.from("businesses").update({approved:true}).eq("id",id);if(result.error){setStatusText("adminStatus","Feil ved godkjenning: "+result.error.message,"crimson");return;}setStatusText("adminStatus","Bedrift godkjent.","green");loadAdmin();loadBusinesses();loadProfile();loadDogClubs();loadStavangerPage();loadHaugalandetPage()}
