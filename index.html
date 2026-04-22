@@ -1,47 +1,1408 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hundene våre</title>
-<style>
-body{font-family:Arial;margin:0;background:#f5f7fb}
-.container{padding:15px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.btn{
-background:#eef4ff;
-border:1px solid #d9e6ff;
-border-radius:18px;
-padding:12px;
-font-size:14px;
-font-weight:700;
-text-align:center;
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hundene våre</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root{--blue:#2563eb;--blue-dark:#1d4ed8;--line:#dbeafe;--text:#0f172a;--muted:#64748b;--card:#fff;--shadow:0 12px 30px rgba(15,23,42,.08)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:radial-gradient(circle at top left,#dbeafe 0%,transparent 30%),linear-gradient(180deg,#eff6ff 0%,#f8fbff 100%)}
+    .wrap{max-width:1100px;margin:0 auto;padding:18px 14px 60px}
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+      padding:12px 14px;
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:rgba(255,255,255,.9);
+      box-shadow:var(--shadow);
+      position:sticky;
+      top:8px;
+      z-index:50
+    }
+
+    .brand{
+      font-size:20px;
+      font-weight:800;
+      color:var(--blue-dark);
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid #cfe0ff;
+      background:#fff
+    }
+
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-radius:30px;
+      min-height:220px;
+      padding:28px;
+      color:#fff;
+      box-shadow:var(--shadow);
+      background:linear-gradient(rgba(0,0,0,.40),rgba(0,0,0,.40)),url("https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;
+      margin-bottom:18px
+    }
+
+    .hero h1{margin:0 0 10px 0;font-size:42px;line-height:1.05}
+    .hero p{margin:0;max-width:560px;line-height:1.6;font-size:16px}
+
+    .card{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:22px;box-shadow:var(--shadow);margin-bottom:18px}
+    h2{margin:0 0 10px 0;font-size:32px}
+    .sub{color:var(--muted);line-height:1.6;margin-bottom:14px}
+
+    .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+    .menu-btn{border:none;border-radius:22px;min-height:72px;padding:12px 10px;font-size:15px;font-weight:800;cursor:pointer;background:#eef4ff;color:var(--blue-dark);border:1px solid #d9e6ff}
+    .menu-btn.offers{background:#dbeafe;color:#1d4ed8;border-color:#93c5fd}
+    .menu-btn.groom{background:#f8f1ff;color:#6d28d9;border-color:#e9d5ff}
+    .menu-btn.shop{background:#effcf3;color:#166534;border-color:#bbf7d0}
+    .menu-btn.vet{background:#fff1f2;color:#be123c;border-color:#fecdd3}
+    .menu-btn.business{background:#fff7ed;color:#c2410c;border-color:#fed7aa}
+    .menu-btn.club{background:#f8fafc;color:#334155;border-color:#cbd5e1}
+    .menu-btn.activity{background:#eefcff;color:#0369a1;border-color:#bae6fd}
+
+    .home-menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+    .home-menu-btn{border:none;border-radius:22px;min-height:82px;padding:12px 8px;font-size:15px;font-weight:800;cursor:pointer;background:#eef4ff;color:var(--blue-dark);border:1px solid #d9e6ff;line-height:1.25;text-align:center}
+    .home-menu-btn.offers{background:#e8f0ff;color:#1d4ed8;border-color:#bfd7ff}
+    .home-menu-btn.activity{background:#edf9ff;color:#0369a1;border-color:#bae6fd}
+    .home-menu-btn.groom{background:#f8f1ff;color:#6d28d9;border-color:#e9d5ff}
+    .home-menu-btn.shop{background:#effcf3;color:#166534;border-color:#bbf7d0}
+    .home-menu-btn.vet{background:#fff1f2;color:#be123c;border-color:#fecdd3}
+    .home-menu-btn.business{background:#fff7ed;color:#c2410c;border-color:#fed7aa}
+    .home-menu-btn.club{background:#f5fbf6;color:#166534;border-color:#d9f4dd}
+    .home-menu-btn.cafe{background:#faf5ff;color:#7c3aed;border-color:#ddd6fe}
+
+    .menu-btn.cafe{background:#fff7ed;color:#9a3412;border-color:#fdba74}
+
+    .offer-link{
+      display:inline-block;
+      text-decoration:none;
+      background:var(--blue);
+      color:#fff;
+      font-weight:800;
+      padding:12px 20px;
+      border-radius:999px;
+      margin-bottom:12px;
+      box-shadow:0 10px 24px rgba(37,99,235,.18)
+    }
+
+    .offers-panel{
+      display:block;
+      margin-bottom:14px
+    }
+
+    .offers-top{
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      margin-bottom:14px
+    }
+
+    .offers-stack{
+      display:flex;
+      flex-direction:column;
+      gap:12px
+    }
+
+    .promo-inline{
+      width:100%;
+      min-height:190px;
+      border-radius:24px;
+      overflow:hidden;
+      border:1px solid #bfd7ff;
+      background:linear-gradient(135deg,#dbeafe 0%,#eff6ff 100%);
+      box-shadow:0 14px 32px rgba(37,99,235,.14);
+      cursor:pointer;
+      position:relative;
+      transition:transform .18s ease, box-shadow .18s ease
+    }
+
+    .promo-inline:hover{
+      transform:translateY(-1px);
+      box-shadow:0 18px 34px rgba(37,99,235,.18)
+    }
+
+    .promo-inline-inner{
+      min-height:190px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:12px;
+      padding:18px
+    }
+
+    .promo-inline.fallback .promo-inline-inner{
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.62) 0%, transparent 35%),
+        linear-gradient(135deg,#dbeafe 0%,#bfdbfe 45%,#eff6ff 100%);
+    }
+
+    .promo-inline-image{background-size:cover;background-position:center;position:relative}
+    .promo-inline-image::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(15,23,42,.12) 0%, rgba(15,23,42,.76) 100%);
+    }
+
+    .promo-inline-image .promo-inline-inner{position:relative;z-index:1}
+    .promo-inline-copy{color:#0f172a;max-width:82%}
+    .promo-inline-image .promo-inline-copy{color:#fff}
+
+    .promo-kicker{
+      display:inline-block;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.45px;
+      opacity:.98;
+      margin-bottom:8px;
+      padding:7px 11px;
+      border-radius:999px;
+      background:rgba(255,255,255,.88);
+      color:#1d4ed8;
+      border:1px solid rgba(191,215,255,.95)
+    }
+
+    .promo-inline-image .promo-kicker{
+      background:rgba(255,255,255,.94);
+      color:#1d4ed8;
+      border-color:rgba(255,255,255,.98)
+    }
+
+    .promo-title{font-size:26px;font-weight:900;line-height:1.15;margin-bottom:6px;text-shadow:0 2px 10px rgba(0,0,0,.20)}
+    .promo-sub{font-size:15px;opacity:.98;line-height:1.35}
+    .promo-inline-image .promo-sub{text-shadow:0 1px 4px rgba(0,0,0,.25)}
+    .promo-bottom{display:flex;justify-content:flex-end}
+    .promo-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:122px;
+      padding:13px 20px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:18px;
+      background:#2563eb;
+      color:#fff;
+      box-shadow:0 12px 24px rgba(37,99,235,.26)
+    }
+    .promo-inline-image .promo-pill{background:rgba(255,255,255,.97);color:#1d4ed8}
+
+    .local-offers-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px
+    }
+
+    .local-offer-card{
+      min-height:126px;
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid #cfe0ff;
+      background:linear-gradient(135deg,#dbeafe 0%,#eff6ff 100%);
+      box-shadow:0 10px 24px rgba(37,99,235,.12);
+      cursor:pointer;
+      position:relative;
+      transition:transform .18s ease, box-shadow .18s ease
+    }
+
+    .local-offer-card:hover{
+      transform:translateY(-1px);
+      box-shadow:0 14px 26px rgba(37,99,235,.16)
+    }
+
+    .local-offer-card.image{
+      background-size:cover;
+      background-position:center;
+      color:#fff
+    }
+
+    .local-offer-card.image::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(15,23,42,.10) 0%, rgba(15,23,42,.78) 100%);
+    }
+
+    .local-offer-card.fallback{
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.65) 0%, transparent 40%),
+        linear-gradient(135deg,#dbeafe 0%,#bfdbfe 48%,#eff6ff 100%);
+      color:#0f172a
+    }
+
+    .local-offer-inner{
+      position:relative;
+      z-index:1;
+      min-height:126px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      padding:12px
+    }
+
+    .local-offer-kicker{
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+      opacity:.98
+    }
+
+    .local-offer-region{
+      font-size:17px;
+      font-weight:900;
+      line-height:1.1;
+      margin-top:4px
+    }
+
+    .local-offer-sub{
+      font-size:11px;
+      line-height:1.25;
+      opacity:.96;
+      margin-top:4px;
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
+      overflow:hidden
+    }
+
+    .local-offer-pill{
+      align-self:flex-end;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:80px;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:900;
+      background:#2563eb;
+      color:#fff;
+      box-shadow:0 8px 18px rgba(37,99,235,.22)
+    }
+
+    .local-offer-card.image .local-offer-pill{
+      background:rgba(255,255,255,.97);
+      color:#1d4ed8
+    }
+
+    .invite-box{
+      margin-top:14px;
+      padding:18px;
+      border:1px solid #dbeafe;
+      border-radius:22px;
+      background:#f8fbff
+    }
+
+    .invite-preview{
+      min-height:180px;
+      white-space:pre-wrap;
+      line-height:1.6;
+      background:#fff;
+      border:1px solid #cfe0ff;
+      border-radius:16px;
+      padding:14px
+    }
+
+    .hidden{display:none!important}
+    .btnrow{display:flex;gap:10px;flex-wrap:wrap}
+    button{border:none;border-radius:999px;padding:11px 16px;background:var(--blue);color:#fff;font-weight:700;cursor:pointer}
+    button.alt{background:#eaf2ff;color:var(--blue-dark);border:1px solid #bfd7ff}
+    button.warn{background:#fff7ed;color:#9a3412;border:1px solid #fdba74}
+    button.danger{background:#b91c1c;color:#fff}
+    button.ok{background:#166534;color:#fff}
+    input,select,textarea{width:100%;padding:14px 15px;border:1px solid #cbd5e1;border-radius:16px;font-size:15px;margin:8px 0 12px;background:#fff}
+    textarea{min-height:110px;resize:vertical}
+    .status{font-weight:700;min-height:22px}
+    .post,.biz-card,.admin-item,.turtip-card{background:#fff;border:1px solid #e2e8f0;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(15,23,42,.06);margin-top:14px}
+    .post-content,.biz-content,.admin-content,.turtip-content{padding:16px}
+    .meta{color:var(--muted);font-size:13px;margin:4px 0 10px 0}
+    .post img,.biz-main img,.club-card img,.turtip-card img{width:100%;display:block;object-fit:cover;max-height:320px;background:#f1f5f9}
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px 16px}
+    .gallery img{width:100%;height:180px;object-fit:cover;border-radius:14px;display:block}
+    .likebar{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+    .comment{border:1px solid #e2e8f0;border-radius:14px;padding:10px 12px;margin-top:8px;background:#fff}
+    .commentmeta{font-size:12px;color:var(--muted);margin-bottom:3px}
+    .search-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:12px}
+    .badge{display:inline-block;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:700}
+    .approved{background:#dcfce7;color:#166534;border:1px solid #86efac}
+    .pending{background:#fffbeb;color:#92400e;border:1px solid #fcd34d}
+    .biz-top{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+    .biz-logo{width:110px;height:110px;object-fit:contain;border-radius:20px;background:#fff;border:1px solid #e2e8f0;padding:8px}
+    .biz-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .site-link{display:inline-block;text-decoration:none;background:#eaf2ff;color:var(--blue-dark);border:1px solid #bfd7ff;padding:9px 13px;border-radius:999px;font-weight:700}
+    .club-grid,.turtips-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+    .club-card{border:1px solid #e2e8f0;border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 8px 22px rgba(15,23,42,.06)}
+    .club-card-content{padding:15px}
+    .sharebox{background:#f8fbff;border:1px solid #dbeafe;border-radius:22px;padding:18px}
+    .sharelink{color:var(--blue-dark);font-weight:700;word-break:break-all;margin:6px 0 10px}
+    .empty-box{border:1px dashed #cbd5e1;border-radius:18px;padding:16px;color:var(--muted);background:#fff}
+    .turtip-card img{height:220px;object-fit:cover}
+    .turtip-badge{display:inline-block;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:700;margin-bottom:10px;background:#eff6ff;color:#1d4ed8}
+    .turtip-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+    .turtip-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .tiny{font-size:12px;color:var(--muted)}
+    #imageModal{position:fixed;inset:0;background:rgba(15,23,42,.8);display:none;align-items:center;justify-content:center;padding:20px;z-index:9999}
+    #imageModal.open{display:flex}
+    #imageModal img{max-width:95vw;max-height:90vh;border-radius:18px;width:auto;height:auto;object-fit:contain}
+    #imageModalClose{position:absolute;top:14px;right:18px;width:42px;height:42px;border-radius:999px;background:#fff;color:#111827;font-size:24px;padding:0}
+    .clickable-image{cursor:zoom-in}
+
+    .weekly-card{
+      background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+      border:1px solid #cfe0ff;
+      border-radius:26px;
+      overflow:hidden;
+      box-shadow:0 14px 34px rgba(37,99,235,.10);
+      margin-top:16px
+    }
+
+    .weekly-head{
+      padding:18px 18px 12px 18px;
+      background:linear-gradient(180deg,#f8fbff 0%,#ffffff 100%);
+      border-bottom:1px solid #e6f0ff
+    }
+
+    .weekly-topline{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:10px
+    }
+
+    .weekly-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      color:#1d4ed8;
+      background:#eaf2ff;
+      border:1px solid #bfd7ff
+    }
+
+    .weekly-date{
+      display:inline-flex;
+      align-items:center;
+      padding:7px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      color:#0f172a;
+      background:#fff7ed;
+      border:1px solid #fed7aa
+    }
+
+    .weekly-title{font-size:26px;font-weight:800;line-height:1.15;margin:0 0 10px 0;color:#0f172a}
+    .weekly-meta-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+
+    .weekly-chip{
+      display:inline-flex;
+      align-items:center;
+      padding:7px 12px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid #dbeafe;
+      color:#334155;
+      font-size:13px;
+      font-weight:700
+    }
+
+    .weekly-desc{color:#334155;line-height:1.65;white-space:pre-wrap}
+    .weekly-image-single{width:100%;display:block;object-fit:cover;max-height:340px;background:#f1f5f9}
+    .weekly-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px 18px 0 18px}
+    .weekly-gallery img{width:100%;height:185px;object-fit:cover;border-radius:16px;display:block;border:1px solid #e2e8f0}
+    .weekly-footer{padding:16px 18px 18px 18px}
+    .weekly-actionbar{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+    .weekly-like-btn{background:#edf4ff;color:#1d4ed8;border:1px solid #bfd7ff;box-shadow:none}
+    .weekly-comment-count{font-size:13px;color:#64748b;font-weight:700}
+    .weekly-comments-box{background:#f8fbff;border:1px solid #e2ecff;border-radius:18px;padding:14px}
+    .weekly-comment{border:1px solid #e2e8f0;border-radius:14px;padding:10px 12px;margin-top:8px;background:#fff}
+    .weekly-comment:first-child{margin-top:0}
+    .weekly-comment-input{margin:12px 0 10px 0!important;background:#fff;border:1px solid #cfe0ff}
+    .weekly-comment-btn{background:#2563eb;color:#fff}
+
+    .region-tabs{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin:12px 0 16px 0
+    }
+
+    .region-tabs-4{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin:12px 0 16px 0
+    }
+
+    .region-tab{
+      border:none;
+      border-radius:18px;
+      min-height:56px;
+      padding:12px 10px;
+      font-size:14px;
+      font-weight:800;
+      cursor:pointer;
+      background:#eef4ff;
+      color:#1d4ed8;
+      border:1px solid #cfe0ff
+    }
+
+    .region-tab.active{
+      background:#2563eb;
+      color:#fff;
+      border-color:#2563eb;
+      box-shadow:0 10px 22px rgba(37,99,235,.16)
+    }
+
+    .region-current{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:#eef4ff;
+      color:#1d4ed8;
+      border:1px solid #cfe0ff;
+      font-size:13px;
+      font-weight:800;
+      margin-bottom:10px
+    }
+
+    @media (max-width:760px){
+      .wrap{padding:14px 12px 40px}
+      .topbar{padding:10px 12px;border-radius:20px}
+      .brand{font-size:18px}
+      .hero{padding:20px;border-radius:24px;min-height:auto}
+      .hero h1{font-size:30px}
+      .menu-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+      .menu-btn{min-height:62px;font-size:13px}
+      .search-grid,.gallery,.weekly-gallery{grid-template-columns:1fr}
+      .gallery img{height:220px}
+      h2{font-size:26px}
+      .turtip-card img{height:200px}
+      .promo-inline,.promo-inline-inner{min-height:170px}
+      .promo-title{font-size:18px}
+      .promo-sub{font-size:12px}
+      .promo-inline-copy{max-width:100%}
+      .promo-kicker{margin-bottom:7px;padding:5px 9px;font-size:10px}
+      .promo-pill{min-width:108px;font-size:16px;padding:12px 18px}
+      .weekly-title{font-size:22px}
+      .weekly-gallery img{height:220px}
+      .weekly-head,.weekly-footer{padding-left:14px;padding-right:14px}
+      .weekly-gallery{padding-left:14px;padding-right:14px}
+      .region-tabs{grid-template-columns:1fr 1fr 1fr;gap:8px}
+      .region-tabs-4{grid-template-columns:1fr 1fr;gap:8px}
+      .region-tab{font-size:13px;min-height:52px;padding:10px 8px}
+      .local-offers-grid{
+        display:flex;
+        gap:10px;
+        overflow-x:auto;
+        padding-bottom:6px;
+        scroll-snap-type:x mandatory
+      }
+      .local-offers-grid::-webkit-scrollbar{display:none}
+      .local-offer-card{
+        min-width:158px;
+        flex-shrink:0;
+        scroll-snap-align:start;
+        min-height:118px
+      }
+      .local-offer-inner{min-height:118px;padding:10px}
+      .local-offer-region{font-size:15px}
+      .local-offer-sub{font-size:10px;-webkit-line-clamp:2}
+      .local-offer-pill{min-width:68px;padding:7px 12px;font-size:12px}
+    }
+
+    @media (min-width:761px){
+      .menu-grid{grid-template-columns:repeat(2,1fr)}
+      .region-grid{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media (min-width:980px){
+      .wrap{max-width:960px}
+      #feed,.card,.post{max-width:900px;margin-left:auto;margin-right:auto}
+      .post img,.biz-main img,.club-card img,.turtip-card img{max-height:260px}
+      .gallery img{height:160px}
+      .menu-grid{grid-template-columns:repeat(2,1fr)}
+      .region-grid{grid-template-columns:repeat(4,1fr)}
+    }
+  </style>
 </head>
 <body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">Hundene våre 🐶</div>
+    <div class="actions">
+      <button type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button>
+      <button type="button" onclick="goHome()">Forside</button>
+      <button type="button" onclick="showPage('admin')">Admin</button>
+    </div>
+  </div>
 
-<div class="container">
-<h2>Hundene våre 🐶</h2>
+  <div id="page-home">
+    <div class="hero">
+      <h1>Hundene våre 🐾</h1>
+      <p>Del hundebilder, historier og opplevelser. Logg inn og bli med i fellesskapet.</p>
+    </div>
 
-<div class="grid">
-<div class="btn">Nyheter</div>
-<div class="btn">Turtips</div>
-<div class="btn">Frisører</div>
+    <div class="card">
+      <div class="offers-panel">
+        <div class="offers-top">
+          <a class="offer-link" href="#" onclick="showPage('weekly'); return false;">🐾 Se Ukens tilbud</a>
+        </div>
 
-<div class="btn">Zoo butikker</div>
-<div class="btn">Hundepensjonat</div>
-<div class="btn">Veterinærer</div>
+        <div class="offers-stack">
+          <div id="promoInlineBanner" class="promo-inline fallback" onclick="showPage('weekly')">
+            <div class="promo-inline-inner">
+              <div class="promo-inline-copy">
+                <div class="promo-kicker">UKENS TILBUD</div>
+                <div class="promo-title">Plass til butikktilbud 🐾</div>
+                <div class="promo-sub">Nyeste tilbudsbilde kan vises automatisk her</div>
+              </div>
+              <div class="promo-bottom">
+                <div class="promo-pill">Se nå</div>
+              </div>
+            </div>
+          </div>
 
-<div class="btn">Bedrift</div>
-<div class="btn">Hundeklubber</div>
-<div class="btn">Haugalandet</div>
+          <div class="local-offers-grid">
+            <div id="localOfferHaugalandet" class="local-offer-card fallback" onclick="openWeeklyRegion('Haugalandet')">
+              <div class="local-offer-inner">
+                <div>
+                  <div class="local-offer-kicker">Lokale tilbud</div>
+                  <div class="local-offer-region">Haugalandet</div>
+                  <div class="local-offer-sub">Ingen tilbud enda</div>
+                </div>
+                <div class="local-offer-pill">Se</div>
+              </div>
+            </div>
 
-<div class="btn">Stavanger</div>
-<div class="btn">☕ Kaféer</div>
+            <div id="localOfferStavanger" class="local-offer-card fallback" onclick="openWeeklyRegion('Stavanger')">
+              <div class="local-offer-inner">
+                <div>
+                  <div class="local-offer-kicker">Lokale tilbud</div>
+                  <div class="local-offer-region">Stavanger</div>
+                  <div class="local-offer-sub">Ingen tilbud enda</div>
+                </div>
+                <div class="local-offer-pill">Se</div>
+              </div>
+            </div>
+
+            <div id="localOfferStord" class="local-offer-card fallback" onclick="openWeeklyRegion('Stord')">
+              <div class="local-offer-inner">
+                <div>
+                  <div class="local-offer-kicker">Lokale tilbud</div>
+                  <div class="local-offer-region">Stord</div>
+                  <div class="local-offer-sub">Ingen tilbud enda</div>
+                </div>
+                <div class="local-offer-pill">Se</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="region-grid">
+        <button class="region-card haugalandet" onclick="showPage('haugalandet')">
+          <div class="region-icon">📍</div>
+          <div class="region-title">Haugalandet</div>
+          <div class="region-sub">Se butikker og tjenester i området</div>
+        </button>
+        <button class="region-card stavanger" onclick="showPage('stavanger')">
+          <div class="region-icon">🏙️</div>
+          <div class="region-title">Stavanger</div>
+          <div class="region-sub">Se tilbud og steder i området</div>
+        </button>
+        <button class="region-card stord" onclick="showPage('stord')">
+          <div class="region-icon">🌉</div>
+          <div class="region-title">Stord</div>
+          <div class="region-sub">Finn butikker og tjenester på Stord</div>
+        </button>
+        <button class="region-card cafe" onclick="showPage('cafes')">
+          <div class="region-icon">☕</div>
+          <div class="region-title">Kaféer</div>
+          <div class="region-sub">Steder der du kan ha med hund</div>
+        </button>
+      </div>
+
+      <div class="home-menu-grid">
+        <button class="home-menu-btn offers" onclick="showPage('stories')">📰 Nyheter fra butikk</button>
+        <button class="home-menu-btn activity" onclick="showPage('turtips')">🥾 Turtips</button>
+        <button class="home-menu-btn groom" onclick="showPage('groomers')">✂️ Frisører</button>
+        <button class="home-menu-btn shop" onclick="showPage('shops')">🐾 Zoo butikker</button>
+        <button class="home-menu-btn shop" onclick="showPage('pensjonat')">🐶 Hundepensjonat</button>
+        <button class="home-menu-btn vet" onclick="showPage('vets')">🏥 Veterinærer</button>
+        <button class="home-menu-btn business" onclick="showPage('business')">🏪 Bedrift</button>
+        <button class="home-menu-btn club" onclick="showPage('hundeklubber')">🐶 Hundeklubber</button>
+        <button class="home-menu-btn activity" onclick="showPage('haugalandet')">📍 Butikker Haugalandet</button>
+        <button class="home-menu-btn activity" onclick="showPage('stavanger')">📍 Stavanger</button>
+        <button class="home-menu-btn cafe" onclick="showPage('cafes')">☕ Kaféer med hund</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-haugalandet" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>📍 Haugalandet</h2><div class="sub">Velg kategori for å vise kun det du vil se i Haugalandet.</div><div class="menu-grid"><button class="menu-btn shop" type="button" onclick="loadHaugalandetCategory('Zoo butikk')">🐾 Zoo butikker</button><button class="menu-btn groom" type="button" onclick="loadHaugalandetCategory('Frisør')">✂️ Frisører</button><button class="menu-btn vet" type="button" onclick="loadHaugalandetCategory('Veterinær')">🏥 Veterinærer</button><button class="menu-btn shop" type="button" onclick="loadHaugalandetCategory('Hund pensjonat')">🐶 Hundepensjonat</button></div><div id="haugalandetCategoryTitle" class="sub" style="margin-top:14px;">Velg en kategori over.</div><div id="haugalandetContent"><div class="empty-box">Ingen kategori valgt ennå.</div></div></div></div>
+
+  <div id="page-stord" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>📍 Stord</h2><div class="sub">Velg kategori for å vise kun det du vil se på Stord.</div><div class="menu-grid"><button class="menu-btn shop" type="button" onclick="loadStordCategory('Zoo butikk')">🐾 Zoo butikker</button><button class="menu-btn groom" type="button" onclick="loadStordCategory('Frisør')">✂️ Frisører</button><button class="menu-btn vet" type="button" onclick="loadStordCategory('Veterinær')">🏥 Veterinærer</button><button class="menu-btn shop" type="button" onclick="loadStordCategory('Hund pensjonat')">🐶 Hundepensjonat</button></div><div id="stordCategoryTitle" class="sub" style="margin-top:14px;">Velg en kategori over.</div><div id="stordContent"><div class="empty-box">Ingen kategori valgt ennå.</div></div></div></div>
+
+  <div id="page-cafes" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>☕ Kaféer med hund</h2><div class="sub">Finn kaféer og steder der du kan ha med hund. Velg område under.</div><div class="menu-grid"><button class="menu-btn activity" type="button" onclick="loadCafeRegion('Haugalandet')">📍 Haugalandet</button><button class="menu-btn activity" type="button" onclick="loadCafeRegion('Stavanger')">📍 Stavanger</button><button class="menu-btn activity" type="button" onclick="loadCafeRegion('Stord')">📍 Stord</button></div><div id="cafesCategoryTitle" class="sub" style="margin-top:14px;">Velg et område over.</div><div id="cafesContent"><div class="empty-box">Ingen område valgt ennå.</div></div></div></div>
+
+  <div id="page-groomers" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>✂️ Frisører</h2><div class="search-grid"><input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()"><select id="filterFavoritesGroomers" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchGroomers" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="groomerList"></div></div></div>
+
+  <div id="page-shops" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🐾 Zoo butikker</h2><div class="search-grid"><input id="searchShops" placeholder="Søk butikk eller sted" oninput="loadBusinesses()"><select id="filterFavoritesShops" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchShops" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="shopList"></div></div></div>
+
+  <div id="page-pensjonat" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🐶 Hundepensjonat & Hundepass</h2><div class="search-grid"><input id="searchPensjonat" placeholder="Søk pensjonat eller sted" oninput="loadBusinesses()"><select id="filterFavoritesPensjonat" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchPensjonat" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="pensjonatList"></div></div></div>
+
+  <div id="page-vets" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🏥 Veterinærer</h2><div class="search-grid"><input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()"><select id="filterFavoritesVets" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchVets" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="vetList"></div></div></div>
+
+  <div id="page-business" class="hidden">
+    <div class="card">
+      <div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div>
+      <h2>🏪 Registrer / rediger bedrift</h2>
+      <div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div>
+      <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
+      <label><strong>Type</strong></label>
+      <select id="bizType"><option>Hundeklubb</option><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option><option>Hund pensjonat</option><option>Kafé</option></select>
+      <label><strong>Område</strong></label>
+      <select id="bizRegion"><option value="Haugalandet">Haugalandet</option><option value="Stavanger">Stavanger</option><option value="Stord">Stord</option></select>
+      <label><strong>Aktivitet</strong></label>
+      <select id="bizActivity"><option value="">Velg aktivitet</option><option>Tilbud</option><option>Valpekurs</option><option>Utstilling</option><option>Agility / trening</option><option>Fellesturer</option></select>
+      <label>Dato for aktivitet</label><input id="bizDate" type="date">
+      <input id="bizName" placeholder="Navn på bedrift">
+      <input id="bizPlace" placeholder="Sted">
+      <input id="bizPhone" placeholder="Telefon">
+      <input id="bizWebsite" placeholder="Nettside eller Facebook-link">
+      <textarea id="bizText" placeholder="Beskrivelse av bedriften"></textarea>
+      <label>Last opp ny logo (valgfritt ved redigering)</label><input id="bizLogo" type="file" accept="image/*">
+      <label>Last opp nytt hovedbilde (valgfritt ved redigering)</label><input id="bizImage" type="file" accept="image/*">
+      <label>Last opp ekstra bilder for galleri (opptil 5)</label><input id="bizGalleryFiles" type="file" accept="image/*" multiple>
+      <div class="btnrow">
+        <button type="button" onclick="saveBusiness()">Lagre bedrift</button>
+        <button type="button" class="alt" onclick="loadBusinesses()">Oppdater bedrifter</button>
+        <button type="button" class="warn" onclick="clearBusinessForm()">Tøm skjema</button>
+      </div>
+      <div id="bizStatus" class="status">Klar.</div>
+    </div>
+
+    <div class="card">
+      <h2 style="font-size:24px;">📩 Inviter butikk</h2>
+      <div class="sub">Lag en ferdig melding du kan kopiere og sende til butikker.</div>
+      <div class="btnrow">
+        <button type="button" onclick="toggleInviteBox()">Inviter butikk</button>
+      </div>
+
+      <div id="inviteBox" class="invite-box hidden">
+        <label><strong>Butikknavn</strong></label>
+        <input id="inviteShopName" placeholder="Skriv butikknavn" oninput="updateInviteMessage()">
+
+        <label><strong>Sted</strong></label>
+        <input id="invitePlace" placeholder="F.eks. Stavanger" oninput="updateInviteMessage()">
+
+        <label><strong>Kontaktperson</strong></label>
+        <input id="inviteContact" placeholder="Valgfritt" oninput="updateInviteMessage()">
+
+        <label><strong>Område</strong></label>
+        <select id="inviteRegion" onchange="updateInviteMessage()">
+          <option value="Stavanger">Stavanger</option>
+          <option value="Haugalandet">Haugalandet</option>
+          <option value="Stord">Stord</option>
+        </select>
+
+        <label><strong>Ferdig invitasjon</strong></label>
+        <div id="invitePreview" class="invite-preview"></div>
+
+        <div class="btnrow" style="margin-top:12px;">
+          <button type="button" onclick="copyInviteMessage()">Kopier invitasjon</button>
+          <button type="button" class="alt" onclick="updateInviteMessage()">Oppdater tekst</button>
+        </div>
+        <div id="inviteStatus" class="status"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-admin" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🛠️ Admin</h2><div id="adminStatus" class="status">Klar.</div></div><div class="card"><h2 style="font-size:24px;">Innlegg</h2><div id="adminStories">Laster ...</div></div><div class="card"><h2 style="font-size:24px;">Bedrifter</h2><div id="adminBusinesses">Laster ...</div></div></div>
+
+  <div id="page-favorites" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>❤️ Mine favoritter</h2><div id="favoritesList">Laster favoritter ...</div></div></div>
+
+  <div id="page-hundeklubber" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🐶 Hundeklubber</h2><div class="sub">Lokale hundeklubber og aktiviteter.</div><div id="dogClubsList"><div class="empty-box">Laster klubber ...</div></div></div><div class="card"><h2 style="font-size:24px;">➕ Legg til hundeklubb</h2><input id="clubName" placeholder="Klubbnavn"><input id="clubLocation" placeholder="Område / sted"><textarea id="clubDescription" placeholder="Beskrivelse"></textarea><input id="clubWebsite" placeholder="Nettside / Facebook-link"><div class="btnrow"><button type="button" onclick="saveDogClub()">Lagre klubb</button><button type="button" class="alt" onclick="loadDogClubs()">Oppdater liste</button></div><div id="clubStatus" class="status"></div></div></div>
+
+  <div class="card"><div class="sharebox"><div>Del appen med andre:</div><div class="sharelink">https://dagfinn53e-alt.github.io/hundene-vare/</div><div class="btnrow"><button type="button" onclick="shareApp()">Del link</button><button type="button" class="alt" onclick="copyLink()">Kopier link</button></div></div></div>
 </div>
 
-</div>
+<div id="imageModal" onclick="closeImageModal(event)"><button id="imageModalClose" type="button" onclick="closeImageModal(event)">×</button><img id="imageModalImg" src="" alt="Forstørret bilde"></div>
 
+<script>
+var ADMIN_EMAIL="dagfinn53e@gmail.com";
+var supabase=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
+var currentStoriesRegion="Stavanger";
+var currentWeeklyRegion="Alle";
+
+function qs(id){return document.getElementById(id)}
+function setStatusText(id,text,color){var el=qs(id);if(el){el.textContent=text;el.style.color=color||"black"}}
+
+function goHome(){
+  var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','stord','cafes','groomers','shops','pensjonat','vets','business','admin','favorites','hundeklubber'];
+  for(var i=0;i<pages.length;i++){
+    var el=qs('page-'+pages[i]);
+    if(el) el.classList.add('hidden');
+  }
+  var home=qs('page-home');
+  if(home) home.classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+
+function showPage(name){
+  if(name==='home'){goHome();return;}
+  var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','stord','cafes','groomers','shops','pensjonat','vets','business','admin','favorites','hundeklubber'];
+  for(var i=0;i<pages.length;i++){
+    var el=qs('page-'+pages[i]);
+    if(el) el.classList.add('hidden');
+  }
+  var active=qs('page-'+name);
+  if(active) active.classList.remove('hidden');
+
+  if(name==='stories'){
+    updateStoriesRegionUI();
+    loadStories();
+    loadProfile();
+  }
+  if(name==='weekly'){
+    updateWeeklyRegionUI();
+    loadWeeklyOffers();
+    loadProfile();
+  }
+  if(name==='turtips'){loadTurtips();}
+  if(name==='stavanger'){loadStavangerPage();}
+  if(name==='haugalandet'){loadHaugalandetPage();}
+  if(name==='stord'){loadStordPage();}
+  if(name==='cafes'){loadCafePage();}
+  if(name==='shops'){
+    if(qs('searchShops')) qs('searchShops').value='';
+    if(qs('mapSearchShops')) qs('mapSearchShops').value='';
+    if(qs('filterFavoritesShops')) qs('filterFavoritesShops').value='all';
+    loadBusinesses();
+  }
+  if(name==='groomers'||name==='vets'||name==='pensjonat'){loadBusinesses();}
+  if(name==='business'){
+    loadBusinessOptions();
+    updateInviteMessage();
+  }
+  if(name==='admin'){loadAdmin();}
+  if(name==='favorites'){loadFavoritesPage();}
+  if(name==='hundeklubber'){loadDogClubs();}
+  window.scrollTo(0,0);
+}
+
+function quickHaugalandet(){showPage('haugalandet')}
+function quickStavanger(){showPage('stavanger')}
+
+function escapeHtml(str){
+  return String(str||"").replace(/[&<>"']/g,function(m){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]
+  })
+}
+
+function normalizeUrl(url){
+  if(!url) return "";
+  if(url.startsWith("http://")||url.startsWith("https://")) return url;
+  return "https://"+url;
+}
+
+function buildGoogleMapsLink(place,searchText){
+  var q=searchText||place||"";
+  if(!q) return "";
+  return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);
+}
+
+function getFavoriteBusinesses(){try{return JSON.parse(localStorage.getItem("hundene_vare_fav_businesses")||"[]")}catch(e){return []}}
+function saveFavoriteBusinesses(list){localStorage.setItem("hundene_vare_fav_businesses",JSON.stringify(list))}
+function toggleFavoriteBusiness(id){var favs=getFavoriteBusinesses();var idx=favs.indexOf(id);if(idx>=0) favs.splice(idx,1); else favs.push(id);saveFavoriteBusinesses(favs);loadBusinesses();loadFavoritesPage()}
+function getTurtipLikes(){try{return JSON.parse(localStorage.getItem("hundene_vare_turtip_likes")||"{}")}catch(e){return {}}}
+function saveTurtipLikes(data){localStorage.setItem("hundene_vare_turtip_likes",JSON.stringify(data))}
+function getTurtipComments(){try{return JSON.parse(localStorage.getItem("hundene_vare_turtip_comments")||"{}")}catch(e){return {}}}
+function saveTurtipComments(data){localStorage.setItem("hundene_vare_turtip_comments",JSON.stringify(data))}
+
+async function uploadFile(file,folder){
+  if(!file) return "";
+  var safeName=Date.now()+"-"+file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+  var filePath=folder+"/"+safeName;
+  var upload=await supabase.storage.from("story-images").upload(filePath,file);
+  if(upload.error) throw new Error(upload.error.message);
+  return supabase.storage.from("story-images").getPublicUrl(filePath).data.publicUrl||"";
+}
+
+async function uploadMultiple(files,folder){
+  var urls=[];
+  for(var i=0;i<files.length;i++){urls.push(await uploadFile(files[i],folder))}
+  return urls;
+}
+
+function getRegionLabel(region){
+  if(region==="Stavanger") return "Stavanger";
+  if(region==="Haugalandet") return "Haugalandet";
+  if(region==="Stord") return "Stord";
+  if(region==="Alle") return "Alle";
+  return region||"";
+}
+
+function buildStoredText(region,offerFrom,offerTo,text){
+  var parts=[];
+  if(region) parts.push("__REGION__:"+region);
+  if(offerFrom||offerTo){
+    parts.push("Tilbud fra: "+(offerFrom||"-")+" | Til: "+(offerTo||"-"));
+  }
+  parts.push(text||"");
+  return parts.join("\n\n");
+}
+
+function parseRegionPrefix(rawText){
+  var text=String(rawText||"");
+  var parts=text.split("\n\n");
+  var first=(parts[0]||"").trim();
+  if(first.indexOf("__REGION__:")===0){
+    return first.replace("__REGION__:","").trim();
+  }
+  return "";
+}
+
+function stripRegionPrefix(rawText){
+  var text=String(rawText||"");
+  var parts=text.split("\n\n");
+  var first=(parts[0]||"").trim();
+  if(first.indexOf("__REGION__:")===0){
+    parts.shift();
+    return parts.join("\n\n");
+  }
+  return text;
+}
+
+function extractOfferInfo(rawText){
+  var withoutRegion=stripRegionPrefix(rawText);
+  var info={offerLine:"",descText:withoutRegion||"",from:"",to:""};
+  if(String(withoutRegion||"").indexOf("Tilbud fra:")===0){
+    var parts=String(withoutRegion||"").split("\n\n");
+    info.offerLine=parts[0]||"";
+    info.descText=parts.slice(1).join("\n\n")||"";
+    var match=info.offerLine.match(/Tilbud fra:\s*(.*?)\s*\|\s*Til:\s*(.*)/);
+    if(match){
+      info.from=(match[1]||"").trim();
+      info.to=(match[2]||"").trim();
+    }
+  }
+  return info;
+}
+
+function setStoriesRegion(region){
+  currentStoriesRegion=region;
+  updateStoriesRegionUI();
+  loadStories();
+}
+
+function updateStoriesRegionUI(){
+  if(qs("storiesTabStavanger")) qs("storiesTabStavanger").classList.toggle("active", currentStoriesRegion==="Stavanger");
+  if(qs("storiesTabHaugalandet")) qs("storiesTabHaugalandet").classList.toggle("active", currentStoriesRegion==="Haugalandet");
+  if(qs("storiesTabStord")) qs("storiesTabStord").classList.toggle("active", currentStoriesRegion==="Stord");
+  if(qs("storiesRegionTitle")) qs("storiesRegionTitle").textContent="Viser område: "+getRegionLabel(currentStoriesRegion);
+  if(qs("storiesFormRegion")) qs("storiesFormRegion").textContent="Nyhet lagres i: "+getRegionLabel(currentStoriesRegion);
+}
+
+function setWeeklyRegion(region){
+  currentWeeklyRegion=region;
+  updateWeeklyRegionUI();
+  loadWeeklyOffers();
+}
+
+function updateWeeklyRegionUI(){
+  if(qs("weeklyTabAlle")) qs("weeklyTabAlle").classList.toggle("active", currentWeeklyRegion==="Alle");
+  if(qs("weeklyTabHaugalandet")) qs("weeklyTabHaugalandet").classList.toggle("active", currentWeeklyRegion==="Haugalandet");
+  if(qs("weeklyTabStavanger")) qs("weeklyTabStavanger").classList.toggle("active", currentWeeklyRegion==="Stavanger");
+  if(qs("weeklyTabStord")) qs("weeklyTabStord").classList.toggle("active", currentWeeklyRegion==="Stord");
+  if(qs("weeklyRegionTitle")) qs("weeklyRegionTitle").textContent="Viser område: "+getRegionLabel(currentWeeklyRegion);
+}
+
+function openWeeklyRegion(region){
+  currentWeeklyRegion=region;
+  showPage('weekly');
+}
+
+function toggleInviteBox(){
+  var box=qs("inviteBox");
+  if(!box) return;
+  box.classList.toggle("hidden");
+  updateInviteMessage();
+}
+
+function updateInviteMessage(){
+  var name=qs("inviteShopName") ? qs("inviteShopName").value.trim() : "";
+  var place=qs("invitePlace") ? qs("invitePlace").value.trim() : "";
+  var contact=qs("inviteContact") ? qs("inviteContact").value.trim() : "";
+  var region=qs("inviteRegion") ? qs("inviteRegion").value : "Stavanger";
+  var target=qs("invitePreview");
+  if(!target) return;
+
+  var line1="Hei" + (contact ? " " + contact : "") + " 😊";
+  var line2="";
+  if(name){
+    line2="Jeg holder på å bygge appen Hundene våre, og jeg tror " + name + " kunne passet veldig fint inn der.";
+  } else {
+    line2="Jeg holder på å bygge appen Hundene våre, og jeg tror butikken deres kunne passet veldig fint inn der.";
+  }
+
+  var line3="Det er en lokal app for hundeeiere i " + region + ", hvor butikker kan vises med informasjon, bilder, nyheter og tilbud.";
+  var line4="Det er gratis å være med nå, og jeg kan ordne hele oppføringen for dere.";
+  var line5="Dere kan få synlighet lokalt, plass under riktig område, og mulighet til å vise nyheter og tilbud.";
+  var line6=place ? "Jeg ser at dere holder til i " + place + ", og derfor tenkte jeg at dette kunne være ekstra aktuelt for dere." : "";
+  var line7="Gi meg gjerne en tilbakemelding hvis dette er interessant, så ordner jeg resten.";
+  var line8="";
+  var line9="Mvh";
+  var line10="Dagfinn";
+
+  var message=[line1,"",line2,line3,"",line4,line5,line6 ? line6 : "", "", line7, "", line9, line10]
+    .filter(function(line, index, arr){
+      return !(line==="" && arr[index-1]==="");
+    })
+    .join("\n");
+
+  target.textContent=message;
+}
+
+function copyInviteMessage(){
+  var target=qs("invitePreview");
+  if(!target) return;
+  var text=target.textContent||"";
+  navigator.clipboard.writeText(text).then(function(){
+    setStatusText("inviteStatus","Invitasjon kopiert.","green");
+  }).catch(function(){
+    setStatusText("inviteStatus","Kunne ikke kopiere invitasjonen.","crimson");
+  });
+}
+
+async function loadInlinePromoBanner(){
+  var el=qs("promoInlineBanner");
+  if(!el) return;
+  try{
+    var result=await supabase.from("stories").select("*").eq("category","Ukens tilbud").order("created_at",{ascending:false});
+    if(result.error){throw new Error(result.error.message);}
+    var rows=result.data||[];
+    var best=null;
+
+    for(var i=0;i<rows.length;i++){
+      var row=rows[i];
+      var gallery=Array.isArray(row.image_urls)&&row.image_urls.length?row.image_urls:[];
+      var img=gallery[0] || row.image_url || "";
+      if(img){
+        best={title:row.title||"Ukens tilbud",place:row.place||"",dog:row.dog||"",image:img};
+        break;
+      }
+    }
+
+    if(best){
+      el.className="promo-inline promo-inline-image";
+      el.innerHTML=
+        '<div class="promo-inline-inner">'+
+          '<div class="promo-inline-copy">'+
+            '<div class="promo-kicker">UKENS TILBUD</div>'+
+            '<div class="promo-title">'+escapeHtml(best.title)+'</div>'+
+            '<div class="promo-sub">'+escapeHtml(best.dog||best.place||'Klikk for å se tilbudet')+'</div>'+
+          '</div>'+
+          '<div class="promo-bottom"><div class="promo-pill">Se nå</div></div>'+
+        '</div>';
+      el.style.backgroundImage='url("'+best.image.replace(/"/g,'&quot;')+'")';
+      el.style.backgroundSize='cover';
+      el.style.backgroundPosition='center';
+    }else{
+      el.className="promo-inline fallback";
+      el.innerHTML=
+        '<div class="promo-inline-inner">'+
+          '<div class="promo-inline-copy">'+
+            '<div class="promo-kicker">UKENS TILBUD</div>'+
+            '<div class="promo-title">Plass til butikktilbud 🐾</div>'+
+            '<div class="promo-sub">Nyeste tilbudsbilde kan vises automatisk her</div>'+
+          '</div>'+
+          '<div class="promo-bottom"><div class="promo-pill">Se nå</div></div>'+
+        '</div>';
+      el.style.backgroundImage='none';
+    }
+  }catch(e){
+    el.className="promo-inline fallback";
+    el.innerHTML=
+      '<div class="promo-inline-inner">'+
+        '<div class="promo-inline-copy">'+
+          '<div class="promo-kicker">UKENS TILBUD</div>'+
+          '<div class="promo-title">Plass til butikktilbud 🐾</div>'+
+          '<div class="promo-sub">Nyeste tilbudsbilde kan vises automatisk her</div>'+
+        '</div>'+
+        '<div class="promo-bottom"><div class="promo-pill">Se nå</div></div>'+
+      '</div>';
+    el.style.backgroundImage='none';
+  }
+}
+
+function renderLocalOfferBox(id, region, row){
+  var el=qs(id);
+  if(!el) return;
+
+  if(row){
+    var gallery=Array.isArray(row.image_urls)&&row.image_urls.length?row.image_urls:[];
+    var img=gallery[0] || row.image_url || "";
+    var title=row.title||"Lokalt tilbud";
+    if(img){
+      el.className="local-offer-card image";
+      el.style.backgroundImage='url("'+img.replace(/"/g,'&quot;')+'")';
+      el.innerHTML=
+        '<div class="local-offer-inner">'+
+          '<div>'+
+            '<div class="local-offer-kicker">Lokale tilbud</div>'+
+            '<div class="local-offer-region">'+escapeHtml(region)+'</div>'+
+            '<div class="local-offer-sub">'+escapeHtml(title)+'</div>'+
+          '</div>'+
+          '<div class="local-offer-pill">Se</div>'+
+        '</div>';
+      return;
+    }
+  }
+
+  el.className="local-offer-card fallback";
+  el.style.backgroundImage="none";
+  el.innerHTML=
+    '<div class="local-offer-inner">'+
+      '<div>'+
+        '<div class="local-offer-kicker">Lokale tilbud</div>'+
+        '<div class="local-offer-region">'+escapeHtml(region)+'</div>'+
+        '<div class="local-offer-sub">Ingen tilbud enda</div>'+
+      '</div>'+
+      '<div class="local-offer-pill">Se</div>'+
+    '</div>';
+}
+
+async function loadLocalOfferBoxes(){
+  try{
+    var result=await supabase.from("stories").select("*").eq("category","Ukens tilbud").order("created_at",{ascending:false});
+    if(result.error) throw new Error(result.error.message);
+    var rows=result.data||[];
+
+    function findLatest(region){
+      for(var i=0;i<rows.length;i++){
+        var row=rows[i];
+        var rowRegion=parseRegionPrefix(row.text||"");
+        if(rowRegion===region) return row;
+      }
+      return null;
+    }
+
+    renderLocalOfferBox("localOfferHaugalandet","Haugalandet",findLatest("Haugalandet"));
+    renderLocalOfferBox("localOfferStavanger","Stavanger",findLatest("Stavanger"));
+    renderLocalOfferBox("localOfferStord","Stord",findLatest("Stord"));
+  }catch(e){
+    renderLocalOfferBox("localOfferHaugalandet","Haugalandet",null);
+    renderLocalOfferBox("localOfferStavanger","Stavanger",null);
+    renderLocalOfferBox("localOfferStord","Stord",null);
+  }
+}
+
+function clearBusinessForm(){qs("editBusinessSelect").value="";qs("bizType").value="Hundeklubb";qs("bizRegion").value="Haugalandet";qs("bizActivity").value="";qs("bizDate").value="";qs("bizName").value="";qs("bizPlace").value="";qs("bizPhone").value="";qs("bizWebsite").value="";qs("bizText").value="";qs("bizLogo").value="";qs("bizImage").value="";qs("bizGalleryFiles").value="";setStatusText("bizStatus","Skjema tømt.","black")}
+async function loadBusinessOptions(){var auth=await supabase.auth.getUser();var user=auth&&auth.data?auth.data.user:null;var select=qs("editBusinessSelect");if(!select) return;select.innerHTML='<option value="">Ny bedrift</option>';if(!user) return;var result=await supabase.from("businesses").select("*").eq("author_email",user.email).order("created_at",{ascending:false});var rows=result.data||[];rows.forEach(function(row){var opt=document.createElement("option");opt.value=row.id;opt.textContent=(row.name||"Uten navn")+" – "+(row.place||"");opt.dataset.biz=JSON.stringify(row);select.appendChild(opt)})}
+function loadBusinessIntoForm(){var select=qs("editBusinessSelect");if(!select||!select.value){clearBusinessForm();return;}var opt=select.options[select.selectedIndex];var b=JSON.parse(opt.dataset.biz);qs("editBusinessSelect").value=b.id||"";qs("bizType").value=b.type||"Hundeklubb";qs("bizRegion").value=b.region||"Haugalandet";qs("bizActivity").value=b.activity||"";qs("bizDate").value=b.activity_date||"";qs("bizName").value=b.name||"";qs("bizPlace").value=b.place||"";qs("bizPhone").value=b.phone||"";qs("bizWebsite").value=b.website||"";qs("bizText").value=b.description||"";qs("bizLogo").value="";qs("bizImage").value="";qs("bizGalleryFiles").value="";setStatusText("bizStatus","Bedrift lastet inn for redigering.","green")}
+
+async function saveBusiness(){var auth=await supabase.auth.getUser();var user=auth&&auth.data?auth.data.user:null;if(!user){setStatusText("bizStatus","Du må logge inn først.","crimson");return;}var editId=qs("editBusinessSelect").value;var payload={user_id:user.id,author_email:user.email,type:qs("bizType").value,region:qs("bizRegion").value,activity:qs("bizActivity").value,activity_date:qs("bizDate").value||null,name:qs("bizName").value.trim(),place:qs("bizPlace").value.trim(),phone:qs("bizPhone").value.trim(),website:qs("bizWebsite").value.trim(),description:qs("bizText").value.trim(),approved:false};if(!payload.name||!payload.place||!payload.description){setStatusText("bizStatus","Skriv inn navn, sted og beskrivelse.","crimson");return;}try{setStatusText("bizStatus",editId?"Oppdaterer ...":"Lagrer ...","blue");var existing=null;if(editId){var current=await supabase.from("businesses").select("*").eq("id",editId).maybeSingle();existing=current.data||null}var logoUrl=existing&&existing.logo_url?existing.logo_url:"";var imageUrl=existing&&existing.image_url?existing.image_url:"";var galleryUrls=existing&&Array.isArray(existing.gallery_urls)?existing.gallery_urls:[];var logoFile=qs("bizLogo").files[0];var imageFile=qs("bizImage").files[0];var galleryFiles=Array.from(qs("bizGalleryFiles").files).slice(0,5);if(logoFile) logoUrl=await uploadFile(logoFile,"businesses/logos");if(imageFile) imageUrl=await uploadFile(imageFile,"businesses/images");if(galleryFiles.length) galleryUrls=(await uploadMultiple(galleryFiles,"businesses/gallery")).slice(0,5);payload.logo_url=logoUrl;payload.image_url=imageUrl;payload.gallery_urls=galleryUrls;var result;if(editId){result=await supabase.from("businesses").update(payload).eq("id",editId).eq("author_email",user.email)} else {result=await supabase.from("businesses").insert([payload])}if(result.error){setStatusText("bizStatus","Feil ved lagring: "+result.error.message,"crimson");return;}setStatusText("bizStatus",editId?"Bedrift oppdatert og sendt til godkjenning.":"Bedrift sendt til godkjenning.","green");await loadBusinesses();await loadBusinessOptions();await loadProfile();await loadDogClubs();clearBusinessForm()}catch(e){setStatusText("bizStatus","Feil ved opplasting: "+e.message,"crimson")}}
+
+async function saveStory(){
+  setStatusText("storiesStatus","Prøver å lagre nyhet ...","blue");
+  var auth=await supabase.auth.getUser();
+  var user=auth&&auth.data?auth.data.user:null;
+  if(!user){setStatusText("storiesStatus","Du må logge inn først.","crimson");return;}
+  var title=qs("title").value.trim();
+  var businessName=qs("dog").value.trim()||"Ikke oppgitt";
+  var place=qs("place").value.trim()||"Ikke oppgitt";
+  var offerFrom=qs("offerFrom")&&qs("offerFrom").value?qs("offerFrom").value:"";
+  var offerTo=qs("offerTo")&&qs("offerTo").value?qs("offerTo").value:"";
+  var text=qs("text").value.trim();
+  var files=Array.from(qs("imageFiles").files).slice(0,5);
+  if(!title||!text){setStatusText("storiesStatus","Skriv inn tittel og tekst.","crimson");return;}
+
+  var fullText=buildStoredText(currentStoriesRegion,offerFrom,offerTo,text);
+
+  try{
+    var imageUrls=await uploadMultiple(files,"stories/gallery");
+    var imageUrl=imageUrls[0]||"";
+    var result=await supabase.from("stories").insert([{user_id:user.id,author_email:user.email,title:title,dog:businessName,place:place,category:"Nyhet",text:fullText,image_url:imageUrl,image_urls:imageUrls}]);
+    if(result.error){setStatusText("storiesStatus","Feil ved lagring: "+result.error.message,"crimson");return;}
+  }catch(e){
+    setStatusText("storiesStatus","Feil ved bildeopplasting: "+e.message,"crimson");
+    return;
+  }
+
+  qs("title").value="";
+  qs("dog").value="";
+  qs("place").value="";
+  if(qs("offerFrom")) qs("offerFrom").value="";
+  if(qs("offerTo")) qs("offerTo").value="";
+  qs("text").value="";
+  qs("imageFiles").value="";
+  setStatusText("storiesStatus","Nyhet lagret i "+getRegionLabel(currentStoriesRegion)+"!","green");
+  await loadStories();
+  await loadProfile();
+  showPage('stories');
+}
+
+async function saveWeeklyOffer(){
+  setStatusText("weeklyStatus","Prøver å lagre Ukens tilbud ...","blue");
+  var auth=await supabase.auth.getUser();
+  var user=auth&&auth.data?auth.data.user:null;
+  if(!user){setStatusText("weeklyStatus","Du må logge inn først.","crimson");return;}
+
+  var region=qs("weeklyRegion") ? qs("weeklyRegion").value : "Haugalandet";
+  var title=qs("weeklyTitle").value.trim();
+  var businessName=qs("weeklyDog").value.trim()||"Ikke oppgitt";
+  var place=qs("weeklyPlace").value.trim()||"Ikke oppgitt";
+  var offerFrom=qs("weeklyOfferFrom")&&qs("weeklyOfferFrom").value?qs("weeklyOfferFrom").value:"";
+  var offerTo=qs("weeklyOfferTo")&&qs("weeklyOfferTo").value?qs("weeklyOfferTo").value:"";
+  var text=qs("weeklyText").value.trim();
+  var files=Array.from(qs("weeklyImageFiles").files).slice(0,5);
+
+  if(!title||!text){setStatusText("weeklyStatus","Skriv inn tittel og tekst.","crimson");return;}
+
+  var fullText=buildStoredText(region,offerFrom,offerTo,text);
+
+  try{
+    var imageUrls=await uploadMultiple(files,"stories/gallery");
+    var imageUrl=imageUrls[0]||"";
+    var result=await supabase.from("stories").insert([{user_id:user.id,author_email:user.email,title:title,dog:businessName,place:place,category:"Ukens tilbud",text:fullText,image_url:imageUrl,image_urls:imageUrls}]);
+    if(result.error){setStatusText("weeklyStatus","Feil ved lagring: "+result.error.message,"crimson");return;}
+  }catch(e){
+    setStatusText("weeklyStatus","Feil ved bildeopplasting: "+e.message,"crimson");
+    return;
+  }
+
+  qs("weeklyTitle").value="";
+  qs("weeklyDog").value="";
+  qs("weeklyPlace").value="";
+  if(qs("weeklyOfferFrom")) qs("weeklyOfferFrom").value="";
+  if(qs("weeklyOfferTo")) qs("weeklyOfferTo").value="";
+  qs("weeklyText").value="";
+  qs("weeklyImageFiles").value="";
+  setStatusText("weeklyStatus","Ukens tilbud lagret i "+getRegionLabel(region)+"!","green");
+  currentWeeklyRegion=region;
+  await loadWeeklyOffers();
+  await loadInlinePromoBanner();
+  await loadLocalOfferBoxes();
+  showPage('weekly');
+}
+
+function buildWeeklyDateBadge(info){
+  if(info.from||info.to){
+    return '<div class="weekly-date">📅 '+escapeHtml((info.from||'-')+' til '+(info.to||'-'))+'</div>';
+  }
+  return '';
+}
+
+async function loadWeeklyOffers(){
+  var feed=qs("weeklyFeed");
+  if(!feed) return;
+  feed.textContent="Laster ...";
+  var result=await supabase.from("stories").select("*").eq("category","Ukens tilbud").order("created_at",{ascending:false});
+  if(result.error){feed.textContent="Feil ved henting: "+result.error.message;return;}
+  var data=result.data||[];
+  var likes=getLikes();
+  var comments=getComments();
+
+  var filtered=data.filter(function(post){
+    var region=parseRegionPrefix(post.text||"");
+    if(currentWeeklyRegion==="Alle") return true;
+    return region===currentWeeklyRegion;
+  });
+
+  if(!filtered.length){
+    feed.innerHTML='<div class="empty-box">Ingen tilbud i '+escapeHtml(getRegionLabel(currentWeeklyRegion))+' enda.</div>';
+    return;
+  }
+
+  var html='';
+  filtered.forEach(function(post,i){
+    var postId=post.id||('weekly_'+i);
+    var likeCount=likes[postId]||0;
+    var postComments=comments[postId]||[];
+    var gallery=Array.isArray(post.image_urls)&&post.image_urls.length?post.image_urls:(post.image_url?[post.image_url]:[]);
+    var info=extractOfferInfo(String(post.text||''));
+    var region=parseRegionPrefix(post.text||"");
+
+    html+='<div class="weekly-card">';
+    html+='<div class="weekly-head">';
+    html+='<div class="weekly-topline">';
+    html+='<div class="weekly-badge">⭐ Ukens tilbud</div>';
+    html+=buildWeeklyDateBadge(info);
+    html+='</div>';
+    html+='<h3 class="weekly-title">'+escapeHtml(post.title||'')+'</h3>';
+    html+='<div class="weekly-meta-row">';
+    if(region){html+='<div class="weekly-chip">📍 '+escapeHtml(region)+'</div>';}
+    if(post.dog){html+='<div class="weekly-chip">🏪 '+escapeHtml(post.dog)+'</div>';}
+    if(post.place){html+='<div class="weekly-chip">📌 '+escapeHtml(post.place)+'</div>';}
+    html+='</div>';
+    html+='<div class="weekly-desc">'+escapeHtml(info.descText||'')+'</div>';
+    html+='</div>';
+
+    if(gallery.length){
+      if(gallery.length===1){
+        html+='<img class="weekly-image-single clickable-image" src="'+gallery[0]+'" alt="Ukens tilbud" onclick="openImageModal(this.src)">';
+      } else {
+        html+='<div class="weekly-gallery">';
+        gallery.forEach(function(url){
+          html+='<img class="clickable-image" src="'+url+'" alt="Ukens tilbud" onclick="openImageModal(this.src)">';
+        });
+        html+='</div>';
+      }
+    }
+
+    html+='<div class="weekly-footer">';
+    html+='<div class="weekly-actionbar">';
+    html+='<button class="weekly-like-btn" type="button" onclick="likePost(\''+postId+'\')">❤️ Lik ('+likeCount+')</button>';
+    html+='<span class="weekly-comment-count">'+postComments.length+' kommentar(er)</span>';
+    html+='</div>';
+    html+='<div class="weekly-comments-box">';
+    postComments.forEach(function(c){
+      html+='<div class="weekly-comment"><div class="commentmeta">'+escapeHtml(c.time||'')+'</div><div>'+escapeHtml(c.text||'')+'</div></div>';
+    });
+    html+='<input class="weekly-comment-input" id="comment-'+postId+'" placeholder="Skriv en kommentar">';
+    html+='<div class="btnrow"><button type="button" class="weekly-comment-btn" onclick="addComment(\''+postId+'\')">Publiser kommentar</button></div>';
+    html+='</div>';
+    html+='</div>';
+    html+='</div>';
+  });
+
+  feed.innerHTML=html;
+}
+
+async function saveTurtip(){var auth=await supabase.auth.getUser();var user=auth&&auth.data?auth.data.user:null;var payload={title:qs("ttTitle").value.trim(),place:qs("ttPlace").value.trim(),description:qs("ttDescription").value.trim(),parking:qs("ttParking").value.trim(),length:qs("ttLength").value.trim(),difficulty:qs("ttDifficulty").value,author_email:user&&user.email?user.email:""};if(!payload.title||!payload.place||!payload.description){setStatusText("turtipStatus","Skriv inn tittel, sted og beskrivelse.","crimson");return;}try{setStatusText("turtipStatus","Lagrer turtips ...","blue");var imageFile=qs("ttImage").files[0];if(imageFile){payload.image_url=await uploadFile(imageFile,"turtips")}var result=await supabase.from("turtips").insert([payload]).select().single();if(result.error){setStatusText("turtipStatus","Feil ved lagring: "+result.error.message,"crimson");return;}qs("ttTitle").value="";qs("ttPlace").value="";qs("ttDescription").value="";qs("ttParking").value="";qs("ttLength").value="";qs("ttDifficulty").value="Lett";qs("ttImage").value="";setStatusText("turtipStatus","Turtips lagret.","green");loadTurtips()}catch(e){setStatusText("turtipStatus","Feil ved bildeopplasting: "+e.message,"crimson")}}
+function likeTurtip(id){var likes=getTurtipLikes();likes[id]=(likes[id]||0)+1;saveTurtipLikes(likes);loadTurtips()}
+function addTurtipComment(id){var input=qs('ttComment-'+id);if(!input) return;var text=input.value.trim();if(!text) return;var comments=getTurtipComments();if(!comments[id]) comments[id]=[];comments[id].push({text:text,time:new Date().toLocaleString('no-NO')});saveTurtipComments(comments);input.value='';loadTurtips()}
+async function deleteTurtip(id){if(!confirm("Slette dette turtipset?")) return;var result=await supabase.from("turtips").delete().eq("id",id);if(result.error){setStatusText("turtipStatus","Feil ved sletting: "+result.error.message,"crimson");return;}var likes=getTurtipLikes();delete likes[id];saveTurtipLikes(likes);var comments=getTurtipComments();delete comments[id];saveTurtipComments(comments);setStatusText("turtipStatus","Turtips slettet.","green");loadTurtips()}
+function getLikes(){try{return JSON.parse(localStorage.getItem("hundene_vare_likes_dbfree")||"{}")}catch(e){return {}}}
+function saveLikes(data){localStorage.setItem("hundene_vare_likes_dbfree",JSON.stringify(data))}
+function getComments(){try{return JSON.parse(localStorage.getItem("hundene_vare_comments_dbfree")||"{}")}catch(e){return {}}}
+function saveComments(data){localStorage.setItem("hundene_vare_comments_dbfree",JSON.stringify(data))}
+function likePost(id){var likes=getLikes();likes[id]=(likes[id]||0)+1;saveLikes(likes);loadStories();loadWeeklyOffers()}
+function addComment(id){var input=qs("comment-"+id);if(!input) return;var text=input.value.trim();if(!text) return;var comments=getComments();if(!comments[id]) comments[id]=[];comments[id].push({text:text,time:new Date().toLocaleString("no-NO")});saveComments(comments);input.value="";loadStories();loadWeeklyOffers()}
+
+async function loadStories(){
+  var feed=qs("feed");
+  if(!feed) return;
+  feed.textContent="Laster ...";
+
+  var result=await supabase.from("stories").select("*").eq("category","Nyhet").order("created_at",{ascending:false});
+  if(result.error){feed.textContent="Feil ved henting: "+result.error.message;return;}
+
+  var data=result.data||[];
+  var likes=getLikes();
+  var comments=getComments();
+
+  var filtered=data.filter(function(post){
+    var region=parseRegionPrefix(post.text||"");
+    return region===currentStoriesRegion;
+  });
+
+  if(!filtered.length){
+    feed.innerHTML='<div class="empty-box">Ingen nyheter i '+escapeHtml(getRegionLabel(currentStoriesRegion))+' enda.</div>';
+    return;
+  }
+
+  var html="";
+  filtered.forEach(function(post,i){
+    var postId=post.id||("post_"+i);
+    var likeCount=likes[postId]||0;
+    var postComments=comments[postId]||[];
+    var gallery=Array.isArray(post.image_urls)&&post.image_urls.length?post.image_urls:(post.image_url?[post.image_url]:[]);
+    var info=extractOfferInfo(String(post.text||""));
+
+    html+='<div class="post"><div class="post-content"><span class="badge approved">Nyhet · '+escapeHtml(getRegionLabel(currentStoriesRegion))+'</span><h3 style="margin:8px 0 6px 0;">'+escapeHtml(post.title||"")+'</h3><div class="meta">'+escapeHtml(post.dog||"")+' · '+escapeHtml(post.place||"")+'</div>'+(info.offerLine?'<div class="meta"><strong>'+escapeHtml(info.offerLine)+'</strong></div>':'')+'<div>'+escapeHtml(info.descText||"")+'</div></div>';
+
+    if(gallery.length){
+      if(gallery.length===1){
+        html+='<img class="clickable-image" src="'+gallery[0]+'" alt="Nyhetsbilde" onclick="openImageModal(this.src)">';
+      } else {
+        html+='<div class="gallery">';
+        gallery.forEach(function(url){
+          html+='<img class="clickable-image" src="'+url+'" alt="Nyhetsbilde" onclick="openImageModal(this.src)">';
+        });
+        html+='</div>';
+      }
+    }
+
+    html+='<div class="post-content"><div class="likebar"><button class="alt" type="button" onclick="likePost(\''+postId+'\')">❤️ Lik ('+likeCount+')</button><span class="meta">'+postComments.length+' kommentar(er)</span></div><div style="margin-top:12px;">';
+    postComments.forEach(function(c){
+      html+='<div class="comment"><div class="commentmeta">'+escapeHtml(c.time||"")+'</div><div>'+escapeHtml(c.text||"")+'</div></div>';
+    });
+    html+='<input id="comment-'+postId+'" placeholder="Skriv en kommentar"><div class="btnrow"><button type="button" class="alt" onclick="addComment(\''+postId+'\')">Publiser kommentar</button></div></div></div></div>';
+  });
+
+  feed.innerHTML=html;
+}
+
+async function loadTurtips(){var target=qs("turtipsList");if(!target) return;target.innerHTML='<div class="empty-box">Laster turtips ...</div>';var auth=await supabase.auth.getUser();var currentUser=auth&&auth.data?auth.data.user:null;var currentEmail=currentUser&&currentUser.email?currentUser.email:"";var result=await supabase.from("turtips").select("*").order("created_at",{ascending:false});if(result.error){target.innerHTML='<div class="empty-box">Feil ved henting: '+escapeHtml(result.error.message)+'</div>';return;}var rows=result.data||[];var likes=getTurtipLikes();var comments=getTurtipComments();if(!rows.length){target.innerHTML='<div class="empty-box">Ingen turtips enda.</div>';return;}target.innerHTML=rows.map(function(t,i){var tipId=t.id||('turtip_'+i);var tipLikes=likes[tipId]||0;var tipComments=comments[tipId]||[];var mapsLink=buildGoogleMapsLink(t.place||"");var canDelete=!!t.id&&(currentEmail===ADMIN_EMAIL||currentEmail===String(t.author_email||""));var html='<div class="turtip-card">';if(t.image_url){html+='<img class="turtip-image clickable-image" src="'+t.image_url+'" alt="Turtips" onclick="openImageModal(this.src)">'}html+='<div class="turtip-content"><div class="turtip-top"><div><div class="turtip-badge">🥾 Turtips</div><h3 style="margin:0 0 6px 0;">'+escapeHtml(t.title||"")+'</h3></div>'+(canDelete?'<button class="danger" type="button" onclick="deleteTurtip(\''+t.id+'\')">Slett</button>':'')+'</div><div class="meta">'+escapeHtml(t.place||"")+(t.difficulty?' · '+escapeHtml(t.difficulty):'')+(t.length?' · '+escapeHtml(t.length):'')+'</div><div>'+escapeHtml(t.description||"")+'</div>';if(t.parking){html+='<div class="meta" style="margin-top:10px;"><strong>Parkering:</strong> '+escapeHtml(t.parking)+'</div>'}if(t.author_email){html+='<div class="meta">Lagt inn av '+escapeHtml(t.author_email)+'</div>'}html+='<div class="biz-actions"><a class="site-link" href="'+mapsLink+'" target="_blank" rel="noopener noreferrer">📍 Kart</a><button class="alt" type="button" onclick="likeTurtip(\''+tipId+'\')">❤️ Lik ('+tipLikes+')</button></div><div style="margin-top:12px;">';tipComments.forEach(function(c){html+='<div class="comment"><div class="commentmeta">'+escapeHtml(c.time||"")+'</div><div>'+escapeHtml(c.text||"")+'</div></div>'});html+='<input id="ttComment-'+tipId+'" placeholder="Skriv en kommentar"><div class="btnrow"><button type="button" class="alt" onclick="addTurtipComment(\''+tipId+'\')">Publiser kommentar</button></div></div></div></div>';return html}).join("")}
+
+async function renderBizList(type,targetId,rows,searchValue,favMode,mapSearch){var favs=getFavoriteBusinesses();var list=rows.filter(function(b){return b.type===type&&b.approved===true&&b.activity!=="Tilbud";});if(searchValue){var s=searchValue.toLowerCase();list=list.filter(function(b){return (b.name||"").toLowerCase().includes(s)||(b.place||"").toLowerCase().includes(s)||(b.description||"").toLowerCase().includes(s)||(b.region||"").toLowerCase().includes(s)})}if(favMode==="fav"){list=list.filter(function(b){return favs.indexOf(b.id)>=0})}var target=qs(targetId);if(!target) return;if(!list.length){target.innerHTML='<div class="empty-box">Ingen godkjente bedrifter funnet.</div>';return;}var html='';list.forEach(function(b){var isFav=favs.indexOf(b.id)>=0;var mapsLink=buildGoogleMapsLink(b.place,mapSearch||b.place);html+='<div class="biz-card"><div class="biz-content"><div class="biz-top">';if(b.logo_url) html+='<img class="biz-logo clickable-image" src="'+b.logo_url+'" alt="Logo" onclick="openImageModal(this.src)">';html+='<div style="flex:1;min-width:240px"><h3 style="margin:0 0 6px 0;">'+escapeHtml(b.name)+' <span class="badge approved">Godkjent</span></h3><div class="meta">'+escapeHtml(b.type||"")+' · '+escapeHtml(b.place||"")+(b.region?' · '+escapeHtml(b.region):'')+(b.activity?' · '+escapeHtml(b.activity):'')+'</div><div>'+escapeHtml(b.description||"")+'</div>';if(b.phone) html+='<div class="meta"><strong>Telefon:</strong> '+escapeHtml(b.phone)+'</div>';html+='<div class="biz-actions">';if(b.website) html+='<a class="site-link" href="'+normalizeUrl(b.website)+'" target="_blank" rel="noopener noreferrer">Åpne link</a>';if(mapsLink) html+='<a class="site-link" href="'+mapsLink+'" target="_blank" rel="noopener noreferrer">📍 Kart</a>';html+='<button class="alt" type="button" onclick="toggleFavoriteBusiness(\''+b.id+'\')">'+(isFav?'❤️ Favoritt lagret':'🤍 Lagre favoritt')+'</button></div></div></div></div>';if(b.image_url){html+='<div class="biz-main"><img class="clickable-image" src="'+b.image_url+'" alt="Bedriftsbilde" onclick="openImageModal(this.src)"></div>'}if(Array.isArray(b.gallery_urls)&&b.gallery_urls.length){html+='<div class="gallery">';b.gallery_urls.forEach(function(url){html+='<img class="clickable-image" src="'+url+'" alt="Galleri" onclick="openImageModal(this.src)">' });html+='</div>'}html+='</div>'});target.innerHTML=html}
+async function renderZooShops(rows,searchValue,favMode,mapSearch){return renderBizList("Zoo butikk","shopList",rows,searchValue,favMode,mapSearch)}
+function renderStavangerGroup(title, items){var html='<div class="card"><h2 style="font-size:26px;">'+title+'</h2>';if(!items.length){html+='<div class="empty-box">Ingen funnet.</div></div>';return html;}items.forEach(function(b){var mapsLink=buildGoogleMapsLink(b.place,b.place);html+='<div class="biz-card"><div class="biz-content"><div class="biz-top">';if(b.logo_url) html+='<img class="biz-logo clickable-image" src="'+b.logo_url+'" alt="Logo" onclick="openImageModal(this.src)">';html+='<div style="flex:1;min-width:240px"><h3 style="margin:0 0 6px 0;">'+escapeHtml(b.name||"")+'</h3><div class="meta">'+escapeHtml(b.type||"")+' · '+escapeHtml(b.place||"")+'</div><div>'+escapeHtml(b.description||"")+'</div>';if(b.phone) html+='<div class="meta"><strong>Telefon:</strong> '+escapeHtml(b.phone)+'</div>';html+='<div class="biz-actions">';if(b.website) html+='<a class="site-link" href="'+normalizeUrl(b.website)+'" target="_blank" rel="noopener noreferrer">Åpne link</a>';if(mapsLink) html+='<a class="site-link" href="'+mapsLink+'" target="_blank" rel="noopener noreferrer">📍 Kart</a>';html+='</div></div></div></div>';if(b.image_url) html+='<div class="biz-main"><img class="clickable-image" src="'+b.image_url+'" alt="Bilde" onclick="openImageModal(this.src)"></div>';if(Array.isArray(b.gallery_urls)&&b.gallery_urls.length){html+='<div class="gallery">';b.gallery_urls.forEach(function(url){html+='<img class="clickable-image" src="'+url+'" alt="Galleri" onclick="openImageModal(this.src)">' });html+='</div>'}html+='</div>';});html+='</div>';return html}
+async function loadStavangerPage(){var title=qs("stavangerCategoryTitle");var target=qs("stavangerContent");if(title) title.textContent="Velg en kategori over.";if(target) target.innerHTML='<div class="empty-box">Ingen kategori valgt ennå.</div>'}
+function getStavangerLabel(type){if(type==="Zoo butikk") return "🐾 Zoo butikker";if(type==="Frisør") return "✂️ Frisører";if(type==="Veterinær") return "🏥 Veterinærer";if(type==="Hund pensjonat") return "🐶 Hundepensjonat";if(type==="Kafé") return "☕ Kaféer";return type||""}
+async function loadStavangerCategory(type){var title=qs("stavangerCategoryTitle");var target=qs("stavangerContent");if(!target) return;target.innerHTML='Laster ...';if(title) title.textContent='Viser: '+getStavangerLabel(type);var result=await supabase.from("businesses").select("*").eq("approved",true).eq("region","Stavanger").eq("type",type).order("created_at",{ascending:false});if(result.error){target.innerHTML='<div class="empty-box">Feil ved henting: '+escapeHtml(result.error.message)+'</div>';return;}var rows=(result.data||[]).filter(function(b){return b.activity!=="Tilbud"});if(!rows.length){target.innerHTML='<div class="empty-box">Ingen funnet i denne kategorien.</div>';return;}target.innerHTML=renderStavangerGroup(getStavangerLabel(type),rows)}
+
+async function loadHaugalandetPage(){var title=qs("haugalandetCategoryTitle");var target=qs("haugalandetContent");if(title) title.textContent="Velg en kategori over.";if(target) target.innerHTML='<div class="empty-box">Ingen kategori valgt ennå.</div>'}
+async function loadHaugalandetCategory(type){var title=qs("haugalandetCategoryTitle");var target=qs("haugalandetContent");if(!target) return;target.innerHTML='Laster ...';if(title) title.textContent='Viser: '+getStavangerLabel(type);var result=await supabase.from("businesses").select("*").eq("approved",true).eq("region","Haugalandet").eq("type",type).order("created_at",{ascending:false});if(result.error){target.innerHTML='<div class="empty-box">Feil ved henting: '+escapeHtml(result.error.message)+'</div>';return;}var rows=(result.data||[]).filter(function(b){return b.activity!=="Tilbud"});if(!rows.length){target.innerHTML='<div class="empty-box">Ingen funnet i denne kategorien.</div>';return;}target.innerHTML=renderStavangerGroup(getStavangerLabel(type),rows)}
+
+async function loadCafePage(){var title=qs("cafesCategoryTitle");var target=qs("cafesContent");if(title) title.textContent="Velg et område over.";if(target) target.innerHTML='<div class="empty-box">Ingen område valgt ennå.</div>'}
+async function loadCafeRegion(region){var title=qs("cafesCategoryTitle");var target=qs("cafesContent");if(!target) return;target.innerHTML='Laster ...';if(title) title.textContent='Viser: ☕ Kaféer i '+region;var result=await supabase.from("businesses").select("*").eq("approved",true).eq("region",region).eq("type","Kafé").order("created_at",{ascending:false});if(result.error){target.innerHTML='<div class="empty-box">Feil ved henting: '+escapeHtml(result.error.message)+'</div>';return;}var rows=(result.data||[]).filter(function(b){return b.activity!=="Tilbud"});if(!rows.length){target.innerHTML='<div class="empty-box">Ingen kaféer lagt inn i dette området ennå.</div>';return;}target.innerHTML=renderStavangerGroup('☕ Kaféer i '+region,rows)}
+
+
+async function loadStordPage(){var title=qs("stordCategoryTitle");var target=qs("stordContent");if(title) title.textContent="Velg en kategori over.";if(target) target.innerHTML='<div class="empty-box">Ingen kategori valgt ennå.</div>';}
+async function loadStordCategory(type){var title=qs("stordCategoryTitle");var target=qs("stordContent");if(!target) return;target.innerHTML='Laster ...';if(title) title.textContent='Viser: '+getStavangerLabel(type);var result=await supabase.from("businesses").select("*").eq("approved",true).eq("region","Stord").eq("type",type).order("created_at",{ascending:false});if(result.error){target.innerHTML='<div class="empty-box">Feil ved henting: '+escapeHtml(result.error.message)+'</div>';return;}var rows=(result.data||[]).filter(function(b){return b.activity!=="Tilbud"});if(!rows.length){target.innerHTML='<div class="empty-box">Ingen funnet i denne kategorien.</div>';return;}target.innerHTML=renderStavangerGroup(getStavangerLabel(type),rows);}
+
+async function loadBusinesses(){var result=await supabase.from("businesses").select("*").order("created_at",{ascending:false});var rows=result.data||[];await renderBizList("Frisør","groomerList",rows,qs("searchGroomers")?.value||"",qs("filterFavoritesGroomers")?.value||"all",qs("mapSearchGroomers")?.value||"");await renderZooShops(rows,qs("searchShops")?.value||"",qs("filterFavoritesShops")?.value||"all",qs("mapSearchShops")?.value||"");await renderBizList("Hund pensjonat","pensjonatList",rows,qs("searchPensjonat")?.value||"",qs("filterFavoritesPensjonat")?.value||"all",qs("mapSearchPensjonat")?.value||"");await renderBizList("Veterinær","vetList",rows,qs("searchVets")?.value||"",qs("filterFavoritesVets")?.value||"all",qs("mapSearchVets")?.value||"")}
+async function approveBusiness(id){var result=await supabase.from("businesses").update({approved:true}).eq("id",id);if(result.error){setStatusText("adminStatus","Feil ved godkjenning: "+result.error.message,"crimson");return;}setStatusText("adminStatus","Bedrift godkjent.","green");loadAdmin();loadBusinesses();loadProfile();loadDogClubs();loadStavangerPage();loadHaugalandetPage()}
+async function rejectBusiness(id){var result=await supabase.from("businesses").update({approved:false}).eq("id",id);if(result.error){setStatusText("adminStatus","Feil ved avvisning: "+result.error.message,"crimson");return;}setStatusText("adminStatus","Bedrift satt som ventende.","green");loadAdmin();loadBusinesses();loadProfile();loadDogClubs();loadStavangerPage();loadHaugalandetPage()}
+async function deleteBusiness(id){if(!confirm("Slette denne bedriften?")) return;var result=await supabase.from("businesses").delete().eq("id",id);if(result.error){setStatusText("adminStatus","Feil ved sletting: "+result.error.message,"crimson");return;}setStatusText("adminStatus","Bedrift slettet.","green");loadAdmin();loadBusinesses();loadBusinessOptions();loadProfile();loadDogClubs();loadStavangerPage();loadHaugalandetPage()}
+async function deleteStory(id){if(!confirm("Slette dette innlegget?")) return;var result=await supabase.from("stories").delete().eq("id",id);if(result.error){setStatusText("adminStatus","Feil ved sletting: "+result.error.message,"crimson");return;}setStatusText("adminStatus","Innlegg slettet.","green");loadAdmin();loadStories();loadProfile();loadInlinePromoBanner();loadWeeklyOffers();loadLocalOfferBoxes()}
+async function loadAdmin(){var auth=await supabase.auth.getUser();var user=auth&&auth.data?auth.data.user:null;if(!user||user.email!==ADMIN_EMAIL){qs("adminStories").innerHTML="Du må være innlogget som admin.";qs("adminBusinesses").innerHTML="Du må være innlogget som admin.";setStatusText("adminStatus","Admin-tilgang mangler.","crimson");return;}setStatusText("adminStatus","Admin innlogget som "+user.email,"green");var storiesRes=await supabase.from("stories").select("*").order("created_at",{ascending:false});var businessesRes=await supabase.from("businesses").select("*").order("created_at",{ascending:false});var stories=storiesRes.data||[];var businesses=businessesRes.data||[];qs("adminStories").innerHTML=stories.length?stories.map(function(s){return '<div class="admin-item"><div class="admin-content"><h3 style="margin:0 0 6px 0;">'+escapeHtml(s.title||"")+'</h3><div class="meta">'+escapeHtml(s.author_email||"")+' · '+escapeHtml(s.place||"")+'</div><div class="btnrow"><button class="danger" type="button" onclick="deleteStory(\''+s.id+'\')">Slett innlegg</button></div></div></div>'}).join(""):"Ingen innlegg.";qs("adminBusinesses").innerHTML=businesses.length?businesses.map(function(b){var buttons='';if(!b.approved) buttons+='<button class="ok" type="button" onclick="approveBusiness(\''+b.id+'\')">Godkjenn</button>';if(b.approved) buttons+='<button class="warn" type="button" onclick="rejectBusiness(\''+b.id+'\')">Sett ventende</button>';buttons+='<button class="danger" type="button" onclick="deleteBusiness(\''+b.id+'\')">Slett bedrift</button>';return '<div class="admin-item"><div class="admin-content"><h3 style="margin:0 0 6px 0;">'+escapeHtml(b.name||"")+' '+(b.approved?'<span class="badge approved">Godkjent</span>':'<span class="badge pending">Venter</span>')+'</h3><div class="meta">'+escapeHtml(b.author_email||"")+' · '+escapeHtml(b.type||"")+' · '+escapeHtml(b.place||"")+(b.region?' · '+escapeHtml(b.region):'')+'</div><div class="btnrow">'+buttons+'</div></div></div>'}).join(""):"Ingen bedrifter."}
+async function loadProfile(){var auth=await supabase.auth.getUser();var user=auth&&auth.data?auth.data.user:null;if(!user){qs("profileEmail").textContent="Ikke innlogget";qs("profilePosts").textContent="0";qs("profileBusinesses").textContent="0";qs("myPosts").textContent="Logg inn for å se dine nyheter.";qs("myBusinesses").textContent="Logg inn for å se dine bedrifter.";return;}qs("profileEmail").textContent=user.email;var postsRes=await supabase.from("stories").select("*").eq("author_email",user.email).eq("category","Nyhet").order("created_at",{ascending:false});var posts=postsRes.data||[];qs("profilePosts").textContent=String(posts.length);qs("myPosts").innerHTML=posts.length?posts.map(function(post){var gallery=Array.isArray(post.image_urls)&&post.image_urls.length?post.image_urls:(post.image_url?[post.image_url]:[]);var info=extractOfferInfo(String(post.text||""));var region=parseRegionPrefix(String(post.text||""));var html='<div class="post"><div class="post-content"><span class="badge approved">Nyhet'+(region?' · '+escapeHtml(region):'')+'</span><h3 style="margin:8px 0 6px 0;">'+escapeHtml(post.title||"")+'</h3><div class="meta">'+escapeHtml(post.dog||"")+' · '+escapeHtml(post.place||"")+'</div>'+(info.offerLine?'<div class="meta"><strong>'+escapeHtml(info.offerLine)+'</strong></div>':'')+'<div>'+escapeHtml(info.descText||"")+'</div></div>';if(gallery.length){if(gallery.length===1){html+='<img class="clickable-image" src="'+gallery[0]+'" alt="Nyhetsbilde" onclick="openImageModal(this.src)">' } else {html+='<div class="gallery">';gallery.forEach(function(url){html+='<img class="clickable-image" src="'+url+'" alt="Nyhetsbilde" onclick="openImageModal(this.src)">' });html+='</div>'}}html+='</div>';return html}).join(""):"Ingen egne nyheter enda.";var bizRes=await supabase.from("businesses").select("*").eq("author_email",user.email).order("created_at",{ascending:false});var businesses=bizRes.data||[];qs("profileBusinesses").textContent=String(businesses.length);qs("myBusinesses").innerHTML=businesses.length?businesses.map(function(b){var html='<div class="biz-card"><div class="biz-content"><div class="biz-top">';if(b.logo_url) html+='<img class="biz-logo clickable-image" src="'+b.logo_url+'" alt="Logo" onclick="openImageModal(this.src)">';html+='<div style="flex:1;min-width:240px"><h3 style="margin:0 0 6px 0;">'+escapeHtml(b.name||"")+' '+(b.approved?'<span class="badge approved">Godkjent</span>':'<span class="badge pending">Venter</span>')+'</h3><div class="meta">'+escapeHtml(b.type||"")+' · '+escapeHtml(b.place||"")+(b.region?' · '+escapeHtml(b.region):'')+'</div><div>'+escapeHtml(b.description||"")+'</div><div class="biz-actions"><button class="alt" type="button" onclick="openBusinessForEdit(\''+b.id+'\')">Rediger bedrift</button></div></div></div></div>';if(b.image_url) html+='<div class="biz-main"><img class="clickable-image" src="'+b.image_url+'" alt="Bedriftsbilde" onclick="openImageModal(this.src)"></div>';if(Array.isArray(b.gallery_urls)&&b.gallery_urls.length){html+='<div class="gallery">';b.gallery_urls.forEach(function(url){html+='<img class="clickable-image" src="'+url+'" alt="Galleri" onclick="openImageModal(this.src)">' });html+='</div>'}html+='</div>';return html}).join(""):"Ingen egne bedrifter enda."}
+async function openBusinessForEdit(id){showPage('business');await loadBusinessOptions();qs("editBusinessSelect").value=id;loadBusinessIntoForm()}
+async function saveDogClub(){var name=qs("clubName").value.trim();var location=qs("clubLocation").value.trim();var description=qs("clubDescription").value.trim();var website=qs("clubWebsite").value.trim();if(!name||!location){setStatusText("clubStatus","Skriv inn klubbnavn og område.","crimson");return;}setStatusText("clubStatus","Lagrer klubb ...","#1d4ed8");var result=await supabase.from("dog_clubs").insert([{name:name,location:location,description:description,website:website}]);if(result.error){setStatusText("clubStatus","Feil ved lagring: "+result.error.message,"crimson");return;}qs("clubName").value="";qs("clubLocation").value="";qs("clubDescription").value="";qs("clubWebsite").value="";setStatusText("clubStatus","Klubb lagret.","green");loadDogClubs()}
+function renderClubCard(item){var html='<div class="club-card">';if(item.image_url) html+='<img class="clickable-image" src="'+item.image_url+'" alt="Klubb" onclick="openImageModal(this.src)">';html+='<div class="club-card-content"><h3 style="margin:0 0 6px 0;">'+escapeHtml(item.title||item.name||"Uten tittel")+'</h3><div class="meta">'+escapeHtml(item.place||item.location||"")+(item.activity?' · '+escapeHtml(item.activity):'')+'</div>';if(item.description) html+='<div>'+escapeHtml(item.description)+'</div>';if(item.website) html+='<div class="biz-actions"><a class="site-link" href="'+normalizeUrl(item.website)+'" target="_blank" rel="noopener noreferrer">Åpne link</a></div>';html+='</div></div>';return html}
+async function loadDogClubs(){var container=qs("dogClubsList");if(!container) return;container.innerHTML='<div class="empty-box">Laster klubber ...</div>';var clubsRes=await supabase.from("dog_clubs").select("*").order("created_at",{ascending:false});var bizRes=await supabase.from("businesses").select("*").eq("type","Hundeklubb").order("created_at",{ascending:false});var clubs=clubsRes.data||[];var businesses=(bizRes.data||[]).filter(function(b){return b.approved!==false});if(!clubs.length&&!businesses.length){container.innerHTML='<div class="empty-box">Ingen hundeklubber lagt inn enda.</div>';return;}var grouped={};clubs.forEach(function(club){var key=(club.name||"Ukjent klubb").trim();if(!grouped[key]) grouped[key]={clubInfo:null,items:[]};grouped[key].clubInfo=club});businesses.forEach(function(b){var key=(b.name||"Ukjent klubb").trim();if(!grouped[key]) grouped[key]={clubInfo:null,items:[]};if(!grouped[key].clubInfo){grouped[key].clubInfo={name:b.name||"",location:b.place||"",description:b.description||"",website:b.website||"",logo_url:b.logo_url||""}}grouped[key].items.push({title:b.activity||b.name,place:b.place,description:b.description,image_url:b.image_url,website:b.website,activity:b.activity||""})});var names=Object.keys(grouped).sort(function(a,b){return a.localeCompare(b,"no")});container.innerHTML=names.map(function(name){var g=grouped[name];var html='<div class="card"><div class="section-head"><div><h2 style="font-size:26px;margin:0 0 6px 0;">'+escapeHtml(name)+'</h2><div class="meta">'+escapeHtml(g.clubInfo&&g.clubInfo.location||"")+'</div></div><div class="badge approved">'+(g.items.length||0)+' aktivitet(er)</div></div>';if(g.clubInfo&&g.clubInfo.description) html+='<div class="sub">'+escapeHtml(g.clubInfo.description)+'</div>';if(g.clubInfo&&g.clubInfo.website) html+='<div class="btnrow" style="margin-bottom:12px;"><a class="site-link" href="'+normalizeUrl(g.clubInfo.website)+'" target="_blank" rel="noopener noreferrer">Åpne klubb-link</a></div>';html+=g.items.length?'<div class="club-grid">'+g.items.map(renderClubCard).join("")+'</div>':'<div class="empty-box">Ingen aktiviteter lagt inn for denne klubben enda.</div>';html+='</div>';return html}).join("")}
+async function loadFavoritesPage(){var target=qs("favoritesList");if(!target) return;var favs=getFavoriteBusinesses();if(!favs.length){target.innerHTML='<div class="empty-box">Du har ingen favoritter enda.</div>';return;}var res=await supabase.from("businesses").select("*").in("id",favs).order("created_at",{ascending:false});var rows=res.data||[];target.innerHTML=rows.length?rows.map(function(b){return '<div class="biz-card"><div class="biz-content"><h3 style="margin:0 0 6px 0;">'+escapeHtml(b.name||"")+'</h3><div class="meta">'+escapeHtml(b.type||"")+' · '+escapeHtml(b.place||"")+'</div><div>'+escapeHtml(b.description||"")+'</div><div class="biz-actions"><button class="alt" type="button" onclick="toggleFavoriteBusiness(\''+b.id+'\')">Fjern favoritt</button></div></div></div>'}).join(""):'<div class="empty-box">Fant ingen lagrede favoritter.</div>'}
+function openImageModal(src){if(!src) return;qs("imageModalImg").src=src;qs("imageModal").classList.add("open");document.body.style.overflow="hidden"}
+function closeImageModal(event){if(event) event.stopPropagation();qs("imageModal").classList.remove("open");qs("imageModalImg").src="";document.body.style.overflow=""}
+document.addEventListener("keydown",function(e){if(e.key==="Escape") closeImageModal()})
+async function signupUser(){setStatusText("status","Prøver å opprette konto ...","blue");var email=qs("email").value.trim();var password=qs("password").value.trim();if(!email||!password){setStatusText("status","Skriv inn e-post og passord.","crimson");return;}var result=await supabase.auth.signUp({email:email,password:password});if(result.error){setStatusText("status","Feil: "+result.error.message,"crimson");return;}setStatusText("status","Konto opprettet.","green")}
+async function loginUser(){setStatusText("status","Prøver å logge inn ...","blue");var email=qs("email").value.trim();var password=qs("password").value.trim();if(!email||!password){setStatusText("status","Skriv inn e-post og passord.","crimson");return;}var result=await supabase.auth.signInWithPassword({email:email,password:password});if(result.error){setStatusText("status","Feil: "+result.error.message,"crimson");return;}setStatusText("status","Innlogget som "+email,"green");loadProfile();goHome()}
+function shareApp(){var url="https://dagfinn53e-alt.github.io/hundene-vare/";if(navigator.share){navigator.share({title:"Hundene våre",text:"Se appen Hundene våre 🐶",url:url}).catch(function(){})} else {copyLink()}}
+function copyLink(){var url="https://dagfinn53e-alt.github.io/hundene-vare/";navigator.clipboard.writeText(url).then(function(){setStatusText("status","Link kopiert.","green")}).catch(function(){setStatusText("status","Kunne ikke kopiere linken.","crimson")})}
+
+goHome();
+updateStoriesRegionUI();
+updateWeeklyRegionUI();
+loadStories();
+loadWeeklyOffers();
+loadProfile();
+loadBusinesses();
+loadDogClubs();
+loadTurtips();
+loadInlinePromoBanner();
+loadLocalOfferBoxes();
+updateInviteMessage();
+</script>
 </body>
 </html>
