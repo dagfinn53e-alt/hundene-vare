@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hundene våre</title>
-  <meta name="theme-color" content="#2563eb">
-  <link rel="manifest" href="manifest.json">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root{--blue:#2563eb;--blue-dark:#1d4ed8;--line:#dbeafe;--text:#0f172a;--muted:#64748b;--card:#fff;--shadow:0 12px 30px rgba(15,23,42,.08)}
@@ -479,7 +477,7 @@
       .hero{padding:20px;border-radius:24px;min-height:auto}
       .hero h1{font-size:30px}
       .menu-grid{grid-template-columns:repeat(2,1fr);gap:10px}
-      .menu-btn{min-height:74px;font-size:14px}
+      .menu-btn{min-height:62px;font-size:13px}
       .search-grid,.gallery,.weekly-gallery{grid-template-columns:1fr}
       .gallery img{height:220px}
       h2{font-size:26px}
@@ -529,15 +527,6 @@
       .menu-grid{grid-template-columns:repeat(3,1fr)}
     }
   </style>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8ZX63CK8SB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-8ZX63CK8SB');
-</script>
 </head>
 <body>
 <div class="wrap">
@@ -624,6 +613,7 @@
         <button class="menu-btn club" onclick="showPage('hundeklubber')">🐶 Hundeklubber</button>
         <button class="menu-btn activity" onclick="showPage('haugalandet')">📍 Butikker Haugalandet</button>
         <button class="menu-btn activity" onclick="showPage('stavanger')">📍 Stavanger</button>
+        <button class="menu-btn cafe" onclick="showPage('cafes')">☕ Kaféer med hund</button>
       </div>
     </div>
   </div>
@@ -723,6 +713,9 @@
 
   <div id="page-haugalandet" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>📍 Haugalandet</h2><div class="sub">Velg kategori for å vise kun det du vil se i Haugalandet.</div><div class="menu-grid"><button class="menu-btn shop" type="button" onclick="loadHaugalandetCategory('Zoo butikk')">🐾 Zoo butikker</button><button class="menu-btn groom" type="button" onclick="loadHaugalandetCategory('Frisør')">✂️ Frisører</button><button class="menu-btn vet" type="button" onclick="loadHaugalandetCategory('Veterinær')">🏥 Veterinærer</button><button class="menu-btn shop" type="button" onclick="loadHaugalandetCategory('Hund pensjonat')">🐶 Hundepensjonat</button></div><div id="haugalandetCategoryTitle" class="sub" style="margin-top:14px;">Velg en kategori over.</div><div id="haugalandetContent"><div class="empty-box">Ingen kategori valgt ennå.</div></div></div></div>
 
+
+  <div id="page-cafes" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>☕ Kaféer med hund</h2><div class="sub">Finn kaféer og steder der du kan ha med hund. Velg område under.</div><div class="menu-grid"><button class="menu-btn activity" type="button" onclick="loadCafeRegion('Haugalandet')">📍 Haugalandet</button><button class="menu-btn activity" type="button" onclick="loadCafeRegion('Stavanger')">📍 Stavanger</button><button class="menu-btn activity" type="button" onclick="loadCafeRegion('Stord')">📍 Stord</button></div><div id="cafesCategoryTitle" class="sub" style="margin-top:14px;">Velg et område over.</div><div id="cafesContent"><div class="empty-box">Ingen område valgt ennå.</div></div></div></div>
+
   <div id="page-groomers" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>✂️ Frisører</h2><div class="search-grid"><input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()"><select id="filterFavoritesGroomers" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchGroomers" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="groomerList"></div></div></div>
 
   <div id="page-shops" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🐾 Zoo butikker</h2><div class="search-grid"><input id="searchShops" placeholder="Søk butikk eller sted" oninput="loadBusinesses()"><select id="filterFavoritesShops" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchShops" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="shopList"></div></div></div>
@@ -738,9 +731,9 @@
       <div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div>
       <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
       <label><strong>Type</strong></label>
-      <select id="bizType"><option>Hundeklubb</option><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option><option>Hund pensjonat</option></select>
+      <select id="bizType"><option>Hundeklubb</option><option>Frisør</option><option>Zoo butikk</option><option>Veterinær</option><option>Hund pensjonat</option><option>Kafé</option></select>
       <label><strong>Område</strong></label>
-      <select id="bizRegion"><option value="Haugalandet">Haugalandet</option><option value="Stavanger">Stavanger</option></select>
+      <select id="bizRegion"><option value="Haugalandet">Haugalandet</option><option value="Stavanger">Stavanger</option><option value="Stord">Stord</option></select>
       <label><strong>Aktivitet</strong></label>
       <select id="bizActivity"><option value="">Velg aktivitet</option><option>Tilbud</option><option>Valpekurs</option><option>Utstilling</option><option>Agility / trening</option><option>Fellesturer</option></select>
       <label>Dato for aktivitet</label><input id="bizDate" type="date">
@@ -817,7 +810,7 @@ function qs(id){return document.getElementById(id)}
 function setStatusText(id,text,color){var el=qs(id);if(el){el.textContent=text;el.style.color=color||"black"}}
 
 function goHome(){
-  var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','groomers','shops','pensjonat','vets','business','admin','favorites','hundeklubber'];
+  var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','cafes','groomers','shops','pensjonat','vets','business','admin','favorites','hundeklubber'];
   for(var i=0;i<pages.length;i++){
     var el=qs('page-'+pages[i]);
     if(el) el.classList.add('hidden');
@@ -829,7 +822,7 @@ function goHome(){
 
 function showPage(name){
   if(name==='home'){goHome();return;}
-  var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','groomers','shops','pensjonat','vets','business','admin','favorites','hundeklubber'];
+  var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','cafes','groomers','shops','pensjonat','vets','business','admin','favorites','hundeklubber'];
   for(var i=0;i<pages.length;i++){
     var el=qs('page-'+pages[i]);
     if(el) el.classList.add('hidden');
@@ -1417,11 +1410,14 @@ async function renderBizList(type,targetId,rows,searchValue,favMode,mapSearch){v
 async function renderZooShops(rows,searchValue,favMode,mapSearch){return renderBizList("Zoo butikk","shopList",rows,searchValue,favMode,mapSearch)}
 function renderStavangerGroup(title, items){var html='<div class="card"><h2 style="font-size:26px;">'+title+'</h2>';if(!items.length){html+='<div class="empty-box">Ingen funnet.</div></div>';return html;}items.forEach(function(b){var mapsLink=buildGoogleMapsLink(b.place,b.place);html+='<div class="biz-card"><div class="biz-content"><div class="biz-top">';if(b.logo_url) html+='<img class="biz-logo clickable-image" src="'+b.logo_url+'" alt="Logo" onclick="openImageModal(this.src)">';html+='<div style="flex:1;min-width:240px"><h3 style="margin:0 0 6px 0;">'+escapeHtml(b.name||"")+'</h3><div class="meta">'+escapeHtml(b.type||"")+' · '+escapeHtml(b.place||"")+'</div><div>'+escapeHtml(b.description||"")+'</div>';if(b.phone) html+='<div class="meta"><strong>Telefon:</strong> '+escapeHtml(b.phone)+'</div>';html+='<div class="biz-actions">';if(b.website) html+='<a class="site-link" href="'+normalizeUrl(b.website)+'" target="_blank" rel="noopener noreferrer">Åpne link</a>';if(mapsLink) html+='<a class="site-link" href="'+mapsLink+'" target="_blank" rel="noopener noreferrer">📍 Kart</a>';html+='</div></div></div></div>';if(b.image_url) html+='<div class="biz-main"><img class="clickable-image" src="'+b.image_url+'" alt="Bilde" onclick="openImageModal(this.src)"></div>';if(Array.isArray(b.gallery_urls)&&b.gallery_urls.length){html+='<div class="gallery">';b.gallery_urls.forEach(function(url){html+='<img class="clickable-image" src="'+url+'" alt="Galleri" onclick="openImageModal(this.src)">' });html+='</div>'}html+='</div>';});html+='</div>';return html}
 async function loadStavangerPage(){var title=qs("stavangerCategoryTitle");var target=qs("stavangerContent");if(title) title.textContent="Velg en kategori over.";if(target) target.innerHTML='<div class="empty-box">Ingen kategori valgt ennå.</div>'}
-function getStavangerLabel(type){if(type==="Zoo butikk") return "🐾 Zoo butikker";if(type==="Frisør") return "✂️ Frisører";if(type==="Veterinær") return "🏥 Veterinærer";if(type==="Hund pensjonat") return "🐶 Hundepensjonat";return type||""}
+function getStavangerLabel(type){if(type==="Zoo butikk") return "🐾 Zoo butikker";if(type==="Frisør") return "✂️ Frisører";if(type==="Veterinær") return "🏥 Veterinærer";if(type==="Hund pensjonat") return "🐶 Hundepensjonat";if(type==="Kafé") return "☕ Kaféer";return type||""}
 async function loadStavangerCategory(type){var title=qs("stavangerCategoryTitle");var target=qs("stavangerContent");if(!target) return;target.innerHTML='Laster ...';if(title) title.textContent='Viser: '+getStavangerLabel(type);var result=await supabase.from("businesses").select("*").eq("approved",true).eq("region","Stavanger").eq("type",type).order("created_at",{ascending:false});if(result.error){target.innerHTML='<div class="empty-box">Feil ved henting: '+escapeHtml(result.error.message)+'</div>';return;}var rows=(result.data||[]).filter(function(b){return b.activity!=="Tilbud"});if(!rows.length){target.innerHTML='<div class="empty-box">Ingen funnet i denne kategorien.</div>';return;}target.innerHTML=renderStavangerGroup(getStavangerLabel(type),rows)}
 
 async function loadHaugalandetPage(){var title=qs("haugalandetCategoryTitle");var target=qs("haugalandetContent");if(title) title.textContent="Velg en kategori over.";if(target) target.innerHTML='<div class="empty-box">Ingen kategori valgt ennå.</div>'}
 async function loadHaugalandetCategory(type){var title=qs("haugalandetCategoryTitle");var target=qs("haugalandetContent");if(!target) return;target.innerHTML='Laster ...';if(title) title.textContent='Viser: '+getStavangerLabel(type);var result=await supabase.from("businesses").select("*").eq("approved",true).eq("region","Haugalandet").eq("type",type).order("created_at",{ascending:false});if(result.error){target.innerHTML='<div class="empty-box">Feil ved henting: '+escapeHtml(result.error.message)+'</div>';return;}var rows=(result.data||[]).filter(function(b){return b.activity!=="Tilbud"});if(!rows.length){target.innerHTML='<div class="empty-box">Ingen funnet i denne kategorien.</div>';return;}target.innerHTML=renderStavangerGroup(getStavangerLabel(type),rows)}
+
+async function loadCafePage(){var title=qs("cafesCategoryTitle");var target=qs("cafesContent");if(title) title.textContent="Velg et område over.";if(target) target.innerHTML='<div class="empty-box">Ingen område valgt ennå.</div>'}
+async function loadCafeRegion(region){var title=qs("cafesCategoryTitle");var target=qs("cafesContent");if(!target) return;target.innerHTML='Laster ...';if(title) title.textContent='Viser: ☕ Kaféer i '+region;var result=await supabase.from("businesses").select("*").eq("approved",true).eq("region",region).eq("type","Kafé").order("created_at",{ascending:false});if(result.error){target.innerHTML='<div class="empty-box">Feil ved henting: '+escapeHtml(result.error.message)+'</div>';return;}var rows=(result.data||[]).filter(function(b){return b.activity!=="Tilbud"});if(!rows.length){target.innerHTML='<div class="empty-box">Ingen kaféer lagt inn i dette området ennå.</div>';return;}target.innerHTML=renderStavangerGroup('☕ Kaféer i '+region,rows)}
 
 async function loadBusinesses(){var result=await supabase.from("businesses").select("*").order("created_at",{ascending:false});var rows=result.data||[];await renderBizList("Frisør","groomerList",rows,qs("searchGroomers")?.value||"",qs("filterFavoritesGroomers")?.value||"all",qs("mapSearchGroomers")?.value||"");await renderZooShops(rows,qs("searchShops")?.value||"",qs("filterFavoritesShops")?.value||"all",qs("mapSearchShops")?.value||"");await renderBizList("Hund pensjonat","pensjonatList",rows,qs("searchPensjonat")?.value||"",qs("filterFavoritesPensjonat")?.value||"all",qs("mapSearchPensjonat")?.value||"");await renderBizList("Veterinær","vetList",rows,qs("searchVets")?.value||"",qs("filterFavoritesVets")?.value||"all",qs("mapSearchVets")?.value||"")}
 async function approveBusiness(id){var result=await supabase.from("businesses").update({approved:true}).eq("id",id);if(result.error){setStatusText("adminStatus","Feil ved godkjenning: "+result.error.message,"crimson");return;}setStatusText("adminStatus","Bedrift godkjent.","green");loadAdmin();loadBusinesses();loadProfile();loadDogClubs();loadStavangerPage();loadHaugalandetPage()}
@@ -1442,13 +1438,6 @@ async function signupUser(){setStatusText("status","Prøver å opprette konto ..
 async function loginUser(){setStatusText("status","Prøver å logge inn ...","blue");var email=qs("email").value.trim();var password=qs("password").value.trim();if(!email||!password){setStatusText("status","Skriv inn e-post og passord.","crimson");return;}var result=await supabase.auth.signInWithPassword({email:email,password:password});if(result.error){setStatusText("status","Feil: "+result.error.message,"crimson");return;}setStatusText("status","Innlogget som "+email,"green");loadProfile();goHome()}
 function shareApp(){var url="https://dagfinn53e-alt.github.io/hundene-vare/";if(navigator.share){navigator.share({title:"Hundene våre",text:"Se appen Hundene våre 🐶",url:url}).catch(function(){})} else {copyLink()}}
 function copyLink(){var url="https://dagfinn53e-alt.github.io/hundene-vare/";navigator.clipboard.writeText(url).then(function(){setStatusText("status","Link kopiert.","green")}).catch(function(){setStatusText("status","Kunne ikke kopiere linken.","crimson")})}
-
-
-if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0) {
-  window.addEventListener("load", function() {
-    navigator.serviceWorker.register("sw.js").catch(function(){});
-  });
-}
 
 goHome();
 updateStoriesRegionUI();
