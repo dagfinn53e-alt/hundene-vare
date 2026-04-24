@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produkter og leverandørtilbud – Hundene våre</title>
+  <style>
+    :root{
+      --blue:#2563eb;
+      --blue-dark:#1d4ed8;
+      --soft:#eff6ff;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#64748b;
+      --orange:#f97316;
+      --border:#dbeafe;
+      --shadow:0 14px 35px rgba(37,99,235,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#eaf3ff 0%,#f8fbff 45%,#fff 100%);color:var(--text)}
+    .wrap{max-width:1100px;margin:0 auto;padding:18px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;background:rgba(255,255,255,.92);border:1px solid var(--border);border-radius:26px;padding:14px 18px;box-shadow:var(--shadow);position:sticky;top:10px;z-index:10}
+    .brand{font-size:26px;font-weight:900;color:var(--blue-dark);white-space:nowrap}
+    .nav{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .nav a{background:var(--blue);color:white;text-decoration:none;padding:12px 16px;border-radius:999px;font-weight:800;font-size:15px}
+    .hero{margin-top:18px;border-radius:30px;overflow:hidden;background:linear-gradient(135deg,#102a52,#2563eb);color:white;padding:34px;box-shadow:var(--shadow)}
+    .hero h1{margin:0 0 12px;font-size:42px;line-height:1.05}
+    .hero p{margin:0;max-width:760px;font-size:20px;line-height:1.5}
+    .badge{display:inline-block;background:var(--orange);padding:9px 14px;border-radius:999px;font-weight:900;margin-bottom:16px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:20px;box-shadow:var(--shadow)}
+    .card h2,.card h3{margin:0 0 10px}
+    .muted{color:var(--muted);line-height:1.45}
+    .section-title{margin:30px 0 12px;font-size:30px}
+    .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+    .product{background:white;border:1px solid var(--border);border-radius:24px;overflow:hidden;box-shadow:var(--shadow)}
+    .product-img{height:180px;background:linear-gradient(135deg,#dbeafe,#fff7ed);display:flex;align-items:center;justify-content:center;font-size:58px}
+    .product-body{padding:18px}
+    .product h3{font-size:22px;margin:0 0 8px}
+    .price{display:inline-block;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;padding:8px 12px;border-radius:999px;font-weight:900;margin:8px 0 12px}
+    .shops{margin-top:12px;padding:12px;background:#f8fafc;border-radius:16px;border:1px solid #e2e8f0}
+    .shops strong{display:block;margin-bottom:6px}
+    .shopline{padding:5px 0;color:#334155}
+    .cta{display:block;margin-top:12px;background:var(--blue);color:#fff;text-align:center;padding:12px;border-radius:16px;text-decoration:none;font-weight:900}
+    .info-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+    .mini{background:white;border:1px solid var(--border);border-radius:20px;padding:16px;box-shadow:var(--shadow)}
+    .mini b{display:block;margin-bottom:6px}
+    .footer{margin:26px 0 10px;padding:20px;text-align:center;color:var(--muted)}
+    @media(max-width:850px){
+      .topbar{align-items:flex-start;flex-direction:column}
+      .nav{justify-content:flex-start}
+      .hero h1{font-size:32px}
+      .grid,.product-grid,.info-row{grid-template-columns:1fr}
+      .product-img{height:150px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">Hundene våre 🐶</div>
+      <div class="nav">
+        <a href="index.html">Forside</a>
+        <a href="#produkter">Produkter</a>
+        <a href="#leverandor">For leverandører</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <span class="badge">Ny mulighet for butikker og leverandører</span>
+      <h1>Produkter, tilbud og hvor de kan kjøpes lokalt</h1>
+      <p>Her kan hundeeiere finne gode produkter og se hvilke butikker i området som selger dem. Perfekt for hundefôr, godbiter, utstyr, leker og kampanjer.</p>
+    </section>
+
+    <div class="grid">
+      <div class="card"><h2>🐾 For hundeeiere</h2><p class="muted">Finn produkter og tilbud, og se hvor varen kan kjøpes i Haugalandet, Stavanger eller Stord.</p></div>
+      <div class="card"><h2>🏪 For butikker</h2><p class="muted">Butikker får ekstra synlighet når produkter kobles direkte til deres butikk.</p></div>
+      <div class="card"><h2>📦 For leverandører</h2><p class="muted">Leverandører kan vise kampanjeprodukter og henvise kunder til lokale forhandlere.</p></div>
+    </div>
+
+    <h2 id="produkter" class="section-title">🛍️ Produktkampanjer</h2>
+
+    <div class="product-grid">
+      <article class="product">
+        <div class="product-img">🐶</div>
+        <div class="product-body">
+          <h3>Natures Menu 120g</h3>
+          <p class="muted">Kylling & svin. Godt valg for hunder som liker smakfull våtfôr.</p>
+          <span class="price">30% rabatt ved kjøp av 2</span>
+          <div class="shops">
+            <strong>Selges hos:</strong>
+            <div class="shopline">📍 Haugalandet: legg inn butikk</div>
+            <div class="shopline">📍 Stavanger: legg inn butikk</div>
+            <div class="shopline">📍 Stord: legg inn butikk</div>
+          </div>
+          <a class="cta" href="index.html">Se butikker i appen</a>
+        </div>
+      </article>
+
+      <article class="product">
+        <div class="product-img">🦴</div>
+        <div class="product-body">
+          <h3>Godbiter / tyggebein</h3>
+          <p class="muted">Kampanjeplass for lokale butikker eller leverandører.</p>
+          <span class="price">Ukens produkt</span>
+          <div class="shops">
+            <strong>Selges hos:</strong>
+            <div class="shopline">📍 Velg butikk i ditt område</div>
+            <div class="shopline">🏪 Kan kobles til flere butikker</div>
+          </div>
+          <a class="cta" href="index.html">Finn nærmeste butikk</a>
+        </div>
+      </article>
+
+      <article class="product">
+        <div class="product-img">🛒</div>
+        <div class="product-body">
+          <h3>Hundemat / utstyr</h3>
+          <p class="muted">Her kan en leverandør vise produktet sitt og sende kunden til lokale forhandlere.</p>
+          <span class="price">Leverandørkampanje</span>
+          <div class="shops">
+            <strong>Selges hos:</strong>
+            <div class="shopline">📍 Haugalandet</div>
+            <div class="shopline">📍 Stavanger</div>
+            <div class="shopline">📍 Stord</div>
+          </div>
+          <a class="cta" href="#leverandor">Bli med</a>
+        </div>
+      </article>
+    </div>
+
+    <h2 id="leverandor" class="section-title">💰 Hvordan dette kan brukes</h2>
+
+    <div class="info-row">
+      <div class="mini"><b>1. Leverandør</b>Sender produkt, bilde, pris og kampanjeperiode.</div>
+      <div class="mini"><b>2. Butikker</b>Du legger inn hvilke butikker som selger produktet.</div>
+      <div class="mini"><b>3. Appen</b>Produktet vises med “Selges hos” og lokale områder.</div>
+      <div class="mini"><b>4. Kunde</b>Kunden finner varen og handler hos lokal butikk.</div>
+    </div>
+
+    <section class="card" style="margin-top:22px">
+      <h2>📢 Forslag til enkel prising senere</h2>
+      <p class="muted">Start gratis for å teste. Når appen har mer trafikk kan du tilby:</p>
+      <p>✔ Fremhevet produkt: <b>99 kr / uke</b><br>✔ Ukens produkt: <b>199 kr / uke</b><br>✔ Leverandørkampanje: <b>499–1500 kr / måned</b></p>
+    </section>
+
+    <div class="footer">Hundene våre – lokale tilbud, butikker og hundevennlige steder<br>www.hundenevåre.com</div>
+  </div>
+</body>
+</html>
