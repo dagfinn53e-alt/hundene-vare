@@ -33,7 +33,6 @@
     .status{font-weight:800;min-height:22px;margin-top:8px}
     .empty{border:1px dashed #cbd5e1;border-radius:18px;padding:16px;color:var(--muted);background:#fff}
     .admin-item{border:1px solid #e2e8f0;border-radius:20px;padding:14px;margin-top:12px;background:#fff}
-    .hidden{display:none}
     .help{background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px;box-shadow:var(--shadow);margin-bottom:18px}
     .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;align-items:center;justify-content:center;padding:18px}
     .modal img{max-width:96vw;max-height:88vh;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
@@ -59,7 +58,7 @@
     <p class="sub" style="margin-top:8px">Skjemaet er skjult for kunder. Trykk på knappen hvis du skal legge inn produkt.</p>
   </div>
 
-  <div id="formArea" class="hidden">
+  <div id="formArea" style="display:none;">
     <div class="card">
       <h2>🔐 Logg inn</h2>
       <input id="email" type="email" placeholder="E-post">
@@ -103,12 +102,26 @@
 <script>
 var ADMIN_EMAIL="dagfinn53e@gmail.com";
 var supabase=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
+
 function qs(id){return document.getElementById(id)}
 function escapeHtml(str){return String(str||"").replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]})}
 function setStatus(id,text,color){var el=qs(id);if(el){el.textContent=text;el.style.color=color||"black"}}
-function toggleForm(){var area=qs("formArea");area.classList.toggle("hidden");if(!area.classList.contains("hidden")) updateAuthStatus();}
+
+function toggleForm(){
+  var area=qs("formArea");
+  if(!area) return;
+  if(area.style.display==="none" || area.style.display===""){
+    area.style.display="block";
+    updateAuthStatus();
+    setTimeout(function(){area.scrollIntoView({behavior:"smooth",block:"start"});},100);
+  }else{
+    area.style.display="none";
+  }
+}
+
 function openImageModal(src){if(!src) return;qs("modalImg").src=src;qs("imgModal").style.display="flex";}
 function closeImageModal(){qs("imgModal").style.display="none";qs("modalImg").src="";}
+
 async function getUser(){var auth=await supabase.auth.getUser();return auth&&auth.data?auth.data.user:null;}
 async function updateAuthStatus(){var user=await getUser();if(user){setStatus("authStatus","Innlogget som "+user.email,"green");if(user.email===ADMIN_EMAIL){qs("adminBox").style.display="block";loadPendingProducts();}}else{setStatus("authStatus","Ikke innlogget.","black");qs("adminBox").style.display="none";}}
 async function signupUser(){var email=qs("email").value.trim();var password=qs("password").value.trim();if(!email||!password){setStatus("authStatus","Skriv inn e-post og passord.","crimson");return;}var result=await supabase.auth.signUp({email:email,password:password});if(result.error){setStatus("authStatus","Feil: "+result.error.message,"crimson");return;}setStatus("authStatus","Konto opprettet. Sjekk e-post hvis bekreftelse kreves.","green");}
