@@ -5,42 +5,215 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Produkter – Hundene våre</title>
 <style>
-body{font-family:Arial;margin:0;background:#f5f7fb}
-.container{padding:15px}
-.product{background:white;border-radius:16px;padding:15px;margin-bottom:15px;box-shadow:0 5px 15px rgba(0,0,0,0.1)}
-.price{color:#e11d48;font-weight:bold;margin-top:5px}
-.shop{margin-top:10px;font-size:14px}
+:root{
+  --blue:#2563eb;
+  --blue-dark:#1d4ed8;
+  --line:#dbeafe;
+  --text:#0f172a;
+  --muted:#64748b;
+  --card:#fff;
+  --shadow:0 12px 30px rgba(15,23,42,.08);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  color:var(--text);
+  background:linear-gradient(180deg,#eff6ff 0%,#f8fbff 100%);
+}
+.wrap{
+  max-width:980px;
+  margin:0 auto;
+  padding:18px 14px 50px;
+}
+.top{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:18px;
+  box-shadow:var(--shadow);
+  margin-bottom:18px;
+}
+.back{
+  display:inline-block;
+  text-decoration:none;
+  background:#eaf2ff;
+  color:var(--blue-dark);
+  border:1px solid #bfd7ff;
+  padding:10px 16px;
+  border-radius:999px;
+  font-weight:800;
+  margin-bottom:14px;
+}
+h1{
+  margin:0 0 8px;
+  font-size:34px;
+}
+.sub{
+  color:var(--muted);
+  line-height:1.6;
+  margin:0;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+.product{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:26px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.product-img{
+  height:210px;
+  background:#eaf2ff;
+  overflow:hidden;
+}
+.product-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.product-body{
+  padding:18px;
+}
+.badge{
+  display:inline-block;
+  background:#fff7ed;
+  color:#c2410c;
+  border:1px solid #fed7aa;
+  border-radius:999px;
+  padding:7px 12px;
+  font-size:13px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+.product h2{
+  margin:0 0 8px;
+  font-size:23px;
+}
+.price{
+  display:inline-block;
+  background:#dcfce7;
+  color:#166534;
+  border:1px solid #86efac;
+  padding:8px 12px;
+  border-radius:999px;
+  font-weight:900;
+  margin:10px 0 12px;
+}
+.shops{
+  background:#f8fbff;
+  border:1px solid #dbeafe;
+  border-radius:18px;
+  padding:13px;
+  margin-top:10px;
+}
+.shops strong{
+  display:block;
+  margin-bottom:8px;
+}
+.shopline{
+  color:#334155;
+  padding:5px 0;
+  font-size:14px;
+}
+.note{
+  margin-top:18px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:18px;
+  color:#334155;
+  box-shadow:var(--shadow);
+  line-height:1.6;
+}
+@media(max-width:850px){
+  .grid{grid-template-columns:1fr}
+  h1{font-size:28px}
+  .product-img{height:230px}
+}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<div class="container">
+  <div class="top">
+    <a class="back" href="index.html">← Tilbake til appen</a>
+    <h1>🛍️ Produkter og lokale tilbud</h1>
+    <p class="sub">
+      Her kan hundeeiere se produkter, tilbud og hvilke butikker i området som selger varen.
+      Dette passer godt for hundefôr, godbiter, leker og utstyr.
+    </p>
+  </div>
 
-<h2>🛍️ Produkter i ditt område</h2>
+  <div class="grid">
 
-<div class="product">
-<h3>🐶 Natures Menu 120g</h3>
-<p>Kylling & svin – populært våtfôr</p>
-<div class="price">30% rabatt ved kjøp av 2</div>
-<div class="shop">
-Selges hos:<br>
-📍 Musti Haugesund<br>
-📍 Aasheim Zoo Stord
+    <div class="product">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=900&q=80" alt="Hundemat">
+      </div>
+      <div class="product-body">
+        <span class="badge">Ukens tilbud</span>
+        <h2>Natures Menu 120g</h2>
+        <p class="sub">Kylling & svin – populært våtfôr til hund.</p>
+        <div class="price">30% rabatt ved kjøp av 2</div>
+        <div class="shops">
+          <strong>Selges hos:</strong>
+          <div class="shopline">📍 Musti Haugesund</div>
+          <div class="shopline">📍 Aasheim Zoo Stord</div>
+          <div class="shopline">📍 PetXL Stord</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?auto=format&fit=crop&w=900&q=80" alt="Godbiter til hund">
+      </div>
+      <div class="product-body">
+        <span class="badge">Populært nå</span>
+        <h2>Godbiter / tyggebein</h2>
+        <p class="sub">Perfekt som belønning, trening eller kos.</p>
+        <div class="price">Fra 99,-</div>
+        <div class="shops">
+          <strong>Selges hos:</strong>
+          <div class="shopline">📍 Buddy Amanda</div>
+          <div class="shopline">📍 Musti Raglamyr</div>
+          <div class="shopline">📍 Lokal dyrebutikk</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1600369672770-985fd30004eb?auto=format&fit=crop&w=900&q=80" alt="Hundeleker">
+      </div>
+      <div class="product-body">
+        <span class="badge">Leverandørkampanje</span>
+        <h2>Hundeleker og utstyr</h2>
+        <p class="sub">Leker, seler, bånd og utstyr til aktive hunder.</p>
+        <div class="price">Kampanjepris</div>
+        <div class="shops">
+          <strong>Selges hos:</strong>
+          <div class="shopline">📍 Haugalandet</div>
+          <div class="shopline">📍 Stavanger</div>
+          <div class="shopline">📍 Stord</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="note">
+    <strong>For leverandører:</strong><br>
+    Her kan et produkt vises med bilde, kampanjepris og hvilke lokale butikker som selger varen.
+    Kunden finner produktet og ser direkte hvor det kan kjøpes i sitt område.
+  </div>
+
 </div>
-</div>
-
-<div class="product">
-<h3>🦴 Tyggebein Premium</h3>
-<p>Lang holdbarhet – perfekt for aktive hunder</p>
-<div class="price">99,-</div>
-<div class="shop">
-Selges hos:<br>
-📍 Buddy Amanda<br>
-📍 Musti Raglamyr
-</div>
-</div>
-
-</div>
-
 </body>
 </html>
