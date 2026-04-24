@@ -129,6 +129,23 @@
       margin:10px 0 12px;
     }
     .shops{
+      line-height:1.8;
+    }
+    .shop-btn{
+      display:inline-block;
+      background:#eaf2ff;
+      border:1px solid #bfd7ff;
+      padding:6px 10px;
+      border-radius:999px;
+      margin:3px 4px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .shop-btn:hover{
+      background:#2563eb;
+      color:#fff;
+    }
+
       background:#f8fbff;
       border:1px solid #dbeafe;
       border-radius:18px;
@@ -382,7 +399,12 @@
       qs("productShops").value = "";
       qs("productImage").value = "";
       setStatus("productStatus", "Produkt sendt til godkjenning.", "green");
-      await loadProducts();
+      await function searchShop(name){
+      alert("Søk etter butikk: " + name);
+      // senere kobler vi til butikk-side
+    }
+
+    loadProducts();
       await loadPendingProducts();
     }catch(e){
       setStatus("productStatus", "Feil ved bilde/lagring: " + e.message, "crimson");
@@ -453,7 +475,12 @@
   async function approveProduct(id){
     var result = await db.from("products").update({approved:true}).eq("id", id);
     if(result.error){ alert("Feil: " + result.error.message); return; }
-    await loadProducts();
+    await function searchShop(name){
+      alert("Søk etter butikk: " + name);
+      // senere kobler vi til butikk-side
+    }
+
+    loadProducts();
     await loadPendingProducts();
   }
 
@@ -461,7 +488,12 @@
     if(!confirm("Slette produktet?")) return;
     var result = await db.from("products").delete().eq("id", id);
     if(result.error){ alert("Feil: " + result.error.message); return; }
-    await loadProducts();
+    await function searchShop(name){
+      alert("Søk etter butikk: " + name);
+      // senere kobler vi til butikk-side
+    }
+
+    loadProducts();
     await loadPendingProducts();
   }
 
@@ -494,7 +526,12 @@
     qs("logoutBtn").addEventListener("click", logoutUser);
     qs("saveProductBtn").addEventListener("click", saveProduct);
     qs("refreshProductsBtn").addEventListener("click", loadProducts);
-    await loadProducts();
+    await function searchShop(name){
+      alert("Søk etter butikk: " + name);
+      // senere kobler vi til butikk-side
+    }
+
+    loadProducts();
     await updateAuthStatus();
   });
 })();
