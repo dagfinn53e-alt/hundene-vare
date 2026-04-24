@@ -1,108 +1,106 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Produkter – Hundene våre</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    :root{--blue:#2563eb;--blue-dark:#1d4ed8;--line:#dbeafe;--text:#0f172a;--muted:#64748b;--card:#fff;--shadow:0 12px 30px rgba(15,23,42,.08)}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:linear-gradient(180deg,#eff6ff 0%,#f8fbff 100%)}
-    .wrap{max-width:980px;margin:0 auto;padding:18px 14px 50px}
-    .top,.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:20px;box-shadow:var(--shadow);margin-bottom:18px}
-    .back{display:inline-block;text-decoration:none;background:#eaf2ff;color:var(--blue-dark);border:1px solid #bfd7ff;padding:10px 16px;border-radius:999px;font-weight:800;margin-bottom:14px}
-    h1{margin:0 0 8px;font-size:34px} h2{margin:0 0 12px;font-size:26px} h3{margin:0 0 8px;font-size:23px}
-    .sub{color:var(--muted);line-height:1.6;margin:0}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .product{background:var(--card);border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:var(--shadow)}
-    .product-img{height:230px;background:#eaf2ff;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:54px;cursor:pointer}
-    .product-img img{width:100%;height:100%;object-fit:cover;display:block}
-    .product-body{padding:18px}
-    .badge{display:inline-block;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;border-radius:999px;padding:7px 12px;font-size:13px;font-weight:900;margin-bottom:10px}
-    .price{display:inline-block;background:#dcfce7;color:#166534;border:1px solid #86efac;padding:8px 12px;border-radius:999px;font-weight:900;margin:10px 0 12px}
-    .shops{background:#f8fbff;border:1px solid #dbeafe;border-radius:18px;padding:13px;margin-top:10px;white-space:pre-wrap}
-    .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    button{border:none;border-radius:999px;padding:10px 14px;background:#2563eb;color:#fff;font-weight:800;cursor:pointer}
-    button.danger{background:#b91c1c}
-    .admin-item{border:1px solid #e2e8f0;border-radius:20px;padding:14px;margin-top:12px;background:#fff}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produkter – Hundene våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{font-family:Arial;margin:0;background:#f5f7fb}
+.container{padding:15px;max-width:900px;margin:auto}
+.card{background:white;padding:15px;border-radius:16px;margin-bottom:15px;box-shadow:0 5px 15px rgba(0,0,0,0.1)}
+.product{background:white;border-radius:16px;padding:15px;margin-bottom:15px}
+.price{color:#e11d48;font-weight:bold}
+.btn{padding:10px 15px;border:none;border-radius:10px;margin-top:10px;cursor:pointer}
+.btn-green{background:#16a34a;color:white}
+.btn-red{background:#dc2626;color:white}
+</style>
 </head>
+
 <body>
-<div class="wrap">
+<div class="container">
 
-<h1>🛍️ Produkter</h1>
+<h2>🛍️ Produkter</h2>
+<div id="products"></div>
 
-<div id="productList" class="grid"></div>
+<h2>➕ Legg inn produkt</h2>
+<div class="card">
+<input id="title" placeholder="Produktnavn"><br><br>
+<input id="price" placeholder="Pris / tilbud"><br><br>
+<textarea id="shops" placeholder="Selges hos"></textarea><br><br>
+<button class="btn btn-green" onclick="save()">Lagre</button>
+</div>
 
-<h2>🛠️ Admin – alle produkter</h2>
-<div id="adminList"></div>
+<h2>🛠️ Admin</h2>
+<div id="admin"></div>
 
 </div>
 
 <script>
-var ADMIN_EMAIL="dagfinn53e@gmail.com";
-var supabase=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
+const supabase = window.supabase.createClient(
+"https://kxudiviidwwwclbzgdyx.supabase.co",
+"sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
 
-function qs(id){return document.getElementById(id)}
+async function load(){
+let {data} = await supabase.from("products").select("*").order("created_at",{ascending:false});
 
-async function getUser(){
-  let auth=await supabase.auth.getUser();
-  return auth.data.user;
+let pHTML="";
+let aHTML="";
+
+data.forEach(p=>{
+if(p.approved){
+pHTML+=`
+<div class="product">
+<h3>${p.title}</h3>
+<div class="price">${p.price_text}</div>
+<div>${p.shops_text}</div>
+<button class="btn btn-red" onclick="del('${p.id}')">Slett</button>
+</div>`;
 }
 
-async function loadProducts(){
-  let res=await supabase.from("products").select("*").eq("approved",true);
-  let html="";
-  res.data.forEach(p=>{
-    html+=`
-    <div class="product">
-      <div class="product-img">${p.image_url?'<img src="'+p.image_url+'">':'🛍️'}</div>
-      <div class="product-body">
-        <h3>${p.title}</h3>
-        <div class="price">${p.price_text}</div>
-        <div class="shops">${p.shops_text}</div>
-      </div>
-    </div>`;
-  });
-  qs("productList").innerHTML=html;
+aHTML+=`
+<div class="card">
+<strong>${p.title}</strong> (${p.approved?"Godkjent":"Venter"})
+<br>
+${!p.approved?`<button class="btn btn-green" onclick="approve('${p.id}')">Godkjenn</button>`:""}
+<button class="btn btn-red" onclick="del('${p.id}')">Slett</button>
+</div>`;
+});
+
+document.getElementById("products").innerHTML=pHTML;
+document.getElementById("admin").innerHTML=aHTML;
 }
 
-async function loadAdmin(){
-  let user=await getUser();
-  if(!user || user.email!==ADMIN_EMAIL)return;
+async function save(){
+let title=document.getElementById("title").value;
+let price=document.getElementById("price").value;
+let shops=document.getElementById("shops").value;
 
-  let res=await supabase.from("products").select("*").order("created_at",{ascending:false});
-  let html="";
-  res.data.forEach(p=>{
-    html+=`
-    <div class="admin-item">
-      <strong>${p.title}</strong>
-      <div>${p.approved?"✔ Godkjent":"⏳ Venter"}</div>
-      <div class="btnrow">
-        ${!p.approved?'<button onclick="approve(\''+p.id+'\')">Godkjenn</button>':''}
-        <button class="danger" onclick="deleteP('${p.id}')">Slett</button>
-      </div>
-    </div>`;
-  });
-  qs("adminList").innerHTML=html;
+await supabase.from("products").insert([{
+title:title,
+price_text:price,
+shops_text:shops,
+approved:false
+}]);
+
+load();
 }
 
 async function approve(id){
-  await supabase.from("products").update({approved:true}).eq("id",id);
-  loadProducts();
-  loadAdmin();
+await supabase.from("products").update({approved:true}).eq("id",id);
+load();
 }
 
-async function deleteP(id){
-  if(!confirm("Slette produkt?"))return;
-  await supabase.from("products").delete().eq("id",id);
-  loadProducts();
-  loadAdmin();
+async function del(id){
+if(confirm("Slette?")){
+await supabase.from("products").delete().eq("id",id);
+load();
+}
 }
 
-loadProducts();
-loadAdmin();
+load();
 </script>
 
 </body>
