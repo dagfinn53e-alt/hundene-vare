@@ -1,219 +1,267 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Produkter – Hundene våre</title>
-<style>
-:root{
-  --blue:#2563eb;
-  --blue-dark:#1d4ed8;
-  --line:#dbeafe;
-  --text:#0f172a;
-  --muted:#64748b;
-  --card:#fff;
-  --shadow:0 12px 30px rgba(15,23,42,.08);
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  color:var(--text);
-  background:linear-gradient(180deg,#eff6ff 0%,#f8fbff 100%);
-}
-.wrap{
-  max-width:980px;
-  margin:0 auto;
-  padding:18px 14px 50px;
-}
-.top{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:24px;
-  padding:18px;
-  box-shadow:var(--shadow);
-  margin-bottom:18px;
-}
-.back{
-  display:inline-block;
-  text-decoration:none;
-  background:#eaf2ff;
-  color:var(--blue-dark);
-  border:1px solid #bfd7ff;
-  padding:10px 16px;
-  border-radius:999px;
-  font-weight:800;
-  margin-bottom:14px;
-}
-h1{
-  margin:0 0 8px;
-  font-size:34px;
-}
-.sub{
-  color:var(--muted);
-  line-height:1.6;
-  margin:0;
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-.product{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:26px;
-  overflow:hidden;
-  box-shadow:var(--shadow);
-}
-.product-img{
-  height:210px;
-  background:#eaf2ff;
-  overflow:hidden;
-}
-.product-img img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-.product-body{
-  padding:18px;
-}
-.badge{
-  display:inline-block;
-  background:#fff7ed;
-  color:#c2410c;
-  border:1px solid #fed7aa;
-  border-radius:999px;
-  padding:7px 12px;
-  font-size:13px;
-  font-weight:900;
-  margin-bottom:10px;
-}
-.product h2{
-  margin:0 0 8px;
-  font-size:23px;
-}
-.price{
-  display:inline-block;
-  background:#dcfce7;
-  color:#166534;
-  border:1px solid #86efac;
-  padding:8px 12px;
-  border-radius:999px;
-  font-weight:900;
-  margin:10px 0 12px;
-}
-.shops{
-  background:#f8fbff;
-  border:1px solid #dbeafe;
-  border-radius:18px;
-  padding:13px;
-  margin-top:10px;
-}
-.shops strong{
-  display:block;
-  margin-bottom:8px;
-}
-.shopline{
-  color:#334155;
-  padding:5px 0;
-  font-size:14px;
-}
-.note{
-  margin-top:18px;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:18px;
-  color:#334155;
-  box-shadow:var(--shadow);
-  line-height:1.6;
-}
-@media(max-width:850px){
-  .grid{grid-template-columns:1fr}
-  h1{font-size:28px}
-  .product-img{height:230px}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produkter – Hundene våre</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root{--blue:#2563eb;--blue-dark:#1d4ed8;--line:#dbeafe;--text:#0f172a;--muted:#64748b;--card:#fff;--shadow:0 12px 30px rgba(15,23,42,.08)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:linear-gradient(180deg,#eff6ff 0%,#f8fbff 100%)}
+    .wrap{max-width:980px;margin:0 auto;padding:18px 14px 50px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:20px;box-shadow:var(--shadow);margin-bottom:18px}
+    .top{background:#fff;border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:var(--shadow);margin-bottom:18px}
+    .back,.site-link{display:inline-block;text-decoration:none;background:#eaf2ff;color:var(--blue-dark);border:1px solid #bfd7ff;padding:10px 16px;border-radius:999px;font-weight:800;margin-bottom:14px}
+    h1{margin:0 0 8px;font-size:34px} h2{margin:0 0 12px;font-size:26px} h3{margin:0 0 8px;font-size:23px}
+    .sub{color:var(--muted);line-height:1.6;margin:0}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .product{background:var(--card);border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:var(--shadow)}
+    .product-img{height:210px;background:#eaf2ff;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:54px}
+    .product-img img{width:100%;height:100%;object-fit:cover;display:block}
+    .product-body{padding:18px}
+    .badge{display:inline-block;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;border-radius:999px;padding:7px 12px;font-size:13px;font-weight:900;margin-bottom:10px}
+    .price{display:inline-block;background:#dcfce7;color:#166534;border:1px solid #86efac;padding:8px 12px;border-radius:999px;font-weight:900;margin:10px 0 12px}
+    .shops{background:#f8fbff;border:1px solid #dbeafe;border-radius:18px;padding:13px;margin-top:10px;white-space:pre-wrap}
+    label{font-weight:800;font-size:14px}
+    input,select,textarea{width:100%;padding:14px 15px;border:1px solid #cbd5e1;border-radius:16px;font-size:15px;margin:8px 0 12px;background:#fff}
+    textarea{min-height:110px;resize:vertical}
+    .btnrow{display:flex;gap:10px;flex-wrap:wrap}
+    button{border:none;border-radius:999px;padding:11px 16px;background:var(--blue);color:#fff;font-weight:800;cursor:pointer}
+    button.alt{background:#eaf2ff;color:var(--blue-dark);border:1px solid #bfd7ff}
+    button.ok{background:#166534}
+    button.danger{background:#b91c1c}
+    .status{font-weight:800;min-height:22px}
+    .empty{border:1px dashed #cbd5e1;border-radius:18px;padding:16px;color:var(--muted);background:#fff}
+    .admin-item{border:1px solid #e2e8f0;border-radius:20px;padding:14px;margin-top:12px;background:#fff}
+    @media(max-width:850px){.grid{grid-template-columns:1fr}h1{font-size:28px}.product-img{height:230px}}
+  </style>
 </head>
 <body>
 <div class="wrap">
-
   <div class="top">
     <a class="back" href="index.html">← Tilbake til appen</a>
     <h1>🛍️ Produkter og lokale tilbud</h1>
-    <p class="sub">
-      Her kan hundeeiere se produkter, tilbud og hvilke butikker i området som selger varen.
-      Dette passer godt for hundefôr, godbiter, leker og utstyr.
-    </p>
+    <p class="sub">Her kan hundeeiere se produkter, tilbud og hvilke butikker i området som selger varen.</p>
   </div>
 
-  <div class="grid">
-
-    <div class="product">
-      <div class="product-img">
-        <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=900&q=80" alt="Hundemat">
-      </div>
-      <div class="product-body">
-        <span class="badge">Ukens tilbud</span>
-        <h2>Natures Menu 120g</h2>
-        <p class="sub">Kylling & svin – populært våtfôr til hund.</p>
-        <div class="price">30% rabatt ved kjøp av 2</div>
-        <div class="shops">
-          <strong>Selges hos:</strong>
-          <div class="shopline">📍 Musti Haugesund</div>
-          <div class="shopline">📍 Aasheim Zoo Stord</div>
-          <div class="shopline">📍 PetXL Stord</div>
-        </div>
-      </div>
+  <div class="card">
+    <h2>🔐 Logg inn for å legge inn produkt</h2>
+    <p class="sub">Bruk samme konto som i appen.</p>
+    <input id="email" type="email" placeholder="E-post">
+    <input id="password" type="password" placeholder="Passord">
+    <div class="btnrow">
+      <button type="button" onclick="loginUser()">Logg inn</button>
+      <button type="button" class="alt" onclick="signupUser()">Lag konto</button>
+      <button type="button" class="alt" onclick="logoutUser()">Logg ut</button>
     </div>
-
-    <div class="product">
-      <div class="product-img">
-        <img src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?auto=format&fit=crop&w=900&q=80" alt="Godbiter til hund">
-      </div>
-      <div class="product-body">
-        <span class="badge">Populært nå</span>
-        <h2>Godbiter / tyggebein</h2>
-        <p class="sub">Perfekt som belønning, trening eller kos.</p>
-        <div class="price">Fra 99,-</div>
-        <div class="shops">
-          <strong>Selges hos:</strong>
-          <div class="shopline">📍 Buddy Amanda</div>
-          <div class="shopline">📍 Musti Raglamyr</div>
-          <div class="shopline">📍 Lokal dyrebutikk</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="product">
-      <div class="product-img">
-        <img src="https://images.unsplash.com/photo-1600369672770-985fd30004eb?auto=format&fit=crop&w=900&q=80" alt="Hundeleker">
-      </div>
-      <div class="product-body">
-        <span class="badge">Leverandørkampanje</span>
-        <h2>Hundeleker og utstyr</h2>
-        <p class="sub">Leker, seler, bånd og utstyr til aktive hunder.</p>
-        <div class="price">Kampanjepris</div>
-        <div class="shops">
-          <strong>Selges hos:</strong>
-          <div class="shopline">📍 Haugalandet</div>
-          <div class="shopline">📍 Stavanger</div>
-          <div class="shopline">📍 Stord</div>
-        </div>
-      </div>
-    </div>
-
+    <div id="authStatus" class="status">Ikke innlogget.</div>
   </div>
 
-  <div class="note">
-    <strong>For leverandører:</strong><br>
-    Her kan et produkt vises med bilde, kampanjepris og hvilke lokale butikker som selger varen.
-    Kunden finner produktet og ser direkte hvor det kan kjøpes i sitt område.
+  <div class="card">
+    <h2>➕ Legg inn produkt</h2>
+    <p class="sub">Produktet vises først etter godkjenning.</p>
+
+    <label>Produktnavn</label>
+    <input id="productTitle" placeholder="F.eks. Natures Menu 120g">
+
+    <label>Beskrivelse</label>
+    <textarea id="productDescription" placeholder="Kort tekst om produktet"></textarea>
+
+    <label>Pris / tilbud</label>
+    <input id="productPrice" placeholder="F.eks. 30% rabatt ved kjøp av 2">
+
+    <label>Område</label>
+    <select id="productRegion">
+      <option>Haugalandet</option>
+      <option>Stavanger</option>
+      <option>Stord</option>
+      <option>Flere områder</option>
+    </select>
+
+    <label>Selges hos</label>
+    <textarea id="productShops" placeholder="F.eks.&#10;Musti Haugesund&#10;Aasheim Zoo Stord"></textarea>
+
+    <label>Bilde av produkt</label>
+    <input id="productImage" type="file" accept="image/*">
+
+    <div class="btnrow">
+      <button type="button" onclick="saveProduct()">Lagre produkt</button>
+      <button type="button" class="alt" onclick="loadProducts()">Oppdater produkter</button>
+    </div>
+    <div id="productStatus" class="status">Klar.</div>
   </div>
 
+  <h2>🛍️ Godkjente produkter</h2>
+  <div id="productList" class="grid"><div class="empty">Laster produkter ...</div></div>
+
+  <div id="adminBox" class="card" style="display:none;margin-top:18px">
+    <h2>🛠️ Admin – produkter som venter</h2>
+    <div id="pendingProducts">Laster ...</div>
+  </div>
 </div>
+
+<script>
+var ADMIN_EMAIL="dagfinn53e@gmail.com";
+var supabase=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
+
+function qs(id){return document.getElementById(id)}
+function escapeHtml(str){return String(str||"").replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]})}
+function setStatus(id,text,color){var el=qs(id);if(el){el.textContent=text;el.style.color=color||"black"}}
+
+async function getUser(){
+  var auth=await supabase.auth.getUser();
+  return auth && auth.data ? auth.data.user : null;
+}
+
+async function updateAuthStatus(){
+  var user=await getUser();
+  if(user){
+    setStatus("authStatus","Innlogget som "+user.email,"green");
+    if(user.email===ADMIN_EMAIL){qs("adminBox").style.display="block";loadPendingProducts();}
+  }else{
+    setStatus("authStatus","Ikke innlogget.","black");
+    qs("adminBox").style.display="none";
+  }
+}
+
+async function signupUser(){
+  var email=qs("email").value.trim();
+  var password=qs("password").value.trim();
+  if(!email||!password){setStatus("authStatus","Skriv inn e-post og passord.","crimson");return;}
+  var result=await supabase.auth.signUp({email:email,password:password});
+  if(result.error){setStatus("authStatus","Feil: "+result.error.message,"crimson");return;}
+  setStatus("authStatus","Konto opprettet. Sjekk e-post hvis bekreftelse kreves.","green");
+}
+
+async function loginUser(){
+  var email=qs("email").value.trim();
+  var password=qs("password").value.trim();
+  if(!email||!password){setStatus("authStatus","Skriv inn e-post og passord.","crimson");return;}
+  var result=await supabase.auth.signInWithPassword({email:email,password:password});
+  if(result.error){setStatus("authStatus","Feil: "+result.error.message,"crimson");return;}
+  await updateAuthStatus();
+}
+
+async function logoutUser(){
+  await supabase.auth.signOut();
+  await updateAuthStatus();
+}
+
+async function uploadProductImage(file){
+  if(!file) return "";
+  var safeName=Date.now()+"-"+file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+  var filePath="products/"+safeName;
+  var upload=await supabase.storage.from("story-images").upload(filePath,file);
+  if(upload.error) throw new Error(upload.error.message);
+  return supabase.storage.from("story-images").getPublicUrl(filePath).data.publicUrl||"";
+}
+
+async function saveProduct(){
+  var user=await getUser();
+  if(!user){setStatus("productStatus","Du må logge inn først.","crimson");return;}
+
+  var title=qs("productTitle").value.trim();
+  var description=qs("productDescription").value.trim();
+  var price=qs("productPrice").value.trim();
+  var region=qs("productRegion").value;
+  var shops=qs("productShops").value.trim();
+  var file=qs("productImage").files[0];
+
+  if(!title||!description||!price||!shops){setStatus("productStatus","Fyll inn produktnavn, beskrivelse, pris og butikker.","crimson");return;}
+
+  try{
+    setStatus("productStatus","Lagrer produkt ...","blue");
+    var imageUrl=await uploadProductImage(file);
+    var result=await supabase.from("products").insert([{
+      user_id:user.id,
+      author_email:user.email,
+      title:title,
+      description:description,
+      price_text:price,
+      region:region,
+      shops_text:shops,
+      image_url:imageUrl,
+      approved:false
+    }]);
+
+    if(result.error){setStatus("productStatus","Feil ved lagring: "+result.error.message,"crimson");return;}
+
+    qs("productTitle").value="";
+    qs("productDescription").value="";
+    qs("productPrice").value="";
+    qs("productRegion").value="Haugalandet";
+    qs("productShops").value="";
+    qs("productImage").value="";
+    setStatus("productStatus","Produkt sendt til godkjenning.","green");
+    await loadProducts();
+    await loadPendingProducts();
+  }catch(e){
+    setStatus("productStatus","Feil ved bilde/lagring: "+e.message,"crimson");
+  }
+}
+
+function renderProduct(p){
+  var img=p.image_url?'<img src="'+p.image_url+'" alt="Produkt">':'🛍️';
+  return '<div class="product">'+
+    '<div class="product-img">'+img+'</div>'+
+    '<div class="product-body">'+
+      '<span class="badge">'+escapeHtml(p.region||"Produkt")+'</span>'+
+      '<h3>'+escapeHtml(p.title||"")+'</h3>'+
+      '<p class="sub">'+escapeHtml(p.description||"")+'</p>'+
+      '<div class="price">'+escapeHtml(p.price_text||"")+'</div>'+
+      '<div class="shops"><strong>Selges hos:</strong><br>'+escapeHtml(p.shops_text||"")+'</div>'+
+    '</div>'+
+  '</div>';
+}
+
+async function loadProducts(){
+  var target=qs("productList");
+  target.innerHTML='<div class="empty">Laster produkter ...</div>';
+  var result=await supabase.from("products").select("*").eq("approved",true).order("created_at",{ascending:false});
+  if(result.error){target.innerHTML='<div class="empty">Feil ved henting: '+escapeHtml(result.error.message)+'</div>';return;}
+  var rows=result.data||[];
+  if(!rows.length){target.innerHTML='<div class="empty">Ingen godkjente produkter enda.</div>';return;}
+  target.innerHTML=rows.map(renderProduct).join("");
+}
+
+async function loadPendingProducts(){
+  var user=await getUser();
+  if(!user || user.email!==ADMIN_EMAIL) return;
+  var target=qs("pendingProducts");
+  target.innerHTML="Laster ...";
+  var result=await supabase.from("products").select("*").eq("approved",false).order("created_at",{ascending:false});
+  if(result.error){target.innerHTML="Feil: "+escapeHtml(result.error.message);return;}
+  var rows=result.data||[];
+  if(!rows.length){target.innerHTML='<div class="empty">Ingen produkter venter.</div>';return;}
+  target.innerHTML=rows.map(function(p){
+    return '<div class="admin-item">'+
+      '<h3>'+escapeHtml(p.title||"")+'</h3>'+
+      '<div class="sub">'+escapeHtml(p.author_email||"")+' · '+escapeHtml(p.region||"")+'</div>'+
+      '<p>'+escapeHtml(p.description||"")+'</p>'+
+      '<div class="btnrow">'+
+        '<button class="ok" onclick="approveProduct(\''+p.id+'\')">Godkjenn</button>'+
+        '<button class="danger" onclick="deleteProduct(\''+p.id+'\')">Slett</button>'+
+      '</div>'+
+    '</div>';
+  }).join("");
+}
+
+async function approveProduct(id){
+  var result=await supabase.from("products").update({approved:true}).eq("id",id);
+  if(result.error){alert("Feil: "+result.error.message);return;}
+  loadProducts();loadPendingProducts();
+}
+
+async function deleteProduct(id){
+  if(!confirm("Slette produktet?")) return;
+  var result=await supabase.from("products").delete().eq("id",id);
+  if(result.error){alert("Feil: "+result.error.message);return;}
+  loadProducts();loadPendingProducts();
+}
+
+loadProducts();
+updateAuthStatus();
+</script>
 </body>
 </html>
