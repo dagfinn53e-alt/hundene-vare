@@ -54,43 +54,40 @@
   <div id="productList" class="grid"><div class="empty">Laster produkter ...</div></div>
 
   <div class="card" style="margin-top:22px">
-    <button type="button" class="alt" onclick="toggleForm()">➕ Legg inn produkt / leverandør</button>
-    <p class="sub" style="margin-top:8px">Skjemaet er skjult for kunder. Trykk på knappen hvis du skal legge inn produkt.</p>
+    <h2>➕ Legg inn produkt / leverandør</h2>
+    <p class="sub">For butikker og leverandører. Produktet vises først etter godkjenning.</p>
   </div>
 
-  <div id="formArea" style="display:none;">
-    <div class="card">
-      <h2>🔐 Logg inn</h2>
-      <input id="email" type="email" placeholder="E-post">
-      <input id="password" type="password" placeholder="Passord">
-      <div class="btnrow">
-        <button type="button" onclick="loginUser()">Logg inn</button>
-        <button type="button" class="alt" onclick="signupUser()">Lag konto</button>
-        <button type="button" class="alt" onclick="logoutUser()">Logg ut</button>
-      </div>
-      <div id="authStatus" class="status">Ikke innlogget.</div>
+  <div class="card">
+    <h2>🔐 Logg inn</h2>
+    <input id="email" type="email" placeholder="E-post">
+    <input id="password" type="password" placeholder="Passord">
+    <div class="btnrow">
+      <button type="button" onclick="loginUser()">Logg inn</button>
+      <button type="button" class="alt" onclick="signupUser()">Lag konto</button>
+      <button type="button" class="alt" onclick="logoutUser()">Logg ut</button>
     </div>
+    <div id="authStatus" class="status">Ikke innlogget.</div>
+  </div>
 
-    <div class="card">
-      <h2>➕ Legg inn produkt</h2>
-      <p class="sub">Produktet vises først etter godkjenning.</p>
-      <label>Produktnavn</label><input id="productTitle" placeholder="F.eks. Natures Menu 120g">
-      <label>Beskrivelse</label><textarea id="productDescription" placeholder="Kort tekst om produktet"></textarea>
-      <label>Pris / tilbud</label><input id="productPrice" placeholder="F.eks. 30% rabatt ved kjøp av 2">
-      <label>Område</label><select id="productRegion"><option>Haugalandet</option><option>Stavanger</option><option>Stord</option><option>Flere områder</option></select>
-      <label>Selges hos</label><textarea id="productShops" placeholder="F.eks.&#10;Musti Haugesund&#10;Aasheim Zoo Stord"></textarea>
-      <label>Bilde av produkt</label><input id="productImage" type="file" accept="image/*">
-      <div class="btnrow">
-        <button type="button" onclick="saveProduct()">Lagre produkt</button>
-        <button type="button" class="alt" onclick="loadProducts()">Oppdater produkter</button>
-      </div>
-      <div id="productStatus" class="status">Klar.</div>
+  <div class="card">
+    <h2>➕ Produkt-skjema</h2>
+    <label>Produktnavn</label><input id="productTitle" placeholder="F.eks. Natures Menu 120g">
+    <label>Beskrivelse</label><textarea id="productDescription" placeholder="Kort tekst om produktet"></textarea>
+    <label>Pris / tilbud</label><input id="productPrice" placeholder="F.eks. 30% rabatt ved kjøp av 2">
+    <label>Område</label><select id="productRegion"><option>Haugalandet</option><option>Stavanger</option><option>Stord</option><option>Flere områder</option></select>
+    <label>Selges hos</label><textarea id="productShops" placeholder="F.eks.&#10;Musti Haugesund&#10;Aasheim Zoo Stord"></textarea>
+    <label>Bilde av produkt</label><input id="productImage" type="file" accept="image/*">
+    <div class="btnrow">
+      <button type="button" onclick="saveProduct()">Lagre produkt</button>
+      <button type="button" class="alt" onclick="loadProducts()">Oppdater produkter</button>
     </div>
+    <div id="productStatus" class="status">Klar.</div>
+  </div>
 
-    <div id="adminBox" class="card" style="display:none">
-      <h2>🛠️ Admin – produkter som venter</h2>
-      <div id="pendingProducts">Laster ...</div>
-    </div>
+  <div id="adminBox" class="card" style="display:none">
+    <h2>🛠️ Admin – produkter som venter</h2>
+    <div id="pendingProducts">Laster ...</div>
   </div>
 </div>
 
@@ -106,22 +103,8 @@ var supabase=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase
 function qs(id){return document.getElementById(id)}
 function escapeHtml(str){return String(str||"").replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]})}
 function setStatus(id,text,color){var el=qs(id);if(el){el.textContent=text;el.style.color=color||"black"}}
-
-function toggleForm(){
-  var area=qs("formArea");
-  if(!area) return;
-  if(area.style.display==="none" || area.style.display===""){
-    area.style.display="block";
-    updateAuthStatus();
-    setTimeout(function(){area.scrollIntoView({behavior:"smooth",block:"start"});},100);
-  }else{
-    area.style.display="none";
-  }
-}
-
 function openImageModal(src){if(!src) return;qs("modalImg").src=src;qs("imgModal").style.display="flex";}
 function closeImageModal(){qs("imgModal").style.display="none";qs("modalImg").src="";}
-
 async function getUser(){var auth=await supabase.auth.getUser();return auth&&auth.data?auth.data.user:null;}
 async function updateAuthStatus(){var user=await getUser();if(user){setStatus("authStatus","Innlogget som "+user.email,"green");if(user.email===ADMIN_EMAIL){qs("adminBox").style.display="block";loadPendingProducts();}}else{setStatus("authStatus","Ikke innlogget.","black");qs("adminBox").style.display="none";}}
 async function signupUser(){var email=qs("email").value.trim();var password=qs("password").value.trim();if(!email||!password){setStatus("authStatus","Skriv inn e-post og passord.","crimson");return;}var result=await supabase.auth.signUp({email:email,password:password});if(result.error){setStatus("authStatus","Feil: "+result.error.message,"crimson");return;}setStatus("authStatus","Konto opprettet. Sjekk e-post hvis bekreftelse kreves.","green");}
@@ -135,6 +118,7 @@ async function loadPendingProducts(){var user=await getUser();if(!user||user.ema
 async function approveProduct(id){var result=await supabase.from("products").update({approved:true}).eq("id",id);if(result.error){alert("Feil: "+result.error.message);return;}loadProducts();loadPendingProducts();}
 async function deleteProduct(id){if(!confirm("Slette produktet?")) return;var result=await supabase.from("products").delete().eq("id",id);if(result.error){alert("Feil: "+result.error.message);return;}loadProducts();loadPendingProducts();}
 loadProducts();
+updateAuthStatus();
 </script>
 </body>
 </html>
