@@ -6,38 +6,179 @@
   <title>Produkter – Hundene våre</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    :root{--blue:#2563eb;--blue-dark:#1d4ed8;--line:#dbeafe;--text:#0f172a;--muted:#64748b;--card:#fff;--shadow:0 12px 30px rgba(15,23,42,.08)}
+    :root{
+      --blue:#2563eb;
+      --blue-dark:#1d4ed8;
+      --sky:#eaf3ff;
+      --line:#dbeafe;
+      --text:#0f172a;
+      --muted:#64748b;
+      --card:#ffffff;
+      --green:#16a34a;
+      --orange:#f97316;
+      --red:#b91c1c;
+      --shadow:0 18px 45px rgba(30,64,175,.13);
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:linear-gradient(180deg,#eff6ff 0%,#f8fbff 100%)}
-    .wrap{max-width:980px;margin:0 auto;padding:18px 14px 50px}
-    .top,.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:20px;box-shadow:var(--shadow);margin-bottom:18px}
-    .back{display:inline-block;text-decoration:none;background:#eaf2ff;color:var(--blue-dark);border:1px solid #bfd7ff;padding:10px 16px;border-radius:999px;font-weight:800;margin-bottom:14px}
-    h1{margin:0 0 8px;font-size:34px} h2{margin:0 0 12px;font-size:26px} h3{margin:0 0 8px;font-size:23px}
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left,#dbeafe 0,#f8fbff 34%,#ffffff 100%);
+    }
+    .wrap{max-width:1060px;margin:0 auto;padding:18px 14px 55px}
+    .top{
+      background:linear-gradient(135deg,#123c73,#2563eb);
+      color:#fff;
+      border-radius:30px;
+      padding:24px 22px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+      overflow:hidden;
+      position:relative;
+    }
+    .top:after{
+      content:"🐾";
+      position:absolute;
+      right:22px;
+      top:20px;
+      font-size:76px;
+      opacity:.16;
+    }
+    .top .sub{color:#eaf3ff;max-width:720px}
+    .back{
+      display:inline-block;
+      text-decoration:none;
+      background:rgba(255,255,255,.18);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.35);
+      padding:10px 16px;
+      border-radius:999px;
+      font-weight:900;
+      margin-bottom:14px;
+    }
+    .card,.help{
+      background:rgba(255,255,255,.96);
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:20px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+    h1{margin:0 0 8px;font-size:36px;line-height:1.08}
+    h2{margin:0 0 14px;font-size:27px}
+    h3{margin:0 0 8px;font-size:23px}
     .sub{color:var(--muted);line-height:1.6;margin:0}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .product{background:var(--card);border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:var(--shadow)}
-    .product-img{height:230px;background:#eaf2ff;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:54px;cursor:pointer}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .product{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:28px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+    .product:hover{transform:translateY(-2px);box-shadow:0 22px 55px rgba(30,64,175,.18)}
+    .product-img{
+      height:235px;
+      background:linear-gradient(135deg,#dbeafe,#fff7ed);
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:60px;
+      cursor:pointer;
+      position:relative;
+    }
+    .product-img:after{
+      content:"Trykk for større bilde";
+      position:absolute;
+      bottom:10px;
+      left:50%;
+      transform:translateX(-50%);
+      background:rgba(15,23,42,.72);
+      color:#fff;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      opacity:.9;
+    }
     .product-img img{width:100%;height:100%;object-fit:cover;display:block}
     .product-body{padding:18px}
-    .badge{display:inline-block;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;border-radius:999px;padding:7px 12px;font-size:13px;font-weight:900;margin-bottom:10px}
-    .price{display:inline-block;background:#dcfce7;color:#166534;border:1px solid #86efac;padding:8px 12px;border-radius:999px;font-weight:900;margin:10px 0 12px}
-    .shops{background:#f8fbff;border:1px solid #dbeafe;border-radius:18px;padding:13px;margin-top:10px;white-space:pre-wrap}
-    label{font-weight:800;font-size:14px}
-    input,select,textarea{width:100%;padding:14px 15px;border:1px solid #cbd5e1;border-radius:16px;font-size:15px;margin:8px 0 12px;background:#fff}
+    .badge{
+      display:inline-block;
+      background:#fff7ed;
+      color:#c2410c;
+      border:1px solid #fed7aa;
+      border-radius:999px;
+      padding:7px 12px;
+      font-size:13px;
+      font-weight:900;
+      margin-bottom:10px;
+    }
+    .price{
+      display:inline-block;
+      background:#dcfce7;
+      color:#166534;
+      border:1px solid #86efac;
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:900;
+      margin:10px 0 12px;
+    }
+    .shops{
+      background:#f8fbff;
+      border:1px solid #dbeafe;
+      border-radius:18px;
+      padding:13px;
+      margin-top:10px;
+      white-space:pre-wrap;
+      color:#334155;
+      line-height:1.5;
+    }
+    label{font-weight:900;font-size:14px}
+    input,select,textarea{
+      width:100%;
+      padding:14px 15px;
+      border:1px solid #cbd5e1;
+      border-radius:16px;
+      font-size:15px;
+      margin:8px 0 12px;
+      background:#fff;
+      outline:none;
+    }
+    input:focus,select:focus,textarea:focus{border-color:#60a5fa;box-shadow:0 0 0 4px rgba(96,165,250,.18)}
     textarea{min-height:110px;resize:vertical}
     .btnrow{display:flex;gap:10px;flex-wrap:wrap}
-    button{border:none;border-radius:999px;padding:11px 16px;background:var(--blue);color:#fff;font-weight:800;cursor:pointer}
-    button.alt{background:#eaf2ff;color:var(--blue-dark);border:1px solid #bfd7ff}
-    button.ok{background:#166534}
-    button.danger{background:#b91c1c}
-    .status{font-weight:800;min-height:22px;margin-top:8px}
+    button{
+      border:none;
+      border-radius:999px;
+      padding:12px 17px;
+      background:linear-gradient(135deg,#2563eb,#1d4ed8);
+      color:#fff;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 10px 24px rgba(37,99,235,.2);
+    }
+    button.alt{background:#eaf2ff;color:var(--blue-dark);border:1px solid #bfd7ff;box-shadow:none}
+    button.ok{background:linear-gradient(135deg,#16a34a,#15803d)}
+    button.danger{background:linear-gradient(135deg,#dc2626,#991b1b)}
+    .status{font-weight:900;min-height:22px;margin-top:8px}
     .empty{border:1px dashed #cbd5e1;border-radius:18px;padding:16px;color:var(--muted);background:#fff}
     .admin-item{border:1px solid #e2e8f0;border-radius:20px;padding:14px;margin-top:12px;background:#fff}
-    .help{background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px;box-shadow:var(--shadow);margin-bottom:18px}
     .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;align-items:center;justify-content:center;padding:18px}
     .modal img{max-width:96vw;max-height:88vh;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
     .modalClose{position:fixed;top:18px;right:18px;background:white;color:#111;border-radius:999px;padding:10px 14px;font-weight:900;cursor:pointer}
-    @media(max-width:850px){.grid{grid-template-columns:1fr}h1{font-size:28px}.product-img{height:260px}}
+    @media(max-width:850px){
+      .wrap{padding:12px 10px 45px}
+      .grid{grid-template-columns:1fr}
+      h1{font-size:30px}
+      h2{font-size:24px}
+      .product-img{height:260px}
+      .top{border-radius:24px;padding:22px 18px}
+    }
   </style>
 </head>
 <body>
