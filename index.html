@@ -656,10 +656,15 @@
 <div class="wrap">
   <div class="topbar">
     <div class="brand">Hundene våre 🐶</div>
-    <div class="actions">
-      <button type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button>
-      <button type="button" onclick="goHome()">Forside</button>
-      <button type="button" onclick="showPage('admin')">Admin</button>
+    
+      <div class="actions">
+  <button type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button>
+  <button type="button" onclick="goHome()">Forside</button>
+  <button type="button" onclick="showPage('admin')">Admin</button>
+
+  <!-- NY KNAPP -->
+  <button type="button" onclick="visNaerMeg()">📍 Nær meg</button>
+</div>
     </div>
   </div>
 
@@ -1576,6 +1581,9 @@ loadTurtips();
 loadInlinePromoBanner();
 loadLocalOfferBoxes();
 updateInviteMessage();
+  function visNaerMeg() {
+  visCafeRegion('Haugalandet');
+}
 </script>
 </body>
 </html>
