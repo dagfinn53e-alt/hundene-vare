@@ -734,7 +734,7 @@
       <div class="menu-grid">
         <button class="menu-btn offers" onclick="showPage('stories')">📰 Nyheter fra butikk</buton>
         <button class="menu-btn activity" onclick="showPage('turtips')">🥾 Turtips</button>
-         <button class="menu-btn activity" onclick="window.location.href='produkter.html'">☕🔥 Kafé- og produkttilbud</button>
+         <button class="menu-btn activity" onclick="showPage('cafe')">☕🔥 Kafé Tilbud</button>
         
       
         
@@ -853,7 +853,20 @@
   <div id="page-pensjonat" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🐶 Hundepensjonat & Hundepass</h2><div class="search-grid"><input id="searchPensjonat" placeholder="Søk pensjonat eller sted" oninput="loadBusinesses()"><select id="filterFavoritesPensjonat" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchPensjonat" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="pensjonatList"></div></div></div>
 
   <div id="page-vets" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🏥 Veterinærer</h2><div class="search-grid"><input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()"><select id="filterFavoritesVets" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchVets" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="vetList"></div></div></div>
+<div id="page-cafe" class="hidden">
+  <div class="card">
+    <h2>☕🔥 Kafé Tilbud</h2>
 
+    <p>Her kan du legge inn kafétilbud:</p>
+
+    <input type="text" placeholder="Tittel (f.eks Kaffe + bolle 49,-)" />
+    <input type="text" placeholder="Kafé navn" />
+    <input type="text" placeholder="Sted" />
+    <textarea placeholder="Beskrivelse"></textarea>
+
+    <button class="ok">Lagre</button>
+  </div>
+</div>
   <div id="page-business" class="hidden">
     <div class="card">
       <div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div>
