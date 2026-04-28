@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kafétilbud – Hundene våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{font-family:Arial;margin:0;background:#eef6ff;color:#0f172a}
+.wrap{max-width:980px;margin:auto;padding:16px}
+.top,.card{background:white;border:1px solid #dbeafe;border-radius:24px;padding:18px;margin-bottom:16px;box-shadow:0 12px 30px rgba(30,64,175,.12)}
+.top{background:linear-gradient(135deg,#123c73,#2563eb);color:white}
+.back{color:white;text-decoration:none;font-weight:800}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.offer{background:white;border:1px solid #dbeafe;border-radius:24px;overflow:hidden;box-shadow:0 12px 30px rgba(30,64,175,.12)}
+.img{height:220px;background:#eaf2ff;display:flex;align-items:center;justify-content:center;font-size:52px;overflow:hidden}
+.img img{width:100%;height:100%;object-fit:cover}
+.body{padding:16px}
+.badge{display:inline-block;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;border-radius:999px;padding:7px 12px;font-weight:900}
+.price{display:inline-block;background:#dcfce7;color:#166534;border:1px solid #86efac;padding:8px 12px;border-radius:999px;font-weight:900;margin:10px 0}
+input,select,textarea{width:100%;padding:14px;border:1px solid #cbd5e1;border-radius:14px;margin:8px 0 12px;font-size:15px}
+textarea{min-height:100px}
+button{border:none;border-radius:999px;padding:11px 16px;background:#2563eb;color:white;font-weight:900;margin:4px;cursor:pointer}
+button.alt{background:#eaf2ff;color:#1d4ed8;border:1px solid #bfd7ff}
+button.ok{background:#166534}
+button.danger{background:#b91c1c}
+.status{font-weight:900;margin-top:8px}
+.admin-item{border:1px solid #e2e8f0;border-radius:18px;padding:12px;margin-top:10px;background:white}
+.empty{border:1px dashed #cbd5e1;border-radius:18px;padding:16px;color:#64748b;background:white}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.img{height:250px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+<a class="back" href="index.html">← Tilbake til appen</a>
+<h1>☕🔥 Kafétilbud</h1>
+<p>Tilbud fra kaféer som ønsker hund velkommen.</p>
+</div>
+
+<h2>Godkjente kafétilbud</h2>
+<div id="offerList" class="grid"><div class="empty">Laster ...</div></div>
+
+<div class="card">
+<h2>🔐 Logg inn</h2>
+<input id="email" type="email" placeholder="E-post">
+<input id="password" type="password" placeholder="Passord">
+<button id="loginBtn">Logg inn</button>
+<button class="alt" id="signupBtn">Lag konto</button>
+<button class="alt" id="logoutBtn">Logg ut</button>
+<div id="authStatus" class="status">Ikke innlogget.</div>
+</div>
+
+<div class="card">
+<h2>➕ Legg inn kafétilbud</h2>
+<input id="title" placeholder="Tittel f.eks. Kaffe + bolle 49,-">
+<input id="cafe" placeholder="Kafé navn">
+<input id="place" placeholder="Sted">
+<select id="region"><option>Haugalandet</option><option>Stavanger</option><option>Stord</option></select>
+<textarea id="description" placeholder="Beskrivelse"></textarea>
+<input id="imageFile" type="file" accept="image/*">
+<button id="saveBtn">Lagre kafétilbud</button>
+<button class="alt" id="refreshBtn">Oppdater</button>
+<div id="saveStatus" class="status">Klar.</div>
+</div>
+
+<div id="adminBox" class="card" style="display:none">
+<h2>🛠️ Admin – venter på godkjenning</h2>
+<div id="pendingOffers">Laster ...</div>
+</div>
+</div>
+
+<script>
+(function(){
+var ADMIN_EMAIL="dagfinn53e@gmail.com";
+var db=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
+function q(id){return document.getElementById(id)}
+function esc(s){return String(s||"").replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]})}
+function stat(id,t,c){q(id).textContent=t;q(id).style.color=c||"black"}
+async function user(){let a=await db.auth.getUser();return a.data.user}
+async function updateAuth(){let u=await user();if(u){stat("authStatus","Innlogget som "+u.email,"green");if(u.email===ADMIN_EMAIL){q("adminBox").style.display="block";loadPending()}}else{stat("authStatus","Ikke innlogget.","black");q("adminBox").style.display="none"}}
+async function login(){let r=await db.auth.signInWithPassword({email:q("email").value.trim(),password:q("password").value.trim()});if(r.error){stat("authStatus","Feil: "+r.error.message,"crimson");return}updateAuth()}
+async function signup(){let r=await db.auth.signUp({email:q("email").value.trim(),password:q("password").value.trim()});if(r.error){stat("authStatus","Feil: "+r.error.message,"crimson");return}stat("authStatus","Konto opprettet.","green")}
+async function logout(){await db.auth.signOut();updateAuth()}
+async function upload(file){if(!file)return "";let name=Date.now()+"-"+file.name.replace(/[^a-zA-Z0-9._-]/g,"_");let path="cafe-offers/"+name;let r=await db.storage.from("story-images").upload(path,file);if(r.error)throw new Error(r.error.message);return db.storage.from("story-images").getPublicUrl(path).data.publicUrl||""}
+async function save(){
+let u=await user();if(!u){stat("saveStatus","Du må logge inn først.","crimson");return}
+let title=q("title").value.trim(), cafe=q("cafe").value.trim(), place=q("place").value.trim(), description=q("description").value.trim();
+if(!title||!cafe||!place||!description){stat("saveStatus","Fyll inn alle felt.","crimson");return}
+try{
+stat("saveStatus","Lagrer ...","blue");
+let image_url=await upload(q("imageFile").files[0]);
+let r=await db.from("cafe_offers").insert([{user_id:u.id,author_email:u.email,title:title,cafe_name:cafe,place:place,region:q("region").value,description:description,image_url:image_url,approved:false}]);
+if(r.error){stat("saveStatus","Feil: "+r.error.message,"crimson");return}
+q("title").value="";q("cafe").value="";q("place").value="";q("description").value="";q("imageFile").value="";
+stat("saveStatus","Kafétilbud sendt til godkjenning.","green");loadOffers();loadPending();
+}catch(e){stat("saveStatus","Feil: "+e.message,"crimson")}
+}
+function render(o){let img=o.image_url?'<img src="'+esc(o.image_url)+'">':'☕';return '<div class="offer"><div class="img">'+img+'</div><div class="body"><span class="badge">'+esc(o.region)+'</span><h3>'+esc(o.title)+'</h3><div class="price">☕ '+esc(o.cafe_name)+'</div><p>'+esc(o.description)+'</p><p>📍 '+esc(o.place)+'</p></div></div>'}
+async function loadOffers(){let r=await db.from("cafe_offers").select("*").eq("approved",true).order("created_at",{ascending:false});if(r.error){q("offerList").innerHTML='<div class="empty">Feil: '+esc(r.error.message)+'</div>';return}let rows=r.data||[];q("offerList").innerHTML=rows.length?rows.map(render).join(""):'<div class="empty">Ingen godkjente kafétilbud enda.</div>'}
+async function loadPending(){let u=await user();if(!u||u.email!==ADMIN_EMAIL)return;let r=await db.from("cafe_offers").select("*").eq("approved",false).order("created_at",{ascending:false});if(r.error){q("pendingOffers").innerHTML="Feil: "+esc(r.error.message);return}let rows=r.data||[];q("pendingOffers").innerHTML=rows.length?rows.map(o=>'<div class="admin-item"><h3>'+esc(o.title)+'</h3><p>'+esc(o.cafe_name)+' · '+esc(o.region)+'</p><button class="ok" data-approve="'+o.id+'">Godkjenn</button><button class="danger" data-delete="'+o.id+'">Slett</button></div>').join(""):'<div class="empty">Ingen venter.</div>'}
+async function approve(id){await db.from("cafe_offers").update({approved:true}).eq("id",id);loadOffers();loadPending()}
+async function del(id){if(confirm("Slette?")){await db.from("cafe_offers").delete().eq("id",id);loadOffers();loadPending()}}
+document.addEventListener("click",e=>{if(e.target.dataset.approve)approve(e.target.dataset.approve);if(e.target.dataset.delete)del(e.target.dataset.delete)});
+document.addEventListener("DOMContentLoaded",()=>{q("loginBtn").onclick=login;q("signupBtn").onclick=signup;q("logoutBtn").onclick=logout;q("saveBtn").onclick=save;q("refreshBtn").onclick=loadOffers;loadOffers();updateAuth()});
+})();
+</script>
+</body>
+</html>
