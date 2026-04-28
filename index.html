@@ -725,6 +725,15 @@
                   <div class="local-offer-sub">Ingen tilbud enda</div>
                 </div>
                 <div class="local-offer-pill">Se</div>
+                <div class="card">
+  <h2>☕🔥 Kafé Tilbud</h2>
+
+  <div id="homeCafeOffers" class="grid"></div>
+
+  <button onclick="window.location.href='cafe_tilbud.html'" class="menu-btn activity">
+    Se alle kafétilbud
+  </button>
+</div>
               </div>
             </div>
           </div>
@@ -1585,6 +1594,7 @@ function copyLink(){var url="https://dagfinn53e-alt.github.io/hundene-vare/";nav
 goHome();
 updateStoriesRegionUI();
 updateWeeklyRegionUI();
+ loadHomeCafeOffers(); 
 loadStories();
 loadWeeklyOffers();
 loadProfile();
@@ -1596,6 +1606,30 @@ loadLocalOfferBoxes();
 updateInviteMessage();
   function visNaerMeg() {
   visCafeRegion('Haugalandet');
+}async function loadHomeCafeOffers() {
+  const { data, error } = await supabase
+    .from('cafe_offers')
+    .select('*')
+    .eq('approved', true)
+    .order('created_at', { ascending: false })
+    .limit(3);
+
+  if (error) return;
+
+  const container = document.getElementById('homeCafeOffers');
+
+  if (!data || data.length === 0) {
+    container.innerHTML = "<p>Ingen kafétilbud enda</p>";
+    return;
+  }
+
+  container.innerHTML = data.map(o => `
+    <div class="card">
+      <h3>${o.title}</h3>
+      <p>☕ ${o.cafe_name}</p>
+      <p>📍 ${o.place}</p>
+    </div>
+  `).join('');
 }
 </script>
 </body>
