@@ -728,10 +728,34 @@
                 <div class="card">
   <h2>☕🔥 Kafé Tilbud</h2>
 
-  <div id="homeCafeOffers" class="grid"></div>
+  async function loadHomeCafeOffers() {
+  const container = document.getElementById('homeCafeOffers');
+  if (!container) return;
 
-  <button onclick="window.location.href='cafe_tilbud.html'" class="menu-btn activity">
-    Se alle kafétilbud
+  const url = "https://kxudiviidwwwclbzgdyx.supabase.co/rest/v1/cafe_offers?approved=eq.true&select=*&order=created_at.desc&limit=3";
+
+  const res = await fetch(url, {
+    headers: {
+      apikey: "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH",
+      Authorization: "Bearer sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+    }
+  });
+
+  const data = await res.json();
+
+  if (!data || data.length === 0) {
+    container.innerHTML = "<p>Ingen kafétilbud enda</p>";
+    return;
+  }
+
+  container.innerHTML = data.map(o => `
+    <div class="card">
+      <h3>${o.title}</h3>
+      <p>☕ ${o.cafe_name}</p>
+      <p>📍 ${o.place}</p>
+    </div>
+  `).join('');
+}
   </button>
 </div>
               </div>
