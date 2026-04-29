@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kafétilbud – Hundene våre</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -29,11 +28,7 @@ button.danger{background:#b91c1c}
 .status{font-weight:900;margin-top:8px}
 .admin-item{border:1px solid #e2e8f0;border-radius:18px;padding:12px;margin-top:10px;background:white}
 .empty{border:1px dashed #cbd5e1;border-radius:18px;padding:16px;color:#64748b;background:white}
-
-@media(max-width:850px){
-  .grid{grid-template-columns:1fr}
-  .img{height:250px}
-}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.img{height:250px}}
 </style>
 </head>
 
@@ -43,17 +38,13 @@ button.danger{background:#b91c1c}
 <div class="top">
   <a class="back" href="index.html">← Tilbake til appen</a>
   <h1>☕🔥 Kafétilbud</h1>
-
-  <!-- FIXET NÆR MEG -->
-  <button id="nearBtn">📍 Nær meg</button>
-
+  <button type="button" onclick="naerMeg()">📍 Nær meg</button>
+  <button type="button" class="alt" onclick="visAlle()">Vis alle</button>
   <p>Tilbud fra kaféer som ønsker hund velkommen.</p>
 </div>
 
-<h2>Godkjente kafétilbud</h2>
-<div id="offerList" class="grid">
-  <div class="empty">Laster ...</div>
-</div>
+<h2 id="listTitle">Godkjente kafétilbud</h2>
+<div id="offerList" class="grid"><div class="empty">Laster ...</div></div>
 
 <div class="card">
 <h2>🔐 Logg inn</h2>
@@ -71,9 +62,9 @@ button.danger{background:#b91c1c}
 <input id="cafe" placeholder="Kafé navn">
 <input id="place" placeholder="Sted">
 <select id="region">
-  <option>Haugalandet</option>
-  <option>Stavanger</option>
-  <option>Stord</option>
+<option>Haugalandet</option>
+<option>Stavanger</option>
+<option>Stord</option>
 </select>
 <textarea id="description" placeholder="Beskrivelse"></textarea>
 <input id="imageFile" type="file" accept="image/*">
@@ -84,6 +75,7 @@ button.danger{background:#b91c1c}
 
 <div id="adminBox" class="card" style="display:none">
 <h2>🛠️ Admin – alle kafétilbud</h2>
+<p>Her kan du godkjenne og slette både ventende og godkjente kafétilbud.</p>
 <div id="adminOffers">Laster ...</div>
 </div>
 
@@ -95,12 +87,12 @@ button.danger{background:#b91c1c}
 var ADMIN_EMAIL="dagfinn53e@gmail.com";
 
 var db=window.supabase.createClient(
-"https://kxudiviidwwwclbzgdyx.supabase.co",
-"sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
 );
 
 function q(id){return document.getElementById(id)}
-function esc(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function esc(s){return String(s||"").replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]})}
 function stat(id,t,c){q(id).textContent=t;q(id).style.color=c||"black"}
 
 async function user(){
@@ -117,7 +109,7 @@ async function updateAuth(){
       loadAdminOffers();
     }
   }else{
-    stat("authStatus","Ikke innlogget.");
+    stat("authStatus","Ikke innlogget.","black");
     q("adminBox").style.display="none";
   }
 }
@@ -147,11 +139,11 @@ async function logout(){
 
 async function upload(file){
   if(!file)return "";
-  let name=Date.now()+"-"+file.name;
+  let name=Date.now()+"-"+file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
   let path="cafe-offers/"+name;
   let r=await db.storage.from("story-images").upload(path,file);
   if(r.error)throw new Error(r.error.message);
-  return db.storage.from("story-images").getPublicUrl(path).data.publicUrl;
+  return db.storage.from("story-images").getPublicUrl(path).data.publicUrl||"";
 }
 
 async function save(){
@@ -164,26 +156,41 @@ async function save(){
   let description=q("description").value.trim();
 
   if(!title||!cafe||!place||!description){
-    stat("saveStatus","Fyll inn alle felt.","crimson");return;
+    stat("saveStatus","Fyll inn alle felt.","crimson");
+    return;
   }
 
   try{
+    stat("saveStatus","Lagrer ...","blue");
+
     let image_url=await upload(q("imageFile").files[0]);
 
-    await db.from("cafe_offers").insert([{
+    let r=await db.from("cafe_offers").insert([{
       user_id:u.id,
       author_email:u.email,
-      title,
+      title:title,
       cafe_name:cafe,
-      place,
+      place:place,
       region:q("region").value,
-      description,
-      image_url,
+      description:description,
+      image_url:image_url,
       approved:false
     }]);
 
-    stat("saveStatus","Sendt til godkjenning.","green");
+    if(r.error){
+      stat("saveStatus","Feil: "+r.error.message,"crimson");
+      return;
+    }
+
+    q("title").value="";
+    q("cafe").value="";
+    q("place").value="";
+    q("description").value="";
+    q("imageFile").value="";
+
+    stat("saveStatus","Kafétilbud sendt til godkjenning.","green");
     loadOffers();
+    loadAdminOffers();
 
   }catch(e){
     stat("saveStatus","Feil: "+e.message,"crimson");
@@ -191,90 +198,111 @@ async function save(){
 }
 
 function render(o){
-  return `
-  <div class="offer">
-    <div class="img">
-      ${o.image_url?`<img src="${o.image_url}">`:"☕"}
-    </div>
-    <div class="body">
-      <span class="badge">${o.region}</span>
-      <h3>${o.title}</h3>
-      <div class="price">☕ ${o.cafe_name}</div>
-      <p>${o.description}</p>
-      <p>📍 ${o.place}</p>
-    </div>
-  </div>`;
+  let img=o.image_url?'<img src="'+esc(o.image_url)+'">':'☕';
+  return '<div class="offer"><div class="img">'+img+'</div><div class="body"><span class="badge">'+esc(o.region)+'</span><h3>'+esc(o.title)+'</h3><div class="price">☕ '+esc(o.cafe_name)+'</div><p>'+esc(o.description)+'</p><p>📍 '+esc(o.place)+'</p></div></div>';
 }
 
 async function loadOffers(){
+  q("listTitle").textContent="Godkjente kafétilbud";
+  q("offerList").innerHTML='<div class="empty">Laster ...</div>';
+
   let r=await db.from("cafe_offers")
     .select("*")
     .eq("approved",true)
     .order("created_at",{ascending:false});
 
   if(r.error){
-    q("offerList").innerHTML="Feil";
+    q("offerList").innerHTML='<div class="empty">Feil: '+esc(r.error.message)+'</div>';
     return;
   }
 
-  q("offerList").innerHTML=r.data.length
-    ? r.data.map(render).join("")
-    : "<div class='empty'>Ingen tilbud enda</div>";
+  let rows=r.data||[];
+  q("offerList").innerHTML=rows.length
+    ? rows.map(render).join("")
+    : '<div class="empty">Ingen godkjente kafétilbud enda.</div>';
 }
 
-/* 🔥 NY – NÆR MEG FUNKSJON */
 async function loadOffersByRegion(region){
+  q("listTitle").textContent="Kafétilbud nær meg – "+region;
+  q("offerList").innerHTML='<div class="empty">Søker etter tilbud i nærheten ...</div>';
+
   let r=await db.from("cafe_offers")
     .select("*")
     .eq("approved",true)
     .eq("region",region)
     .order("created_at",{ascending:false});
 
-  if(r.error)return;
+  if(r.error){
+    q("offerList").innerHTML='<div class="empty">Feil: '+esc(r.error.message)+'</div>';
+    return;
+  }
 
-  q("offerList").innerHTML=r.data.length
-    ? r.data.map(render).join("")
-    : "<div class='empty'>Ingen kafétilbud i nærheten</div>";
+  let rows=r.data||[];
+  q("offerList").innerHTML=rows.length
+    ? rows.map(render).join("")
+    : '<div class="empty">Ingen kafétilbud i nærheten enda.</div>';
 }
 
 async function loadAdminOffers(){
-  let r=await db.from("cafe_offers").select("*");
+  let u=await user();
+  if(!u||u.email!==ADMIN_EMAIL)return;
 
-  q("adminOffers").innerHTML=r.data.map(o=>`
-    <div class="admin-item">
-      <h3>${o.title}</h3>
-      <button onclick="approve('${o.id}')">Godkjenn</button>
-      <button onclick="del('${o.id}')">Slett</button>
-    </div>
-  `).join("");
+  let r=await db.from("cafe_offers")
+    .select("*")
+    .order("created_at",{ascending:false});
+
+  if(r.error){
+    q("adminOffers").innerHTML="Feil: "+esc(r.error.message);
+    return;
+  }
+
+  let rows=r.data||[];
+
+  q("adminOffers").innerHTML=rows.length?rows.map(function(o){
+    return '<div class="admin-item"><h3>'+esc(o.title)+'</h3><p>☕ '+esc(o.cafe_name)+' · 📍 '+esc(o.place)+' · '+esc(o.region)+'</p><p><strong>Status:</strong> '+(o.approved?'✔ Godkjent':'⏳ Venter')+'</p>'+(!o.approved?'<button class="ok" data-approve="'+o.id+'">Godkjenn</button>':'')+'<button class="danger" data-delete="'+o.id+'">Slett</button></div>';
+  }).join(""):'<div class="empty">Ingen kafétilbud enda.</div>';
 }
 
-window.approve=async id=>{
-  await db.from("cafe_offers").update({approved:true}).eq("id",id);
-  loadOffers();loadAdminOffers();
+async function approve(id){
+  let r=await db.from("cafe_offers").update({approved:true}).eq("id",id);
+  if(r.error){alert("Feil: "+r.error.message);return}
+  loadOffers();
+  loadAdminOffers();
 }
 
-window.del=async id=>{
-  await db.from("cafe_offers").delete().eq("id",id);
-  loadOffers();loadAdminOffers();
+async function del(id){
+  if(confirm("Slette kafétilbud?")){
+    let r=await db.from("cafe_offers").delete().eq("id",id);
+    if(r.error){alert("Feil: "+r.error.message);return}
+    loadOffers();
+    loadAdminOffers();
+  }
 }
 
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("click",function(e){
+  if(e.target.dataset.approve)approve(e.target.dataset.approve);
+  if(e.target.dataset.delete)del(e.target.dataset.delete);
+});
 
+document.addEventListener("DOMContentLoaded",function(){
   q("loginBtn").onclick=login;
   q("signupBtn").onclick=signup;
   q("logoutBtn").onclick=logout;
   q("saveBtn").onclick=save;
   q("refreshBtn").onclick=loadOffers;
 
-  /* 🔥 KOBLER KNAPP */
-  q("nearBtn").onclick=()=>{
-    loadOffersByRegion("Haugalandet");
-  };
-
   loadOffers();
   updateAuth();
 });
+
+/* Disse må ligge globalt fordi knappene bruker onclick */
+window.naerMeg=function(){
+  loadOffersByRegion("Haugalandet");
+};
+
+window.visAlle=function(){
+  loadOffers();
+};
 
 })();
 </script>
