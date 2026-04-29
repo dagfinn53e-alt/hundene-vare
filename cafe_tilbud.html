@@ -22,7 +22,7 @@ button.alt{background:#eaf2ff;color:#1d4ed8;border:1px solid #bfd7ff}button.ok{b
 </head>
 <body>
 <div class="wrap">
-<div class="top"><a class="back" href="index.html">← Tilbake til appen</a><h1>☕🔥 Kafétilbud</h1><p>Tilbud fra kaféer som ønsker hund velkommen.</p></div>
+<div class="top"><a class="back" href="index.html">← Tilbake til appen</a><h1>☕🔥 Kafétilbud</h1><button type="button" class="menu-btn activity" onclick="naerMeg()">📍 Nær meg</button> <p>Tilbud fra kaféer som ønsker hund velkommen.</p></div>
 <h2>Godkjente kafétilbud</h2><div id="offerList" class="grid"><div class="empty">Laster ...</div></div>
 <div class="card"><h2>🔐 Logg inn</h2><input id="email" type="email" placeholder="E-post"><input id="password" type="password" placeholder="Passord"><button id="loginBtn">Logg inn</button><button class="alt" id="signupBtn">Lag konto</button><button class="alt" id="logoutBtn">Logg ut</button><div id="authStatus" class="status">Ikke innlogget.</div></div>
 <div class="card"><h2>➕ Legg inn kafétilbud</h2><input id="title" placeholder="Tittel f.eks. Kaffe + bolle 49,-"><input id="cafe" placeholder="Kafé navn"><input id="place" placeholder="Sted"><select id="region"><option>Haugalandet</option><option>Stavanger</option><option>Stord</option></select><textarea id="description" placeholder="Beskrivelse"></textarea><input id="imageFile" type="file" accept="image/*"><button id="saveBtn">Lagre kafétilbud</button><button class="alt" id="refreshBtn">Oppdater</button><div id="saveStatus" class="status">Klar.</div></div>
@@ -50,6 +50,42 @@ async function del(id){if(confirm("Slette kafétilbud?")){let r=await db.from("c
 document.addEventListener("click",e=>{if(e.target.dataset.approve)approve(e.target.dataset.approve);if(e.target.dataset.delete)del(e.target.dataset.delete)});
 document.addEventListener("DOMContentLoaded",()=>{q("loginBtn").onclick=login;q("signupBtn").onclick=signup;q("logoutBtn").onclick=logout;q("saveBtn").onclick=save;q("refreshBtn").onclick=loadOffers;loadOffers();updateAuth()});
 })();
+  function naerMeg() {
+  loadOffersByRegion("Haugalandet");
+}
+
+async function loadOffersByRegion(region) {
+  const { data, error } = await db
+    .from("cafe_offers")
+    .select("*")
+    .eq("approved", true)
+    .eq("region", region)
+    .order("created_at", { ascending: false });
+
+  if (error) return;
+
+  const container = document.getElementById("offerList");
+
+  if (!data || data.length === 0) {
+    container.innerHTML = "<p>Ingen kafétilbud i nærheten</p>";
+    return;
+  }
+
+  container.innerHTML = data.map(o => `
+    <div class="offer">
+      <div class="img">
+        ${o.image_url ? `<img src="${o.image_url}">` : "☕"}
+      </div>
+      <div class="body">
+        <span class="badge">${o.region}</span>
+        <h3>${o.title}</h3>
+        <div class="price">☕ ${o.cafe_name}</div>
+        <p>${o.description}</p>
+        <p>📍 ${o.place}</p>
+      </div>
+    </div>
+  `).join('');
+}
 </script>
 </body>
 </html>
