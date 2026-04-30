@@ -104,5 +104,66 @@ loadDyriskOffers();
   </div>
   <a class="button" href="index.html">Tilbake til appen</a>
 </div>
+  <div id="liveOffers" style="max-width:900px;margin:20px auto;padding:20px;"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const supabase = window.supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+async function loadDyriskOffers() {
+
+  const box = document.getElementById("liveOffers");
+
+  box.innerHTML = "<h2>🐶 Siste fra butikken</h2>";
+
+  const { data, error } = await supabase
+    .from("stories")
+    .select("*")
+    .eq("dog", "Dyrisk Åkrehamn")
+    .order("created_at", { ascending: false })
+    .limit(3);
+
+  if (error || !data || data.length === 0) {
+
+    box.innerHTML += "<p>Ingen innlegg enda.</p>";
+    return;
+  }
+
+  data.forEach(post => {
+
+    box.innerHTML += `
+
+      <div style="
+        background:white;
+        padding:18px;
+        margin-bottom:18px;
+        border-radius:20px;
+        box-shadow:0 4px 14px rgba(0,0,0,0.08);
+      ">
+
+        <h3>${post.title || ""}</h3>
+
+        <p>${post.text || ""}</p>
+
+        ${
+          post.image_url
+          ? `<img src="${post.image_url}"
+             style="width:100%;border-radius:16px;margin-top:10px;">`
+          : ""
+        }
+
+      </div>
+    `;
+  });
+}
+
+loadDyriskOffers();
+
+</script>
 </body>
 </html>
