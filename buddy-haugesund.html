@@ -6,17 +6,18 @@
 <title>Buddy Haugesund | Hundene våre</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#222}
-.header{background:white;padding:16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 10px rgba(0,0,0,0.05);position:sticky;top:0;z-index:10}
+.header{background:white;padding:16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 10px rgba(0,0,0,.05);position:sticky;top:0;z-index:10}
 .back-btn{text-decoration:none;font-size:14px;background:#eef3ff;padding:8px 14px;border-radius:20px;color:#2457ff;font-weight:bold}
-.hero img{width:100%;height:260px;object-fit:cover;display:block}
 .content{padding:20px;max-width:900px;margin:auto}
-.card{background:white;border-radius:20px;padding:20px;margin-bottom:20px;box-shadow:0 4px 15px rgba(0,0,0,0.06)}
-h1{margin-top:0;font-size:32px}
+.card{background:white;border-radius:20px;padding:20px;margin-bottom:20px;box-shadow:0 4px 15px rgba(0,0,0,.06)}
+.logo{width:150px;max-width:70%;display:block;margin:0 auto 15px auto;border-radius:18px}
+h1{margin-top:0;font-size:32px;text-align:center}
 .info{line-height:1.9;font-size:16px}
 .offer{background:#fff4f4;border:2px solid #ffd7d7;padding:15px;border-radius:16px;margin-top:15px}
 .button{display:block;text-align:center;background:#2457ff;color:white;padding:16px;border-radius:16px;text-decoration:none;font-weight:bold;margin-top:16px}
 .button.light{background:#eef3ff;color:#2457ff}
-@media(max-width:600px){.hero img{height:240px}h1{font-size:30px}.content{padding:16px}}
+.button.green{background:#16a34a;color:white}
+@media(max-width:600px){h1{font-size:30px}.content{padding:16px}}
 </style>
 </head>
 <body>
@@ -27,24 +28,27 @@ h1{margin-top:0;font-size:32px}
 
 <div class="content">
   <div class="card">
-    <img src="buddy-logo.jpg"
-     alt="Buddy Haugesund logo"
-     style="width:140px;display:block;margin:0 auto 15px auto;border-radius:18px;">
+    <img class="logo" src="buddy-logo.jpg" alt="Buddy Haugesund logo">
+    <h1>Buddy Haugesund</h1>
 
-<h1 style="text-align:center;">Buddy Haugesund</h1>
     <div class="info">
       📍 Longhammarvegen 15, Haugesund, Norway, 5536<br>
       📞 400 07 220<br>
       🕒 Mandag–fredag: 10–20 · Lørdag: 10–15
     </div>
+
     <p>Buddy Haugesund er en dyrebutikk på Raglamyr med utvalg for hund, katt og andre kjæledyr.</p>
+
     <a class="button" href="https://www.facebook.com/Buddyraglamyr" target="_blank" rel="noopener">Besøk Facebook / nettside</a>
     <a class="button light" href="https://www.google.com/maps/search/?api=1&query=Longhammarvegen%2015,%20Haugesund,%20Norway,%205536" target="_blank" rel="noopener">📍 Åpne kart</a>
+    <a class="button green" href="index.html">➕ Legg inn / bytt Ukens tilbud</a>
   </div>
+
   <div class="card">
     <h2>🔥 Ukens tilbud</h2>
     <div class="offer">Ingen aktivt tilbud lagt inn ennå.</div>
   </div>
+
   <a class="button" href="index.html">Tilbake til appen</a>
 </div>
 </body>
