@@ -4,166 +4,164 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dyrisk Åkrehamn | Hundene våre</title>
-<style>
-body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#222}
-.header{background:white;padding:16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 10px rgba(0,0,0,0.05);position:sticky;top:0;z-index:10}
-.back-btn{text-decoration:none;font-size:14px;background:#eef3ff;padding:8px 14px;border-radius:20px;color:#2457ff;font-weight:bold}
-.hero img{width:100%;height:260px;object-fit:cover;display:block}
-.content{padding:20px;max-width:900px;margin:auto}
-.card{background:white;border-radius:20px;padding:20px;margin-bottom:20px;box-shadow:0 4px 15px rgba(0,0,0,0.06)}
-h1{margin-top:0;font-size:32px}
-.info{line-height:1.9;font-size:16px}
-.offer{background:#fff4f4;border:2px solid #ffd7d7;padding:15px;border-radius:16px;margin-top:15px}
-.button{display:block;text-align:center;background:#2457ff;color:white;padding:16px;border-radius:16px;text-decoration:none;font-weight:bold;margin-top:16px}
-.button.light{background:#eef3ff;color:#2457ff}
-@media(max-width:600px){.hero img{height:240px}h1{font-size:30px}.content{padding:16px}}
-</style>
-</head>
-  <div id="liveOffers" style="max-width:900px;margin:20px auto;padding:20px;"></div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-const supabase = window.supabase.createClient(
-  "https://kxudiviidwwwclbzgdyx.supabase.co",
-  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
-);
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#222}
+.header{background:white;padding:16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 10px rgba(0,0,0,.05);position:sticky;top:0;z-index:10}
+.back-btn{text-decoration:none;font-size:14px;background:#eef3ff;padding:8px 14px;border-radius:20px;color:#2457ff;font-weight:bold}
+.content{padding:20px;max-width:900px;margin:auto}
+.card{background:white;border-radius:20px;padding:20px;margin-bottom:20px;box-shadow:0 4px 15px rgba(0,0,0,.06)}
+.logo{width:150px;max-width:70%;display:block;margin:0 auto 15px auto;border-radius:18px}
+h1{text-align:center;margin-top:0;font-size:32px}
+.info{line-height:1.9;font-size:16px}
+.button{display:block;text-align:center;background:#2457ff;color:white;padding:16px;border-radius:16px;text-decoration:none;font-weight:bold;margin-top:16px}
+.button.light{background:#eef3ff;color:#2457ff}
+.button.green{background:#16a34a;color:white}
+.offer{background:#fff4f4;border:2px solid #ffd7d7;padding:15px;border-radius:16px;margin-top:15px}
+.live-img{width:100%;border-radius:16px;margin-top:12px}
+.meta{color:#64748b;font-size:13px}
+@media(max-width:600px){h1{font-size:30px}.content{padding:16px}}
+</style>
+</head>
 
-async function loadDyriskOffers() {
-
-  const box = document.getElementById("liveOffers");
-
-  box.innerHTML = "<h2>🐶 Siste fra butikken</h2>";
-
-  const { data, error } = await supabase
-    .from("stories")
-    .select("*")
-    .eq("dog", "Dyrisk Åkrehamn")
-    .order("created_at", { ascending: false })
-    .limit(3);
-
-  if (error || !data || data.length === 0) {
-    box.innerHTML += "<p>Ingen innlegg enda.</p>";
-    return;
-  }
-
-  data.forEach(post => {
-
-    box.innerHTML += `
-      <div style="
-        background:white;
-        padding:18px;
-        margin-bottom:18px;
-        border-radius:20px;
-        box-shadow:0 4px 14px rgba(0,0,0,0.08);
-      ">
-
-        <h3>${post.title || ""}</h3>
-
-        <p>${post.text || ""}</p>
-
-        ${
-          post.image_url
-          ? `<img src="${post.image_url}"
-             style="width:100%;border-radius:16px;margin-top:10px;">`
-          : ""
-        }
-
-      </div>
-    `;
-  });
-}
-
-loadDyriskOffers();
-</script>
 <body>
+
 <div class="header">
   <a class="back-btn" href="index.html">← Tilbake</a>
   <h3>🐶 Hundene våre</h3>
 </div>
 
 <div class="content">
-  <div class="card">
-    <img src="dyrisk-logo.jpg" 
-     alt="Dyrisk logo"
-     style="width:140px;display:block;margin:0 auto 15px auto;border-radius:18px;">
 
-<h1 style="text-align:center;">Dyrisk Åkrehamn</h1>
+  <div class="card">
+    <img class="logo" src="dyrisk-logo.jpg" alt="Dyrisk logo">
+
+    <h1>Dyrisk Åkrehamn</h1>
+
     <div class="info">
       📍 Bedehusvegen 16, Åkrehamn, Norway, 4270<br>
       📞 902 98 097<br>
       🕒 Mandag–fredag: 10–18 · Lørdag: 10–15
     </div>
+
     <p>Dyrisk Åkrehamn er en lokal dyrebutikk for hundeeiere på Karmøy, med utstyr, fôr og produkter til hund og kjæledyr.</p>
-    <a class="button" href="https://www.facebook.com/dyrisk" target="_blank" rel="noopener">Besøk Facebook / nettside</a>
-    <a class="button light" href="https://www.google.com/maps/search/?api=1&query=Bedehusvegen%2016,%20Åkrehamn,%20Norway,%204270" target="_blank" rel="noopener">📍 Åpne kart</a>
+
+    <a class="button" href="https://www.facebook.com/dyrisk" target="_blank">Besøk Facebook / nettside</a>
+
+    <a class="button light" target="_blank"
+       href="https://www.google.com/maps/search/?api=1&query=Bedehusvegen%2016%20%C3%85krehamn">
+      📍 Åpne kart
+    </a>
+
+    <a class="button green" href="index.html">
+      ➕ Legg inn / bytt Ukens tilbud
+    </a>
   </div>
+
   <div class="card">
     <h2>🔥 Ukens tilbud</h2>
-    <div class="offer">Ingen aktivt tilbud lagt inn ennå.</div>
+    <div id="liveOffer" class="offer">Laster tilbud ...</div>
   </div>
-  <a class="button" href="index.html">Tilbake til appen</a>
-</div>
-  <div id="liveOffers" style="max-width:900px;margin:20px auto;padding:20px;"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <div class="card">
+    <h2>🐶 Siste fra butikken</h2>
+    <div id="livePosts">Laster innlegg ...</div>
+  </div>
+
+  <a class="button" href="index.html">Tilbake til appen</a>
+
+</div>
 
 <script>
-
-const supabase = window.supabase.createClient(
+var supabase = window.supabase.createClient(
   "https://kxudiviidwwwclbzgdyx.supabase.co",
   "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
 );
 
-async function loadDyriskOffers() {
-
-  const box = document.getElementById("liveOffers");
-
-  box.innerHTML = "<h2>🐶 Siste fra butikken</h2>";
-
-  const { data, error } = await supabase
-    .from("stories")
-    .select("*")
-    .eq("dog", "Dyrisk Åkrehamn")
-    .order("created_at", { ascending: false })
-    .limit(3);
-
-  if (error || !data || data.length === 0) {
-
-    box.innerHTML += "<p>Ingen innlegg enda.</p>";
-    return;
-  }
-
-  data.forEach(post => {
-
-    box.innerHTML += `
-
-      <div style="
-        background:white;
-        padding:18px;
-        margin-bottom:18px;
-        border-radius:20px;
-        box-shadow:0 4px 14px rgba(0,0,0,0.08);
-      ">
-
-        <h3>${post.title || ""}</h3>
-
-        <p>${post.text || ""}</p>
-
-        ${
-          post.image_url
-          ? `<img src="${post.image_url}"
-             style="width:100%;border-radius:16px;margin-top:10px;">`
-          : ""
-        }
-
-      </div>
-    `;
+function esc(s){
+  return String(s || "").replace(/[&<>"']/g,function(m){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m];
   });
 }
 
-loadDyriskOffers();
+function stripRegionText(text){
+  text = String(text || "");
+  var parts = text.split("\n\n");
+  if ((parts[0] || "").indexOf("__REGION__:") === 0) {
+    parts.shift();
+  }
+  return parts.join("\n\n");
+}
 
+function isDyrisk(post){
+  var name = String(post.dog || "").toLowerCase();
+  return name.includes("dyrisk");
+}
+
+async function loadLiveFromSupabase(){
+  var offerBox = document.getElementById("liveOffer");
+  var postsBox = document.getElementById("livePosts");
+
+  try{
+    var result = await supabase
+      .from("stories")
+      .select("*")
+      .order("created_at", { ascending:false })
+      .limit(50);
+
+    if(result.error){
+      offerBox.innerHTML = "Kunne ikke hente tilbud.";
+      postsBox.innerHTML = "Kunne ikke hente innlegg.";
+      return;
+    }
+
+    var rows = (result.data || []).filter(isDyrisk);
+
+    var offers = rows.filter(function(p){
+      return String(p.category || "").toLowerCase().includes("ukens");
+    });
+
+    if(offers.length){
+      var o = offers[0];
+      offerBox.innerHTML =
+        "<strong>" + esc(o.title) + "</strong><br><br>" +
+        esc(stripRegionText(o.text));
+    } else {
+      offerBox.innerHTML = "Ingen aktivt tilbud lagt inn ennå.";
+    }
+
+    if(!rows.length){
+      postsBox.innerHTML = "<p>Ingen innlegg fra Dyrisk enda.</p>";
+      return;
+    }
+
+    postsBox.innerHTML = rows.slice(0,3).map(function(p){
+      var img = "";
+      if(Array.isArray(p.image_urls) && p.image_urls.length){
+        img = p.image_urls[0];
+      } else if(p.image_url){
+        img = p.image_url;
+      }
+
+      return `
+        <div class="card">
+          <div class="meta">${esc(p.category || "Innlegg")} · ${esc(p.place || "")}</div>
+          <h3>${esc(p.title)}</h3>
+          <p>${esc(stripRegionText(p.text))}</p>
+          ${img ? `<img class="live-img" src="${esc(img)}">` : ""}
+        </div>
+      `;
+    }).join("");
+
+  }catch(e){
+    offerBox.innerHTML = "Kunne ikke hente tilbud.";
+    postsBox.innerHTML = "Kunne ikke hente innlegg.";
+  }
+}
+
+loadLiveFromSupabase();
 </script>
+
 </body>
 </html>
