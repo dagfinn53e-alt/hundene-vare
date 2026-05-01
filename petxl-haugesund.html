@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetXL Haugesund | Hundene våre</title>
+<title>Dyrisk Åkrehamn | Hundene våre</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -37,22 +37,21 @@ h1{text-align:center;margin-top:0;font-size:32px}
   <div class="card">
     <img class="logo" src="dyrisk-logo.jpg" alt="Dyrisk logo">
 
-    <h1>PetXL Haugesund/h1>
+    <h1>Dyrisk Åkrehamn</h1>
 
     <div class="info">
-      📍 Longhammarvegen 6, Haugesund, Norway, 5536
-      📞 456 19 206<br>
-      🕒 Mandag–fredag: 10–20 · Lørdag: 10–18
+      📍 Bedehusvegen 16, Åkrehamn, Norway, 4270<br>
+      📞 902 98 097<br>
+      🕒 Mandag–fredag: 10–18 · Lørdag: 10–15
     </div>
 
-    <p>PetXL har et av markedets beste og bredeste utvalg av utstyr til alle typer kjæledyr! Velkommen🧡</p>
+    <p>Dyrisk Åkrehamn er en lokal dyrebutikk for hundeeiere på Karmøy, med utstyr, fôr og produkter til hund og kjæledyr.</p>
 
-    <a class="button" href=" https://www.facebook.com/petxlhaugesund/abouttarget="_blank">Besøk Facebook / nettside</a>
+    <a class="button" href="https://www.facebook.com/dyrisk" target="_blank">Besøk Facebook / nettside</a>
 
     <a class="button light" target="_blank"
-       href="https:/">https://hundenevåre.com/petxl-haugesund.html?v=10
+       href="https://www.google.com/maps/search/?api=1&query=Bedehusvegen%2016%20%C3%85krehamn">
       📍 Åpne kart
-Longhammarvegen 6, Haugesund, Norway, 5536
     </a>
 
     <a class="button green" href="index.html">
@@ -95,7 +94,7 @@ function stripRegionText(text){
   return parts.join("\n\n");
 }
 
-function isPetXL Haugesund(post){
+function isDyrisk(post){
   var name = String(post.dog || "").toLowerCase();
   return name.includes("dyrisk");
 }
