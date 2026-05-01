@@ -3,166 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetXL Haugesund | Hundene våre</title>
+<title>PETXL Haugesund | Hundene våre</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#222}
-.header{background:white;padding:16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 10px rgba(0,0,0,.05);position:sticky;top:0;z-index:10}
-.back-btn{text-decoration:none;font-size:14px;background:#eef3ff;padding:8px 14px;border-radius:20px;color:#2457ff;font-weight:bold}
-.content{padding:20px;max-width:900px;margin:auto}
-.card{background:white;border-radius:20px;padding:20px;margin-bottom:20px;box-shadow:0 4px 15px rgba(0,0,0,.06)}
-.logo{width:150px;max-width:70%;display:block;margin:0 auto 15px auto;border-radius:18px}
-h1{text-align:center;margin-top:0;font-size:32px}
-.info{line-height:1.9;font-size:16px}
-.button{display:block;text-align:center;background:#2457ff;color:white;padding:16px;border-radius:16px;text-decoration:none;font-weight:bold;margin-top:16px}
-.button.light{background:#eef3ff;color:#2457ff}
-.button.green{background:#16a34a;color:white}
-.offer{background:#fff4f4;border:2px solid #ffd7d7;padding:15px;border-radius:16px;margin-top:15px}
-.live-img{width:100%;border-radius:16px;margin-top:12px}
-.meta{color:#64748b;font-size:13px}
-@media(max-width:600px){h1{font-size:30px}.content{padding:16px}}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#222}.header{background:white;padding:16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 10px rgba(0,0,0,.05);position:sticky;top:0;z-index:10}.back-btn{text-decoration:none;font-size:14px;background:#eef3ff;padding:8px 14px;border-radius:20px;color:#2457ff;font-weight:bold}.content{padding:20px;max-width:900px;margin:auto}.card{background:white;border-radius:20px;padding:20px;margin-bottom:20px;box-shadow:0 4px 15px rgba(0,0,0,.06)}.logo{width:150px;max-width:70%;display:block;margin:0 auto 15px auto;border-radius:18px}h1{text-align:center;margin-top:0;font-size:32px}.info{line-height:1.9;font-size:16px}.button{display:block;text-align:center;background:#2457ff;color:white;padding:16px;border-radius:16px;text-decoration:none;font-weight:bold;margin-top:16px}.button.light{background:#eef3ff;color:#2457ff}.button.green{background:#16a34a;color:white}.offer{background:#fff4f4;border:2px solid #ffd7d7;padding:15px;border-radius:16px;margin-top:15px;line-height:1.5}.live-img{width:100%;border-radius:16px;margin-top:12px}.meta{color:#64748b;font-size:13px;margin-bottom:6px}.post-card{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:16px;margin-top:14px;box-shadow:0 3px 12px rgba(0,0,0,.05)}@media(max-width:600px){h1{font-size:30px}.content{padding:16px}}
 </style>
 </head>
-
 <body>
-
-<div class="header">
-  <a class="back-btn" href="index.html">← Tilbake</a>
-  <h3>🐶 Hundene våre</h3>
-</div>
-
+<div class="header"><a class="back-btn" href="index.html">← Tilbake</a><h3>🐶 Hundene våre</h3></div>
 <div class="content">
-
   <div class="card">
-    <img class=">
-
-    <h1>PetXL Haugesund</h1>
-
-    <div class="info">
-      📍 Longhammarvegen 6, Haugesund, Norway, 5536<br>
-      📞 <br>45619206
-
-      🕒 Mandag–fredag: 10–20 · Lørdag: 10–18
-    </div>
-
-    <p>PetXL har et av markedets beste og bredeste utvalg av utstyr til alle typer kjæledyr! Velkommen🧡.</p>
-
-    <a class="button" href="https://hundenevåre.com/petxl-haugesund.html?v=10
-
-    <a class="button light" target="_blank"
-       href=">
-      📍 Åpne kart
-    </a>
-
-    <a class="button green" href="index.html">
-      ➕ Legg inn / bytt Ukens tilbud
-    </a>
+    <img class="logo" src="petxl-logo.jpg" alt="PETXL Haugesund logo">
+    <h1>PETXL Haugesund</h1>
+    <div class="info">📍 Longhammarvegen 6, Haugesund, Norway, 5536<br>📞 456 19 206<br>🕒 Mandag–fredag: 10–20 · Lørdag: 10–18</div>
+    <p>PETXL Haugesund tilbyr produkter, fôr og utstyr til hund og kjæledyr på Raglamyr i Haugesund.</p>
+    <a class="button" href="https://www.facebook.com/petxlhaugesund" target="_blank" rel="noopener">Besøk Facebook / nettside</a>
+    <a class="button light" href="https://www.google.com/maps/search/?api=1&query=Longhammarvegen%206%20Haugesund" target="_blank" rel="noopener">📍 Åpne kart</a>
+    <a class="button green" href="index.html">➕ Legg inn / bytt Ukens tilbud</a>
   </div>
-
-  <div class="card">
-    <h2>🔥 Ukens tilbud</h2>
-    <div id="liveOffer" class="offer">Laster tilbud ...</div>
-  </div>
-
-  <div class="card">
-    <h2>🐶 Siste fra butikken</h2>
-    <div id="livePosts">Laster innlegg ...</div>
-  </div>
-
+  <div class="card"><h2>🔥 Ukens tilbud</h2><div id="liveOffer" class="offer">Laster tilbud ...</div></div>
+  <div class="card"><h2>🐶 Siste fra butikken</h2><div id="livePosts">Laster innlegg ...</div></div>
   <a class="button" href="index.html">Tilbake til appen</a>
-
 </div>
-
 <script>
-var supabase = window.supabase.createClient(
-  "https://kxudiviidwwwclbzgdyx.supabase.co",
-  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
-);
-
-function esc(s){
-  return String(s || "").replace(/[&<>"']/g,function(m){
-    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m];
-  });
-}
-
-function stripRegionText(text){
-  text = String(text || "");
-  var parts = text.split("\n\n");
-  if ((parts[0] || "").indexOf("__REGION__:") === 0) {
-    parts.shift();
-  }
-  return parts.join("\n\n");
-}
-
-function isDyrisk(post){
-  var name = String(post.dog || "").toLowerCase();
-  return name.includes("dyrisk");
-}
-
-async function loadLiveFromSupabase(){
-  var offerBox = document.getElementById("liveOffer");
-  var postsBox = document.getElementById("livePosts");
-
-  try{
-    var result = await supabase
-      .from("stories")
-      .select("*")
-      .order("created_at", { ascending:false })
-      .limit(50);
-
-    if(result.error){
-      offerBox.innerHTML = "Kunne ikke hente tilbud.";
-      postsBox.innerHTML = "Kunne ikke hente innlegg.";
-      return;
-    }
-
-    var rows = (result.data || []).filter(isDyrisk);
-
-    var offers = rows.filter(function(p){
-      return String(p.category || "").toLowerCase().includes("ukens");
-    });
-
-    if(offers.length){
-      var o = offers[0];
-      offerBox.innerHTML =
-        "<strong>" + esc(o.title) + "</strong><br><br>" +
-        esc(stripRegionText(o.text));
-    } else {
-      offerBox.innerHTML = "Ingen aktivt tilbud lagt inn ennå.";
-    }
-
-    if(!rows.length){
-      postsBox.innerHTML = "<p>Ingen innlegg fra Dyrisk enda.</p>";
-      return;
-    }
-
-    postsBox.innerHTML = rows.slice(0,3).map(function(p){
-      var img = "";
-      if(Array.isArray(p.image_urls) && p.image_urls.length){
-        img = p.image_urls[0];
-      } else if(p.image_url){
-        img = p.image_url;
-      }
-
-      return `
-        <div class="card">
-          <div class="meta">${esc(p.category || "Innlegg")} · ${esc(p.place || "")}</div>
-          <h3>${esc(p.title)}</h3>
-          <p>${esc(stripRegionText(p.text))}</p>
-          ${img ? `<img class="live-img" src="${esc(img)}">` : ""}
-        </div>
-      `;
-    }).join("");
-
-  }catch(e){
-    offerBox.innerHTML = "Kunne ikke hente tilbud.";
-    postsBox.innerHTML = "Kunne ikke hente innlegg.";
-  }
-}
-
-loadLiveFromSupabase();
+(function(){
+var offerBox=document.getElementById('liveOffer');
+var postsBox=document.getElementById('livePosts');
+function safe(v){return String(v||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function clean(v){var text=String(v||'');var parts=text.split('\n\n');if((parts[0]||'').indexOf('__REGION__:')===0){parts.shift();}return parts.join('\n\n');}
+function matchPetxl(p){var dog=String(p.dog||'').toLowerCase();var title=String(p.title||'').toLowerCase();var place=String(p.place||'').toLowerCase();var text=String(p.text||'').toLowerCase();return dog.indexOf('petxl')>=0||dog.indexOf('pet xl')>=0||title.indexOf('petxl')>=0||title.indexOf('pet xl')>=0||text.indexOf('petxl')>=0||text.indexOf('pet xl')>=0||place.indexOf('longhammarvegen 6')>=0||(place.indexOf('haugesund')>=0&&dog.indexOf('pet')>=0);}
+function firstImg(p){if(p.image_urls&&p.image_urls.length){return p.image_urls[0];}if(p.image_url){return p.image_url;}return '';}
+function fallback(){if(offerBox.innerHTML.indexOf('Laster')>=0){offerBox.innerHTML='Ingen aktivt tilbud lagt inn ennå.';}if(postsBox.innerHTML.indexOf('Laster')>=0){postsBox.innerHTML='<p>Ingen innlegg fra PETXL Haugesund enda.</p>';}}
+setTimeout(fallback,8000);
+async function load(){try{if(!window.supabase){fallback();return;}var client=window.supabase.createClient('https://kxudiviidwwwclbzgdyx.supabase.co','sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH');var result=await client.from('stories').select('*').order('created_at',{ascending:false}).limit(100);if(result.error){fallback();return;}var rows=(result.data||[]).filter(matchPetxl);var offers=rows.filter(function(p){return String(p.category||'').toLowerCase().indexOf('ukens')>=0;});if(offers.length){var o=offers[0];offerBox.innerHTML='<strong>'+safe(o.title)+'</strong><br><br>'+safe(clean(o.text));}else{offerBox.innerHTML='Ingen aktivt tilbud lagt inn ennå.';}if(!rows.length){postsBox.innerHTML='<p>Ingen innlegg fra PETXL Haugesund enda.</p>';return;}var html='';rows.slice(0,3).forEach(function(p){var img=firstImg(p);html+='<div class="post-card"><div class="meta">'+safe(p.category||'Innlegg')+' · '+safe(p.place||'')+'</div><h3>'+safe(p.title||'')+'</h3><p>'+safe(clean(p.text))+'</p>';if(img){html+='<img class="live-img" src="'+safe(img)+'" alt="Bilde fra butikken">';}html+='</div>';});postsBox.innerHTML=html;}catch(e){fallback();}}
+load();
+})();
 </script>
-
 </body>
 </html>
