@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Musti Haugesund</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{font-family:Arial;margin:0;background:#f4f7fb}
+.wrap{max-width:900px;margin:auto;padding:20px}
+.card{background:#fff;padding:20px;border-radius:20px;margin-bottom:20px}
+.logo{width:160px;display:block;margin:auto}
+.button{display:block;background:#2457ff;color:#fff;text-align:center;padding:15px;border-radius:14px;text-decoration:none;margin-top:14px}
+.offer{background:#fff4f4;padding:15px;border-radius:14px}
+img.post{width:100%;border-radius:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="card">
+<img class="logo" src="musti-haugesund-logo.jpg">
+<h1>Musti Haugesund</h1>
+<a class="button" href="index.html">➕ Legg inn / bytt Ukens tilbud</a>
+</div>
+
+<div class="card">
+<h2>🔥 Ukens tilbud</h2>
+<div id="offer" class="offer">Laster tilbud ...</div>
+</div>
+
+<div class="card">
+<h2>🐶 Siste fra butikken</h2>
+<div id="posts">Laster innlegg ...</div>
+</div>
+
+</div>
+
+<script>
+var MATCH="musti haugesund";
+
+var db=window.supabase.createClient(
+"https://kxudiviidwwwclbzgdyx.supabase.co",
+"sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+function ok(post){
+var t=(post.dog||"").toLowerCase();
+var x=(post.title||"").toLowerCase();
+return t.includes(MATCH)||x.includes(MATCH);
+}
+
+async function load(){
+try{
+var r=await db.from("stories").select("*").order("created_at",{ascending:false}).limit(100);
+
+var rows=(r.data||[]).filter(ok);
+
+var offer=rows.find(p=>String(p.category||"").toLowerCase().includes("ukens"));
+
+document.getElementById("offer").innerHTML=
+offer ? "<b>"+(offer.title||"")+"</b><br><br>"+(offer.text||"")
+: "Ingen aktivt tilbud lagt inn ennå.";
+
+document.getElementById("posts").innerHTML=
+rows.length ? rows.slice(0,3).map(function(p){
+var img="";
+if(p.image_url) img='<img class="post" src="'+p.image_url+'">';
+return '<div class="card"><h3>'+(p.title||"")+'</h3><p>'+(p.text||"")+'</p>'+img+'</div>';
+}).join("")
+: "Ingen innlegg enda.";
+
+}catch(e){
+document.getElementById("offer").innerHTML="Kunne ikke hente tilbud.";
+document.getElementById("posts").innerHTML="Kunne ikke hente innlegg.";
+}
+}
+
+load();
+</script>
+
+</body>
+</html>
