@@ -48,6 +48,16 @@ function esc(s){return String(s||"").replace(/[&<>"']/g,function(m){return {"&":
 function cleanText(text){text=String(text||"");var p=text.split("\n\n");if((p[0]||"").indexOf("__REGION__:")===0)p.shift();return p.join("\n\n");}
 function allText(post){return (String(post.dog||"")+" "+String(post.title||"")+" "+String(post.place||"")+" "+String(post.text||"")).toLowerCase();}
 function belongs(post){
+  var all = (
+    String(post.dog || "") + " " +
+    String(post.title || "") + " " +
+    String(post.place || "") + " " +
+    String(post.text || "")
+  ).toLowerCase();
+
+  return all.includes("musti stord") ||
+         (all.includes("musti") && all.includes("stord"));
+}
   var all = allText(post);
   if(MATCH==="musti stord") return all.includes("musti stord") || (all.includes("musti") && (all.includes("stord") || all.includes("meatjønn") || all.includes("meatjonn")));
   if(MATCH==="musti haugesund") return all.includes("musti haugesund") || (all.includes("musti") && (all.includes("haugesund") || all.includes("raglamyr")));
