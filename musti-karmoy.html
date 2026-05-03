@@ -25,55 +25,36 @@ h1{text-align:center;margin-top:0;font-size:32px}
 </style>
 </head>
 <body>
-
 <div class="header">
   <a class="back-btn" href="index.html">← Tilbake</a>
   <h3>🐶 Hundene våre</h3>
 </div>
-
 <div class="content">
-
   <div class="card">
     <img class="logo" src="musti-logo.jpg" alt="Musti Karmøy logo">
     <h1>Musti Karmøy</h1>
-
     <div class="info">
       📍 Austre Veaveg 3, Vea, Norway, 4276<br>
       📞 960 05 153<br>
       🕒 Mandag–fredag: 10–20 · Lørdag: 10–18
     </div>
-
     <p>Musti Karmøy holder til på Vea og tilbyr produkter, fôr og utstyr til hund og kjæledyr.</p>
-
     <a class="button" href="https://www.facebook.com/MustiKarmoy" target="_blank" rel="noopener">Besøk Facebook / nettside</a>
-
-    <a class="button light" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Austre%20Veaveg%203,%20Vea,%20Norway,%204276">
-      📍 Åpne kart
-    </a>
-
-    <a class="button green" href="index.html">
-      ➕ Legg inn / bytt Ukens tilbud
-    </a>
+    <a class="button light" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Austre%20Veaveg%203%20Vea">📍 Åpne kart</a>
+    <a class="button green" href="index.html">➕ Legg inn / bytt Ukens tilbud</a>
   </div>
-
   <div class="card">
     <h2>🔥 Ukens tilbud</h2>
     <div id="liveOffer" class="offer">Laster tilbud ...</div>
   </div>
-
   <div class="card">
     <h2>🐶 Siste fra butikken</h2>
     <div id="livePosts">Laster innlegg ...</div>
   </div>
-
   <a class="button" href="index.html">Tilbake til appen</a>
-
 </div>
-
 <script>
-var BUTIKK_MATCH = "musti";
-
-var supabase = window.supabase.createClient(
+var db = window.supabase.createClient(
   "https://kxudiviidwwwclbzgdyx.supabase.co",
   "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
 );
@@ -84,85 +65,72 @@ function esc(s){
   });
 }
 
-function stripRegionText(text){
+function cleanText(text){
   text = String(text || "");
   var parts = text.split("\n\n");
-  if ((parts[0] || "").indexOf("__REGION__:") === 0) {
-    parts.shift();
-  }
+  if ((parts[0] || "").indexOf("__REGION__:") === 0) parts.shift();
   return parts.join("\n\n");
 }
 
-function postMatchesStore(post){
-  var name = String(post.dog || "").toLowerCase();
-  var title = String(post.title || "").toLowerCase();
-  var text = String(post.text || "").toLowerCase();
-  return name.includes(BUTIKK_MATCH) || title.includes(BUTIKK_MATCH) || text.includes(BUTIKK_MATCH);
+function belongsToMustiVea(post){
+  var all = (
+    String(post.dog || "") + " " +
+    String(post.title || "") + " " +
+    String(post.place || "") + " " +
+    String(post.text || "")
+  ).toLowerCase();
+
+  return all.includes("musti-vea") ||
+         all.includes("musti karmøy") ||
+         all.includes("musti karmoy") ||
+         all.includes("musti vea") ||
+         all.includes("austre veaveg") ||
+         (all.includes("musti") && all.includes("vea"));
 }
 
-function getPostImage(post){
+function getImage(post){
   if(Array.isArray(post.image_urls) && post.image_urls.length) return post.image_urls[0];
   if(post.image_url) return post.image_url;
   return "";
 }
 
-async function loadLiveFromSupabase(){
+async function loadLive(){
   var offerBox = document.getElementById("liveOffer");
   var postsBox = document.getElementById("livePosts");
 
   try{
-    var result = await supabase
-      .from("stories")
-      .select("*")
-      .order("created_at", { ascending:false })
-      .limit(80);
+    var r = await db.from("stories").select("*").order("created_at", {ascending:false}).limit(120);
+    if(r.error) throw r.error;
 
-    if(result.error){
-      offerBox.innerHTML = "Kunne ikke hente tilbud.";
-      postsBox.innerHTML = "Kunne ikke hente innlegg.";
-      return;
-    }
+    var rows = (r.data || []).filter(belongsToMustiVea);
+    var offers = rows.filter(function(p){ return String(p.category || "").toLowerCase().includes("ukens"); });
 
-    var rows = (result.data || []).filter(postMatchesStore);
-
-    var offers = rows.filter(function(p){
-      return String(p.category || "").toLowerCase().includes("ukens");
-    });
-
-    if(offers.length){
-      var o = offers[0];
-      offerBox.innerHTML =
-        "<strong>" + esc(o.title) + "</strong><br><br>" +
-        esc(stripRegionText(o.text));
-    } else {
-      offerBox.innerHTML = "Ingen aktivt tilbud lagt inn ennå.";
-    }
+    offerBox.innerHTML = offers.length
+      ? "<strong>" + esc(offers[0].title) + "</strong><br><br>" + esc(cleanText(offers[0].text))
+      : "Ingen aktivt tilbud lagt inn ennå.";
 
     if(!rows.length){
-      postsBox.innerHTML = "<p>Ingen innlegg fra butikken enda.</p>";
+      postsBox.innerHTML = "<p>Ingen innlegg enda.</p>";
       return;
     }
 
     postsBox.innerHTML = rows.slice(0,3).map(function(p){
-      var img = getPostImage(p);
+      var image = getImage(p);
       return `
         <div class="post-card">
           <div class="meta">${esc(p.category || "Innlegg")} · ${esc(p.place || "")}</div>
-          <h3>${esc(p.title)}</h3>
-          <p>${esc(stripRegionText(p.text))}</p>
-          ${img ? `<img class="live-img" src="${esc(img)}" alt="Bilde fra butikken">` : ""}
+          <h3>${esc(p.title || "")}</h3>
+          <p>${esc(cleanText(p.text || ""))}</p>
+          ${image ? `<img class="live-img" src="${esc(image)}" alt="Bilde fra butikken">` : ""}
         </div>
       `;
     }).join("");
-
   }catch(e){
     offerBox.innerHTML = "Kunne ikke hente tilbud.";
     postsBox.innerHTML = "Kunne ikke hente innlegg.";
   }
 }
-
-loadLiveFromSupabase();
+loadLive();
 </script>
-
 </body>
 </html>
