@@ -19,20 +19,25 @@ h1,h2{margin:0 0 10px 0}
 button,.button{border:none;border-radius:999px;padding:12px 18px;background:var(--blue);color:#fff;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block}
 button.alt,.button.alt{background:#eaf2ff;color:var(--blue-dark);border:1px solid #bfd7ff}
 button.green{background:#16a34a;color:#fff}
+button.danger{background:#b91c1c;color:white}
+button.sold{background:#f59e0b;color:#111827}
 .btnrow{display:flex;gap:10px;flex-wrap:wrap}
 input,select,textarea{width:100%;padding:14px 15px;border:1px solid #cbd5e1;border-radius:16px;font-size:15px;margin:8px 0 12px;background:#fff}
 textarea{min-height:110px;resize:vertical}
 .region-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 16px}
 .region-tab{border:none;border-radius:18px;min-height:56px;padding:12px 10px;font-size:14px;font-weight:800;cursor:pointer;background:#eef4ff;color:#1d4ed8;border:1px solid #cfe0ff}
 .region-tab.active{background:#2563eb;color:#fff;border-color:#2563eb;box-shadow:0 10px 22px rgba(37,99,235,.16)}
-.product-card{background:#fff;border:1px solid #e2e8f0;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(15,23,42,.06);margin-top:14px}
-.product-content{padding:16px}
+.product-card{background:#fff;border:1px solid #e2e8f0;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(15,23,42,.06);margin-top:14px;position:relative}
+.product-card.sold-card{opacity:.72}
 .product-card img{width:100%;display:block;object-fit:cover;max-height:320px;background:#f1f5f9}
+.product-content{padding:16px}
 .meta{color:var(--muted);font-size:13px;margin:4px 0 10px}
-.badge{display:inline-block;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800;background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd}
+.badge{display:inline-block;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800;background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;margin-right:6px}
+.sold-badge{display:inline-block;padding:7px 13px;border-radius:999px;font-size:13px;font-weight:900;background:#fee2e2;color:#991b1b;border:1px solid #fecaca;margin-bottom:8px}
 .price{display:inline-block;font-size:22px;font-weight:900;color:#166534;margin:8px 0}
 .empty-box{border:1px dashed #cbd5e1;border-radius:18px;padding:16px;color:var(--muted);background:#fff}
 .status{font-weight:800;min-height:22px}
+.owner-actions{margin-top:14px;padding-top:12px;border-top:1px solid #e2e8f0}
 @media(max-width:760px){.region-tabs{grid-template-columns:1fr}.wrap{padding:14px 12px 40px}.topbar{border-radius:20px}.brand{font-size:18px}}
 </style>
 </head>
@@ -98,12 +103,15 @@ textarea{min-height:110px;resize:vertical}
 </div>
 
 <script>
+var ADMIN_EMAIL = "dagfinn53e@gmail.com";
+
 var supabase = window.supabase.createClient(
   "https://kxudiviidwwwclbzgdyx.supabase.co",
   "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
 );
 
 var currentRegion = "Haugalandet";
+var currentUserEmail = "";
 
 function qs(id){return document.getElementById(id)}
 function escapeHtml(str){
@@ -116,6 +124,13 @@ function setStatus(text,color){
   if(el){el.textContent=text;el.style.color=color||"black";}
 }
 
+async function refreshCurrentUser(){
+  var auth=await supabase.auth.getUser();
+  var user=auth && auth.data ? auth.data.user : null;
+  currentUserEmail = user && user.email ? user.email : "";
+  return user;
+}
+
 function setRegion(region){
   currentRegion=region;
   qs("tabHaugalandet").classList.toggle("active",region==="Haugalandet");
@@ -125,12 +140,13 @@ function setRegion(region){
   loadProducts();
 }
 
-function buildText(region,description,price,contact,condition){
+function buildText(region,description,price,contact,condition,sold){
   return [
     "__REGION__:"+region,
     "Pris: "+price,
     "Kontakt: "+contact,
     "Tilstand: "+condition,
+    "Status: "+(sold ? "Solgt" : "Til salgs"),
     "",
     description
   ].join("\n");
@@ -144,6 +160,23 @@ function getLine(text,label){
     }
   }
   return "";
+}
+
+function replaceLine(text,label,value){
+  var lines=String(text||"").split("\n");
+  var found=false;
+  for(var i=0;i<lines.length;i++){
+    if(lines[i].toLowerCase().indexOf(label.toLowerCase()+":")===0){
+      lines[i]=label+": "+value;
+      found=true;
+    }
+  }
+  if(!found){
+    var insertAt=lines.findIndex(function(line){ return line.trim()===""; });
+    if(insertAt<0) insertAt=lines.length;
+    lines.splice(insertAt,0,label+": "+value);
+  }
+  return lines.join("\n");
 }
 
 function getRegion(text){
@@ -163,6 +196,10 @@ function getDescription(text){
   return desc.join("\n").trim();
 }
 
+function isSold(text){
+  return getLine(text,"Status").toLowerCase()==="solgt";
+}
+
 async function uploadProductImage(file){
   if(!file) return "";
   var safeName=Date.now()+"-"+file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
@@ -175,8 +212,7 @@ async function uploadProductImage(file){
 async function saveProduct(){
   setStatus("Lagrer produkt ...","blue");
 
-  var auth=await supabase.auth.getUser();
-  var user=auth && auth.data ? auth.data.user : null;
+  var user=await refreshCurrentUser();
   if(!user){
     setStatus("Du må logge inn i appen først.","crimson");
     return;
@@ -197,7 +233,7 @@ async function saveProduct(){
 
   try{
     var imageUrl=await uploadProductImage(file);
-    var text=buildText(region,description,price,contact,condition);
+    var text=buildText(region,description,price,contact,condition,false);
 
     var result=await supabase.from("stories").insert([{
       user_id:user.id,
@@ -234,7 +270,45 @@ function clearForm(){
   qs("productImage").value="";
 }
 
+function canManage(post){
+  return currentUserEmail && (currentUserEmail===ADMIN_EMAIL || currentUserEmail===String(post.author_email||""));
+}
+
+async function markSold(id,text){
+  if(!confirm("Merke produktet som SOLGT?")) return;
+  var newText=replaceLine(text,"Status","Solgt");
+  var result=await supabase.from("stories").update({text:newText}).eq("id",id);
+  if(result.error){
+    alert("Feil: "+result.error.message);
+    return;
+  }
+  loadProducts();
+}
+
+async function markAvailable(id,text){
+  if(!confirm("Sette produktet tilbake som TIL SALGS?")) return;
+  var newText=replaceLine(text,"Status","Til salgs");
+  var result=await supabase.from("stories").update({text:newText}).eq("id",id);
+  if(result.error){
+    alert("Feil: "+result.error.message);
+    return;
+  }
+  loadProducts();
+}
+
+async function deleteProduct(id){
+  if(!confirm("Slette dette produktet?")) return;
+  var result=await supabase.from("stories").delete().eq("id",id);
+  if(result.error){
+    alert("Feil: "+result.error.message);
+    return;
+  }
+  loadProducts();
+}
+
 async function loadProducts(){
+  await refreshCurrentUser();
+
   var list=qs("productList");
   list.innerHTML='<div class="empty-box">Laster produkter ...</div>';
 
@@ -264,17 +338,31 @@ async function loadProducts(){
     var contact=getLine(text,"Kontakt");
     var condition=getLine(text,"Tilstand");
     var desc=getDescription(text);
+    var sold=isSold(text);
     var img=(Array.isArray(p.image_urls)&&p.image_urls.length?p.image_urls[0]:p.image_url)||"";
 
-    var html='<div class="product-card">';
+    var html='<div class="product-card '+(sold?'sold-card':'')+'">';
     if(img) html+='<img src="'+escapeHtml(img)+'" alt="Produktbilde">';
     html+='<div class="product-content">';
+    if(sold) html+='<div class="sold-badge">🏷️ SOLGT</div><br>';
     html+='<span class="badge">'+escapeHtml(currentRegion)+'</span>';
     html+='<h2 style="font-size:24px;margin-top:10px;">'+escapeHtml(p.title||"Produkt")+'</h2>';
     html+='<div class="price">'+escapeHtml(price||"Pris ikke oppgitt")+'</div>';
     html+='<div class="meta">Tilstand: '+escapeHtml(condition||"Ikke oppgitt")+'</div>';
     html+='<p>'+escapeHtml(desc||"")+'</p>';
     html+='<p><strong>Kontakt:</strong> '+escapeHtml(contact||"Ikke oppgitt")+'</p>';
+
+    if(canManage(p)){
+      html+='<div class="owner-actions btnrow">';
+      if(sold){
+        html+='<button type="button" class="alt" onclick="markAvailable(\''+p.id+'\', '+JSON.stringify(text)+')">Sett til salgs igjen</button>';
+      } else {
+        html+='<button type="button" class="sold" onclick="markSold(\''+p.id+'\', '+JSON.stringify(text)+')">🏷️ Merk som solgt</button>';
+      }
+      html+='<button type="button" class="danger" onclick="deleteProduct(\''+p.id+'\')">🗑️ Slett produkt</button>';
+      html+='</div>';
+    }
+
     html+='</div></div>';
     return html;
   }).join("");
