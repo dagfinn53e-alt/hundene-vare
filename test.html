@@ -1,104 +1,202 @@
-# Erstatt ALT i test.html med dette
-
-```html
 <!DOCTYPE html>
 <html lang="no">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hundene våre - Markedsplass</title>
-
+<title>Hundene våre - Test Markedsplass</title>
 <style>
-body{
-font-family:Arial,sans-serif;
-background:#f4f8ff;
-margin:0;
-padding:20px;
-}
-
-.card{
-max-width:700px;
-margin:auto;
-background:#fff;
-padding:20px;
-border-radius:20px;
-box-shadow:0 4px 15px rgba(0,0,0,0.1);
-}
-
-h2{
-color:#2563eb;
-margin-bottom:20px;
-}
-
-input, textarea, select{
-width:100%;
-padding:14px;
-margin-bottom:14px;
-border-radius:12px;
-border:1px solid #ccc;
-font-size:16px;
-box-sizing:border-box;
-}
-
-textarea{
-min-height:120px;
-resize:vertical;
-}
-
-button{
-background:#2563eb;
-color:white;
-border:none;
-padding:14px 20px;
-border-radius:12px;
-font-size:16px;
-cursor:pointer;
-}
-
-button:hover{
-background:#1d4ed8;
-}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f8ff;color:#1f2937}
+.wrap{max-width:1000px;margin:auto;padding:18px}
+.topbar{background:white;border-radius:22px;padding:14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 18px rgba(0,0,0,.08);margin-bottom:18px}
+.brand{font-size:22px;font-weight:900;color:#2563eb}
+button{border:none;border-radius:999px;padding:12px 18px;background:#2563eb;color:white;font-weight:800;cursor:pointer}
+button.alt{background:#eef4ff;color:#1d4ed8}
+.hero{background:linear-gradient(rgba(0,0,0,.38),rgba(0,0,0,.38)),url("https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80") center/cover;border-radius:28px;padding:32px;color:white;margin-bottom:18px}
+.hero h1{font-size:40px;margin:0 0 8px 0}
+.card{background:white;border-radius:24px;padding:22px;box-shadow:0 4px 18px rgba(0,0,0,.08);margin-bottom:18px}
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.menu-btn{min-height:74px;border-radius:22px;font-size:16px;background:#eef4ff;color:#1d4ed8;border:1px solid #cfe0ff}
+.menu-btn.market{background:#ecfdf5;color:#166534;border-color:#bbf7d0}
+.hidden{display:none!important}
+input,textarea,select{width:100%;padding:14px;margin:8px 0 12px;border-radius:14px;border:1px solid #cbd5e1;font-size:15px;box-sizing:border-box}
+textarea{min-height:120px}
+.product-card{background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:16px;margin-top:14px;box-shadow:0 3px 14px rgba(0,0,0,.06)}
+.product-card img{width:100%;max-height:320px;object-fit:cover;border-radius:16px;margin-top:10px}
+.badge{display:inline-block;background:#e0f2fe;color:#0369a1;padding:6px 12px;border-radius:999px;font-weight:800;font-size:13px}
+.region-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.region-tabs button{background:#eef4ff;color:#1d4ed8}
+.region-tabs button.active{background:#2563eb;color:white}
+.status{font-weight:800;min-height:22px;margin-top:8px}
+@media(max-width:700px){.menu-grid{grid-template-columns:repeat(2,1fr)}.region-tabs{grid-template-columns:1fr}.hero h1{font-size:30px}}
 </style>
 </head>
-
 <body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">Hundene våre 🐶</div>
+    <button onclick="goHome()">Forside</button>
+  </div>
 
-<div class="card">
-<h2>🛒 Markedsplass</h2>
+  <div id="page-home">
+    <div class="hero">
+      <h1>Hundene våre 🐾</h1>
+      <p>Testside for ny Markedsplass. Her kan vi teste trygt før vi legger det inn i hovedappen.</p>
+    </div>
+    <div class="card">
+      <h2>Forside</h2>
+      <p>Trykk på Markedsplass for å teste kjøp og salg av brukt utstyr.</p>
+      <div class="menu-grid">
+        <button class="menu-btn" onclick="alert('Denne er bare test')">📰 Nyheter fra butikk</button>
+        <button class="menu-btn market" onclick="showPage('market')">🛒 Markedsplass</button>
+        <button class="menu-btn" onclick="alert('Denne er bare test')">⭐ Ukens tilbud</button>
+        <button class="menu-btn" onclick="alert('Denne er bare test')">📍 Butikker</button>
+        <button class="menu-btn" onclick="alert('Denne er bare test')">✂️ Frisører</button>
+        <button class="menu-btn" onclick="alert('Denne er bare test')">🏥 Veterinærer</button>
+      </div>
+    </div>
+  </div>
 
-<input id="ttTitle" placeholder="Produktnavn">
+  <div id="page-market" class="hidden">
+    <div class="card">
+      <button class="alt" onclick="goHome()">← Tilbake til forsiden</button>
+      <h2>🛒 Markedsplass</h2>
+      <p>Her kan folk legge ut brukt hunde- og kjæledyrutstyr lokalt.</p>
 
-<input id="ttPlace" placeholder="Område: Haugalandet - Stord - Stavanger">
+      <div class="region-tabs">
+        <button id="tabHaugalandet" class="active" onclick="setRegion('Haugalandet')">Haugalandet</button>
+        <button id="tabStord" onclick="setRegion('Stord')">Stord</button>
+        <button id="tabStavanger" onclick="setRegion('Stavanger')">Stavanger</button>
+      </div>
 
-<textarea id="ttDescription" placeholder="Beskrivelse av produkt"></textarea>
+      <div id="currentRegion" class="badge">Viser: Haugalandet</div>
+      <div id="productList"></div>
+    </div>
 
-<input id="ttParking" placeholder="Kontaktinformasjon">
-
-<input id="ttLength" placeholder="Pris">
-
-<select id="ttDifficulty">
-<option>Velg tilstand</option>
-<option>Ny</option>
-<option>Som ny</option>
-<option>Brukt</option>
-</select>
-
-<input type="file">
-
-<button>Lagre produkt</button>
+    <div class="card">
+      <h2>➕ 🛒 Legg inn produkt</h2>
+      <input id="productName" placeholder="Produktnavn">
+      <select id="productRegion">
+        <option>Haugalandet</option>
+        <option>Stord</option>
+        <option>Stavanger</option>
+      </select>
+      <textarea id="productDescription" placeholder="Beskrivelse av produktet"></textarea>
+      <input id="productPrice" placeholder="Pris">
+      <input id="productContact" placeholder="Kontaktinfo: telefon, Facebook eller Messenger">
+      <select id="productCondition">
+        <option>Velg tilstand</option>
+        <option>Ny</option>
+        <option>Som ny</option>
+        <option>Brukt</option>
+        <option>Gratis gis bort</option>
+      </select>
+      <label>Last opp bilde</label>
+      <input id="productImage" type="file" accept="image/*">
+      <button onclick="saveProduct()">Lagre produkt</button>
+      <div id="marketStatus" class="status">Klar.</div>
+    </div>
+  </div>
 </div>
 
+<script>
+var currentRegion = "Haugalandet";
+var products = [];
+
+function qs(id){ return document.getElementById(id); }
+
+function goHome(){
+  qs("page-market").classList.add("hidden");
+  qs("page-home").classList.remove("hidden");
+  window.scrollTo(0,0);
+}
+
+function showPage(page){
+  qs("page-home").classList.add("hidden");
+  qs("page-market").classList.remove("hidden");
+  window.scrollTo(0,0);
+  renderProducts();
+}
+
+function setRegion(region){
+  currentRegion = region;
+  qs("tabHaugalandet").classList.toggle("active", region === "Haugalandet");
+  qs("tabStord").classList.toggle("active", region === "Stord");
+  qs("tabStavanger").classList.toggle("active", region === "Stavanger");
+  qs("currentRegion").textContent = "Viser: " + region;
+  renderProducts();
+}
+
+function saveProduct(){
+  var name = qs("productName").value.trim();
+  var region = qs("productRegion").value;
+  var description = qs("productDescription").value.trim();
+  var price = qs("productPrice").value.trim();
+  var contact = qs("productContact").value.trim();
+  var condition = qs("productCondition").value;
+  var file = qs("productImage").files[0];
+
+  if(!name || !description || !price || !contact){
+    qs("marketStatus").textContent = "Fyll inn produktnavn, beskrivelse, pris og kontaktinfo.";
+    qs("marketStatus").style.color = "crimson";
+    return;
+  }
+
+  var product = {name:name, region:region, description:description, price:price, contact:contact, condition:condition, image:""};
+
+  if(file){
+    var reader = new FileReader();
+    reader.onload = function(e){
+      product.image = e.target.result;
+      products.unshift(product);
+      clearForm();
+      setRegion(region);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    products.unshift(product);
+    clearForm();
+    setRegion(region);
+  }
+}
+
+function clearForm(){
+  qs("productName").value = "";
+  qs("productDescription").value = "";
+  qs("productPrice").value = "";
+  qs("productContact").value = "";
+  qs("productCondition").value = "Velg tilstand";
+  qs("productImage").value = "";
+  qs("marketStatus").textContent = "Produkt lagt inn i testen.";
+  qs("marketStatus").style.color = "green";
+}
+
+function renderProducts(){
+  var list = products.filter(function(p){ return p.region === currentRegion; });
+  var html = "";
+
+  if(currentRegion === "Haugalandet"){
+    html += '<div class="product-card"><span class="badge">Eksempel</span><h3>Hundebur selges</h3><p><strong>Pris:</strong> 500 kr</p><p><strong>Område:</strong> Haugalandet</p><p>Lite brukt hundebur. Passer liten/mellomstor hund.</p><p><strong>Kontakt:</strong> Send melding på Facebook</p></div>';
+  }
+
+  if(!list.length && currentRegion !== "Haugalandet"){
+    html += '<div class="product-card"><p>Ingen produkter lagt inn i ' + currentRegion + ' enda.</p></div>';
+  }
+
+  list.forEach(function(p){
+    html += '<div class="product-card">';
+    html += '<span class="badge">' + p.region + '</span>';
+    html += '<h3>' + p.name + '</h3>';
+    html += '<p><strong>Pris:</strong> ' + p.price + '</p>';
+    html += '<p><strong>Tilstand:</strong> ' + p.condition + '</p>';
+    html += '<p>' + p.description + '</p>';
+    html += '<p><strong>Kontakt:</strong> ' + p.contact + '</p>';
+    if(p.image){ html += '<img src="' + p.image + '" alt="Produktbilde">'; }
+    html += '</div>';
+  });
+
+  qs("productList").innerHTML = html;
+}
+renderProducts();
+</script>
 </body>
 </html>
-```
-
-# Slik tester du
-
-1. Åpne `test.html`
-2. Ctrl + A
-3. Delete
-4. Lim inn hele koden over
-5. Commit changes
-6. Åpne test.html igjen
-
-Da får du en ren test-side for Markedsplass 😄
