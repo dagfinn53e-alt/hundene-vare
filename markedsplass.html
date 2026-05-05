@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Markedsplass | Hundene våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{--blue:#2563eb;--blue-dark:#1d4ed8;--line:#dbeafe;--text:#0f172a;--muted:#64748b;--card:#fff;--shadow:0 12px 30px rgba(15,23,42,.08)}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:radial-gradient(circle at top left,#dbeafe 0%,transparent 30%),linear-gradient(180deg,#eff6ff 0%,#f8fbff 100%)}
+.wrap{max-width:1000px;margin:0 auto;padding:18px 14px 60px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px;padding:12px 14px;border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.9);box-shadow:var(--shadow);position:sticky;top:8px;z-index:50}
+.brand{font-size:20px;font-weight:800;color:var(--blue-dark);padding:10px 14px;border-radius:999px;border:1px solid #cfe0ff;background:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:22px;box-shadow:var(--shadow);margin-bottom:18px}
+h1,h2{margin:0 0 10px 0}
+.sub{color:var(--muted);line-height:1.6;margin-bottom:14px}
+button,.button{border:none;border-radius:999px;padding:12px 18px;background:var(--blue);color:#fff;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block}
+button.alt,.button.alt{background:#eaf2ff;color:var(--blue-dark);border:1px solid #bfd7ff}
+button.green{background:#16a34a;color:#fff}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap}
+input,select,textarea{width:100%;padding:14px 15px;border:1px solid #cbd5e1;border-radius:16px;font-size:15px;margin:8px 0 12px;background:#fff}
+textarea{min-height:110px;resize:vertical}
+.region-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 16px}
+.region-tab{border:none;border-radius:18px;min-height:56px;padding:12px 10px;font-size:14px;font-weight:800;cursor:pointer;background:#eef4ff;color:#1d4ed8;border:1px solid #cfe0ff}
+.region-tab.active{background:#2563eb;color:#fff;border-color:#2563eb;box-shadow:0 10px 22px rgba(37,99,235,.16)}
+.product-card{background:#fff;border:1px solid #e2e8f0;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(15,23,42,.06);margin-top:14px}
+.product-content{padding:16px}
+.product-card img{width:100%;display:block;object-fit:cover;max-height:320px;background:#f1f5f9}
+.meta{color:var(--muted);font-size:13px;margin:4px 0 10px}
+.badge{display:inline-block;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800;background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd}
+.price{display:inline-block;font-size:22px;font-weight:900;color:#166534;margin:8px 0}
+.empty-box{border:1px dashed #cbd5e1;border-radius:18px;padding:16px;color:var(--muted);background:#fff}
+.status{font-weight:800;min-height:22px}
+@media(max-width:760px){.region-tabs{grid-template-columns:1fr}.wrap{padding:14px 12px 40px}.topbar{border-radius:20px}.brand{font-size:18px}}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">Hundene våre 🐶</div>
+    <div class="btnrow">
+      <a class="button alt" href="index.html">← Tilbake til forsiden</a>
+      <button type="button" onclick="loadProducts()">Oppdater</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h1>🛒 Markedsplass</h1>
+    <div class="sub">Kjøp og salg av brukt hunde- og kjæledyrutstyr lokalt.</div>
+
+    <div class="region-tabs">
+      <button id="tabHaugalandet" class="region-tab active" onclick="setRegion('Haugalandet')">Haugalandet</button>
+      <button id="tabStord" class="region-tab" onclick="setRegion('Stord')">Stord</button>
+      <button id="tabStavanger" class="region-tab" onclick="setRegion('Stavanger')">Stavanger</button>
+    </div>
+
+    <div id="productList"><div class="empty-box">Laster produkter ...</div></div>
+  </div>
+
+  <div class="card">
+    <h2>➕ Legg inn produkt</h2>
+    <div class="sub">Du må være innlogget i appen for å lagre produktet.</div>
+
+    <input id="productName" placeholder="Produktnavn">
+
+    <select id="productRegion">
+      <option value="Haugalandet">Haugalandet</option>
+      <option value="Stord">Stord</option>
+      <option value="Stavanger">Stavanger</option>
+    </select>
+
+    <textarea id="productDescription" placeholder="Beskrivelse av produktet"></textarea>
+    <input id="productPrice" placeholder="Pris, f.eks. 500 kr">
+    <input id="productContact" placeholder="Kontaktinfo: telefon, Facebook eller Messenger">
+
+    <select id="productCondition">
+      <option value="Brukt">Brukt</option>
+      <option value="Som ny">Som ny</option>
+      <option value="Ny">Ny</option>
+      <option value="Gratis gis bort">Gratis gis bort</option>
+    </select>
+
+    <label>Last opp bilde</label>
+    <input id="productImage" type="file" accept="image/*">
+
+    <div class="btnrow">
+      <button type="button" class="green" onclick="saveProduct()">Lagre produkt</button>
+      <button type="button" class="alt" onclick="clearForm()">Tøm skjema</button>
+    </div>
+
+    <div id="marketStatus" class="status">Klar.</div>
+  </div>
+
+</div>
+
+<script>
+var supabase = window.supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+var currentRegion = "Haugalandet";
+
+function qs(id){return document.getElementById(id)}
+function escapeHtml(str){
+  return String(str||"").replace(/[&<>"']/g,function(m){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]
+  })
+}
+function setStatus(text,color){
+  var el=qs("marketStatus");
+  if(el){el.textContent=text;el.style.color=color||"black";}
+}
+
+function setRegion(region){
+  currentRegion=region;
+  qs("tabHaugalandet").classList.toggle("active",region==="Haugalandet");
+  qs("tabStord").classList.toggle("active",region==="Stord");
+  qs("tabStavanger").classList.toggle("active",region==="Stavanger");
+  if(qs("productRegion")) qs("productRegion").value=region;
+  loadProducts();
+}
+
+function buildText(region,description,price,contact,condition){
+  return [
+    "__REGION__:"+region,
+    "Pris: "+price,
+    "Kontakt: "+contact,
+    "Tilstand: "+condition,
+    "",
+    description
+  ].join("\n");
+}
+
+function getLine(text,label){
+  var lines=String(text||"").split("\n");
+  for(var i=0;i<lines.length;i++){
+    if(lines[i].toLowerCase().indexOf(label.toLowerCase()+":")===0){
+      return lines[i].split(":").slice(1).join(":").trim();
+    }
+  }
+  return "";
+}
+
+function getRegion(text){
+  var first=String(text||"").split("\n")[0]||"";
+  if(first.indexOf("__REGION__:")===0) return first.replace("__REGION__:","").trim();
+  return "";
+}
+
+function getDescription(text){
+  var parts=String(text||"").split("\n");
+  var desc=[];
+  var start=false;
+  for(var i=0;i<parts.length;i++){
+    if(parts[i].trim()===""){start=true;continue;}
+    if(start) desc.push(parts[i]);
+  }
+  return desc.join("\n").trim();
+}
+
+async function uploadProductImage(file){
+  if(!file) return "";
+  var safeName=Date.now()+"-"+file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+  var filePath="marketplace/"+safeName;
+  var upload=await supabase.storage.from("story-images").upload(filePath,file);
+  if(upload.error) throw new Error(upload.error.message);
+  return supabase.storage.from("story-images").getPublicUrl(filePath).data.publicUrl||"";
+}
+
+async function saveProduct(){
+  setStatus("Lagrer produkt ...","blue");
+
+  var auth=await supabase.auth.getUser();
+  var user=auth && auth.data ? auth.data.user : null;
+  if(!user){
+    setStatus("Du må logge inn i appen først.","crimson");
+    return;
+  }
+
+  var name=qs("productName").value.trim();
+  var region=qs("productRegion").value;
+  var description=qs("productDescription").value.trim();
+  var price=qs("productPrice").value.trim();
+  var contact=qs("productContact").value.trim();
+  var condition=qs("productCondition").value;
+  var file=qs("productImage").files[0];
+
+  if(!name||!description||!price||!contact){
+    setStatus("Fyll inn produktnavn, beskrivelse, pris og kontaktinfo.","crimson");
+    return;
+  }
+
+  try{
+    var imageUrl=await uploadProductImage(file);
+    var text=buildText(region,description,price,contact,condition);
+
+    var result=await supabase.from("stories").insert([{
+      user_id:user.id,
+      author_email:user.email,
+      title:name,
+      dog:"Markedsplass",
+      place:region,
+      category:"Markedsplass",
+      text:text,
+      image_url:imageUrl,
+      image_urls:imageUrl?[imageUrl]:[]
+    }]);
+
+    if(result.error){
+      setStatus("Feil ved lagring: "+result.error.message,"crimson");
+      return;
+    }
+
+    clearForm();
+    setStatus("Produkt lagret.","green");
+    setRegion(region);
+
+  }catch(e){
+    setStatus("Feil: "+e.message,"crimson");
+  }
+}
+
+function clearForm(){
+  qs("productName").value="";
+  qs("productDescription").value="";
+  qs("productPrice").value="";
+  qs("productContact").value="";
+  qs("productCondition").value="Brukt";
+  qs("productImage").value="";
+}
+
+async function loadProducts(){
+  var list=qs("productList");
+  list.innerHTML='<div class="empty-box">Laster produkter ...</div>';
+
+  var result=await supabase
+    .from("stories")
+    .select("*")
+    .eq("category","Markedsplass")
+    .order("created_at",{ascending:false});
+
+  if(result.error){
+    list.innerHTML='<div class="empty-box">Feil ved henting: '+escapeHtml(result.error.message)+'</div>';
+    return;
+  }
+
+  var rows=(result.data||[]).filter(function(p){
+    return getRegion(p.text||"")===currentRegion || p.place===currentRegion;
+  });
+
+  if(!rows.length){
+    list.innerHTML='<div class="empty-box">Ingen produkter i '+escapeHtml(currentRegion)+' enda.</div>';
+    return;
+  }
+
+  list.innerHTML=rows.map(function(p){
+    var text=p.text||"";
+    var price=getLine(text,"Pris");
+    var contact=getLine(text,"Kontakt");
+    var condition=getLine(text,"Tilstand");
+    var desc=getDescription(text);
+    var img=(Array.isArray(p.image_urls)&&p.image_urls.length?p.image_urls[0]:p.image_url)||"";
+
+    var html='<div class="product-card">';
+    if(img) html+='<img src="'+escapeHtml(img)+'" alt="Produktbilde">';
+    html+='<div class="product-content">';
+    html+='<span class="badge">'+escapeHtml(currentRegion)+'</span>';
+    html+='<h2 style="font-size:24px;margin-top:10px;">'+escapeHtml(p.title||"Produkt")+'</h2>';
+    html+='<div class="price">'+escapeHtml(price||"Pris ikke oppgitt")+'</div>';
+    html+='<div class="meta">Tilstand: '+escapeHtml(condition||"Ikke oppgitt")+'</div>';
+    html+='<p>'+escapeHtml(desc||"")+'</p>';
+    html+='<p><strong>Kontakt:</strong> '+escapeHtml(contact||"Ikke oppgitt")+'</p>';
+    html+='</div></div>';
+    return html;
+  }).join("");
+}
+
+loadProducts();
+</script>
+
+</body>
+</html>
