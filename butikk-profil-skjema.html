@@ -20,6 +20,7 @@
     button:hover{background:#1d4ed8;}
     .back{display:inline-block;margin-bottom:18px;text-decoration:none;background:#eaf2ff;color:#1d4ed8;padding:12px 18px;border-radius:999px;font-weight:bold;border:1px solid #bfd7ff;}
     .status{margin-top:16px;font-weight:bold;text-align:center;min-height:24px;}
+    .help{font-size:13px;color:#64748b;margin-top:6px;}
   </style>
 </head>
 
@@ -81,6 +82,18 @@
     <textarea id="shopDescription" placeholder="Beskrivelse av butikken"></textarea>
   </div>
 
+  <div class="form-group">
+    <label>Logo</label>
+    <input type="file" id="logoUpload" accept="image/*">
+    <div class="help">Valgfritt. Last opp butikkens logo.</div>
+  </div>
+
+  <div class="form-group">
+    <label>Bilder</label>
+    <input type="file" id="imageUpload" accept="image/*" multiple>
+    <div class="help">Valgfritt. Du kan velge flere bilder samtidig.</div>
+  </div>
+
   <button type="button" onclick="saveShop()">
     Lagre butikk
   </button>
@@ -101,46 +114,112 @@
     el.style.color = color || "black";
   }
 
-  window.saveShop = async function(){
-    alert("Knappen virker - nå prøver vi å lagre");
+  function cleanFileName(name){
+    return String(name || "bilde.jpg").replace(/[^a-zA-Z0-9._-]/g, "_");
+  }
 
-    const name = document.getElementById("shopName").value.trim();
-    const type = document.getElementById("shopType").value;
-    const region = document.getElementById("shopRegion").value;
-    const address = document.getElementById("shopAddress").value.trim();
-    const phone = document.getElementById("shopPhone").value.trim();
-    const facebook = document.getElementById("shopFacebook").value.trim();
-    const description = document.getElementById("shopDescription").value.trim();
+  async function uploadOneFile(file, folder){
+    if(!file) return "";
 
-    if(!name){
-      setStatus("Skriv inn butikknavn.", "crimson");
-      alert("Skriv inn butikknavn.");
-      return;
-    }
+    const fileName = Date.now() + "-" + cleanFileName(file.name);
+    const filePath = folder + "/" + fileName;
 
-    setStatus("Lagrer butikk ...", "#1d4ed8");
-
-    const { error } = await supabaseClient
-      .from("businesses")
-      .insert([{
-        name: name,
-        type: type,
-        region: region,
-        place: address,
-        phone: phone,
-        website: facebook,
-        description: description,
-        approved: false
-      }]);
+    const { error } = await supabaseClient.storage
+      .from("story-images")
+      .upload(filePath, file);
 
     if(error){
-      setStatus("Feil: " + error.message, "crimson");
-      alert("Feil: " + error.message);
-      return;
+      throw new Error(error.message);
     }
 
-    setStatus("Butikken er sendt til godkjenning 😊", "green");
-    alert("Butikken er sendt til godkjenning 😊");
+    const { data } = supabaseClient.storage
+      .from("story-images")
+      .getPublicUrl(filePath);
+
+    return data.publicUrl || "";
+  }
+
+  async function uploadManyFiles(files, folder){
+    const urls = [];
+
+    for(let i = 0; i < files.length; i++){
+      const url = await uploadOneFile(files[i], folder);
+      if(url) urls.push(url);
+    }
+
+    return urls;
+  }
+
+  window.saveShop = async function(){
+    try{
+      const name = document.getElementById("shopName").value.trim();
+      const type = document.getElementById("shopType").value;
+      const region = document.getElementById("shopRegion").value;
+      const address = document.getElementById("shopAddress").value.trim();
+      const phone = document.getElementById("shopPhone").value.trim();
+      const facebook = document.getElementById("shopFacebook").value.trim();
+      const description = document.getElementById("shopDescription").value.trim();
+
+      const logoFile = document.getElementById("logoUpload").files[0];
+      const imageFiles = document.getElementById("imageUpload").files;
+
+      if(!name){
+        setStatus("Skriv inn butikknavn.", "crimson");
+        alert("Skriv inn butikknavn.");
+        return;
+      }
+
+      let logoUrl = "";
+      let galleryUrls = [];
+
+      if(logoFile){
+        setStatus("Laster opp logo ...", "#1d4ed8");
+        logoUrl = await uploadOneFile(logoFile, "butikk-logo");
+      }
+
+      if(imageFiles && imageFiles.length > 0){
+        setStatus("Laster opp bilder ...", "#1d4ed8");
+        galleryUrls = await uploadManyFiles(imageFiles, "butikk-bilder");
+      }
+
+      setStatus("Lagrer butikk ...", "#1d4ed8");
+
+      const { error } = await supabaseClient
+        .from("businesses")
+        .insert([{
+          name: name,
+          type: type,
+          region: region,
+          place: address,
+          phone: phone,
+          website: facebook,
+          description: description,
+          logo_url: logoUrl,
+          gallery_urls: galleryUrls,
+          approved: false
+        }]);
+
+      if(error){
+        setStatus("Feil: " + error.message, "crimson");
+        alert("Feil: " + error.message);
+        return;
+      }
+
+      document.getElementById("shopName").value = "";
+      document.getElementById("shopAddress").value = "";
+      document.getElementById("shopPhone").value = "";
+      document.getElementById("shopFacebook").value = "";
+      document.getElementById("shopDescription").value = "";
+      document.getElementById("logoUpload").value = "";
+      document.getElementById("imageUpload").value = "";
+
+      setStatus("Butikken er sendt til godkjenning 😊", "green");
+      alert("Butikken er sendt til godkjenning 😊");
+
+    }catch(error){
+      setStatus("Feil: " + error.message, "crimson");
+      alert("Feil: " + error.message);
+    }
   }
 </script>
 
