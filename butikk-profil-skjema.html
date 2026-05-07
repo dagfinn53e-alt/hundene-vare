@@ -88,13 +88,15 @@ const supabase = window.supabase.createClient(
 
 <div class="form-group">
 <label>Butikknavn</label>
-<input type="text" placeholder="Skriv butikknavn">
+<input type="text"
+       id="shopName"
+       placeholder="Skriv butikknavn">
 </div>
 
 <div class="form-group">
 <label>Type</label>
 
-<select>
+<select id="shopType">
 <option>Hundepensjonat</option>
 <option>Frisør</option>
 <option>Veterinær</option>
@@ -105,35 +107,49 @@ const supabase = window.supabase.createClient(
 
 <div class="form-group">
 <label>Adresse</label>
-<input type="text" placeholder="Adresse">
+<input type="text"
+       id="shopAddress"
+       placeholder="Adresse">
 </div>
 
 <div class="form-group">
 <label>Telefon</label>
-<input type="text" placeholder="Telefonnummer">
+<input type="text"
+       id="shopPhone"
+       placeholder="Telefonnummer">
 </div>
 
 <div class="form-group">
 <label>Facebook / Nettside</label>
-<input type="text" placeholder="Facebook-link">
+<input type="text"
+       id="shopFacebook"
+       placeholder="Facebook-link">
 </div>
 
 <div class="form-group">
 <label>Beskrivelse</label>
-<textarea placeholder="Beskrivelse av butikken"></textarea>
+<textarea id="shopDescription"
+placeholder="Beskrivelse av butikken"></textarea>
 </div>
 
 <div class="form-group">
 <label>Logo</label>
-<input type="file" accept="image/*">
+<input type="file"
+       id="logoUpload"
+       accept="image/*">
 </div>
 
 <div class="form-group">
 <label>Bilder</label>
-<input type="file" accept="image/*" multiple>
+<input type="file"
+       id="imageUpload"
+       accept="image/*"
+       multiple>
 </div>
 
-<button>Lagre butikk</button>
+<button onclick="saveShop()">
+Lagre butikk
+</button>
 
 </div>
 
