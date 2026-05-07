@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andreea's Potell</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f8fc;
+  color:#1e293b;
+}
+
+.hero{
+  position:relative;
+  height:320px;
+  background:url('https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1400&q=80') center/cover;
+  display:flex;
+  align-items:flex-end;
+}
+
+.overlay{
+  width:100%;
+  padding:30px;
+  background:linear-gradient(transparent,rgba(0,0,0,0.7));
+  color:white;
+}
+
+.overlay h1{
+  margin:0;
+  font-size:42px;
+}
+
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background:white;
+  border-radius:24px;
+  padding:24px;
+  margin-bottom:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+.card h2{
+  margin-top:0;
+  font-size:28px;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+
+.info-box{
+  background:#eef6ff;
+  padding:18px;
+  border-radius:18px;
+}
+
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:14px;
+}
+
+.gallery img{
+  width:100%;
+  height:240px;
+  object-fit:cover;
+  border-radius:18px;
+}
+
+.btns{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+.btn{
+  text-decoration:none;
+  background:#2563eb;
+  color:white;
+  padding:14px 20px;
+  border-radius:999px;
+  font-weight:700;
+}
+
+.btn.alt{
+  background:#eaf2ff;
+  color:#1d4ed8;
+}
+
+@media(max-width:700px){
+
+.overlay h1{
+  font-size:30px;
+}
+
+.hero{
+  height:240px;
+}
+
+.gallery img{
+  height:200px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+  <div class="overlay">
+    <h1>🐶 Andreea's Potell</h1>
+    <p>Trygt og koselig hundepensjonat</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <h2>Om oss</h2>
+
+    <p>
+      Velkommen til Andreea's Potell 🐾  
+      Et rolig og trygt sted hvor hunden din får omsorg,
+      kos og oppfølging mens du er borte.
+    </p>
+
+    <p>
+      Her er fokus på trygghet, gode rutiner og et hyggelig miljø
+      for både små og store hunder.
+    </p>
+
+    <div class="btns">
+      <a class="btn" href="#">📍 Åpne kart</a>
+      <a class="btn alt" href="#">📞 Kontakt</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Informasjon</h2>
+
+    <div class="info-grid">
+
+      <div class="info-box">
+        <strong>📍 Område</strong><br>
+        Haugalandet
+      </div>
+
+      <div class="info-box">
+        <strong>🐶 Type</strong><br>
+        Hundepensjonat
+      </div>
+
+      <div class="info-box">
+        <strong>🦴 Tilbud</strong><br>
+        Dagspass / overnatting
+      </div>
+
+      <div class="info-box">
+        <strong>❤️ Fokus</strong><br>
+        Trygghet og trivsel
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Bilder</h2>
+
+    <div class="gallery">
+
+      <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1000&q=80">
+
+      <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1000&q=80">
+
+      <img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=1000&q=80">
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
