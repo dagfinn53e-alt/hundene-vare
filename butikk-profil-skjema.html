@@ -309,8 +309,40 @@
 
 </body>
   <script>
+<script>
 async function lagreButikk() {
-  alert("Nå prøver vi å lagre til Supabase");
+
+  const shopName = document.getElementById("shopName").value;
+  const shopType = document.getElementById("shopType").value;
+  const shopRegion = document.getElementById("shopRegion").value;
+  const shopAddress = document.getElementById("shopAddress").value;
+  const shopPhone = document.getElementById("shopPhone").value;
+  const shopFacebook = document.getElementById("shopFacebook").value;
+  const shopDescription = document.getElementById("shopDescription").value;
+
+  const { data, error } = await supabase
+    .from("businesses")
+    .insert([
+      {
+        name: shopName,
+        type: shopType,
+        region: shopRegion,
+        address: shopAddress,
+        phone: shopPhone,
+        facebook: shopFacebook,
+        description: shopDescription
+      }
+    ]);
+
+  if (error) {
+    alert("Feil: " + error.message);
+    console.log(error);
+  } else {
+    alert("Butikk lagret!");
+    console.log(data);
+  }
+}
+</script>
 }
 </script>
 
