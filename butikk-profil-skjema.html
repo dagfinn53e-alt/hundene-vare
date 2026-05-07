@@ -1,258 +1,309 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Registrer butikk</title>
+  <title>Registrer butikk</title>
 
-<style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-body{
-    font-family:Arial,sans-serif;
-    background:#f4f8ff;
-    margin:0;
-    padding:20px;
-}
+  <style>
+    body{
+      font-family:Arial,sans-serif;
+      background:#f4f8ff;
+      margin:0;
+      padding:20px;
+      color:#0f172a;
+    }
 
-.container{
-    max-width:700px;
-    margin:auto;
-    background:white;
-    padding:25px;
-    border-radius:25px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.1);
-}
+    .container{
+      max-width:760px;
+      margin:auto;
+      background:white;
+      padding:25px;
+      border-radius:25px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    }
 
-h1{
-    text-align:center;
-    color:#1e3a8a;
-}
+    h1{
+      text-align:center;
+      color:#1e3a8a;
+      margin-top:0;
+    }
 
-.form-group{
-    margin-bottom:18px;
-}
+    .sub{
+      text-align:center;
+      color:#64748b;
+      line-height:1.5;
+      margin-bottom:22px;
+    }
 
-label{
-    display:block;
-    margin-bottom:8px;
-    font-weight:bold;
-}
+    .form-group{
+      margin-bottom:18px;
+    }
 
-input,
-textarea,
-select{
-    width:100%;
-    padding:14px;
-    border-radius:14px;
-    border:1px solid #cbd5e1;
-    font-size:15px;
-}
+    label{
+      display:block;
+      margin-bottom:8px;
+      font-weight:bold;
+    }
 
-textarea{
-    min-height:120px;
-}
+    input,
+    textarea,
+    select{
+      width:100%;
+      padding:14px;
+      border-radius:14px;
+      border:1px solid #cbd5e1;
+      font-size:15px;
+      box-sizing:border-box;
+      background:white;
+    }
 
-button{
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:16px;
-    background:#2563eb;
-    color:white;
-    font-size:17px;
-    font-weight:bold;
-    cursor:pointer;
-}
+    textarea{
+      min-height:120px;
+      resize:vertical;
+    }
 
-button:hover{
-    background:#1d4ed8;
-}
+    button{
+      width:100%;
+      padding:16px;
+      border:none;
+      border-radius:16px;
+      background:#2563eb;
+      color:white;
+      font-size:17px;
+      font-weight:bold;
+      cursor:pointer;
+    }
 
-</style>
+    button:hover{
+      background:#1d4ed8;
+    }
+
+    .back{
+      display:inline-block;
+      margin-bottom:18px;
+      text-decoration:none;
+      background:#eaf2ff;
+      color:#1d4ed8;
+      padding:12px 18px;
+      border-radius:999px;
+      font-weight:bold;
+      border:1px solid #bfd7ff;
+    }
+
+    .status{
+      margin-top:16px;
+      font-weight:bold;
+      text-align:center;
+      min-height:24px;
+    }
+
+    .help{
+      font-size:13px;
+      color:#64748b;
+      margin-top:6px;
+      line-height:1.4;
+    }
+  </style>
 </head>
-<script>
 
-const supabase = window.supabase.createClient(
-  "https://kxudiviidwwwclbzgdyx.supabase.co",
-  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
-);
-async function saveShop() {
-
-  const name =
-    document.getElementById("shopName").value;
-
-  const type =
-    document.getElementById("shopType").value;
-
-  const address =
-    document.getElementById("shopAddress").value;
-
-  const phone =
-    document.getElementById("shopPhone").value;
-
-  const facebook =
-    document.getElementById("shopFacebook").value;
-
-  const description =
-    document.getElementById("shopDescription").value;
-
-  const logoFile =
-    document.getElementById("logoUpload").files[0];
-
-  const imageFiles =
-    document.getElementById("imageUpload").files;
-
-  if (!name || !description) {
-    alert("Skriv inn navn og beskrivelse");
-    return;
-  }
-
-  let logoUrl = "";
-
-  if (logoFile) {
-
-    const logoName =
-      Date.now() + "-" + logoFile.name;
-
-    const { error: logoError } =
-      await supabase.storage
-      .from("story-images")
-      .upload("butikk-logo/" + logoName, logoFile);
-
-    if (!logoError) {
-
-      logoUrl =
-        supabase.storage
-        .from("story-images")
-        .getPublicUrl("butikk-logo/" + logoName)
-        .data.publicUrl;
-    }
-  }
-
-  let galleryUrls = [];
-
-  for (let i = 0; i < imageFiles.length; i++) {
-
-    const file = imageFiles[i];
-
-    const fileName =
-      Date.now() + "-" + file.name;
-
-    const { error } =
-      await supabase.storage
-      .from("story-images")
-      .upload("butikk-bilder/" + fileName, file);
-
-    if (!error) {
-
-      const publicUrl =
-        supabase.storage
-        .from("story-images")
-        .getPublicUrl("butikk-bilder/" + fileName)
-        .data.publicUrl;
-
-      galleryUrls.push(publicUrl);
-    }
-  }
-
-  const { error } =
-    await supabase
-    .from("businesses")
-    .insert([{
-      name: name,
-      type: type,
-      place: address,
-      phone: phone,
-      website: facebook,
-      description: description,
-      logo_url: logoUrl,
-      gallery_urls: galleryUrls,
-      approved: false
-    }]);
-
-  if (error) {
-    alert("Feil: " + error.message);
-    return;
-  }
-
-  alert("Butikken er sendt til godkjenning 😊");
-
-}
-</script>
 <body>
 
 <div class="container">
 
-<h1>🐶 Registrer butikk</h1>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <a class="back" href="index.html">← Tilbake til appen</a>
 
-<div class="form-group">
-<label>Butikknavn</label>
-<input type="text"
-       id="shopName"
-       placeholder="Skriv butikknavn">
+  <h1>🐶 Registrer butikk</h1>
+
+  <p class="sub">
+    Fyll inn informasjon om butikken. Når du trykker lagre, blir butikken sendt til godkjenning.
+  </p>
+
+  <div class="form-group">
+    <label>Butikknavn</label>
+    <input type="text" id="shopName" placeholder="Skriv butikknavn">
+  </div>
+
+  <div class="form-group">
+    <label>Type</label>
+    <select id="shopType">
+      <option>Hundepensjonat</option>
+      <option>Frisør</option>
+      <option>Veterinær</option>
+      <option>Zoo butikk</option>
+      <option>Kafé</option>
+      <option>Hundeklubb</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Område</label>
+    <select id="shopRegion">
+      <option value="Haugalandet">Haugalandet</option>
+      <option value="Stavanger">Stavanger</option>
+      <option value="Stord">Stord</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Adresse</label>
+    <input type="text" id="shopAddress" placeholder="Adresse">
+  </div>
+
+  <div class="form-group">
+    <label>Telefon</label>
+    <input type="text" id="shopPhone" placeholder="Telefonnummer">
+  </div>
+
+  <div class="form-group">
+    <label>Facebook / Nettside</label>
+    <input type="text" id="shopFacebook" placeholder="Facebook-link eller nettside">
+  </div>
+
+  <div class="form-group">
+    <label>Beskrivelse</label>
+    <textarea id="shopDescription" placeholder="Beskrivelse av butikken"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Logo</label>
+    <input type="file" id="logoUpload" accept="image/*">
+    <div class="help">Valgfritt. Last opp butikkens logo.</div>
+  </div>
+
+  <div class="form-group">
+    <label>Bilder</label>
+    <input type="file" id="imageUpload" accept="image/*" multiple>
+    <div class="help">Valgfritt. Du kan velge flere bilder samtidig.</div>
+  </div>
+
+  <button type="button" onclick="saveShop()">Lagre butikk</button>
+
+  <div id="status" class="status">Klar.</div>
+
 </div>
 
-<div class="form-group">
-<label>Type</label>
+<script>
+  const supabase = window.supabase.createClient(
+    "https://kxudiviidwwwclbzgdyx.supabase.co",
+    "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+  );
 
-<select id="shopType">
-<option>Hundepensjonat</option>
-<option>Frisør</option>
-<option>Veterinær</option>
-<option>Zoo butikk</option>
-<option>Kafé</option>
-</select>
-</div>
+  function setStatus(text, color){
+    const el = document.getElementById("status");
+    el.textContent = text;
+    el.style.color = color || "black";
+  }
 
-<div class="form-group">
-<label>Adresse</label>
-<input type="text"
-       id="shopAddress"
-       placeholder="Adresse">
-</div>
+  function cleanFileName(name){
+    return String(name || "bilde.jpg").replace(/[^a-zA-Z0-9._-]/g, "_");
+  }
 
-<div class="form-group">
-<label>Telefon</label>
-<input type="text"
-       id="shopPhone"
-       placeholder="Telefonnummer">
-</div>
+  async function uploadOneFile(file, folder){
+    if(!file) return "";
 
-<div class="form-group">
-<label>Facebook / Nettside</label>
-<input type="text"
-       id="shopFacebook"
-       placeholder="Facebook-link">
-</div>
+    const fileName = Date.now() + "-" + cleanFileName(file.name);
+    const filePath = folder + "/" + fileName;
 
-<div class="form-group">
-<label>Beskrivelse</label>
-<textarea id="shopDescription"
-placeholder="Beskrivelse av butikken"></textarea>
-</div>
+    const upload = await supabase.storage
+      .from("story-images")
+      .upload(filePath, file);
 
-<div class="form-group">
-<label>Logo</label>
-<input type="file"
-       id="logoUpload"
-       accept="image/*">
-</div>
+    if(upload.error){
+      throw new Error(upload.error.message);
+    }
 
-<div class="form-group">
-<label>Bilder</label>
-<input type="file"
-       id="imageUpload"
-       accept="image/*"
-       multiple>
-</div>
+    return supabase.storage
+      .from("story-images")
+      .getPublicUrl(filePath)
+      .data.publicUrl || "";
+  }
 
-<button type="button" onclick="saveShop()">
-Lagre butikk
-</button>
+  async function uploadManyFiles(files, folder){
+    const urls = [];
 
-</div>
+    for(let i = 0; i < files.length; i++){
+      const url = await uploadOneFile(files[i], folder);
+      if(url) urls.push(url);
+    }
+
+    return urls;
+  }
+
+  async function saveShop(){
+    try{
+      setStatus("Lagrer butikk ...", "#1d4ed8");
+
+      const name = document.getElementById("shopName").value.trim();
+      const type = document.getElementById("shopType").value;
+      const region = document.getElementById("shopRegion").value;
+      const address = document.getElementById("shopAddress").value.trim();
+      const phone = document.getElementById("shopPhone").value.trim();
+      const facebook = document.getElementById("shopFacebook").value.trim();
+      const description = document.getElementById("shopDescription").value.trim();
+      const logoFile = document.getElementById("logoUpload").files[0];
+      const imageFiles = document.getElementById("imageUpload").files;
+
+      if(!name || !address || !description){
+        setStatus("Skriv inn butikknavn, adresse og beskrivelse.", "crimson");
+        return;
+      }
+
+      let logoUrl = "";
+      let galleryUrls = [];
+
+      if(logoFile){
+        setStatus("Laster opp logo ...", "#1d4ed8");
+        logoUrl = await uploadOneFile(logoFile, "butikk-logo");
+      }
+
+      if(imageFiles && imageFiles.length > 0){
+        setStatus("Laster opp bilder ...", "#1d4ed8");
+        galleryUrls = await uploadManyFiles(imageFiles, "butikk-bilder");
+      }
+
+      setStatus("Sender butikken til godkjenning ...", "#1d4ed8");
+
+      const result = await supabase
+        .from("businesses")
+        .insert([{
+          name: name,
+          type: type,
+          region: region,
+          place: address,
+          phone: phone,
+          website: facebook,
+          description: description,
+          logo_url: logoUrl,
+          gallery_urls: galleryUrls,
+          approved: false
+        }]);
+
+      if(result.error){
+        setStatus("Feil: " + result.error.message, "crimson");
+        return;
+      }
+
+      document.getElementById("shopName").value = "";
+      document.getElementById("shopAddress").value = "";
+      document.getElementById("shopPhone").value = "";
+      document.getElementById("shopFacebook").value = "";
+      document.getElementById("shopDescription").value = "";
+      document.getElementById("logoUpload").value = "";
+      document.getElementById("imageUpload").value = "";
+
+      setStatus("Butikken er sendt til godkjenning 😊", "green");
+      alert("Butikken er sendt til godkjenning 😊");
+
+    }catch(error){
+      setStatus("Feil: " + error.message, "crimson");
+      alert("Feil: " + error.message);
+    }
+  }
+</script>
 
 </body>
 </html>
