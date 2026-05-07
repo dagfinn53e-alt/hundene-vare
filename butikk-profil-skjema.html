@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Registrer butikk</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f8ff;
+    margin:0;
+    padding:20px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+h1{
+    text-align:center;
+    color:#1e3a8a;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:14px;
+    border-radius:14px;
+    border:1px solid #cbd5e1;
+    font-size:15px;
+}
+
+textarea{
+    min-height:120px;
+}
+
+button{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:16px;
+    background:#2563eb;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🐶 Registrer butikk</h1>
+
+<div class="form-group">
+<label>Butikknavn</label>
+<input type="text" placeholder="Skriv butikknavn">
+</div>
+
+<div class="form-group">
+<label>Type</label>
+
+<select>
+<option>Hundepensjonat</option>
+<option>Frisør</option>
+<option>Veterinær</option>
+<option>Zoo butikk</option>
+<option>Kafé</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>Adresse</label>
+<input type="text" placeholder="Adresse">
+</div>
+
+<div class="form-group">
+<label>Telefon</label>
+<input type="text" placeholder="Telefonnummer">
+</div>
+
+<div class="form-group">
+<label>Facebook / Nettside</label>
+<input type="text" placeholder="Facebook-link">
+</div>
+
+<div class="form-group">
+<label>Beskrivelse</label>
+<textarea placeholder="Beskrivelse av butikken"></textarea>
+</div>
+
+<div class="form-group">
+<label>Logo</label>
+<input type="file" accept="image/*">
+</div>
+
+<div class="form-group">
+<label>Bilder</label>
+<input type="file" accept="image/*" multiple>
+</div>
+
+<button>Lagre butikk</button>
+
+</div>
+
+</body>
+</html>
