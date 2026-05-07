@@ -71,12 +71,20 @@ button:hover{
 
 </style>
 </head>
+<script>
 
+const supabase = window.supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+</script>
 <body>
 
 <div class="container">
 
 <h1>🐶 Registrer butikk</h1>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <div class="form-group">
 <label>Butikknavn</label>
