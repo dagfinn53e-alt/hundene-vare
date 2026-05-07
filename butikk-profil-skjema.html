@@ -77,7 +77,108 @@ const supabase = window.supabase.createClient(
   "https://kxudiviidwwwclbzgdyx.supabase.co",
   "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
 );
+async function saveShop() {
 
+  const name =
+    document.getElementById("shopName").value;
+
+  const type =
+    document.getElementById("shopType").value;
+
+  const address =
+    document.getElementById("shopAddress").value;
+
+  const phone =
+    document.getElementById("shopPhone").value;
+
+  const facebook =
+    document.getElementById("shopFacebook").value;
+
+  const description =
+    document.getElementById("shopDescription").value;
+
+  const logoFile =
+    document.getElementById("logoUpload").files[0];
+
+  const imageFiles =
+    document.getElementById("imageUpload").files;
+
+  if (!name || !description) {
+    alert("Skriv inn navn og beskrivelse");
+    return;
+  }
+
+  let logoUrl = "";
+
+  if (logoFile) {
+
+    const logoName =
+      Date.now() + "-" + logoFile.name;
+
+    const { error: logoError } =
+      await supabase.storage
+      .from("story-images")
+      .upload("butikk-logo/" + logoName, logoFile);
+
+    if (!logoError) {
+
+      logoUrl =
+        supabase.storage
+        .from("story-images")
+        .getPublicUrl("butikk-logo/" + logoName)
+        .data.publicUrl;
+    }
+  }
+
+  let galleryUrls = [];
+
+  for (let i = 0; i < imageFiles.length; i++) {
+
+    const file = imageFiles[i];
+
+    const fileName =
+      Date.now() + "-" + file.name;
+
+    const { error } =
+      await supabase.storage
+      .from("story-images")
+      .upload("butikk-bilder/" + fileName, file);
+
+    if (!error) {
+
+      const publicUrl =
+        supabase.storage
+        .from("story-images")
+        .getPublicUrl("butikk-bilder/" + fileName)
+        .data.publicUrl;
+
+      galleryUrls.push(publicUrl);
+    }
+  }
+
+  const { error } =
+    await supabase
+    .from("businesses")
+    .insert([{
+      name: name,
+      type: type,
+      place: address,
+      phone: phone,
+      website: facebook,
+      description: description,
+      logo_url: logoUrl,
+      gallery_urls: galleryUrls,
+      approved: false
+    }]);
+
+  if (error) {
+    alert("Feil: " + error.message);
+    return;
+  }
+
+  alert("Butikken er sendt til godkjenning 😊");
+
+}
 </script>
 <body>
 
