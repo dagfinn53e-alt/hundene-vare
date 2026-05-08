@@ -1030,7 +1030,9 @@ function normalizeUrl(url){
   if(url.startsWith("http://")||url.startsWith("https://")) return url;
   return "https://"+url;
 }
-
+function buildShopPageLink(id){
+  return "butikk.html?id=" + id;
+}
 function buildGoogleMapsLink(place,searchText){
   var q=searchText||place||"";
   if(!q) return "";
