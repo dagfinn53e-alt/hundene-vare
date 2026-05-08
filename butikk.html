@@ -228,6 +228,7 @@ function getId(){
 
 if(edit === "TEST123"){
 
+  if(edit === "TEST123"){
   document.body.insertAdjacentHTML("afterbegin", `
     <div style="
       position:fixed;
@@ -242,6 +243,16 @@ if(edit === "TEST123"){
       box-shadow:0 10px 25px rgba(0,0,0,.2);
     ">
       ✏️ Redigeringsmodus aktiv
+    </div>
+  `);
+
+  const editButton = document.getElementById("editBtn");
+
+  if(editButton){
+    editButton.style.display = "inline-flex";
+    editButton.href = "rediger-butikk.html?id=" + getId() + "&edit=TEST123";
+  }
+}
     </div>
   `);
 
