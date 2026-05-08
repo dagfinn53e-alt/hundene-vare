@@ -119,7 +119,7 @@ async function loadShop(){
     return;
   }
 
-  if(edit !== data.edit_code){
+  if(String(edit).trim().toUpperCase() !== String(data.edit_code).trim().toUpperCase()){
     setStatus("Ingen tilgang. Feil redigeringskode.", "crimson");
     return;
   }
