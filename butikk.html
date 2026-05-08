@@ -217,96 +217,17 @@
 </div>
 
 <script>
-  const supabaseClient = window.supabase.createClient(
-    "https://kxudiviidwwwclbzgdyx.supabase.co",
-    "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
-  );
+ <script>
 
-  function getId(){
-    const params = new URLSearchParams(window.location.search);
-    return params.get("id");
-  }
-
-  function safeText(value){
-    return value || "";
-  }
-
-  async function loadShop(){
-    const id = getId();
-
-    if(!id){
-      document.getElementById("status").textContent = "Mangler butikk-ID.";
-      return;
-    }
-
-    const { data, error } = await supabaseClient
-      .from("businesses")
-      .select("*")
-      .eq("id", id)
-      .single();
-
-    if(error || !data){
-      document.getElementById("status").textContent = "Fant ikke butikken.";
-      return;
-    }
-
-    document.title = data.name || "Butikkside";
-
-    document.getElementById("name").textContent = safeText(data.name);
-    document.getElementById("description").textContent = safeText(data.description);
-    document.getElementById("address").textContent = safeText(data.place || data.address);
-    document.getElementById("type").textContent = safeText(data.type);
-    document.getElementById("region").textContent = safeText(data.region);
-    document.getElementById("phone").textContent = safeText(data.phone);
-
-    const logo = document.getElementById("logo");
-    logo.src = data.logo_url || "https://placehold.co/300x300?text=Logo";
-
-    const address = data.place || data.address || "";
-    document.getElementById("mapBtn").href =
-      "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
-
-    document.getElementById("phoneBtn").href =
-      "tel:" + safeText(data.phone).replace(/\s/g, "");
-
-    const webBtn = document.getElementById("webBtn");
-    if(data.website){
-      webBtn.href = data.website;
-      webBtn.style.display = "inline-block";
-    }else{
-      webBtn.style.display = "none";
-    }
-
-    const gallery = document.getElementById("gallery");
-    const galleryCard = document.getElementById("galleryCard");
-
-    let images = data.gallery_urls || [];
-
-    if(typeof images === "string"){
-      try{
-        images = JSON.parse(images);
-      }catch(e){
-        images = [];
-      }
-    }
-
-    if(images && images.length > 0){
-      gallery.innerHTML = images.map(url => `
-        <img src="${url}" alt="Butikkbilde">
-      `).join("");
-    }else{
-      galleryCard.style.display = "none";
-    }
-
-    document.getElementById("status").style.display = "none";
-    document.getElementById("content").style.display = "block";
-  }
-
-  loadShop();
-  const params = new URLSearchParams(window.location.search);
+const params = new URLSearchParams(window.location.search);
 const edit = params.get("edit");
 
+function getId(){
+  return params.get("id");
+}
+
 if(edit === "TEST123"){
+
   document.body.insertAdjacentHTML("afterbegin", `
     <div style="
       position:fixed;
@@ -323,12 +244,14 @@ if(edit === "TEST123"){
       ✏️ Redigeringsmodus aktiv
     </div>
   `);
-}document.getElementById
+
   document.getElementById("editBtn").style.display = "inline-flex";
 
-document.getElementById("editBtn").href =
-"rediger-butikk.html?id=" + getId() + "&edit=" + edit;
+  document.getElementById("editBtn").href =
+    "rediger-butikk.html?id=" + getId() + "&edit=" + edit;
+}
 
+</script>
 </script>
 
 </body>
