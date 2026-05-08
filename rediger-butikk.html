@@ -5,20 +5,29 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Rediger butikk</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 body{font-family:Arial;background:#eef4ff;padding:20px;}
-.card{max-width:700px;margin:auto;background:white;padding:25px;border-radius:24px;}
-input,textarea{width:100%;padding:14px;margin:8px 0 16px;border-radius:12px;border:1px solid #ccc;}
-button{padding:15px 22px;background:#2563eb;color:white;border:0;border-radius:14px;font-weight:bold;}
-#status{font-weight:bold;margin:15px 0;color:#2563eb;}
+.card{max-width:760px;margin:auto;background:white;padding:25px;border-radius:24px;box-shadow:0 8px 25px rgba(0,0,0,.1);}
+input,textarea{width:100%;padding:14px;margin:8px 0 16px;border-radius:12px;border:1px solid #ccc;box-sizing:border-box;}
+button{padding:15px 22px;background:#2563eb;color:white;border:0;border-radius:14px;font-weight:bold;margin-top:10px;}
+#status{font-weight:bold;margin:15px 0;}
+.logo-preview{width:130px;height:130px;object-fit:cover;border-radius:18px;background:#f1f5f9;}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:12px;}
+.gallery img{width:100%;height:120px;object-fit:cover;border-radius:14px;}
 </style>
 </head>
 
 <body>
+
 <div class="card">
 <h1>✏️ Rediger butikk</h1>
 
 <div id="status">Laster butikk...</div>
+
+<h3>Logo</h3>
+<img id="logoPreview" class="logo-preview">
+<input type="file" id="logoFile" accept="image/*">
 
 <label>Butikknavn</label>
 <input id="name">
@@ -31,6 +40,11 @@ button{padding:15px 22px;background:#2563eb;color:white;border:0;border-radius:1
 
 <label>Facebook / Nettside</label>
 <input id="website">
+
+<h3>Bilder til butikksiden</h3>
+<input type="file" id="galleryFiles" accept="image/*" multiple>
+
+<div id="gallery" class="gallery"></div>
 
 <button onclick="saveShop()">💾 Lagre endringer</button>
 </div>
@@ -45,59 +59,158 @@ const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 const edit = params.get("edit");
 
-function statusText(text, color="black"){
+let currentShop = null;
+let galleryUrls = [];
+
+function setStatus(text, color="black"){
   const el = document.getElementById("status");
   el.textContent = text;
   el.style.color = color;
 }
 
-if(edit !== "TEST123"){
-  statusText("Ingen tilgang. Feil redigeringskode.", "crimson");
-} else if(!id){
-  statusText("Mangler butikk-ID i adressen.", "crimson");
-} else {
-  loadShop();
+function cleanFileName(name){
+  return String(name || "bilde.jpg").replace(/[^a-zA-Z0-9._-]/g, "_");
+}
+
+async function uploadFile(file, folder){
+  const fileName = Date.now() + "-" + cleanFileName(file.name);
+  const filePath = folder + "/" + fileName;
+
+  const { error } = await supabaseClient.storage
+    .from("story-images")
+    .upload(filePath, file);
+
+  if(error){
+    throw new Error(error.message);
+  }
+
+  const { data } = supabaseClient.storage
+    .from("story-images")
+    .getPublicUrl(filePath);
+
+  return data.publicUrl;
+}
+
+function showGallery(){
+  const box = document.getElementById("gallery");
+
+  if(!galleryUrls || galleryUrls.length === 0){
+    box.innerHTML = "<p>Ingen bilder lagt inn enda.</p>";
+    return;
+  }
+
+  box.innerHTML = galleryUrls.map(url => `
+    <img src="${url}" alt="Butikkbilde">
+  `).join("");
 }
 
 async function loadShop(){
+  if(edit !== "TEST123"){
+    setStatus("Ingen tilgang. Feil redigeringskode.", "crimson");
+    return;
+  }
+
+  if(!id){
+    setStatus("Mangler butikk-ID.", "crimson");
+    return;
+  }
+
   const { data, error } = await supabaseClient
     .from("businesses")
     .select("*")
     .eq("id", id)
     .single();
 
-  if(error){
-    statusText("Feil ved henting: " + error.message, "crimson");
+  if(error || !data){
+    setStatus("Fant ikke butikk.", "crimson");
+    console.log(error);
     return;
   }
+
+  currentShop = data;
 
   document.getElementById("name").value = data.name || "";
   document.getElementById("description").value = data.description || "";
   document.getElementById("phone").value = data.phone || "";
   document.getElementById("website").value = data.website || "";
+  document.getElementById("logoPreview").src = data.logo_url || "";
 
-  statusText("Butikk hentet: " + data.name, "green");
+  galleryUrls = data.gallery_urls || [];
+
+  if(typeof galleryUrls === "string"){
+    try{
+      galleryUrls = JSON.parse(galleryUrls);
+    }catch(e){
+      galleryUrls = [];
+    }
+  }
+
+  showGallery();
+  setStatus("Butikk hentet: " + data.name, "green");
 }
 
 async function saveShop(){
-  const { error } = await supabaseClient
-    .from("businesses")
-    .update({
-      name: document.getElementById("name").value,
-      description: document.getElementById("description").value,
-      phone: document.getElementById("phone").value,
-      website: document.getElementById("website").value
-    })
-    .eq("id", id);
-
-  if(error){
-    statusText("Feil ved lagring: " + error.message, "crimson");
+  if(!currentShop){
+    alert("Butikken er ikke lastet inn.");
     return;
   }
 
-  statusText("Endringer lagret 😊", "green");
-  alert("Endringer lagret 😊");
+  try{
+    setStatus("Lagrer ...", "#2563eb");
+
+    let logoUrl = currentShop.logo_url || "";
+
+    const logoFile = document.getElementById("logoFile").files[0];
+
+    if(logoFile){
+      setStatus("Laster opp logo ...", "#2563eb");
+      logoUrl = await uploadFile(logoFile, "butikk-logo");
+    }
+
+    const files = document.getElementById("galleryFiles").files;
+
+    if(files && files.length > 0){
+      setStatus("Laster opp bilder ...", "#2563eb");
+
+      for(let i = 0; i < files.length; i++){
+        const url = await uploadFile(files[i], "butikk-bilder");
+        galleryUrls.push(url);
+      }
+    }
+
+    const { error } = await supabaseClient
+      .from("businesses")
+      .update({
+        name: document.getElementById("name").value.trim(),
+        description: document.getElementById("description").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        website: document.getElementById("website").value.trim(),
+        logo_url: logoUrl,
+        gallery_urls: galleryUrls
+      })
+      .eq("id", id);
+
+    if(error){
+      setStatus("Feil ved lagring: " + error.message, "crimson");
+      return;
+    }
+
+    document.getElementById("logoPreview").src = logoUrl;
+    document.getElementById("logoFile").value = "";
+    document.getElementById("galleryFiles").value = "";
+
+    showGallery();
+
+    setStatus("Endringer lagret 😊", "green");
+    alert("Endringer lagret 😊");
+
+  }catch(err){
+    setStatus("Feil: " + err.message, "crimson");
+    alert("Feil: " + err.message);
+  }
 }
+
+loadShop();
 </script>
 
 </body>
