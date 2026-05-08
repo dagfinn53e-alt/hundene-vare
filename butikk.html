@@ -323,7 +323,10 @@ if(edit === "TEST123"){
       ✏️ Redigeringsmodus aktiv
     </div>
   `);
-}
+}document.getElementById("editBtn").style.display = "inline-flex";
+
+document.getElementById("editBtn").href =
+"rediger-butikk.html?id=" + business.id + "&edit=" + edit;
 </script>
 
 </body>
