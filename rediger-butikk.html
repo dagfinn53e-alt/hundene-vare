@@ -1,178 +1,225 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rediger butikk</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-  <style>
-    body{font-family:Arial,sans-serif;background:#eef6ff;margin:0;padding:20px;color:#0f172a;}
-    .box{max-width:760px;margin:auto;background:white;padding:25px;border-radius:24px;box-shadow:0 8px 25px rgba(0,0,0,.1);}
-    input,textarea{width:100%;padding:14px;margin:8px 0 16px;border-radius:14px;border:1px solid #cbd5e1;box-sizing:border-box;}
-    button{width:100%;padding:15px;border:0;border-radius:14px;background:#2563eb;color:white;font-weight:bold;font-size:16px;margin-top:8px;}
-    .status{text-align:center;font-weight:bold;margin-top:15px;}
-    .preview img{width:120px;height:120px;object-fit:cover;border-radius:14px;margin:8px;}
-  </style>
+<title>Rediger butikk</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+body{
+  margin:0;
+  padding:20px;
+  font-family:Arial;
+  background:#eef4ff;
+}
+
+.wrap{
+  max-width:700px;
+  margin:auto;
+}
+
+.card{
+  background:#fff;
+  border-radius:24px;
+  padding:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+h1{
+  margin-top:0;
+}
+
+label{
+  display:block;
+  margin-top:18px;
+  margin-bottom:8px;
+  font-weight:bold;
+}
+
+input,textarea{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid #dbe4ff;
+  box-sizing:border-box;
+  font-size:16px;
+}
+
+textarea{
+  min-height:140px;
+  resize:vertical;
+}
+
+button{
+  margin-top:20px;
+  border:none;
+  background:#2563eb;
+  color:#fff;
+  padding:16px 22px;
+  border-radius:16px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:.9;
+}
+
+.status{
+  margin-top:20px;
+  font-weight:bold;
+}
+
+.preview{
+  width:120px;
+  height:120px;
+  border-radius:20px;
+  object-fit:cover;
+  display:block;
+  margin-bottom:15px;
+  background:#f3f4f6;
+}
+
+</style>
 </head>
 
 <body>
 
-<div class="box">
-  <h1>🐶 Rediger butikk</h1>
+<div class="wrap">
+  <div class="card">
 
-  <label>Butikk-kode</label>
-  <input id="editCode" placeholder="Skriv butikkens kode">
+    <h1>✏️ Rediger butikk</h1>
 
-  <button onclick="loadShop()">Hent butikk</button>
+    <img id="preview" class="preview">
 
-  <div id="form" style="display:none;">
+    <label>Logo URL</label>
+    <input id="logo">
+
+    <label>Butikknavn</label>
+    <input id="name">
+
     <label>Beskrivelse</label>
     <textarea id="description"></textarea>
 
     <label>Telefon</label>
     <input id="phone">
 
-    <label>Facebook / Nettside</label>
+    <label>Nettside / Facebook</label>
     <input id="website">
 
-    <label>Last opp nye bilder</label>
-    <input type="file" id="images" accept="image/*" multiple>
+    <button id="saveBtn">
+      💾 Lagre endringer
+    </button>
 
-    <button onclick="saveShop()">Lagre endringer</button>
+    <div class="status" id="status"></div>
 
-    <h3>Bilder</h3>
-    <div id="preview" class="preview"></div>
   </div>
-
-  <div id="status" class="status">Klar.</div>
 </div>
 
 <script>
-const supabaseClient = window.supabase.createClient(
-  "https://kxudiviidwwwclbzgdyx.supabase.co",
-  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+
+const SUPABASE_URL = "DIN_SUPABASE_URL";
+const SUPABASE_KEY = "DIN_SUPABASE_ANON_KEY";
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
-let currentShop = null;
-let galleryUrls = [];
+const params = new URLSearchParams(window.location.search);
 
-function setStatus(text, color="black"){
-  const s = document.getElementById("status");
-  s.textContent = text;
-  s.style.color = color;
+const id = params.get("id");
+const edit = params.get("edit");
+
+if(edit !== "TEST123"){
+  document.body.innerHTML = "<h1>Ingen tilgang</h1>";
 }
 
-function cleanFileName(name){
-  return String(name || "bilde.jpg").replace(/[^a-zA-Z0-9._-]/g, "_");
-}
+let business = null;
 
-async function uploadFile(file){
-  const fileName = Date.now() + "-" + cleanFileName(file.name);
-  const filePath = "butikk-bilder/" + fileName;
+async function loadBusiness(){
 
-  const { error } = await supabaseClient.storage
-    .from("story-images")
-    .upload(filePath, file);
-
-  if(error) throw new Error(error.message);
-
-  const { data } = supabaseClient.storage
-    .from("story-images")
-    .getPublicUrl(filePath);
-
-  return data.publicUrl;
-}
-
-function showImages(){
-  document.getElementById("preview").innerHTML = galleryUrls.map(url =>
-    `<img src="${url}">`
-  ).join("");
-}
-
-async function loadShop(){
-  const code = document.getElementById("editCode").value.trim();
-
-  if(!code){
-    alert("Skriv inn butikk-kode");
-    return;
-  }
-
-  setStatus("Henter butikk ...", "#2563eb");
-
-  const { data, error } = await supabaseClient
+  const { data,error } = await supabase
     .from("businesses")
     .select("*")
-    .eq("edit_code", code)
+    .eq("id",id)
     .single();
 
-  if(error || !data){
-    setStatus("Fant ikke butikk med denne koden.", "crimson");
+  if(error){
+    console.log(error);
     return;
   }
 
-  currentShop = data;
+  business = data;
 
-  document.getElementById("description").value = data.description || "";
-  document.getElementById("phone").value = data.phone || "";
-  document.getElementById("website").value = data.website || "";
+  document.getElementById("logo").value =
+    business.logo_url || "";
 
-  galleryUrls = data.gallery_urls || [];
+  document.getElementById("name").value =
+    business.name || "";
 
-  if(typeof galleryUrls === "string"){
-    try{ galleryUrls = JSON.parse(galleryUrls); }
-    catch(e){ galleryUrls = []; }
-  }
+  document.getElementById("description").value =
+    business.description || "";
 
-  showImages();
+  document.getElementById("phone").value =
+    business.phone || "";
 
-  document.getElementById("form").style.display = "block";
-  setStatus("Butikk hentet: " + data.name, "green");
+  document.getElementById("website").value =
+    business.website || "";
+
+  document.getElementById("preview").src =
+    business.logo_url || "";
 }
 
-async function saveShop(){
-  if(!currentShop){
-    alert("Hent butikk først");
+loadBusiness();
+
+document.getElementById("saveBtn")
+.addEventListener("click", async()=>{
+
+  const updates = {
+
+    logo_url:
+      document.getElementById("logo").value,
+
+    name:
+      document.getElementById("name").value,
+
+    description:
+      document.getElementById("description").value,
+
+    phone:
+      document.getElementById("phone").value,
+
+    website:
+      document.getElementById("website").value
+
+  };
+
+  const { error } = await supabase
+    .from("businesses")
+    .update(updates)
+    .eq("id",id);
+
+  if(error){
+
+    document.getElementById("status").innerHTML =
+      "❌ Feil ved lagring";
+
+    console.log(error);
+
     return;
   }
 
-  try{
-    setStatus("Laster opp bilder ...", "#2563eb");
+  document.getElementById("status").innerHTML =
+    "✅ Lagret!";
 
-    const files = document.getElementById("images").files;
+});
 
-    for(let i=0; i<files.length; i++){
-      const url = await uploadFile(files[i]);
-      galleryUrls.push(url);
-    }
-
-    setStatus("Lagrer endringer ...", "#2563eb");
-
-    const { error } = await supabaseClient
-      .from("businesses")
-      .update({
-        description: document.getElementById("description").value.trim(),
-        phone: document.getElementById("phone").value.trim(),
-        website: document.getElementById("website").value.trim(),
-        gallery_urls: galleryUrls
-      })
-      .eq("id", currentShop.id);
-
-    if(error){
-      setStatus("Feil: " + error.message, "crimson");
-      return;
-    }
-
-    showImages();
-    document.getElementById("images").value = "";
-    setStatus("Endringer lagret 😊", "green");
-    alert("Endringer lagret 😊");
-
-  }catch(err){
-    setStatus("Feil: " + err.message, "crimson");
-    alert("Feil: " + err.message);
-  }
-}
 </script>
 
 </body>
