@@ -85,6 +85,7 @@
     .blue{background:#2563eb;}
     .green{background:#16a34a;}
     .purple{background:#7c3aed;}
+    .dark{background:#111827;}
 
     .card{
       background:white;
@@ -123,8 +124,8 @@
       height:220px;
       object-fit:cover;
       border-radius:18px;
-      box-shadow:0 8px 20px rgba(0,0,0,.12);
       background:#f1f5f9;
+      box-shadow:0 8px 20px rgba(0,0,0,.12);
     }
 
     .status{
@@ -140,7 +141,7 @@
 
 <div class="page">
 
-  <a class="back" href="index.html">← Tilbake</a>
+  <a class="back" href="butikker.html">← Tilbake</a>
 
   <div id="status" class="status">Laster butikk ...</div>
 
@@ -155,31 +156,8 @@
         <a id="mapBtn" class="btn blue" target="_blank">📍 Åpne kart</a>
         <a id="phoneBtn" class="btn green">📞 Ring</a>
         <a id="webBtn" class="btn purple" target="_blank">Facebook / Nettside</a>
-        <a id="editBtn" class="btn blue" style="display:none;background:#111;">
-✏️ Rediger butikk
-</a>
+        <a id="editBtn" class="btn dark" style="display:none;">✏️ Rediger butikk</a>
       </div>
-      
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-</div>
     </div>
 
     <div class="card">
@@ -217,57 +195,96 @@
 </div>
 
 <script>
- <script>
+  const supabaseClient = window.supabase.createClient(
+    "https://kxudiviidwwwclbzgdyx.supabase.co",
+    "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+  );
 
-const params = new URLSearchParams(window.location.search);
-const edit = params.get("edit");
+  const params = new URLSearchParams(window.location.search);
+  const shopId = params.get("id");
+  const editCode = params.get("edit");
 
-function getId(){
-  return params.get("id");
-}
-
-if(edit === "TEST123"){
-
-  if(edit === "TEST123"){
-  document.body.insertAdjacentHTML("afterbegin", `
-    <div style="
-      position:fixed;
-      bottom:20px;
-      right:20px;
-      background:#2563eb;
-      color:white;
-      padding:14px 20px;
-      border-radius:14px;
-      font-weight:bold;
-      z-index:9999;
-      box-shadow:0 10px 25px rgba(0,0,0,.2);
-    ">
-      ✏️ Redigeringsmodus aktiv
-    </div>
-  `);
-
-  const editButton = document.getElementById("editBtn");
-
-  if(editButton){
-    editButton.style.display = "inline-flex";
-    editButton.href = "rediger-butikk.html?id=" + getId() + "&edit=TEST123";
+  function safeText(value){
+    return value || "";
   }
-}
-    </div>
-  `);
 
-  document.getElementById("editBtn").style.display = "inline-flex";
+  async function loadShop(){
+    if(!shopId){
+      document.getElementById("status").textContent = "Mangler butikk-ID.";
+      return;
+    }
 
-  if(edit === "TEST123"){
-  document.getElementById("editBtn").style.display = "inline-flex";
+    const { data, error } = await supabaseClient
+      .from("businesses")
+      .select("*")
+      .eq("id", shopId)
+      .single();
 
-  document.getElementById("editBtn").href =
-  "rediger-butikk.html?id=" + id + "&edit=TEST123";
-}
-  
-}
+    if(error || !data){
+      document.getElementById("status").textContent = "Fant ikke butikken.";
+      console.log(error);
+      return;
+    }
 
-</script>
+    document.title = data.name || "Butikkside";
+
+    document.getElementById("name").textContent = safeText(data.name);
+    document.getElementById("description").textContent = safeText(data.description);
+    document.getElementById("address").textContent = safeText(data.place || data.address);
+    document.getElementById("type").textContent = safeText(data.type);
+    document.getElementById("region").textContent = safeText(data.region);
+    document.getElementById("phone").textContent = safeText(data.phone);
+
+    document.getElementById("logo").src =
+      data.logo_url || "https://placehold.co/300x300?text=Logo";
+
+    const address = data.place || data.address || "";
+    document.getElementById("mapBtn").href =
+      "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
+
+    document.getElementById("phoneBtn").href =
+      "tel:" + safeText(data.phone).replace(/\s/g, "");
+
+    const webBtn = document.getElementById("webBtn");
+    if(data.website){
+      webBtn.href = data.website;
+      webBtn.style.display = "inline-block";
+    }else{
+      webBtn.style.display = "none";
+    }
+
+    const editBtn = document.getElementById("editBtn");
+    if(editCode === "TEST123"){
+      editBtn.style.display = "inline-block";
+      editBtn.href = "rediger-butikk.html?id=" + shopId + "&edit=TEST123";
+    }
+
+    let images = data.gallery_urls || [];
+
+    if(typeof images === "string"){
+      try{
+        images = JSON.parse(images);
+      }catch(e){
+        images = [];
+      }
+    }
+
+    const gallery = document.getElementById("gallery");
+    const galleryCard = document.getElementById("galleryCard");
+
+    if(images && images.length > 0){
+      gallery.innerHTML = images.map(url => `
+        <img src="${url}" alt="Butikkbilde">
+      `).join("");
+    }else{
+      galleryCard.style.display = "none";
+    }
+
+    document.getElementById("status").style.display = "none";
+    document.getElementById("content").style.display = "block";
+  }
+
+  loadShop();
 </script>
 
 </body>
