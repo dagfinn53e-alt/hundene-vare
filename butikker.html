@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Butikker</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body{font-family:Arial,sans-serif;background:#eef6ff;margin:0;padding:20px;color:#0f172a;}
+    .page{max-width:1100px;margin:auto;}
+    .back{display:inline-block;margin-bottom:18px;text-decoration:none;background:white;color:#2563eb;padding:12px 18px;border-radius:999px;font-weight:bold;border:1px solid #bfdbfe;}
+    h1{text-align:center;color:#1e3a8a;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:25px;}
+    .card{background:white;border-radius:22px;padding:20px;box-shadow:0 8px 25px rgba(0,0,0,0.08);}
+    .logo{width:90px;height:90px;object-fit:cover;border-radius:18px;background:#f1f5f9;}
+    .type{color:#64748b;font-weight:bold;margin-top:8px;}
+    .desc{color:#334155;line-height:1.5;}
+    .btn{display:inline-block;margin-top:12px;text-decoration:none;background:#2563eb;color:white;padding:12px 16px;border-radius:14px;font-weight:bold;}
+    .status{text-align:center;margin-top:30px;font-weight:bold;color:#475569;}
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+  <a class="back" href="index.html">← Tilbake til forsiden</a>
+
+  <h1>🐶 Butikker og tjenester</h1>
+
+  <div id="status" class="status">Laster butikker ...</div>
+  <div id="grid" class="grid"></div>
+</div>
+
+<script>
+  const supabaseClient = window.supabase.createClient(
+    "https://kxudiviidwwwclbzgdyx.supabase.co",
+    "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+  );
+
+  async function loadBusinesses(){
+    const { data, error } = await supabaseClient
+      .from("businesses")
+      .select("*")
+      .eq("approved", true)
+      .order("created_at", { ascending:false });
+
+    if(error){
+      document.getElementById("status").textContent = "Feil: " + error.message;
+      return;
+    }
+
+    if(!data || data.length === 0){
+      document.getElementById("status").textContent = "Ingen godkjente butikker funnet.";
+      return;
+    }
+
+    document.getElementById("status").style.display = "none";
+
+    document.getElementById("grid").innerHTML = data.map(b => `
+      <div class="card">
+        <img class="logo" src="${b.logo_url || 'https://placehold.co/200x200?text=Logo'}" alt="Logo">
+        <h2>${b.name || ''}</h2>
+        <div class="type">${b.type || ''} • ${b.region || ''}</div>
+        <p class="desc">${b.description || ''}</p>
+        <a class="btn" href="butikk.html?id=${b.id}">Se butikkside</a>
+      </div>
+    `).join("");
+  }
+
+  loadBusinesses();
+</script>
+
+</body>
+</html>
