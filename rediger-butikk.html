@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rediger butikk</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body{font-family:Arial,sans-serif;background:#eef6ff;margin:0;padding:20px;color:#0f172a;}
+    .box{max-width:760px;margin:auto;background:white;padding:25px;border-radius:24px;box-shadow:0 8px 25px rgba(0,0,0,.1);}
+    input,textarea{width:100%;padding:14px;margin:8px 0 16px;border-radius:14px;border:1px solid #cbd5e1;box-sizing:border-box;}
+    button{width:100%;padding:15px;border:0;border-radius:14px;background:#2563eb;color:white;font-weight:bold;font-size:16px;margin-top:8px;}
+    .status{text-align:center;font-weight:bold;margin-top:15px;}
+    .preview img{width:120px;height:120px;object-fit:cover;border-radius:14px;margin:8px;}
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h1>🐶 Rediger butikk</h1>
+
+  <label>Butikk-kode</label>
+  <input id="editCode" placeholder="Skriv butikkens kode">
+
+  <button onclick="loadShop()">Hent butikk</button>
+
+  <div id="form" style="display:none;">
+    <label>Beskrivelse</label>
+    <textarea id="description"></textarea>
+
+    <label>Telefon</label>
+    <input id="phone">
+
+    <label>Facebook / Nettside</label>
+    <input id="website">
+
+    <label>Last opp nye bilder</label>
+    <input type="file" id="images" accept="image/*" multiple>
+
+    <button onclick="saveShop()">Lagre endringer</button>
+
+    <h3>Bilder</h3>
+    <div id="preview" class="preview"></div>
+  </div>
+
+  <div id="status" class="status">Klar.</div>
+</div>
+
+<script>
+const supabaseClient = window.supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+let currentShop = null;
+let galleryUrls = [];
+
+function setStatus(text, color="black"){
+  const s = document.getElementById("status");
+  s.textContent = text;
+  s.style.color = color;
+}
+
+function cleanFileName(name){
+  return String(name || "bilde.jpg").replace(/[^a-zA-Z0-9._-]/g, "_");
+}
+
+async function uploadFile(file){
+  const fileName = Date.now() + "-" + cleanFileName(file.name);
+  const filePath = "butikk-bilder/" + fileName;
+
+  const { error } = await supabaseClient.storage
+    .from("story-images")
+    .upload(filePath, file);
+
+  if(error) throw new Error(error.message);
+
+  const { data } = supabaseClient.storage
+    .from("story-images")
+    .getPublicUrl(filePath);
+
+  return data.publicUrl;
+}
+
+function showImages(){
+  document.getElementById("preview").innerHTML = galleryUrls.map(url =>
+    `<img src="${url}">`
+  ).join("");
+}
+
+async function loadShop(){
+  const code = document.getElementById("editCode").value.trim();
+
+  if(!code){
+    alert("Skriv inn butikk-kode");
+    return;
+  }
+
+  setStatus("Henter butikk ...", "#2563eb");
+
+  const { data, error } = await supabaseClient
+    .from("businesses")
+    .select("*")
+    .eq("edit_code", code)
+    .single();
+
+  if(error || !data){
+    setStatus("Fant ikke butikk med denne koden.", "crimson");
+    return;
+  }
+
+  currentShop = data;
+
+  document.getElementById("description").value = data.description || "";
+  document.getElementById("phone").value = data.phone || "";
+  document.getElementById("website").value = data.website || "";
+
+  galleryUrls = data.gallery_urls || [];
+
+  if(typeof galleryUrls === "string"){
+    try{ galleryUrls = JSON.parse(galleryUrls); }
+    catch(e){ galleryUrls = []; }
+  }
+
+  showImages();
+
+  document.getElementById("form").style.display = "block";
+  setStatus("Butikk hentet: " + data.name, "green");
+}
+
+async function saveShop(){
+  if(!currentShop){
+    alert("Hent butikk først");
+    return;
+  }
+
+  try{
+    setStatus("Laster opp bilder ...", "#2563eb");
+
+    const files = document.getElementById("images").files;
+
+    for(let i=0; i<files.length; i++){
+      const url = await uploadFile(files[i]);
+      galleryUrls.push(url);
+    }
+
+    setStatus("Lagrer endringer ...", "#2563eb");
+
+    const { error } = await supabaseClient
+      .from("businesses")
+      .update({
+        description: document.getElementById("description").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        website: document.getElementById("website").value.trim(),
+        gallery_urls: galleryUrls
+      })
+      .eq("id", currentShop.id);
+
+    if(error){
+      setStatus("Feil: " + error.message, "crimson");
+      return;
+    }
+
+    showImages();
+    document.getElementById("images").value = "";
+    setStatus("Endringer lagret 😊", "green");
+    alert("Endringer lagret 😊");
+
+  }catch(err){
+    setStatus("Feil: " + err.message, "crimson");
+    alert("Feil: " + err.message);
+  }
+}
+</script>
+
+</body>
+</html>
