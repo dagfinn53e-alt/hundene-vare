@@ -2,7 +2,6 @@
 <html lang="no">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Test</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -24,25 +23,8 @@ const params = new URLSearchParams(window.location.search);
 
 const id = params.get("id");
 
-async function test(){
-
-  const { data, error } = await supabase
-    .from("businesses")
-    .select("*")
-    .eq("id", id)
-    .single();
-
-  if(error){
-    document.getElementById("status").innerHTML =
-    "FEIL: " + error.message;
-    return;
-  }
-
-  document.getElementById("status").innerHTML =
-  "FUNKER 😍 " + data.name;
-}
-
-test();
+document.getElementById("status").innerHTML =
+"ID fra link: " + id;
 
 </script>
 
