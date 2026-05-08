@@ -156,6 +156,10 @@
         <a id="mapBtn" class="btn blue" target="_blank">📍 Åpne kart</a>
         <a id="phoneBtn" class="btn green">📞 Ring</a>
         <a id="webBtn" class="btn purple" target="_blank">Facebook / Nettside</a>
+        <a id="reelBtn" class="btn" target="_blank"
+style="display:none;background:#ff0066;color:white;">
+🎥 Se Reel
+</a>
         <a id="editBtn" class="btn dark" style="display:none;">✏️ Rediger butikk</a>
       </div>
     </div>
@@ -247,6 +251,10 @@
 
     const webBtn = document.getElementById("webBtn");
     if(data.website){
+      if(data.reel_url){
+  document.getElementById("reelBtn").style.display = "inline-flex";
+  document.getElementById("reelBtn").href = data.reel_url;
+}
       webBtn.href = data.website;
       webBtn.style.display = "inline-block";
     }else{
