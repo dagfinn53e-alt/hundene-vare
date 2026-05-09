@@ -107,6 +107,19 @@ button:hover{
 <div class="card">
 
 <h1>✏️ Rediger butikk</h1>
+  <a id="backBtn"
+style="
+display:inline-block;
+margin-bottom:20px;
+text-decoration:none;
+background:#e5e7eb;
+padding:10px 16px;
+border-radius:12px;
+font-weight:bold;
+color:#111;
+">
+← Tilbake til butikksiden
+</a>
 
 <div id="status" class="status">
 Laster butikk...
@@ -160,7 +173,8 @@ const supabaseClient = window.supabase.createClient(
 const params = new URLSearchParams(window.location.search);
 
 const id = params.get("id");
-
+document.getElementById("backBtn").href =
+"butikk.html?id=" + id + "&edit=TEST123";
 let shop = null;
 let galleryUrls = [];
 
