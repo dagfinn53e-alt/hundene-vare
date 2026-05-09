@@ -204,7 +204,11 @@ style="display:none;background:#ff0066;color:white;">
     "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
   );
 
-  const params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(window.location.search)
+  const editCode = params.get("edit");
+
+const isEditMode =
+  editCode === "TEST123";
   const shopId = params.get("id");
   const editCode = params.get("edit");
 
@@ -291,7 +295,18 @@ style="display:none;background:#ff0066;color:white;">
     document.getElementById("status").style.display = "none";
     document.getElementById("content").style.display = "block";
   }
+const editBtn =
+  document.getElementById("editBtn");
 
+if(editBtn && isEditMode){
+
+  editBtn.style.display = "inline-flex";
+
+  editBtn.href =
+    "rediger-butikk.html?id=" +
+    shopId +
+    "&edit=TEST123";
+}
   loadShop();
 </script>
 
