@@ -266,9 +266,14 @@ const isEditMode =
     }
 
     const editBtn = document.getElementById("editBtn");
-    if(editCode === "TEST123"){
-      editBtn.style.display = "inline-block";
-      editBtn.href = "rediger-butikk.html?id=" + data.id + "&edit=TEST123";
+
+if(editBtn && editCode === "TEST123"){
+  editBtn.style.display = "inline-block";
+  editBtn.href =
+    "rediger-butikk.html?id=" +
+    new URLSearchParams(window.location.search).get("id") +
+    "&edit=TEST123";
+}
     }
 
     let images = data.gallery_urls || [];
