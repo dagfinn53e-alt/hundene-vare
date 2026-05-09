@@ -1,308 +1,290 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Butikkside</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Butikkside</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    body{
-      font-family:Arial,sans-serif;
-      background:#eaf4ff;
-      margin:0;
-      padding:20px;
-      color:#0f172a;
-    }
-
-    .page{
-      max-width:1000px;
-      margin:auto;
-    }
-
-    .back{
-      display:inline-block;
-      margin-bottom:18px;
-      text-decoration:none;
-      background:white;
-      color:#2563eb;
-      padding:12px 18px;
-      border-radius:999px;
-      font-weight:bold;
-      border:1px solid #bfdbfe;
-    }
-
-    .hero{
-      background:white;
-      border-radius:28px;
-      padding:30px;
-      text-align:center;
-      box-shadow:0 8px 25px rgba(0,0,0,0.08);
-      margin-bottom:22px;
-    }
-
-    .logo{
-      width:140px;
-      height:140px;
-      object-fit:cover;
-      border-radius:24px;
-      background:#f1f5f9;
-      margin-bottom:15px;
-    }
-
-    h1{
-      margin:8px 0;
-      font-size:34px;
-      color:#0f172a;
-    }
-
-    .desc{
-      max-width:800px;
-      margin:15px auto;
-      line-height:1.6;
-      color:#334155;
-      font-size:17px;
-    }
-
-    .buttons{
-      display:flex;
-      justify-content:center;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top:20px;
-    }
-
-    .btn{
-      text-decoration:none;
-      padding:12px 18px;
-      border-radius:14px;
-      color:white;
-      font-weight:bold;
-      display:inline-block;
-    }
-
-    .blue{background:#2563eb;}
-    .green{background:#16a34a;}
-    .purple{background:#7c3aed;}
-    .dark{background:#111827;}
-
-    .card{
-      background:white;
-      border-radius:24px;
-      padding:24px;
-      box-shadow:0 8px 25px rgba(0,0,0,0.08);
-      margin-bottom:22px;
-    }
-
-    .info-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-      gap:15px;
-    }
-
-    .info-box{
-      background:#f8fafc;
-      padding:16px;
-      border-radius:18px;
-    }
-
-    .info-box strong{
-      display:block;
-      margin-bottom:8px;
-      color:#334155;
-    }
-
-    .gallery{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-      gap:15px;
-    }
-
-    .gallery img{
-      width:100%;
-      height:220px;
-      object-fit:cover;
-      border-radius:18px;
-      background:#f1f5f9;
-      box-shadow:0 8px 20px rgba(0,0,0,.12);
-    }
-
-    .status{
-      text-align:center;
-      font-weight:bold;
-      margin-top:40px;
-      color:#475569;
-    }
-  </style>
+<style>
+body{
+  margin:0;
+  padding:20px;
+  font-family:Arial,sans-serif;
+  background:#eaf4ff;
+  color:#0f172a;
+}
+.page{
+  max-width:1000px;
+  margin:auto;
+}
+.back{
+  display:inline-block;
+  margin-bottom:18px;
+  padding:12px 18px;
+  border-radius:999px;
+  background:white;
+  color:#2563eb;
+  text-decoration:none;
+  font-weight:bold;
+}
+.card{
+  background:white;
+  border-radius:28px;
+  padding:28px;
+  margin-bottom:22px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+.hero{
+  text-align:center;
+}
+.logo{
+  width:140px;
+  height:140px;
+  object-fit:cover;
+  border-radius:24px;
+  background:#f1f5f9;
+}
+h1{
+  font-size:34px;
+  margin:16px 0 10px;
+}
+.desc{
+  max-width:780px;
+  margin:auto;
+  line-height:1.6;
+  color:#334155;
+}
+.buttons{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:22px;
+}
+.btn{
+  display:inline-block;
+  padding:12px 18px;
+  border-radius:14px;
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+}
+.blue{background:#2563eb;}
+.green{background:#16a34a;}
+.purple{background:#7c3aed;}
+.dark{background:#111827;}
+.reel{background:#ff0066;}
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+}
+.info-box{
+  background:#f8fafc;
+  padding:16px;
+  border-radius:18px;
+}
+.info-box strong{
+  display:block;
+  margin-bottom:8px;
+}
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+}
+.gallery img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  border-radius:18px;
+  box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+.status{
+  text-align:center;
+  font-weight:bold;
+  margin-top:40px;
+}
+</style>
 </head>
 
 <body>
 
 <div class="page">
 
-  <a class="back" href="butikker.html">← Tilbake</a>
+<a class="back" href="butikker.html">← Tilbake</a>
 
-  <div id="status" class="status">Laster butikk ...</div>
+<div id="status" class="status">Laster butikk ...</div>
 
-  <div id="content" style="display:none;">
+<div id="content" style="display:none;">
 
-    <div class="hero">
-      <img id="logo" class="logo" src="" alt="Logo">
-      <h1 id="name"></h1>
-      <p id="description" class="desc"></p>
+  <div class="card hero">
+    <img id="logo" class="logo" alt="Logo">
 
-      <div class="buttons">
-        <a id="mapBtn" class="btn blue" target="_blank">📍 Åpne kart</a>
-        <a id="phoneBtn" class="btn green">📞 Ring</a>
-        <a id="webBtn" class="btn purple" target="_blank">Facebook / Nettside</a>
-        <a id="reelBtn" class="btn" target="_blank"
-style="display:none;background:#ff0066;color:white;">
-🎥 Se Reel
-</a>
-        <a id="editBtn" class="btn dark" style="display:none;">✏️ Rediger butikk</a>
+    <h1 id="name"></h1>
+
+    <p id="description" class="desc"></p>
+
+    <div class="buttons">
+      <a id="mapBtn" class="btn blue" target="_blank">📍 Åpne kart</a>
+      <a id="phoneBtn" class="btn green">📞 Ring</a>
+      <a id="webBtn" class="btn purple" target="_blank">Facebook / Nettside</a>
+      <a id="reelBtn" class="btn reel" target="_blank" style="display:none;">🎥 Se Reel</a>
+      <a id="editBtn" class="btn dark" style="display:none;">✏️ Rediger butikk</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Informasjon</h2>
+
+    <div class="info-grid">
+      <div class="info-box">
+        <strong>📍 Adresse</strong>
+        <span id="address"></span>
+      </div>
+
+      <div class="info-box">
+        <strong>🐶 Type</strong>
+        <span id="type"></span>
+      </div>
+
+      <div class="info-box">
+        <strong>🌍 Område</strong>
+        <span id="region"></span>
+      </div>
+
+      <div class="info-box">
+        <strong>📞 Kontakt</strong>
+        <span id="phone"></span>
       </div>
     </div>
+  </div>
 
-    <div class="card">
-      <h2>Informasjon</h2>
-      <div class="info-grid">
-        <div class="info-box">
-          <strong>📍 Adresse</strong>
-          <span id="address"></span>
-        </div>
-
-        <div class="info-box">
-          <strong>🐶 Type</strong>
-          <span id="type"></span>
-        </div>
-
-        <div class="info-box">
-          <strong>🌍 Område</strong>
-          <span id="region"></span>
-        </div>
-
-        <div class="info-box">
-          <strong>📞 Kontakt</strong>
-          <span id="phone"></span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" id="galleryCard">
-      <h2>Bilder</h2>
-      <div id="gallery" class="gallery"></div>
-    </div>
-
+  <div id="galleryCard" class="card">
+    <h2>Bilder</h2>
+    <div id="gallery" class="gallery"></div>
   </div>
 
 </div>
 
+</div>
+
 <script>
-  const supabaseClient = window.supabase.createClient(
-    "https://kxudiviidwwwclbzgdyx.supabase.co",
-    "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
-  );
+const supabaseClient = window.supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
 
-  const params = new URLSearchParams(window.location.search)
-  const editCode = params.get("edit");
+const params = new URLSearchParams(window.location.search);
+const businessId = params.get("id");
+const editCode = params.get("edit");
 
-const isEditMode =
-  editCode === "TEST123";
-  const shopId = params.get("id");
-  const editCode = params.get("edit");
+function txt(value){
+  return value || "";
+}
 
-  function safeText(value){
-    return value || "";
+function normalizeUrl(url){
+  if(!url) return "";
+  if(url.startsWith("http://") || url.startsWith("https://")) return url;
+  return "https://" + url;
+}
+
+function safeArray(value){
+  if(!value) return [];
+  if(Array.isArray(value)) return value;
+
+  try{
+    return JSON.parse(value);
+  }catch(e){
+    return [];
+  }
+}
+
+async function loadShop(){
+
+  if(!businessId){
+    document.getElementById("status").textContent = "Mangler butikk-ID.";
+    return;
   }
 
-  async function loadShop(){
-    if(!shopId){
-      document.getElementById("status").textContent = "Mangler butikk-ID.";
-      return;
-    }
+  const { data, error } = await supabaseClient
+    .from("businesses")
+    .select("*")
+    .eq("id", businessId)
+    .single();
 
-    const { data, error } = await supabaseClient
-      .from("businesses")
-      .select("*")
-      .eq("id", shopId)
-      .single();
-
-    if(error || !data){
-      document.getElementById("status").textContent = "Fant ikke butikken.";
-      console.log(error);
-      return;
-    }
-
-    document.title = data.name || "Butikkside";
-
-    document.getElementById("name").textContent = safeText(data.name);
-    document.getElementById("description").textContent = safeText(data.description);
-    document.getElementById("address").textContent = safeText(data.place || data.address);
-    document.getElementById("type").textContent = safeText(data.type);
-    document.getElementById("region").textContent = safeText(data.region);
-    document.getElementById("phone").textContent = safeText(data.phone);
-
-    document.getElementById("logo").src =
-      data.logo_url || "https://placehold.co/300x300?text=Logo";
-
-    const address = data.place || data.address || "";
-    document.getElementById("mapBtn").href =
-      "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
-
-    document.getElementById("phoneBtn").href =
-      "tel:" + safeText(data.phone).replace(/\s/g, "");
-
-    const webBtn = document.getElementById("webBtn");
-    if(data.website){
-      if(data.reel_url){
-  document.getElementById("reelBtn").style.display = "inline-flex";
-  document.getElementById("reelBtn").href = data.reel_url;
-}
-      webBtn.href = data.website;
-      webBtn.style.display = "inline-block";
-    }else{
-      webBtn.style.display = "none";
-    }
-
-    const editBtn = document.getElementById("editBtn");
-
-if(editBtn && editCode === "TEST123"){
-  editBtn.style.display = "inline-block";
-  editBtn.href =
-    "rediger-butikk.html?id=" +
-    new URLSearchParams(window.location.search).get("id") +
-    "&edit=TEST123";
-}
-    }
-
-    let images = data.gallery_urls || [];
-
-    if(typeof images === "string"){
-      try{
-        images = JSON.parse(images);
-      }catch(e){
-        images = [];
-      }
-    }
-
-    const gallery = document.getElementById("gallery");
-    const galleryCard = document.getElementById("galleryCard");
-
-    if(images && images.length > 0){
-      gallery.innerHTML = images.map(url => `
-        <img src="${url}" alt="Butikkbilde">
-      `).join("");
-    }else{
-      galleryCard.style.display = "none";
-    }
-
-    document.getElementById("status").style.display = "none";
-    document.getElementById("content").style.display = "block";
+  if(error || !data){
+    document.getElementById("status").textContent = "Fant ikke butikk.";
+    console.log(error);
+    return;
   }
 
+  document.title = data.name || "Butikkside";
+
+  document.getElementById("name").textContent = txt(data.name);
+  document.getElementById("description").textContent = txt(data.description);
+  document.getElementById("address").textContent = txt(data.address || data.place);
+  document.getElementById("type").textContent = txt(data.type);
+  document.getElementById("region").textContent = txt(data.region);
+  document.getElementById("phone").textContent = txt(data.phone);
+
+  document.getElementById("logo").src =
+    data.logo_url || "https://placehold.co/300x300?text=Logo";
+
+  const mapText =
+    data.address || data.place || data.name || "";
+
+  document.getElementById("mapBtn").href =
+    "https://www.google.com/maps/search/?api=1&query=" +
+    encodeURIComponent(mapText);
+
+  document.getElementById("phoneBtn").href =
+    "tel:" + txt(data.phone).replace(/\s/g,"");
+
+  const webBtn = document.getElementById("webBtn");
+
+  if(data.website){
+    webBtn.href = normalizeUrl(data.website);
+    webBtn.style.display = "inline-block";
+  }else{
+    webBtn.style.display = "none";
+  }
+
+  const reelBtn = document.getElementById("reelBtn");
+
+  if(data.reel_url){
+    reelBtn.href = normalizeUrl(data.reel_url);
+    reelBtn.style.display = "inline-block";
+  }
+
+  const editBtn = document.getElementById("editBtn");
+
+  if(editCode === "TEST123"){
+    editBtn.href =
+      "rediger-butikk.html?id=" + businessId + "&edit=TEST123";
+
+    editBtn.style.display = "inline-block";
+  }
+
+  const images = safeArray(data.gallery_urls);
+  const gallery = document.getElementById("gallery");
+  const galleryCard = document.getElementById("galleryCard");
+
+  if(images.length > 0){
+    gallery.innerHTML = images.map(url =>
+      `<img src="${url}" alt="Butikkbilde">`
+    ).join("");
+  }else{
+    galleryCard.style.display = "none";
+  }
+
+  document.getElementById("status").style.display = "none";
+  document.getElementById("content").style.display = "block";
 }
-  loadShop();
+
+loadShop();
 </script>
 
 </body>
