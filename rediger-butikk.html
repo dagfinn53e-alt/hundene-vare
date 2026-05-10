@@ -249,9 +249,29 @@ function renderGallery(){
     document.getElementById("gallery");
 
   gallery.innerHTML =
-    galleryUrls.map(url =>
-      `<img src="${url}">`
-    ).join("");
+  galleryUrls.map((url,index) => `
+    <div style="position:relative;">
+      <img src="${url}">
+      
+      <button
+        onclick="deleteImage(${index})"
+        style="
+          position:absolute;
+          top:6px;
+          right:6px;
+          background:crimson;
+          color:white;
+          border:none;
+          border-radius:10px;
+          padding:6px 10px;
+          cursor:pointer;
+          font-size:12px;
+        "
+      >
+        Slett
+      </button>
+    </div>
+  `).join("");
 }
 
 async function uploadFile(file,path){
@@ -326,7 +346,16 @@ document.getElementById("galleryInput")
 
   setStatus("✅ Bilder lastet opp","green");
 });
+function deleteImage(index){
 
+  if(!confirm("Slette dette bildet?")){
+    return;
+  }
+
+  galleryUrls.splice(index,1);
+
+  renderGallery();
+}
 async function saveShop(){
 
   setStatus("Lagrer...");
