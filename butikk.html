@@ -1,298 +1,338 @@
+
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Butikkside</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Rediger butikk</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    body{
-      font-family:Arial,sans-serif;
-      background:#eaf4ff;
-      margin:0;
-      padding:20px;
-      color:#0f172a;
-    }
+<style>
+body{
+  margin:0;
+  padding:20px;
+  background:#eaf4ff;
+  font-family:Arial,sans-serif;
+  color:#111827;
+}
 
-    .page{
-      max-width:1000px;
-      margin:auto;
-    }
+.container{
+  max-width:850px;
+  margin:auto;
+}
 
-    .back{
-      display:inline-block;
-      margin-bottom:18px;
-      text-decoration:none;
-      background:white;
-      color:#2563eb;
-      padding:12px 18px;
-      border-radius:999px;
-      font-weight:bold;
-      border:1px solid #bfdbfe;
-    }
+.card{
+  background:white;
+  border-radius:24px;
+  padding:24px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
 
-    .hero{
-      background:white;
-      border-radius:28px;
-      padding:30px;
-      text-align:center;
-      box-shadow:0 8px 25px rgba(0,0,0,0.08);
-      margin-bottom:22px;
-    }
+h1{
+  margin-top:0;
+}
 
-    .logo{
-      width:140px;
-      height:140px;
-      object-fit:cover;
-      border-radius:24px;
-      background:#f1f5f9;
-      margin-bottom:15px;
-    }
+label{
+  display:block;
+  margin-top:18px;
+  margin-bottom:6px;
+  font-weight:bold;
+}
 
-    h1{
-      margin:8px 0;
-      font-size:34px;
-      color:#0f172a;
-    }
+input,
+textarea{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid #cbd5e1;
+  font-size:16px;
+  box-sizing:border-box;
+}
 
-    .desc{
-      max-width:800px;
-      margin:15px auto;
-      line-height:1.6;
-      color:#334155;
-      font-size:17px;
-    }
+textarea{
+  min-height:120px;
+  resize:vertical;
+}
 
-    .buttons{
-      display:flex;
-      justify-content:center;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top:20px;
-    }
+.preview{
+  width:120px;
+  height:120px;
+  object-fit:cover;
+  border-radius:18px;
+  margin-top:10px;
+  background:#f1f5f9;
+}
 
-    .btn{
-      text-decoration:none;
-      padding:12px 18px;
-      border-radius:14px;
-      color:white;
-      font-weight:bold;
-      display:inline-block;
-    }
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:12px;
+  margin-top:15px;
+}
 
-    .blue{background:#2563eb;}
-    .green{background:#16a34a;}
-    .purple{background:#7c3aed;}
-    .dark{background:#111827;}
+.gallery img{
+  width:100%;
+  height:120px;
+  object-fit:cover;
+  border-radius:16px;
+}
 
-    .card{
-      background:white;
-      border-radius:24px;
-      padding:24px;
-      box-shadow:0 8px 25px rgba(0,0,0,0.08);
-      margin-bottom:22px;
-    }
+button{
+  margin-top:24px;
+  border:none;
+  background:#2563eb;
+  color:white;
+  padding:16px 24px;
+  border-radius:16px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-    .info-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-      gap:15px;
-    }
-
-    .info-box{
-      background:#f8fafc;
-      padding:16px;
-      border-radius:18px;
-    }
-
-    .info-box strong{
-      display:block;
-      margin-bottom:8px;
-      color:#334155;
-    }
-
-    .gallery{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-      gap:15px;
-    }
-
-    .gallery img{
-      width:100%;
-      height:220px;
-      object-fit:cover;
-      border-radius:18px;
-      background:#f1f5f9;
-      box-shadow:0 8px 20px rgba(0,0,0,.12);
-    }
-
-    .status{
-      text-align:center;
-      font-weight:bold;
-      margin-top:40px;
-      color:#475569;
-    }
-  </style>
+.status{
+  margin-top:18px;
+  font-weight:bold;
+}
+</style>
 </head>
 
 <body>
 
-<div class="page">
+<div class="container">
 
-  <a class="back" href="butikker.html">← Tilbake</a>
+<div class="card">
 
-  <div id="status" class="status">Laster butikk ...</div>
+<h1>✏️ Rediger butikk</h1>
 
-  <div id="content" style="display:none;">
+<div id="status" class="status">Laster butikk ...</div>
 
-    <div class="hero">
-      <img id="logo" class="logo" src="" alt="Logo">
-      <h1 id="name"></h1>
-      <p id="description" class="desc"></p>
+<label>Logo</label>
+<img id="logoPreview" class="preview">
 
-      <div class="buttons">
-        <a id="mapBtn" class="btn blue" target="_blank">📍 Åpne kart</a>
-        <a id="phoneBtn" class="btn green">📞 Ring</a>
-        <a id="webBtn" class="btn purple" target="_blank">Facebook / Nettside</a>
-        <a id="reelBtn" class="btn" target="_blank"
-style="display:none;background:#ff0066;color:white;">
-🎥 Se Reel
-</a>
-        <a id="editBtn" class="btn dark" style="display:none;">✏️ Rediger butikk</a>
-      </div>
-    </div>
+<input type="file" id="logoInput">
 
-    <div class="card">
-      <h2>Informasjon</h2>
-      <div class="info-grid">
-        <div class="info-box">
-          <strong>📍 Adresse</strong>
-          <span id="address"></span>
-        </div>
+<label>Butikknavn</label>
+<input type="text" id="name">
 
-        <div class="info-box">
-          <strong>🐶 Type</strong>
-          <span id="type"></span>
-        </div>
+<label>Beskrivelse</label>
+<textarea id="description"></textarea>
 
-        <div class="info-box">
-          <strong>🌍 Område</strong>
-          <span id="region"></span>
-        </div>
+<label>Telefon</label>
+<input type="text" id="phone">
 
-        <div class="info-box">
-          <strong>📞 Kontakt</strong>
-          <span id="phone"></span>
-        </div>
-      </div>
-    </div>
+<label>Facebook / Nettside</label>
+<input type="text" id="website">
 
-    <div class="card" id="galleryCard">
-      <h2>Bilder</h2>
-      <div id="gallery" class="gallery"></div>
-    </div>
+<label>🎥 Reel-link</label>
+<input type="text" id="reel">
 
-  </div>
+<label>Last opp bilder</label>
+<input type="file" id="galleryInput" multiple>
+
+<div id="gallery" class="gallery"></div>
+
+<button onclick="saveShop()">💾 Lagre Endringer</button>
+
+</div>
 
 </div>
 
 <script>
-  const supabaseClient = window.supabase.createClient(
-    "https://kxudiviidwwwclbzgdyx.supabase.co",
-    "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
-  );
+const supabaseClient = window.supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
 
-  const params = new URLSearchParams(window.location.search);
-  const shopId = params.get("id");
-  const editCode = params.get("edit");
+const params = new URLSearchParams(window.location.search);
+const businessId = params.get("id");
 
-  function safeText(value){
-    return value || "";
-  }
+let currentData = {};
+let galleryUrls = [];
 
-  async function loadShop(){
-    if(!shopId){
-      document.getElementById("status").textContent = "Mangler butikk-ID.";
-      return;
-    }
-
-    const { data, error } = await supabaseClient
-      .from("businesses")
-      .select("*")
-      .eq("id", shopId)
-      .single();
-
-    if(error || !data){
-      document.getElementById("status").textContent = "Fant ikke butikken.";
-      console.log(error);
-      return;
-    }
-
-    document.title = data.name || "Butikkside";
-
-    document.getElementById("name").textContent = safeText(data.name);
-    document.getElementById("description").textContent = safeText(data.description);
-    document.getElementById("address").textContent = safeText(data.place || data.address);
-    document.getElementById("type").textContent = safeText(data.type);
-    document.getElementById("region").textContent = safeText(data.region);
-    document.getElementById("phone").textContent = safeText(data.phone);
-
-    document.getElementById("logo").src =
-      data.logo_url || "https://placehold.co/300x300?text=Logo";
-
-    const address = data.place || data.address || "";
-    document.getElementById("mapBtn").href =
-      "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
-
-    document.getElementById("phoneBtn").href =
-      "tel:" + safeText(data.phone).replace(/\s/g, "");
-
-    const webBtn = document.getElementById("webBtn");
-    if(data.website){
-      if(data.reel_url){
-  document.getElementById("reelBtn").style.display = "inline-flex";
-  document.getElementById("reelBtn").href = data.reel_url;
+function setStatus(text,color="black"){
+  const el = document.getElementById("status");
+  el.textContent = text;
+  el.style.color = color;
 }
-      webBtn.href = data.website;
-      webBtn.style.display = "inline-block";
-    }else{
-      webBtn.style.display = "none";
-    }
 
-    const editBtn = document.getElementById("editBtn");
-    if(editCode === "TEST123"){
-      editBtn.style.display = "inline-block";
-      editBtn.href = "rediger-butikk.html?id=" + shopId + "&edit=TEST123";
-    }
+async function loadShop(){
 
-    let images = data.gallery_urls || [];
-
-    if(typeof images === "string"){
-      try{
-        images = JSON.parse(images);
-      }catch(e){
-        images = [];
-      }
-    }
-
-    const gallery = document.getElementById("gallery");
-    const galleryCard = document.getElementById("galleryCard");
-
-    if(images && images.length > 0){
-      gallery.innerHTML = images.map(url => `
-        <img src="${url}" alt="Butikkbilde">
-      `).join("");
-    }else{
-      galleryCard.style.display = "none";
-    }
-
-    document.getElementById("status").style.display = "none";
-    document.getElementById("content").style.display = "block";
+  if(!businessId){
+    setStatus("Mangler butikk-ID","red");
+    return;
   }
 
-  loadShop();
+  const { data,error } = await supabaseClient
+    .from("businesses")
+    .select("*")
+    .eq("id",businessId)
+    .single();
+
+  if(error || !data){
+    console.log(error);
+    setStatus("Fant ikke butikk","red");
+    return;
+  }
+
+  currentData = data;
+
+  document.getElementById("name").value =
+    data.name || "";
+
+  document.getElementById("description").value =
+    data.description || "";
+
+  document.getElementById("phone").value =
+    data.phone || "";
+
+  document.getElementById("website").value =
+    data.website || "";
+
+  document.getElementById("reel").value =
+    data.reel_url || "";
+
+  document.getElementById("logoPreview").src =
+    data.logo_url || "";
+
+  try{
+    galleryUrls = data.gallery_urls || [];
+
+    if(typeof galleryUrls === "string"){
+      galleryUrls = JSON.parse(galleryUrls);
+    }
+
+  }catch{
+    galleryUrls = [];
+  }
+
+  renderGallery();
+
+  setStatus("✅ Klar");
+}
+
+function renderGallery(){
+
+  const gallery = document.getElementById("gallery");
+
+  gallery.innerHTML =
+    galleryUrls.map(url =>
+      `<img src="${url}">`
+    ).join("");
+}
+
+async function uploadImage(file,path){
+
+  const fileName =
+    Date.now() + "-" + file.name;
+
+  const fullPath =
+    path + "/" + fileName;
+
+  const { error } =
+    await supabaseClient.storage
+      .from("business-images")
+      .upload(fullPath,file);
+
+  if(error){
+    console.log(error);
+    return null;
+  }
+
+  const { data } =
+    supabaseClient.storage
+      .from("business-images")
+      .getPublicUrl(fullPath);
+
+  return data.publicUrl;
+}
+
+document.getElementById("logoInput")
+.addEventListener("change", async(e)=>{
+
+  const file = e.target.files[0];
+  if(!file) return;
+
+  setStatus("Laster opp logo ...");
+
+  const url =
+    await uploadImage(file,"logos");
+
+  if(url){
+    currentData.logo_url = url;
+    document.getElementById("logoPreview").src = url;
+    setStatus("✅ Logo lastet opp","green");
+  }
+});
+
+document.getElementById("galleryInput")
+.addEventListener("change", async(e)=>{
+
+  const files = [...e.target.files];
+
+  if(files.length === 0) return;
+
+  setStatus("Laster opp bilder ...");
+
+  for(const file of files){
+
+    const url =
+      await uploadImage(file,"gallery");
+
+    if(url){
+      galleryUrls.push(url);
+    }
+  }
+
+  renderGallery();
+
+  setStatus("✅ Bilder lastet opp","green");
+});
+
+async function saveShop(){
+
+  setStatus("Lagrer ...");
+
+  const updateData = {
+
+    name:
+      document.getElementById("name").value,
+
+    description:
+      document.getElementById("description").value,
+
+    phone:
+      document.getElementById("phone").value,
+
+    website:
+      document.getElementById("website").value,
+
+    reel_url:
+      document.getElementById("reel").value,
+
+    logo_url:
+      currentData.logo_url || "",
+
+    gallery_urls:
+      galleryUrls
+  };
+
+  const { error } =
+    await supabaseClient
+      .from("businesses")
+      .update(updateData)
+      .eq("id",businessId);
+
+  if(error){
+    console.log(error);
+    setStatus("❌ Feil ved lagring","red");
+    return;
+  }
+
+  setStatus("✅ Endringer lagret","green");
+}
+
+loadShop();
 </script>
 
 </body>
