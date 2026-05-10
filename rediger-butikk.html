@@ -238,7 +238,7 @@ function renderGallery(){
 
 async function loadShop(){
 
-  const { data,error } = await supabaseClient
+  const { data, error } = await supabaseClient
     .from("businesses")
     .select("*")
     .eq("id",id)
