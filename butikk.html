@@ -195,8 +195,8 @@ async function loadShop(){
 
   if(images.length > 0){
     gallery.innerHTML = images.map(url =>
-      `<img src="${url}" alt="Butikkbilde">`
-    ).join("");
+  `<img src="${url}" alt="Butikkbilde" onclick="openImageModal('${url}')">`
+).join("");
   }else{
     galleryCard.style.display = "none";
   }
@@ -206,7 +206,42 @@ async function loadShop(){
 }
 
 loadShop();
-</script>
+  function openImageModal(url){
+  document.getElementById("modalImage").src = url;
+  document.getElementById("imageModal").style.display = "flex";
+}
 
+function closeImageModal(){
+  document.getElementById("imageModal").style.display = "none";
+  document.getElementById("modalImage").src = "";
+}
+</script>
+<div id="imageModal" onclick="closeImageModal()" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+">
+  <span style="
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:40px;
+    cursor:pointer;
+    font-weight:bold;
+  ">×</span>
+
+  <img id="modalImage" src="" style="
+    max-width:95%;
+    max-height:90vh;
+    border-radius:18px;
+    box-shadow:0 10px 40px rgba(0,0,0,.5);
+  ">
+</div>
 </body>
 </html>
