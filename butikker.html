@@ -46,10 +46,7 @@
   <div id="status" class="status">Laster butikker ...</div>
   <div id="grid" class="grid"></div>
 </div>
-function nearMe(){
-  window.open(
-    "https://www.google.com/maps/search/hundefrisør+hundepensjonat+dyrebutikk+nær+meg",
-    "_blank"
+
   );
 }
 <script>
@@ -57,8 +54,15 @@ function nearMe(){
     "https://kxudiviidwwwclbzgdyx.supabase.co",
     "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
   );
+function nearMe(){
 
-  async function loadBusinesses(){
+  
+
+}
+  aswindow.open(
+  "https://www.google.com/maps/search/hundefrisør+hundepensjonat+dyrebutikk+nær+meg",
+  "_blank"
+);ync function loadBusinesses(){
     const { data, error } = await supabaseClient
       .from("businesses")
       .select("*")
