@@ -8,127 +8,24 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-body{
-  margin:0;
-  padding:20px;
-  font-family:Arial,sans-serif;
-  background:#eaf4ff;
-  color:#0f172a;
-}
-
-.page{
-  max-width:1100px;
-  margin:auto;
-}
-
-.top{
-  text-align:center;
-  margin-bottom:25px;
-}
-
-.back{
-  display:inline-block;
-  margin-bottom:16px;
-  background:white;
-  color:#2563eb;
-  padding:10px 16px;
-  border-radius:999px;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-h1{
-  font-size:34px;
-  margin:10px 0;
-}
-
-.actions{
-  display:flex;
-  justify-content:center;
-  gap:12px;
-  flex-wrap:wrap;
-  margin:20px 0;
-}
-
-.btn{
-  border:none;
-  padding:14px 24px;
-  border-radius:999px;
-  font-size:17px;
-  font-weight:bold;
-  cursor:pointer;
-  text-decoration:none;
-  display:inline-block;
-}
-
-.near{
-  background:#16a34a;
-  color:white;
-  box-shadow:0 8px 20px rgba(0,0,0,.18);
-}
-
-.home{
-  background:#2563eb;
-  color:white;
-}
-
-.status{
-  text-align:center;
-  font-weight:bold;
-  margin:25px 0;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:18px;
-}
-
-.card{
-  background:white;
-  border-radius:24px;
-  padding:20px;
-  box-shadow:0 8px 25px rgba(0,0,0,.08);
-  text-align:center;
-}
-
-.logo{
-  width:100px;
-  height:100px;
-  object-fit:cover;
-  border-radius:20px;
-  background:#f1f5f9;
-  margin-bottom:12px;
-}
-
-.card h2{
-  margin:8px 0;
-  font-size:22px;
-}
-
-.desc{
-  color:#475569;
-  font-size:15px;
-  line-height:1.5;
-  min-height:45px;
-}
-
-.meta{
-  font-size:14px;
-  color:#334155;
-  margin:10px 0;
-}
-
-.open{
-  display:inline-block;
-  margin-top:12px;
-  background:#2563eb;
-  color:white;
-  padding:12px 18px;
-  border-radius:14px;
-  text-decoration:none;
-  font-weight:bold;
-}
+body{margin:0;padding:20px;font-family:Arial,sans-serif;background:#eaf4ff;color:#0f172a;}
+.page{max-width:1100px;margin:auto;}
+.top{text-align:center;margin-bottom:25px;}
+.back{display:inline-block;margin-bottom:16px;background:white;color:#2563eb;padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:bold;}
+h1{font-size:34px;margin:10px 0;}
+.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:20px 0;}
+.btn{border:none;padding:14px 24px;border-radius:999px;font-size:17px;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block;}
+.near{background:#16a34a;color:white;box-shadow:0 8px 20px rgba(0,0,0,.18);}
+.home{background:#2563eb;color:white;}
+.status{text-align:center;font-weight:bold;margin:25px 0;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;}
+.card{background:white;border-radius:24px;padding:20px;box-shadow:0 8px 25px rgba(0,0,0,.08);text-align:center;}
+.logo{width:100px;height:100px;object-fit:cover;border-radius:20px;background:#f1f5f9;margin-bottom:12px;}
+.card h2{margin:8px 0;font-size:22px;}
+.desc{color:#475569;font-size:15px;line-height:1.5;min-height:45px;}
+.meta{font-size:14px;color:#334155;margin:10px 0;}
+.distance{font-weight:bold;color:#16a34a;margin-top:8px;}
+.open{display:inline-block;margin-top:12px;background:#2563eb;color:white;padding:12px 18px;border-radius:14px;text-decoration:none;font-weight:bold;}
 </style>
 </head>
 
@@ -142,13 +39,12 @@ h1{
     <h1>🐶 Butikker og tjenester</h1>
 
     <div class="actions">
-      <button class="btn near" onclick="nearMe()">📍 Nær meg</button>
+      <button class="btn near" onclick="sortNearMe()">📍 Nær meg</button>
       <a class="btn home" href="index.html">🏠 Forsiden</a>
     </div>
   </div>
 
   <div id="status" class="status">Laster butikker ...</div>
-
   <div id="grid" class="grid"></div>
 
 </div>
@@ -159,19 +55,77 @@ const supabaseClient = window.supabase.createClient(
   "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
 );
 
-function nearMe(){
-  window.location.href =
-    "https://www.google.com/maps/search/hundefrisør+hundepensjonat+dyrebutikk+nær+meg";
-}
+let businesses = [];
 
 function text(value){
   return value || "";
 }
 
-async function loadBusinesses(){
+function distanceKm(lat1,lng1,lat2,lng2){
+  const R = 6371;
+  const dLat = (lat2-lat1) * Math.PI / 180;
+  const dLng = (lng2-lng1) * Math.PI / 180;
 
+  const a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI / 180) *
+    Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLng/2) * Math.sin(dLng/2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+  return R * c;
+}
+
+function renderBusinesses(list){
   const status = document.getElementById("status");
   const grid = document.getElementById("grid");
+
+  if(!list || list.length === 0){
+    status.textContent = "Ingen butikker funnet.";
+    return;
+  }
+
+  status.style.display = "none";
+
+  grid.innerHTML = list.map(business => {
+    const logo = business.logo_url || "https://placehold.co/300x300?text=Logo";
+    const name = text(business.name);
+    const desc = text(business.description).slice(0,120);
+    const type = text(business.type);
+    const region = text(business.region);
+
+    const distanceText =
+      business.distance_km !== undefined
+      ? `<div class="distance">📍 ${business.distance_km.toFixed(1)} km unna</div>`
+      : "";
+
+    return `
+      <div class="card">
+        <img class="logo" src="${logo}" alt="Logo">
+
+        <h2>${name}</h2>
+
+        <div class="meta">
+          ${type} ${region ? " · " + region : ""}
+        </div>
+
+        ${distanceText}
+
+        <div class="desc">
+          ${desc}
+        </div>
+
+        <a class="open" href="butikk.html?id=${business.id}">
+          Se butikkside
+        </a>
+      </div>
+    `;
+  }).join("");
+}
+
+async function loadBusinesses(){
+  const status = document.getElementById("status");
 
   const { data, error } = await supabaseClient
     .from("businesses")
@@ -184,50 +138,54 @@ async function loadBusinesses(){
     return;
   }
 
-  if(!data || data.length === 0){
-    status.textContent = "Ingen butikker funnet.";
+  businesses = data || [];
+  renderBusinesses(businesses);
+}
+
+function sortNearMe(){
+  const status = document.getElementById("status");
+  status.style.display = "block";
+  status.textContent = "Henter posisjon ...";
+
+  if(!navigator.geolocation){
+    status.textContent = "Nettleseren støtter ikke posisjon.";
     return;
   }
 
-  status.style.display = "none";
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      const userLat = position.coords.latitude;
+      const userLng = position.coords.longitude;
 
-  grid.innerHTML = data.map(business => {
+      const sorted = businesses.map(b => {
+        const lat = Number(b.lat);
+        const lng = Number(b.lng);
 
-    const logo =
-      business.logo_url || "https://placehold.co/300x300?text=Logo";
+        if(!lat || !lng){
+          return {
+            ...b,
+            distance_km: undefined,
+            sort_distance: 999999
+          };
+        }
 
-    const name =
-      text(business.name);
+        const dist = distanceKm(userLat,userLng,lat,lng);
 
-    const desc =
-      text(business.description).slice(0,120);
+        return {
+          ...b,
+          distance_km: dist,
+          sort_distance: dist
+        };
+      }).sort((a,b) => a.sort_distance - b.sort_distance);
 
-    const type =
-      text(business.type);
-
-    const region =
-      text(business.region);
-
-    return `
-      <div class="card">
-        <img class="logo" src="${logo}" alt="Logo">
-
-        <h2>${name}</h2>
-
-        <div class="meta">
-          ${type} ${region ? " · " + region : ""}
-        </div>
-
-        <div class="desc">
-          ${desc}
-        </div>
-
-        <a class="open" href="butikk.html?id=${business.id}">
-          Se butikkside
-        </a>
-      </div>
-    `;
-  }).join("");
+      status.style.display = "none";
+      renderBusinesses(sorted);
+    },
+    error => {
+      status.textContent = "Du må tillate posisjon for å bruke Nær meg.";
+      console.log(error);
+    }
+  );
 }
 
 loadBusinesses();
