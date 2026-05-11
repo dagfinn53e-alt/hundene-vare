@@ -182,7 +182,7 @@ async function loadShop(){
 
   const editBtn = document.getElementById("editBtn");
 
-  if(editCode === "TEST123"){
+  if(editCode && editCode === data.edit_code){
     editBtn.href =
       "rediger-butikk.html?id=" + businessId;
 
