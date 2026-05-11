@@ -1,98 +1,236 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Butikker</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Butikker og tjenester</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    body{font-family:Arial,sans-serif;background:#eef6ff;margin:0;padding:20px;color:#0f172a;}
-    .page{max-width:1100px;margin:auto;}
-    .back{display:inline-block;margin-bottom:18px;text-decoration:none;background:white;color:#2563eb;padding:12px 18px;border-radius:999px;font-weight:bold;border:1px solid #bfdbfe;}
-    h1{text-align:center;color:#1e3a8a;}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:25px;}
-    .card{background:white;border-radius:22px;padding:20px;box-shadow:0 8px 25px rgba(0,0,0,0.08);}
-    .logo{width:90px;height:90px;object-fit:cover;border-radius:18px;background:#f1f5f9;}
-    .type{color:#64748b;font-weight:bold;margin-top:8px;}
-    .desc{color:#334155;line-height:1.5;}
-    .btn{display:inline-block;margin-top:12px;text-decoration:none;background:#2563eb;color:white;padding:12px 16px;border-radius:14px;font-weight:bold;}
-    .status{text-align:center;margin-top:30px;font-weight:bold;color:#475569;}
-  </style>
+<style>
+body{
+  margin:0;
+  padding:20px;
+  font-family:Arial,sans-serif;
+  background:#eaf4ff;
+  color:#0f172a;
+}
+
+.page{
+  max-width:1100px;
+  margin:auto;
+}
+
+.top{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.back{
+  display:inline-block;
+  margin-bottom:16px;
+  background:white;
+  color:#2563eb;
+  padding:10px 16px;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+h1{
+  font-size:34px;
+  margin:10px 0;
+}
+
+.actions{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:20px 0;
+}
+
+.btn{
+  border:none;
+  padding:14px 24px;
+  border-radius:999px;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-block;
+}
+
+.near{
+  background:#16a34a;
+  color:white;
+  box-shadow:0 8px 20px rgba(0,0,0,.18);
+}
+
+.home{
+  background:#2563eb;
+  color:white;
+}
+
+.status{
+  text-align:center;
+  font-weight:bold;
+  margin:25px 0;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:18px;
+}
+
+.card{
+  background:white;
+  border-radius:24px;
+  padding:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+  text-align:center;
+}
+
+.logo{
+  width:100px;
+  height:100px;
+  object-fit:cover;
+  border-radius:20px;
+  background:#f1f5f9;
+  margin-bottom:12px;
+}
+
+.card h2{
+  margin:8px 0;
+  font-size:22px;
+}
+
+.desc{
+  color:#475569;
+  font-size:15px;
+  line-height:1.5;
+  min-height:45px;
+}
+
+.meta{
+  font-size:14px;
+  color:#334155;
+  margin:10px 0;
+}
+
+.open{
+  display:inline-block;
+  margin-top:12px;
+  background:#2563eb;
+  color:white;
+  padding:12px 18px;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:bold;
+}
+</style>
 </head>
 
 <body>
 
 <div class="page">
-  <a class="back" href="index.html">← Tilbake til forsiden</a>
 
-  <h1>🐶 Butikker og tjenester</h1>
-<div style="text-align:center;margin:20px 0;">
-  <button onclick="nearMe()" style="
-    background:#16a34a;
-    color:white;
-    border:none;
-    padding:14px 24px;
-    border-radius:999px;
-    font-size:17px;
-    font-weight:bold;
-    cursor:pointer;
-    box-shadow:0 8px 20px rgba(0,0,0,.18);
-  ">
-    📍 Nær meg
-  </button>
-</div>
+  <div class="top">
+    <a class="back" href="index.html">← Tilbake</a>
+
+    <h1>🐶 Butikker og tjenester</h1>
+
+    <div class="actions">
+      <button class="btn near" onclick="nearMe()">📍 Nær meg</button>
+      <a class="btn home" href="index.html">🏠 Forsiden</a>
+    </div>
+  </div>
+
   <div id="status" class="status">Laster butikker ...</div>
+
   <div id="grid" class="grid"></div>
+
 </div>
 
-  );
-}
 <script>
-  const supabaseClient = window.supabase.createClient(
-    "https://kxudiviidwwwclbzgdyx.supabase.co",
-    "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
-  );
+const supabaseClient = window.supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
 function nearMe(){
-
-  
-
+  window.location.href =
+    "https://www.google.com/maps/search/hundefrisør+hundepensjonat+dyrebutikk+nær+meg";
 }
-  aswindow.open(
-  "https://www.google.com/maps/search/hundefrisør+hundepensjonat+dyrebutikk+nær+meg",
-  "_blank"
-);ync function loadBusinesses(){
-    const { data, error } = await supabaseClient
-      .from("businesses")
-      .select("*")
-      .eq("approved", true)
-      .order("created_at", { ascending:false });
 
-    if(error){
-      document.getElementById("status").textContent = "Feil: " + error.message;
-      return;
-    }
+function text(value){
+  return value || "";
+}
 
-    if(!data || data.length === 0){
-      document.getElementById("status").textContent = "Ingen godkjente butikker funnet.";
-      return;
-    }
+async function loadBusinesses(){
 
-    document.getElementById("status").style.display = "none";
+  const status = document.getElementById("status");
+  const grid = document.getElementById("grid");
 
-    document.getElementById("grid").innerHTML = data.map(b => `
-      <div class="card">
-        <img class="logo" src="${b.logo_url || 'https://placehold.co/200x200?text=Logo'}" alt="Logo">
-        <h2>${b.name || ''}</h2>
-        <div class="type">${b.type || ''} • ${b.region || ''}</div>
-        <p class="desc">${b.description || ''}</p>
-        <a class="btn" href="butikk.html?id=${b.id}">Se butikkside</a>
-      </div>
-    `).join("");
+  const { data, error } = await supabaseClient
+    .from("businesses")
+    .select("*")
+    .order("created_at", { ascending:false });
+
+  if(error){
+    status.textContent = "Feil ved lasting av butikker.";
+    console.log(error);
+    return;
   }
 
-  loadBusinesses();
+  if(!data || data.length === 0){
+    status.textContent = "Ingen butikker funnet.";
+    return;
+  }
+
+  status.style.display = "none";
+
+  grid.innerHTML = data.map(business => {
+
+    const logo =
+      business.logo_url || "https://placehold.co/300x300?text=Logo";
+
+    const name =
+      text(business.name);
+
+    const desc =
+      text(business.description).slice(0,120);
+
+    const type =
+      text(business.type);
+
+    const region =
+      text(business.region);
+
+    return `
+      <div class="card">
+        <img class="logo" src="${logo}" alt="Logo">
+
+        <h2>${name}</h2>
+
+        <div class="meta">
+          ${type} ${region ? " · " + region : ""}
+        </div>
+
+        <div class="desc">
+          ${desc}
+        </div>
+
+        <a class="open" href="butikk.html?id=${business.id}">
+          Se butikkside
+        </a>
+      </div>
+    `;
+  }).join("");
+}
+
+loadBusinesses();
 </script>
 
 </body>
