@@ -28,11 +28,30 @@
   <a class="back" href="index.html">← Tilbake til forsiden</a>
 
   <h1>🐶 Butikker og tjenester</h1>
-
+<div style="text-align:center;margin:20px 0;">
+  <button onclick="nearMe()" style="
+    background:#16a34a;
+    color:white;
+    border:none;
+    padding:14px 24px;
+    border-radius:999px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,0,0,.18);
+  ">
+    📍 Nær meg
+  </button>
+</div>
   <div id="status" class="status">Laster butikker ...</div>
   <div id="grid" class="grid"></div>
 </div>
-
+function nearMe(){
+  window.open(
+    "https://www.google.com/maps/search/hundefrisør+hundepensjonat+dyrebutikk+nær+meg",
+    "_blank"
+  );
+}
 <script>
   const supabaseClient = window.supabase.createClient(
     "https://kxudiviidwwwclbzgdyx.supabase.co",
