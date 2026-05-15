@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kafétilbud – Hundene våre</title>
+<title>🐱 Til Katten – Hundene våre</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -57,9 +57,9 @@ button.danger{background:#b91c1c}
 </div>
 
 <div class="card">
-<h2>➕ Legg inn kafétilbud</h2>
+<h2>➕ Legg inn katteprodukt</h2>
 <input id="title" placeholder="Tittel f.eks. Kaffe + bolle 49,-">
-<input id="cafe" placeholder="Kafé navn">
+<input id="cafe" placeholder="Butikk navn>
 <input id="place" placeholder="Sted">
 <select id="region">
 <option>Haugalandet</option>
@@ -219,7 +219,7 @@ async function loadOffers(){
   let rows=r.data||[];
   q("offerList").innerHTML=rows.length
     ? rows.map(render).join("")
-    : '<div class="empty">Ingen godkjente kafétilbud enda.</div>';
+    : '<div class="empty">Ingen katteprodukter enda</div>';
 }
 
 async function loadOffersByRegion(region){
