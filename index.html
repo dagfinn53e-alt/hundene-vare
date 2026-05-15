@@ -662,6 +662,15 @@ background:transparent;
 #cafesContent button:hover {
   background: #2563eb !important;
   color: white !important;
+}.admin-alert{
+  background:#fff8d7;
+  border:2px solid #f1c40f;
+  color:#7a5c00;
+  padding:14px 18px;
+  border-radius:16px;
+  font-weight:700;
+  margin-bottom:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
 }
   </style>
 </head>
@@ -1125,7 +1134,9 @@ onclick="window.location.href='butikk-profil-skjema.html'">
     </div>
   </div>
 
-  <div id="page-admin" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🛠️ Admin</h2><div id="adminStatus" class="status">Klar.</div></div><div class="card"><h2 style="font-size:24px;">Innlegg</h2><div id="adminStories">Laster ...</div></div><div class="card"><h2 style="font-size:24px;">Bedrifter</h2><div id="adminBusinesses">Laster ...</div></div></div>
+  <div id="page-admin" class="hidden"><div class="admin-alert">
+🔔 Nye butikker til godkjenning: 0
+</div><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🛠️ Admin</h2><div id="adminStatus" class="status">Klar.</div></div><div class="card"><h2 style="font-size:24px;">Innlegg</h2><div id="adminStories">Laster ...</div></div><div class="card"><h2 style="font-size:24px;">Bedrifter</h2><div id="adminBusinesses">Laster ...</div></div></div>
 
   <div id="page-favorites" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>❤️ Mine favoritter</h2><div id="favoritesList">Laster favoritter ...</div></div></div>
 
