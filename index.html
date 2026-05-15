@@ -1152,6 +1152,23 @@ var ADMIN_EMAIL="dagfinn53e@gmail.com";
 var supabase=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
 var currentStoriesRegion="Stavanger";
 var currentWeeklyRegion="Alle";
+  async function checkPendingBusinesses(){
+
+  const { count, error } = await supabase
+    .from('businesses')
+    .select('*', { count: 'exact', head: true })
+    .eq('approved', false);
+
+  if(!error){
+    const alertBox = document.querySelector('.admin-alert');
+
+    if(alertBox){
+      alertBox.innerHTML = `🔔 Nye butikker til godkjenning: ${count}`;
+    }
+  }
+}
+
+checkPendingBusinesses();
 
 function qs(id){return document.getElementById(id)}
 function setStatusText(id,text,color){var el=qs(id);if(el){el.textContent=text;el.style.color=color||"black"}}
