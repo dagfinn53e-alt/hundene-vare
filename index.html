@@ -741,7 +741,7 @@ background:transparent;
     <img src="bilder/haugesund-dyrebutikk.jpg" alt="">
     <div class="slide-text">
 🐶 Hundene våre
-
+</div>
     
     
     </div>
@@ -790,14 +790,10 @@ background:transparent;
 .top-slider{
   position:relative;
   width:100%;
-  max-width:520px;
-  height:160px;
-  margin:24px auto;
-  overflow:hidden;
-  border-radius:22px;
+max-width:520px;
+height:160px;
+margin:24px auto;
   box-shadow:0 10px 30px rgba(0,0,0,.15);
-}
-}
 }
 
 .slide{
@@ -860,12 +856,12 @@ left:14px;
 </style>
 
 <script>
-  <script>
 const slides = document.querySelectorAll('.top-slider .slide');
 
 let currentSlide = 0;
 
 setInterval(() => {
+
   slides[currentSlide].classList.remove('active');
 
   currentSlide++;
@@ -875,8 +871,8 @@ setInterval(() => {
   }
 
   slides[currentSlide].classList.add('active');
+
 }, 4000);
-</script>
 </script>
 <!-- HUNDENE VÅRE SLIDER SLUTT -->
         <div class="offers-stack">
