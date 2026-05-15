@@ -921,12 +921,12 @@ setInterval(() => {
                 </div>
                 <div class="local-offer-pill">Se</div>
                 <div class="card">
-  <h2>Til Katten</h2>
+  <h2>Kafétilbud</h2>
 
   <div id="homeCafeOffers" class="grid"></div>
 
   <button onclick="window.location.href='cafe_tilbud.html'" class="menu-btn activity">
-    Se alle katteprodukter
+    Se alle kafétilbud
   </button>
 </div>
               </div>
@@ -1838,7 +1838,7 @@ updateInviteMessage();
   const container = document.getElementById('homeCafeOffers');
 
   if (!data || data.length === 0) {
-    container.innerHTML = "<p>Ingen katteprodukter enda;
+    container.innerHTML = "<p>Ingen kafétilbud enda</p>";
     return;
   }
 
