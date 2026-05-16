@@ -313,6 +313,14 @@ window.visAlle=function(){
 };
 
 })();
+  function openImage(src){
+  document.getElementById('modalImg').src = src;
+  document.getElementById('imageModal').style.display = 'flex';
+}
+
+function closeImage(){
+  document.getElementById('imageModal').style.display = 'none';
+}
 </script>
 
 </body>
