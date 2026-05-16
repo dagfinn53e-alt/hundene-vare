@@ -206,7 +206,7 @@ async function save(){
 }
 
 function render(o){
-  let img=o.image_url?'<img src="'+esc(o.image_url)+'">':'☕';
+  let img=o.image_url?'<img src="'+esc(o.image_url)+'" onclick="openImage(this.src)">':'🐾';
   return '<div class="offer"><div class="img">'+img+'</div><div class="body"><span class="badge">'+esc(o.region)+'</span><h3>'+esc(o.title)+'</h3><div class="price">☕ '+esc(o.cafe_name)+'</div><p>'+esc(o.description)+'</p><p>📍 '+esc(o.place)+'</p></div></div>';
 }
 
