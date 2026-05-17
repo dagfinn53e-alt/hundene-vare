@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🍖 Fang godbitene</title>
+
+<style>
+
+body{
+    margin:0;
+    overflow:hidden;
+    font-family:Arial;
+    background:linear-gradient(#87ceeb,#dff6ff);
+}
+
+#game{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+}
+
+#dog{
+    position:absolute;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:70px;
+}
+
+.treat{
+    position:absolute;
+    top:-50px;
+    font-size:45px;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    to{
+        top:110vh;
+    }
+}
+
+#score{
+    position:absolute;
+    top:20px;
+    left:20px;
+    background:white;
+    padding:12px 18px;
+    border-radius:999px;
+    font-size:24px;
+    font-weight:bold;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+#back{
+    position:absolute;
+    top:20px;
+    right:20px;
+    background:#2563eb;
+    color:white;
+    padding:12px 18px;
+    border-radius:999px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="game">
+
+<div id="score">
+🍖 0
+</div>
+
+<a id="back" href="hundespill.html">
+← Tilbake
+</a>
+
+<div id="dog">
+🐶
+</div>
+
+</div>
+
+<script>
+
+const game = document.getElementById("game");
+const dog = document.getElementById("dog");
+const scoreBox = document.getElementById("score");
+
+let score = 0;
+let dogX = window.innerWidth / 2;
+
+document.addEventListener("mousemove",(e)=>{
+    dogX = e.clientX;
+    dog.style.left = dogX + "px";
+});
+
+document.addEventListener("touchmove",(e)=>{
+    dogX = e.touches[0].clientX;
+    dog.style.left = dogX + "px";
+});
+
+function createTreat(){
+
+    const treat = document.createElement("div");
+
+    treat.className="treat";
+    treat.innerHTML="🍖";
+
+    const x = Math.random() * (window.innerWidth - 60);
+
+    treat.style.left = x + "px";
+
+    const duration = 3 + Math.random()*2;
+
+    treat.style.animationDuration = duration + "s";
+
+    game.appendChild(treat);
+
+    const fall = setInterval(()=>{
+
+        const treatRect = treat.getBoundingClientRect();
+        const dogRect = dog.getBoundingClientRect();
+
+        if(
+            treatRect.bottom > dogRect.top &&
+            treatRect.left < dogRect.right &&
+            treatRect.right > dogRect.left
+        ){
+
+            score++;
+
+            scoreBox.innerHTML = "🍖 " + score;
+
+            treat.remove();
+
+            clearInterval(fall);
+
+        }
+
+    },50);
+
+    setTimeout(()=>{
+        if(treat.parentNode){
+            treat.remove();
+        }
+    },duration*1000);
+
+}
+
+setInterval(createTreat,900);
+
+</script>
+
+</body>
+</html>
