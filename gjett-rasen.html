@@ -30,6 +30,7 @@ img{
   max-width:400px;
   border-radius:20px;
   margin:20px 0;
+  object-fit:cover;
 }
 
 button{
@@ -58,6 +59,12 @@ button:hover{
   text-decoration:none;
 }
 
+#score{
+  margin-top:20px;
+  font-size:22px;
+  font-weight:bold;
+}
+
 </style>
 </head>
 
@@ -71,7 +78,7 @@ button:hover{
 Hvilken hunderase er dette?
 </h2>
 
-<img id="dogImage" src="https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=1200&auto=format&fit=crop">
+<img id="dogImage" src="">
 
 <div id="answers"></div>
 
@@ -89,8 +96,6 @@ Poeng: 0
 
 const dogs = [
 
-
-{
 {
 name:"Golden Retriever",
 image:"bilder/golden.png"
@@ -109,99 +114,99 @@ image:"bilder/bichon.png"
 {
 name:"Dobermann",
 image:"bilder/dobermann.png"
-}
-
 },
 
 {
-
-
+name:"Langhåret Collie",
+image:"bilder/golden.png"
 },
 
 {
-
-},
-
-{
-
+name:"Puddel",
+image:"bilder/bichon.png"
 },
 
 {
 name:"Chihuahua",
-image:"bilder/chihuahua.jpg"
+image:"bilder/pomeranian.png"
 },
-
 
 {
 name:"Newfoundland",
-image:"bilder/newfoundland.jpg"
+image:"bilder/golden.png"
 },
 
 {
 name:"St. Bernard",
-image:"bilder/st-bernard.jpg"
+image:"bilder/golden.png"
 },
 
 {
 name:"Tervueren",
-image:"bilder/tervueren.jpg"
+image:"bilder/dobermann.png"
 },
 
 {
 name:"Boxer",
-image:"bilder/boxer.jpg"
+image:"bilder/dobermann.png"
 },
 
 {
 name:"Cavalier King Charles Spaniel",
-image:"bilder/cavalier.jpg"
+image:"bilder/bichon.png"
 },
 
 {
 name:"Mops",
-image:"bilder/mops.jpg"
+image:"bilder/pomeranian.png"
 },
 
 {
 name:"Boston Terrier",
-image:"bilder/boston-terrier.jpg"
+image:"bilder/dobermann.png"
 },
 
 {
 name:"Løwchen",
-image:"bilder/lowchen.jpg"
+image:"bilder/bichon.png"
 },
 
 {
 name:"Rhodesian Ridgeback",
-image:"bilder/ridgeback.jpg"
+image:"bilder/dobermann.png"
 },
 
 {
 name:"Schnauzer",
-image:"bilder/schnauzer.jpg"
+image:"bilder/bichon.png"
 },
 
 {
 name:"Irsk Ulvehund",
-image:"bilder/irsk-ulvehund.jpg"
+image:"bilder/golden.png"
 },
 
 {
 name:"Lhasa Apso",
-image:"bilder/lhasa-apso.jpg"
-},
-
-{
-name:"Dobermann",
-image:"bilder/dobermann.png"
-}
+image:"bilder/bichon.png"
 }
 
 ];
 
 let current = 0;
 let score = 0;
+
+function shuffle(array){
+
+  for(let i = array.length - 1; i > 0; i--){
+
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+
+  return array;
+}
 
 function showDog(){
 
@@ -225,8 +230,33 @@ function showDog(){
 
   document.getElementById("dogImage").src = dog.image;
 
+  let wrong1 =
+    dogs[Math.floor(Math.random()*dogs.length)].name;
+
+  let wrong2 =
+    dogs[Math.floor(Math.random()*dogs.length)].name;
+
+  while(wrong1 === dog.name){
+    wrong1 =
+    dogs[Math.floor(Math.random()*dogs.length)].name;
+  }
+
+  while(
+    wrong2 === dog.name ||
+    wrong2 === wrong1
+  ){
+    wrong2 =
+    dogs[Math.floor(Math.random()*dogs.length)].name;
+  }
+
+  let answers = shuffle([
+    dog.name,
+    wrong1,
+    wrong2
+  ]);
+
   document.getElementById("answers").innerHTML =
-    dog.answers.map(answer =>
+    answers.map(answer =>
       `<button onclick="guess('${answer}')">${answer}</button>`
     ).join("");
 
@@ -234,7 +264,7 @@ function showDog(){
 
 function guess(answer){
 
-  if(answer === dogs[current].correct){
+  if(answer === dogs[current].name){
 
     score++;
 
