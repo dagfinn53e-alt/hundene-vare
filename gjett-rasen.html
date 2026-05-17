@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="no">
 <head>
@@ -10,59 +11,67 @@
 
 body{
   margin:0;
-  font-family:Arial;
+  font-family:Arial,sans-serif;
   background:#eef6ff;
   text-align:center;
   color:#123c73;
 }
 
-.box{
-  max-width:700px;
+.container{
+  max-width:750px;
   margin:30px auto;
   background:white;
   padding:25px;
-  border-radius:24px;
-  box-shadow:0 10px 25px rgba(0,0,0,.12);
+  border-radius:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.12);
 }
 
-img{
+h1{
+  margin-bottom:10px;
+}
+
+#dogImage{
   width:100%;
-  max-width:400px;
-  border-radius:20px;
+  max-width:450px;
+  border-radius:22px;
   margin:20px 0;
   object-fit:cover;
 }
 
-button{
+.answer-btn{
   display:block;
   width:100%;
   margin:12px 0;
   padding:16px;
   border:none;
-  border-radius:16px;
+  border-radius:18px;
   background:#2563eb;
   color:white;
   font-size:18px;
   font-weight:bold;
   cursor:pointer;
+  transition:0.2s;
 }
 
-button:hover{
+.answer-btn:hover{
   background:#1d4ed8;
-}
-
-.back{
-  display:inline-block;
-  margin-top:20px;
-  color:#2563eb;
-  font-weight:bold;
-  text-decoration:none;
+  transform:scale(1.02);
 }
 
 #score{
   margin-top:20px;
-  font-size:22px;
+  font-size:24px;
   font-weight:bold;
+  color:#10b981;
+}
+
+.back-btn{
+  display:inline-block;
+  margin-top:25px;
+  text-decoration:none;
+  color:#2563eb;
+  font-weight:bold;
+  font-size:18px;
 }
 
 </style>
@@ -70,7 +79,7 @@ button:hover{
 
 <body>
 
-<div class="box">
+<div class="container">
 
 <h1>🐶 Gjett hunderasen</h1>
 
@@ -86,7 +95,7 @@ Hvilken hunderase er dette?
 Poeng: 0
 </div>
 
-<a class="back" href="hundespill.html">
+<a class="back-btn" href="hundespill.html">
 ← Tilbake til spill
 </a>
 
@@ -115,83 +124,85 @@ image:"bilder/bichon.png"
 name:"Dobermann",
 image:"bilder/dobermann.png"
 },
-name:"Collie",
+
+{
+name:"Langhåret Collie",
 image:"bilder/collie.png"
+},
+
 {
 name:"Puddel",
 image:"bilder/puddel.png"
-
 },
+
+{
 name:"Chihuahua",
 image:"bilder/chihuahua.png"
+},
+
 {
 name:"Boxer",
 image:"bilder/boxer.png"
 },
 
 {
-name:"Chihuahua",
-image:"bilder/pomeranian.png"
-},
-
-{
 name:"Newfoundland",
-image:"bilder/golden.png"
+image:"bilder/newfoundland.png"
 },
 
 {
 name:"St. Bernard",
-image:"bilder/golden.png"
+image:"bilder/st-bernard.png"
 },
 
 {
 name:"Tervueren",
-image:"bilder/dobermann.png"
-},
-
-{
-name:"Boxer",
-image:"bilder/dobermann.png"
-},
-
-{
-name:"Cavalier King Charles Spaniel",
-image:"bilder/bichon.png"
-},
-
-{
-name:"Mops",
-image:"bilder/pomeranian.png"
-},
-
-{
-name:"Boston Terrier",
-image:"bilder/dobermann.png"
-},
-
-{
-name:"Løwchen",
-image:"bilder/bichon.png"
-},
-
-{
-name:"Rhodesian Ridgeback",
-image:"bilder/dobermann.png"
+image:"bilder/tervueren.png"
 },
 
 {
 name:"Schnauzer",
-image:"bilder/bichon.png"
+image:"bilder/schnauzer.png"
 },
 
 {
-name:"Irsk Ulvehund",
-image:"bilder/golden.png"
+name:"Boston Terrier",
+image:"bilder/boston-terrier.png"
 },
 
 {
 name:"Lhasa Apso",
-image:"bilder/bichon.png"
+image:"bilder/lhasa-apso.png"
+},
+
+{
+name:"Rhodesian Ridgeback",
+image:"bilder/ridgeback.png"
+},
+
+{
+name:"Irsk Ulvehund",
+image:"bilder/irsk-ulvehund.png"
+},
+
+{
+name:"Mops",
+image:"bilder/mops.png"
+},
+
+{
+name:"Cavalier King Charles Spaniel",
+image:"bilder/cavalier.png"
+},
+
+{
+name:"Løwchen",
+image:"bilder/lowchen.png"
+},
+
+{
+name:"Bichon Frise",
+image:"bilder/bichon2.png"
 }
 
 ];
@@ -211,57 +222,56 @@ function shuffle(array){
   return array;
 }
 
+function getWrongAnswers(correctName){
+
+  let names = dogs
+    .map(d => d.name)
+    .filter(name => name !== correctName);
+
+  shuffle(names);
+
+  return names.slice(0,2);
+}
+
 function showDog(){
 
   if(current >= dogs.length){
 
     document.getElementById("question").innerHTML =
-      "🎉 Ferdig!";
+    "🎉 Du er ferdig!";
 
-    document.getElementById("dogImage").style.display="none";
+    document.getElementById("dogImage").style.display =
+    "none";
 
     document.getElementById("answers").innerHTML =
-      '<button onclick="restart()">Start på nytt</button>';
+    `<button class="answer-btn" onclick="restartGame()">Start på nytt</button>`;
 
     document.getElementById("score").innerHTML =
-      "Du fikk " + score + " poeng 🐾";
+    "Sluttpoeng: " + score + " 🐾";
 
     return;
   }
 
   const dog = dogs[current];
 
-  document.getElementById("dogImage").src = dog.image;
+  document.getElementById("dogImage").src =
+  dog.image;
 
-  let wrong1 =
-    dogs[Math.floor(Math.random()*dogs.length)].name;
+  const wrongAnswers =
+  getWrongAnswers(dog.name);
 
-  let wrong2 =
-    dogs[Math.floor(Math.random()*dogs.length)].name;
-
-  while(wrong1 === dog.name){
-    wrong1 =
-    dogs[Math.floor(Math.random()*dogs.length)].name;
-  }
-
-  while(
-    wrong2 === dog.name ||
-    wrong2 === wrong1
-  ){
-    wrong2 =
-    dogs[Math.floor(Math.random()*dogs.length)].name;
-  }
-
-  let answers = shuffle([
+  let answers = [
     dog.name,
-    wrong1,
-    wrong2
-  ]);
+    wrongAnswers[0],
+    wrongAnswers[1]
+  ];
+
+  shuffle(answers);
 
   document.getElementById("answers").innerHTML =
-    answers.map(answer =>
-      `<button onclick="guess('${answer}')">${answer}</button>`
-    ).join("");
+  answers.map(answer =>
+    `<button class="answer-btn" onclick="guess('${answer}')">${answer}</button>`
+  ).join("");
 
 }
 
@@ -271,29 +281,33 @@ function guess(answer){
 
     score++;
 
-    alert("Riktig 🎉");
+    alert("🎉 Riktig!");
 
   }else{
 
-    alert("Feil 🙂");
+    alert("🙂 Feil!");
 
   }
 
   current++;
 
   document.getElementById("score").innerHTML =
-    "Poeng: " + score;
+  "Poeng: " + score;
 
   showDog();
 
 }
 
-function restart(){
+function restartGame(){
 
   current = 0;
   score = 0;
 
-  document.getElementById("dogImage").style.display="block";
+  document.getElementById("dogImage").style.display =
+  "block";
+
+  document.getElementById("score").innerHTML =
+  "Poeng: 0";
 
   showDog();
 
