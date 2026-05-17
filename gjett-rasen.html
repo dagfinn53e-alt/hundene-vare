@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🐶 Gjett hunderasen</title>
+
+<style>
+
+body{
+  margin:0;
+  font-family:Arial;
+  background:#eef6ff;
+  text-align:center;
+  color:#123c73;
+}
+
+.box{
+  max-width:700px;
+  margin:30px auto;
+  background:white;
+  padding:25px;
+  border-radius:24px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+img{
+  width:100%;
+  max-width:400px;
+  border-radius:20px;
+  margin:20px 0;
+}
+
+button{
+  display:block;
+  width:100%;
+  margin:12px 0;
+  padding:16px;
+  border:none;
+  border-radius:16px;
+  background:#2563eb;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#1d4ed8;
+}
+
+.back{
+  display:inline-block;
+  margin-top:20px;
+  color:#2563eb;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>🐶 Gjett hunderasen</h1>
+
+<h2 id="question">
+Hvilken hunderase er dette?
+</h2>
+
+<img id="dogImage" src="https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=1200&auto=format&fit=crop">
+
+<div id="answers"></div>
+
+<div id="score">
+Poeng: 0
+</div>
+
+<a class="back" href="hundespill.html">
+← Tilbake til spill
+</a>
+
+</div>
+
+<script>
+
+const dogs = [
+
+{
+image:"https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=1200&auto=format&fit=crop",
+correct:"Golden Retriever",
+answers:["Golden Retriever","Chihuahua","Husky"]
+},
+
+{
+image:"https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=1200&auto=format&fit=crop",
+correct:"Husky",
+answers:["Beagle","Husky","Mops"]
+},
+
+{
+image:"https://images.unsplash.com/photo-1518717758536-85ae29035b6d?q=80&w=1200&auto=format&fit=crop",
+correct:"Beagle",
+answers:["Dobermann","Beagle","Border Collie"]
+}
+
+];
+
+let current = 0;
+let score = 0;
+
+function showDog(){
+
+  if(current >= dogs.length){
+
+    document.getElementById("question").innerHTML =
+      "🎉 Ferdig!";
+
+    document.getElementById("dogImage").style.display="none";
+
+    document.getElementById("answers").innerHTML =
+      '<button onclick="restart()">Start på nytt</button>';
+
+    document.getElementById("score").innerHTML =
+      "Du fikk " + score + " poeng 🐾";
+
+    return;
+  }
+
+  const dog = dogs[current];
+
+  document.getElementById("dogImage").src = dog.image;
+
+  document.getElementById("answers").innerHTML =
+    dog.answers.map(answer =>
+      `<button onclick="guess('${answer}')">${answer}</button>`
+    ).join("");
+
+}
+
+function guess(answer){
+
+  if(answer === dogs[current].correct){
+
+    score++;
+
+    alert("Riktig 🎉");
+
+  }else{
+
+    alert("Feil 🙂");
+
+  }
+
+  current++;
+
+  document.getElementById("score").innerHTML =
+    "Poeng: " + score;
+
+  showDog();
+
+}
+
+function restart(){
+
+  current = 0;
+  score = 0;
+
+  document.getElementById("dogImage").style.display="block";
+
+  showDog();
+
+}
+
+showDog();
+
+</script>
+
+</body>
+</html>
