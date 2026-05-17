@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🐾 Hundeløp</title>
+
+<style>
+
+body{
+  margin:0;
+  overflow:hidden;
+  background:linear-gradient(#87ceeb,#dff6ff);
+  font-family:Arial,sans-serif;
+}
+
+#game{
+  position:relative;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+}
+
+#ground{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:120px;
+  background:#6ab04c;
+}
+
+#dog{
+  position:absolute;
+  bottom:120px;
+  left:80px;
+  font-size:80px;
+  transition:bottom 0.1s;
+}
+
+.obstacle{
+  position:absolute;
+  bottom:120px;
+  right:-100px;
+  font-size:70px;
+  animation:moveObstacle linear forwards;
+}
+
+@keyframes moveObstacle{
+  from{
+    right:-100px;
+  }
+  to{
+    right:110%;
+  }
+}
+
+#score{
+  position:absolute;
+  top:20px;
+  left:20px;
+  background:white;
+  padding:12px 18px;
+  border-radius:999px;
+  font-size:24px;
+  font-weight:bold;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+#message{
+  position:absolute;
+  top:80px;
+  width:100%;
+  text-align:center;
+  font-size:28px;
+  font-weight:bold;
+  color:#123c73;
+}
+
+#back{
+  position:absolute;
+  top:20px;
+  right:20px;
+  background:#2563eb;
+  color:white;
+  padding:12px 18px;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+#jumpBtn{
+  position:absolute;
+  bottom:20px;
+  right:20px;
+  width:120px;
+  height:120px;
+  border:none;
+  border-radius:50%;
+  background:#2563eb;
+  color:white;
+  font-size:28px;
+  font-weight:bold;
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="game">
+
+<div id="score">
+🏆 0
+</div>
+
+<div id="message">
+Trykk HOPP for å hoppe over hindrene 🐶
+</div>
+
+<a id="back" href="hundespill.html">
+← Tilbake
+</a>
+
+<div id="dog">
+🐶
+</div>
+
+<div id="ground"></div>
+
+<button id="jumpBtn">
+HOPP
+</button>
+
+</div>
+
+<script>
+
+const dog = document.getElementById("dog");
+const scoreBox = document.getElementById("score");
+const message = document.getElementById("message");
+const jumpBtn = document.getElementById("jumpBtn");
+
+let jumping = false;
+let score = 0;
+let gameOver = false;
+
+function jump(){
+
+  if(jumping || gameOver) return;
+
+  jumping = true;
+
+  dog.style.bottom = "260px";
+
+  setTimeout(()=>{
+
+    dog.style.bottom = "120px";
+
+    setTimeout(()=>{
+      jumping = false;
+    },200);
+
+  },500);
+
+}
+
+jumpBtn.onclick = jump;
+
+document.addEventListener("keydown",(e)=>{
+  if(e.code === "Space"){
+    jump();
+  }
+});
+
+function createObstacle(){
+
+  if(gameOver) return;
+
+  const obstacle = document.createElement("div");
+
+  obstacle.className = "obstacle";
+
+  const obstacles = ["🌵","🪵","🪨"];
+
+  obstacle.innerHTML =
+    obstacles[Math.floor(Math.random()*obstacles.length)];
+
+  const duration = 4 + Math.random()*2;
+
+  obstacle.style.animationDuration =
+    duration + "s";
+
+  document.getElementById("game")
+  .appendChild(obstacle);
+
+  const moveCheck = setInterval(()=>{
+
+    const dogRect =
+      dog.getBoundingClientRect();
+
+    const obstacleRect =
+      obstacle.getBoundingClientRect();
+
+    if(
+
+      obstacleRect.left < dogRect.right &&
+      obstacleRect.right > dogRect.left &&
+      obstacleRect.bottom > dogRect.top
+
+    ){
+
+      gameOver = true;
+
+      message.innerHTML =
+      "💥 Oi! Du krasjet!";
+
+      alert("🏆 Du fikk " + score + " poeng!");
+
+      location.reload();
+
+    }
+
+  },20);
+
+  setTimeout(()=>{
+
+    if(!gameOver){
+
+      score++;
+
+      scoreBox.innerHTML =
+      "🏆 " + score;
+
+    }
+
+    obstacle.remove();
+
+    clearInterval(moveCheck);
+
+  },duration*1000);
+
+}
+
+setInterval(createObstacle,1800);
+
+</script>
+
+</body>
+</html>
