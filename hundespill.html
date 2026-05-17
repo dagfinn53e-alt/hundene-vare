@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🐶 Hundespill - Hundene våre</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#eef6ff;
+    text-align:center;
+    color:#123c73;
+}
+
+.top{
+    background:linear-gradient(135deg,#123c73,#2563eb);
+    color:white;
+    padding:30px 20px;
+}
+
+.top h1{
+    margin:0;
+    font-size:42px;
+}
+
+.top p{
+    margin-top:10px;
+    font-size:18px;
+}
+
+.back{
+    display:inline-block;
+    margin-top:14px;
+    background:white;
+    color:#123c73;
+    text-decoration:none;
+    padding:10px 18px;
+    border-radius:999px;
+    font-weight:bold;
+}
+
+.game{
+    max-width:700px;
+    margin:30px auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    border-radius:24px;
+    height:150px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:60px;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+    transition:0.2s;
+}
+
+.card:hover{
+    transform:scale(1.04);
+}
+
+.message{
+    font-size:28px;
+    font-weight:bold;
+    margin-top:20px;
+}
+
+button{
+    margin-top:20px;
+    border:none;
+    background:#2563eb;
+    color:white;
+    padding:14px 24px;
+    border-radius:999px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+@media(max-width:700px){
+    .game{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .card{
+        height:130px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top">
+    <h1>🐶 Hundespill</h1>
+    <p>Finn hundebeinet 🦴</p>
+
+    <a class="back" href="index.html">
+        ← Tilbake til appen
+    </a>
+</div>
+
+<div class="message" id="message">
+    Trykk på et kort 🙂
+</div>
+
+<div class="game" id="game"></div>
+
+<button onclick="startGame()">
+    Start på nytt
+</button>
+
+<script>
+
+const game = document.getElementById("game");
+const message = document.getElementById("message");
+
+let boneIndex = 0;
+
+function startGame(){
+
+    game.innerHTML="";
+
+    boneIndex = Math.floor(Math.random()*6);
+
+    for(let i=0;i<6;i++){
+
+        const card = document.createElement("div");
+        card.className="card";
+        card.innerHTML="🐾";
+
+        card.onclick=()=>{
+
+            if(i===boneIndex){
+                card.innerHTML="🦴";
+                message.innerHTML="🎉 Du fant hundebeinet!";
+            }else{
+                card.innerHTML="🐶";
+                message.innerHTML="Prøv igjen 🙂";
+            }
+
+        };
+
+        game.appendChild(card);
+    }
+
+}
+
+startGame();
+
+</script>
+
+</body>
+</html>
