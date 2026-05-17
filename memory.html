@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧠 Hundememory</title>
+
+<style>
+body{margin:0;font-family:Arial;background:#eef6ff;color:#123c73;text-align:center}
+.box{max-width:900px;margin:20px auto;padding:15px}
+h1{margin-bottom:8px}
+.info{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:15px 0;font-weight:bold}
+.badge{background:white;padding:10px 16px;border-radius:999px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.card{height:120px;background:#2563eb;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:46px;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.15)}
+.card.open{background:white;font-size:42px}
+.card.done{background:#d1fae5;cursor:default}
+button{margin-top:18px;background:#2563eb;color:white;border:none;padding:14px 22px;border-radius:999px;font-weight:bold;font-size:17px;cursor:pointer}
+.back{display:inline-block;margin-top:18px;color:#2563eb;font-weight:bold;text-decoration:none}
+@media(max-width:650px){.grid{grid-template-columns:repeat(4,1fr);gap:8px}.card{height:80px;font-size:34px}}
+</style>
+</head>
+
+<body>
+<div class="box">
+<h1>🧠 Hundememory</h1>
+<p>Finn to like hunder 🐶</p>
+
+<div class="info">
+<div class="badge">⏱️ Tid: <span id="time">0</span>s</div>
+<div class="badge">🎯 Trekk: <span id="moves">0</span></div>
+<div class="badge">✅ Par: <span id="pairs">0</span>/8</div>
+</div>
+
+<div id="grid" class="grid"></div>
+
+<button onclick="startGame()">Start på nytt</button>
+<br>
+<a class="back" href="hundespill.html">← Tilbake til spill</a>
+</div>
+
+<script>
+const dogs=["🐶","🐕","🦮","🐕‍🦺","🦴","🐾","🍖","🏠"];
+let cards=[];
+let first=null;
+let second=null;
+let lock=false;
+let moves=0;
+let pairs=0;
+let seconds=0;
+let timer=null;
+
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+function startTimer(){
+  clearInterval(timer);
+  seconds=0;
+  document.getElementById("time").textContent=seconds;
+  timer=setInterval(()=>{
+    seconds++;
+    document.getElementById("time").textContent=seconds;
+  },1000);
+}
+
+function startGame(){
+  const grid=document.getElementById("grid");
+  grid.innerHTML="";
+  first=null;
+  second=null;
+  lock=false;
+  moves=0;
+  pairs=0;
+  document.getElementById("moves").textContent=moves;
+  document.getElementById("pairs").textContent=pairs;
+
+  cards=shuffle([...dogs,...dogs]);
+
+  cards.forEach((dog,index)=>{
+    const div=document.createElement("div");
+    div.className="card";
+    div.dataset.value=dog;
+    div.dataset.index=index;
+    div.textContent="❓";
+    div.onclick=()=>flip(div);
+    grid.appendChild(div);
+  });
+
+  startTimer();
+}
+
+function flip(card){
+  if(lock || card.classList.contains("open") || card.classList.contains("done")) return;
+
+  card.classList.add("open");
+  card.textContent=card.dataset.value;
+
+  if(!first){
+    first=card;
+    return;
+  }
+
+  second=card;
+  moves++;
+  document.getElementById("moves").textContent=moves;
+
+  if(first.dataset.value===second.dataset.value){
+    first.classList.add("done");
+    second.classList.add("done");
+    first=null;
+    second=null;
+    pairs++;
+    document.getElementById("pairs").textContent=pairs;
+
+    if(pairs===8){
+      clearInterval(timer);
+      setTimeout(()=>{
+        alert("🎉 Du klarte det på "+seconds+" sekunder og "+moves+" trekk!");
+      },200);
+    }
+  }else{
+    lock=true;
+    setTimeout(()=>{
+      first.classList.remove("open");
+      second.classList.remove("open");
+      first.textContent="❓";
+      second.textContent="❓";
+      first=null;
+      second=null;
+      lock=false;
+    },800);
+  }
+}
+
+startGame();
+</script>
+</body>
+</html>
