@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧩 Hundepuslespill</title>
+
+<style>
+body{margin:0;font-family:Arial;background:#eef6ff;color:#123c73;text-align:center}
+.box{max-width:1000px;margin:20px auto;padding:15px}
+.levels{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:15px 0}
+button{background:#2563eb;color:white;border:none;padding:12px 18px;border-radius:999px;font-weight:bold;cursor:pointer}
+#board{margin:20px auto;display:grid;gap:2px;max-width:92vw}
+.piece{background:#fff;border:1px solid #ddd;aspect-ratio:1/1;background-image:url("bilder/golden.png");background-size:500% 500%;cursor:pointer}
+.selected{outline:4px solid #f59e0b}
+.back{display:inline-block;margin-top:18px;color:#2563eb;font-weight:bold;text-decoration:none}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h1>🧩 Hundepuslespill</h1>
+<p>Velg vanskelighetsgrad</p>
+
+<div class="levels">
+<button onclick="startPuzzle(5)">25 brikker</button>
+<button onclick="startPuzzle(7)">49 brikker</button>
+<button onclick="startPuzzle(10)">100 brikker</button>
+<button onclick="startPuzzle(12)">144 brikker</button>
+<button onclick="startPuzzle(14)">196 brikker</button>
+</div>
+
+<p id="info">Trykk to brikker for å bytte plass 🐶</p>
+
+<div id="board"></div>
+
+<a class="back" href="hundespill.html">← Tilbake til spill</a>
+</div>
+
+<script>
+let size=5;
+let pieces=[];
+let selected=null;
+
+function startPuzzle(s){
+  size=s;
+  selected=null;
+  pieces=[];
+
+  for(let i=0;i<size*size;i++){
+    pieces.push(i);
+  }
+
+  pieces.sort(()=>Math.random()-0.5);
+  draw();
+}
+
+function draw(){
+  const board=document.getElementById("board");
+  board.innerHTML="";
+  board.style.gridTemplateColumns=`repeat(${size},1fr)`;
+
+  const boardSize=Math.min(window.innerWidth*0.92,700);
+  board.style.width=boardSize+"px";
+
+  pieces.forEach((value,index)=>{
+    const div=document.createElement("div");
+    div.className="piece";
+
+    const row=Math.floor(value/size);
+    const col=value%size;
+
+    div.style.backgroundSize=`${size*100}% ${size*100}%`;
+    div.style.backgroundPosition=`${(col/(size-1))*100}% ${(row/(size-1))*100}%`;
+
+    div.onclick=()=>selectPiece(index,div);
+
+    board.appendChild(div);
+  });
+}
+
+function selectPiece(index,div){
+  if(selected===null){
+    selected=index;
+    div.classList.add("selected");
+    return;
+  }
+
+  const temp=pieces[selected];
+  pieces[selected]=pieces[index];
+  pieces[index]=temp;
+
+  selected=null;
+  draw();
+  checkWin();
+}
+
+function checkWin(){
+  for(let i=0;i<pieces.length;i++){
+    if(pieces[i]!==i) return;
+  }
+
+  setTimeout(()=>{
+    alert("🎉 Du klarte puslespillet!");
+  },200);
+}
+
+startPuzzle(5);
+</script>
+
+</body>
+</html>
