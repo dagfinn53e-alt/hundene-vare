@@ -17,7 +17,7 @@ body{
 }
 
 .container{
-  max-width:700px;
+  max-width:750px;
   margin:30px auto;
   background:white;
   padding:30px;
@@ -57,7 +57,8 @@ h1{
 
 #result{
   margin-top:30px;
-  font-size:30px;
+  font-size:24px;
+  line-height:1.6;
   font-weight:bold;
   color:#10b981;
 }
@@ -97,7 +98,7 @@ h1{
 const questions = [
 
 {
-q:"Bor du i leilighet eller hus?",
+q:"Bor dere i leilighet eller hus?",
 answers:[
 { text:"Leilighet", type:"small" },
 { text:"Hus", type:"large" }
@@ -105,26 +106,74 @@ answers:[
 },
 
 {
-q:"Hvor aktiv er du?",
+q:"Har dere små barn?",
 answers:[
-{ text:"Rolig", type:"calm" },
-{ text:"Veldig aktiv", type:"active" }
+{ text:"Ja", type:"family" },
+{ text:"Nei", type:"active" }
 ]
 },
 
 {
-q:"Liker du små eller store hunder?",
+q:"Jobber begge voksne i huset?",
 answers:[
-{ text:"Små hunder", type:"small" },
-{ text:"Store hunder", type:"large" }
+{ text:"Ja", type:"alone" },
+{ text:"Nei", type:"social" }
 ]
 },
 
 {
-q:"Hvor mye pelsstell vil du ha?",
+q:"Blir hunden alene hjemme lenge?",
+answers:[
+{ text:"Ja", type:"alone" },
+{ text:"Nei", type:"social" }
+]
+},
+
+{
+q:"Liker dere lange turer?",
+answers:[
+{ text:"Ja", type:"active" },
+{ text:"Nei", type:"calm" }
+]
+},
+
+{
+q:"Vil dere ha stor eller liten hund?",
+answers:[
+{ text:"Stor hund", type:"large" },
+{ text:"Liten hund", type:"small" }
+]
+},
+
+{
+q:"Hvor mye pelsstell ønsker dere?",
 answers:[
 { text:"Lite", type:"easy" },
 { text:"Masse pels 😄", type:"fluffy" }
+]
+},
+
+{
+q:"Reiser dere ofte på ferie?",
+answers:[
+{ text:"Ja", type:"easy" },
+{ text:"Nei", type:"active" }
+]
+},
+
+{
+q:"Har dere god plass til hund?",
+answers:[
+{ text:"Ja", type:"large" },
+{ text:"Litt begrenset", type:"small" }
+]
+},
+
+{
+q:"Vil dere ha en rolig eller energisk hund?",
+answers:[
+{ text:"Rolig", type:"calm" },
+{ text:"Energisk", type:"active" }
 ]
 }
 
@@ -138,7 +187,10 @@ large:0,
 active:0,
 calm:0,
 easy:0,
-fluffy:0
+fluffy:0,
+family:0,
+alone:0,
+social:0
 };
 
 function showQuestion(){
@@ -179,39 +231,70 @@ showQuestion();
 
 function showResult(){
 
-let result = "Golden Retriever 🐶";
+let dogs = [];
 
-if(score.small >= 2){
+if(score.family >= 2){
 
-result = "Pomeranian 🐾";
-
-}
-
-if(score.large >= 2 && score.active >= 1){
-
-result = "Dobermann 🐕";
+dogs.push("🐶 Golden Retriever");
+dogs.push("🐶 Cavalier King Charles Spaniel");
 
 }
 
-if(score.fluffy >= 2){
+if(score.small >= 3){
 
-result = "Bichon Frise ☁️";
+dogs.push("🐾 Pomeranian");
+dogs.push("🐾 Chihuahua");
+
+}
+
+if(score.large >= 3){
+
+dogs.push("🐕 Dobermann");
+dogs.push("🐕 Newfoundland");
+
+}
+
+if(score.active >= 2){
+
+dogs.push("🐕 Boxer");
+dogs.push("🐕 Rhodesian Ridgeback");
 
 }
 
 if(score.calm >= 2){
 
-result = "Cavalier King Charles Spaniel 👑";
+dogs.push("☁️ Bichon Frise");
+dogs.push("☁️ Lhasa Apso");
+
+}
+
+if(score.fluffy >= 2){
+
+dogs.push("🐩 Puddel");
+dogs.push("🐩 Langhåret Collie");
+
+}
+
+if(score.easy >= 2){
+
+dogs.push("🐶 Boston Terrier");
+dogs.push("🐶 Schnauzer");
+
+}
+
+if(dogs.length === 0){
+
+dogs.push("🐶 Golden Retriever");
 
 }
 
 document.getElementById("question").innerHTML =
-"🎉 Din perfekte hund er:";
+"🎉 Disse hundene kan passe dere:";
 
 document.getElementById("answers").innerHTML = "";
 
 document.getElementById("result").innerHTML =
-result;
+dogs.join("<br>");
 
 }
 
