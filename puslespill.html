@@ -11,7 +11,7 @@ body{margin:0;font-family:Arial;background:#eef6ff;color:#123c73;text-align:cent
 .levels{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:15px 0}
 button{background:#2563eb;color:white;border:none;padding:12px 18px;border-radius:999px;font-weight:bold;cursor:pointer}
 #board{margin:20px auto;display:grid;gap:2px;max-width:92vw}
-.piece{background:#fff;border:1px solid #ddd;aspect-ratio:1/1;background-image:url("bilder/golden.png");background-size:500% 500%;cursor:pointer}
+.piece{background:#fff;border:1px solid #ddd;aspect-ratio:1/1;cursor:pointer}
 .selected{outline:4px solid #f59e0b}
 .back{display:inline-block;margin-top:18px;color:#2563eb;font-weight:bold;text-decoration:none}
 </style>
@@ -21,17 +21,15 @@ button{background:#2563eb;color:white;border:none;padding:12px 18px;border-radiu
 
 <div class="box">
 <h1>🧩 Hundepuslespill</h1>
-<p>Velg vanskelighetsgrad</p>
+<p>Velg nivå – hvert nivå har en ny hunderase 🐶</p>
 
 <div class="levels">
-<button onclick="startPuzzle(5)">25 brikker</button>
-<button onclick="startPuzzle(7)">49 brikker</button>
-<button onclick="startPuzzle(10)">100 brikker</button>
-<button onclick="startPuzzle(12)">144 brikker</button>
-<button onclick="startPuzzle(14)">196 brikker</button>
+<button onclick="startPuzzle(5,'bilder/golden.png')">25 brikker<br>Golden Retriever</button>
+<button onclick="startPuzzle(7,'bilder/dobermann.png')">50 brikker<br>Dobermann</button>
+<button onclick="startPuzzle(9,'bilder/pomeranian.png')">75 brikker<br>Pomeranian</button>
 </div>
 
-<p id="info">Trykk to brikker for å bytte plass 🐶</p>
+<p id="info">Trykk to brikker for å bytte plass 🐾</p>
 
 <div id="board"></div>
 
@@ -42,9 +40,11 @@ button{background:#2563eb;color:white;border:none;padding:12px 18px;border-radiu
 let size=5;
 let pieces=[];
 let selected=null;
+let currentImage="bilder/golden.png";
 
-function startPuzzle(s){
+function startPuzzle(s,img){
   size=s;
+  currentImage=img;
   selected=null;
   pieces=[];
 
@@ -67,6 +67,7 @@ function draw(){
   pieces.forEach((value,index)=>{
     const div=document.createElement("div");
     div.className="piece";
+    div.style.backgroundImage=`url('${currentImage}')`;
 
     const row=Math.floor(value/size);
     const col=value%size;
@@ -74,16 +75,15 @@ function draw(){
     div.style.backgroundSize=`${size*100}% ${size*100}%`;
     div.style.backgroundPosition=`${(col/(size-1))*100}% ${(row/(size-1))*100}%`;
 
-    div.onclick=()=>selectPiece(index,div);
-
+    div.onclick=()=>selectPiece(index);
     board.appendChild(div);
   });
 }
 
-function selectPiece(index,div){
+function selectPiece(index){
   if(selected===null){
     selected=index;
-    div.classList.add("selected");
+    board.children[index].classList.add("selected");
     return;
   }
 
@@ -106,7 +106,7 @@ function checkWin(){
   },200);
 }
 
-startPuzzle(5);
+startPuzzle(5,"bilder/golden.png");
 </script>
 
 </body>
