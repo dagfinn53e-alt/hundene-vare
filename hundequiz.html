@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>❓ Hundequiz</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#eef6ff;
+  text-align:center;
+  color:#123c73;
+}
+
+.box{
+  max-width:700px;
+  margin:30px auto;
+  background:white;
+  padding:25px;
+  border-radius:24px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+h1{
+  font-size:36px;
+}
+
+.question{
+  font-size:24px;
+  font-weight:bold;
+  margin:25px 0;
+}
+
+button{
+  display:block;
+  width:100%;
+  margin:12px 0;
+  padding:16px;
+  border:none;
+  border-radius:16px;
+  background:#2563eb;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#1d4ed8;
+}
+
+.back{
+  display:inline-block;
+  margin-top:20px;
+  color:#2563eb;
+  font-weight:bold;
+  text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h1>❓ Hundequiz</h1>
+  <div id="score">Poeng: 0</div>
+  <div id="question" class="question"></div>
+  <div id="answers"></div>
+
+  <a class="back" href="hundespill.html">← Tilbake til spill</a>
+</div>
+
+<script>
+const quiz = [
+  {
+    q:"Hva liker de fleste hunder best?",
+    a:["Sjokolade","Tur og lek","Løk"],
+    correct:1
+  },
+  {
+    q:"Hva bør en hund alltid ha tilgang til?",
+    a:["Rent vann","Brus","Kaffe"],
+    correct:0
+  },
+  {
+    q:"Hva betyr det ofte når hunden logrer?",
+    a:["Den er glad eller spent","Den sover","Den kjører bil"],
+    correct:0
+  },
+  {
+    q:"Hva bruker hunden nesen mye til?",
+    a:["Å lukte","Å skrive","Å tegne"],
+    correct:0
+  },
+  {
+    q:"Hva skal man gjøre før man klapper en ukjent hund?",
+    a:["Spørre eieren","Rope høyt","Løpe mot den"],
+    correct:0
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function showQuestion(){
+  if(current >= quiz.length){
+    document.getElementById("question").innerHTML =
+      "🎉 Ferdig! Du fikk " + score + " poeng!";
+    document.getElementById("answers").innerHTML =
+      '<button onclick="restart()">Start på nytt</button>';
+    return;
+  }
+
+  const item = quiz[current];
+
+  document.getElementById("question").innerHTML = item.q;
+  document.getElementById("score").innerHTML = "Poeng: " + score;
+
+  document.getElementById("answers").innerHTML =
+    item.a.map((answer,index)=>
+      `<button onclick="answer(${index})">${answer}</button>`
+    ).join("");
+}
+
+function answer(index){
+  if(index === quiz[current].correct){
+    score++;
+    alert("Riktig! 🎉");
+  }else{
+    alert("Prøv igjen neste gang 🙂");
+  }
+
+  current++;
+  showQuestion();
+}
+
+function restart(){
+  current = 0;
+  score = 0;
+  showQuestion();
+}
+
+showQuestion();
+</script>
+
+</body>
+</html>
