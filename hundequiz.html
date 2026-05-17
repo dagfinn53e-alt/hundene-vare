@@ -6,125 +6,150 @@
 <title>❓ Hundequiz</title>
 
 <style>
+
 body{
   margin:0;
   font-family:Arial;
   background:#eef6ff;
-  text-align:center;
-  color:#123c73;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
 }
 
-.box{
-  max-width:700px;
-  margin:30px auto;
+.quiz-box{
   background:white;
-  padding:25px;
-  border-radius:24px;
-  box-shadow:0 10px 25px rgba(0,0,0,.12);
+  width:90%;
+  max-width:500px;
+  padding:30px;
+  border-radius:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+  text-align:center;
 }
 
 h1{
-  font-size:36px;
+  color:#123c73;
 }
 
-.question{
+#question{
   font-size:24px;
-  font-weight:bold;
   margin:25px 0;
+  color:#123c73;
 }
 
-button{
+.answer-btn{
   display:block;
   width:100%;
-  margin:12px 0;
-  padding:16px;
+  margin:10px 0;
+  padding:15px;
   border:none;
-  border-radius:16px;
+  border-radius:15px;
   background:#2563eb;
   color:white;
   font-size:18px;
-  font-weight:bold;
   cursor:pointer;
+  transition:0.2s;
 }
 
-button:hover{
-  background:#1d4ed8;
+.answer-btn:hover{
+  transform:scale(1.02);
+}
+
+#score{
+  margin-top:20px;
+  font-size:20px;
+  font-weight:bold;
+  color:#10b981;
 }
 
 .back{
   display:inline-block;
   margin-top:20px;
+  text-decoration:none;
   color:#2563eb;
   font-weight:bold;
-  text-decoration:none;
 }
+
 </style>
 </head>
 
 <body>
 
-<div class="box">
-  <h1>❓ Hundequiz</h1>
-  <div id="score">Poeng: 0</div>
-  <div id="question" class="question"></div>
-  <div id="answers"></div>
+<div class="quiz-box">
 
-  <a class="back" href="hundespill.html">← Tilbake til spill</a>
+<h1>❓ Hundequiz</h1>
+
+<div id="question"></div>
+
+<div id="answers"></div>
+
+<div id="score">Poeng: 0</div>
+
+<a class="back" href="hundespill.html">
+← Tilbake til spill
+</a>
+
 </div>
 
 <script>
+
 const quiz = [
-  {
-    q:"Hva liker de fleste hunder best?",
-    a:["Sjokolade","Tur og lek","Løk"],
-    correct:1
-  },
-  {
-    q:"Hva bør en hund alltid ha tilgang til?",
-    a:["Rent vann","Brus","Kaffe"],
-    correct:0
-  },
-  {
-    q:"Hva betyr det ofte når hunden logrer?",
-    a:["Den er glad eller spent","Den sover","Den kjører bil"],
-    correct:0
-  },
-  {
-    q:"Hva bruker hunden nesen mye til?",
-    a:["Å lukte","Å skrive","Å tegne"],
-    correct:0
-  },
-  {
-    q:"Hva skal man gjøre før man klapper en ukjent hund?",
-    a:["Spørre eieren","Rope høyt","Løpe mot den"],
-    correct:0
-    ,
+
+{
+  q:"Hva liker de fleste hunder best?",
+  a:["Sjokolade","Tur og lek","Løk"],
+  correct:1
+},
+
+{
+  q:"Hva bør en hund alltid ha tilgang til?",
+  a:["Rent vann","Brus","Kaffe"],
+  correct:0
+},
+
+{
+  q:"Hva betyr det ofte når hunden logrer?",
+  a:["Den er glad eller spent","Den sover","Den kjører bil"],
+  correct:0
+},
+
+{
+  q:"Hva bruker hunden nesen mye til?",
+  a:["Å lukte","Å skrive","Å tegne"],
+  correct:0
+},
+
+{
+  q:"Hva skal man gjøre før man klapper en ukjent hund?",
+  a:["Spørre eieren","Rope høyt","Løpe mot den"],
+  correct:0
+},
+
 {
   q:"Hvor mange bein har en vanlig hund?",
   a:["2","4","6"],
   correct:1
-
+},
 
 {
   q:"Hva gjør hunder ofte når de er glade?",
   a:["Logrer","Flyr","Sover i tre"],
   correct:0
-
+},
 
 {
   q:"Hva trenger hunder hver dag?",
   a:["Tur","Iskrem","Pizza"],
   correct:0
-
+},
 
 {
   q:"Hvilket dyr sier voff?",
   a:["Katt","Hund","Ku"],
   correct:1
-
+},
 
 {
- 
   q:"Hva liker mange hunder å leke med?",
   a:["Ball","TV","Mobil"],
   correct:0
@@ -132,51 +157,64 @@ const quiz = [
 
 ];
 
-
-
-
 let current = 0;
-let score = 0;
+let points = 0;
 
 function showQuestion(){
+
   if(current >= quiz.length){
+
     document.getElementById("question").innerHTML =
-      "🎉 Ferdig! Du fikk " + score + " poeng!";
-    document.getElementById("answers").innerHTML =
-      '<button onclick="restart()">Start på nytt</button>';
+    "🎉 Du er ferdig!";
+
+    document.getElementById("answers").innerHTML = "";
+
     return;
   }
 
-  const item = quiz[current];
+  const q = quiz[current];
 
-  document.getElementById("question").innerHTML = item.q;
-  document.getElementById("score").innerHTML = "Poeng: " + score;
+  document.getElementById("question").innerHTML = q.q;
 
-  document.getElementById("answers").innerHTML =
-    item.a.map((answer,index)=>
-      `<button onclick="answer(${index})">${answer}</button>`
-    ).join("");
+  const answersDiv = document.getElementById("answers");
+
+  answersDiv.innerHTML = "";
+
+  q.a.forEach((answer,index)=>{
+
+    const btn = document.createElement("button");
+
+    btn.className = "answer-btn";
+
+    btn.innerHTML = answer;
+
+    btn.onclick = ()=>checkAnswer(index);
+
+    answersDiv.appendChild(btn);
+
+  });
+
 }
 
-function answer(index){
+function checkAnswer(index){
+
   if(index === quiz[current].correct){
-    score++;
-    alert("Riktig! 🎉");
-  }else{
-    alert("Prøv igjen neste gang 🙂");
+
+    points++;
+
+    document.getElementById("score").innerHTML =
+    "Poeng: " + points;
+
   }
 
   current++;
-  showQuestion();
-}
 
-function restart(){
-  current = 0;
-  score = 0;
   showQuestion();
+
 }
 
 showQuestion();
+
 </script>
 
 </body>
