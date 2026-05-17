@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏆 Hundeshow</title>
+
+<style>
+body{margin:0;font-family:Arial;background:#eef6ff;color:#123c73;text-align:center}
+.box{max-width:760px;margin:25px auto;background:white;padding:28px;border-radius:25px;box-shadow:0 10px 25px rgba(0,0,0,.12)}
+h1{margin-bottom:10px}
+#dog{font-size:80px;margin:15px}
+#step{font-size:26px;font-weight:bold;margin:20px 0}
+button{display:block;width:100%;margin:12px 0;padding:16px;border:none;border-radius:18px;background:#2563eb;color:white;font-size:18px;font-weight:bold;cursor:pointer}
+button:hover{background:#1d4ed8}
+#points{font-size:22px;font-weight:bold;color:#10b981;margin-top:18px}
+.back{display:inline-block;margin-top:20px;color:#2563eb;font-weight:bold;text-decoration:none}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h1>🏆 Hundeshow</h1>
+<div id="dog">🐶</div>
+<div id="step"></div>
+<div id="choices"></div>
+<div id="points">Poeng: 0</div>
+<a class="back" href="hundespill.html">← Tilbake til spill</a>
+</div>
+
+<script>
+const steps = [
+  {
+    text:"Velg hunden din",
+    choices:[
+      {text:"Golden Retriever", points:10},
+      {text:"Puddel", points:10},
+      {text:"Boxer", points:10}
+    ]
+  },
+  {
+    text:"Vask hunden før showet",
+    choices:[
+      {text:"Grundig vask 🛁", points:20},
+      {text:"Rask skylling", points:10},
+      {text:"Dropper vask", points:0}
+    ]
+  },
+  {
+    text:"Børst pelsen",
+    choices:[
+      {text:"Børster nøye ✨", points:20},
+      {text:"Litt børsting", points:10},
+      {text:"Ingen børsting", points:0}
+    ]
+  },
+  {
+    text:"Tren posering",
+    choices:[
+      {text:"Trener rolig posering", points:20},
+      {text:"Tar en rask øvelse", points:10},
+      {text:"Ingen trening", points:0}
+    ]
+  },
+  {
+    text:"Velg show-utstyr",
+    choices:[
+      {text:"Fin sløyfe 🎀", points:15},
+      {text:"Pent halsbånd", points:10},
+      {text:"Vanlig bånd", points:5}
+    ]
+  },
+  {
+    text:"Hvordan går dere inn i ringen?",
+    choices:[
+      {text:"Rolig og stolt", points:20},
+      {text:"Litt stresset", points:8},
+      {text:"Hunden hopper rundt", points:3}
+    ]
+  },
+  {
+    text:"Dommeren ser på hunden",
+    choices:[
+      {text:"Hunden står fint", points:20},
+      {text:"Hunden sitter litt", points:10},
+      {text:"Hunden vil leke", points:5}
+    ]
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function showStep(){
+  if(current >= steps.length){
+    showResult();
+    return;
+  }
+
+  const s = steps[current];
+  document.getElementById("step").innerHTML = s.text;
+  document.getElementById("choices").innerHTML = s.choices.map(c =>
+    `<button onclick="choose(${c.points})">${c.text}</button>`
+  ).join("");
+}
+
+function choose(points){
+  score += points;
+  document.getElementById("points").innerHTML = "Poeng: " + score;
+  current++;
+  showStep();
+}
+
+function showResult(){
+  let result = "🥉 Bronse";
+  if(score >= 100) result = "🥇 Gull!";
+  else if(score >= 70) result = "🥈 Sølv";
+
+  document.getElementById("step").innerHTML = "Resultat: " + result;
+  document.getElementById("choices").innerHTML =
+    `<p style="font-size:22px;font-weight:bold;">Du fikk ${score} poeng!</p>
+     <button onclick="location.reload()">Spill igjen</button>`;
+}
+
+showStep();
+</script>
+
+</body>
+</html>
