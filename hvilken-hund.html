@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🐶 Hvilken hund passer deg?</title>
+
+<style>
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#eef6ff;
+  color:#123c73;
+  text-align:center;
+}
+
+.container{
+  max-width:700px;
+  margin:30px auto;
+  background:white;
+  padding:30px;
+  border-radius:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+h1{
+  margin-bottom:10px;
+}
+
+#question{
+  font-size:28px;
+  font-weight:bold;
+  margin:30px 0;
+}
+
+.answer-btn{
+  display:block;
+  width:100%;
+  margin:12px 0;
+  padding:18px;
+  border:none;
+  border-radius:18px;
+  background:#2563eb;
+  color:white;
+  font-size:20px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.answer-btn:hover{
+  background:#1d4ed8;
+  transform:scale(1.02);
+}
+
+#result{
+  margin-top:30px;
+  font-size:30px;
+  font-weight:bold;
+  color:#10b981;
+}
+
+.back{
+  display:inline-block;
+  margin-top:25px;
+  color:#2563eb;
+  text-decoration:none;
+  font-weight:bold;
+  font-size:18px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🐶 Hvilken hund passer deg?</h1>
+
+<div id="question"></div>
+
+<div id="answers"></div>
+
+<div id="result"></div>
+
+<a class="back" href="hundespill.html">
+← Tilbake til spill
+</a>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+q:"Bor du i leilighet eller hus?",
+answers:[
+{ text:"Leilighet", type:"small" },
+{ text:"Hus", type:"large" }
+]
+},
+
+{
+q:"Hvor aktiv er du?",
+answers:[
+{ text:"Rolig", type:"calm" },
+{ text:"Veldig aktiv", type:"active" }
+]
+},
+
+{
+q:"Liker du små eller store hunder?",
+answers:[
+{ text:"Små hunder", type:"small" },
+{ text:"Store hunder", type:"large" }
+]
+},
+
+{
+q:"Hvor mye pelsstell vil du ha?",
+answers:[
+{ text:"Lite", type:"easy" },
+{ text:"Masse pels 😄", type:"fluffy" }
+]
+}
+
+];
+
+let current = 0;
+
+const score = {
+small:0,
+large:0,
+active:0,
+calm:0,
+easy:0,
+fluffy:0
+};
+
+function showQuestion(){
+
+if(current >= questions.length){
+
+showResult();
+
+return;
+
+}
+
+const q = questions[current];
+
+document.getElementById("question").innerHTML = q.q;
+
+document.getElementById("answers").innerHTML =
+q.answers.map(answer =>
+
+`<button class="answer-btn"
+onclick="choose('${answer.type}')">
+${answer.text}
+</button>`
+
+).join("");
+
+}
+
+function choose(type){
+
+score[type]++;
+
+current++;
+
+showQuestion();
+
+}
+
+function showResult(){
+
+let result = "Golden Retriever 🐶";
+
+if(score.small >= 2){
+
+result = "Pomeranian 🐾";
+
+}
+
+if(score.large >= 2 && score.active >= 1){
+
+result = "Dobermann 🐕";
+
+}
+
+if(score.fluffy >= 2){
+
+result = "Bichon Frise ☁️";
+
+}
+
+if(score.calm >= 2){
+
+result = "Cavalier King Charles Spaniel 👑";
+
+}
+
+document.getElementById("question").innerHTML =
+"🎉 Din perfekte hund er:";
+
+document.getElementById("answers").innerHTML = "";
+
+document.getElementById("result").innerHTML =
+result;
+
+}
+
+showQuestion();
+
+</script>
+
+</body>
+</html>
