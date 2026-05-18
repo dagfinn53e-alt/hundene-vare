@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🚑 Veterinærspill</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#eef6ff;
+  text-align:center;
+  color:#123c73;
+}
+
+.box{
+  max-width:750px;
+  margin:25px auto;
+  background:white;
+  padding:30px;
+  border-radius:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+#dog{
+  font-size:100px;
+  margin:20px 0;
+}
+
+#problem{
+  font-size:28px;
+  font-weight:bold;
+  margin:20px 0;
+}
+
+button{
+  display:block;
+  width:100%;
+  margin:12px 0;
+  padding:16px;
+  border:none;
+  border-radius:18px;
+  background:#2563eb;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#1d4ed8;
+}
+
+#score{
+  margin-top:20px;
+  font-size:24px;
+  font-weight:bold;
+  color:#10b981;
+}
+
+.back{
+  display:inline-block;
+  margin-top:20px;
+  color:#2563eb;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>🚑 Veterinærspill</h1>
+
+<div id="dog">🐶</div>
+
+<div id="problem"></div>
+
+<div id="choices"></div>
+
+<div id="score">
+Stjerner: ⭐ 0
+</div>
+
+<a class="back" href="hundespill.html">
+← Tilbake til spill
+</a>
+
+</div>
+
+<script>
+
+const tasks = [
+
+{
+problem:"Hunden har vond pote 🐾",
+answers:[
+{text:"Legg på plaster",good:true},
+{text:"Gi pizza",good:false},
+{text:"Kast ball",good:false}
+]
+},
+
+{
+problem:"Hunden er skitten 🛁",
+answers:[
+{text:"Vask hunden",good:true},
+{text:"Gi brus",good:false},
+{text:"La den sove",good:false}
+]
+},
+
+{
+problem:"Hunden er tørst 💧",
+answers:[
+{text:"Gi vann",good:true},
+{text:"Gi kaffe",good:false},
+{text:"Gi sjokolade",good:false}
+]
+},
+
+{
+problem:"Hunden fryser 🥶",
+answers:[
+{text:"Gi teppe",good:true},
+{text:"Spray vann",good:false},
+{text:"Sett på vifte",good:false}
+]
+},
+
+{
+problem:"Hunden har feber 🌡️",
+answers:[
+{text:"Mål temperaturen",good:true},
+{text:"Gi iskrem",good:false},
+{text:"Spill musikk",good:false}
+]
+},
+
+{
+problem:"Hunden er sulten 🍖",
+answers:[
+{text:"Gi hundemat",good:true},
+{text:"Gi løk",good:false},
+{text:"Gi brus",good:false}
+]
+}
+
+];
+
+let current = 0;
+let stars = 0;
+
+function showTask(){
+
+if(current >= tasks.length){
+
+finishGame();
+
+return;
+
+}
+
+const t = tasks[current];
+
+document.getElementById("problem").innerHTML =
+t.problem;
+
+document.getElementById("choices").innerHTML =
+t.answers.map(answer =>
+
+`<button onclick="choose(${answer.good})">
+${answer.text}
+</button>`
+
+).join("");
+
+}
+
+function choose(good){
+
+if(good){
+
+stars++;
+
+alert("🎉 Bra jobbet!");
+
+}else{
+
+alert("🙂 Det var ikke helt riktig");
+
+}
+
+document.getElementById("score").innerHTML =
+"Stjerner: ⭐ " + stars;
+
+current++;
+
+showTask();
+
+}
+
+function finishGame(){
+
+let result = "🙂 Bra veterinær!";
+
+if(stars >= 5){
+
+result = "🏆 Fantastisk veterinær!";
+
+}else if(stars >= 3){
+
+result = "⭐ Flink veterinær!";
+
+}
+
+document.getElementById("problem").innerHTML =
+result;
+
+document.getElementById("choices").innerHTML =
+`<button onclick="location.reload()">
+Spill igjen
+</button>`;
+
+}
+
+showTask();
+
+</script>
+
+</body>
+</html>
