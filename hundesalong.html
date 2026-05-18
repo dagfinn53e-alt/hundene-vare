@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="no">
 <head>
@@ -6,16 +7,11 @@
 <title>🐶 Hundesalong LIVE PRO</title>
 
 <style>
-
 body{
   margin:0;
   overflow:hidden;
   font-family:Arial,sans-serif;
-  background:linear-gradient(
-  to bottom,
-  #fbcfe8,
-  #dbeafe
-  );
+  background:linear-gradient(to bottom,#fbcfe8,#dbeafe);
 }
 
 #game{
@@ -24,12 +20,29 @@ body{
   height:100vh;
 }
 
+#hud{
+  position:absolute;
+  top:20px;
+  left:20px;
+  background:rgba(255,255,255,.95);
+  padding:18px;
+  border-radius:20px;
+  z-index:20;
+  min-width:220px;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+#message{
+  margin-top:12px;
+  line-height:1.5;
+}
+
 #salon{
   position:absolute;
   inset:0;
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
 }
 
 #dogContainer{
@@ -43,19 +56,16 @@ body{
   height:100%;
   object-fit:cover;
   border-radius:30px;
-  box-shadow:0 12px 30px rgba(0,0,0,.25);
-  transition:0.3s;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  transition:.2s;
 }
 
 .dirty{
-  filter:
-  brightness(.7)
-  grayscale(.4);
+  filter:brightness(.65) grayscale(.35);
 }
 
 .clean{
-  filter:
-  brightness(1.08);
+  filter:brightness(1.1);
 }
 
 #foamLayer{
@@ -66,27 +76,31 @@ body{
 
 .foam{
   position:absolute;
-  width:60px;
-  height:60px;
+  width:55px;
+  height:55px;
   border-radius:50%;
-  background:rgba(255,255,255,.8);
-  box-shadow:
-  0 0 10px rgba(255,255,255,.8);
-  animation:foamFade 2s forwards;
+  background:rgba(255,255,255,.85);
+  animation:fadeBubble 1.5s linear forwards;
 }
 
-@keyframes foamFade{
-
-0%{
-opacity:1;
-transform:scale(1);
+@keyframes fadeBubble{
+  0%{
+    opacity:1;
+    transform:scale(1);
+  }
+  100%{
+    opacity:0;
+    transform:scale(1.8);
+  }
 }
 
-100%{
-opacity:0;
-transform:scale(1.8);
-}
-
+#bow{
+  position:absolute;
+  top:45px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:80px;
+  display:none;
 }
 
 #toolbar{
@@ -95,112 +109,52 @@ transform:scale(1.8);
   left:50%;
   transform:translateX(-50%);
   display:flex;
-  gap:16px;
-  background:rgba(255,255,255,.9);
+  gap:15px;
+  background:rgba(255,255,255,.92);
   padding:15px;
   border-radius:24px;
+  z-index:20;
   box-shadow:0 8px 20px rgba(0,0,0,.2);
 }
 
 .tool{
-  width:90px;
-  height:90px;
-  border-radius:22px;
+  width:85px;
+  height:85px;
   background:white;
+  border-radius:20px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:42px;
+  font-size:40px;
   cursor:pointer;
-  transition:0.2s;
+  transition:.2s;
 }
 
 .tool:hover{
   transform:scale(1.08);
 }
 
-.activeTool{
+.active{
   background:#2563eb;
   color:white;
 }
 
-#hud{
-  position:absolute;
-  top:20px;
-  left:20px;
-  background:rgba(255,255,255,.92);
-  padding:18px;
-  border-radius:22px;
-  font-weight:bold;
-  min-width:230px;
-  box-shadow:0 8px 20px rgba(0,0,0,.15);
-}
-
-#message{
-  margin-top:12px;
-  line-height:1.5;
-}
-
-#bow{
-  position:absolute;
-  top:45px;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:90px;
-  display:none;
-}
-
-.scoreFx{
-  position:absolute;
-  color:#10b981;
-  font-size:34px;
-  font-weight:bold;
-  animation:scoreFloat 1.2s forwards;
-  pointer-events:none;
-}
-
-@keyframes scoreFloat{
-
-0%{
-opacity:1;
-transform:translateY(0);
-}
-
-100%{
-opacity:0;
-transform:translateY(-100px);
-}
-
-}
-
 </style>
 </head>
-
 <body>
 
 <div id="game">
 
 <div id="hud">
-
-⭐ Poeng:
-<span id="score">0</span>
-
+⭐ Poeng: <span id="score">0</span>
 <br><br>
-
-🧼 Renhet:
-<span id="clean">0</span>%
-
+🧼 Renhet: <span id="clean">0</span>%
 <br><br>
-
-✂️ Stil:
-<span id="style">0</span>%
+✂️ Stil: <span id="style">0</span>%
 
 <div id="message">
-
-Velkommen til LIVE hundesalong 🐶
-
+Velg et verktøy og dra musa over hunden 🐶
 </div>
-
 </div>
 
 <div id="salon">
@@ -215,9 +169,7 @@ src="bilder/bichon.png"
 
 <div id="foamLayer"></div>
 
-<div id="bow">
-🎀
-</div>
+<div id="bow">🎀</div>
 
 </div>
 
@@ -225,35 +177,12 @@ src="bilder/bichon.png"
 
 <div id="toolbar">
 
-<div class="tool"
-onclick="selectTool('wash', this)">
-🧽
-</div>
-
-<div class="tool"
-onclick="selectTool('rinse', this)">
-🚿
-</div>
-
-<div class="tool"
-onclick="selectTool('brush', this)">
-🪮
-</div>
-
-<div class="tool"
-onclick="selectTool('cut', this)">
-✂️
-</div>
-
-<div class="tool"
-onclick="selectTool('bow', this)">
-🎀
-</div>
-
-<div class="tool"
-onclick="finishDog()">
-📸
-</div>
+<div class="tool" data-tool="wash">🧽</div>
+<div class="tool" data-tool="rinse">🚿</div>
+<div class="tool" data-tool="brush">🪮</div>
+<div class="tool" data-tool="cut">✂️</div>
+<div class="tool" data-tool="bow">🎀</div>
+<div class="tool" id="finishBtn">📸</div>
 
 </div>
 
@@ -262,268 +191,180 @@ onclick="finishDog()">
 <script>
 
 let currentTool="";
-
+let clean=0;
+let style=0;
 let score=0;
 
-let clean=0;
+const dog=document.getElementById("dog");
+const dogContainer=document.getElementById("dogContainer");
+const foamLayer=document.getElementById("foamLayer");
 
-let style=0;
+function updateStats(){
 
-const dog=
-document.getElementById(
-"dog"
-);
+  document.getElementById("score").innerHTML=Math.floor(score);
+  document.getElementById("clean").innerHTML=Math.floor(clean);
+  document.getElementById("style").innerHTML=Math.floor(style);
 
-function update(){
-
-document.getElementById(
-"score"
-).innerHTML=
-Math.floor(score);
-
-document.getElementById(
-"clean"
-).innerHTML=
-Math.floor(clean);
-
-document.getElementById(
-"style"
-).innerHTML=
-Math.floor(style);
-
-if(clean<60){
-
-dog.classList.add("dirty");
-dog.classList.remove("clean");
-
-}else{
-
-dog.classList.remove("dirty");
-dog.classList.add("clean");
+  if(clean >= 60){
+    dog.classList.remove("dirty");
+    dog.classList.add("clean");
+  }else{
+    dog.classList.add("dirty");
+    dog.classList.remove("clean");
+  }
 
 }
 
+function setMessage(text){
+  document.getElementById("message").innerHTML=text;
 }
 
-function message(text){
+function createFoam(x,y){
 
-document.getElementById(
-"message"
-).innerHTML=text;
+  const foam=document.createElement("div");
+  foam.className="foam";
+
+  foam.style.left=x+"px";
+  foam.style.top=y+"px";
+
+  foamLayer.appendChild(foam);
+
+  setTimeout(()=>{
+    foam.remove();
+  },1500);
 
 }
 
-function selectTool(tool,element){
+const tools=document.querySelectorAll(".tool[data-tool]");
 
-currentTool=tool;
+tools.forEach(tool=>{
 
-document.querySelectorAll(
-".tool"
-).forEach(t=>{
+  tool.addEventListener("click",()=>{
 
-t.classList.remove(
-"activeTool"
-);
+    tools.forEach(t=>t.classList.remove("active"));
+
+    tool.classList.add("active");
+
+    currentTool=tool.dataset.tool;
+
+    setMessage("Aktivt verktøy: "+currentTool);
+
+  });
 
 });
 
-element.classList.add(
-"activeTool"
-);
+dogContainer.addEventListener("mousemove",(e)=>{
 
-message(
-"🎮 Verktøy valgt!"
-);
+  if(currentTool === "") return;
 
-}
+  const rect=dogContainer.getBoundingClientRect();
 
-document.getElementById(
-"dogContainer"
-).addEventListener(
-"mousemove",
-e=>{
+  const x=e.clientX-rect.left;
+  const y=e.clientY-rect.top;
 
-if(currentTool==="wash"){
+  if(currentTool === "wash"){
 
-createFoam(e);
+    createFoam(x,y);
 
-clean+=0.2;
+    clean += 0.25;
+    score += 0.1;
 
-score+=0.08;
+    setMessage("🧽 Vasker hunden...");
 
-message(
-"🧽 Vasker hunden..."
-);
+  }
 
-}
+  if(currentTool === "rinse"){
 
-if(currentTool==="rinse"){
+    clean += 0.15;
+    score += 0.05;
 
-clean+=0.15;
+    setMessage("🚿 Skyller pelsen...");
 
-score+=0.05;
+  }
 
-message(
-"🚿 Skyller pelsen..."
-);
+  if(currentTool === "brush"){
 
-}
+    style += 0.15;
+    clean += 0.05;
+    score += 0.08;
 
-if(currentTool==="brush"){
+    dog.style.transform="scale(1.02)";
 
-style+=0.12;
+    setTimeout(()=>{
+      dog.style.transform="scale(1)";
+    },100);
 
-clean+=0.05;
+    setMessage("🪮 Børster pelsen...");
 
-score+=0.06;
+  }
 
-message(
-"🪮 Børster pelsen..."
-);
+  if(currentTool === "cut"){
 
-}
+    style += 0.25;
+    score += 0.12;
 
-if(currentTool==="cut"){
+    dog.style.transform="rotate(1deg) scale(1.01)";
 
-style+=0.2;
+    setTimeout(()=>{
+      dog.style.transform="scale(1)";
+    },100);
 
-score+=0.1;
+    setMessage("✂️ Klipper pelsen...");
 
-dog.style.transform=
-"scale(1.01) rotate(1deg)";
+  }
 
-setTimeout(()=>{
+  if(currentTool === "bow"){
 
-dog.style.transform=
-"scale(1)";
+    if(style > 35){
 
-},100);
+      document.getElementById("bow").style.display="block";
 
-message(
-"✂️ Klipper pelsen..."
-);
+      style += 0.03;
+      score += 0.03;
 
-}
+      setMessage("🎀 Pynter hunden...");
 
-if(currentTool==="bow"){
+    }else{
 
-if(style>40){
+      setMessage("✂️ Børst og klipp litt mer først.");
 
-document.getElementById(
-"bow"
-).style.display=
-"block";
+    }
 
-style+=0.05;
+  }
 
-score+=0.03;
+  if(clean > 100) clean=100;
+  if(style > 100) style=100;
 
-message(
-"🎀 Setter på pynt!"
-);
-
-}
-
-}
-
-if(clean>100)
-clean=100;
-
-if(style>100)
-style=100;
-
-update();
+  updateStats();
 
 });
 
-function createFoam(e){
+document.getElementById("finishBtn").addEventListener("click",()=>{
 
-const foam=
-document.createElement("div");
+  let text="🙂 Fin innsats!";
 
-foam.className="foam";
+  if(clean > 85 && style > 85){
 
-foam.style.left=
-e.offsetX-20+"px";
+    text="🏆 WOW! Perfekt salonghund!";
+    score += 50;
 
-foam.style.top=
-e.offsetY-20+"px";
+  }else if(clean > 60 && style > 60){
 
-document.getElementById(
-"foamLayer"
-).appendChild(foam);
+    text="⭐ Kjempefint resultat!";
+    score += 25;
 
-setTimeout(()=>{
+  }
 
-foam.remove();
+  updateStats();
 
-},2000);
+  setMessage(text + "<br><br>📸 Bilde tatt!");
 
-}
+});
 
-function finishDog(){
-
-let result=
-"🙂 Fin innsats!";
-
-if(clean>85 && style>85){
-
-result=
-"🏆 WOW! Perfekt salonghund!";
-
-score+=50;
-
-createScoreFx(50);
-
-}else if(clean>65 && style>65){
-
-result=
-"⭐ Kjempefint resultat!";
-
-score+=25;
-
-createScoreFx(25);
-
-}
-
-message(
-result+
-"<br><br>📸 Bilde lagret!"
-);
-
-update();
-
-}
-
-function createScoreFx(points){
-
-const fx=
-document.createElement("div");
-
-fx.className="scoreFx";
-
-fx.innerHTML=
-"+"+points;
-
-fx.style.left=
-(window.innerWidth/2)+"px";
-
-fx.style.top=
-(window.innerHeight/2)+"px";
-
-document.body.appendChild(fx);
-
-setTimeout(()=>{
-
-fx.remove();
-
-},1200);
-
-}
-
-update();
+updateStats();
 
 </script>
 
 </body>
 </html>
+```
