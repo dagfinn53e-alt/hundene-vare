@@ -3,279 +3,271 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>🐕 Finn veien hjem</title>
 
 <style>
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#eef6ff;
-  text-align:center;
-  color:#123c73;
-}
-
-h1{
-  margin-top:20px;
-}
-
-#maze{
-  width:max-content;
-  margin:20px auto;
-  display:grid;
-  gap:4px;
-}
-
-.cell{
-  width:55px;
-  height:55px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:12px;
-  font-size:28px;
-  font-weight:bold;
-}
-
-.wall{
-  background:#123c73;
-}
-
-.path{
-  background:white;
-}
-
-.player{
-  background:#10b981;
-  color:white;
-}
-
-.goal{
-  background:#f59e0b;
-  color:white;
-}
-
-.controls{
-  margin-top:20px;
-}
-
-.controls button{
-  width:90px;
-  height:55px;
-  margin:5px;
-  border:none;
-  border-radius:14px;
-  background:#2563eb;
-  color:white;
-  font-size:22px;
-  font-weight:bold;
-}
-
-#level{
-  font-size:24px;
-  font-weight:bold;
-  margin-top:10px;
-}
-
-.back{
-  display:inline-block;
-  margin-top:20px;
-  color:#2563eb;
-  font-weight:bold;
-  text-decoration:none;
-}
-
+body{margin:0;font-family:Arial,sans-serif;background:#eef6ff;color:#123c73;text-align:center}
+.box{max-width:950px;margin:20px auto;background:white;padding:25px;border-radius:25px;box-shadow:0 10px 25px rgba(0,0,0,.12)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:15px 0}
+.stat{background:#f1f5ff;padding:12px;border-radius:16px;font-weight:bold}
+#maze{width:max-content;margin:20px auto;display:grid;gap:4px}
+.cell{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:25px;font-weight:bold}
+.wall{background:#123c73}
+.path{background:#fff}
+.player{background:#10b981;color:white}
+.goal{background:#f59e0b;color:white}
+.trap{background:#fee2e2}
+.controls button,.levelBtn{border:none;border-radius:14px;background:#2563eb;color:white;font-size:18px;font-weight:bold;padding:14px;margin:5px;cursor:pointer}
+.controls button{width:80px;height:50px}
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:15px 0}
+.back{display:inline-block;margin-top:20px;color:#2563eb;font-weight:bold;text-decoration:none}
 </style>
 </head>
 
 <body>
 
+<div class="box">
 <h1>🐕 Finn veien hjem</h1>
+<p>Hjelp hunden 🐶 hjem til huset 🏠</p>
 
-<div id="level">
-Nivå 1
+<div class="stats">
+<div class="stat">⭐ Bane: <span id="levelText">1</span></div>
+<div class="stat">❤️ Liv: <span id="lives">3</span></div>
+<div class="stat">🎯 Trekk: <span id="moves">0</span></div>
+<div class="stat">🏆 Beste: <span id="best">0</span></div>
 </div>
 
-<p>Hjelp hunden hjem 🏠</p>
+<div class="levels">
+<button class="levelBtn" onclick="loadLevel(0)">1 Lett</button>
+<button class="levelBtn" onclick="loadLevel(1)">2 Lett</button>
+<button class="levelBtn" onclick="loadLevel(2)">3 Medium</button>
+<button class="levelBtn" onclick="loadLevel(3)">4 Medium</button>
+<button class="levelBtn" onclick="loadLevel(4)">5 Vanskelig</button>
+<button class="levelBtn" onclick="loadLevel(5)">6 Vanskelig</button>
+<button class="levelBtn" onclick="loadLevel(6)">7 Ekspert</button>
+<button class="levelBtn" onclick="loadLevel(7)">8 Ekspert</button>
+<button class="levelBtn" onclick="loadLevel(8)">9 Super</button>
+<button class="levelBtn" onclick="loadLevel(9)">10 Mester</button>
+</div>
 
 <div id="maze"></div>
 
 <div class="controls">
-
-<div>
-<button onclick="move(-1,0)">⬆️</button>
-</div>
-
+<div><button onclick="move(-1,0)">⬆️</button></div>
 <div>
 <button onclick="move(0,-1)">⬅️</button>
 <button onclick="move(0,1)">➡️</button>
 </div>
-
-<div>
-<button onclick="move(1,0)">⬇️</button>
+<div><button onclick="move(1,0)">⬇️</button></div>
 </div>
 
+<a class="back" href="hundespill.html">← Tilbake til spill</a>
 </div>
-
-<a class="back" href="hundespill.html">
-← Tilbake til spill
-</a>
 
 <script>
-
 const levels = [
-
 [
-["P",".","#",".","🏠"],
-["#",".","#",".","#"],
-[".",".",".",".","#"],
-[".","#","#",".","."],
-[".",".",".",".","."]
-],
-
-[
-["P","#",".",".","."],
-[".","#",".","#","."],
-[".",".",".","#","."],
-["#","#",".",".","."],
-[".","#","#","#","🏠"]
-],
-
-[
-["P",".","#","#","."],
-["#",".",".","#","."],
+["P",".",".","#","🏠"],
 ["#","#",".","#","."],
 [".",".",".",".","."],
-["#","#","#","#","🏠"]
+[".","#","#","#","."],
+[".",".",".",".","."]
+],
+[
+["P",".","#",".","🏠"],
+[".",".","#",".","#"],
+["#",".",".",".","."],
+["#","#","#",".","#"],
+[".",".",".",".","."]
+],
+[
+["P","#",".",".",".","🏠"],
+[".","#",".","#","#","."],
+[".",".",".",".","#","."],
+["#","#","#",".","#","."],
+[".",".",".",".",".","."],
+[".","#","#","#","#","."]
+],
+[
+["P",".",".","#",".","🏠"],
+["#","#",".","#",".","#"],
+[".",".",".",".",".","."],
+[".","#","#","#","#","."],
+[".",".",".",".","#","."],
+["#","#","#",".",".","."]
+],
+[
+["P",".","#",".",".",".","🏠"],
+["#",".","#",".","#","#","."],
+[".",".",".",".","#",".","."],
+[".","#","#",".","#",".","#"],
+[".",".","#",".",".",".","."],
+["#",".","#","#","#","#","."],
+[".",".",".",".",".",".","."]
+],
+[
+["P",".",".","#",".",".","🏠"],
+["#","#",".","#",".","#","#"],
+[".",".",".",".",".",".","."],
+[".","#","#","#","#","#","."],
+[".",".",".",".",".","#","."],
+["#","#","#","#",".","#","."],
+[".",".",".",".",".",".","."]
+],
+[
+["P",".","#",".",".","💥",".","🏠"],
+["#",".","#",".","#","#",".","#"],
+[".",".",".",".",".","#",".","."],
+[".","#","#","#",".","#","#","."],
+[".",".",".","#",".",".",".","."],
+["#","#",".","#","#","#","#","."],
+[".",".",".",".",".","💥",".","."],
+[".","#","#","#",".",".",".","."]
+],
+[
+["P",".",".","#",".",".",".","🏠"],
+["#","#",".","#",".","#","#","#"],
+[".",".",".",".",".",".","💥","."],
+[".","#","#","#","#",".","#","."],
+[".",".",".","💥",".",".","#","."],
+["#","#",".","#","#","#","#","."],
+[".",".",".",".",".",".",".","."],
+[".","#","#","#","#","#",".","."]
+],
+[
+["P",".","#",".",".","💥",".",".","🏠"],
+["#",".","#",".","#","#","#",".","#"],
+[".",".",".",".",".",".","#",".","."],
+[".","#","#","#","#",".","#","#","."],
+[".",".",".","💥",".",".",".",".","."],
+["#","#",".","#","#","#","#","#","."],
+[".",".",".",".",".",".","💥",".","."],
+[".","#","#","#","#","#",".","#","."],
+[".",".",".",".",".",".",".",".","."]
+],
+[
+["P",".","#",".","💥",".",".",".","🏠"],
+["#",".","#",".","#","#","#",".","#"],
+[".",".",".",".",".",".","#",".","."],
+[".","#","#","#","#",".","#","#","."],
+[".",".",".","💥",".",".",".","#","."],
+["#","#",".","#","#","#",".","#","."],
+[".",".",".",".",".",".",".",".","."],
+[".","#","#","#","#","#","#",".","#"],
+[".",".",".","💥",".",".",".",".","."]
 ]
-
 ];
 
-let currentLevel = 0;
+let currentLevel=0;
+let playerRow=0;
+let playerCol=0;
+let lives=3;
+let moves=0;
 
-let playerRow = 0;
-let playerCol = 0;
+function loadLevel(index){
+  currentLevel=index;
+  lives=3;
+  moves=0;
 
-function loadLevel(){
+  const map=levels[currentLevel];
 
-  playerRow = 0;
-  playerCol = 0;
+  for(let r=0;r<map.length;r++){
+    for(let c=0;c<map[r].length;c++){
+      if(map[r][c]==="P"){
+        playerRow=r;
+        playerCol=c;
+      }
+    }
+  }
 
+  updateStats();
   draw();
+}
 
-  document.getElementById("level").innerHTML =
-  "Nivå " + (currentLevel + 1);
-
+function updateStats(){
+  document.getElementById("levelText").innerHTML=currentLevel+1;
+  document.getElementById("lives").innerHTML=lives;
+  document.getElementById("moves").innerHTML=moves;
+  document.getElementById("best").innerHTML=localStorage.getItem("mazeBest") || 0;
 }
 
 function draw(){
-
-  const map = levels[currentLevel];
-
-  const maze = document.getElementById("maze");
-
+  const map=levels[currentLevel];
+  const maze=document.getElementById("maze");
   maze.innerHTML="";
-
-  maze.style.gridTemplateColumns =
-  `repeat(${map[0].length},55px)`;
+  maze.style.gridTemplateColumns=`repeat(${map[0].length},48px)`;
 
   for(let r=0;r<map.length;r++){
-
     for(let c=0;c<map[r].length;c++){
-
-      const cell =
-      document.createElement("div");
-
+      const cell=document.createElement("div");
       cell.classList.add("cell");
 
-      const value = map[r][c];
+      const value=map[r][c];
 
       if(r===playerRow && c===playerCol){
-
         cell.classList.add("player");
-
         cell.innerHTML="🐶";
-
       }else if(value==="#"){
-
         cell.classList.add("wall");
-
       }else if(value==="🏠"){
-
         cell.classList.add("goal");
-
         cell.innerHTML="🏠";
-
+      }else if(value==="💥"){
+        cell.classList.add("trap");
+        cell.innerHTML="💥";
       }else{
-
         cell.classList.add("path");
-
       }
 
       maze.appendChild(cell);
-
     }
-
   }
-
 }
 
 function move(dr,dc){
+  const map=levels[currentLevel];
+  const newRow=playerRow+dr;
+  const newCol=playerCol+dc;
 
-  const map = levels[currentLevel];
+  if(newRow<0 || newRow>=map.length || newCol<0 || newCol>=map[0].length) return;
+  if(map[newRow][newCol]==="#") return;
 
-  const newRow = playerRow + dr;
-  const newCol = playerCol + dc;
+  playerRow=newRow;
+  playerCol=newCol;
+  moves++;
 
-  if(
-    newRow < 0 ||
-    newRow >= map.length ||
-    newCol < 0 ||
-    newCol >= map[0].length
-  ){
-    return;
+  if(map[playerRow][playerCol]==="💥"){
+    lives--;
+    alert("💥 Au! Du mistet ett liv.");
+    if(lives<=0){
+      alert("😅 Tom for liv. Prøv banen igjen.");
+      loadLevel(currentLevel);
+      return;
+    }
   }
-
-  if(map[newRow][newCol]==="#"){
-    return;
-  }
-
-  playerRow = newRow;
-  playerCol = newCol;
 
   if(map[playerRow][playerCol]==="🏠"){
+    const score=Math.max(10,100-moves+(currentLevel*20)+(lives*10));
+    const best=parseInt(localStorage.getItem("mazeBest") || "0");
 
-    if(currentLevel < levels.length - 1){
-
-      setTimeout(()=>{
-
-        alert("🎉 Neste nivå!");
-
-        currentLevel++;
-
-        loadLevel();
-
-      },100);
-
-    }else{
-
-      setTimeout(()=>{
-
-        alert("🏆 Du klarte alle nivåene!");
-
-      },100);
-
+    if(score>best){
+      localStorage.setItem("mazeBest",score);
     }
 
+    if(currentLevel < levels.length-1){
+      alert("🎉 Du klarte banen! Neste nivå.");
+      loadLevel(currentLevel+1);
+      return;
+    }else{
+      alert("🏆 Du klarte alle banene!");
+    }
   }
 
+  updateStats();
   draw();
-
 }
 
-loadLevel();
-
+loadLevel(0);
 </script>
 
 </body>
