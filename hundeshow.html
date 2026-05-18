@@ -3,127 +3,499 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏆 Hundeshow</title>
+<title>🏆 Hundeshow Pro</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#eef6ff;color:#123c73;text-align:center}
-.box{max-width:760px;margin:25px auto;background:white;padding:28px;border-radius:25px;box-shadow:0 10px 25px rgba(0,0,0,.12)}
-h1{margin-bottom:10px}
-#dog{font-size:80px;margin:15px}
-#step{font-size:26px;font-weight:bold;margin:20px 0}
-button{display:block;width:100%;margin:12px 0;padding:16px;border:none;border-radius:18px;background:#2563eb;color:white;font-size:18px;font-weight:bold;cursor:pointer}
-button:hover{background:#1d4ed8}
-#points{font-size:22px;font-weight:bold;color:#10b981;margin-top:18px}
-.back{display:inline-block;margin-top:20px;color:#2563eb;font-weight:bold;text-decoration:none}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#eef6ff;
+  color:#123c73;
+  text-align:center;
+}
+
+.box{
+  max-width:950px;
+  margin:20px auto;
+  background:white;
+  padding:25px;
+  border-radius:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+input,select{
+  width:100%;
+  padding:14px;
+  margin:10px 0;
+  border-radius:14px;
+  border:1px solid #ccc;
+  font-size:18px;
+}
+
+button{
+  display:block;
+  width:100%;
+  margin:10px 0;
+  padding:15px;
+  border:none;
+  border-radius:16px;
+  background:#2563eb;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#1d4ed8;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
+  margin:20px 0;
+}
+
+.stat{
+  background:#f1f5ff;
+  padding:14px;
+  border-radius:18px;
+  font-weight:bold;
+}
+
+#dogCard{
+  background:#f8fafc;
+  border-radius:18px;
+  padding:20px;
+  margin-top:20px;
+}
+
+#log{
+  background:#f8fafc;
+  border-radius:18px;
+  padding:15px;
+  margin-top:20px;
+  min-height:120px;
+  text-align:left;
+  line-height:1.5;
+}
+
+.hidden{
+  display:none;
+}
+
+.back{
+  display:inline-block;
+  margin-top:20px;
+  color:#2563eb;
+  font-weight:bold;
+  text-decoration:none;
+}
+
 </style>
 </head>
 
 <body>
 
 <div class="box">
-<h1>🏆 Hundeshow</h1>
-<div id="dog">🐶</div>
-<div id="step"></div>
-<div id="choices"></div>
-<div id="points">Poeng: 0</div>
-<a class="back" href="hundespill.html">← Tilbake til spill</a>
+
+<h1>🏆 Hundeshow Pro</h1>
+
+<div id="setup">
+
+<h2>Start karrieren</h2>
+
+<input type="text"
+id="dogName"
+placeholder="Hundens navn">
+
+<select id="breed">
+
+<option>Golden Retriever</option>
+<option>Bichon Frise</option>
+<option>Dobermann</option>
+<option>Pomeranian</option>
+<option>Boxer</option>
+<option>Puddel</option>
+<option>Cavalier King Charles Spaniel</option>
+
+</select>
+
+<button onclick="startGame()">
+🚀 Start Hundeshow
+</button>
+
+</div>
+
+<div id="game" class="hidden">
+
+<h2 id="title"></h2>
+
+<div class="stats">
+
+<div class="stat">
+📅 Dag: <span id="day">1</span>
+</div>
+
+<div class="stat">
+⭐ Showpoeng: <span id="points">0</span>
+</div>
+
+<div class="stat">
+🏆 Premier: <span id="wins">0</span>
+</div>
+
+<div class="stat">
+❤️ Energi: <span id="energy">80</span>
+</div>
+
+<div class="stat">
+✨ Pels: <span id="fur">70</span>
+</div>
+
+<div class="stat">
+🎯 Trening: <span id="training">50</span>
+</div>
+
+</div>
+
+<div id="dogCard">
+
+<h3 id="dogInfo"></h3>
+
+<p>
+Fra lokalt show til Norgesfinale 🏆
+</p>
+
+</div>
+
+<button onclick="action('train')">
+🐕 Tren posering
+</button>
+
+<button onclick="action('wash')">
+🛁 Vask og pelsstell
+</button>
+
+<button onclick="action('walk')">
+🚶 Rolig tur
+</button>
+
+<button onclick="action('rest')">
+😴 Hviledag
+</button>
+
+<button onclick="action('show')">
+🏆 Delta på hundeshow
+</button>
+
+<button onclick="resetGame()">
+🔄 Start nytt spill
+</button>
+
+<div id="log">
+Velkommen til hundeshow-karrieren 🏆
+</div>
+
+</div>
+
+<a class="back" href="hundespill.html">
+← Tilbake til spill
+</a>
+
 </div>
 
 <script>
-const steps = [
-  {
-    text:"Velg hunden din",
-    choices:[
-      {text:"Golden Retriever", points:10},
-      {text:"Puddel", points:10},
-      {text:"Boxer", points:10}
-    ]
-  },
-  {
-    text:"Vask hunden før showet",
-    choices:[
-      {text:"Grundig vask 🛁", points:20},
-      {text:"Rask skylling", points:10},
-      {text:"Dropper vask", points:0}
-    ]
-  },
-  {
-    text:"Børst pelsen",
-    choices:[
-      {text:"Børster nøye ✨", points:20},
-      {text:"Litt børsting", points:10},
-      {text:"Ingen børsting", points:0}
-    ]
-  },
-  {
-    text:"Tren posering",
-    choices:[
-      {text:"Trener rolig posering", points:20},
-      {text:"Tar en rask øvelse", points:10},
-      {text:"Ingen trening", points:0}
-    ]
-  },
-  {
-    text:"Velg show-utstyr",
-    choices:[
-      {text:"Fin sløyfe 🎀", points:15},
-      {text:"Pent halsbånd", points:10},
-      {text:"Vanlig bånd", points:5}
-    ]
-  },
-  {
-    text:"Hvordan går dere inn i ringen?",
-    choices:[
-      {text:"Rolig og stolt", points:20},
-      {text:"Litt stresset", points:8},
-      {text:"Hunden hopper rundt", points:3}
-    ]
-  },
-  {
-    text:"Dommeren ser på hunden",
-    choices:[
-      {text:"Hunden står fint", points:20},
-      {text:"Hunden sitter litt", points:10},
-      {text:"Hunden vil leke", points:5}
-    ]
-  }
-];
 
-let current = 0;
-let score = 0;
+let dogName = "";
+let breed = "";
 
-function showStep(){
-  if(current >= steps.length){
-    showResult();
+let day = 1;
+let points = 0;
+let wins = 0;
+
+let energy = 80;
+let fur = 70;
+let training = 50;
+
+function startGame(){
+
+  dogName =
+  document.getElementById("dogName").value;
+
+  breed =
+  document.getElementById("breed").value;
+
+  if(dogName.trim() === ""){
+
+    alert("Gi hunden navn 🙂");
+
     return;
+
   }
 
-  const s = steps[current];
-  document.getElementById("step").innerHTML = s.text;
-  document.getElementById("choices").innerHTML = s.choices.map(c =>
-    `<button onclick="choose(${c.points})">${c.text}</button>`
-  ).join("");
+  document.getElementById("setup")
+  .classList.add("hidden");
+
+  document.getElementById("game")
+  .classList.remove("hidden");
+
+  update();
+
+  saveGame();
+
 }
 
-function choose(points){
-  score += points;
-  document.getElementById("points").innerHTML = "Poeng: " + score;
-  current++;
-  showStep();
+function update(){
+
+  document.getElementById("title")
+  .innerHTML =
+  "🏆 " + dogName;
+
+  document.getElementById("dogInfo")
+  .innerHTML =
+  "🐶 " + breed;
+
+  document.getElementById("day")
+  .innerHTML = day;
+
+  document.getElementById("points")
+  .innerHTML = points;
+
+  document.getElementById("wins")
+  .innerHTML = wins;
+
+  document.getElementById("energy")
+  .innerHTML = energy;
+
+  document.getElementById("fur")
+  .innerHTML = fur;
+
+  document.getElementById("training")
+  .innerHTML = training;
+
 }
 
-function showResult(){
-  let result = "🥉 Bronse";
-  if(score >= 100) result = "🥇 Gull!";
-  else if(score >= 70) result = "🥈 Sølv";
+function log(text){
 
-  document.getElementById("step").innerHTML = "Resultat: " + result;
-  document.getElementById("choices").innerHTML =
-    `<p style="font-size:22px;font-weight:bold;">Du fikk ${score} poeng!</p>
-     <button onclick="location.reload()">Spill igjen</button>`;
+  document.getElementById("log")
+  .innerHTML = text;
+
 }
 
-showStep();
+function nextDay(){
+
+  day++;
+
+  energy -= 5;
+
+  fur -= 3;
+
+  if(energy < 0) energy = 0;
+  if(fur < 0) fur = 0;
+
+  randomEvent();
+
+  saveGame();
+
+  update();
+
+}
+
+function randomEvent(){
+
+  const events = [
+
+    "⭐ Dommeren la merke til hunden din.",
+    "🐕 Hunden lærte en bedre posering.",
+    "🏆 Folk tok bilder av hunden.",
+    "✨ Pelsen ser ekstra fin ut i dag.",
+    "🎯 Treningen begynner å gi resultater."
+
+  ];
+
+  if(Math.random() < 0.35){
+
+    const e =
+    events[Math.floor(Math.random()*events.length)];
+
+    log(
+      document.getElementById("log").innerHTML +
+      "<br><br>🎲 " + e
+    );
+
+    points += 2;
+
+  }
+
+}
+
+function action(type){
+
+  if(type === "train"){
+
+    training += 10;
+
+    energy -= 10;
+
+    points += 5;
+
+    log(
+      "🐕 Du trente posering og showgang."
+    );
+
+  }
+
+  if(type === "wash"){
+
+    fur += 15;
+
+    energy -= 5;
+
+    points += 4;
+
+    if(fur > 100) fur = 100;
+
+    log(
+      "🛁 Hunden fikk pelsstell og vask."
+    );
+
+  }
+
+  if(type === "walk"){
+
+    energy += 8;
+
+    points += 2;
+
+    if(energy > 100) energy = 100;
+
+    log(
+      "🚶 Rolig tur ga bedre humør."
+    );
+
+  }
+
+  if(type === "rest"){
+
+    energy += 18;
+
+    if(energy > 100) energy = 100;
+
+    log(
+      "😴 Hunden fikk hvile."
+    );
+
+  }
+
+  if(type === "show"){
+
+    let result =
+    training + fur + energy;
+
+    if(result > 220){
+
+      wins++;
+
+      points += 25;
+
+      log(
+        "🥇 Fantastisk! Du vant hundeshow!"
+      );
+
+    }else if(result > 170){
+
+      points += 15;
+
+      log(
+        "🥈 Flott innsats på show!"
+      );
+
+    }else{
+
+      points += 5;
+
+      log(
+        "🙂 Dere fikk nyttig erfaring."
+      );
+
+    }
+
+    energy -= 20;
+
+  }
+
+  nextDay();
+
+}
+
+function saveGame(){
+
+  const data = {
+
+    dogName,
+    breed,
+    day,
+    points,
+    wins,
+    energy,
+    fur,
+    training
+
+  };
+
+  localStorage.setItem(
+    "dogShowSave",
+    JSON.stringify(data)
+  );
+
+}
+
+function loadGame(){
+
+  const save =
+  localStorage.getItem("dogShowSave");
+
+  if(save){
+
+    const data = JSON.parse(save);
+
+    dogName = data.dogName;
+    breed = data.breed;
+
+    day = data.day;
+    points = data.points;
+    wins = data.wins;
+
+    energy = data.energy;
+    fur = data.fur;
+    training = data.training;
+
+    document.getElementById("setup")
+    .classList.add("hidden");
+
+    document.getElementById("game")
+    .classList.remove("hidden");
+
+    log("💾 Lagret karriere lastet!");
+
+  }
+
+}
+
+function resetGame(){
+
+  localStorage.removeItem("dogShowSave");
+
+  location.reload();
+
+}
+
+loadGame();
+
+update();
+
 </script>
 
 </body>
