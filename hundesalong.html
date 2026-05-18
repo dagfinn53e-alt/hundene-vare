@@ -211,7 +211,6 @@ Velkommen til LIVE hundesalong 🐶
 id="dog"
 class="dirty"
 src="bilder/bichon.png"
-
 >
 
 <div id="foamLayer"></div>
@@ -227,27 +226,27 @@ src="bilder/bichon.png"
 <div id="toolbar">
 
 <div class="tool"
-onclick="selectTool('wash')">
+onclick="selectTool('wash', this)">
 🧽
 </div>
 
 <div class="tool"
-onclick="selectTool('rinse')">
+onclick="selectTool('rinse', this)">
 🚿
 </div>
 
 <div class="tool"
-onclick="selectTool('brush')">
+onclick="selectTool('brush', this)">
 🪮
 </div>
 
 <div class="tool"
-onclick="selectTool('cut')">
+onclick="selectTool('cut', this)">
 ✂️
 </div>
 
 <div class="tool"
-onclick="selectTool('bow')">
+onclick="selectTool('bow', this)">
 🎀
 </div>
 
@@ -279,15 +278,18 @@ function update(){
 
 document.getElementById(
 "score"
-).innerHTML=score;
+).innerHTML=
+Math.floor(score);
 
 document.getElementById(
 "clean"
-).innerHTML=clean;
+).innerHTML=
+Math.floor(clean);
 
 document.getElementById(
 "style"
-).innerHTML=style;
+).innerHTML=
+Math.floor(style);
 
 if(clean<60){
 
@@ -311,7 +313,7 @@ document.getElementById(
 
 }
 
-function selectTool(tool){
+function selectTool(tool,element){
 
 currentTool=tool;
 
@@ -325,12 +327,12 @@ t.classList.remove(
 
 });
 
-event.target.classList.add(
+element.classList.add(
 "activeTool"
 );
 
 message(
-"🎮 Aktivt verktøy valgt."
+"🎮 Verktøy valgt!"
 );
 
 }
@@ -345,9 +347,9 @@ if(currentTool==="wash"){
 
 createFoam(e);
 
-clean+=0.15;
+clean+=0.2;
 
-score+=0.05;
+score+=0.08;
 
 message(
 "🧽 Vasker hunden..."
@@ -357,9 +359,9 @@ message(
 
 if(currentTool==="rinse"){
 
-clean+=0.1;
+clean+=0.15;
 
-score+=0.03;
+score+=0.05;
 
 message(
 "🚿 Skyller pelsen..."
@@ -369,12 +371,11 @@ message(
 
 if(currentTool==="brush"){
 
-style+=0.1;
+style+=0.12;
 
-score+=0.04;
+clean+=0.05;
 
-dog.style.transform=
-"scale(1.02)";
+score+=0.06;
 
 message(
 "🪮 Børster pelsen..."
@@ -384,12 +385,19 @@ message(
 
 if(currentTool==="cut"){
 
-style+=0.18;
+style+=0.2;
 
-score+=0.08;
+score+=0.1;
 
 dog.style.transform=
 "scale(1.01) rotate(1deg)";
+
+setTimeout(()=>{
+
+dog.style.transform=
+"scale(1)";
+
+},100);
 
 message(
 "✂️ Klipper pelsen..."
@@ -403,14 +411,15 @@ if(style>40){
 
 document.getElementById(
 "bow"
-).style.display="block";
+).style.display=
+"block";
 
 style+=0.05;
 
 score+=0.03;
 
 message(
-"🎀 Hunden pyntes!"
+"🎀 Setter på pynt!"
 );
 
 }
