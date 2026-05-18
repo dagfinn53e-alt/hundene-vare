@@ -6,6 +6,7 @@
 <title>🏆 Hundeshow Pro</title>
 
 <style>
+
 body{
   margin:0;
   font-family:Arial,sans-serif;
@@ -50,6 +51,10 @@ button:hover{
   background:#1d4ed8;
 }
 
+.smallBtn{
+  background:#f97316;
+}
+
 .stats{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
@@ -79,6 +84,13 @@ button:hover{
   line-height:1.5;
 }
 
+.activeDog{
+  border:3px solid #10b981;
+  padding:12px;
+  border-radius:16px;
+  margin-bottom:12px;
+}
+
 .hidden{
   display:none;
 }
@@ -87,20 +99,8 @@ button:hover{
   display:inline-block;
   margin-top:20px;
   color:#2563eb;
-  font-weight:bold;
   text-decoration:none;
-}
-
-.smallBtn{
-  background:#f97316;
-  margin-top:8px;
-}
-
-.activeDog{
-  border:3px solid #10b981;
-  padding:10px;
-  border-radius:14px;
-  margin-bottom:10px;
+  font-weight:bold;
 }
 
 </style>
@@ -140,7 +140,7 @@ placeholder="Navn på første showhund">
 
 <div id="game" class="hidden">
 
-<h2 id="title"></h2>
+<h2>🏆 Hundeshow Karriere</h2>
 
 <div class="stats">
 
@@ -181,7 +181,7 @@ Lokalt Show
 <div id="dogList"></div>
 
 <button onclick="buyDog()">
-🐶 Kjøp ny showhund
+🐶 Kjøp ny showhund - 5000 kr
 </button>
 
 <h2>🎯 Aktiv showhund</h2>
@@ -230,6 +230,10 @@ Lokalt Show
 🏆 Meld på hundeshow - 500 kr
 </button>
 
+<h2>🛒 Showbutikk</h2>
+
+<div id="shop"></div>
+
 <div id="log">
 Velkommen til hundeshow-karrieren 🏆
 </div>
@@ -261,6 +265,8 @@ let dogs = [];
 
 let activeDog = 0;
 
+let ownedItems = [];
+
 const breeds = [
 
 "Golden Retriever",
@@ -277,6 +283,52 @@ const randomNames = [
 
 "Bella","Luna","Max","Charlie",
 "Leo","Milo","Molly","Rocky"
+
+];
+
+const shopItems = [
+
+{
+name:"🎀 Show-sløyfe",
+price:500,
+bonus:10
+},
+
+{
+name:"🪮 Proff børste",
+price:700,
+bonus:15
+},
+
+{
+name:"🧴 Premium shampoo",
+price:900,
+bonus:20
+},
+
+{
+name:"🐕 Showbånd",
+price:1200,
+bonus:25
+},
+
+{
+name:"✨ Premium pelspleie",
+price:1800,
+bonus:35
+},
+
+{
+name:"🚐 Transportbur",
+price:3500,
+bonus:15
+},
+
+{
+name:"🏕️ Utstillingstelt",
+price:5000,
+bonus:40
+}
 
 ];
 
@@ -298,12 +350,12 @@ function startGame(){
 
   dogs.push({
 
-    name: dogName,
-    breed: breed,
-    energy: 80,
-    fur: 70,
-    training: 50,
-    points: 0
+    name:dogName,
+    breed:breed,
+    energy:80,
+    fur:70,
+    training:50,
+    points:0
 
   });
 
@@ -361,10 +413,6 @@ function update(){
 
   const dog = getDog();
 
-  document.getElementById("title")
-  .innerHTML =
-  "🏆 Hundeshow Pro";
-
   document.getElementById("day")
   .innerHTML = day;
 
@@ -403,9 +451,9 @@ function update(){
 
   `
   <div class="${
-    index===activeDog
-    ? "activeDog"
-    : ""
+  index===activeDog
+  ? "activeDog"
+  : ""
   }">
 
   🐶 <b>${d.name}</b><br>
@@ -428,6 +476,48 @@ function update(){
 
   ).join("");
 
+  document.getElementById("shop")
+  .innerHTML =
+
+  shopItems.map(item => {
+
+  const owned =
+  ownedItems.includes(item.name);
+
+  return `
+
+  <div style="
+  background:#eef6ff;
+  padding:15px;
+  border-radius:14px;
+  margin-bottom:12px;
+  ">
+
+  <b>${item.name}</b><br>
+  Pris: ${item.price} kr<br>
+  Bonus: +${item.bonus}
+
+  <button
+  class="smallBtn"
+  onclick="buyItem(
+  '${item.name}',
+  ${item.price}
+  )"
+
+  ${owned ? "disabled" : ""}
+
+  >
+
+  ${owned ? "✅ Kjøpt" : "Kjøp"}
+
+  </button>
+
+  </div>
+
+  `;
+
+  }).join("");
+
 }
 
 function setActiveDog(index){
@@ -435,7 +525,7 @@ function setActiveDog(index){
   activeDog = index;
 
   log(
-    "🐶 Aktiv showhund endret."
+  "🐶 Aktiv showhund valgt."
   );
 
   update();
@@ -481,14 +571,14 @@ function nextDay(){
 
   dogs.forEach(dog=>{
 
-    dog.energy -= 5;
-    dog.fur -= 3;
+  dog.energy -= 5;
+  dog.fur -= 3;
 
-    if(dog.energy < 0)
-    dog.energy = 0;
+  if(dog.energy < 0)
+  dog.energy = 0;
 
-    if(dog.fur < 0)
-    dog.fur = 0;
+  if(dog.fur < 0)
+  dog.fur = 0;
 
   });
 
@@ -504,24 +594,49 @@ function randomEvent(){
 
   const events = [
 
-    "⭐ Publikum likte hundene.",
-    "🏆 Dommeren la merke til pelsen.",
-    "🎯 Treningen begynner å gi resultater.",
-    "✨ Hundene ser flotte ut i dag."
+  "⭐ Publikum likte hundene.",
+  "🏆 Dommeren la merke til pelsen.",
+  "🎯 Treningen gir resultater.",
+  "✨ Hundene ser flotte ut."
 
   ];
 
   if(Math.random() < 0.35){
 
-    const e =
-    events[Math.floor(Math.random()*events.length)];
+  const e =
+  events[Math.floor(
+  Math.random()*events.length
+  )];
 
-    log(
-      document.getElementById("log").innerHTML +
-      "<br><br>🎲 " + e
-    );
+  log(
+  document.getElementById("log").innerHTML +
+  "<br><br>🎲 " + e
+  );
 
   }
+
+}
+
+function getBonus(){
+
+  let bonus = 0;
+
+  ownedItems.forEach(itemName=>{
+
+  const item =
+  shopItems.find(i=>
+  i.name===itemName
+  );
+
+  if(item){
+
+  bonus += item.bonus;
+
+  }
+
+  });
+
+  return bonus;
 
 }
 
@@ -531,151 +646,177 @@ function action(type){
 
   if(type === "train"){
 
-    dog.training += 10;
+  dog.training += 10;
 
-    dog.energy -= 10;
+  dog.energy -= 10;
 
-    dog.points += 5;
+  dog.points += 5;
 
-    log(
-      "🐕 " + dog.name +
-      " trente showposering."
-    );
+  log(
+  "🐕 " + dog.name +
+  " trente showposering."
+  );
 
   }
 
   if(type === "wash"){
 
-    dog.fur += 15;
+  dog.fur += 15;
 
-    dog.energy -= 5;
+  dog.energy -= 5;
 
-    dog.points += 4;
+  dog.points += 4;
 
-    if(dog.fur > 100)
-    dog.fur = 100;
+  if(dog.fur > 100)
+  dog.fur = 100;
 
-    log(
-      "🛁 " + dog.name +
-      " fikk pelsstell."
-    );
+  log(
+  "🛁 " + dog.name +
+  " fikk pelsstell."
+  );
 
   }
 
   if(type === "grooming"){
 
-    if(!pay(800)) return;
+  if(!pay(800)) return;
 
-    dog.fur += 30;
+  dog.fur += 30;
 
-    dog.points += 8;
+  dog.points += 8;
 
-    if(dog.fur > 100)
-    dog.fur = 100;
+  if(dog.fur > 100)
+  dog.fur = 100;
 
-    log(
-      "✂️ Profesjonelt pelsklipp utført."
-    );
+  log(
+  "✂️ Profesjonelt pelsklipp utført."
+  );
 
   }
 
   if(type === "walk"){
 
-    dog.energy += 8;
+  dog.energy += 8;
 
-    dog.points += 2;
+  dog.points += 2;
 
-    if(dog.energy > 100)
-    dog.energy = 100;
+  if(dog.energy > 100)
+  dog.energy = 100;
 
-    log(
-      "🚶 Rolig tur ga bedre humør."
-    );
+  log(
+  "🚶 Rolig tur ga bedre humør."
+  );
 
   }
 
   if(type === "rest"){
 
-    dog.energy += 18;
+  dog.energy += 18;
 
-    if(dog.energy > 100)
-    dog.energy = 100;
+  if(dog.energy > 100)
+  dog.energy = 100;
 
-    log(
-      "😴 Hunden fikk hvile."
-    );
+  log(
+  "😴 Hunden fikk hvile."
+  );
 
   }
 
   if(type === "show"){
 
-    if(!pay(500)) return;
+  if(!pay(500)) return;
 
-    let result =
-    dog.training +
-    dog.fur +
-    dog.energy;
+  let result =
+  dog.training +
+  dog.fur +
+  dog.energy +
+  getBonus();
 
-    if(showLevel.includes("Verdens")){
+  if(showLevel.includes("Verdens")){
 
-      result -= 40;
+  result -= 40;
 
-    }else if(showLevel.includes("Nordisk")){
+  }else if(showLevel.includes("Nordisk")){
 
-      result -= 30;
+  result -= 30;
 
-    }else if(showLevel.includes("Norges")){
+  }else if(showLevel.includes("Norges")){
 
-      result -= 20;
+  result -= 20;
 
-    }else if(showLevel.includes("Regional")){
+  }else if(showLevel.includes("Regional")){
 
-      result -= 10;
+  result -= 10;
 
-    }
+  }
 
-    if(result > 220){
+  if(result > 220){
 
-      wins++;
+  wins++;
 
-      dog.points += 35;
+  dog.points += 35;
 
-      earn(1500);
+  earn(1500);
 
-      log(
-        "🥇 " + dog.name +
-        " vant " +
-        showLevel + "!"
-      );
+  log(
+  "🥇 " + dog.name +
+  " vant " +
+  showLevel + "!"
+  );
 
-    }else if(result > 170){
+  }else if(result > 170){
 
-      dog.points += 18;
+  dog.points += 18;
 
-      earn(700);
+  earn(700);
 
-      log(
-        "🥈 Flott innsats i " +
-        showLevel + "."
-      );
+  log(
+  "🥈 Flott innsats i " +
+  showLevel + "."
+  );
 
-    }else{
+  }else{
 
-      dog.points += 5;
+  dog.points += 5;
 
-      earn(200);
+  earn(200);
 
-      log(
-        "🙂 Dere fikk erfaring."
-      );
+  log(
+  "🙂 Dere fikk erfaring."
+  );
 
-    }
+  }
 
-    dog.energy -= 20;
+  dog.energy -= 20;
 
   }
 
   nextDay();
+
+}
+
+function buyItem(name,price){
+
+  if(ownedItems.includes(name)){
+
+  log("✅ Du har allerede dette.");
+
+  return;
+
+  }
+
+  if(!pay(price)) return;
+
+  ownedItems.push(name);
+
+  log(
+  "🛒 Du kjøpte " +
+  name + "!"
+  );
+
+  saveGame();
+
+  update();
 
 }
 
@@ -687,28 +828,28 @@ function buyDog(){
 
   const breed =
   breeds[Math.floor(
-    Math.random()*breeds.length
+  Math.random()*breeds.length
   )];
 
   const name =
   randomNames[Math.floor(
-    Math.random()*randomNames.length
+  Math.random()*randomNames.length
   )];
 
   dogs.push({
 
-    name:name,
-    breed:breed,
-    energy:80,
-    fur:70,
-    training:50,
-    points:0
+  name:name,
+  breed:breed,
+  energy:80,
+  fur:70,
+  training:50,
+  points:0
 
   });
 
   log(
-    "🐶 Ny showhund kjøpt: " +
-    name + " (" + breed + ")"
+  "🐶 Ny showhund kjøpt: " +
+  name + " (" + breed + ")"
   );
 
   saveGame();
@@ -721,20 +862,21 @@ function saveGame(){
 
   const data = {
 
-    day,
-    wins,
-    money,
-    spent,
-    earned,
-    showLevel,
-    dogs,
-    activeDog
+  day,
+  wins,
+  money,
+  spent,
+  earned,
+  showLevel,
+  dogs,
+  activeDog,
+  ownedItems
 
   };
 
   localStorage.setItem(
-    "dogShowSave",
-    JSON.stringify(data)
+  "dogShowSave",
+  JSON.stringify(data)
   );
 
 }
@@ -742,34 +884,39 @@ function saveGame(){
 function loadGame(){
 
   const save =
-  localStorage.getItem("dogShowSave");
+  localStorage.getItem(
+  "dogShowSave"
+  );
 
   if(save){
 
-    const data =
-    JSON.parse(save);
+  const data =
+  JSON.parse(save);
 
-    day = data.day;
-    wins = data.wins;
+  day = data.day;
+  wins = data.wins;
 
-    money = data.money;
-    spent = data.spent;
-    earned = data.earned;
+  money = data.money;
+  spent = data.spent;
+  earned = data.earned;
 
-    showLevel = data.showLevel;
+  showLevel = data.showLevel;
 
-    dogs = data.dogs;
+  dogs = data.dogs;
 
-    activeDog =
-    data.activeDog || 0;
+  activeDog =
+  data.activeDog || 0;
 
-    document.getElementById("setup")
-    .classList.add("hidden");
+  ownedItems =
+  data.ownedItems || [];
 
-    document.getElementById("game")
-    .classList.remove("hidden");
+  document.getElementById("setup")
+  .classList.add("hidden");
 
-    log("💾 Lagret karriere lastet!");
+  document.getElementById("game")
+  .classList.remove("hidden");
+
+  log("💾 Lagret karriere lastet!");
 
   }
 
@@ -778,7 +925,7 @@ function loadGame(){
 function resetGame(){
 
   localStorage.removeItem(
-    "dogShowSave"
+  "dogShowSave"
   );
 
   location.reload();
