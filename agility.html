@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐕 Agility-bane</title>
+
+<style>
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#eef6ff;
+  color:#123c73;
+  text-align:center;
+}
+
+.container{
+  max-width:1100px;
+  margin:20px auto;
+  background:white;
+  padding:25px;
+  border-radius:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
+  margin:20px 0;
+}
+
+.stat{
+  background:#f1f5ff;
+  padding:14px;
+  border-radius:18px;
+  font-weight:bold;
+}
+
+#course{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+  margin-top:25px;
+}
+
+.obstacle{
+  width:120px;
+  height:120px;
+  background:#eef6ff;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:45px;
+  border:3px solid transparent;
+}
+
+.active{
+  border:3px solid #10b981;
+  background:#dcfce7;
+}
+
+.done{
+  background:#10b981;
+  color:white;
+}
+
+.fail{
+  background:#ef4444;
+  color:white;
+}
+
+button,select{
+  padding:14px;
+  margin:10px;
+  border:none;
+  border-radius:14px;
+  font-size:18px;
+  font-weight:bold;
+}
+
+button{
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#1d4ed8;
+}
+
+.controls{
+  margin-top:25px;
+}
+
+#log{
+  background:#f8fafc;
+  border-radius:18px;
+  padding:20px;
+  margin-top:20px;
+  min-height:120px;
+  text-align:left;
+  line-height:1.5;
+}
+
+.back{
+  display:inline-block;
+  margin-top:25px;
+  text-decoration:none;
+  color:#2563eb;
+  font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🐕 Agility-bane</h1>
+
+<select id="difficulty">
+
+<option value="easy">
+🙂 Lett
+</option>
+
+<option value="medium">
+😎 Medium
+</option>
+
+<option value="hard">
+🔥 Vanskelig
+</option>
+
+<option value="expert">
+🌍 Turnering
+</option>
+
+</select>
+
+<button onclick="startGame()">
+🚀 Start bane
+</button>
+
+<div class="stats">
+
+<div class="stat">
+🏁 Bane: <span id="level">
+1
+</span>
+</div>
+
+<div class="stat">
+⭐ Stjerner: <span id="stars">
+0
+</span>
+</div>
+
+<div class="stat">
+⏱️ Tid: <span id="time">
+60
+</span>
+</div>
+
+<div class="stat">
+🏆 Beste tid: <span id="best">
+0
+</span>
+</div>
+
+</div>
+
+<div id="course"></div>
+
+<div class="controls">
+
+<button onclick="playerAction('jump')">
+⬆️ Hopp
+</button>
+
+<button onclick="playerAction('tunnel')">
+🌀 Tunnel
+</button>
+
+<button onclick="playerAction('slalom')">
+↔️ Slalåm
+</button>
+
+<button onclick="playerAction('sprint')">
+⚡ Sprint
+</button>
+
+</div>
+
+<div id="log">
+Velkommen til Agility-banen 🐕
+</div>
+
+<a class="back" href="hundespill.html">
+← Tilbake til spill
+</a>
+
+</div>
+
+<script>
+
+const obstacleTypes=[
+
+{
+type:"jump",
+emoji:"⬆️"
+},
+
+{
+type:"tunnel",
+emoji:"🌀"
+},
+
+{
+type:"slalom",
+emoji:"↔️"
+},
+
+{
+type:"sprint",
+emoji:"⚡"
+}
+
+];
+
+let course=[];
+
+let current=0;
+
+let stars=0;
+
+let timeLeft=60;
+
+let timer=null;
+
+let level=1;
+
+function startGame(){
+
+clearInterval(timer);
+
+const difficulty=
+document.getElementById(
+"difficulty"
+).value;
+
+let length=6;
+
+timeLeft=60;
+
+if(difficulty==="medium"){
+
+length=8;
+timeLeft=50;
+
+}
+
+if(difficulty==="hard"){
+
+length=10;
+timeLeft=45;
+
+}
+
+if(difficulty==="expert"){
+
+length=14;
+timeLeft=35;
+
+}
+
+course=[];
+
+for(let i=0;i<length;i++){
+
+const random=
+obstacleTypes[
+Math.floor(
+Math.random()*
+obstacleTypes.length
+)
+];
+
+course.push(random);
+
+}
+
+current=0;
+
+drawCourse();
+
+document.getElementById(
+"stars"
+).innerHTML=stars;
+
+document.getElementById(
+"time"
+).innerHTML=timeLeft;
+
+document.getElementById(
+"level"
+).innerHTML=level;
+
+log(
+"🏁 Banen er klar!"
+);
+
+timer=setInterval(
+updateTimer,
+1000
+);
+
+}
+
+function drawCourse(){
+
+const courseDiv=
+document.getElementById(
+"course"
+);
+
+courseDiv.innerHTML="";
+
+course.forEach((item,index)=>{
+
+const div=
+document.createElement("div");
+
+div.className="obstacle";
+
+if(index===current){
+
+div.classList.add(
+"active"
+);
+
+}
+
+if(index<current){
+
+div.classList.add(
+"done"
+);
+
+}
+
+div.innerHTML=item.emoji;
+
+courseDiv.appendChild(div);
+
+});
+
+}
+
+function playerAction(action){
+
+if(current>=course.length)
+return;
+
+const needed=
+course[current].type;
+
+if(action===needed){
+
+current++;
+
+stars+=2;
+
+log(
+"✅ Perfekt hinder!"
+);
+
+drawCourse();
+
+document.getElementById(
+"stars"
+).innerHTML=stars;
+
+if(current>=course.length){
+
+winLevel();
+
+}
+
+}else{
+
+stars--;
+
+if(stars<0)
+stars=0;
+
+timeLeft-=3;
+
+log(
+"❌ Feil hinder!"
+);
+
+document.getElementById(
+"stars"
+).innerHTML=stars;
+
+}
+
+}
+
+function winLevel(){
+
+clearInterval(timer);
+
+const usedTime=
+60-timeLeft;
+
+const best=
+localStorage.getItem(
+"agilityBest"
+)||999;
+
+if(usedTime<best){
+
+localStorage.setItem(
+"agilityBest",
+usedTime
+);
+
+}
+
+document.getElementById(
+"best"
+).innerHTML=
+localStorage.getItem(
+"agilityBest"
+)||0;
+
+setTimeout(()=>{
+
+alert(
+"🏆 Bane fullført!"
+);
+
+level++;
+
+startGame();
+
+},500);
+
+}
+
+function updateTimer(){
+
+timeLeft--;
+
+document.getElementById(
+"time"
+).innerHTML=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+alert(
+"⏱️ Tiden er ute!"
+);
+
+}
+
+}
+
+function log(text){
+
+document.getElementById(
+"log"
+).innerHTML=text;
+
+}
+
+document.getElementById(
+"best"
+).innerHTML=
+localStorage.getItem(
+"agilityBest"
+)||0;
+
+</script>
+
+</body>
+</html>
