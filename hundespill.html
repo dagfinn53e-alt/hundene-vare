@@ -3,669 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐕 Hundelabyrint MASTER</title>
+<title>🎮 Hundespill</title>
 
 <style>
 
 body{
-  margin:0;
   font-family:Arial,sans-serif;
-  background:#0f172a;
-  color:white;
+  background:#eef6ff;
   text-align:center;
-  overflow:auto;
+  padding:30px;
 }
 
-.container{
-  max-width:1200px;
-  margin:10px auto;
-  padding:20px;
+h1{
+  color:#123c73;
 }
 
-.stats{
+.games{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:12px;
-  margin-bottom:20px;
-}
-
-.stat{
-  background:#1e293b;
-  padding:14px;
-  border-radius:16px;
-  font-weight:bold;
-}
-
-#maze{
-  display:grid;
-  gap:3px;
-  justify-content:center;
-  margin-top:20px;
-}
-
-.cell{
-  width:44px;
-  height:44px;
-  border-radius:8px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:23px;
-}
-
-.wall{background:#475569;}
-.path{background:#1e293b;}
-.player{background:#10b981;}
-.goal{background:#f59e0b;}
-.key{background:#2563eb;}
-.door{background:#dc2626;}
-.guard{background:#7c3aed;}
-.teleport{background:#06b6d4;}
-.trap{background:#ef4444;}
-.bone{background:#facc15;}
-.fake{background:#9333ea;}
-.hidden{background:black;}
-
-.controls{
-  margin-top:20px;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+  max-width:1000px;
+  margin:auto;
 }
 
 button{
-  padding:14px;
-  margin:6px;
+  padding:30px;
   border:none;
-  border-radius:14px;
-  font-size:20px;
-  background:#2563eb;
-  color:white;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-button:hover{
-  background:#1d4ed8;
-}
-
-#themeName{
-  margin-bottom:10px;
+  border-radius:20px;
   font-size:22px;
+  font-weight:bold;
+  cursor:pointer;
+  color:white;
 }
 
-.back{
-  display:inline-block;
-  margin-top:20px;
-  color:#60a5fa;
-  text-decoration:none;
-  font-weight:bold;
-}
+.lab{background:#7c3aed;}
+.mem{background:#2563eb;}
+.agi{background:#10b981;}
 
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<h1>🎮 Hundespill</h1>
 
-<h1>🐕 Hundelabyrint MASTER</h1>
+<div class="games">
 
-<div id="themeName">
-🌲 Skogslabyrint
-</div>
+<button class="lab"
+onclick="location.href='Hundelabyrint.html'">
 
-<div class="stats">
+🐕 Hundelabyrint
 
-<div class="stat">
-🗝️ Nøkkel:
-<span id="hasKey">Nei</span>
-</div>
+</button>
 
-<div class="stat">
-❤️ Liv:
-<span id="lives">5</span>
-</div>
+<button class="mem"
+onclick="location.href='memory.html'">
 
-<div class="stat">
-🏆 Nivå:
-<span id="level">1</span>
-</div>
+🧠 Memory Arcade
 
-<div class="stat">
-⭐ Poeng:
-<span id="score">0</span>
-</div>
+</button>
 
-<div class="stat">
-🦴 Bein:
-<span id="bones">0</span>
-</div>
+<button class="agi"
+onclick="location.href='agility.html'">
+
+🐕 Agility
+
+</button>
 
 </div>
-
-<div id="maze"></div>
-
-<div class="controls">
-
-<div>
-<button onclick="move(-1,0)">⬆️</button>
-</div>
-
-<div>
-<button onclick="move(0,-1)">⬅️</button>
-<button onclick="move(0,1)">➡️</button>
-</div>
-
-<div>
-<button onclick="move(1,0)">⬇️</button>
-</div>
-
-</div>
-
-<a class="back" href="hundespill.html">
-← Tilbake til spill
-</a>
-
-</div>
-
-<script>
-
-const themes=[
-
-"🌲 Skogslabyrint",
-"❄️ Snølabyrint",
-"🏰 Slottlabyrint",
-"🌑 Nattlabyrint",
-"🧪 Laboratorium"
-
-];
-
-const levels=[
-
-[
-["#","#","#","#","#","#","#","#","#","#"],
-["#","P",".",".",".",".",".","G",".","#"],
-["#",".","#","#","#","#",".","#",".","#"],
-["#",".",".","K",".","#",".","#",".","#"],
-["#","#",".","#",".","#",".","#",".","#"],
-["#",".",".","#",".",".",".","#",".","#"],
-["#",".","#","#","#","#",".","#",".","#"],
-["#",".",".",".","T",".",".","#","D","#"],
-["#","G","#","#","#","#","B",".","H","#"],
-["#","#","#","#","#","#","#","#","#","#"]
-],
-
-[
-["#","#","#","#","#","#","#","#","#","#"],
-["#","P",".",".",".","G",".",".",".","#"],
-["#",".","#","#","#","#",".","#",".","#"],
-["#",".",".","K",".","#",".","#",".","#"],
-["#","#",".","#",".","#",".","#",".","#"],
-["#",".",".","#",".",".",".","#",".","#"],
-["#",".","#","#","#","#",".","#",".","#"],
-["#",".","T",".","B",".",".","#","D","#"],
-["#",".","#","#","#","#",".",".","H","#"],
-["#","#","#","#","#","#","#","#","#","#"]
-],
-
-[
-["#","#","#","#","#","#","#","#","#","#"],
-["#","P",".","G",".",".",".",".",".","#"],
-["#",".","#","#","#","#",".","#",".","#"],
-["#",".",".","K",".","#",".","#",".","#"],
-["#","#",".","#",".","#",".","#",".","#"],
-["#",".",".","#",".",".",".","#",".","#"],
-["#",".","#","#","#","#",".","#",".","#"],
-["#",".","T",".","B",".","F","#","D","#"],
-["#",".","#","#","#","#",".",".","H","#"],
-["#","#","#","#","#","#","#","#","#","#"]
-],
-
-[
-["#","#","#","#","#","#","#","#","#","#"],
-["#","P",".",".",".","G",".",".",".","#"],
-["#",".","#","#","#","#",".","#",".","#"],
-["#",".",".","K",".","#",".","#",".","#"],
-["#","#",".","#",".","#",".","#",".","#"],
-["#",".",".","#",".",".",".","#",".","#"],
-["#",".","#","#","#","#",".","#",".","#"],
-["#",".","T",".","B",".","F","#","D","#"],
-["#","G","#","#","#","#",".",".","H","#"],
-["#","#","#","#","#","#","#","#","#","#"]
-],
-
-[
-["#","#","#","#","#","#","#","#","#","#"],
-["#","P",".","G",".",".",".",".",".","#"],
-["#",".","#","#","#","#",".","#",".","#"],
-["#",".",".","K",".","#",".","#",".","#"],
-["#","#",".","#",".","#",".","#",".","#"],
-["#",".",".","#",".",".",".","#",".","#"],
-["#",".","#","#","#","#",".","#",".","#"],
-["#",".","T",".","B",".","F","#","D","#"],
-["#","G","#","#","#","#",".",".","H","#"],
-["#","#","#","#","#","#","#","#","#","#"]
-]
-
-];
-
-let level=0;
-
-let mazeData=[];
-
-let playerRow=1;
-let playerCol=1;
-
-let hasKey=false;
-
-let lives=5;
-
-let score=0;
-
-let bones=0;
-
-let guards=[];
-
-function loadLevel(index){
-
-mazeData=
-JSON.parse(
-JSON.stringify(levels[index])
-);
-
-hasKey=false;
-
-guards=[];
-
-document.getElementById(
-"themeName"
-).innerHTML=
-themes[index];
-
-for(let r=0;r<mazeData.length;r++){
-
-for(let c=0;c<mazeData[r].length;c++){
-
-if(mazeData[r][c]==="P"){
-
-playerRow=r;
-playerCol=c;
-
-}
-
-if(mazeData[r][c]==="G"){
-
-guards.push({
-row:r,
-col:c,
-dir:1
-});
-
-}
-
-}
-
-}
-
-drawMaze();
-
-}
-
-function drawMaze(){
-
-const maze=
-document.getElementById(
-"maze"
-);
-
-maze.innerHTML="";
-
-maze.style.gridTemplateColumns=
-`repeat(${mazeData[0].length},44px)`;
-
-for(let r=0;r<mazeData.length;r++){
-
-for(let c=0;c<mazeData[r].length;c++){
-
-const cell=
-document.createElement("div");
-
-cell.classList.add("cell");
-
-const value=
-mazeData[r][c];
-
-const distance=
-Math.abs(playerRow-r)+
-Math.abs(playerCol-c);
-
-if(distance>3){
-
-cell.classList.add("hidden");
-
-maze.appendChild(cell);
-
-continue;
-
-}
-
-if(r===playerRow && c===playerCol){
-
-cell.classList.add("player");
-
-cell.innerHTML="🐶";
-
-maze.appendChild(cell);
-
-continue;
-
-}
-
-if(value==="#"){
-cell.classList.add("wall");
-}
-
-if(value==="."){
-cell.classList.add("path");
-}
-
-if(value==="H"){
-cell.classList.add("goal");
-cell.innerHTML="🏠";
-}
-
-if(value==="K"){
-cell.classList.add("key");
-cell.innerHTML="🗝️";
-}
-
-if(value==="D"){
-cell.classList.add("door");
-cell.innerHTML="🚪";
-}
-
-if(value==="G"){
-cell.classList.add("guard");
-cell.innerHTML="🐺";
-}
-
-if(value==="T"){
-cell.classList.add("teleport");
-cell.innerHTML="🌀";
-}
-
-if(value==="X"){
-cell.classList.add("trap");
-cell.innerHTML="💥";
-}
-
-if(value==="B"){
-cell.classList.add("bone");
-cell.innerHTML="🦴";
-}
-
-if(value==="F"){
-cell.classList.add("fake");
-cell.innerHTML="❓";
-}
-
-maze.appendChild(cell);
-
-}
-
-}
-
-updateStats();
-
-}
-
-function updateStats(){
-
-document.getElementById(
-"hasKey"
-).innerHTML=
-hasKey ? "Ja" : "Nei";
-
-document.getElementById(
-"lives"
-).innerHTML=lives;
-
-document.getElementById(
-"level"
-).innerHTML=level+1;
-
-document.getElementById(
-"score"
-).innerHTML=score;
-
-document.getElementById(
-"bones"
-).innerHTML=bones;
-
-}
-
-function move(dr,dc){
-
-const newRow=
-playerRow+dr;
-
-const newCol=
-playerCol+dc;
-
-const target=
-mazeData[newRow][newCol];
-
-if(target==="#")
-return;
-
-if(target==="D" && !hasKey){
-
-alert(
-"🚪 Du trenger nøkkel!"
-);
-
-return;
-
-}
-
-playerRow=newRow;
-playerCol=newCol;
-
-if(target==="K"){
-
-hasKey=true;
-
-mazeData[newRow][newCol]=".";
-
-score+=100;
-
-alert(
-"🗝️ Du fant nøkkelen!"
-);
-
-}
-
-if(target==="B"){
-
-bones++;
-
-score+=50;
-
-mazeData[newRow][newCol]=".";
-
-}
-
-if(target==="F"){
-
-alert(
-"😅 Falsk dør!"
-);
-
-score-=20;
-
-}
-
-if(target==="X"){
-
-lives--;
-
-score-=50;
-
-alert(
-"💥 Felle!"
-);
-
-}
-
-if(target==="T"){
-
-const teleports=[
-
-{r:1,c:1},
-{r:8,c:8},
-{r:1,c:8}
-
-];
-
-const t=
-teleports[
-Math.floor(
-Math.random()*
-teleports.length
-)
-];
-
-playerRow=t.r;
-playerCol=t.c;
-
-alert(
-"🌀 TELEPORT!"
-);
-
-}
-
-if(target==="G"){
-
-lives--;
-
-alert(
-"🐺 Vakthund tok deg!"
-);
-
-}
-
-if(target==="H"){
-
-score+=300;
-
-alert(
-"🏆 Bane fullført!"
-);
-
-level++;
-
-if(level>=levels.length){
-
-alert(
-"🌍 GRATULERER! Du klarte alle labyrintene!"
-);
-
-location.reload();
-
-return;
-
-}
-
-loadLevel(level);
-
-return;
-
-}
-
-if(lives<=0){
-
-alert(
-"😅 GAME OVER!"
-);
-
-location.reload();
-
-}
-
-moveGuards();
-
-moveWalls();
-
-drawMaze();
-
-}
-
-function moveGuards(){
-
-guards.forEach(g=>{
-
-mazeData[g.row][g.col]=".";
-
-g.col+=g.dir;
-
-if(
-mazeData[g.row][g.col]==="#"
-){
-
-g.dir*=-1;
-
-g.col+=g.dir*2;
-
-}
-
-mazeData[g.row][g.col]="G";
-
-if(
-g.row===playerRow &&
-g.col===playerCol
-){
-
-lives--;
-
-alert(
-"🐺 Vakthund traff deg!"
-);
-
-}
-
-});
-
-}
-
-function moveWalls(){
-
-for(let r=1;r<mazeData.length-1;r++){
-
-for(let c=1;c<mazeData[r].length-1;c++){
-
-if(
-Math.random()<0.015 &&
-mazeData[r][c]==="."
-){
-
-mazeData[r][c]="#";
-
-}else if(
-Math.random()<0.015 &&
-mazeData[r][c]==="#"
-){
-
-mazeData[r][c]=".";
-
-}
-
-}
-
-}
-
-}
-
-loadLevel(level);
-
-</script>
 
 </body>
 </html>
