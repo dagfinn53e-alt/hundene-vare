@@ -24,10 +24,6 @@ body{
   box-shadow:0 10px 25px rgba(0,0,0,.12);
 }
 
-h1{
-  margin-bottom:10px;
-}
-
 select,button{
   padding:14px;
   margin:10px;
@@ -50,17 +46,17 @@ button:hover{
 #puzzle{
   display:grid;
   gap:2px;
-  margin-top:25px;
   justify-content:center;
+  margin-top:25px;
 }
 
 .tile{
-  width:90px;
-  height:90px;
-  background-size:cover;
-  border-radius:8px;
+  width:80px;
+  height:80px;
   border:1px solid #ccc;
   cursor:pointer;
+  border-radius:6px;
+  background-repeat:no-repeat;
 }
 
 #info{
@@ -72,8 +68,8 @@ button:hover{
 .back{
   display:inline-block;
   margin-top:25px;
-  text-decoration:none;
   color:#2563eb;
+  text-decoration:none;
   font-weight:bold;
 }
 
@@ -177,8 +173,6 @@ function startGame(){
     "dogSelect"
   ).value;
 
-  board = [];
-
   moves = 0;
 
   document.getElementById(
@@ -200,9 +194,15 @@ function createBoard(){
   puzzle.innerHTML = "";
 
   puzzle.style.gridTemplateColumns =
-  `repeat(${size}, 90px)`;
+  `repeat(${size}, 80px)`;
 
-  for(let i=0;i<size*size;i++){
+  board = [];
+
+  for(
+    let i=0;
+    i<size*size;
+    i++
+  ){
 
     board.push(i);
 
@@ -217,23 +217,26 @@ function createBoard(){
 
     tile.className = "tile";
 
-    const x =
-    (piece % size) * 100 /
-    (size - 1);
+    tile.dataset.correct = piece;
 
-    const y =
-    Math.floor(piece / size) *
-    100 / (size - 1);
+    tile.dataset.current = piece;
+
+    tile.dataset.index = index;
+
+    const row =
+    Math.floor(piece / size);
+
+    const col =
+    piece % size;
 
     tile.style.backgroundImage =
     `url('${image}')`;
 
+    tile.style.backgroundSize =
+    `${size*100}% ${size*100}%`;
+
     tile.style.backgroundPosition =
-    `${x}% ${y}%`;
-
-    tile.dataset.index = index;
-
-    tile.dataset.piece = piece;
+    `${(col/(size-1))*100}% ${(row/(size-1))*100}%`;
 
     tile.onclick =
     ()=>selectTile(tile);
@@ -277,23 +280,23 @@ function selectTile(tile){
 
 function swapTiles(a,b){
 
-  const tempBg =
+  const bgA =
   a.style.backgroundPosition;
 
-  const tempPiece =
-  a.dataset.piece;
+  const correctA =
+  a.dataset.correct;
 
   a.style.backgroundPosition =
   b.style.backgroundPosition;
 
-  a.dataset.piece =
-  b.dataset.piece;
+  a.dataset.correct =
+  b.dataset.correct;
 
   b.style.backgroundPosition =
-  tempBg;
+  bgA;
 
-  b.dataset.piece =
-  tempPiece;
+  b.dataset.correct =
+  correctA;
 
 }
 
@@ -307,7 +310,7 @@ function checkWin(){
   tiles.forEach((tile,index)=>{
 
     if(
-      parseInt(tile.dataset.piece)
+      parseInt(tile.dataset.correct)
       !== index
     ){
 
@@ -322,9 +325,9 @@ function checkWin(){
     setTimeout(()=>{
 
       alert(
-        "🏆 Gratulerer! Du klarte puslespillet på " +
-        moves +
-        " trekk!"
+      "🏆 Gratulerer! Du klarte puslespillet på " +
+      moves +
+      " trekk!"
       );
 
     },300);
