@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎯 Kast frisbee</title>
+
+<style>
+body{margin:0;font-family:Arial;background:linear-gradient(#87ceeb,#dff6ff);text-align:center;color:#123c73}
+#game{position:relative;width:100vw;height:100vh;overflow:hidden}
+#dog{position:absolute;bottom:70px;left:50%;transform:translateX(-50%);font-size:80px}
+#frisbee{position:absolute;top:180px;left:-80px;font-size:55px}
+#score{position:absolute;top:20px;left:20px;background:white;padding:12px 18px;border-radius:999px;font-weight:bold;font-size:22px}
+#msg{position:absolute;top:75px;width:100%;font-size:24px;font-weight:bold}
+#throwBtn{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:#2563eb;color:white;border:none;border-radius:999px;padding:18px 28px;font-size:22px;font-weight:bold}
+#back{position:absolute;top:20px;right:20px;background:white;color:#2563eb;padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:bold}
+</style>
+</head>
+
+<body>
+<div id="game">
+<div id="score">Poeng: 0</div>
+<div id="msg">Trykk KAST når frisbeen er nær hunden 🐶</div>
+<a id="back" href="hundespill.html">← Tilbake</a>
+<div id="frisbee">🥏</div>
+<div id="dog">🐶</div>
+<button id="throwBtn" onclick="catchFrisbee()">KAST</button>
+</div>
+
+<script>
+const frisbee=document.getElementById("frisbee");
+const scoreBox=document.getElementById("score");
+const msg=document.getElementById("msg");
+
+let score=0;
+let x=-80;
+let speed=5;
+
+function moveFrisbee(){
+  x += speed;
+  frisbee.style.left = x + "px";
+
+  if(x > window.innerWidth + 80){
+    x = -80;
+    speed = 4 + Math.random()*5;
+  }
+
+  requestAnimationFrame(moveFrisbee);
+}
+
+function catchFrisbee(){
+  const dogCenter = window.innerWidth/2;
+  const frisbeeCenter = x + 25;
+  const distance = Math.abs(dogCenter - frisbeeCenter);
+
+  if(distance < 90){
+    score++;
+    scoreBox.innerHTML="Poeng: " + score;
+    msg.innerHTML="🎉 Flott fangst!";
+    x = -80;
+  }else{
+    msg.innerHTML="🙂 Nesten! Prøv igjen";
+  }
+}
+
+moveFrisbee();
+</script>
+</body>
+</html>
