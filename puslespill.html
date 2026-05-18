@@ -6,107 +6,353 @@
 <title>🧩 Hundepuslespill</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#eef6ff;color:#123c73;text-align:center}
-.box{max-width:1000px;margin:20px auto;padding:15px}
-.levels{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:15px 0}
-button{background:#2563eb;color:white;border:none;padding:12px 18px;border-radius:999px;font-weight:bold;cursor:pointer}
-#board{margin:20px auto;display:grid;gap:2px;max-width:92vw}
-.piece{background:#fff;border:1px solid #ddd;aspect-ratio:1/1;cursor:pointer}
-.selected{outline:4px solid #f59e0b}
-.back{display:inline-block;margin-top:18px;color:#2563eb;font-weight:bold;text-decoration:none}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#eef6ff;
+  color:#123c73;
+  text-align:center;
+}
+
+.container{
+  max-width:1100px;
+  margin:20px auto;
+  background:white;
+  padding:25px;
+  border-radius:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+h1{
+  margin-bottom:10px;
+}
+
+select,button{
+  padding:14px;
+  margin:10px;
+  border:none;
+  border-radius:14px;
+  font-size:18px;
+  font-weight:bold;
+}
+
+button{
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#1d4ed8;
+}
+
+#puzzle{
+  display:grid;
+  gap:2px;
+  margin-top:25px;
+  justify-content:center;
+}
+
+.tile{
+  width:90px;
+  height:90px;
+  background-size:cover;
+  border-radius:8px;
+  border:1px solid #ccc;
+  cursor:pointer;
+}
+
+#info{
+  margin-top:20px;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.back{
+  display:inline-block;
+  margin-top:25px;
+  text-decoration:none;
+  color:#2563eb;
+  font-weight:bold;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="box">
-<h1>🧩 Hundepuslespill</h1>
-<p>Velg nivå – hvert nivå har en ny hunderase 🐶</p>
+<div class="container">
 
-<div class="levels">
-<button onclick="startPuzzle(5,'bilder/golden.png')">25 brikker<br>Golden Retriever</button>
-<button onclick="startPuzzle(7,'bilder/dobermann.png')">50 brikker<br>Dobermann</button>
-<button onclick="startPuzzle(9,'bilder/pomeranian.png')">75 brikker<br>Pomeranian</button>
+<h1>🧩 Hundepuslespill</h1>
+
+<select id="dogSelect">
+
+<option value="bichon.png">
+Bichon Frise
+</option>
+
+<option value="collie.png">
+Collie
+</option>
+
+<option value="puddel.png">
+Puddel
+</option>
+
+<option value="lhasa-apso.png">
+Lhasa Apso
+</option>
+
+<option value="st-bernard.png">
+St. Bernard
+</option>
+
+<option value="boston-terrier.png">
+Boston Terrier
+</option>
+
+<option value="mops.png">
+Mops
+</option>
+
+</select>
+
+<select id="difficulty">
+
+<option value="5">
+25 brikker
+</option>
+
+<option value="7">
+50 brikker
+</option>
+
+<option value="9">
+75 brikker
+</option>
+
+</select>
+
+<button onclick="startGame()">
+🚀 Start puslespill
+</button>
+
+<div id="info">
+Trekk: 0
 </div>
 
-<p id="info">Trykk to brikker for å bytte plass 🐾</p>
+<div id="puzzle"></div>
 
-<div id="board"></div>
+<a class="back" href="hundespill.html">
+← Tilbake til spill
+</a>
 
-<a class="back" href="hundespill.html">← Tilbake til spill</a>
 </div>
 
 <script>
-let size=5;
-let pieces=[];
-let selected=null;
-let currentImage="bilder/golden.png";
 
-function startPuzzle(s,img){
-  size=s;
-  currentImage=img;
-  selected=null;
-  pieces=[];
+let size = 5;
+
+let image = "";
+
+let board = [];
+
+let firstTile = null;
+
+let moves = 0;
+
+function startGame(){
+
+  size =
+  parseInt(
+    document.getElementById(
+      "difficulty"
+    ).value
+  );
+
+  image =
+  "bilder/" +
+  document.getElementById(
+    "dogSelect"
+  ).value;
+
+  board = [];
+
+  moves = 0;
+
+  document.getElementById(
+    "info"
+  ).innerHTML =
+  "Trekk: 0";
+
+  createBoard();
+
+}
+
+function createBoard(){
+
+  const puzzle =
+  document.getElementById(
+    "puzzle"
+  );
+
+  puzzle.innerHTML = "";
+
+  puzzle.style.gridTemplateColumns =
+  `repeat(${size}, 90px)`;
 
   for(let i=0;i<size*size;i++){
-    pieces.push(i);
+
+    board.push(i);
+
   }
 
-  pieces.sort(()=>Math.random()-0.5);
-  draw();
-}
+  shuffle(board);
 
-function draw(){
-  const board=document.getElementById("board");
-  board.innerHTML="";
-  board.style.gridTemplateColumns=`repeat(${size},1fr)`;
+  board.forEach((piece,index)=>{
 
-  const boardSize=Math.min(window.innerWidth*0.92,700);
-  board.style.width=boardSize+"px";
+    const tile =
+    document.createElement("div");
 
-  pieces.forEach((value,index)=>{
-    const div=document.createElement("div");
-    div.className="piece";
-    div.style.backgroundImage=`url('${currentImage}')`;
+    tile.className = "tile";
 
-    const row=Math.floor(value/size);
-    const col=value%size;
+    const x =
+    (piece % size) * 100 /
+    (size - 1);
 
-    div.style.backgroundSize=`${size*100}% ${size*100}%`;
-    div.style.backgroundPosition=`${(col/(size-1))*100}% ${(row/(size-1))*100}%`;
+    const y =
+    Math.floor(piece / size) *
+    100 / (size - 1);
 
-    div.onclick=()=>selectPiece(index);
-    board.appendChild(div);
+    tile.style.backgroundImage =
+    `url('${image}')`;
+
+    tile.style.backgroundPosition =
+    `${x}% ${y}%`;
+
+    tile.dataset.index = index;
+
+    tile.dataset.piece = piece;
+
+    tile.onclick =
+    ()=>selectTile(tile);
+
+    puzzle.appendChild(tile);
+
   });
+
 }
 
-function selectPiece(index){
-  if(selected===null){
-    selected=index;
-    board.children[index].classList.add("selected");
+function selectTile(tile){
+
+  if(!firstTile){
+
+    firstTile = tile;
+
+    tile.style.border =
+    "4px solid #10b981";
+
     return;
+
   }
 
-  const temp=pieces[selected];
-  pieces[selected]=pieces[index];
-  pieces[index]=temp;
+  swapTiles(firstTile,tile);
 
-  selected=null;
-  draw();
+  firstTile.style.border =
+  "1px solid #ccc";
+
+  firstTile = null;
+
+  moves++;
+
+  document.getElementById(
+    "info"
+  ).innerHTML =
+  "Trekk: " + moves;
+
   checkWin();
+
+}
+
+function swapTiles(a,b){
+
+  const tempBg =
+  a.style.backgroundPosition;
+
+  const tempPiece =
+  a.dataset.piece;
+
+  a.style.backgroundPosition =
+  b.style.backgroundPosition;
+
+  a.dataset.piece =
+  b.dataset.piece;
+
+  b.style.backgroundPosition =
+  tempBg;
+
+  b.dataset.piece =
+  tempPiece;
+
 }
 
 function checkWin(){
-  for(let i=0;i<pieces.length;i++){
-    if(pieces[i]!==i) return;
+
+  const tiles =
+  document.querySelectorAll(".tile");
+
+  let correct = true;
+
+  tiles.forEach((tile,index)=>{
+
+    if(
+      parseInt(tile.dataset.piece)
+      !== index
+    ){
+
+      correct = false;
+
+    }
+
+  });
+
+  if(correct){
+
+    setTimeout(()=>{
+
+      alert(
+        "🏆 Gratulerer! Du klarte puslespillet på " +
+        moves +
+        " trekk!"
+      );
+
+    },300);
+
   }
 
-  setTimeout(()=>{
-    alert("🎉 Du klarte puslespillet!");
-  },200);
 }
 
-startPuzzle(5,"bilder/golden.png");
+function shuffle(array){
+
+  for(
+    let i=array.length-1;
+    i>0;
+    i--
+  ){
+
+    const j =
+    Math.floor(
+      Math.random()*(i+1)
+    );
+
+    [array[i],array[j]] =
+    [array[j],array[i]];
+
+  }
+
+}
+
 </script>
 
 </body>
