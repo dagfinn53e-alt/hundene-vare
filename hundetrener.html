@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🐕 Hundetrener Simulator</title>
+
+<style>
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#eef6ff;
+  color:#123c73;
+  text-align:center;
+}
+
+.container{
+  max-width:850px;
+  margin:25px auto;
+  background:white;
+  padding:30px;
+  border-radius:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+h1{
+  margin-bottom:10px;
+}
+
+#dog{
+  font-size:90px;
+  margin:20px 0;
+}
+
+#day{
+  font-size:26px;
+  font-weight:bold;
+  color:#2563eb;
+}
+
+#scenario{
+  margin:25px 0;
+  font-size:28px;
+  font-weight:bold;
+  line-height:1.4;
+}
+
+.choice-btn{
+  display:block;
+  width:100%;
+  margin:12px 0;
+  padding:18px;
+  border:none;
+  border-radius:18px;
+  background:#2563eb;
+  color:white;
+  font-size:20px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.choice-btn:hover{
+  background:#1d4ed8;
+  transform:scale(1.02);
+}
+
+#stats{
+  margin-top:25px;
+  font-size:22px;
+  font-weight:bold;
+  color:#10b981;
+}
+
+.back{
+  display:inline-block;
+  margin-top:25px;
+  color:#2563eb;
+  text-decoration:none;
+  font-weight:bold;
+  font-size:18px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🐕 Hundetrener Simulator</h1>
+
+<div id="dog">🐶</div>
+
+<div id="day"></div>
+
+<div id="scenario"></div>
+
+<div id="choices"></div>
+
+<div id="stats">
+Poeng: 0 ⭐
+</div>
+
+<a class="back" href="hundespill.html">
+← Tilbake til spill
+</a>
+
+</div>
+
+<script>
+
+const trainingDays = [
+
+{
+day:"Dag 1 - Kontakttrening",
+scenario:"Hunden mister fokus ute på tur. Hva gjør du?",
+choices:[
+{text:"Belønner kontakt med godbit",points:15},
+{text:"Roper høyt på hunden",points:5},
+{text:"Ignorerer hunden",points:0}
+]
+},
+
+{
+day:"Dag 2 - Sitt",
+scenario:"Hvordan lærer du hunden å sitte?",
+choices:[
+{text:"Belønner riktig oppførsel",points:15},
+{text:"Blir irritert",points:0},
+{text:"Gir opp treningen",points:0}
+]
+},
+
+{
+day:"Dag 3 - Bli",
+scenario:"Hunden reiser seg for tidlig. Hva gjør du?",
+choices:[
+{text:"Trener korte økter rolig",points:15},
+{text:"Kjefter på hunden",points:3},
+{text:"Avslutter helt",points:0}
+]
+},
+
+{
+day:"Dag 4 - Gå pent i bånd",
+scenario:"Hunden trekker mye i båndet.",
+choices:[
+{text:"Stopper og belønner rolig gange",points:15},
+{text:"Drar hardt tilbake",points:2},
+{text:"Lar hunden trekke",points:0}
+]
+},
+
+{
+day:"Dag 5 - Innkalling",
+scenario:"Hunden kommer ikke når du roper.",
+choices:[
+{text:"Bruker positiv stemme og belønning",points:15},
+{text:"Blir sint",points:1},
+{text:"Jager etter hunden",points:5}
+]
+},
+
+{
+day:"Dag 6 - Hopp på mennesker",
+scenario:"Hunden hopper på gjester.",
+choices:[
+{text:"Ber hunden sitte rolig",points:15},
+{text:"Roper NEI hele tiden",points:5},
+{text:"Lar hunden fortsette",points:0}
+]
+},
+
+{
+day:"Dag 7 - Sluttprøve",
+scenario:"Hunden skal gjennom en liten lydighetsprøve.",
+choices:[
+{text:"Du trener rolig og støttende",points:20},
+{text:"Du stresser hunden",points:3},
+{text:"Du avlyser prøven",points:0}
+]
+}
+
+];
+
+let current = 0;
+let score = 0;
+
+function showDay(){
+
+if(current >= trainingDays.length){
+
+finishGame();
+
+return;
+
+}
+
+const t = trainingDays[current];
+
+document.getElementById("day").innerHTML =
+t.day;
+
+document.getElementById("scenario").innerHTML =
+t.scenario;
+
+document.getElementById("choices").innerHTML =
+t.choices.map(choice =>
+
+`<button class="choice-btn"
+onclick="choose(${choice.points})">
+${choice.text}
+</button>`
+
+).join("");
+
+}
+
+function choose(points){
+
+score += points;
+
+document.getElementById("stats").innerHTML =
+"Poeng: " + score + " ⭐";
+
+if(points >= 15){
+
+alert("🎉 Flott trening!");
+
+}else if(points >= 5){
+
+alert("🙂 Det kunne gått bedre");
+
+}else{
+
+alert("😅 Hunden ble litt forvirret");
+
+}
+
+current++;
+
+showDay();
+
+}
+
+function finishGame(){
+
+let result = "🙂 Nybegynner trener";
+
+if(score >= 90){
+
+result = "🏆 Profesjonell hundetrener!";
+
+}else if(score >= 60){
+
+result = "⭐ Dyktig hundetrener!";
+
+}else if(score >= 40){
+
+result = "🐶 Lovende trener!";
+
+}
+
+document.getElementById("day").innerHTML =
+"🎉 Ferdig!";
+
+document.getElementById("scenario").innerHTML =
+result;
+
+document.getElementById("choices").innerHTML =
+`
+<button class="choice-btn"
+onclick="location.reload()">
+Spill igjen
+</button>
+`;
+
+}
+
+showDay();
+
+</script>
+
+</body>
+</html>
