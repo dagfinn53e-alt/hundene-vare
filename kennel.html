@@ -6,610 +6,285 @@
 <title>🐾 Kennel-simulator</title>
 
 <style>
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#eef6ff;
-  color:#123c73;
-  text-align:center;
-}
-
-.box{
-  max-width:950px;
-  margin:20px auto;
-  background:white;
-  padding:25px;
-  border-radius:25px;
-  box-shadow:0 10px 25px rgba(0,0,0,.12);
-}
-
-h1{
-  margin-bottom:10px;
-}
-
-input,select{
-  width:100%;
-  padding:14px;
-  margin:10px 0;
-  border-radius:14px;
-  border:1px solid #ccc;
-  font-size:18px;
-}
-
-button{
-  display:block;
-  width:100%;
-  margin:10px 0;
-  padding:15px;
-  border:none;
-  border-radius:16px;
-  background:#2563eb;
-  color:white;
-  font-size:18px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-button:hover{
-  background:#1d4ed8;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:12px;
-  margin:20px 0;
-}
-
-.stat{
-  background:#f1f5ff;
-  padding:14px;
-  border-radius:18px;
-  font-weight:bold;
-}
-
-#dogList{
-  background:#f8fafc;
-  border-radius:18px;
-  padding:15px;
-  margin-top:20px;
-  text-align:left;
-}
-
-#log{
-  background:#f8fafc;
-  border-radius:18px;
-  padding:15px;
-  margin-top:20px;
-  min-height:120px;
-  text-align:left;
-  line-height:1.5;
-}
-
-.back{
-  display:inline-block;
-  margin-top:20px;
-  color:#2563eb;
-  font-weight:bold;
-  text-decoration:none;
-}
-
-.hidden{
-  display:none;
-}
-
+body{margin:0;font-family:Arial,sans-serif;background:#eef6ff;color:#123c73;text-align:center}
+.box{max-width:950px;margin:20px auto;background:white;padding:25px;border-radius:25px;box-shadow:0 10px 25px rgba(0,0,0,.12)}
+input,select{width:100%;padding:14px;margin:10px 0;border-radius:14px;border:1px solid #ccc;font-size:18px}
+button{display:block;width:100%;margin:10px 0;padding:15px;border:none;border-radius:16px;background:#2563eb;color:white;font-size:18px;font-weight:bold;cursor:pointer}
+button:hover{background:#1d4ed8}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:20px 0}
+.stat,#dogList,#shop,#log{background:#f8fafc;padding:15px;border-radius:18px;margin-top:15px}
+.stat{font-weight:bold}
+#dogList,#shop,#log{text-align:left;line-height:1.5}
+.hidden{display:none}
+.back{display:inline-block;margin-top:20px;color:#2563eb;font-weight:bold;text-decoration:none}
+.shopbtn{background:#f97316}
 </style>
 </head>
 
 <body>
-
 <div class="box">
-
 <h1>🐾 Kennel-simulator</h1>
 
 <div id="setup">
-
 <h2>Start din kennel</h2>
-
 <input type="text" id="kennelName" placeholder="Kennelnavn">
-
 <select id="starterBreed">
-
-<option value="Golden Retriever">
-Golden Retriever
-</option>
-
-<option value="Bichon Frise">
-Bichon Frise
-</option>
-
-<option value="Dobermann">
-Dobermann
-</option>
-
-<option value="Pomeranian">
-Pomeranian
-</option>
-
-<option value="Boxer">
-Boxer
-</option>
-
-<option value="Newfoundland">
-Newfoundland
-</option>
-
+<option>Golden Retriever</option>
+<option>Bichon Frise</option>
+<option>Dobermann</option>
+<option>Pomeranian</option>
+<option>Boxer</option>
+<option>Newfoundland</option>
 </select>
-
-<input type="text" id="starterDogName"
-placeholder="Navn på første hund">
-
-<button onclick="startGame()">
-🚀 Start Kennel
-</button>
-
+<input type="text" id="starterDogName" placeholder="Navn på første hund">
+<button onclick="startGame()">🚀 Start Kennel</button>
 </div>
 
 <div id="game" class="hidden">
-
 <h2 id="kennelTitle"></h2>
 
 <div class="stats">
-
-<div class="stat">
-📅 Dag: <span id="day">1</span>
-</div>
-
-<div class="stat">
-💰 Penger: <span id="money">1000</span> kr
-</div>
-
-<div class="stat">
-🐶 Hunder: <span id="dogs">1</span>
-</div>
-
-<div class="stat">
-⭐ Rykte: <span id="reputation">10</span>
-</div>
-
-<div class="stat">
-❤️ Hundelykke: <span id="happiness">70</span>
-</div>
-
-<div class="stat">
-🏠 Kennel nivå: <span id="level">1</span>
-</div>
-
+<div class="stat">📅 Dag: <span id="day">1</span></div>
+<div class="stat">💰 Penger: <span id="money">1000</span> kr</div>
+<div class="stat">🐶 Hunder: <span id="dogs">1</span></div>
+<div class="stat">⭐ Rykte: <span id="reputation">10</span></div>
+<div class="stat">❤️ Hundelykke: <span id="happiness">70</span></div>
+<div class="stat">🏠 Nivå: <span id="level">1</span></div>
 </div>
 
 <h3>🐾 Kennelhunder</h3>
-
 <div id="dogList"></div>
 
-<button onclick="action('train')">
-🐕 Tren hundene
-</button>
+<h3>Velg dagens arbeid</h3>
+<button onclick="action('train')">🐕 Tren hundene</button>
+<button onclick="action('care')">🛁 Stell og kos</button>
+<button onclick="action('customer')">👥 Ta imot kunde</button>
+<button onclick="action('show')">🏆 Hundeshow</button>
+<button onclick="action('upgrade')">🏠 Oppgrader kennel</button>
+<button onclick="buyDog()">🐶 Kjøp ny hund</button>
 
-<button onclick="action('care')">
-🛁 Stell og kos
-</button>
+<h3>🛒 Kennelbutikk</h3>
+<div id="shop"></div>
 
-<button onclick="action('customer')">
-👥 Ta imot kunde
-</button>
+<button onclick="resetGame()">🔄 Start nytt spill</button>
 
-<button onclick="action('show')">
-🏆 Hundeshow
-</button>
-
-<button onclick="action('upgrade')">
-🏠 Oppgrader kennel
-</button>
-
-<button onclick="buyDog()">
-🐶 Kjøp ny hund
-</button>
-
-<button onclick="resetGame()">
-🔄 Start nytt spill
-</button>
-
-<div id="log">
-Velkommen til kennelen 🐾
+<div id="log">Velkommen til kennelen 🐾</div>
 </div>
 
-</div>
-
-<a class="back" href="hundespill.html">
-← Tilbake til spill
-</a>
-
+<a class="back" href="hundespill.html">← Tilbake til spill</a>
 </div>
 
 <script>
+let kennelName="";
+let dogsData=[];
+let day=1,money=1000,reputation=10,happiness=70,level=1;
+let items=[];
 
-let kennelName = "";
-
-let dogsData = [];
-
-let day = 1;
-let money = 1000;
-let reputation = 10;
-let happiness = 70;
-let level = 1;
-
-const breeds = [
-"Golden Retriever",
-"Bichon Frise",
-"Dobermann",
-"Pomeranian",
-"Boxer",
-"Newfoundland",
-"Puddel",
-"Boston Terrier"
+const breeds=["Golden Retriever","Bichon Frise","Dobermann","Pomeranian","Boxer","Newfoundland","Puddel","Boston Terrier"];
+const shopItems=[
+{name:"🛏️ Hundeseng",price:400,effect:"lykke"},
+{name:"🎾 Leker",price:300,effect:"lykke"},
+{name:"🪮 Børste",price:350,effect:"show"},
+{name:"🥩 Premium hundemat",price:500,effect:"helse"},
+{name:"🏃 Treningsutstyr",price:700,effect:"trening"}
 ];
 
 function startGame(){
+  kennelName=document.getElementById("kennelName").value;
+  const breed=document.getElementById("starterBreed").value;
+  const dogName=document.getElementById("starterDogName").value;
 
-  kennelName =
-  document.getElementById("kennelName").value;
-
-  const breed =
-  document.getElementById("starterBreed").value;
-
-  const dogName =
-  document.getElementById("starterDogName").value;
-
-  if(
-    kennelName.trim() === "" ||
-    dogName.trim() === ""
-  ){
-
+  if(kennelName.trim()===""||dogName.trim()===""){
     alert("Fyll ut alle feltene 🙂");
-
     return;
-
   }
 
-  dogsData.push({
-
-    name: dogName,
-    breed: breed
-
-  });
-
-  document.getElementById("setup")
-  .classList.add("hidden");
-
-  document.getElementById("game")
-  .classList.remove("hidden");
-
+  dogsData.push({name:dogName,breed:breed});
+  document.getElementById("setup").classList.add("hidden");
+  document.getElementById("game").classList.remove("hidden");
   update();
-
   saveGame();
-
 }
 
 function update(){
+  document.getElementById("kennelTitle").innerHTML="🏠 "+kennelName;
+  document.getElementById("day").innerHTML=day;
+  document.getElementById("money").innerHTML=money;
+  document.getElementById("dogs").innerHTML=dogsData.length;
+  document.getElementById("reputation").innerHTML=reputation;
+  document.getElementById("happiness").innerHTML=happiness;
+  document.getElementById("level").innerHTML=level;
 
-  document.getElementById("kennelTitle")
-  .innerHTML =
-  "🏠 " + kennelName;
+  document.getElementById("dogList").innerHTML=dogsData.map(d=>"🐶 <b>"+d.name+"</b> - "+d.breed).join("<br><br>");
 
-  document.getElementById("day").innerHTML =
-  day;
-
-  document.getElementById("money").innerHTML =
-  money;
-
-  document.getElementById("dogs").innerHTML =
-  dogsData.length;
-
-  document.getElementById("reputation").innerHTML =
-  reputation;
-
-  document.getElementById("happiness").innerHTML =
-  happiness;
-
-  document.getElementById("level").innerHTML =
-  level;
-
-  document.getElementById("dogList").innerHTML =
-  dogsData.map(dog =>
-
-    "🐶 <b>" + dog.name +
-    "</b> - " + dog.breed
-
-  ).join("<br><br>");
-
+  document.getElementById("shop").innerHTML=shopItems.map(item=>{
+    const owned=items.includes(item.name);
+    return `
+      <div style="margin-bottom:12px;">
+        <b>${item.name}</b> - ${item.price} kr
+        <button class="shopbtn" onclick="buyItem('${item.name}',${item.price})" ${owned?"disabled":""}>
+          ${owned?"✅ Kjøpt":"Kjøp"}
+        </button>
+      </div>
+    `;
+  }).join("");
 }
 
-function log(text){
-
-  document.getElementById("log").innerHTML =
-  text;
-
-}
+function log(text){document.getElementById("log").innerHTML=text;}
 
 function saveGame(){
-
-  const data = {
-
-    kennelName,
-    dogsData,
-    day,
-    money,
-    reputation,
-    happiness,
-    level
-
-  };
-
-  localStorage.setItem(
-    "kennelSave",
-    JSON.stringify(data)
-  );
-
+  localStorage.setItem("kennelSave",JSON.stringify({
+    kennelName,dogsData,day,money,reputation,happiness,level,items
+  }));
 }
 
 function loadGame(){
-
-  const save =
-  localStorage.getItem("kennelSave");
-
+  const save=localStorage.getItem("kennelSave");
   if(save){
-
-    const data = JSON.parse(save);
-
-    kennelName = data.kennelName;
-
-    dogsData = data.dogsData;
-
-    day = data.day;
-    money = data.money;
-    reputation = data.reputation;
-    happiness = data.happiness;
-    level = data.level;
-
-    document.getElementById("setup")
-    .classList.add("hidden");
-
-    document.getElementById("game")
-    .classList.remove("hidden");
-
+    const d=JSON.parse(save);
+    kennelName=d.kennelName; dogsData=d.dogsData||[]; day=d.day; money=d.money;
+    reputation=d.reputation; happiness=d.happiness; level=d.level; items=d.items||[];
+    document.getElementById("setup").classList.add("hidden");
+    document.getElementById("game").classList.remove("hidden");
     log("💾 Lagret kennel lastet!");
-
   }
-
 }
 
 function resetGame(){
-
   localStorage.removeItem("kennelSave");
-
   location.reload();
-
 }
 
 function nextDay(){
-
   day++;
+  happiness-=3;
+  if(happiness<0)happiness=0;
 
-  happiness -= 3;
-
-  if(happiness < 0){
-    happiness = 0;
-  }
-
-  if(day % 7 === 0){
-
-    money -= dogsData.length * 80;
-
-    log(
-      "📅 Ny uke! Du betalte drift."
-    );
-
+  if(day%7===0){
+    money-=dogsData.length*80;
+    log("📅 Ny uke! Du betalte drift.");
   }
 
   randomEvent();
-
   saveGame();
-
   update();
-
 }
 
 function randomEvent(){
-
-  const events = [
-
+  const events=[
     "⭐ Kennelen fikk gode anmeldelser.",
     "🐕 Hundene lærte nye triks.",
     "📞 Nye kunder tok kontakt.",
     "🏆 En hund gjorde det bra.",
     "❤️ Hundene virker glade i dag."
-
   ];
 
-  if(Math.random() < 0.35){
-
-    const e =
-    events[Math.floor(Math.random()*events.length)];
-
-    log(
-      document.getElementById("log").innerHTML +
-      "<br><br>🎲 " + e
-    );
-
-    reputation += 1;
-
+  if(Math.random()<0.35){
+    const e=events[Math.floor(Math.random()*events.length)];
+    log(document.getElementById("log").innerHTML+"<br><br>🎲 "+e);
+    reputation+=1;
   }
+}
 
+function has(effect){
+  return items.some(i=>{
+    const item=shopItems.find(s=>s.name===i);
+    return item && item.effect===effect;
+  });
 }
 
 function action(type){
-
-  if(type === "train"){
-
-    reputation += 3;
-
-    happiness -= 4;
-
+  if(type==="train"){
+    reputation+=has("trening")?6:3;
+    happiness-=4;
     log("🐕 Du trente hundene.");
-
   }
 
-  if(type === "care"){
-
-    happiness += 10;
-
-    if(happiness > 100){
-      happiness = 100;
-    }
-
-    reputation += 1;
-
-    log("🛁 Hundene fikk stell.");
-
+  if(type==="care"){
+    happiness+=has("lykke")?16:10;
+    if(happiness>100)happiness=100;
+    reputation+=1;
+    log("🛁 Hundene fikk stell og kos.");
   }
 
-  if(type === "customer"){
-
-    let earned =
-    150 + (level * 50) + (reputation * 3);
-
-    money += earned;
-
-    happiness -= 5;
-
-    reputation += 2;
-
-    log(
-      "👥 Kunde besøkte kennelen. +" +
-      earned + " kr."
-    );
-
+  if(type==="customer"){
+    let earned=150+(level*50)+(reputation*3);
+    money+=earned;
+    happiness-=5;
+    reputation+=2;
+    log("👥 Kunde besøkte kennelen. +"+earned+" kr.");
   }
 
-  if(type === "show"){
-
-    let chance =
-    reputation + happiness;
-
-    if(chance > 100){
-
-      money += 600;
-
-      reputation += 8;
-
-      log(
-        "🏆 Du vant hundeshow!"
-      );
-
+  if(type==="show"){
+    let chance=reputation+happiness+(has("show")?25:0);
+    if(chance>100){
+      money+=600;
+      reputation+=8;
+      log("🏆 Du vant hundeshow!");
     }else{
-
-      reputation += 2;
-
-      money -= 100;
-
-      log(
-        "🙂 Du fikk erfaring fra show."
-      );
-
+      reputation+=2;
+      money-=100;
+      log("🙂 Du fikk erfaring fra show.");
     }
-
   }
 
-  if(type === "upgrade"){
-
-    let cost =
-    level * 700;
-
-    if(money >= cost){
-
-      money -= cost;
-
-      level++;
-
-      reputation += 5;
-
-      log(
-        "🏠 Kennelen ble oppgradert!"
-      );
-
+  if(type==="upgrade"){
+    let cost=level*700;
+    if(money>=cost){
+      money-=cost; level++; reputation+=5;
+      log("🏠 Kennelen ble oppgradert!");
     }else{
-
-      log(
-        "❌ Du trenger " +
-        cost + " kr."
-      );
-
-      update();
-
-      return;
-
+      log("❌ Du trenger "+cost+" kr.");
+      update(); return;
     }
-
   }
 
   nextDay();
-
 }
 
 function buyDog(){
-
-  let cost =
-  900 + (dogsData.length * 200);
-
-  if(money < cost){
-
-    log(
-      "❌ Du trenger " +
-      cost + " kr for ny hund."
-    );
-
+  let cost=900+(dogsData.length*200);
+  if(money<cost){
+    log("❌ Du trenger "+cost+" kr for ny hund.");
     return;
-
   }
 
-  const breed =
-  breeds[Math.floor(Math.random()*breeds.length)];
+  const breed=breeds[Math.floor(Math.random()*breeds.length)];
+  const names=["Bella","Max","Luna","Charlie","Milo","Rocky","Leo","Molly"];
+  const name=names[Math.floor(Math.random()*names.length)];
 
-  const names = [
-  "Bella","Max","Luna","Charlie",
-  "Milo","Rocky","Leo","Molly"
-  ];
-
-  const name =
-  names[Math.floor(Math.random()*names.length)];
-
-  dogsData.push({
-
-    name:name,
-    breed:breed
-
-  });
-
-  money -= cost;
-
-  happiness += 5;
-
-  reputation += 3;
-
-  log(
-    "🐶 Du kjøpte " +
-    name + " (" + breed + ")!"
-  );
-
+  dogsData.push({name:name,breed:breed});
+  money-=cost; happiness+=5; reputation+=3;
+  log("🐶 Du kjøpte "+name+" ("+breed+")!");
   nextDay();
+}
 
+function buyItem(name,price){
+  if(items.includes(name)){
+    log("✅ Dette utstyret har du allerede.");
+    return;
+  }
+
+  if(money<price){
+    log("❌ Du har ikke nok penger til "+name+".");
+    return;
+  }
+
+  money-=price;
+  items.push(name);
+
+  if(name.includes("Hundeseng")||name.includes("Leker")) happiness+=8;
+  if(name.includes("Premium")) happiness+=6;
+  if(happiness>100)happiness=100;
+
+  reputation+=2;
+  log("🛒 Du kjøpte "+name+"!");
+  saveGame();
+  update();
 }
 
 loadGame();
-
 update();
-
 </script>
 
 </body>
