@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐕 Hundetrener Simulator</title>
+<title>🐕 Hundetrener Simulator PRO</title>
 
 <style>
 
@@ -16,7 +16,7 @@ body{
 }
 
 .container{
-  max-width:1100px;
+  max-width:1200px;
   margin:20px auto;
   background:white;
   padding:25px;
@@ -46,7 +46,7 @@ button:hover{
 
 .stats{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:12px;
   margin:20px 0;
 }
@@ -58,14 +58,29 @@ button:hover{
   font-weight:bold;
 }
 
+#shop,
 #log{
   background:#f8fafc;
   border-radius:18px;
   padding:20px;
   margin-top:20px;
-  min-height:120px;
   text-align:left;
+}
+
+#log{
+  min-height:120px;
   line-height:1.5;
+}
+
+.shopItem{
+  background:#eef6ff;
+  padding:15px;
+  border-radius:14px;
+  margin-bottom:12px;
+}
+
+.hidden{
+  display:none;
 }
 
 .back{
@@ -76,10 +91,6 @@ button:hover{
   font-weight:bold;
 }
 
-.hidden{
-  display:none;
-}
-
 </style>
 </head>
 
@@ -87,11 +98,11 @@ button:hover{
 
 <div class="container">
 
-<h1>🐕 Hundetrener Simulator</h1>
+<h1>🐕 Hundetrener Simulator PRO</h1>
 
 <div id="setup">
 
-<h2>Start trening</h2>
+<h2>Start trenerkarriere</h2>
 
 <input type="text"
 id="dogName"
@@ -147,6 +158,18 @@ Nybegynner
 </span>
 </div>
 
+<div class="stat">
+💰 Konto: <span id="money">
+5000
+</span> kr
+</div>
+
+<div class="stat">
+📜 Sertifikater: <span id="certificates">
+0
+</span>
+</div>
+
 </div>
 
 <h2>🐾 Kommando-trening</h2>
@@ -165,10 +188,6 @@ Nybegynner
 
 <button onclick="action('heel')">
 🐕 Tren GÅ PENT I BÅND
-</button>
-
-<button onclick="action('jump')">
-🚪 Tren IKKE HOPP
 </button>
 
 <button onclick="action('search')">
@@ -192,15 +211,19 @@ Nybegynner
 <h2>🏆 Konkurranser</h2>
 
 <button onclick="action('competition')">
-🏅 Lydighetsprøve
+🏅 Lydighetsprøve - 300 kr
 </button>
 
 <button onclick="action('advancedCompetition')">
-🌍 Elite-konkurranse
+🌍 Elite-konkurranse - 1000 kr
 </button>
 
+<h2>🛒 Treningsbutikk</h2>
+
+<div id="shop"></div>
+
 <div id="log">
-Velkommen til Hundetrener Simulator 🐕
+Velkommen til Hundetrener Simulator PRO 🐕
 </div>
 
 <button onclick="resetGame()">
@@ -217,455 +240,627 @@ Velkommen til Hundetrener Simulator 🐕
 
 <script>
 
-let dogName = "";
-let breed = "";
+let dogName="";
+let breed="";
 
-let day = 1;
+let day=1;
 
-let obedience = 20;
-let trust = 50;
-let energy = 80;
-let stress = 10;
+let obedience=20;
+let trust=50;
+let energy=80;
+let stress=10;
 
-let level = "🙂 Nybegynner";
+let money=5000;
+
+let certificates=0;
+
+let level="🙂 Nybegynner";
+
+let ownedItems=[];
+
+const shopItems=[
+
+{
+name:"🎾 Treningsball",
+price:500,
+bonus:10
+},
+
+{
+name:"🦴 Godbitpose",
+price:800,
+bonus:15
+},
+
+{
+name:"🐕 Proff bånd",
+price:1200,
+bonus:20
+},
+
+{
+name:"📣 Klikker",
+price:1800,
+bonus:25
+},
+
+{
+name:"🏆 Elite utstyr",
+price:3500,
+bonus:40
+}
+
+];
 
 function startGame(){
 
-  dogName =
-  document.getElementById(
-    "dogName"
-  ).value;
+dogName=
+document.getElementById(
+"dogName"
+).value;
 
-  breed =
-  document.getElementById(
-    "breed"
-  ).value;
+breed=
+document.getElementById(
+"breed"
+).value;
 
-  if(dogName.trim()===""){
+if(dogName.trim()===""){
 
-    alert("Gi hunden navn 🙂");
+alert("Gi hunden navn 🙂");
 
-    return;
+return;
 
-  }
+}
 
-  document.getElementById(
-    "setup"
-  ).classList.add("hidden");
+document.getElementById(
+"setup"
+).classList.add("hidden");
 
-  document.getElementById(
-    "game"
-  ).classList.remove("hidden");
+document.getElementById(
+"game"
+).classList.remove("hidden");
 
-  update();
+update();
 
-  saveGame();
+saveGame();
 
 }
 
 function updateLevel(){
 
-  if(obedience >= 450){
+if(obedience>=500){
 
-    level =
-    "🌍 Elite Trener";
+level="🌍 Elite Trener";
 
-  }else if(obedience >= 300){
+}else if(obedience>=320){
 
-    level =
-    "🏆 Konkurranseklar";
+level="🏆 Konkurranseklar";
 
-  }else if(obedience >= 180){
+}else if(obedience>=180){
 
-    level =
-    "⭐ Viderekommen";
+level="⭐ Viderekommen";
 
-  }else if(obedience >= 80){
+}else if(obedience>=80){
 
-    level =
-    "🐶 Unghund";
+level="🐶 Unghund";
 
-  }else{
+}else{
 
-    level =
-    "🙂 Nybegynner";
+level="🙂 Nybegynner";
 
-  }
+}
 
 }
 
 function update(){
 
-  updateLevel();
+updateLevel();
 
-  document.getElementById(
-    "dogInfo"
-  ).innerHTML =
-  "🐶 " + dogName +
-  " - " + breed;
+document.getElementById(
+"dogInfo"
+).innerHTML=
+"🐶 "+dogName+
+" - "+breed;
 
-  document.getElementById(
-    "day"
-  ).innerHTML = day;
+document.getElementById(
+"day"
+).innerHTML=day;
 
-  document.getElementById(
-    "obedience"
-  ).innerHTML = obedience;
+document.getElementById(
+"obedience"
+).innerHTML=obedience;
 
-  document.getElementById(
-    "trust"
-  ).innerHTML = trust;
+document.getElementById(
+"trust"
+).innerHTML=trust;
 
-  document.getElementById(
-    "energy"
-  ).innerHTML = energy;
+document.getElementById(
+"energy"
+).innerHTML=energy;
 
-  document.getElementById(
-    "stress"
-  ).innerHTML = stress;
+document.getElementById(
+"stress"
+).innerHTML=stress;
 
-  document.getElementById(
-    "level"
-  ).innerHTML = level;
+document.getElementById(
+"level"
+).innerHTML=level;
+
+document.getElementById(
+"money"
+).innerHTML=money;
+
+document.getElementById(
+"certificates"
+).innerHTML=certificates;
+
+document.getElementById(
+"shop"
+).innerHTML=
+
+shopItems.map(item=>{
+
+const owned=
+ownedItems.includes(item.name);
+
+return`
+
+<div class="shopItem">
+
+<b>${item.name}</b><br>
+Pris: ${item.price} kr<br>
+Bonus: +${item.bonus}
+
+<button
+onclick="buyItem(
+'${item.name}',
+${item.price}
+)"
+
+${owned ? "disabled" : ""}
+
+>
+
+${owned ? "✅ Kjøpt" : "Kjøp"}
+
+</button>
+
+</div>
+
+`;
+
+}).join("");
 
 }
 
 function log(text){
 
-  document.getElementById(
-    "log"
-  ).innerHTML = text;
+document.getElementById(
+"log"
+).innerHTML=text;
 
 }
 
 function nextDay(){
 
-  day++;
+day++;
 
-  energy -= 5;
+energy-=5;
 
-  if(energy < 0)
-  energy = 0;
+if(energy<0)
+energy=0;
 
-  stress += 2;
+stress+=2;
 
-  if(stress > 100)
-  stress = 100;
+if(stress>100)
+stress=100;
 
-  randomEvent();
+randomEvent();
 
-  saveGame();
+saveGame();
 
-  update();
+update();
 
 }
 
 function randomEvent(){
 
-  const events = [
+const events=[
 
-  "⭐ Hunden lærte raskere i dag.",
-  "🐕 Folk roste treningen din.",
-  "🎾 Hunden virker glad.",
-  "🏆 Treningen begynner å gi resultater.",
-  "❤️ Hunden virker mer trygg på deg."
+"⭐ Hunden lærte raskere i dag.",
+"🐕 Folk roste treningen din.",
+"🎾 Hunden virker glad.",
+"🏆 Treningen gir resultater.",
+"❤️ Hunden virker tryggere."
 
-  ];
+];
 
-  if(Math.random() < 0.35){
+if(Math.random()<0.35){
 
-  const e =
-  events[Math.floor(
-    Math.random()*events.length
-  )];
+const e=
+events[Math.floor(
+Math.random()*events.length
+)];
 
-  log(
-  document.getElementById(
-    "log"
-  ).innerHTML +
-  "<br><br>🎲 " + e
-  );
+log(
+document.getElementById(
+"log"
+).innerHTML+
+"<br><br>🎲 "+e
+);
 
-  }
+}
+
+}
+
+function getBonus(){
+
+let bonus=0;
+
+ownedItems.forEach(name=>{
+
+const item=
+shopItems.find(
+i=>i.name===name
+);
+
+if(item){
+
+bonus+=item.bonus;
+
+}
+
+});
+
+return bonus;
+
+}
+
+function pay(amount){
+
+if(money<amount){
+
+log("❌ Ikke nok penger.");
+
+return false;
+
+}
+
+money-=amount;
+
+return true;
+
+}
+
+function earn(amount){
+
+money+=amount;
 
 }
 
 function action(type){
 
-  if(type==="sit"){
+if(type==="sit"){
 
-    obedience += 8;
-    trust += 2;
-    energy -= 8;
-    stress += 3;
+obedience+=8;
+trust+=2;
+energy-=8;
+stress+=3;
 
-    log("🪑 Du trente SITT.");
+log("🪑 Du trente SITT.");
 
-  }
+}
 
-  if(type==="stay"){
+if(type==="stay"){
 
-    obedience += 10;
-    trust += 3;
-    energy -= 10;
-    stress += 4;
+obedience+=10;
+trust+=3;
+energy-=10;
+stress+=4;
 
-    log("✋ Du trente BLI.");
+log("✋ Du trente BLI.");
 
-  }
+}
 
-  if(type==="come"){
+if(type==="come"){
 
-    obedience += 14;
-    trust += 5;
-    energy -= 12;
-    stress += 5;
+obedience+=14;
+trust+=5;
+energy-=12;
+stress+=5;
 
-    log("📣 Du trente INNKALLING.");
+log("📣 Du trente INNKALLING.");
 
-  }
+}
 
-  if(type==="heel"){
+if(type==="heel"){
 
-    obedience += 12;
-    trust += 3;
-    energy -= 10;
-    stress += 4;
+obedience+=12;
+trust+=3;
+energy-=10;
+stress+=4;
 
-    log("🐕 Du trente GÅ PENT I BÅND.");
+log("🐕 Du trente GÅ PENT I BÅND.");
 
-  }
+}
 
-  if(type==="jump"){
+if(type==="search"){
 
-    obedience += 10;
-    trust += 2;
-    energy -= 8;
-    stress += 3;
+obedience+=16;
+trust+=5;
+energy-=15;
+stress+=2;
 
-    log("🚪 Du trente IKKE HOPP.");
+log("🦴 Du trente SØK.");
 
-  }
+}
 
-  if(type==="search"){
+if(type==="walk"){
 
-    obedience += 16;
-    trust += 5;
-    energy -= 15;
-    stress += 2;
+trust+=6;
+stress-=8;
+energy-=4;
 
-    log("🦴 Du trente SØK.");
+if(stress<0)
+stress=0;
 
-  }
+log("🚶 Rolig tur ga bedre kontakt.");
 
-  if(type==="walk"){
+}
 
-    trust += 6;
-    stress -= 8;
-    energy -= 4;
+if(type==="play"){
 
-    if(stress < 0)
-    stress = 0;
+trust+=10;
+stress-=10;
+energy-=5;
 
-    log("🚶 Rolig tur ga bedre kontakt.");
+if(stress<0)
+stress=0;
 
-  }
+log("🎾 Lek og kos gjorde hunden glad.");
 
-  if(type==="play"){
+}
 
-    trust += 10;
-    stress -= 10;
-    energy -= 5;
+if(type==="rest"){
 
-    if(stress < 0)
-    stress = 0;
+energy+=20;
+stress-=6;
 
-    log("🎾 Lek og kos gjorde hunden glad.");
+if(energy>100)
+energy=100;
 
-  }
+if(stress<0)
+stress=0;
 
-  if(type==="rest"){
+log("😴 Hunden fikk hvile.");
 
-    energy += 20;
-    stress -= 6;
+}
 
-    if(energy > 100)
-    energy = 100;
+if(type==="competition"){
 
-    if(stress < 0)
-    stress = 0;
+if(!pay(300)) return;
 
-    log("😴 Hunden fikk hvile.");
+let result=
+obedience+
+trust+
+energy-
+stress+
+getBonus();
 
-  }
+if(result>240){
 
-  if(type==="competition"){
+obedience+=35;
+trust+=10;
 
-    let result =
-    obedience +
-    trust +
-    energy -
-    stress;
+earn(800);
 
-    if(result > 240){
+certificates++;
 
-      obedience += 35;
-      trust += 10;
+log(
+"🥇 Hunden besto lydighetsprøven!"
+);
 
-      log(
-      "🥇 Fantastisk! Hunden besto lydighetsprøven!"
-      );
+}else if(result>180){
 
-    }else if(result > 180){
+obedience+=18;
 
-      obedience += 18;
+earn(400);
 
-      log(
-      "🥈 God innsats på lydighetsprøven."
-      );
+log(
+"🥈 God innsats på prøven."
+);
 
-    }else{
+}else{
 
-      obedience += 5;
-      stress += 6;
+obedience+=5;
+stress+=6;
 
-      log(
-      "🙂 Dere fikk nyttig erfaring."
-      );
+earn(100);
 
-    }
+log(
+"🙂 Dere fikk erfaring."
+);
 
-    energy -= 20;
+}
 
-  }
+energy-=20;
 
-  if(type==="advancedCompetition"){
+}
 
-    let result =
-    obedience +
-    trust +
-    energy -
-    stress;
+if(type==="advancedCompetition"){
 
-    result -= 40;
+if(!pay(1000)) return;
 
-    if(result > 260){
+let result=
+obedience+
+trust+
+energy-
+stress+
+getBonus()-40;
 
-      obedience += 50;
-      trust += 15;
+if(result>260){
 
-      log(
-      "🌍 Elite-konkurransen ble vunnet!"
-      );
+obedience+=50;
+trust+=15;
 
-    }else if(result > 210){
+earn(2500);
 
-      obedience += 25;
+certificates+=2;
 
-      log(
-      "🏆 Flott elite-resultat!"
-      );
+log(
+"🌍 Elite-konkurransen ble vunnet!"
+);
 
-    }else{
+}else if(result>210){
 
-      obedience += 8;
-      stress += 8;
+obedience+=25;
 
-      log(
-      "🙂 Elite-nivået var krevende."
-      );
+earn(1200);
 
-    }
+certificates++;
 
-    energy -= 30;
+log(
+"🏆 Flott elite-resultat!"
+);
 
-  }
+}else{
 
-  if(trust > 100)
-  trust = 100;
+obedience+=8;
+stress+=8;
 
-  if(energy > 100)
-  energy = 100;
+earn(300);
 
-  if(stress > 100)
-  stress = 100;
+log(
+"🙂 Elite-nivået var krevende."
+);
 
-  if(stress < 0)
-  stress = 0;
+}
 
-  nextDay();
+energy-=30;
+
+}
+
+if(trust>100)
+trust=100;
+
+if(energy>100)
+energy=100;
+
+if(stress>100)
+stress=100;
+
+if(stress<0)
+stress=0;
+
+nextDay();
+
+}
+
+function buyItem(name,price){
+
+if(ownedItems.includes(name)){
+
+log("✅ Du har allerede dette.");
+
+return;
+
+}
+
+if(!pay(price)) return;
+
+ownedItems.push(name);
+
+log(
+"🛒 Du kjøpte "+
+name+"!"
+);
+
+saveGame();
+
+update();
 
 }
 
 function saveGame(){
 
-  const data = {
+const data={
 
-  dogName,
-  breed,
-  day,
-  obedience,
-  trust,
-  energy,
-  stress,
-  level
+dogName,
+breed,
+day,
+obedience,
+trust,
+energy,
+stress,
+level,
+money,
+certificates,
+ownedItems
 
-  };
+};
 
-  localStorage.setItem(
-  "dogTrainerSave",
-  JSON.stringify(data)
-  );
+localStorage.setItem(
+"dogTrainerSave",
+JSON.stringify(data)
+);
 
 }
 
 function loadGame(){
 
-  const save =
-  localStorage.getItem(
-  "dogTrainerSave"
-  );
+const save=
+localStorage.getItem(
+"dogTrainerSave"
+);
 
-  if(save){
+if(save){
 
-  const data =
-  JSON.parse(save);
+const data=
+JSON.parse(save);
 
-  dogName = data.dogName;
-  breed = data.breed;
+dogName=data.dogName;
+breed=data.breed;
 
-  day = data.day;
+day=data.day;
 
-  obedience = data.obedience;
-  trust = data.trust;
-  energy = data.energy;
-  stress = data.stress;
+obedience=data.obedience;
+trust=data.trust;
+energy=data.energy;
+stress=data.stress;
 
-  level = data.level;
+level=data.level;
 
-  document.getElementById(
-    "setup"
-  ).classList.add("hidden");
+money=data.money;
 
-  document.getElementById(
-    "game"
-  ).classList.remove("hidden");
+certificates=
+data.certificates;
 
-  log(
-  "💾 Lagret trening lastet!"
-  );
+ownedItems=
+data.ownedItems || [];
 
-  }
+document.getElementById(
+"setup"
+).classList.add("hidden");
+
+document.getElementById(
+"game"
+).classList.remove("hidden");
+
+log(
+"💾 Lagret trening lastet!"
+);
+
+}
 
 }
 
 function resetGame(){
 
-  localStorage.removeItem(
-    "dogTrainerSave"
-  );
+localStorage.removeItem(
+"dogTrainerSave"
+);
 
-  location.reload();
+location.reload();
 
 }
 
