@@ -158,6 +158,12 @@ placeholder="Hundens navn">
 🎯 Trening: <span id="training">50</span>
 </div>
 
+<div class="stat">
+🌍 Nivå: <span id="showLevel">
+Lokalt Show
+</span>
+</div>
+
 </div>
 
 <div id="dogCard">
@@ -165,7 +171,7 @@ placeholder="Hundens navn">
 <h3 id="dogInfo"></h3>
 
 <p>
-Fra lokalt show til Norgesfinale 🏆
+Bygg karrieren fra lokalt show til verdensfinale 🏆
 </p>
 
 </div>
@@ -219,6 +225,8 @@ let energy = 80;
 let fur = 70;
 let training = 50;
 
+let showLevel = "Lokalt Show";
+
 function startGame(){
 
   dogName =
@@ -247,7 +255,35 @@ function startGame(){
 
 }
 
+function updateLevel(){
+
+  if(points >= 300){
+
+    showLevel = "🌍 Verdensfinale";
+
+  }else if(points >= 220){
+
+    showLevel = "🏆 Nordisk Show";
+
+  }else if(points >= 150){
+
+    showLevel = "🇳🇴 Norgesfinale";
+
+  }else if(points >= 80){
+
+    showLevel = "⭐ Regionalt Show";
+
+  }else{
+
+    showLevel = "🏡 Lokalt Show";
+
+  }
+
+}
+
 function update(){
+
+  updateLevel();
 
   document.getElementById("title")
   .innerHTML =
@@ -274,6 +310,9 @@ function update(){
 
   document.getElementById("training")
   .innerHTML = training;
+
+  document.getElementById("showLevel")
+  .innerHTML = showLevel;
 
 }
 
@@ -308,9 +347,9 @@ function randomEvent(){
   const events = [
 
     "⭐ Dommeren la merke til hunden din.",
-    "🐕 Hunden lærte en bedre posering.",
+    "🐕 Hunden lærte bedre posering.",
     "🏆 Folk tok bilder av hunden.",
-    "✨ Pelsen ser ekstra fin ut i dag.",
+    "✨ Pelsen ser ekstra flott ut.",
     "🎯 Treningen begynner å gi resultater."
 
   ];
@@ -358,7 +397,7 @@ function action(type){
     if(fur > 100) fur = 100;
 
     log(
-      "🛁 Hunden fikk pelsstell og vask."
+      "🛁 Hunden fikk pelsstell."
     );
 
   }
@@ -394,22 +433,42 @@ function action(type){
     let result =
     training + fur + energy;
 
+    if(showLevel.includes("Verdensfinale")){
+
+      result -= 40;
+
+    }else if(showLevel.includes("Nordisk")){
+
+      result -= 30;
+
+    }else if(showLevel.includes("Norges")){
+
+      result -= 20;
+
+    }else if(showLevel.includes("Regionalt")){
+
+      result -= 10;
+
+    }
+
     if(result > 220){
 
       wins++;
 
-      points += 25;
+      points += 35;
 
       log(
-        "🥇 Fantastisk! Du vant hundeshow!"
+        "🥇 Fantastisk! Du vant " +
+        showLevel + "!"
       );
 
     }else if(result > 170){
 
-      points += 15;
+      points += 18;
 
       log(
-        "🥈 Flott innsats på show!"
+        "🥈 Flott innsats i " +
+        showLevel + "."
       );
 
     }else{
@@ -417,7 +476,7 @@ function action(type){
       points += 5;
 
       log(
-        "🙂 Dere fikk nyttig erfaring."
+        "🙂 Dere fikk erfaring fra show."
       );
 
     }
@@ -441,7 +500,8 @@ function saveGame(){
     wins,
     energy,
     fur,
-    training
+    training,
+    showLevel
 
   };
 
@@ -471,6 +531,8 @@ function loadGame(){
     energy = data.energy;
     fur = data.fur;
     training = data.training;
+
+    showLevel = data.showLevel;
 
     document.getElementById("setup")
     .classList.add("hidden");
