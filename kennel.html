@@ -16,7 +16,7 @@ body{
 }
 
 .box{
-  max-width:850px;
+  max-width:900px;
   margin:20px auto;
   background:white;
   padding:25px;
@@ -24,18 +24,17 @@ body{
   box-shadow:0 10px 25px rgba(0,0,0,.12);
 }
 
-.stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:12px;
-  margin:20px 0;
+h1{
+  margin-bottom:10px;
 }
 
-.stat{
-  background:#f1f5ff;
+input,select{
+  width:100%;
   padding:14px;
-  border-radius:18px;
-  font-weight:bold;
+  margin:10px 0;
+  border-radius:14px;
+  border:1px solid #ccc;
+  font-size:18px;
 }
 
 button{
@@ -56,6 +55,20 @@ button:hover{
   background:#1d4ed8;
 }
 
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
+  margin:20px 0;
+}
+
+.stat{
+  background:#f1f5ff;
+  padding:14px;
+  border-radius:18px;
+  font-weight:bold;
+}
+
 #log{
   background:#f8fafc;
   border-radius:18px;
@@ -74,6 +87,10 @@ button:hover{
   text-decoration:none;
 }
 
+.hidden{
+  display:none;
+}
+
 </style>
 </head>
 
@@ -83,7 +100,29 @@ button:hover{
 
 <h1>🐾 Kennel-simulator</h1>
 
-<p>Bygg opp din egen kennel – dag for dag 🐶</p>
+<div id="setup">
+
+<h2>Start din kennel</h2>
+
+<input type="text" id="kennelName" placeholder="Skriv kennelnavn">
+
+<select id="starterDog">
+<option value="Golden Retriever">Golden Retriever</option>
+<option value="Bichon Frise">Bichon Frise</option>
+<option value="Dobermann">Dobermann</option>
+<option value="Pomeranian">Pomeranian</option>
+<option value="Boxer">Boxer</option>
+</select>
+
+<button onclick="startGame()">
+🚀 Start Kennel
+</button>
+
+</div>
+
+<div id="game" class="hidden">
+
+<h2 id="kennelTitle"></h2>
 
 <div class="stats">
 
@@ -113,14 +152,14 @@ button:hover{
 
 </div>
 
-<h2>Velg dagens arbeid</h2>
+<h3 id="mainDog"></h3>
 
 <button onclick="action('train')">
 🐕 Tren hundene
 </button>
 
 <button onclick="action('care')">
-🛁 Stell og kos med hundene
+🛁 Stell og kos
 </button>
 
 <button onclick="action('customer')">
@@ -128,11 +167,11 @@ button:hover{
 </button>
 
 <button onclick="action('show')">
-🏆 Meld på hundeshow
+🏆 Hundeshow
 </button>
 
 <button onclick="action('upgrade')">
-🏠 Oppgrader kennelen
+🏠 Oppgrader kennel
 </button>
 
 <button onclick="action('buydog')">
@@ -144,7 +183,9 @@ button:hover{
 </button>
 
 <div id="log">
-Velkommen til kennelen din! 🐾
+Velkommen til kennelen 🐾
+</div>
+
 </div>
 
 <a class="back" href="hundespill.html">
@@ -155,12 +196,55 @@ Velkommen til kennelen din! 🐾
 
 <script>
 
+let kennelName = "";
+let mainDog = "";
+
 let day = 1;
 let money = 1000;
 let dogs = 1;
 let reputation = 10;
 let happiness = 70;
 let level = 1;
+
+function startGame(){
+
+  kennelName =
+  document.getElementById("kennelName").value;
+
+  mainDog =
+  document.getElementById("starterDog").value;
+
+  if(kennelName.trim() === ""){
+
+    alert("Skriv kennelnavn 🙂");
+
+    return;
+
+  }
+
+  document.getElementById("setup")
+  .classList.add("hidden");
+
+  document.getElementById("game")
+  .classList.remove("hidden");
+
+  updateTitles();
+
+  saveGame();
+
+}
+
+function updateTitles(){
+
+  document.getElementById("kennelTitle")
+  .innerHTML =
+  "🏠 " + kennelName;
+
+  document.getElementById("mainDog")
+  .innerHTML =
+  "🐶 Første hund: " + mainDog;
+
+}
 
 function update(){
 
@@ -195,6 +279,8 @@ function saveGame(){
 
   const data = {
 
+    kennelName,
+    mainDog,
     day,
     money,
     dogs,
@@ -220,12 +306,23 @@ function loadGame(){
 
     const data = JSON.parse(save);
 
+    kennelName = data.kennelName;
+    mainDog = data.mainDog;
+
     day = data.day;
     money = data.money;
     dogs = data.dogs;
     reputation = data.reputation;
     happiness = data.happiness;
     level = data.level;
+
+    document.getElementById("setup")
+    .classList.add("hidden");
+
+    document.getElementById("game")
+    .classList.remove("hidden");
+
+    updateTitles();
 
     log("💾 Lagret kennel lastet!");
 
@@ -256,7 +353,7 @@ function nextDay(){
     money -= dogs * 80;
 
     log(
-      "📅 Ny uke! Du betalte mat og drift for hundene."
+      "📅 Ny uke! Du betalte drift for hundene."
     );
 
   }
@@ -273,13 +370,12 @@ function randomEvent(){
 
   const events = [
 
-    "⭐ En kunde anbefalte kennelen din videre.",
-    "🐕 En hund lærte et nytt triks.",
-    "📞 Du fikk flere kundehenvendelser.",
-    "🌧️ Regnvær gjorde hundene rastløse.",
-    "🛁 Kennelen fikk skryt for god omsorg.",
-    "🏆 En av hundene gjorde det bra på trening.",
-    "🐶 En ny kunde vil besøke kennelen.",
+    "⭐ En kunde anbefalte kennelen videre.",
+    "🐕 Hundene lærte nye triks.",
+    "📞 Flere kunder tok kontakt.",
+    "🌧️ Dårlig vær gjorde hundene rastløse.",
+    "🏆 Kennelen fikk ros for godt arbeid.",
+    "🐶 En hund imponerte på trening.",
     "❤️ Hundene virker ekstra glade i dag."
 
   ];
@@ -308,9 +404,7 @@ function action(type){
 
     happiness -= 4;
 
-    log(
-      "🐕 Du trente hundene. Rykte økte!"
-    );
+    log("🐕 Du trente hundene.");
 
   }
 
@@ -324,9 +418,7 @@ function action(type){
 
     reputation += 1;
 
-    log(
-      "🛁 Du stelte og koste med hundene."
-    );
+    log("🛁 Hundene fikk stell og kos.");
 
   }
 
@@ -342,7 +434,7 @@ function action(type){
     reputation += 2;
 
     log(
-      "👥 Du tok imot kunde og tjente " +
+      "👥 Kunde besøkte kennelen. +" +
       earned + " kr."
     );
 
@@ -360,7 +452,7 @@ function action(type){
       reputation += 8;
 
       log(
-        "🏆 Fantastisk! Du vant hundeshow!"
+        "🏆 Du vant hundeshow!"
       );
 
     }else{
@@ -370,7 +462,7 @@ function action(type){
       money -= 100;
 
       log(
-        "🙂 Du fikk erfaring fra hundeshow."
+        "🙂 Du fikk erfaring fra show."
       );
 
     }
@@ -391,15 +483,14 @@ function action(type){
       reputation += 5;
 
       log(
-        "🏠 Kennelen ble oppgradert til nivå " +
-        level + "!"
+        "🏠 Kennelen ble oppgradert!"
       );
 
     }else{
 
       log(
-        "❌ Du trenger " + cost +
-        " kr for oppgradering."
+        "❌ Du trenger " +
+        cost + " kr."
       );
 
       update();
@@ -426,8 +517,7 @@ function action(type){
       reputation += 3;
 
       log(
-        "🐶 Du kjøpte ny hund! Nå har du " +
-        dogs + " hunder."
+        "🐶 Du kjøpte ny hund!"
       );
 
     }else{
