@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✂️ Hundesalong</title>
+
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#eef6ff;color:#123c73;text-align:center}
+.box{max-width:1000px;margin:20px auto;background:white;padding:25px;border-radius:25px;box-shadow:0 10px 25px rgba(0,0,0,.12)}
+.salon{background:#dff6ff;border-radius:25px;padding:25px;margin-top:20px;min-height:260px}
+#dog{font-size:120px;transition:.3s;margin:20px}
+.dirty{filter:grayscale(.7) brightness(.75)}
+.clean{filter:brightness(1.15)}
+.styled{transform:scale(1.08)}
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:20px}
+button{border:none;border-radius:18px;background:#2563eb;color:white;padding:16px;font-size:18px;font-weight:bold;cursor:pointer}
+button:hover{background:#1d4ed8}
+.stat{background:#f1f5ff;padding:14px;border-radius:18px;font-weight:bold;margin:10px}
+#log{background:#f8fafc;border-radius:18px;padding:15px;margin-top:20px;text-align:left;min-height:80px}
+.back{display:inline-block;margin-top:20px;color:#2563eb;font-weight:bold;text-decoration:none}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h1>✂️ Hundesalong Simulator</h1>
+<p>Stell hunden ferdig og få salongpoeng 🐶</p>
+
+<div class="stat">⭐ Poeng: <span id="score">0</span></div>
+<div class="stat">🧼 Renhet: <span id="clean">0</span>%</div>
+<div class="stat">✂️ Stil: <span id="style">0</span>%</div>
+
+<div class="salon">
+<div id="dog" class="dirty">🐶</div>
+<div id="accessory"></div>
+</div>
+
+<div class="tools">
+<button onclick="useTool('wash')">🧽 Vask</button>
+<button onclick="useTool('rinse')">🚿 Skyll</button>
+<button onclick="useTool('cut')">✂️ Klipp pels</button>
+<button onclick="useTool('brush')">🪮 Børst</button>
+<button onclick="useTool('bow')">🎀 Pynt</button>
+<button onclick="finishDog()">📸 Ferdig</button>
+</div>
+
+<div id="log">Velkommen til hundesalongen! Hunden trenger stell 🐾</div>
+
+<button onclick="newDog()">🐶 Ny hund</button>
+
+<a class="back" href="hundespill.html">← Tilbake til spill</a>
+</div>
+
+<script>
+let score=0;
+let clean=0;
+let style=0;
+let washed=false;
+let rinsed=false;
+let cut=false;
+let brushed=false;
+let bow=false;
+
+function update(){
+  document.getElementById("score").innerHTML=score;
+  document.getElementById("clean").innerHTML=clean;
+  document.getElementById("style").innerHTML=style;
+
+  const dog=document.getElementById("dog");
+  dog.className="";
+
+  if(clean<60){
+    dog.classList.add("dirty");
+  }else{
+    dog.classList.add("clean");
+  }
+
+  if(style>=70){
+    dog.classList.add("styled");
+  }
+
+  document.getElementById("accessory").innerHTML=bow ? "<h2>🎀</h2>" : "";
+}
+
+function log(text){
+  document.getElementById("log").innerHTML=text;
+}
+
+function useTool(tool){
+  if(tool==="wash"){
+    clean+=30;
+    score+=10;
+    washed=true;
+    log("🧽 Du vasket hunden.");
+  }
+
+  if(tool==="rinse"){
+    if(!washed){
+      log("🚿 Vask først, så skyll 🙂");
+      return;
+    }
+    clean+=25;
+    score+=10;
+    rinsed=true;
+    log("🚿 Du skylte hunden ren.");
+  }
+
+  if(tool==="cut"){
+    if(clean<50){
+      log("✂️ Hunden bør vaskes før klipp.");
+      return;
+    }
+    style+=30;
+    score+=15;
+    cut=true;
+    log("✂️ Du klippet pelsen pent.");
+  }
+
+  if(tool==="brush"){
+    style+=25;
+    clean+=10;
+    score+=12;
+    brushed=true;
+    log("🪮 Du børstet pelsen.");
+  }
+
+  if(tool==="bow"){
+    if(style<40){
+      log("🎀 Stell pelsen litt først.");
+      return;
+    }
+    style+=20;
+    score+=15;
+    bow=true;
+    log("🎀 Hunden fikk fin pynt.");
+  }
+
+  if(clean>100) clean=100;
+  if(style>100) style=100;
+
+  update();
+}
+
+function finishDog(){
+  let result="🙂 Fin innsats!";
+  if(clean>=90 && style>=90){
+    result="🏆 Perfekt salonghund!";
+    score+=50;
+  }else if(clean>=70 && style>=60){
+    result="⭐ Veldig fint resultat!";
+    score+=25;
+  }else if(clean<50){
+    result="🧼 Hunden trenger mer vask.";
+  }
+
+  log(result + "<br>📸 Ferdig bilde tatt!");
+  update();
+}
+
+function newDog(){
+  score=0;
+  clean=0;
+  style=0;
+  washed=false;
+  rinsed=false;
+  cut=false;
+  brushed=false;
+  bow=false;
+  log("🐶 Ny hund kom inn i salongen!");
+  update();
+}
+
+update();
+</script>
+
+</body>
+</html>
