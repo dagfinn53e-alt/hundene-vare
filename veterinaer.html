@@ -3,47 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🚑 Veterinærspill</title>
+<title>🐕 Hundetrener Simulator</title>
 
 <style>
+
 body{
   margin:0;
   font-family:Arial,sans-serif;
   background:#eef6ff;
-  text-align:center;
   color:#123c73;
+  text-align:center;
 }
 
-.box{
-  max-width:750px;
-  margin:25px auto;
+.container{
+  max-width:1000px;
+  margin:20px auto;
   background:white;
-  padding:30px;
+  padding:25px;
   border-radius:25px;
   box-shadow:0 10px 25px rgba(0,0,0,.12);
 }
 
-#dog{
-  font-size:100px;
-  margin:20px 0;
-}
-
-#problem{
-  font-size:28px;
-  font-weight:bold;
-  margin:20px 0;
+input,select,button{
+  width:100%;
+  padding:14px;
+  margin:10px 0;
+  border:none;
+  border-radius:14px;
+  font-size:18px;
 }
 
 button{
-  display:block;
-  width:100%;
-  margin:12px 0;
-  padding:16px;
-  border:none;
-  border-radius:18px;
   background:#2563eb;
   color:white;
-  font-size:18px;
   font-weight:bold;
   cursor:pointer;
 }
@@ -52,18 +44,39 @@ button:hover{
   background:#1d4ed8;
 }
 
-#score{
-  margin-top:20px;
-  font-size:24px;
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
+  margin:20px 0;
+}
+
+.stat{
+  background:#f1f5ff;
+  padding:14px;
+  border-radius:18px;
   font-weight:bold;
-  color:#10b981;
+}
+
+#log{
+  background:#f8fafc;
+  border-radius:18px;
+  padding:20px;
+  margin-top:20px;
+  min-height:120px;
+  text-align:left;
+  line-height:1.5;
+}
+
+.hidden{
+  display:none;
 }
 
 .back{
   display:inline-block;
-  margin-top:20px;
-  color:#2563eb;
+  margin-top:25px;
   text-decoration:none;
+  color:#2563eb;
   font-weight:bold;
 }
 
@@ -72,18 +85,102 @@ button:hover{
 
 <body>
 
-<div class="box">
+<div class="container">
 
-<h1>🚑 Veterinærspill</h1>
+<h1>🐕 Hundetrener Simulator</h1>
 
-<div id="dog">🐶</div>
+<div id="setup">
 
-<div id="problem"></div>
+<h2>Start trening</h2>
 
-<div id="choices"></div>
+<input type="text"
+id="dogName"
+placeholder="Hundens navn">
 
-<div id="score">
-Stjerner: ⭐ 0
+<select id="breed">
+
+<option>Border Collie</option>
+<option>Golden Retriever</option>
+<option>Bichon Frise</option>
+<option>Dobermann</option>
+<option>Labrador</option>
+<option>Puddel</option>
+<option>Schæfer</option>
+
+</select>
+
+<button onclick="startGame()">
+🚀 Start Simulator
+</button>
+
+</div>
+
+<div id="game" class="hidden">
+
+<h2 id="dogInfo"></h2>
+
+<div class="stats">
+
+<div class="stat">
+📅 Dag: <span id="day">1</span>
+</div>
+
+<div class="stat">
+🎯 Lydighet: <span id="obedience">20</span>
+</div>
+
+<div class="stat">
+❤️ Tillit: <span id="trust">50</span>
+</div>
+
+<div class="stat">
+⚡ Energi: <span id="energy">80</span>
+</div>
+
+<div class="stat">
+😰 Stress: <span id="stress">10</span>
+</div>
+
+<div class="stat">
+🏆 Nivå: <span id="level">
+Nybegynner
+</span>
+</div>
+
+</div>
+
+<button onclick="action('sit')">
+🪑 Tren SITT
+</button>
+
+<button onclick="action('stay')">
+✋ Tren BLI
+</button>
+
+<button onclick="action('walk')">
+🚶 Gå tur
+</button>
+
+<button onclick="action('play')">
+🎾 Lek og kos
+</button>
+
+<button onclick="action('rest')">
+😴 Hvile
+</button>
+
+<button onclick="action('competition')">
+🏆 Treningsprøve
+</button>
+
+<div id="log">
+Velkommen til Hundetrener Simulator 🐕
+</div>
+
+<button onclick="resetGame()">
+🔄 Start nytt spill
+</button>
+
 </div>
 
 <a class="back" href="hundespill.html">
@@ -94,141 +191,394 @@ Stjerner: ⭐ 0
 
 <script>
 
-const tasks = [
+let dogName = "";
+let breed = "";
 
-{
-problem:"Hunden har vond pote 🐾",
-answers:[
-{text:"Legg på plaster",good:true},
-{text:"Gi pizza",good:false},
-{text:"Kast ball",good:false}
-]
-},
+let day = 1;
 
-{
-problem:"Hunden er skitten 🛁",
-answers:[
-{text:"Vask hunden",good:true},
-{text:"Gi brus",good:false},
-{text:"La den sove",good:false}
-]
-},
+let obedience = 20;
+let trust = 50;
+let energy = 80;
+let stress = 10;
 
-{
-problem:"Hunden er tørst 💧",
-answers:[
-{text:"Gi vann",good:true},
-{text:"Gi kaffe",good:false},
-{text:"Gi sjokolade",good:false}
-]
-},
+let level = "🙂 Nybegynner";
 
-{
-problem:"Hunden fryser 🥶",
-answers:[
-{text:"Gi teppe",good:true},
-{text:"Spray vann",good:false},
-{text:"Sett på vifte",good:false}
-]
-},
+function startGame(){
 
-{
-problem:"Hunden har feber 🌡️",
-answers:[
-{text:"Mål temperaturen",good:true},
-{text:"Gi iskrem",good:false},
-{text:"Spill musikk",good:false}
-]
-},
+  dogName =
+  document.getElementById(
+    "dogName"
+  ).value;
 
-{
-problem:"Hunden er sulten 🍖",
-answers:[
-{text:"Gi hundemat",good:true},
-{text:"Gi løk",good:false},
-{text:"Gi brus",good:false}
-]
-}
+  breed =
+  document.getElementById(
+    "breed"
+  ).value;
 
-];
+  if(dogName.trim()===""){
 
-let current = 0;
-let stars = 0;
+    alert("Gi hunden navn 🙂");
 
-function showTask(){
+    return;
 
-if(current >= tasks.length){
+  }
 
-finishGame();
+  document.getElementById(
+    "setup"
+  ).classList.add("hidden");
 
-return;
+  document.getElementById(
+    "game"
+  ).classList.remove("hidden");
+
+  update();
+
+  saveGame();
 
 }
 
-const t = tasks[current];
+function updateLevel(){
 
-document.getElementById("problem").innerHTML =
-t.problem;
+  if(obedience >= 300){
 
-document.getElementById("choices").innerHTML =
-t.answers.map(answer =>
+    level =
+    "🌍 Elite Trener";
 
-`<button onclick="choose(${answer.good})">
-${answer.text}
-</button>`
+  }else if(obedience >= 200){
 
-).join("");
+    level =
+    "🏆 Konkurranseklar";
 
-}
+  }else if(obedience >= 120){
 
-function choose(good){
+    level =
+    "⭐ Viderekommen";
 
-if(good){
+  }else if(obedience >= 60){
 
-stars++;
+    level =
+    "🐶 Unghund";
 
-alert("🎉 Bra jobbet!");
+  }else{
 
-}else{
+    level =
+    "🙂 Nybegynner";
 
-alert("🙂 Det var ikke helt riktig");
-
-}
-
-document.getElementById("score").innerHTML =
-"Stjerner: ⭐ " + stars;
-
-current++;
-
-showTask();
+  }
 
 }
 
-function finishGame(){
+function update(){
 
-let result = "🙂 Bra veterinær!";
+  updateLevel();
 
-if(stars >= 5){
+  document.getElementById(
+    "dogInfo"
+  ).innerHTML =
+  "🐶 " + dogName +
+  " - " + breed;
 
-result = "🏆 Fantastisk veterinær!";
+  document.getElementById(
+    "day"
+  ).innerHTML = day;
 
-}else if(stars >= 3){
+  document.getElementById(
+    "obedience"
+  ).innerHTML = obedience;
 
-result = "⭐ Flink veterinær!";
+  document.getElementById(
+    "trust"
+  ).innerHTML = trust;
+
+  document.getElementById(
+    "energy"
+  ).innerHTML = energy;
+
+  document.getElementById(
+    "stress"
+  ).innerHTML = stress;
+
+  document.getElementById(
+    "level"
+  ).innerHTML = level;
 
 }
 
-document.getElementById("problem").innerHTML =
-result;
+function log(text){
 
-document.getElementById("choices").innerHTML =
-`<button onclick="location.reload()">
-Spill igjen
-</button>`;
+  document.getElementById(
+    "log"
+  ).innerHTML = text;
 
 }
 
-showTask();
+function nextDay(){
+
+  day++;
+
+  energy -= 5;
+
+  if(energy < 0)
+  energy = 0;
+
+  stress += 2;
+
+  if(stress > 100)
+  stress = 100;
+
+  randomEvent();
+
+  saveGame();
+
+  update();
+
+}
+
+function randomEvent(){
+
+  const events = [
+
+  "⭐ Hunden lærte raskere i dag.",
+  "🐕 Folk roste treningen din.",
+  "🎾 Hunden virker glad.",
+  "🏆 Treningen begynner å gi resultater."
+
+  ];
+
+  if(Math.random() < 0.35){
+
+  const e =
+  events[Math.floor(
+    Math.random()*events.length
+  )];
+
+  log(
+  document.getElementById(
+    "log"
+  ).innerHTML +
+  "<br><br>🎲 " + e
+  );
+
+  }
+
+}
+
+function action(type){
+
+  if(type==="sit"){
+
+    obedience += 8;
+
+    trust += 2;
+
+    energy -= 8;
+
+    stress += 3;
+
+    log(
+    "🪑 Du trente SITT."
+    );
+
+  }
+
+  if(type==="stay"){
+
+    obedience += 10;
+
+    trust += 3;
+
+    energy -= 10;
+
+    stress += 4;
+
+    log(
+    "✋ Du trente BLI."
+    );
+
+  }
+
+  if(type==="walk"){
+
+    trust += 6;
+
+    stress -= 8;
+
+    energy -= 4;
+
+    if(stress < 0)
+    stress = 0;
+
+    log(
+    "🚶 Rolig tur ga bedre kontakt."
+    );
+
+  }
+
+  if(type==="play"){
+
+    trust += 10;
+
+    stress -= 10;
+
+    energy -= 5;
+
+    if(stress < 0)
+    stress = 0;
+
+    log(
+    "🎾 Lek og kos gjorde hunden glad."
+    );
+
+  }
+
+  if(type==="rest"){
+
+    energy += 20;
+
+    stress -= 6;
+
+    if(energy > 100)
+    energy = 100;
+
+    if(stress < 0)
+    stress = 0;
+
+    log(
+    "😴 Hunden fikk hvile."
+    );
+
+  }
+
+  if(type==="competition"){
+
+    let result =
+    obedience +
+    trust +
+    energy -
+    stress;
+
+    if(result > 220){
+
+      obedience += 25;
+
+      trust += 10;
+
+      log(
+      "🥇 Fantastisk! Hunden besto prøven!"
+      );
+
+    }else if(result > 160){
+
+      obedience += 12;
+
+      log(
+      "🥈 God innsats på treningsprøven."
+      );
+
+    }else{
+
+      obedience += 4;
+
+      stress += 6;
+
+      log(
+      "🙂 Dere fikk nyttig erfaring."
+      );
+
+    }
+
+    energy -= 20;
+
+  }
+
+  if(trust > 100)
+  trust = 100;
+
+  if(energy > 100)
+  energy = 100;
+
+  if(stress > 100)
+  stress = 100;
+
+  nextDay();
+
+}
+
+function saveGame(){
+
+  const data = {
+
+  dogName,
+  breed,
+  day,
+  obedience,
+  trust,
+  energy,
+  stress,
+  level
+
+  };
+
+  localStorage.setItem(
+  "dogTrainerSave",
+  JSON.stringify(data)
+  );
+
+}
+
+function loadGame(){
+
+  const save =
+  localStorage.getItem(
+  "dogTrainerSave"
+  );
+
+  if(save){
+
+  const data =
+  JSON.parse(save);
+
+  dogName = data.dogName;
+  breed = data.breed;
+
+  day = data.day;
+
+  obedience = data.obedience;
+  trust = data.trust;
+  energy = data.energy;
+  stress = data.stress;
+
+  level = data.level;
+
+  document.getElementById(
+    "setup"
+  ).classList.add("hidden");
+
+  document.getElementById(
+    "game"
+  ).classList.remove("hidden");
+
+  log(
+  "💾 Lagret trening lastet!"
+  );
+
+  }
+
+}
+
+function resetGame(){
+
+  localStorage.removeItem(
+    "dogTrainerSave"
+  );
+
+  location.reload();
+
+}
+
+loadGame();
+
+update();
 
 </script>
 
