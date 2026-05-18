@@ -3,145 +3,480 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🧠 Hundememory</title>
+<title>🧠 Hundehukommelse PRO</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#eef6ff;color:#123c73;text-align:center}
-.box{max-width:950px;margin:20px auto;padding:15px}
-h1{margin-bottom:8px}
-.levels{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0}
-.levels button,.restart{background:#2563eb;color:white;border:none;padding:12px 18px;border-radius:999px;font-weight:bold;cursor:pointer}
-.info{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:15px 0;font-weight:bold}
-.badge{background:white;padding:10px 16px;border-radius:999px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
-.grid{display:grid;gap:10px;margin-top:20px}
-.card{height:105px;background:#2563eb;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:42px;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.15)}
-.card.open{background:white}
-.card.done{background:#d1fae5;cursor:default}
-.back{display:inline-block;margin-top:18px;color:#2563eb;font-weight:bold;text-decoration:none}
-@media(max-width:650px){.card{height:72px;font-size:30px}.grid{gap:7px}}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#eef6ff;
+  color:#123c73;
+  text-align:center;
+  transition:0.4s;
+}
+
+.darkMode{
+  background:#111827;
+  color:white;
+}
+
+.container{
+  max-width:1100px;
+  margin:20px auto;
+  background:white;
+  padding:25px;
+  border-radius:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+.darkMode .container{
+  background:#1f2937;
+}
+
+h1{
+  margin-bottom:10px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
+  margin:20px 0;
+}
+
+.stat{
+  background:#f1f5ff;
+  padding:14px;
+  border-radius:18px;
+  font-weight:bold;
+}
+
+.darkMode .stat{
+  background:#374151;
+}
+
+#gameBoard{
+  display:grid;
+  gap:10px;
+  justify-content:center;
+  margin-top:25px;
+}
+
+.card{
+  width:90px;
+  height:90px;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:40px;
+  cursor:pointer;
+  user-select:none;
+  transition:0.3s;
+  background:#2563eb;
+  color:white;
+  transform-style:preserve-3d;
+}
+
+.card.flipped{
+  background:white;
+  color:#111827;
+  transform:rotateY(180deg);
+}
+
+.darkMode .card.flipped{
+  background:#374151;
+  color:white;
+}
+
+.card.matched{
+  background:#10b981;
+  color:white;
+}
+
+button,select{
+  padding:14px;
+  margin:10px;
+  border:none;
+  border-radius:14px;
+  font-size:18px;
+  font-weight:bold;
+}
+
+button{
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#1d4ed8;
+}
+
+.back{
+  display:inline-block;
+  margin-top:25px;
+  text-decoration:none;
+  color:#2563eb;
+  font-weight:bold;
+}
+
 </style>
 </head>
 
 <body>
-<div class="box">
-<h1>🧠 Hundememory</h1>
-<p>Velg vanskelighetsgrad 🐶</p>
 
-<div class="levels">
-<button onclick="startGame(4)">Lett</button>
-<button onclick="startGame(6)">Middels</button>
-<button onclick="startGame(8)">Vanskelig</button>
-<button onclick="startGame(10)">Ekspert</button>
+<div class="container">
+
+<h1>🧠 Hundehukommelse PRO</h1>
+
+<select id="difficulty">
+
+<option value="12">
+🙂 Lett
+</option>
+
+<option value="16">
+😎 Medium
+</option>
+
+<option value="20">
+🔥 Vanskelig
+</option>
+
+<option value="24">
+🌙 Expert
+</option>
+
+</select>
+
+<button onclick="startGame()">
+🚀 Start spill
+</button>
+
+<div class="stats">
+
+<div class="stat">
+⭐ Poeng: <span id="score">0</span>
 </div>
 
-<div class="info">
-<div class="badge">⏱️ Tid: <span id="time">0</span>s</div>
-<div class="badge">🎯 Trekk: <span id="moves">0</span></div>
-<div class="badge">✅ Par: <span id="pairs">0</span>/<span id="totalPairs">0</span></div>
+<div class="stat">
+🔥 Combo: <span id="combo">0</span>
 </div>
 
-<div id="grid" class="grid"></div>
+<div class="stat">
+⏱️ Tid: <span id="time">60</span>
+</div>
 
-<button class="restart" onclick="startGame(currentPairs)">Start på nytt</button>
-<br>
-<a class="back" href="hundespill.html">← Tilbake til spill</a>
+<div class="stat">
+🏆 Highscore: <span id="highscore">0</span>
+</div>
+
+</div>
+
+<div id="gameBoard"></div>
+
+<a class="back" href="hundespill.html">
+← Tilbake til spill
+</a>
+
 </div>
 
 <script>
-const symbols=["🐶","🐕","🦮","🐕‍🦺","🦴","🐾","🍖","🏠","🎾","🐩"];
-let first=null, second=null, lock=false;
-let moves=0, pairs=0, currentPairs=4, seconds=0, timer=null;
 
-function shuffle(arr){
-  for(let i=arr.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [arr[i],arr[j]]=[arr[j],arr[i]];
-  }
-  return arr;
+const dogs=[
+
+"🐶","🐕","🦮","🐩",
+"🐕‍🦺","🐾","🦴","🎾",
+"🐺","🐕","🐩","🦮"
+
+];
+
+let cards=[];
+
+let flipped=[];
+
+let matched=0;
+
+let score=0;
+
+let combo=0;
+
+let timeLeft=60;
+
+let timer=null;
+
+function startGame(){
+
+clearInterval(timer);
+
+document.body.classList.remove(
+"darkMode"
+);
+
+const totalCards=
+parseInt(
+document.getElementById(
+"difficulty"
+).value
+);
+
+cards=[];
+
+for(let i=0;i<totalCards/2;i++){
+
+cards.push(dogs[i]);
+cards.push(dogs[i]);
+
 }
 
-function startTimer(){
-  clearInterval(timer);
-  seconds=0;
-  document.getElementById("time").textContent=0;
-  timer=setInterval(()=>{
-    seconds++;
-    document.getElementById("time").textContent=seconds;
-  },1000);
+shuffle(cards);
+
+matched=0;
+score=0;
+combo=0;
+
+timeLeft=
+totalCards===24
+? 45
+: 60;
+
+document.getElementById(
+"score"
+).innerHTML=score;
+
+document.getElementById(
+"combo"
+).innerHTML=combo;
+
+document.getElementById(
+"time"
+).innerHTML=timeLeft;
+
+if(totalCards===24){
+
+document.body.classList.add(
+"darkMode"
+);
+
 }
 
-function startGame(pairCount){
-  currentPairs=pairCount;
-  first=null; second=null; lock=false;
-  moves=0; pairs=0;
+createBoard();
 
-  document.getElementById("moves").textContent=0;
-  document.getElementById("pairs").textContent=0;
-  document.getElementById("totalPairs").textContent=pairCount;
+timer=setInterval(updateTimer,1000);
 
-  const grid=document.getElementById("grid");
-  grid.innerHTML="";
-
-  let cols=4;
-  if(pairCount>=10) cols=5;
-  grid.style.gridTemplateColumns=`repeat(${cols},1fr)`;
-
-  const selected=symbols.slice(0,pairCount);
-  const cards=shuffle([...selected,...selected]);
-
-  cards.forEach(value=>{
-    const div=document.createElement("div");
-    div.className="card";
-    div.dataset.value=value;
-    div.textContent="❓";
-    div.onclick=()=>flip(div);
-    grid.appendChild(div);
-  });
-
-  startTimer();
 }
 
-function flip(card){
-  if(lock || card.classList.contains("open") || card.classList.contains("done")) return;
+function createBoard(){
 
-  card.classList.add("open");
-  card.textContent=card.dataset.value;
+const board=
+document.getElementById(
+"gameBoard"
+);
 
-  if(!first){
-    first=card;
-    return;
-  }
+board.innerHTML="";
 
-  second=card;
-  moves++;
-  document.getElementById("moves").textContent=moves;
+const total=
+cards.length;
 
-  if(first.dataset.value===second.dataset.value){
-    first.classList.add("done");
-    second.classList.add("done");
-    first=null; second=null;
-    pairs++;
-    document.getElementById("pairs").textContent=pairs;
+const cols=
+Math.ceil(Math.sqrt(total));
 
-    if(pairs===currentPairs){
-      clearInterval(timer);
-      setTimeout(()=>{
-        alert("🎉 Du klarte nivået på "+seconds+" sekunder og "+moves+" trekk!");
-      },200);
-    }
-  }else{
-    lock=true;
-    setTimeout(()=>{
-      first.classList.remove("open");
-      second.classList.remove("open");
-      first.textContent="❓";
-      second.textContent="❓";
-      first=null; second=null; lock=false;
-    },800);
-  }
+board.style.gridTemplateColumns=
+`repeat(${cols},90px)`;
+
+cards.forEach((dog,index)=>{
+
+const card=
+document.createElement("div");
+
+card.className="card";
+
+card.dataset.value=dog;
+
+card.dataset.index=index;
+
+card.innerHTML="❓";
+
+card.onclick=()=>flipCard(card);
+
+board.appendChild(card);
+
+});
+
 }
 
-startGame(4);
+function flipCard(card){
+
+if(
+card.classList.contains("flipped")
+||
+card.classList.contains("matched")
+||
+flipped.length>=2
+){
+return;
+}
+
+card.classList.add("flipped");
+
+card.innerHTML=
+card.dataset.value;
+
+flipped.push(card);
+
+if(flipped.length===2){
+
+checkMatch();
+
+}
+
+}
+
+function checkMatch(){
+
+const [a,b]=flipped;
+
+if(a.dataset.value===b.dataset.value){
+
+a.classList.add("matched");
+b.classList.add("matched");
+
+matched+=2;
+
+combo++;
+
+const bonus=
+10+(combo*2);
+
+score+=bonus;
+
+document.getElementById(
+"score"
+).innerHTML=score;
+
+document.getElementById(
+"combo"
+).innerHTML=combo;
+
+flipped=[];
+
+if(matched===cards.length){
+
+clearInterval(timer);
+
+saveHighscore();
+
+setTimeout(()=>{
+
+alert(
+"🏆 Gratulerer! Du vant med "+
+score+
+" poeng!"
+);
+
+},300);
+
+}
+
+}else{
+
+combo=0;
+
+document.getElementById(
+"combo"
+).innerHTML=combo;
+
+setTimeout(()=>{
+
+a.classList.remove("flipped");
+b.classList.remove("flipped");
+
+a.innerHTML="❓";
+b.innerHTML="❓";
+
+flipped=[];
+
+},700);
+
+}
+
+}
+
+function updateTimer(){
+
+timeLeft--;
+
+document.getElementById(
+"time"
+).innerHTML=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+alert(
+"⏱️ Tiden er ute!"
+);
+
+}
+
+}
+
+function saveHighscore(){
+
+const best=
+localStorage.getItem(
+"memoryHighscore"
+)||0;
+
+if(score>best){
+
+localStorage.setItem(
+"memoryHighscore",
+score
+);
+
+}
+
+document.getElementById(
+"highscore"
+).innerHTML=
+localStorage.getItem(
+"memoryHighscore"
+)||0;
+
+}
+
+function shuffle(array){
+
+for(
+let i=array.length-1;
+i>0;
+i--
+){
+
+const j=
+Math.floor(
+Math.random()*(i+1)
+);
+
+[array[i],array[j]]=
+[array[j],array[i]];
+
+}
+
+}
+
+document.getElementById(
+"highscore"
+).innerHTML=
+localStorage.getItem(
+"memoryHighscore"
+)||0;
+
 </script>
+
 </body>
 </html>
