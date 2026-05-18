@@ -3,115 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐕 Agility-bane</title>
+<title>🐕 Live Agility Simulator</title>
 
 <style>
 
 body{
   margin:0;
+  overflow:hidden;
   font-family:Arial,sans-serif;
-  background:#eef6ff;
-  color:#123c73;
-  text-align:center;
+  background:#87ceeb;
 }
 
-.container{
-  max-width:1100px;
-  margin:20px auto;
-  background:white;
-  padding:25px;
-  border-radius:25px;
-  box-shadow:0 10px 25px rgba(0,0,0,.12);
+#game{
+  position:relative;
+  width:100vw;
+  height:100vh;
+  background:linear-gradient(
+  to bottom,
+  #87ceeb 0%,
+  #87ceeb 70%,
+  #4ade80 70%,
+  #22c55e 100%
+  );
+  overflow:hidden;
 }
 
-.stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:12px;
-  margin:20px 0;
-}
-
-.stat{
-  background:#f1f5ff;
-  padding:14px;
-  border-radius:18px;
-  font-weight:bold;
-}
-
-#course{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:12px;
-  margin-top:25px;
+#dog{
+  position:absolute;
+  width:70px;
+  height:70px;
+  left:120px;
+  top:400px;
+  font-size:55px;
+  transition:0.05s linear;
+  z-index:5;
 }
 
 .obstacle{
-  width:120px;
-  height:120px;
-  background:#eef6ff;
-  border-radius:20px;
+  position:absolute;
+  width:80px;
+  height:80px;
+  font-size:60px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:45px;
-  border:3px solid transparent;
 }
 
-.active{
-  border:3px solid #10b981;
-  background:#dcfce7;
-}
-
-.done{
-  background:#10b981;
-  color:white;
-}
-
-.fail{
-  background:#ef4444;
-  color:white;
-}
-
-button,select{
-  padding:14px;
-  margin:10px;
-  border:none;
-  border-radius:14px;
-  font-size:18px;
-  font-weight:bold;
-}
-
-button{
-  background:#2563eb;
-  color:white;
-  cursor:pointer;
-}
-
-button:hover{
-  background:#1d4ed8;
-}
-
-.controls{
-  margin-top:25px;
-}
-
-#log{
-  background:#f8fafc;
+#hud{
+  position:absolute;
+  top:15px;
+  left:15px;
+  background:rgba(255,255,255,0.9);
+  padding:15px;
   border-radius:18px;
-  padding:20px;
-  margin-top:20px;
-  min-height:120px;
-  text-align:left;
-  line-height:1.5;
+  font-weight:bold;
+  z-index:10;
 }
 
-.back{
-  display:inline-block;
-  margin-top:25px;
-  text-decoration:none;
-  color:#2563eb;
-  font-weight:bold;
+#info{
+  margin-top:10px;
 }
 
 </style>
@@ -119,171 +69,114 @@ button:hover{
 
 <body>
 
-<div class="container">
+<div id="game">
 
-<h1>🐕 Agility-bane</h1>
+<div id="hud">
 
-<select id="difficulty">
+🏆 Poeng:
+<span id="score">0</span>
 
-<option value="easy">
-🙂 Lett
-</option>
+<br><br>
 
-<option value="medium">
-😎 Medium
-</option>
+❤️ Liv:
+<span id="lives">3</span>
 
-<option value="hard">
-🔥 Vanskelig
-</option>
-
-<option value="expert">
-🌍 Turnering
-</option>
-
-</select>
-
-<button onclick="startGame()">
-🚀 Start bane
-</button>
-
-<div class="stats">
-
-<div class="stat">
-🏁 Bane: <span id="level">
-1
-</span>
-</div>
-
-<div class="stat">
-⭐ Stjerner: <span id="stars">
-0
-</span>
-</div>
-
-<div class="stat">
-⏱️ Tid: <span id="time">
-60
-</span>
-</div>
-
-<div class="stat">
-🏆 Beste tid: <span id="best">
-0
-</span>
+<div id="info">
+⬅️➡️⬆️⬇️ Bruk piltastene
 </div>
 
 </div>
 
-<div id="course"></div>
-
-<div class="controls">
-
-<button onclick="playerAction('jump')">
-⬆️ Hopp
-</button>
-
-<button onclick="playerAction('tunnel')">
-🌀 Tunnel
-</button>
-
-<button onclick="playerAction('slalom')">
-↔️ Slalåm
-</button>
-
-<button onclick="playerAction('sprint')">
-⚡ Sprint
-</button>
-
-</div>
-
-<div id="log">
-Velkommen til Agility-banen 🐕
-</div>
-
-<a class="back" href="hundespill.html">
-← Tilbake til spill
-</a>
+<div id="dog">🐕</div>
 
 </div>
 
 <script>
 
-const obstacleTypes=[
+const dog =
+document.getElementById("dog");
 
-{
-type:"jump",
-emoji:"⬆️"
-},
+const game =
+document.getElementById("game");
 
-{
-type:"tunnel",
-emoji:"🌀"
-},
+let x = 120;
+let y = 400;
 
-{
-type:"slalom",
-emoji:"↔️"
-},
+let speed = 12;
 
-{
-type:"sprint",
-emoji:"⚡"
-}
+let score = 0;
+
+let lives = 3;
+
+let obstacles = [];
+
+const obstacleTypes = [
+
+"🌀",
+"⬆️",
+"↔️",
+"🚧"
 
 ];
 
-let course=[];
+document.addEventListener(
+"keydown",
+moveDog
+);
 
-let current=0;
+function moveDog(e){
 
-let stars=0;
+if(e.key==="ArrowUp"){
 
-let timeLeft=60;
-
-let timer=null;
-
-let level=1;
-
-function startGame(){
-
-clearInterval(timer);
-
-const difficulty=
-document.getElementById(
-"difficulty"
-).value;
-
-let length=6;
-
-timeLeft=60;
-
-if(difficulty==="medium"){
-
-length=8;
-timeLeft=50;
+y -= speed;
 
 }
 
-if(difficulty==="hard"){
+if(e.key==="ArrowDown"){
 
-length=10;
-timeLeft=45;
-
-}
-
-if(difficulty==="expert"){
-
-length=14;
-timeLeft=35;
+y += speed;
 
 }
 
-course=[];
+if(e.key==="ArrowLeft"){
 
-for(let i=0;i<length;i++){
+x -= speed;
 
-const random=
+}
+
+if(e.key==="ArrowRight"){
+
+x += speed;
+
+}
+
+if(x < 0) x = 0;
+
+if(y < 80) y = 80;
+
+if(x > window.innerWidth-80)
+x = window.innerWidth-80;
+
+if(y > window.innerHeight-90)
+y = window.innerHeight-90;
+
+dog.style.left = x + "px";
+
+dog.style.top = y + "px";
+
+checkCollision();
+
+}
+
+function createObstacle(){
+
+const obstacle =
+document.createElement("div");
+
+obstacle.className =
+"obstacle";
+
+const type =
 obstacleTypes[
 Math.floor(
 Math.random()*
@@ -291,204 +184,125 @@ obstacleTypes.length
 )
 ];
 
-course.push(random);
+obstacle.innerHTML = type;
+
+const posY =
+Math.random() *
+(window.innerHeight-150)
++100;
+
+obstacle.style.left =
+window.innerWidth + "px";
+
+obstacle.style.top =
+posY + "px";
+
+game.appendChild(obstacle);
+
+obstacles.push(obstacle);
+
+moveObstacle(obstacle);
 
 }
 
-current=0;
+function moveObstacle(obstacle){
 
-drawCourse();
+let posX =
+window.innerWidth;
+
+const interval =
+setInterval(()=>{
+
+posX -= 6;
+
+obstacle.style.left =
+posX + "px";
+
+if(posX < -100){
+
+clearInterval(interval);
+
+obstacle.remove();
+
+score++;
 
 document.getElementById(
-"stars"
-).innerHTML=stars;
-
-document.getElementById(
-"time"
-).innerHTML=timeLeft;
-
-document.getElementById(
-"level"
-).innerHTML=level;
-
-log(
-"🏁 Banen er klar!"
-);
-
-timer=setInterval(
-updateTimer,
-1000
-);
+"score"
+).innerHTML = score;
 
 }
 
-function drawCourse(){
+checkHit(obstacle);
 
-const courseDiv=
+},30);
+
+}
+
+function checkHit(obstacle){
+
+const dogRect =
+dog.getBoundingClientRect();
+
+const obsRect =
+obstacle.getBoundingClientRect();
+
+if(
+
+dogRect.left <
+obsRect.right &&
+
+dogRect.right >
+obsRect.left &&
+
+dogRect.top <
+obsRect.bottom &&
+
+dogRect.bottom >
+obsRect.top
+
+){
+
+obstacle.remove();
+
+lives--;
+
 document.getElementById(
-"course"
-);
+"lives"
+).innerHTML =
+lives;
 
-courseDiv.innerHTML="";
+if(lives <= 0){
 
-course.forEach((item,index)=>{
-
-const div=
-document.createElement("div");
-
-div.className="obstacle";
-
-if(index===current){
-
-div.classList.add(
-"active"
-);
+gameOver();
 
 }
 
-if(index<current){
-
-div.classList.add(
-"done"
-);
+}
 
 }
 
-div.innerHTML=item.emoji;
+function checkCollision(){
 
-courseDiv.appendChild(div);
+obstacles.forEach(obs=>{
+
+checkHit(obs);
 
 });
 
 }
 
-function playerAction(action){
-
-if(current>=course.length)
-return;
-
-const needed=
-course[current].type;
-
-if(action===needed){
-
-current++;
-
-stars+=2;
-
-log(
-"✅ Perfekt hinder!"
-);
-
-drawCourse();
-
-document.getElementById(
-"stars"
-).innerHTML=stars;
-
-if(current>=course.length){
-
-winLevel();
-
-}
-
-}else{
-
-stars--;
-
-if(stars<0)
-stars=0;
-
-timeLeft-=3;
-
-log(
-"❌ Feil hinder!"
-);
-
-document.getElementById(
-"stars"
-).innerHTML=stars;
-
-}
-
-}
-
-function winLevel(){
-
-clearInterval(timer);
-
-const usedTime=
-60-timeLeft;
-
-const best=
-localStorage.getItem(
-"agilityBest"
-)||999;
-
-if(usedTime<best){
-
-localStorage.setItem(
-"agilityBest",
-usedTime
-);
-
-}
-
-document.getElementById(
-"best"
-).innerHTML=
-localStorage.getItem(
-"agilityBest"
-)||0;
-
-setTimeout(()=>{
+function gameOver(){
 
 alert(
-"🏆 Bane fullført!"
+"😅 Game Over! Poeng: "
++ score
 );
 
-level++;
-
-startGame();
-
-},500);
+location.reload();
 
 }
 
-function updateTimer(){
-
-timeLeft--;
-
-document.getElementById(
-"time"
-).innerHTML=timeLeft;
-
-if(timeLeft<=0){
-
-clearInterval(timer);
-
-alert(
-"⏱️ Tiden er ute!"
-);
-
-}
-
-}
-
-function log(text){
-
-document.getElementById(
-"log"
-).innerHTML=text;
-
-}
-
-document.getElementById(
-"best"
-).innerHTML=
-localStorage.getItem(
-"agilityBest"
-)||0;
+setInterval(createObstacle,1800);
 
 </script>
 
