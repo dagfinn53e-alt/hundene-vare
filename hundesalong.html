@@ -3,20 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐶 Hundesalong LIVE</title>
+<title>🐶 Hundesalong LIVE PRO</title>
 
 <style>
 
 body{
   margin:0;
+  overflow:hidden;
   font-family:Arial,sans-serif;
   background:linear-gradient(
   to bottom,
-  #fce7f3,
+  #fbcfe8,
   #dbeafe
   );
-  overflow:hidden;
-  text-align:center;
 }
 
 #game{
@@ -27,75 +26,80 @@ body{
 
 #salon{
   position:absolute;
-  bottom:0;
-  width:100%;
-  height:260px;
-  background:#f9a8d4;
-  border-top-left-radius:40px;
-  border-top-right-radius:40px;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+#dogContainer{
+  position:relative;
+  width:520px;
+  height:520px;
 }
 
 #dog{
-  position:absolute;
-  left:50%;
-  top:45%;
-  transform:translate(-50%,-50%);
-  font-size:180px;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:30px;
+  box-shadow:0 12px 30px rgba(0,0,0,.25);
   transition:0.3s;
-  z-index:5;
 }
 
 .dirty{
   filter:
-  grayscale(.7)
-  brightness(.7);
+  brightness(.7)
+  grayscale(.4);
 }
 
 .clean{
   filter:
-  brightness(1.15);
+  brightness(1.08);
 }
 
-.happy{
-  transform:
-  translate(-50%,-50%)
-  scale(1.08);
-}
-
-#bubbleLayer{
+#foamLayer{
   position:absolute;
   inset:0;
   pointer-events:none;
 }
 
-.bubble{
+.foam{
   position:absolute;
-  font-size:35px;
-  animation:floatUp 2s linear forwards;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:rgba(255,255,255,.8);
+  box-shadow:
+  0 0 10px rgba(255,255,255,.8);
+  animation:foamFade 2s forwards;
 }
 
-@keyframes floatUp{
+@keyframes foamFade{
 
 0%{
 opacity:1;
-transform:translateY(0);
+transform:scale(1);
 }
 
 100%{
 opacity:0;
-transform:translateY(-160px);
+transform:scale(1.8);
 }
 
 }
 
-.toolBox{
+#toolbar{
   position:absolute;
   bottom:25px;
   left:50%;
   transform:translateX(-50%);
   display:flex;
-  gap:14px;
-  z-index:10;
+  gap:16px;
+  background:rgba(255,255,255,.9);
+  padding:15px;
+  border-radius:24px;
+  box-shadow:0 8px 20px rgba(0,0,0,.2);
 }
 
 .tool{
@@ -108,12 +112,16 @@ transform:translateY(-160px);
   justify-content:center;
   font-size:42px;
   cursor:pointer;
-  box-shadow:0 6px 14px rgba(0,0,0,.18);
   transition:0.2s;
 }
 
 .tool:hover{
   transform:scale(1.08);
+}
+
+.activeTool{
+  background:#2563eb;
+  color:white;
 }
 
 #hud{
@@ -122,28 +130,36 @@ transform:translateY(-160px);
   left:20px;
   background:rgba(255,255,255,.92);
   padding:18px;
-  border-radius:20px;
+  border-radius:22px;
   font-weight:bold;
-  text-align:left;
-  min-width:220px;
-  z-index:10;
+  min-width:230px;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
 }
 
 #message{
-  margin-top:10px;
+  margin-top:12px;
   line-height:1.5;
 }
 
-.scoreFloat{
+#bow{
+  position:absolute;
+  top:45px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:90px;
+  display:none;
+}
+
+.scoreFx{
   position:absolute;
   color:#10b981;
+  font-size:34px;
   font-weight:bold;
-  font-size:28px;
-  animation:scoreUp 1.2s linear forwards;
+  animation:scoreFloat 1.2s forwards;
   pointer-events:none;
 }
 
-@keyframes scoreUp{
+@keyframes scoreFloat{
 
 0%{
 opacity:1;
@@ -152,18 +168,9 @@ transform:translateY(0);
 
 100%{
 opacity:0;
-transform:translateY(-80px);
+transform:translateY(-100px);
 }
 
-}
-
-#accessory{
-  position:absolute;
-  left:50%;
-  top:28%;
-  transform:translateX(-50%);
-  font-size:70px;
-  z-index:8;
 }
 
 </style>
@@ -190,46 +197,56 @@ transform:translateY(-80px);
 
 <div id="message">
 
-Velkommen til LIVE-salongen 🐶
+Velkommen til LIVE hundesalong 🐶
 
 </div>
 
 </div>
 
-<div id="bubbleLayer"></div>
+<div id="salon">
 
-<div id="accessory"></div>
+<div id="dogContainer">
 
-<div id="dog" class="dirty">
-🐶
+<img
+id="dog"
+class="dirty"
+src="file_00000000c9c071f4bf47f05725e1c888"
+>
+
+<div id="foamLayer"></div>
+
+<div id="bow">
+🎀
 </div>
 
-<div id="salon"></div>
+</div>
 
-<div class="toolBox">
+</div>
+
+<div id="toolbar">
 
 <div class="tool"
-onclick="useTool('wash')">
+onclick="selectTool('wash')">
 🧽
 </div>
 
 <div class="tool"
-onclick="useTool('rinse')">
+onclick="selectTool('rinse')">
 🚿
 </div>
 
 <div class="tool"
-onclick="useTool('cut')">
-✂️
-</div>
-
-<div class="tool"
-onclick="useTool('brush')">
+onclick="selectTool('brush')">
 🪮
 </div>
 
 <div class="tool"
-onclick="useTool('bow')">
+onclick="selectTool('cut')">
+✂️
+</div>
+
+<div class="tool"
+onclick="selectTool('bow')">
 🎀
 </div>
 
@@ -244,13 +261,18 @@ onclick="finishDog()">
 
 <script>
 
+let currentTool="";
+
 let score=0;
 
 let clean=0;
 
 let style=0;
 
-let bow=false;
+const dog=
+document.getElementById(
+"dog"
+);
 
 function update(){
 
@@ -266,39 +288,17 @@ document.getElementById(
 "style"
 ).innerHTML=style;
 
-const dog=
-document.getElementById(
-"dog"
-);
-
-dog.className="";
-
 if(clean<60){
 
-dog.classList.add(
-"dirty"
-);
+dog.classList.add("dirty");
+dog.classList.remove("clean");
 
 }else{
 
-dog.classList.add(
-"clean"
-);
+dog.classList.remove("dirty");
+dog.classList.add("clean");
 
 }
-
-if(style>60){
-
-dog.classList.add(
-"happy"
-);
-
-}
-
-document.getElementById(
-"accessory"
-).innerHTML=
-bow ? "🎀" : "";
 
 }
 
@@ -310,41 +310,187 @@ document.getElementById(
 
 }
 
-function createBubble(){
+function selectTool(tool){
 
-const bubble=
-document.createElement("div");
+currentTool=tool;
 
-bubble.className="bubble";
+document.querySelectorAll(
+".tool"
+).forEach(t=>{
 
-bubble.innerHTML="🫧";
+t.classList.remove(
+"activeTool"
+);
 
-bubble.style.left=
-Math.random()*
-window.innerWidth+"px";
+});
 
-bubble.style.top=
-Math.random()*
-window.innerHeight+"px";
+event.target.classList.add(
+"activeTool"
+);
+
+message(
+"🎮 Aktivt verktøy valgt."
+);
+
+}
 
 document.getElementById(
-"bubbleLayer"
-).appendChild(bubble);
+"dogContainer"
+).addEventListener(
+"mousemove",
+e=>{
+
+if(currentTool==="wash"){
+
+createFoam(e);
+
+clean+=0.15;
+
+score+=0.05;
+
+message(
+"🧽 Vasker hunden..."
+);
+
+}
+
+if(currentTool==="rinse"){
+
+clean+=0.1;
+
+score+=0.03;
+
+message(
+"🚿 Skyller pelsen..."
+);
+
+}
+
+if(currentTool==="brush"){
+
+style+=0.1;
+
+score+=0.04;
+
+dog.style.transform=
+"scale(1.02)";
+
+message(
+"🪮 Børster pelsen..."
+);
+
+}
+
+if(currentTool==="cut"){
+
+style+=0.18;
+
+score+=0.08;
+
+dog.style.transform=
+"scale(1.01) rotate(1deg)";
+
+message(
+"✂️ Klipper pelsen..."
+);
+
+}
+
+if(currentTool==="bow"){
+
+if(style>40){
+
+document.getElementById(
+"bow"
+).style.display="block";
+
+style+=0.05;
+
+score+=0.03;
+
+message(
+"🎀 Hunden pyntes!"
+);
+
+}
+
+}
+
+if(clean>100)
+clean=100;
+
+if(style>100)
+style=100;
+
+update();
+
+});
+
+function createFoam(e){
+
+const foam=
+document.createElement("div");
+
+foam.className="foam";
+
+foam.style.left=
+e.offsetX-20+"px";
+
+foam.style.top=
+e.offsetY-20+"px";
+
+document.getElementById(
+"foamLayer"
+).appendChild(foam);
 
 setTimeout(()=>{
 
-bubble.remove();
+foam.remove();
 
 },2000);
 
 }
 
-function scoreEffect(points){
+function finishDog(){
+
+let result=
+"🙂 Fin innsats!";
+
+if(clean>85 && style>85){
+
+result=
+"🏆 WOW! Perfekt salonghund!";
+
+score+=50;
+
+createScoreFx(50);
+
+}else if(clean>65 && style>65){
+
+result=
+"⭐ Kjempefint resultat!";
+
+score+=25;
+
+createScoreFx(25);
+
+}
+
+message(
+result+
+"<br><br>📸 Bilde lagret!"
+);
+
+update();
+
+}
+
+function createScoreFx(points){
 
 const fx=
 document.createElement("div");
 
-fx.className="scoreFloat";
+fx.className="scoreFx";
 
 fx.innerHTML=
 "+"+points;
@@ -362,168 +508,6 @@ setTimeout(()=>{
 fx.remove();
 
 },1200);
-
-}
-
-function useTool(tool){
-
-if(tool==="wash"){
-
-clean+=20;
-
-score+=10;
-
-message(
-"🧽 Hunden vaskes!"
-);
-
-for(let i=0;i<12;i++){
-
-setTimeout(
-createBubble,
-i*100
-);
-
-}
-
-scoreEffect(10);
-
-}
-
-if(tool==="rinse"){
-
-clean+=20;
-
-score+=10;
-
-message(
-"🚿 Skylte hunden ren!"
-);
-
-for(let i=0;i<10;i++){
-
-setTimeout(
-createBubble,
-i*80
-);
-
-}
-
-scoreEffect(10);
-
-}
-
-if(tool==="cut"){
-
-style+=25;
-
-score+=15;
-
-message(
-"✂️ Pelsen klippes!"
-);
-
-document.getElementById(
-"dog"
-).style.transform=
-"translate(-50%,-50%) rotate(2deg)";
-
-setTimeout(()=>{
-
-document.getElementById(
-"dog"
-).style.transform=
-"translate(-50%,-50%)";
-
-},300);
-
-scoreEffect(15);
-
-}
-
-if(tool==="brush"){
-
-style+=18;
-
-clean+=10;
-
-score+=12;
-
-message(
-"🪮 Pelsen blir myk og fin!"
-);
-
-scoreEffect(12);
-
-}
-
-if(tool==="bow"){
-
-if(style<40){
-
-message(
-"🎀 Stell pelsen litt først."
-);
-
-return;
-
-}
-
-bow=true;
-
-style+=20;
-
-score+=20;
-
-message(
-"🎀 Hunden fikk pynt!"
-);
-
-scoreEffect(20);
-
-}
-
-if(clean>100)
-clean=100;
-
-if(style>100)
-style=100;
-
-update();
-
-}
-
-function finishDog(){
-
-let result=
-"🙂 Fin innsats!";
-
-if(clean>=90 && style>=90){
-
-result=
-"🏆 WOW! Perfekt salonghund!";
-
-score+=50;
-
-scoreEffect(50);
-
-}else if(clean>=70 && style>=70){
-
-result=
-"⭐ Kjempefint resultat!";
-
-score+=25;
-
-scoreEffect(25);
-
-}
-
-message(
-result+
-"<br><br>📸 Bilde tatt!"
-);
-
-update();
 
 }
 
