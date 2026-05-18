@@ -16,7 +16,7 @@ body{
 }
 
 .container{
-  max-width:1000px;
+  max-width:1100px;
   margin:20px auto;
   background:white;
   padding:25px;
@@ -68,16 +68,16 @@ button:hover{
   line-height:1.5;
 }
 
-.hidden{
-  display:none;
-}
-
 .back{
   display:inline-block;
   margin-top:25px;
   text-decoration:none;
   color:#2563eb;
   font-weight:bold;
+}
+
+.hidden{
+  display:none;
 }
 
 </style>
@@ -149,6 +149,8 @@ Nybegynner
 
 </div>
 
+<h2>🐾 Kommando-trening</h2>
+
 <button onclick="action('sit')">
 🪑 Tren SITT
 </button>
@@ -156,6 +158,24 @@ Nybegynner
 <button onclick="action('stay')">
 ✋ Tren BLI
 </button>
+
+<button onclick="action('come')">
+📣 Tren INNKALLING
+</button>
+
+<button onclick="action('heel')">
+🐕 Tren GÅ PENT I BÅND
+</button>
+
+<button onclick="action('jump')">
+🚪 Tren IKKE HOPP
+</button>
+
+<button onclick="action('search')">
+🦴 Tren SØK
+</button>
+
+<h2>❤️ Hverdag</h2>
 
 <button onclick="action('walk')">
 🚶 Gå tur
@@ -169,8 +189,14 @@ Nybegynner
 😴 Hvile
 </button>
 
+<h2>🏆 Konkurranser</h2>
+
 <button onclick="action('competition')">
-🏆 Treningsprøve
+🏅 Lydighetsprøve
+</button>
+
+<button onclick="action('advancedCompetition')">
+🌍 Elite-konkurranse
 </button>
 
 <div id="log">
@@ -239,22 +265,22 @@ function startGame(){
 
 function updateLevel(){
 
-  if(obedience >= 300){
+  if(obedience >= 450){
 
     level =
     "🌍 Elite Trener";
 
-  }else if(obedience >= 200){
+  }else if(obedience >= 300){
 
     level =
     "🏆 Konkurranseklar";
 
-  }else if(obedience >= 120){
+  }else if(obedience >= 180){
 
     level =
     "⭐ Viderekommen";
 
-  }else if(obedience >= 60){
+  }else if(obedience >= 80){
 
     level =
     "🐶 Unghund";
@@ -341,7 +367,8 @@ function randomEvent(){
   "⭐ Hunden lærte raskere i dag.",
   "🐕 Folk roste treningen din.",
   "🎾 Hunden virker glad.",
-  "🏆 Treningen begynner å gi resultater."
+  "🏆 Treningen begynner å gi resultater.",
+  "❤️ Hunden virker mer trygg på deg."
 
   ];
 
@@ -368,73 +395,98 @@ function action(type){
   if(type==="sit"){
 
     obedience += 8;
-
     trust += 2;
-
     energy -= 8;
-
     stress += 3;
 
-    log(
-    "🪑 Du trente SITT."
-    );
+    log("🪑 Du trente SITT.");
 
   }
 
   if(type==="stay"){
 
     obedience += 10;
-
     trust += 3;
-
     energy -= 10;
-
     stress += 4;
 
-    log(
-    "✋ Du trente BLI."
-    );
+    log("✋ Du trente BLI.");
+
+  }
+
+  if(type==="come"){
+
+    obedience += 14;
+    trust += 5;
+    energy -= 12;
+    stress += 5;
+
+    log("📣 Du trente INNKALLING.");
+
+  }
+
+  if(type==="heel"){
+
+    obedience += 12;
+    trust += 3;
+    energy -= 10;
+    stress += 4;
+
+    log("🐕 Du trente GÅ PENT I BÅND.");
+
+  }
+
+  if(type==="jump"){
+
+    obedience += 10;
+    trust += 2;
+    energy -= 8;
+    stress += 3;
+
+    log("🚪 Du trente IKKE HOPP.");
+
+  }
+
+  if(type==="search"){
+
+    obedience += 16;
+    trust += 5;
+    energy -= 15;
+    stress += 2;
+
+    log("🦴 Du trente SØK.");
 
   }
 
   if(type==="walk"){
 
     trust += 6;
-
     stress -= 8;
-
     energy -= 4;
 
     if(stress < 0)
     stress = 0;
 
-    log(
-    "🚶 Rolig tur ga bedre kontakt."
-    );
+    log("🚶 Rolig tur ga bedre kontakt.");
 
   }
 
   if(type==="play"){
 
     trust += 10;
-
     stress -= 10;
-
     energy -= 5;
 
     if(stress < 0)
     stress = 0;
 
-    log(
-    "🎾 Lek og kos gjorde hunden glad."
-    );
+    log("🎾 Lek og kos gjorde hunden glad.");
 
   }
 
   if(type==="rest"){
 
     energy += 20;
-
     stress -= 6;
 
     if(energy > 100)
@@ -443,9 +495,7 @@ function action(type){
     if(stress < 0)
     stress = 0;
 
-    log(
-    "😴 Hunden fikk hvile."
-    );
+    log("😴 Hunden fikk hvile.");
 
   }
 
@@ -457,28 +507,26 @@ function action(type){
     energy -
     stress;
 
-    if(result > 220){
+    if(result > 240){
 
-      obedience += 25;
-
+      obedience += 35;
       trust += 10;
 
       log(
-      "🥇 Fantastisk! Hunden besto prøven!"
+      "🥇 Fantastisk! Hunden besto lydighetsprøven!"
       );
 
-    }else if(result > 160){
+    }else if(result > 180){
 
-      obedience += 12;
+      obedience += 18;
 
       log(
-      "🥈 God innsats på treningsprøven."
+      "🥈 God innsats på lydighetsprøven."
       );
 
     }else{
 
-      obedience += 4;
-
+      obedience += 5;
       stress += 6;
 
       log(
@@ -491,6 +539,48 @@ function action(type){
 
   }
 
+  if(type==="advancedCompetition"){
+
+    let result =
+    obedience +
+    trust +
+    energy -
+    stress;
+
+    result -= 40;
+
+    if(result > 260){
+
+      obedience += 50;
+      trust += 15;
+
+      log(
+      "🌍 Elite-konkurransen ble vunnet!"
+      );
+
+    }else if(result > 210){
+
+      obedience += 25;
+
+      log(
+      "🏆 Flott elite-resultat!"
+      );
+
+    }else{
+
+      obedience += 8;
+      stress += 8;
+
+      log(
+      "🙂 Elite-nivået var krevende."
+      );
+
+    }
+
+    energy -= 30;
+
+  }
+
   if(trust > 100)
   trust = 100;
 
@@ -499,6 +589,9 @@ function action(type){
 
   if(stress > 100)
   stress = 100;
+
+  if(stress < 0)
+  stress = 0;
 
   nextDay();
 
