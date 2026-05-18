@@ -174,6 +174,12 @@ Lokalt Show
 🐶 Showhunder: <span id="dogCount">1</span>
 </div>
 
+<div class="stat">
+👑 Karriere: <span id="careerRank">
+🙂 Nybegynner
+</span>
+</div>
+
 </div>
 
 <h2>🐶 Showhunder</h2>
@@ -260,6 +266,8 @@ let spent = 0;
 let earned = 0;
 
 let showLevel = "Lokalt Show";
+
+let careerRank = "🙂 Nybegynner";
 
 let dogs = [];
 
@@ -407,9 +415,55 @@ function updateLevel(){
 
 }
 
+function updateCareer(){
+
+  const totalPoints =
+  dogs.reduce((sum,dog)=>
+  sum + dog.points,0);
+
+  if(
+  wins >= 30 &&
+  totalPoints >= 1000
+  ){
+
+  careerRank =
+  "🌍 Verdensklasse";
+
+  }else if(
+  wins >= 20
+  ){
+
+  careerRank =
+  "🏆 Showstjerne";
+
+  }else if(
+  wins >= 12
+  ){
+
+  careerRank =
+  "⭐ Proff Handler";
+
+  }else if(
+  wins >= 5
+  ){
+
+  careerRank =
+  "🐶 Lovende Utstiller";
+
+  }else{
+
+  careerRank =
+  "🙂 Nybegynner";
+
+  }
+
+}
+
 function update(){
 
   updateLevel();
+
+  updateCareer();
 
   const dog = getDog();
 
@@ -430,6 +484,9 @@ function update(){
 
   document.getElementById("showLevel")
   .innerHTML = showLevel;
+
+  document.getElementById("careerRank")
+  .innerHTML = careerRank;
 
   document.getElementById("dogCount")
   .innerHTML = dogs.length;
@@ -543,9 +600,9 @@ function pay(amount){
 
   if(money < amount){
 
-    log("❌ Ikke nok penger.");
+  log("❌ Ikke nok penger.");
 
-    return false;
+  return false;
 
   }
 
@@ -868,6 +925,7 @@ function saveGame(){
   spent,
   earned,
   showLevel,
+  careerRank,
   dogs,
   activeDog,
   ownedItems
@@ -901,6 +959,10 @@ function loadGame(){
   earned = data.earned;
 
   showLevel = data.showLevel;
+
+  careerRank =
+  data.careerRank ||
+  "🙂 Nybegynner";
 
   dogs = data.dogs;
 
