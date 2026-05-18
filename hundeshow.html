@@ -6,95 +6,18 @@
 <title>🏆 Hundeshow Pro</title>
 
 <style>
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#eef6ff;
-  color:#123c73;
-  text-align:center;
-}
-
-.box{
-  max-width:1000px;
-  margin:20px auto;
-  background:white;
-  padding:25px;
-  border-radius:25px;
-  box-shadow:0 10px 25px rgba(0,0,0,.12);
-}
-
-input,select{
-  width:100%;
-  padding:14px;
-  margin:10px 0;
-  border-radius:14px;
-  border:1px solid #ccc;
-  font-size:18px;
-}
-
-button{
-  display:block;
-  width:100%;
-  margin:10px 0;
-  padding:15px;
-  border:none;
-  border-radius:16px;
-  background:#2563eb;
-  color:white;
-  font-size:18px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-button:hover{
-  background:#1d4ed8;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:12px;
-  margin:20px 0;
-}
-
-.stat{
-  background:#f1f5ff;
-  padding:14px;
-  border-radius:18px;
-  font-weight:bold;
-}
-
-#dogCard,
-#shop,
-#log{
-  background:#f8fafc;
-  border-radius:18px;
-  padding:20px;
-  margin-top:20px;
-}
-
-#log{
-  min-height:120px;
-  text-align:left;
-  line-height:1.5;
-}
-
-.hidden{
-  display:none;
-}
-
-.back{
-  display:inline-block;
-  margin-top:20px;
-  color:#2563eb;
-  font-weight:bold;
-  text-decoration:none;
-}
-
-.shopBtn{
-  background:#f97316;
-}
-
+body{margin:0;font-family:Arial,sans-serif;background:#eef6ff;color:#123c73;text-align:center}
+.box{max-width:1000px;margin:20px auto;background:white;padding:25px;border-radius:25px;box-shadow:0 10px 25px rgba(0,0,0,.12)}
+input,select{width:100%;padding:14px;margin:10px 0;border-radius:14px;border:1px solid #ccc;font-size:18px}
+button{display:block;width:100%;margin:10px 0;padding:15px;border:none;border-radius:16px;background:#2563eb;color:white;font-size:18px;font-weight:bold;cursor:pointer}
+button:hover{background:#1d4ed8}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:20px 0}
+.stat{background:#f1f5ff;padding:14px;border-radius:18px;font-weight:bold}
+#dogCard,#shop,#log{background:#f8fafc;border-radius:18px;padding:20px;margin-top:20px}
+#log{min-height:120px;text-align:left;line-height:1.5}
+.hidden{display:none}
+.back{display:inline-block;margin-top:20px;color:#2563eb;font-weight:bold;text-decoration:none}
+.shopBtn{background:#f97316}
 </style>
 </head>
 
@@ -105,15 +28,11 @@ button:hover{
 <h1>🏆 Hundeshow Pro</h1>
 
 <div id="setup">
-
 <h2>Start karrieren</h2>
 
-<input type="text"
-id="dogName"
-placeholder="Hundens navn">
+<input type="text" id="dogName" placeholder="Hundens navn">
 
 <select id="breed">
-
 <option>Golden Retriever</option>
 <option>Bichon Frise</option>
 <option>Dobermann</option>
@@ -121,13 +40,9 @@ placeholder="Hundens navn">
 <option>Boxer</option>
 <option>Puddel</option>
 <option>Cavalier King Charles Spaniel</option>
-
 </select>
 
-<button onclick="startGame()">
-🚀 Start Hundeshow
-</button>
-
+<button onclick="startGame()">🚀 Start Hundeshow</button>
 </div>
 
 <div id="game" class="hidden">
@@ -135,575 +50,311 @@ placeholder="Hundens navn">
 <h2 id="title"></h2>
 
 <div class="stats">
-
-<div class="stat">
-📅 Dag: <span id="day">1</span>
-</div>
-
-<div class="stat">
-⭐ Showpoeng: <span id="points">0</span>
-</div>
-
-<div class="stat">
-🏆 Premier: <span id="wins">0</span>
-</div>
-
-<div class="stat">
-💰 Penger: <span id="money">1000</span> kr
-</div>
-
-<div class="stat">
-❤️ Energi: <span id="energy">80</span>
-</div>
-
-<div class="stat">
-✨ Pels: <span id="fur">70</span>
-</div>
-
-<div class="stat">
-🎯 Trening: <span id="training">50</span>
-</div>
-
-<div class="stat">
-🌍 Nivå: <span id="showLevel">
-Lokalt Show
-</span>
-</div>
-
+<div class="stat">📅 Dag: <span id="day">1</span></div>
+<div class="stat">⭐ Showpoeng: <span id="points">0</span></div>
+<div class="stat">🏆 Premier: <span id="wins">0</span></div>
+<div class="stat">💰 Konto: <span id="money">25000</span> kr</div>
+<div class="stat">💸 Brukt: <span id="spent">0</span> kr</div>
+<div class="stat">📈 Tjent: <span id="earned">0</span> kr</div>
+<div class="stat">❤️ Energi: <span id="energy">80</span></div>
+<div class="stat">✨ Pels: <span id="fur">70</span></div>
+<div class="stat">🎯 Trening: <span id="training">50</span></div>
+<div class="stat">🌍 Nivå: <span id="showLevel">Lokalt Show</span></div>
 </div>
 
 <div id="dogCard">
-
 <h3 id="dogInfo"></h3>
-
-<p>
-Bygg karrieren fra lokalt show til verdensfinale 🏆
-</p>
-
+<p>Bygg karrieren fra lokalt show til verdensfinale 🏆</p>
 </div>
 
-<button onclick="action('train')">
-🐕 Tren posering
-</button>
-
-<button onclick="action('wash')">
-🛁 Vask og pelsstell
-</button>
-
-<button onclick="action('walk')">
-🚶 Rolig tur
-</button>
-
-<button onclick="action('rest')">
-😴 Hviledag
-</button>
-
-<button onclick="action('show')">
-🏆 Delta på hundeshow
-</button>
+<button onclick="action('train')">🐕 Tren posering</button>
+<button onclick="action('wash')">🛁 Vask og pelsstell</button>
+<button onclick="action('grooming')">✂️ Pelsklipp hos frisør - 800 kr</button>
+<button onclick="action('walk')">🚶 Rolig tur</button>
+<button onclick="action('rest')">😴 Hviledag</button>
+<button onclick="action('show')">🏆 Meld på hundeshow - 500 kr</button>
 
 <h2>🛒 Showbutikk</h2>
-
 <div id="shop"></div>
 
-<button onclick="resetGame()">
-🔄 Start nytt spill
-</button>
+<button onclick="resetGame()">🔄 Start nytt spill</button>
 
-<div id="log">
-Velkommen til hundeshow-karrieren 🏆
-</div>
+<div id="log">Velkommen til hundeshow-karrieren 🏆</div>
 
 </div>
 
-<a class="back" href="hundespill.html">
-← Tilbake til spill
-</a>
+<a class="back" href="hundespill.html">← Tilbake til spill</a>
 
 </div>
 
 <script>
+let dogName="";
+let breed="";
 
-let dogName = "";
-let breed = "";
+let day=1;
+let points=0;
+let wins=0;
+let money=25000;
+let spent=0;
+let earned=0;
 
-let day = 1;
-let points = 0;
-let wins = 0;
-let money = 1000;
+let energy=80;
+let fur=70;
+let training=50;
+let showLevel="Lokalt Show";
+let items=[];
 
-let energy = 80;
-let fur = 70;
-let training = 50;
-
-let showLevel = "Lokalt Show";
-
-let items = [];
-
-const shopItems = [
-
-{
-name:"🎀 Show-sløyfe",
-price:300,
-effect:"show"
-},
-
-{
-name:"🪮 Proff børste",
-price:400,
-effect:"fur"
-},
-
-{
-name:"🧴 Premium shampoo",
-price:500,
-effect:"fur"
-},
-
-{
-name:"🐕 Showbånd",
-price:600,
-effect:"training"
-},
-
-{
-name:"✨ Premium pelspleie",
-price:800,
-effect:"show"
-}
-
+const shopItems=[
+{name:"🎀 Show-sløyfe",price:300,effect:"show"},
+{name:"🪮 Proff børste",price:400,effect:"fur"},
+{name:"🧴 Premium shampoo",price:500,effect:"fur"},
+{name:"🐕 Showbånd",price:600,effect:"training"},
+{name:"✨ Premium pelspleie",price:800,effect:"show"}
 ];
 
 function startGame(){
+  dogName=document.getElementById("dogName").value;
+  breed=document.getElementById("breed").value;
 
-  dogName =
-  document.getElementById("dogName").value;
-
-  breed =
-  document.getElementById("breed").value;
-
-  if(dogName.trim() === ""){
-
+  if(dogName.trim()===""){
     alert("Gi hunden navn 🙂");
-
     return;
-
   }
 
-  document.getElementById("setup")
-  .classList.add("hidden");
-
-  document.getElementById("game")
-  .classList.remove("hidden");
+  document.getElementById("setup").classList.add("hidden");
+  document.getElementById("game").classList.remove("hidden");
 
   update();
-
   saveGame();
-
 }
 
 function updateLevel(){
-
-  if(points >= 300){
-
-    showLevel = "🌍 Verdensfinale";
-
-  }else if(points >= 220){
-
-    showLevel = "🏆 Nordisk Show";
-
-  }else if(points >= 150){
-
-    showLevel = "🇳🇴 Norgesfinale";
-
-  }else if(points >= 80){
-
-    showLevel = "⭐ Regionalt Show";
-
-  }else{
-
-    showLevel = "🏡 Lokalt Show";
-
-  }
-
+  if(points>=300) showLevel="🌍 Verdensfinale";
+  else if(points>=220) showLevel="🏆 Nordisk Show";
+  else if(points>=150) showLevel="🇳🇴 Norgesfinale";
+  else if(points>=80) showLevel="⭐ Regionalt Show";
+  else showLevel="🏡 Lokalt Show";
 }
 
 function hasItem(effect){
-
-  return items.some(item => {
-
-    const found =
-    shopItems.find(s => s.name === item);
-
-    return found &&
-    found.effect === effect;
-
+  return items.some(item=>{
+    const found=shopItems.find(s=>s.name===item);
+    return found && found.effect===effect;
   });
-
 }
 
 function update(){
-
   updateLevel();
 
-  document.getElementById("title")
-  .innerHTML =
-  "🏆 " + dogName;
+  document.getElementById("title").innerHTML="🏆 "+dogName;
+  document.getElementById("dogInfo").innerHTML="🐶 "+breed;
 
-  document.getElementById("dogInfo")
-  .innerHTML =
-  "🐶 " + breed;
+  document.getElementById("day").innerHTML=day;
+  document.getElementById("points").innerHTML=points;
+  document.getElementById("wins").innerHTML=wins;
+  document.getElementById("money").innerHTML=money;
+  document.getElementById("spent").innerHTML=spent;
+  document.getElementById("earned").innerHTML=earned;
+  document.getElementById("energy").innerHTML=energy;
+  document.getElementById("fur").innerHTML=fur;
+  document.getElementById("training").innerHTML=training;
+  document.getElementById("showLevel").innerHTML=showLevel;
 
-  document.getElementById("day")
-  .innerHTML = day;
-
-  document.getElementById("points")
-  .innerHTML = points;
-
-  document.getElementById("wins")
-  .innerHTML = wins;
-
-  document.getElementById("money")
-  .innerHTML = money;
-
-  document.getElementById("energy")
-  .innerHTML = energy;
-
-  document.getElementById("fur")
-  .innerHTML = fur;
-
-  document.getElementById("training")
-  .innerHTML = training;
-
-  document.getElementById("showLevel")
-  .innerHTML = showLevel;
-
-  document.getElementById("shop")
-  .innerHTML =
-  shopItems.map(item => {
-
-    const owned =
-    items.includes(item.name);
+  document.getElementById("shop").innerHTML=shopItems.map(item=>{
+    const owned=items.includes(item.name);
 
     return `
-    <div style="margin-bottom:15px;">
-
-    <b>${item.name}</b><br>
-    Pris: ${item.price} kr
-
-    <button class="shopBtn"
-    onclick="buyItem('${item.name}',${item.price})"
-    ${owned ? "disabled" : ""}>
-
-    ${owned ? "✅ Kjøpt" : "Kjøp"}
-
-    </button>
-
-    </div>
+      <div style="margin-bottom:15px;">
+        <b>${item.name}</b><br>
+        Pris: ${item.price} kr
+        <button class="shopBtn"
+        onclick="buyItem('${item.name}',${item.price})"
+        ${owned ? "disabled" : ""}>
+        ${owned ? "✅ Kjøpt" : "Kjøp"}
+        </button>
+      </div>
     `;
-
   }).join("");
-
 }
 
 function log(text){
+  document.getElementById("log").innerHTML=text;
+}
 
-  document.getElementById("log")
-  .innerHTML = text;
+function pay(amount, text){
+  if(money < amount){
+    log("❌ Du har ikke nok penger til " + text + ".");
+    update();
+    return false;
+  }
 
+  money -= amount;
+  spent += amount;
+  return true;
+}
+
+function income(amount){
+  money += amount;
+  earned += amount;
 }
 
 function nextDay(){
-
   day++;
+  energy-=5;
+  fur-=3;
 
-  energy -= 5;
-
-  fur -= 3;
-
-  if(energy < 0) energy = 0;
-  if(fur < 0) fur = 0;
+  if(energy<0) energy=0;
+  if(fur<0) fur=0;
 
   randomEvent();
-
   saveGame();
-
   update();
-
 }
 
 function randomEvent(){
-
-  const events = [
-
+  const events=[
     "⭐ Dommeren la merke til hunden din.",
     "🐕 Hunden lærte bedre posering.",
     "🏆 Folk tok bilder av hunden.",
     "✨ Pelsen ser ekstra flott ut.",
     "🎯 Treningen gir resultater."
-
   ];
 
-  if(Math.random() < 0.35){
-
-    const e =
-    events[Math.floor(Math.random()*events.length)];
-
-    log(
-      document.getElementById("log").innerHTML +
-      "<br><br>🎲 " + e
-    );
-
-    points += 2;
-
+  if(Math.random()<0.35){
+    const e=events[Math.floor(Math.random()*events.length)];
+    log(document.getElementById("log").innerHTML+"<br><br>🎲 "+e);
+    points+=2;
   }
-
 }
 
 function action(type){
-
-  if(type === "train"){
-
-    training += hasItem("training")
-    ? 18
-    : 10;
-
+  if(type==="train"){
+    training += hasItem("training") ? 18 : 10;
     energy -= 10;
-
     points += 5;
-
-    log(
-      "🐕 Du trente posering og showgang."
-    );
-
+    log("🐕 Du trente posering og showgang.");
   }
 
-  if(type === "wash"){
-
-    fur += hasItem("fur")
-    ? 25
-    : 15;
-
+  if(type==="wash"){
+    fur += hasItem("fur") ? 25 : 15;
     energy -= 5;
-
     points += 4;
-
-    if(fur > 100) fur = 100;
-
-    log(
-      "🛁 Hunden fikk proff pelsstell."
-    );
-
+    if(fur>100) fur=100;
+    log("🛁 Hunden fikk vask og pelsstell hjemme.");
   }
 
-  if(type === "walk"){
+  if(type==="grooming"){
+    if(!pay(800,"pelsklipp")) return;
+    fur += 30;
+    points += 8;
+    if(fur>100) fur=100;
+    log("✂️ Du betalte 800 kr for pelsklipp hos frisør. Pelsen ble flott!");
+  }
 
+  if(type==="walk"){
     energy += 8;
-
     points += 2;
-
-    if(energy > 100) energy = 100;
-
-    log(
-      "🚶 Rolig tur ga bedre humør."
-    );
-
+    if(energy>100) energy=100;
+    log("🚶 Rolig tur ga bedre humør.");
   }
 
-  if(type === "rest"){
-
+  if(type==="rest"){
     energy += 18;
-
-    if(energy > 100) energy = 100;
-
-    log(
-      "😴 Hunden fikk hvile."
-    );
-
+    if(energy>100) energy=100;
+    log("😴 Hunden fikk hvile.");
   }
 
-  if(type === "show"){
+  if(type==="show"){
+    if(!pay(500,"påmelding til hundeshow")) return;
 
-    let result =
-    training + fur + energy;
+    let result = training + fur + energy;
 
-    if(hasItem("show")){
+    if(hasItem("show")) result += 25;
 
-      result += 25;
+    if(showLevel.includes("Verdensfinale")) result -= 40;
+    else if(showLevel.includes("Nordisk")) result -= 30;
+    else if(showLevel.includes("Norges")) result -= 20;
+    else if(showLevel.includes("Regionalt")) result -= 10;
 
-    }
-
-    if(showLevel.includes("Verdensfinale")){
-
-      result -= 40;
-
-    }else if(showLevel.includes("Nordisk")){
-
-      result -= 30;
-
-    }else if(showLevel.includes("Norges")){
-
-      result -= 20;
-
-    }else if(showLevel.includes("Regionalt")){
-
-      result -= 10;
-
-    }
-
-    if(result > 220){
-
+    if(result>220){
       wins++;
-
       points += 35;
-
-      money += 1200;
-
-      log(
-        "🥇 Fantastisk! Du vant " +
-        showLevel + "!"
-      );
-
-    }else if(result > 170){
-
+      income(1200);
+      log("🥇 Fantastisk! Du vant " + showLevel + " og fikk 1200 kr i premie!");
+    }else if(result>170){
       points += 18;
-
-      money += 500;
-
-      log(
-        "🥈 Flott innsats i " +
-        showLevel + "."
-      );
-
+      income(500);
+      log("🥈 Flott innsats i " + showLevel + ". Du fikk 500 kr i premie.");
     }else{
-
       points += 5;
-
-      money += 150;
-
-      log(
-        "🙂 Dere fikk erfaring fra show."
-      );
-
+      income(150);
+      log("🙂 Dere fikk erfaring fra show og 150 kr i deltakerpremie.");
     }
 
     energy -= 20;
-
   }
 
   nextDay();
-
 }
 
 function buyItem(name,price){
-
   if(items.includes(name)){
-
     log("✅ Du har allerede dette.");
-
     return;
-
   }
 
-  if(money < price){
-
-    log(
-      "❌ Ikke nok penger."
-    );
-
-    return;
-
-  }
-
-  money -= price;
+  if(!pay(price,name)) return;
 
   items.push(name);
-
-  log(
-    "🛒 Du kjøpte " + name + "!"
-  );
+  log("🛒 Du kjøpte " + name + " for " + price + " kr!");
 
   saveGame();
-
   update();
-
 }
 
 function saveGame(){
-
-  const data = {
-
-    dogName,
-    breed,
-    day,
-    points,
-    wins,
-    money,
-    energy,
-    fur,
-    training,
-    showLevel,
-    items
-
+  const data={
+    dogName,breed,day,points,wins,money,spent,earned,
+    energy,fur,training,showLevel,items
   };
 
-  localStorage.setItem(
-    "dogShowSave",
-    JSON.stringify(data)
-  );
-
+  localStorage.setItem("dogShowSave",JSON.stringify(data));
 }
 
 function loadGame(){
-
-  const save =
-  localStorage.getItem("dogShowSave");
+  const save=localStorage.getItem("dogShowSave");
 
   if(save){
+    const data=JSON.parse(save);
 
-    const data = JSON.parse(save);
+    dogName=data.dogName;
+    breed=data.breed;
+    day=data.day;
+    points=data.points;
+    wins=data.wins;
+    money=data.money ?? 25000;
+    spent=data.spent ?? 0;
+    earned=data.earned ?? 0;
+    energy=data.energy;
+    fur=data.fur;
+    training=data.training;
+    showLevel=data.showLevel;
+    items=data.items || [];
 
-    dogName = data.dogName;
-    breed = data.breed;
-
-    day = data.day;
-    points = data.points;
-    wins = data.wins;
-
-    money = data.money;
-
-    energy = data.energy;
-    fur = data.fur;
-    training = data.training;
-
-    showLevel = data.showLevel;
-
-    items = data.items || [];
-
-    document.getElementById("setup")
-    .classList.add("hidden");
-
-    document.getElementById("game")
-    .classList.remove("hidden");
+    document.getElementById("setup").classList.add("hidden");
+    document.getElementById("game").classList.remove("hidden");
 
     log("💾 Lagret karriere lastet!");
-
   }
-
 }
 
 function resetGame(){
-
   localStorage.removeItem("dogShowSave");
-
   location.reload();
-
 }
 
 loadGame();
-
 update();
-
 </script>
 
 </body>
