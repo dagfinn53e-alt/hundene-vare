@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🧠 Hundehukommelse PRO</title>
+<title>🧠 Memory Arcade</title>
 
 <style>
 
@@ -22,7 +22,7 @@ body{
 }
 
 .container{
-  max-width:1100px;
+  max-width:1200px;
   margin:20px auto;
   background:white;
   padding:25px;
@@ -36,6 +36,25 @@ body{
 
 h1{
   margin-bottom:10px;
+}
+
+select,button{
+  padding:14px;
+  margin:10px;
+  border:none;
+  border-radius:14px;
+  font-size:18px;
+  font-weight:bold;
+}
+
+button{
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#1d4ed8;
 }
 
 .stats{
@@ -70,13 +89,12 @@ h1{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:40px;
+  font-size:38px;
   cursor:pointer;
   user-select:none;
   transition:0.3s;
   background:#2563eb;
   color:white;
-  transform-style:preserve-3d;
 }
 
 .card.flipped{
@@ -95,25 +113,6 @@ h1{
   color:white;
 }
 
-button,select{
-  padding:14px;
-  margin:10px;
-  border:none;
-  border-radius:14px;
-  font-size:18px;
-  font-weight:bold;
-}
-
-button{
-  background:#2563eb;
-  color:white;
-  cursor:pointer;
-}
-
-button:hover{
-  background:#1d4ed8;
-}
-
 .back{
   display:inline-block;
   margin-top:25px;
@@ -129,7 +128,35 @@ button:hover{
 
 <div class="container">
 
-<h1>🧠 Hundehukommelse PRO</h1>
+<h1>🧠 Memory Arcade</h1>
+
+<select id="theme">
+
+<option value="dogs">
+🐶 Hunde-memory
+</option>
+
+<option value="puppies">
+🐾 Valpe-memory
+</option>
+
+<option value="show">
+🏆 Hundeshow-memory
+</option>
+
+<option value="treats">
+🦴 Godbit-memory
+</option>
+
+<option value="forest">
+🌲 Skog-memory
+</option>
+
+<option value="vet">
+🚑 Veterinær-memory
+</option>
+
+</select>
 
 <select id="difficulty">
 
@@ -173,6 +200,12 @@ button:hover{
 🏆 Highscore: <span id="highscore">0</span>
 </div>
 
+<div class="stat">
+🧠 Tema: <span id="themeText">
+Hunde-memory
+</span>
+</div>
+
 </div>
 
 <div id="gameBoard"></div>
@@ -185,13 +218,45 @@ button:hover{
 
 <script>
 
-const dogs=[
+const themes={
 
+dogs:[
 "🐶","🐕","🦮","🐩",
 "🐕‍🦺","🐾","🦴","🎾",
 "🐺","🐕","🐩","🦮"
+],
 
-];
+puppies:[
+"🐶","🍼","🧸","🎀",
+"🐾","🦴","🎾","❤️",
+"🥎","🐕","🐩","🐾"
+],
+
+show:[
+"🏆","🎀","✨","🐩",
+"👑","📸","⭐","🎉",
+"🐶","🎖️","🥇","🎗️"
+],
+
+treats:[
+"🦴","🍖","🥩","🧀",
+"🍗","🥓","🍼","🎾",
+"🐶","🥎","🍪","❤️"
+],
+
+forest:[
+"🌲","🍂","🦊","🐺",
+"🍄","🌳","🪵","🌧️",
+"🐾","🦴","🌙","🔥"
+],
+
+vet:[
+"🚑","💉","🩺","💊",
+"🩹","🐶","❤️","🧴",
+"🧠","⚕️","🏥","🩻"
+]
+
+};
 
 let cards=[];
 
@@ -222,12 +287,27 @@ document.getElementById(
 ).value
 );
 
+const theme=
+document.getElementById(
+"theme"
+).value;
+
+document.getElementById(
+"themeText"
+).innerHTML=
+document.getElementById(
+"theme"
+).selectedOptions[0].text;
+
 cards=[];
+
+const selected=
+themes[theme];
 
 for(let i=0;i<totalCards/2;i++){
 
-cards.push(dogs[i]);
-cards.push(dogs[i]);
+cards.push(selected[i]);
+cards.push(selected[i]);
 
 }
 
@@ -264,7 +344,10 @@ document.body.classList.add(
 
 createBoard();
 
-timer=setInterval(updateTimer,1000);
+timer=setInterval(
+updateTimer,
+1000
+);
 
 }
 
@@ -281,25 +364,26 @@ const total=
 cards.length;
 
 const cols=
-Math.ceil(Math.sqrt(total));
+Math.ceil(
+Math.sqrt(total)
+);
 
 board.style.gridTemplateColumns=
 `repeat(${cols},90px)`;
 
-cards.forEach((dog,index)=>{
+cards.forEach((symbol,index)=>{
 
 const card=
 document.createElement("div");
 
 card.className="card";
 
-card.dataset.value=dog;
-
-card.dataset.index=index;
+card.dataset.value=symbol;
 
 card.innerHTML="❓";
 
-card.onclick=()=>flipCard(card);
+card.onclick=
+()=>flipCard(card);
 
 board.appendChild(card);
 
@@ -310,16 +394,22 @@ board.appendChild(card);
 function flipCard(card){
 
 if(
-card.classList.contains("flipped")
+card.classList.contains(
+"flipped"
+)
 ||
-card.classList.contains("matched")
+card.classList.contains(
+"matched"
+)
 ||
 flipped.length>=2
 ){
 return;
 }
 
-card.classList.add("flipped");
+card.classList.add(
+"flipped"
+);
 
 card.innerHTML=
 card.dataset.value;
@@ -336,12 +426,20 @@ checkMatch();
 
 function checkMatch(){
 
-const [a,b]=flipped;
+const[a,b]=flipped;
 
-if(a.dataset.value===b.dataset.value){
+if(
+a.dataset.value===
+b.dataset.value
+){
 
-a.classList.add("matched");
-b.classList.add("matched");
+a.classList.add(
+"matched"
+);
+
+b.classList.add(
+"matched"
+);
 
 matched+=2;
 
@@ -390,8 +488,13 @@ document.getElementById(
 
 setTimeout(()=>{
 
-a.classList.remove("flipped");
-b.classList.remove("flipped");
+a.classList.remove(
+"flipped"
+);
+
+b.classList.remove(
+"flipped"
+);
 
 a.innerHTML="❓";
 b.innerHTML="❓";
@@ -428,13 +531,13 @@ function saveHighscore(){
 
 const best=
 localStorage.getItem(
-"memoryHighscore"
+"memoryArcadeBest"
 )||0;
 
 if(score>best){
 
 localStorage.setItem(
-"memoryHighscore",
+"memoryArcadeBest",
 score
 );
 
@@ -444,7 +547,7 @@ document.getElementById(
 "highscore"
 ).innerHTML=
 localStorage.getItem(
-"memoryHighscore"
+"memoryArcadeBest"
 )||0;
 
 }
@@ -473,7 +576,7 @@ document.getElementById(
 "highscore"
 ).innerHTML=
 localStorage.getItem(
-"memoryHighscore"
+"memoryArcadeBest"
 )||0;
 
 </script>
