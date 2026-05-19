@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐱 Kattepuslespill MASTER</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:linear-gradient(to bottom,#fdf2f8,#fce7f3);
+text-align:center;
+color:#7a284f;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
+
+h1{
+margin-bottom:20px;
+}
+
+.topbar{
+display:flex;
+flex-wrap:wrap;
+gap:15px;
+justify-content:center;
+margin-bottom:20px;
+}
+
+select,button{
+padding:14px 20px;
+border:none;
+border-radius:16px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button{
+background:#db2777;
+color:white;
+}
+
+.stats{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.stat{
+background:white;
+padding:14px 20px;
+border-radius:18px;
+font-weight:bold;
+box-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+
+#puzzle{
+width:90vw;
+max-width:600px;
+height:90vw;
+max-height:600px;
+margin:auto;
+display:grid;
+gap:2px;
+background:#fff;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+.tile{
+background-size:cover;
+background-repeat:no-repeat;
+cursor:pointer;
+transition:.15s;
+}
+
+.tile:hover{
+transform:scale(0.98);
+}
+
+.empty{
+background:#fbcfe8;
+}
+
+.back button{
+margin-top:30px;
+background:#7a284f;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🐱 Kattepuslespill MASTER</h1>
+
+<div class="topbar">
+
+<select id="catSelect">
+
+<option value="maine-coon.jpg">Maine Coon</option>
+<option value="siameser.jpg">Siameser</option>
+<option value="perser.jpg">Perser</option>
+<option value="bengal.jpg">Bengal</option>
+<option value="abyssiner.jpg">Abyssiner</option>
+<option value="birma.jpg">Birma</option>
+
+</select>
+
+<select id="sizeSelect">
+
+<option value="3">9 Brikker</option>
+<option value="4">16 Brikker</option>
+<option value="5">25 Brikker</option>
+<option value="6">36 Brikker</option>
+
+</select>
+
+<button onclick="startGame()">
+🧩 Start Spill
+</button>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+🏆 Trekk:
+<span id="moves">0</span>
+</div>
+
+<div class="stat">
+⏱️ Tid:
+<span id="time">0</span>s
+</div>
+
+</div>
+
+<div id="puzzle"></div>
+
+<div class="back">
+
+<button onclick="location.href='hundespill.html'">
+⬅️ Tilbake til spill
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let size=4;
+let tiles=[];
+let moves=0;
+let timer=0;
+let interval;
+let imageFile="maine-coon.jpg";
+
+function startGame(){
+
+size=parseInt(
+document.getElementById(
+"sizeSelect"
+).value
+);
+
+imageFile=
+document.getElementById(
+"catSelect"
+).value;
+
+moves=0;
+timer=0;
+
+document.getElementById(
+"moves"
+).innerHTML=moves;
+
+document.getElementById(
+"time"
+).innerHTML=timer;
+
+clearInterval(interval);
+
+interval=setInterval(()=>{
+
+timer++;
+
+document.getElementById(
+"time"
+).innerHTML=timer;
+
+},1000);
+
+createTiles();
+
+drawPuzzle();
+
+}
+
+function createTiles(){
+
+tiles=[];
+
+for(let i=0;i<size*size;i++){
+
+tiles.push(i);
+
+}
+
+tiles.sort(()=>Math.random()-0.5);
+
+}
+
+function drawPuzzle(){
+
+const puzzle=
+document.getElementById(
+"puzzle"
+);
+
+puzzle.innerHTML="";
+
+puzzle.style.gridTemplateColumns=
+`repeat(${size},1fr)`;
+
+tiles.forEach((tile,index)=>{
+
+const div=
+document.createElement("div");
+
+div.classList.add("tile");
+
+if(tile===size*size-1){
+
+div.classList.add("empty");
+
+}else{
+
+const x=
+(tile%size)*
+(100/(size-1));
+
+const y=
+Math.floor(tile/size)*
+(100/(size-1));
+
+div.style.backgroundImage=
+`url('bilder/${imageFile}')`;
+
+div.style.backgroundPosition=
+`${x}% ${y}%`;
+
+div.style.backgroundSize=
+`${size*100}%`;
+
+}
+
+div.onclick=()=>moveTile(index);
+
+puzzle.appendChild(div);
+
+});
+
+}
+
+function moveTile(index){
+
+const empty=
+tiles.indexOf(size*size-1);
+
+const valid=[
+
+empty-1,
+empty+1,
+empty-size,
+empty+size
+
+];
+
+if(valid.includes(index)){
+
+[tiles[index],tiles[empty]]=
+[tiles[empty],tiles[index]];
+
+moves++;
+
+document.getElementById(
+"moves"
+).innerHTML=moves;
+
+drawPuzzle();
+
+checkWin();
+
+}
+
+}
+
+function checkWin(){
+
+let won=true;
+
+for(let i=0;i<tiles.length;i++){
+
+if(tiles[i]!==i){
+
+won=false;
+break;
+
+}
+
+}
+
+if(won){
+
+clearInterval(interval);
+
+setTimeout(()=>{
+
+alert(
+"🏆 Gratulerer! Du klarte puslespillet!"
+);
+
+},300);
+
+}
+
+}
+
+startGame();
+
+</script>
+
+</body>
+</html>
