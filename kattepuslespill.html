@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐱 Kattepuslespill MASTER</title>
+<title>🐱 Kattepuslespill PRO</title>
 
 <style>
 
 body{
 margin:0;
 font-family:Arial,sans-serif;
-background:linear-gradient(to bottom,#fdf2f8,#fce7f3);
+background:linear-gradient(to bottom,#fce7f3,#fdf2f8);
 text-align:center;
 color:#7a284f;
 }
 
 .container{
-max-width:1100px;
+max-width:1000px;
 margin:auto;
 padding:20px;
 }
@@ -27,9 +27,9 @@ margin-bottom:20px;
 
 .topbar{
 display:flex;
-flex-wrap:wrap;
 gap:15px;
 justify-content:center;
+flex-wrap:wrap;
 margin-bottom:20px;
 }
 
@@ -63,7 +63,7 @@ font-weight:bold;
 box-shadow:0 4px 10px rgba(0,0,0,.1);
 }
 
-#puzzle{
+#board{
 width:90vw;
 max-width:600px;
 height:90vw;
@@ -71,25 +71,21 @@ max-height:600px;
 margin:auto;
 display:grid;
 gap:2px;
-background:#fff;
+background:white;
 border-radius:12px;
 overflow:hidden;
 box-shadow:0 8px 20px rgba(0,0,0,.15);
 }
 
-.tile{
-background-size:cover;
-background-repeat:no-repeat;
+.piece{
+background-size:100% 100%;
 cursor:pointer;
-transition:.15s;
+border:1px solid white;
 }
 
-.tile:hover{
-transform:scale(0.98);
-}
-
-.empty{
-background:#fbcfe8;
+.selected{
+outline:5px solid #10b981;
+z-index:10;
 }
 
 .back button{
@@ -104,7 +100,7 @@ background:#7a284f;
 
 <div class="container">
 
-<h1>🐱 Kattepuslespill MASTER</h1>
+<h1>🐱 Kattepuslespill PRO</h1>
 
 <div class="topbar">
 
@@ -123,8 +119,6 @@ background:#7a284f;
 
 <option value="3">9 Brikker</option>
 <option value="4">16 Brikker</option>
-<option value="5">25 Brikker</option>
-<option value="6">36 Brikker</option>
 
 </select>
 
@@ -148,7 +142,7 @@ background:#7a284f;
 
 </div>
 
-<div id="puzzle"></div>
+<div id="board"></div>
 
 <div class="back">
 
@@ -162,8 +156,9 @@ background:#7a284f;
 
 <script>
 
-let size=4;
-let tiles=[];
+let size=3;
+let pieces=[];
+let selected=null;
 let moves=0;
 let timer=0;
 let interval;
@@ -187,11 +182,11 @@ timer=0;
 
 document.getElementById(
 "moves"
-).innerHTML=moves;
+).innerHTML=0;
 
 document.getElementById(
 "time"
-).innerHTML=timer;
+).innerHTML=0;
 
 clearInterval(interval);
 
@@ -205,96 +200,92 @@ document.getElementById(
 
 },1000);
 
-createTiles();
+createPuzzle();
 
-drawPuzzle();
+drawBoard();
 
 }
 
-function createTiles(){
+function createPuzzle(){
 
-tiles=[];
+pieces=[];
 
 for(let i=0;i<size*size;i++){
 
-tiles.push(i);
+pieces.push(i);
 
 }
 
-tiles.sort(()=>Math.random()-0.5);
+pieces.sort(()=>Math.random()-0.5);
 
 }
 
-function drawPuzzle(){
+function drawBoard(){
 
-const puzzle=
+const board=
 document.getElementById(
-"puzzle"
+"board"
 );
 
-puzzle.innerHTML="";
+board.innerHTML="";
 
-puzzle.style.gridTemplateColumns=
+board.style.gridTemplateColumns=
 `repeat(${size},1fr)`;
 
-tiles.forEach((tile,index)=>{
+pieces.forEach((piece,index)=>{
 
 const div=
 document.createElement("div");
 
-div.classList.add("tile");
+div.classList.add("piece");
 
-if(tile===size*size-1){
+if(selected===index){
 
-div.classList.add("empty");
+div.classList.add(
+"selected"
+);
 
-}else{
+}
 
-const x=
-(tile%size)*
-(100/(size-1));
+const correctRow=
+Math.floor(piece/size);
 
-const y=
-Math.floor(tile/size)*
-(100/(size-1));
+const correctCol=
+piece%size;
 
 div.style.backgroundImage=
 `url('bilder/${imageFile}')`;
 
-div.style.backgroundPosition=
-`${x}% ${y}%`;
-
 div.style.backgroundSize=
 `${size*100}%`;
 
-}
+div.style.backgroundPosition=
+`${correctCol*(100/(size-1))}% ${correctRow*(100/(size-1))}%`;
 
-div.onclick=()=>moveTile(index);
+div.onclick=()=>selectPiece(index);
 
-puzzle.appendChild(div);
+board.appendChild(div);
 
 });
 
 }
 
-function moveTile(index){
+function selectPiece(index){
 
-const empty=
-tiles.indexOf(size*size-1);
+if(selected===null){
 
-const valid=[
+selected=index;
 
-empty-1,
-empty+1,
-empty-size,
-empty+size
+drawBoard();
 
-];
+return;
 
-if(valid.includes(index)){
+}
 
-[tiles[index],tiles[empty]]=
-[tiles[empty],tiles[index]];
+[pieces[selected],pieces[index]]=
+[pieces[index],pieces[selected]];
+
+selected=null;
 
 moves++;
 
@@ -302,30 +293,28 @@ document.getElementById(
 "moves"
 ).innerHTML=moves;
 
-drawPuzzle();
+drawBoard();
 
 checkWin();
 
 }
 
-}
-
 function checkWin(){
 
-let won=true;
+let win=true;
 
-for(let i=0;i<tiles.length;i++){
+for(let i=0;i<pieces.length;i++){
 
-if(tiles[i]!==i){
+if(pieces[i]!==i){
 
-won=false;
+win=false;
 break;
 
 }
 
 }
 
-if(won){
+if(win){
 
 clearInterval(interval);
 
