@@ -16,7 +16,7 @@ color:#123c73;
 }
 
 .container{
-max-width:900px;
+max-width:950px;
 margin:20px auto;
 padding:20px;
 }
@@ -332,6 +332,118 @@ breed:"Pomeranian",
 image:"bilder/pomeranian.png",
 answers:["Tyskland","Polen","Russland"],
 correct:"Tyskland"
+},
+
+{
+breed:"Fransk Bulldog",
+image:"bilder/fransk-bulldog.png",
+answers:["Frankrike","Belgia","Italia"],
+correct:"Frankrike"
+},
+
+{
+breed:"Rottweiler",
+image:"bilder/rottweiler.png",
+answers:["Tyskland","Russland","Polen"],
+correct:"Tyskland"
+},
+
+{
+breed:"Basenji",
+image:"bilder/basenji.png",
+answers:["Kongo","Kenya","Egypt"],
+correct:"Kongo"
+},
+
+{
+breed:"Bull Terrier",
+image:"bilder/bull-terrier.png",
+answers:["England","USA","Canada"],
+correct:"England"
+},
+
+{
+breed:"Irsk Setter",
+image:"bilder/irsk-setter.png",
+answers:["Irland","Skottland","England"],
+correct:"Irland"
+},
+
+{
+breed:"Beagle",
+image:"bilder/beagle.png",
+answers:["England","USA","Canada"],
+correct:"England"
+},
+
+{
+breed:"Samojed",
+image:"bilder/samojed.png",
+answers:["Russland","Finland","Canada"],
+correct:"Russland"
+},
+
+{
+breed:"Akita",
+image:"bilder/akita.png",
+answers:["Japan","Kina","Thailand"],
+correct:"Japan"
+},
+
+{
+breed:"Shiba Inu",
+image:"bilder/shiba-inu.png",
+answers:["Japan","Kina","Sør-Korea"],
+correct:"Japan"
+},
+
+{
+breed:"Cane Corso",
+image:"bilder/cane-corso.png",
+answers:["Italia","Spania","Portugal"],
+correct:"Italia"
+},
+
+{
+breed:"Weimaraner",
+image:"bilder/weimaraner.png",
+answers:["Tyskland","Østerrike","Sveits"],
+correct:"Tyskland"
+},
+
+{
+breed:"Malteser",
+image:"bilder/malteser.png",
+answers:["Malta","Italia","Hellas"],
+correct:"Malta"
+},
+
+{
+breed:"Corgi",
+image:"bilder/corgi.png",
+answers:["Wales","Irland","England"],
+correct:"Wales"
+},
+
+{
+breed:"Grand Danois",
+image:"bilder/grand-danois.png",
+answers:["Tyskland","Danmark","Nederland"],
+correct:"Tyskland"
+},
+
+{
+breed:"Sankt Bernhard",
+image:"bilder/sankt-bernhard.png",
+answers:["Sveits","Tyskland","Østerrike"],
+correct:"Sveits"
+},
+
+{
+breed:"Australian Shepherd",
+image:"bilder/australian-shepherd.png",
+answers:["USA","Australia","Canada"],
+correct:"USA"
 }
 
 ];
@@ -410,7 +522,7 @@ document.getElementById("lives").innerHTML = lives;
 
 if(lives <= 0){
 
-alert("😅 Game Over!");
+alert("😅 Game Over! Du må starte på nytt.");
 
 location.reload();
 
@@ -429,7 +541,7 @@ currentQuestion++;
 
 if(currentQuestion >= questions.length){
 
-alert("🏆 Gratulerer! Du fullførte quiz-spillet!");
+alert("🏆 Gratulerer! Du fullførte Hundeland Quiz MASTER!");
 
 location.reload();
 
