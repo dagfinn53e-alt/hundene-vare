@@ -114,10 +114,6 @@ h1{
   display:none;
 }
 
-#nextBtn:hover{
-  background:#1d4ed8;
-}
-
 .back{
   margin-top:30px;
 }
@@ -184,9 +180,7 @@ Neste ➜
 <div class="back">
 
 <button onclick="location.href='hundespill.html'">
-
 ⬅️ Tilbake til spill
-
 </button>
 
 </div>
@@ -251,33 +245,6 @@ breed:"Engelsk Cocker Spaniel",
 image:"bilder/cocker.png",
 answers:["England","USA","Australia"],
 correct:"England"
-}
-{
-breed:"Norsk Lundehund",
-image:"bilder/lundehund.png",
-answers:["Norge","Sverige","Finland"],
-correct:"Norge"
-},
-
-{
-breed:"Shar Pei",
-image:"bilder/sharpei.png",
-answers:["Kina","Japan","Thailand"],
-correct:"Kina"
-},
-
-{
-breed:"Schæfer",
-image:"bilder/schafer.png",
-answers:["Tyskland","Nederland","Belgia"],
-correct:"Tyskland"
-},
-
-{
-breed:"Engelsk Cocker Spaniel",
-image:"bilder/cocker.png",
-answers:["England","USA","Australia"],
-correct:"England"
 },
 
 {
@@ -306,13 +273,12 @@ breed:"Dalmatiner",
 image:"bilder/dalmatiner.png",
 answers:["Kroatia","Italia","Hellas"],
 correct:"Kroatia"
-},
+}
+
 ];
 
 let currentQuestion=0;
-
 let score=0;
-
 let lives=3;
 
 function loadQuestion(){
