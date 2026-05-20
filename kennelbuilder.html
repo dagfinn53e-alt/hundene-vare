@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐶 Kennel Builder</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:linear-gradient(to bottom,#bde0fe,#d8f3dc);
+text-align:center;
+overflow-x:hidden;
+color:#123c73;
+}
+
+h1{
+margin-top:15px;
+font-size:42px;
+}
+
+.helpBox{
+background:white;
+padding:20px;
+border-radius:22px;
+max-width:850px;
+margin:20px auto;
+font-size:24px;
+font-weight:bold;
+line-height:1.7;
+box-shadow:0 5px 14px rgba(0,0,0,.15);
+}
+
+#game{
+display:flex;
+justify-content:center;
+align-items:flex-start;
+gap:40px;
+margin-top:20px;
+flex-wrap:wrap;
+}
+
+.panel{
+background:white;
+padding:20px;
+border-radius:25px;
+box-shadow:0 6px 18px rgba(0,0,0,.15);
+}
+
+.panel h2{
+margin-top:0;
+}
+
+/* MODEL */
+
+.kennel{
+position:relative;
+width:340px;
+height:340px;
+margin:auto;
+background:#b7e4c7;
+border-radius:20px;
+overflow:hidden;
+}
+
+/* TREES */
+
+.tree{
+position:absolute;
+font-size:55px;
+}
+
+/* FENCE */
+
+.fence{
+position:absolute;
+font-size:42px;
+}
+
+/* HOUSE */
+
+.roof{
+position:absolute;
+top:40px;
+left:90px;
+width:0;
+height:0;
+border-left:80px solid transparent;
+border-right:80px solid transparent;
+border-bottom:70px solid #8b4513;
+}
+
+.house{
+position:absolute;
+top:110px;
+left:110px;
+width:120px;
+height:100px;
+background:#c0392b;
+border:5px solid #922b21;
+}
+
+.door{
+position:absolute;
+bottom:0;
+left:40px;
+width:35px;
+height:55px;
+background:#6e2c00;
+}
+
+.window{
+position:absolute;
+top:15px;
+right:15px;
+width:30px;
+height:30px;
+background:#85c1e9;
+border:3px solid white;
+}
+
+/* DOG */
+
+.dog{
+position:absolute;
+font-size:50px;
+}
+
+/* BUILD AREA */
+
+#buildArea{
+position:relative;
+width:420px;
+height:420px;
+background:#dbeafe;
+border-radius:20px;
+border:6px dashed #60a5fa;
+overflow:hidden;
+}
+
+/* PARTS */
+
+.parts{
+display:flex;
+justify-content:center;
+gap:18px;
+margin-top:25px;
+flex-wrap:wrap;
+}
+
+.part{
+width:110px;
+height:110px;
+border-radius:18px;
+cursor:grab;
+box-shadow:0 5px 12px rgba(0,0,0,.18);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:bold;
+color:white;
+user-select:none;
+}
+
+.roofPart{background:#8b4513;}
+.housePart{background:#c0392b;}
+.doorPart{background:#6e2c00;}
+.windowPart{background:#5dade2;}
+.treePart{background:#15803d;}
+.fencePart{background:#6b7280;}
+.dogPart{background:#f59e0b;}
+
+.build-piece{
+position:absolute;
+}
+
+#message{
+margin-top:20px;
+font-size:28px;
+font-weight:bold;
+color:#db2777;
+min-height:40px;
+}
+
+#restartBtn{
+margin-top:20px;
+padding:16px 30px;
+border:none;
+border-radius:18px;
+background:#f59e0b;
+color:white;
+font-size:22px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.back button{
+margin-top:20px;
+padding:16px 28px;
+border:none;
+border-radius:18px;
+background:#2563eb;
+color:white;
+font-size:20px;
+font-weight:bold;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🐶 Kennel Builder</h1>
+
+<div class="helpBox">
+
+🏡 BYGG EN HUNDEKENNEL
+
+🖱️ Dra byggedelene inn i byggefeltet
+
+🏠 Bygg kennelhuset
+
+🌳 Sett inn trær
+
+🪵 Lag gjerde rundt området
+
+🐕 Plasser hundene i kennelen 🙂
+
+</div>
+
+<div id="game">
+
+<!-- MODEL -->
+
+<div class="panel">
+
+<h2>🏡 Modell</h2>
+
+<div class="kennel">
+
+<div class="roof"></div>
+
+<div class="house">
+
+<div class="door"></div>
+
+<div class="window"></div>
+
+</div>
+
+<div class="tree" style="left:10px;top:20px;">🌳</div>
+<div class="tree" style="right:10px;top:20px;">🌳</div>
+
+<div class="fence" style="left:20px;bottom:20px;">🪵🪵🪵</div>
+
+<div class="dog" style="left:120px;bottom:25px;">🐕</div>
+
+</div>
+
+</div>
+
+<!-- BUILD -->
+
+<div class="panel">
+
+<h2>🧱 Bygg her</h2>
+
+<div id="buildArea"></div>
+
+</div>
+
+</div>
+
+<!-- PARTS -->
+
+<div class="parts">
+
+<div class="part roofPart"
+draggable="true"
+data-type="roof">
+
+🏠 TAK
+
+</div>
+
+<div class="part housePart"
+draggable="true"
+data-type="house">
+
+🧱 HUS
+
+</div>
+
+<div class="part doorPart"
+draggable="true"
+data-type="door">
+
+🚪 DØR
+
+</div>
+
+<div class="part windowPart"
+draggable="true"
+data-type="window">
+
+🪟 VINDU
+
+</div>
+
+<div class="part treePart"
+draggable="true"
+data-type="tree">
+
+🌳 TRE
+
+</div>
+
+<div class="part fencePart"
+draggable="true"
+data-type="fence">
+
+🪵 GJERDE
+
+</div>
+
+<div class="part dogPart"
+draggable="true"
+data-type="dog">
+
+🐕 HUND
+
+</div>
+
+</div>
+
+<div id="message">
+
+Dra delene inn i byggefeltet 🙂
+
+</div>
+
+<button id="restartBtn"
+onclick="location.reload()">
+
+🔄 Spill igjen
+
+</button>
+
+<div class="back">
+
+<button onclick="location.href='hundespill.html'">
+
+⬅️ Tilbake til spill
+
+</button>
+
+</div>
+
+<script>
+
+const buildArea=
+document.getElementById(
+"buildArea"
+);
+
+let completed={};
+
+document.querySelectorAll(
+".part"
+).forEach(part=>{
+
+part.addEventListener(
+"dragstart",
+e=>{
+
+e.dataTransfer.setData(
+"text",
+part.dataset.type
+);
+
+});
+
+});
+
+buildArea.addEventListener(
+"dragover",
+e=>{
+
+e.preventDefault();
+
+});
+
+buildArea.addEventListener(
+"drop",
+e=>{
+
+e.preventDefault();
+
+const type=
+e.dataTransfer.getData(
+"text"
+);
+
+if(completed[type]) return;
+
+createPiece(type);
+
+completed[type]=true;
+
+checkComplete();
+
+});
+
+function createPiece(type){
+
+const piece=
+document.createElement(
+"div"
+);
+
+piece.className=
+"build-piece";
+
+if(type==="roof"){
+
+piece.style.top="40px";
+piece.style.left="110px";
+piece.style.width="0";
+piece.style.height="0";
+
+piece.style.borderLeft=
+"80px solid transparent";
+
+piece.style.borderRight=
+"80px solid transparent";
+
+piece.style.borderBottom=
+"70px solid #8b4513";
+
+}
+
+if(type==="house"){
+
+piece.style.top="110px";
+piece.style.left="130px";
+piece.style.width="120px";
+piece.style.height="100px";
+
+piece.style.background="#c0392b";
+
+piece.style.border=
+"5px solid #922b21";
+
+}
+
+if(type==="door"){
+
+piece.style.top="160px";
+piece.style.left="170px";
+piece.style.width="35px";
+piece.style.height="55px";
+
+piece.style.background="#6e2c00";
+
+}
+
+if(type==="window"){
+
+piece.style.top="125px";
+piece.style.left="220px";
+piece.style.width="30px";
+piece.style.height="30px";
+
+piece.style.background="#85c1e9";
+
+piece.style.border=
+"3px solid white";
+
+}
+
+if(type==="tree"){
+
+piece.innerHTML="🌳";
+
+piece.style.fontSize="55px";
+
+piece.style.left="20px";
+
+piece.style.top="20px";
+
+}
+
+if(type==="fence"){
+
+piece.innerHTML="🪵🪵🪵";
+
+piece.style.fontSize="42px";
+
+piece.style.left="30px";
+
+piece.style.bottom="20px";
+
+}
+
+if(type==="dog"){
+
+piece.innerHTML="🐕";
+
+piece.style.fontSize="50px";
+
+piece.style.left="160px";
+
+piece.style.bottom="25px";
+
+}
+
+buildArea.appendChild(
+piece
+);
+
+document.getElementById(
+"message"
+).innerHTML=
+"✅ Bra jobbet bygger!";
+
+}
+
+function checkComplete(){
+
+if(
+
+completed.roof &&
+completed.house &&
+completed.door &&
+completed.window &&
+completed.tree &&
+completed.fence &&
+completed.dog
+
+){
+
+document.getElementById(
+"message"
+).innerHTML=
+"🏆 Kennelen er ferdig!";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
