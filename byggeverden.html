@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐶 Hundehus Builder DELUXE</title>
+<title>🧱 Byggeverden LEVELS</title>
 
 <style>
 
@@ -30,8 +30,24 @@ margin:20px auto;
 font-size:24px;
 font-weight:bold;
 line-height:1.7;
-color:#123c73;
 box-shadow:0 5px 14px rgba(0,0,0,.15);
+}
+
+.stats{
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.stat{
+background:white;
+padding:14px 22px;
+border-radius:18px;
+font-weight:bold;
+font-size:20px;
+box-shadow:0 4px 10px rgba(0,0,0,.12);
 }
 
 #game{
@@ -58,8 +74,8 @@ margin-top:0;
 
 .house{
 position:relative;
-width:220px;
-height:220px;
+width:240px;
+height:240px;
 margin:auto;
 margin-top:20px;
 }
@@ -70,8 +86,8 @@ top:0;
 left:20px;
 width:0;
 height:0;
-border-left:90px solid transparent;
-border-right:90px solid transparent;
+border-left:100px solid transparent;
+border-right:100px solid transparent;
 border-bottom:90px solid #8b4513;
 }
 
@@ -79,8 +95,8 @@ border-bottom:90px solid #8b4513;
 position:absolute;
 top:90px;
 left:40px;
-width:140px;
-height:110px;
+width:160px;
+height:120px;
 background:#c0392b;
 border:5px solid #922b21;
 }
@@ -88,9 +104,9 @@ border:5px solid #922b21;
 .door{
 position:absolute;
 bottom:0;
-left:50px;
-width:40px;
-height:65px;
+left:55px;
+width:45px;
+height:70px;
 background:#6e2c00;
 }
 
@@ -98,18 +114,35 @@ background:#6e2c00;
 position:absolute;
 top:20px;
 right:20px;
-width:35px;
-height:35px;
+width:40px;
+height:40px;
 background:#85c1e9;
 border:4px solid white;
+}
+
+.window2{
+position:absolute;
+top:20px;
+left:20px;
+width:40px;
+height:40px;
+background:#85c1e9;
+border:4px solid white;
+}
+
+.tree{
+position:absolute;
+bottom:0;
+right:-70px;
+font-size:60px;
 }
 
 /* BYGGEFELT */
 
 #buildArea{
 position:relative;
-width:320px;
-height:320px;
+width:360px;
+height:360px;
 background:#dbeafe;
 border-radius:20px;
 border:6px dashed #60a5fa;
@@ -141,21 +174,11 @@ color:white;
 user-select:none;
 }
 
-.roofPart{
-background:#8b4513;
-}
-
-.wallPart{
-background:#c0392b;
-}
-
-.doorPart{
-background:#6e2c00;
-}
-
-.windowPart{
-background:#5dade2;
-}
+.roofPart{background:#8b4513;}
+.wallPart{background:#c0392b;}
+.doorPart{background:#6e2c00;}
+.windowPart{background:#5dade2;}
+.treePart{background:#15803d;}
 
 .build-piece{
 position:absolute;
@@ -169,29 +192,25 @@ color:#db2777;
 min-height:40px;
 }
 
-#nextBtn{
-display:none;
+#nextBtn,
+#restartBtn{
 margin-top:20px;
 padding:16px 30px;
 border:none;
 border-radius:18px;
-background:#10b981;
 color:white;
 font-size:22px;
 font-weight:bold;
 cursor:pointer;
 }
 
+#nextBtn{
+display:none;
+background:#10b981;
+}
+
 #restartBtn{
-margin-top:20px;
-padding:16px 30px;
-border:none;
-border-radius:18px;
 background:#f59e0b;
-color:white;
-font-size:22px;
-font-weight:bold;
-cursor:pointer;
 }
 
 .back button{
@@ -211,33 +230,45 @@ cursor:pointer;
 
 <body>
 
-<h1>🐶 Hundehus Builder DELUXE</h1>
+<h1>🧱 Byggeverden LEVELS</h1>
 
 <div class="helpBox">
 
 🧱 SLIK SPILLER DU
 
-👀 Se på modellen til venstre
+👀 Se på modellen
 
 🖱️ Dra byggedelene inn i byggefeltet
 
-🏠 Bygg huset slik modellen viser
+🏠 Bygg huset riktig
 
-⭐ Når alt er riktig blir bygget ferdig!
+⭐ Fullfør nivåene og bli mesterbygger!
 
-🙂 Lykke til bygger!
+</div>
+
+<div class="stats">
+
+<div class="stat">
+🏗️ Nivå:
+<span id="levelText">1</span>
+</div>
+
+<div class="stat">
+⭐ Poeng:
+<span id="score">0</span>
+</div>
 
 </div>
 
 <div id="game">
 
-<!-- MODELL -->
-
 <div class="panel">
 
-<h2>🏠 Modell</h2>
+<h2 id="modelTitle">
+🐶 Hundehus
+</h2>
 
-<div class="house">
+<div class="house" id="modelHouse">
 
 <div class="roof"></div>
 
@@ -253,8 +284,6 @@ cursor:pointer;
 
 </div>
 
-<!-- BYGG -->
-
 <div class="panel">
 
 <h2>🧱 Bygg her</h2>
@@ -265,90 +294,186 @@ cursor:pointer;
 
 </div>
 
-<!-- DELER -->
-
 <div class="parts">
 
 <div class="part roofPart"
 draggable="true"
 data-type="roof">
-
 🏠 TAK
-
 </div>
 
 <div class="part wallPart"
 draggable="true"
 data-type="walls">
-
 🧱 VEGG
-
 </div>
 
 <div class="part doorPart"
 draggable="true"
 data-type="door">
-
 🚪 DØR
-
 </div>
 
 <div class="part windowPart"
 draggable="true"
 data-type="window">
-
 🪟 VINDU
+</div>
 
+<div class="part treePart"
+draggable="true"
+data-type="tree">
+🌳 TRE
 </div>
 
 </div>
 
 <div id="message">
-
 Dra delene inn i byggefeltet 🙂
-
 </div>
 
-<button id="nextBtn">
-
-🏆 Ferdig!
-
+<button id="nextBtn"
+onclick="nextLevel()">
+➡️ Neste nivå
 </button>
 
 <br>
 
 <button id="restartBtn"
 onclick="location.reload()">
-
 🔄 Spill igjen
-
 </button>
 
 <div class="back">
 
 <button onclick="location.href='hundespill.html'">
-
 ⬅️ Tilbake til spill
-
 </button>
 
 </div>
 
 <script>
 
+const levels=[
+
+{
+title:"🐶 Hundehus",
+parts:["roof","walls","door","window"]
+},
+
+{
+title:"🐱 Kattehus",
+parts:["roof","walls","door","window","tree"]
+},
+
+{
+title:"🏠 Familiehus",
+parts:["roof","walls","door","window","tree","window2"]
+}
+
+];
+
+let currentLevel=0;
+let score=0;
+
 const buildArea=
 document.getElementById(
 "buildArea"
 );
 
-let completed={
+let completed={};
 
-roof:false,
-walls:false,
-door:false,
-window:false
+function loadLevel(){
 
-};
+completed={};
+
+buildArea.innerHTML="";
+
+document.getElementById(
+"nextBtn"
+).style.display="none";
+
+document.getElementById(
+"levelText"
+).innerHTML=
+currentLevel+1;
+
+document.getElementById(
+"modelTitle"
+).innerHTML=
+levels[currentLevel].title;
+
+document.getElementById(
+"message"
+).innerHTML=
+"Dra delene inn i byggefeltet 🙂";
+
+const model=
+document.getElementById(
+"modelHouse"
+);
+
+if(currentLevel===0){
+
+model.innerHTML=`
+
+<div class="roof"></div>
+
+<div class="walls">
+
+<div class="door"></div>
+
+<div class="window"></div>
+
+</div>
+
+`;
+
+}
+
+if(currentLevel===1){
+
+model.innerHTML=`
+
+<div class="roof"></div>
+
+<div class="walls">
+
+<div class="door"></div>
+
+<div class="window"></div>
+
+</div>
+
+<div class="tree">🌳</div>
+
+`;
+
+}
+
+if(currentLevel===2){
+
+model.innerHTML=`
+
+<div class="roof"></div>
+
+<div class="walls">
+
+<div class="door"></div>
+
+<div class="window"></div>
+
+<div class="window2"></div>
+
+</div>
+
+<div class="tree">🌳</div>
+
+`;
+
+}
+
+}
 
 document.querySelectorAll(
 ".part"
@@ -399,23 +524,23 @@ checkComplete();
 function createPiece(type){
 
 const piece=
-document.createElement("div");
+document.createElement(
+"div"
+);
 
 piece.className=
 "build-piece";
 
 if(type==="roof"){
 
-piece.style.top="40px";
-piece.style.left="60px";
+piece.style.top="50px";
+piece.style.left="70px";
 piece.style.width="0";
 piece.style.height="0";
 piece.style.borderLeft=
-"90px solid transparent";
-
+"100px solid transparent";
 piece.style.borderRight=
-"90px solid transparent";
-
+"100px solid transparent";
 piece.style.borderBottom=
 "90px solid #8b4513";
 
@@ -423,10 +548,10 @@ piece.style.borderBottom=
 
 if(type==="walls"){
 
-piece.style.top="130px";
-piece.style.left="80px";
-piece.style.width="140px";
-piece.style.height="110px";
+piece.style.top="140px";
+piece.style.left="90px";
+piece.style.width="160px";
+piece.style.height="120px";
 piece.style.background="#c0392b";
 piece.style.border=
 "5px solid #922b21";
@@ -435,29 +560,56 @@ piece.style.border=
 
 if(type==="door"){
 
-piece.style.top="180px";
-piece.style.left="130px";
-piece.style.width="40px";
-piece.style.height="65px";
+piece.style.top="190px";
+piece.style.left="145px";
+piece.style.width="45px";
+piece.style.height="70px";
 piece.style.background="#6e2c00";
 
 }
 
 if(type==="window"){
 
-piece.style.top="150px";
-piece.style.left="185px";
-piece.style.width="35px";
-piece.style.height="35px";
+piece.style.top="160px";
+piece.style.left="210px";
+piece.style.width="40px";
+piece.style.height="40px";
 piece.style.background="#85c1e9";
 piece.style.border=
 "4px solid white";
 
 }
 
+if(type==="window2"){
+
+piece.style.top="160px";
+piece.style.left="105px";
+piece.style.width="40px";
+piece.style.height="40px";
+piece.style.background="#85c1e9";
+piece.style.border=
+"4px solid white";
+
+}
+
+if(type==="tree"){
+
+piece.innerHTML="🌳";
+piece.style.fontSize="60px";
+piece.style.top="220px";
+piece.style.left="280px";
+
+}
+
 buildArea.appendChild(
 piece
 );
+
+score+=10;
+
+document.getElementById(
+"score"
+).innerHTML=score;
 
 document.getElementById(
 "message"
@@ -468,19 +620,27 @@ document.getElementById(
 
 function checkComplete(){
 
-if(
+const needed=
+levels[currentLevel].parts;
 
-completed.roof &&
-completed.walls &&
-completed.door &&
-completed.window
+let done=true;
 
-){
+needed.forEach(part=>{
+
+if(!completed[part]){
+
+done=false;
+
+}
+
+});
+
+if(done){
 
 document.getElementById(
 "message"
 ).innerHTML=
-"🏆 Hundehuset er ferdig!";
+"🏆 Bygget er ferdig!";
 
 document.getElementById(
 "nextBtn"
@@ -490,6 +650,30 @@ document.getElementById(
 }
 
 }
+
+function nextLevel(){
+
+currentLevel++;
+
+if(
+currentLevel>=levels.length
+){
+
+alert(
+"🏆 Gratulerer! Du fullførte Byggeverden LEVELS!"
+);
+
+location.reload();
+
+return;
+
+}
+
+loadLevel();
+
+}
+
+loadLevel();
 
 </script>
 
