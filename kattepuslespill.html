@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐱 Kattepuslespill PRO</title>
+<title>🐱 Kattepuslespill DELUXE</title>
 
 <style>
 
@@ -13,10 +13,11 @@ font-family:Arial,sans-serif;
 background:linear-gradient(to bottom,#fce7f3,#fdf2f8);
 text-align:center;
 color:#7a284f;
+overflow-x:hidden;
 }
 
 .container{
-max-width:1000px;
+max-width:1100px;
 margin:auto;
 padding:20px;
 }
@@ -27,16 +28,16 @@ margin-bottom:20px;
 
 .topbar{
 display:flex;
-gap:15px;
 justify-content:center;
+gap:15px;
 flex-wrap:wrap;
 margin-bottom:20px;
 }
 
 select,button{
-padding:14px 20px;
+padding:14px 22px;
 border:none;
-border-radius:16px;
+border-radius:18px;
 font-size:18px;
 font-weight:bold;
 cursor:pointer;
@@ -57,30 +58,36 @@ margin-bottom:20px;
 
 .stat{
 background:white;
-padding:14px 20px;
+padding:14px 22px;
 border-radius:18px;
 font-weight:bold;
 box-shadow:0 4px 10px rgba(0,0,0,.1);
 }
 
 #board{
-width:90vw;
-max-width:600px;
-height:90vw;
-max-height:600px;
+width:92vw;
+max-width:650px;
+height:92vw;
+max-height:650px;
 margin:auto;
 display:grid;
-gap:2px;
+gap:3px;
 background:white;
-border-radius:12px;
-overflow:hidden;
-box-shadow:0 8px 20px rgba(0,0,0,.15);
+padding:4px;
+border-radius:18px;
+box-shadow:0 8px 22px rgba(0,0,0,.15);
 }
 
 .piece{
+border-radius:8px;
 background-size:100% 100%;
 cursor:pointer;
-border:1px solid white;
+border:2px solid white;
+transition:.15s;
+}
+
+.piece:hover{
+transform:scale(.98);
 }
 
 .selected{
@@ -88,9 +95,25 @@ outline:5px solid #10b981;
 z-index:10;
 }
 
+.complete{
+animation:win .6s infinite alternate;
+}
+
+@keyframes win{
+from{transform:scale(1)}
+to{transform:scale(1.03)}
+}
+
 .back button{
 margin-top:30px;
 background:#7a284f;
+}
+
+#message{
+font-size:24px;
+font-weight:bold;
+margin-top:20px;
+color:#db2777;
 }
 
 </style>
@@ -100,7 +123,7 @@ background:#7a284f;
 
 <div class="container">
 
-<h1>🐱 Kattepuslespill PRO</h1>
+<h1>🐱 Kattepuslespill DELUXE</h1>
 
 <div class="topbar">
 
@@ -117,8 +140,9 @@ background:#7a284f;
 
 <select id="sizeSelect">
 
-<option value="3">9 Brikker</option>
-<option value="4">16 Brikker</option>
+<option value="3">🙂 Lett - 9 Brikker</option>
+<option value="4">😎 Medium - 16 Brikker</option>
+<option value="5">🔥 Ekspert - 25 Brikker</option>
 
 </select>
 
@@ -140,9 +164,16 @@ background:#7a284f;
 <span id="time">0</span>s
 </div>
 
+<div class="stat">
+⭐ Stjerner:
+<span id="stars">0</span>
+</div>
+
 </div>
 
 <div id="board"></div>
+
+<div id="message"></div>
 
 <div class="back">
 
@@ -161,6 +192,7 @@ let pieces=[];
 let selected=null;
 let moves=0;
 let timer=0;
+let stars=0;
 let interval;
 let imageFile="maine-coon.jpg";
 
@@ -179,6 +211,7 @@ document.getElementById(
 
 moves=0;
 timer=0;
+stars=0;
 
 document.getElementById(
 "moves"
@@ -187,6 +220,14 @@ document.getElementById(
 document.getElementById(
 "time"
 ).innerHTML=0;
+
+document.getElementById(
+"stars"
+).innerHTML=0;
+
+document.getElementById(
+"message"
+).innerHTML="";
 
 clearInterval(interval);
 
@@ -247,10 +288,10 @@ div.classList.add(
 
 }
 
-const correctRow=
+const row=
 Math.floor(piece/size);
 
-const correctCol=
+const col=
 piece%size;
 
 div.style.backgroundImage=
@@ -260,7 +301,7 @@ div.style.backgroundSize=
 `${size*100}%`;
 
 div.style.backgroundPosition=
-`${correctCol*(100/(size-1))}% ${correctRow*(100/(size-1))}%`;
+`${col*(100/(size-1))}% ${row*(100/(size-1))}%`;
 
 div.onclick=()=>selectPiece(index);
 
@@ -318,15 +359,46 @@ if(win){
 
 clearInterval(interval);
 
-setTimeout(()=>{
+calculateStars();
 
-alert(
-"🏆 Gratulerer! Du klarte puslespillet!"
+document.getElementById(
+"message"
+).innerHTML=
+"🏆 Gratulerer! Du klarte puslespillet!";
+
+document.querySelectorAll(
+".piece"
+).forEach(piece=>{
+
+piece.classList.add(
+"complete"
 );
 
-},300);
+});
 
 }
+
+}
+
+function calculateStars(){
+
+if(moves<25){
+
+stars=3;
+
+}else if(moves<50){
+
+stars=2;
+
+}else{
+
+stars=1;
+
+}
+
+document.getElementById(
+"stars"
+).innerHTML=stars;
 
 }
 
