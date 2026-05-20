@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐱 Katteland Quiz</title>
+<title>🐱 Katteland Quiz ULTRA</title>
 
 <style>
 
@@ -23,6 +23,7 @@ padding:20px;
 
 h1{
 margin-bottom:20px;
+font-size:40px;
 }
 
 .stats{
@@ -39,6 +40,7 @@ padding:15px;
 border-radius:18px;
 font-weight:bold;
 box-shadow:0 4px 10px rgba(0,0,0,.1);
+font-size:20px;
 }
 
 .quiz-box{
@@ -50,7 +52,7 @@ box-shadow:0 8px 20px rgba(0,0,0,.12);
 
 #catImage{
 width:100%;
-max-height:260px;
+max-height:280px;
 object-fit:contain;
 background:white;
 border-radius:20px;
@@ -58,13 +60,13 @@ margin-bottom:20px;
 }
 
 #breed{
-font-size:30px;
+font-size:32px;
 font-weight:bold;
 margin-bottom:10px;
 }
 
 .question{
-font-size:22px;
+font-size:24px;
 margin-bottom:20px;
 }
 
@@ -85,6 +87,7 @@ transition:.2s;
 
 .answer-btn:hover{
 background:#f9a8d4;
+transform:scale(1.02);
 }
 
 .correct{
@@ -122,6 +125,14 @@ font-weight:bold;
 cursor:pointer;
 }
 
+#message{
+margin-top:20px;
+font-size:24px;
+font-weight:bold;
+color:#db2777;
+min-height:40px;
+}
+
 </style>
 </head>
 
@@ -129,12 +140,25 @@ cursor:pointer;
 
 <div class="container">
 
-<h1>🐱 Hvilket land kommer disse kattene fra?</h1>
+<h1>🐱 Katteland Quiz ULTRA</h1>
 
 <div class="stats">
-<div class="stat">🏆 Poeng: <span id="score">0</span></div>
-<div class="stat">❤️ Liv: <span id="lives">3</span></div>
-<div class="stat">❓ Spørsmål: <span id="questionNumber">1</span></div>
+
+<div class="stat">
+🏆 Poeng:
+<span id="score">0</span>
+</div>
+
+<div class="stat">
+❤️ Liv:
+<span id="lives">3</span>
+</div>
+
+<div class="stat">
+❓ Spørsmål:
+<span id="questionNumber">1</span>
+</div>
+
 </div>
 
 <div class="quiz-box">
@@ -149,23 +173,30 @@ Hvor kommer denne katterasen fra?
 
 <div id="answers"></div>
 
-<button id="nextBtn" onclick="nextQuestion()">
+<div id="message"></div>
+
+<button id="nextBtn"
+onclick="nextQuestion()">
+
 Neste ➜
+
 </button>
 
 </div>
 
 <div class="back">
+
 <button onclick="location.href='hundespill.html'">
 ⬅️ Tilbake til spill
 </button>
+
 </div>
 
 </div>
 
 <script>
 
-const questions = [
+const questions=[
 
 {
 breed:"Maine Coon",
@@ -184,7 +215,7 @@ correct:"Thailand"
 {
 breed:"Perser",
 image:"bilder/perser.jpg",
-answers:["Iran","Tyrkia","India"],
+answers:["Iran","India","Tyrkia"],
 correct:"Iran"
 },
 
@@ -249,93 +280,177 @@ breed:"Tyrkisk Angora",
 image:"bilder/tyrkisk-angora.jpg",
 answers:["Tyrkia","Iran","Egypt"],
 correct:"Tyrkia"
+},
+
+{
+breed:"Savannah",
+image:"bilder/savannah.jpg",
+answers:["USA","Kenya","Egypt"],
+correct:"USA"
+},
+
+{
+breed:"Munchkin",
+image:"bilder/munchkin.jpg",
+answers:["USA","Japan","England"],
+correct:"USA"
+},
+
+{
+breed:"Exotic Shorthair",
+image:"bilder/exotic-shorthair.jpg",
+answers:["USA","Iran","Russland"],
+correct:"USA"
+},
+
+{
+breed:"Turkish Van",
+image:"bilder/turkish-van.jpg",
+answers:["Tyrkia","Iran","Egypt"],
+correct:"Tyrkia"
 }
 
 ];
 
-let currentQuestion = 0;
-let score = 0;
-let lives = 3;
+let currentQuestion=0;
+let score=0;
+let lives=3;
 
 function loadQuestion(){
 
-const q = questions[currentQuestion];
+const q=questions[currentQuestion];
 
-document.getElementById("catImage").src = q.image;
+document.getElementById(
+"catImage"
+).src=q.image;
 
-document.getElementById("breed").innerHTML = q.breed;
+document.getElementById(
+"breed"
+).innerHTML=q.breed;
 
-document.getElementById("questionNumber").innerHTML =
-(currentQuestion + 1) + "/" + questions.length;
+document.getElementById(
+"questionNumber"
+).innerHTML=
+(currentQuestion+1)+
+"/"+
+questions.length;
 
-const answers = document.getElementById("answers");
+const answers=
+document.getElementById(
+"answers"
+);
 
-answers.innerHTML = "";
+answers.innerHTML="";
 
-q.answers.forEach(answer => {
+document.getElementById(
+"message"
+).innerHTML="";
 
-const btn = document.createElement("button");
+q.answers.forEach(answer=>{
 
-btn.className = "answer-btn";
+const btn=
+document.createElement(
+"button"
+);
 
-btn.innerHTML = answer;
+btn.className=
+"answer-btn";
 
-btn.onclick = () => checkAnswer(btn,answer);
+btn.innerHTML=answer;
+
+btn.onclick=()=>
+checkAnswer(
+btn,
+answer
+);
 
 answers.appendChild(btn);
 
 });
 
-document.getElementById("nextBtn").style.display = "none";
+document.getElementById(
+"nextBtn"
+).style.display="none";
 
 }
 
 function checkAnswer(button,answer){
 
-const q = questions[currentQuestion];
+const q=questions[currentQuestion];
 
-const buttons =
-document.querySelectorAll(".answer-btn");
+const buttons=
+document.querySelectorAll(
+".answer-btn"
+);
 
-buttons.forEach(btn => {
+buttons.forEach(btn=>{
 
-btn.disabled = true;
+btn.disabled=true;
 
-if(btn.innerHTML === q.correct){
+if(
+btn.innerHTML===
+q.correct
+){
 
-btn.classList.add("correct");
+btn.classList.add(
+"correct"
+);
 
 }
 
 });
 
-if(answer === q.correct){
+if(answer===q.correct){
 
-score += 10;
+score+=10;
+
+document.getElementById(
+"message"
+).innerHTML=
+"🎉 Riktig svar!";
 
 }else{
 
 lives--;
 
-button.classList.add("wrong");
+button.classList.add(
+"wrong"
+);
+
+document.getElementById(
+"message"
+).innerHTML=
+"😿 Feil svar!";
 
 }
 
-document.getElementById("score").innerHTML = score;
+document.getElementById(
+"score"
+).innerHTML=score;
 
-document.getElementById("lives").innerHTML = lives;
+document.getElementById(
+"lives"
+).innerHTML=lives;
 
-if(lives <= 0){
+if(lives<=0){
 
-alert("😅 Game Over! Du må starte på nytt.");
+setTimeout(()=>{
+
+alert(
+"😅 Game Over!"
+);
 
 location.reload();
+
+},500);
 
 return;
 
 }
 
-document.getElementById("nextBtn").style.display =
+document.getElementById(
+"nextBtn"
+).style.display=
 "inline-block";
 
 }
@@ -344,9 +459,14 @@ function nextQuestion(){
 
 currentQuestion++;
 
-if(currentQuestion >= questions.length){
+if(
+currentQuestion>=
+questions.length
+){
 
-alert("🏆 Gratulerer! Du fullførte Katteland Quiz!");
+alert(
+"🏆 Gratulerer! Du fullførte Katteland Quiz!"
+);
 
 location.reload();
 
