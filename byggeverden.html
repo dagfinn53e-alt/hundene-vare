@@ -184,7 +184,17 @@ font-size:20px;
 font-weight:bold;
 cursor:pointer;
 }
-
+#restartBtn{
+margin-top:20px;
+padding:16px 30px;
+border:none;
+border-radius:18px;
+background:#f59e0b;
+color:white;
+font-size:22px;
+font-weight:bold;
+cursor:pointer;
+}
 </style>
 </head>
 
@@ -265,7 +275,9 @@ Dra delene inn i byggefeltet 🙂
 <button id="nextBtn">
 🏆 Ferdig!
 </button>
-
+<button id="restartBtn" onclick="location.reload()">
+🔄 Spill igjen
+</button>
 <div class="back">
 
 <button onclick="location.href='hundespill.html'">
