@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐶 Hundehus Builder</title>
+<title>🐶 Hundehus Builder DELUXE</title>
 
 <style>
 
@@ -12,12 +12,26 @@ margin:0;
 font-family:Arial,sans-serif;
 background:linear-gradient(to bottom,#c7e9ff,#eef6ff);
 text-align:center;
-overflow:hidden;
+overflow-x:hidden;
+color:#123c73;
 }
 
 h1{
 margin-top:15px;
+font-size:42px;
+}
+
+.helpBox{
+background:white;
+padding:20px;
+border-radius:22px;
+max-width:760px;
+margin:20px auto;
+font-size:24px;
+font-weight:bold;
+line-height:1.7;
 color:#123c73;
+box-shadow:0 5px 14px rgba(0,0,0,.15);
 }
 
 #game{
@@ -29,8 +43,6 @@ margin-top:20px;
 flex-wrap:wrap;
 }
 
-/* MODEL */
-
 .panel{
 background:white;
 padding:20px;
@@ -40,22 +52,9 @@ box-shadow:0 6px 18px rgba(0,0,0,.15);
 
 .panel h2{
 margin-top:0;
-color:#123c73;
 }
 
-/* BUILD AREA */
-
-#buildArea{
-position:relative;
-width:320px;
-height:320px;
-background:#dbeafe;
-border-radius:20px;
-border:6px dashed #60a5fa;
-overflow:hidden;
-}
-
-/* PREVIEW HOUSE */
+/* MODELL */
 
 .house{
 position:relative;
@@ -105,7 +104,19 @@ background:#85c1e9;
 border:4px solid white;
 }
 
-/* DRAG ITEMS */
+/* BYGGEFELT */
+
+#buildArea{
+position:relative;
+width:320px;
+height:320px;
+background:#dbeafe;
+border-radius:20px;
+border:6px dashed #60a5fa;
+overflow:hidden;
+}
+
+/* DELER */
 
 .parts{
 display:flex;
@@ -116,8 +127,8 @@ flex-wrap:wrap;
 }
 
 .part{
-width:100px;
-height:100px;
+width:110px;
+height:110px;
 border-radius:18px;
 cursor:grab;
 box-shadow:0 5px 12px rgba(0,0,0,.18);
@@ -146,15 +157,13 @@ background:#6e2c00;
 background:#5dade2;
 }
 
-/* BUILD PIECES */
-
 .build-piece{
 position:absolute;
 }
 
 #message{
 margin-top:20px;
-font-size:26px;
+font-size:28px;
 font-weight:bold;
 color:#db2777;
 min-height:40px;
@@ -173,17 +182,6 @@ font-weight:bold;
 cursor:pointer;
 }
 
-.back button{
-margin-top:20px;
-padding:16px 28px;
-border:none;
-border-radius:18px;
-background:#2563eb;
-color:white;
-font-size:20px;
-font-weight:bold;
-cursor:pointer;
-}
 #restartBtn{
 margin-top:20px;
 padding:16px 30px;
@@ -195,16 +193,45 @@ font-size:22px;
 font-weight:bold;
 cursor:pointer;
 }
+
+.back button{
+margin-top:20px;
+padding:16px 28px;
+border:none;
+border-radius:18px;
+background:#2563eb;
+color:white;
+font-size:20px;
+font-weight:bold;
+cursor:pointer;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>🐶 Hundehus Builder</h1>
+<h1>🐶 Hundehus Builder DELUXE</h1>
+
+<div class="helpBox">
+
+🧱 SLIK SPILLER DU
+
+👀 Se på modellen til venstre
+
+🖱️ Dra byggedelene inn i byggefeltet
+
+🏠 Bygg huset slik modellen viser
+
+⭐ Når alt er riktig blir bygget ferdig!
+
+🙂 Lykke til bygger!
+
+</div>
 
 <div id="game">
 
-<!-- MODEL -->
+<!-- MODELL -->
 
 <div class="panel">
 
@@ -226,7 +253,7 @@ cursor:pointer;
 
 </div>
 
-<!-- BUILD -->
+<!-- BYGG -->
 
 <div class="panel">
 
@@ -238,50 +265,71 @@ cursor:pointer;
 
 </div>
 
-<!-- PARTS -->
+<!-- DELER -->
 
 <div class="parts">
 
 <div class="part roofPart"
 draggable="true"
 data-type="roof">
+
 🏠 TAK
+
 </div>
 
 <div class="part wallPart"
 draggable="true"
 data-type="walls">
+
 🧱 VEGG
+
 </div>
 
 <div class="part doorPart"
 draggable="true"
 data-type="door">
+
 🚪 DØR
+
 </div>
 
 <div class="part windowPart"
 draggable="true"
 data-type="window">
+
 🪟 VINDU
+
 </div>
 
 </div>
 
 <div id="message">
+
 Dra delene inn i byggefeltet 🙂
+
 </div>
 
 <button id="nextBtn">
+
 🏆 Ferdig!
+
 </button>
-<button id="restartBtn" onclick="location.reload()">
+
+<br>
+
+<button id="restartBtn"
+onclick="location.reload()">
+
 🔄 Spill igjen
+
 </button>
+
 <div class="back">
 
 <button onclick="location.href='hundespill.html'">
+
 ⬅️ Tilbake til spill
+
 </button>
 
 </div>
@@ -294,10 +342,12 @@ document.getElementById(
 );
 
 let completed={
+
 roof:false,
 walls:false,
 door:false,
 window:false
+
 };
 
 document.querySelectorAll(
@@ -362,8 +412,10 @@ piece.style.width="0";
 piece.style.height="0";
 piece.style.borderLeft=
 "90px solid transparent";
+
 piece.style.borderRight=
 "90px solid transparent";
+
 piece.style.borderBottom=
 "90px solid #8b4513";
 
@@ -417,10 +469,12 @@ document.getElementById(
 function checkComplete(){
 
 if(
+
 completed.roof &&
 completed.walls &&
 completed.door &&
 completed.window
+
 ){
 
 document.getElementById(
