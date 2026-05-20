@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐶🐱 Dyresimulator PRO</title>
+
+<style>
+
+body{
+margin:0;
+overflow:hidden;
+font-family:Arial,sans-serif;
+background:#87ceeb;
+}
+
+#ui{
+position:absolute;
+top:10px;
+left:50%;
+transform:translateX(-50%);
+z-index:100;
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+button{
+padding:14px 20px;
+border:none;
+border-radius:18px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+color:white;
+box-shadow:0 4px 10px rgba(0,0,0,.2);
+}
+
+.feed{background:#f59e0b;}
+.play{background:#10b981;}
+.sleep{background:#6366f1;}
+.love{background:#ec4899;}
+.switch{background:#374151;}
+
+#stats{
+position:absolute;
+top:90px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+z-index:100;
+}
+
+.stat{
+background:white;
+padding:10px 16px;
+border-radius:16px;
+font-weight:bold;
+box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+
+#message{
+position:absolute;
+top:150px;
+width:100%;
+text-align:center;
+font-size:28px;
+font-weight:bold;
+color:white;
+text-shadow:2px 2px 5px black;
+z-index:100;
+}
+
+canvas{
+display:block;
+background:
+linear-gradient(
+to bottom,
+#87ceeb 0%,
+#87ceeb 70%,
+#7dd87d 70%,
+#7dd87d 100%
+);
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="ui">
+
+<button class="feed"
+onclick="feedPet()">
+🍖 Mat
+</button>
+
+<button class="play"
+onclick="playPet()">
+🎾 Lek
+</button>
+
+<button class="sleep"
+onclick="sleepPet()">
+😴 Sov
+</button>
+
+<button class="love"
+onclick="lovePet()">
+❤️ Kos
+</button>
+
+<button class="switch"
+onclick="switchPet()">
+🐶 / 🐱
+</button>
+
+</div>
+
+<div id="stats">
+
+<div class="stat">
+❤️ Humør:
+<span id="mood">80</span>
+</div>
+
+<div class="stat">
+⚡ Energi:
+<span id="energy">70</span>
+</div>
+
+<div class="stat">
+🍖 Mat:
+<span id="food">75</span>
+</div>
+
+</div>
+
+<div id="message">
+😊 Dyret koser seg ute!
+</div>
+
+<canvas id="game"></canvas>
+
+<script>
+
+const canvas=
+document.getElementById("game");
+
+const ctx=
+canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let mood=80;
+let energy=70;
+let food=75;
+
+let currentPet="dog";
+
+const pet={
+
+x:120,
+y:canvas.height-240,
+
+targetX:120,
+
+speed:2,
+
+frame:0
+
+};
+
+const foodBowl={
+x:canvas.width-220,
+y:canvas.height-180
+};
+
+const ball={
+x:canvas.width-500,
+y:canvas.height-180
+};
+
+const bed={
+x:canvas.width-800,
+y:canvas.height-180
+};
+
+function updateStats(){
+
+document.getElementById(
+"mood"
+).innerHTML=mood;
+
+document.getElementById(
+"energy"
+).innerHTML=energy;
+
+document.getElementById(
+"food"
+).innerHTML=food;
+
+}
+
+function drawBackground(){
+
+/* SUN */
+
+ctx.beginPath();
+
+ctx.arc(
+canvas.width-120,
+100,
+50,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle="yellow";
+
+ctx.fill();
+
+/* CLOUDS */
+
+ctx.fillStyle="white";
+
+ctx.beginPath();
+
+ctx.ellipse(
+180,
+100,
+70,
+35,
+0,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+ctx.beginPath();
+
+ctx.ellipse(
+500,
+140,
+90,
+40,
+0,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+/* TREES */
+
+drawTree(120);
+drawTree(900);
+drawTree(1500);
+
+/* HOUSE */
+
+ctx.fillStyle="#ffcc80";
+
+ctx.fillRect(
+canvas.width-300,
+canvas.height-320,
+220,
+180
+);
+
+ctx.fillStyle="#c62828";
+
+ctx.beginPath();
+
+ctx.moveTo(
+canvas.width-320,
+canvas.height-320
+);
+
+ctx.lineTo(
+canvas.width-190,
+canvas.height-430
+);
+
+ctx.lineTo(
+canvas.width-60,
+canvas.height-320
+);
+
+ctx.fill();
+
+ctx.fillStyle="#5d4037";
+
+ctx.fillRect(
+canvas.width-220,
+canvas.height-220,
+60,
+80
+);
+
+}
+
+function drawTree(x){
+
+ctx.fillStyle="#8b5a2b";
+
+ctx.fillRect(
+x,
+canvas.height-240,
+20,
+100
+);
+
+ctx.beginPath();
+
+ctx.arc(
+x+10,
+canvas.height-280,
+60,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle="green";
+
+ctx.fill();
+
+}
+
+function drawObjects(){
+
+ctx.font="70px Arial";
+
+ctx.fillText(
+"🍖",
+foodBowl.x,
+foodBowl.y
+);
+
+ctx.fillText(
+"🎾",
+ball.x,
+ball.y
+);
+
+ctx.fillText(
+"🛏️",
+bed.x,
+bed.y
+);
+
+}
+
+function drawPet(){
+
+ctx.save();
+
+ctx.translate(
+pet.x,
+pet.y
+);
+
+/* BODY */
+
+ctx.fillStyle=
+currentPet==="dog"
+? "#c08457"
+: "#999";
+
+ctx.beginPath();
+
+ctx.ellipse(
+0,
+0,
+60,
+40,
+0,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+/* HEAD */
+
+ctx.beginPath();
+
+ctx.arc(
+60,
+-30,
+35,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+/* EARS */
+
+ctx.fillStyle=
+currentPet==="dog"
+? "#8b5a2b"
+: "#666";
+
+ctx.beginPath();
+
+ctx.ellipse(
+45,
+-60,
+10,
+20,
+-.4,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+ctx.beginPath();
+
+ctx.ellipse(
+75,
+-60,
+10,
+20,
+.4,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+/* EYES */
+
+ctx.fillStyle="black";
+
+ctx.beginPath();
+
+ctx.arc(
+50,
+-35,
+3,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+ctx.beginPath();
+
+ctx.arc(
+70,
+-35,
+3,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+/* TAIL */
+
+ctx.strokeStyle=
+currentPet==="dog"
+? "#8b5a2b"
+: "#666";
+
+ctx.lineWidth=10;
+
+ctx.beginPath();
+
+ctx.moveTo(-55,-5);
+
+ctx.lineTo(
+-90,
+-20+
+Math.sin(
+pet.frame*.2
+)*15
+);
+
+ctx.stroke();
+
+/* LEGS */
+
+for(let i=0;i<4;i++){
+
+const offset=
+Math.sin(
+pet.frame*.3+
+i
+)*10;
+
+ctx.strokeStyle=
+currentPet==="dog"
+? "#8b5a2b"
+: "#666";
+
+ctx.lineWidth=10;
+
+ctx.beginPath();
+
+ctx.moveTo(
+-35+i*20,
+35
+);
+
+ctx.lineTo(
+-35+i*20,
+70+offset
+);
+
+ctx.stroke();
+
+}
+
+ctx.restore();
+
+}
+
+function updatePet(){
+
+if(
+Math.abs(
+pet.targetX-pet.x
+)>2
+){
+
+if(pet.targetX>pet.x){
+
+pet.x+=pet.speed;
+
+}else{
+
+pet.x-=pet.speed;
+
+}
+
+pet.frame++;
+
+}
+
+}
+
+function animate(){
+
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+drawBackground();
+
+drawObjects();
+
+drawPet();
+
+updatePet();
+
+requestAnimationFrame(
+animate
+);
+
+}
+
+function feedPet(){
+
+pet.targetX=
+foodBowl.x-100;
+
+document.getElementById(
+"message"
+).innerHTML=
+"🍖 Dyret går til matskålen!";
+
+food+=10;
+mood+=5;
+
+if(food>100)food=100;
+if(mood>100)mood=100;
+
+updateStats();
+
+}
+
+function playPet(){
+
+pet.targetX=
+ball.x-100;
+
+document.getElementById(
+"message"
+).innerHTML=
+"🎾 Dyret løper etter ballen!";
+
+mood+=10;
+energy-=10;
+
+if(mood>100)mood=100;
+if(energy<0)energy=0;
+
+updateStats();
+
+}
+
+function sleepPet(){
+
+pet.targetX=
+bed.x-100;
+
+document.getElementById(
+"message"
+).innerHTML=
+"😴 Dyret går og legger seg!";
+
+energy+=20;
+
+if(energy>100)energy=100;
+
+updateStats();
+
+}
+
+function lovePet(){
+
+document.getElementById(
+"message"
+).innerHTML=
+"❤️ Dyret elsker kos!";
+
+mood+=15;
+
+if(mood>100)mood=100;
+
+updateStats();
+
+}
+
+function switchPet(){
+
+if(currentPet==="dog"){
+
+currentPet="cat";
+
+document.getElementById(
+"message"
+).innerHTML=
+"🐱 Katten er klar!";
+
+}else{
+
+currentPet="dog";
+
+document.getElementById(
+"message"
+).innerHTML=
+"🐶 Hunden er tilbake!";
+
+}
+
+}
+
+setInterval(()=>{
+
+food-=1;
+energy-=1;
+
+if(food<0)food=0;
+if(energy<0)energy=0;
+
+if(food<30){
+
+document.getElementById(
+"message"
+).innerHTML=
+"🍖 Dyret er sultent!";
+
+}
+
+if(energy<25){
+
+document.getElementById(
+"message"
+).innerHTML=
+"😴 Dyret er trøtt!";
+
+}
+
+updateStats();
+
+},10000);
+
+updateStats();
+
+animate();
+
+</script>
+
+</body>
+</html>
