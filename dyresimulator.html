@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐶🐱 Dyresimulator</title>
+<title>🐶🐱 Dyresimulator DELUXE</title>
 
 <style>
 
@@ -13,10 +13,11 @@ font-family:Arial,sans-serif;
 background:linear-gradient(to bottom,#dbeafe,#fce7f3);
 text-align:center;
 color:#333;
+overflow-x:hidden;
 }
 
 .container{
-max-width:900px;
+max-width:1000px;
 margin:auto;
 padding:20px;
 }
@@ -54,19 +55,33 @@ padding:25px;
 border-radius:25px;
 box-shadow:0 8px 20px rgba(0,0,0,.15);
 margin-bottom:30px;
+position:relative;
+overflow:hidden;
 }
 
 .pet-box img{
-width:280px;
+width:300px;
 max-width:90%;
 border-radius:25px;
+transition:.3s;
+}
+
+.happy{
+animation:bounce .5s;
+}
+
+@keyframes bounce{
+0%{transform:translateY(0)}
+50%{transform:translateY(-20px)}
+100%{transform:translateY(0)}
 }
 
 #moodText{
-font-size:24px;
+font-size:26px;
 margin-top:15px;
 font-weight:bold;
 color:#db2777;
+min-height:40px;
 }
 
 .buttons{
@@ -92,25 +107,11 @@ box-shadow:0 5px 12px rgba(0,0,0,.12);
 transform:scale(1.03);
 }
 
-.feed{
-background:#f59e0b;
-}
-
-.play{
-background:#10b981;
-}
-
-.sleep{
-background:#6366f1;
-}
-
-.wash{
-background:#0ea5e9;
-}
-
-.love{
-background:#ec4899;
-}
+.feed{background:#f59e0b;}
+.play{background:#10b981;}
+.sleep{background:#6366f1;}
+.wash{background:#0ea5e9;}
+.love{background:#ec4899;}
 
 .select-box{
 margin-bottom:25px;
@@ -139,6 +140,13 @@ font-weight:bold;
 cursor:pointer;
 }
 
+#coinsBox{
+margin-top:15px;
+font-size:22px;
+font-weight:bold;
+color:#f59e0b;
+}
+
 </style>
 </head>
 
@@ -146,7 +154,7 @@ cursor:pointer;
 
 <div class="container">
 
-<h1>🐶🐱 Dyresimulator</h1>
+<h1>🐶🐱 Dyresimulator DELUXE</h1>
 
 <div class="subtitle">
 Ta vare på ditt virtuelle kjæledyr ❤️
@@ -201,43 +209,38 @@ src="https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=800&aut
 😊 Dyret har det bra!
 </div>
 
+<div id="coinsBox">
+🪙 Mynter:
+<span id="coins">0</span>
+</div>
+
 </div>
 
 <div class="buttons">
 
 <button class="feed"
 onclick="feedPet()">
-
 🍖 Gi Mat
-
 </button>
 
 <button class="play"
 onclick="playPet()">
-
 🎾 Lek
-
 </button>
 
 <button class="sleep"
 onclick="sleepPet()">
-
 😴 Sov
-
 </button>
 
 <button class="wash"
 onclick="washPet()">
-
 🛁 Vask
-
 </button>
 
 <button class="love"
 onclick="lovePet()">
-
 ❤️ Kos
-
 </button>
 
 </div>
@@ -258,54 +261,89 @@ let mood=80;
 let energy=70;
 let food=75;
 let level=1;
+let coins=0;
 
 function updateStats(){
 
-document.getElementById(
-"mood"
-).innerHTML=mood;
-
-document.getElementById(
-"energy"
-).innerHTML=energy;
-
-document.getElementById(
-"food"
-).innerHTML=food;
-
-document.getElementById(
-"level"
-).innerHTML=level;
+document.getElementById("mood").innerHTML=mood;
+document.getElementById("energy").innerHTML=energy;
+document.getElementById("food").innerHTML=food;
+document.getElementById("level").innerHTML=level;
+document.getElementById("coins").innerHTML=coins;
 
 checkMood();
 
 }
 
-function checkMood(){
+function animatePet(){
 
-let text="😊 Dyret har det bra!";
+const pet=
+document.getElementById(
+"petImage"
+);
 
-if(mood<40){
+pet.classList.add("happy");
 
-text="😢 Dyret er trist!";
+setTimeout(()=>{
 
-}
+pet.classList.remove("happy");
 
-if(energy<30){
-
-text="😴 Dyret er trøtt!";
-
-}
-
-if(food<30){
-
-text="🍖 Dyret er sultent!";
+},500);
 
 }
+
+function randomEvent(){
+
+const events=[
+
+"🐶 Dyret elsker deg!",
+"🐱 Dyret spinner lykkelig!",
+"🎁 Du fant en bonus!",
+"⭐ Dyret lærte et nytt triks!",
+"🍖 Nam nam!"
+];
+
+const random=
+events[
+Math.floor(
+Math.random()*events.length
+)
+];
 
 document.getElementById(
 "moodText"
-).innerHTML=text;
+).innerHTML=random;
+
+}
+
+function checkMood(){
+
+if(mood<30){
+
+document.getElementById(
+"moodText"
+).innerHTML=
+"😢 Dyret er trist!";
+
+}
+
+if(energy<25){
+
+document.getElementById(
+"moodText"
+).innerHTML=
+"😴 Dyret er slitent!";
+
+}
+
+if(food<25){
+
+document.getElementById(
+"moodText"
+).innerHTML=
+"🍖 Dyret er sultent!";
+
+}
 
 }
 
@@ -315,12 +353,14 @@ if(mood>=100){
 
 level++;
 
+coins+=20;
+
 mood=80;
 
 document.getElementById(
 "moodText"
 ).innerHTML=
-"🏆 Level Up!";
+"🏆 LEVEL UP!";
 
 }
 
@@ -328,12 +368,15 @@ document.getElementById(
 
 function feedPet(){
 
-food+=10;
+food+=12;
 mood+=5;
+coins+=2;
 
-if(food>100) food=100;
-if(mood>100) mood=100;
+if(food>100)food=100;
+if(mood>100)mood=100;
 
+animatePet();
+randomEvent();
 levelUp();
 updateStats();
 
@@ -344,11 +387,14 @@ function playPet(){
 mood+=10;
 energy-=10;
 food-=5;
+coins+=5;
 
-if(mood>100) mood=100;
-if(energy<0) energy=0;
-if(food<0) food=0;
+if(mood>100)mood=100;
+if(energy<0)energy=0;
+if(food<0)food=0;
 
+animatePet();
+randomEvent();
 levelUp();
 updateStats();
 
@@ -357,9 +403,11 @@ updateStats();
 function sleepPet(){
 
 energy+=20;
+coins+=1;
 
-if(energy>100) energy=100;
+if(energy>100)energy=100;
 
+randomEvent();
 updateStats();
 
 }
@@ -367,9 +415,12 @@ updateStats();
 function washPet(){
 
 mood+=8;
+coins+=3;
 
-if(mood>100) mood=100;
+if(mood>100)mood=100;
 
+animatePet();
+randomEvent();
 levelUp();
 updateStats();
 
@@ -377,10 +428,13 @@ updateStats();
 
 function lovePet(){
 
-mood+=12;
+mood+=15;
+coins+=4;
 
-if(mood>100) mood=100;
+if(mood>100)mood=100;
 
+animatePet();
+randomEvent();
 levelUp();
 updateStats();
 
@@ -411,6 +465,18 @@ image.src=
 }
 
 }
+
+setInterval(()=>{
+
+food-=1;
+energy-=1;
+
+if(food<0)food=0;
+if(energy<0)energy=0;
+
+updateStats();
+
+},10000);
 
 updateStats();
 
