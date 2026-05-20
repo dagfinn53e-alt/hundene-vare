@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐱 Kattepuslespill MASTER</title>
+<title>🐱 Kattepuslespill MASTER+</title>
 
 <style>
 
@@ -13,11 +13,10 @@ font-family:Arial,sans-serif;
 background:linear-gradient(to bottom,#fce7f3,#fdf2f8);
 text-align:center;
 color:#7a284f;
-overflow-x:hidden;
 }
 
 .container{
-max-width:1100px;
+max-width:1200px;
 margin:auto;
 padding:20px;
 }
@@ -35,9 +34,9 @@ margin-bottom:20px;
 }
 
 select,button{
-padding:14px 22px;
+padding:14px 20px;
 border:none;
-border-radius:18px;
+border-radius:16px;
 font-size:18px;
 font-weight:bold;
 cursor:pointer;
@@ -58,31 +57,51 @@ margin-bottom:20px;
 
 .stat{
 background:white;
-padding:14px 22px;
+padding:14px 20px;
 border-radius:18px;
 font-weight:bold;
 box-shadow:0 4px 10px rgba(0,0,0,.1);
 }
 
+.game-area{
+display:flex;
+justify-content:center;
+align-items:flex-start;
+gap:30px;
+flex-wrap:wrap;
+}
+
+#preview{
+width:220px;
+background:white;
+padding:10px;
+border-radius:18px;
+box-shadow:0 4px 12px rgba(0,0,0,.12);
+}
+
+#preview img{
+width:100%;
+border-radius:12px;
+}
+
 #board{
-width:92vw;
-max-width:650px;
-height:92vw;
-max-height:650px;
-margin:auto;
+width:90vw;
+max-width:600px;
+height:90vw;
+max-height:600px;
 display:grid;
-gap:3px;
+gap:2px;
 background:white;
 padding:4px;
 border-radius:18px;
-box-shadow:0 8px 22px rgba(0,0,0,.15);
+box-shadow:0 8px 20px rgba(0,0,0,.15);
 }
 
 .piece{
-border-radius:8px;
-background-size:100% 100%;
+border-radius:6px;
+background-repeat:no-repeat;
 cursor:pointer;
-border:2px solid white;
+border:1px solid white;
 transition:.15s;
 }
 
@@ -91,29 +110,19 @@ transform:scale(.98);
 }
 
 .selected{
-outline:5px solid #10b981;
-z-index:10;
+outline:4px solid #10b981;
 }
 
-.complete{
-animation:win .6s infinite alternate;
-}
-
-@keyframes win{
-from{transform:scale(1)}
-to{transform:scale(1.03)}
+#message{
+margin-top:20px;
+font-size:24px;
+font-weight:bold;
+color:#db2777;
 }
 
 .back button{
 margin-top:30px;
 background:#7a284f;
-}
-
-#message{
-font-size:24px;
-font-weight:bold;
-margin-top:20px;
-color:#db2777;
 }
 
 </style>
@@ -123,7 +132,7 @@ color:#db2777;
 
 <div class="container">
 
-<h1>🐱 Kattepuslespill MASTER</h1>
+<h1>🐱 Kattepuslespill MASTER+</h1>
 
 <div class="topbar">
 
@@ -157,10 +166,6 @@ Bengal
 😎 Medium - 16 Brikker
 </option>
 
-<option value="5">
-🔥 Ekspert - 25 Brikker
-</option>
-
 </select>
 
 <button onclick="startGame()">
@@ -177,18 +182,25 @@ Bengal
 </div>
 
 <div class="stat">
-⏱️ Tid:
-<span id="time">0</span>s
-</div>
-
-<div class="stat">
 ⭐ Stjerner:
 <span id="stars">0</span>
 </div>
 
 </div>
 
+<div class="game-area">
+
+<div id="preview">
+
+<h3>🐱 Originalbilde</h3>
+
+<img id="previewImage">
+
+</div>
+
 <div id="board"></div>
+
+</div>
 
 <div id="message"></div>
 
@@ -208,9 +220,7 @@ let size=3;
 let pieces=[];
 let selected=null;
 let moves=0;
-let timer=0;
 let stars=0;
-let interval;
 let imageFile="maine-coon-puzzle.jpg";
 
 function startGame(){
@@ -226,16 +236,16 @@ document.getElementById(
 "catSelect"
 ).value;
 
+document.getElementById(
+"previewImage"
+).src=
+"bilder/"+imageFile;
+
 moves=0;
-timer=0;
 stars=0;
 
 document.getElementById(
 "moves"
-).innerHTML=0;
-
-document.getElementById(
-"time"
 ).innerHTML=0;
 
 document.getElementById(
@@ -245,18 +255,6 @@ document.getElementById(
 document.getElementById(
 "message"
 ).innerHTML="";
-
-clearInterval(interval);
-
-interval=setInterval(()=>{
-
-timer++;
-
-document.getElementById(
-"time"
-).innerHTML=timer;
-
-},1000);
 
 createPuzzle();
 
@@ -314,16 +312,11 @@ piece%size;
 div.style.backgroundImage=
 `url('bilder/${imageFile}')`;
 
-div.style.backgroundSize =
-`${size * 100}% ${size * 100}%`;
+div.style.backgroundSize=
+`${size*100}% ${size*100}%`;
 
-div.style.backgroundPosition =
-`${(col * 100) / (size - 1)}% ${(row * 100) / (size - 1)}%`;
-
-div.style.backgroundRepeat = "no-repeat";
-
-
-
+div.style.backgroundPosition=
+`${(col*100)/(size-1)}% ${(row*100)/(size-1)}%`;
 
 div.onclick=()=>selectPiece(index);
 
@@ -364,22 +357,20 @@ checkWin();
 
 function checkWin(){
 
-let win=true;
+let won=true;
 
 for(let i=0;i<pieces.length;i++){
 
 if(pieces[i]!==i){
 
-win=false;
+won=false;
 break;
 
 }
 
 }
 
-if(win){
-
-clearInterval(interval);
+if(won){
 
 calculateStars();
 
@@ -388,27 +379,17 @@ document.getElementById(
 ).innerHTML=
 "🏆 Gratulerer! Du klarte puslespillet!";
 
-document.querySelectorAll(
-".piece"
-).forEach(piece=>{
-
-piece.classList.add(
-"complete"
-);
-
-});
-
 }
 
 }
 
 function calculateStars(){
 
-if(moves<25){
+if(moves<20){
 
 stars=3;
 
-}else if(moves<50){
+}else if(moves<40){
 
 stars=2;
 
