@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐶🐱 Dyresimulator</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:linear-gradient(to bottom,#dbeafe,#fce7f3);
+text-align:center;
+color:#333;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+
+h1{
+font-size:42px;
+margin-bottom:10px;
+color:#7a284f;
+}
+
+.subtitle{
+font-size:20px;
+margin-bottom:30px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-bottom:25px;
+}
+
+.stat{
+background:white;
+padding:18px;
+border-radius:20px;
+font-size:20px;
+font-weight:bold;
+box-shadow:0 5px 12px rgba(0,0,0,.12);
+}
+
+.pet-box{
+background:white;
+padding:25px;
+border-radius:25px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+margin-bottom:30px;
+}
+
+.pet-box img{
+width:280px;
+max-width:90%;
+border-radius:25px;
+}
+
+#moodText{
+font-size:24px;
+margin-top:15px;
+font-weight:bold;
+color:#db2777;
+}
+
+.buttons{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:18px;
+margin-top:25px;
+}
+
+.buttons button{
+padding:18px;
+border:none;
+border-radius:22px;
+font-size:22px;
+font-weight:bold;
+cursor:pointer;
+color:white;
+transition:.2s;
+box-shadow:0 5px 12px rgba(0,0,0,.12);
+}
+
+.buttons button:hover{
+transform:scale(1.03);
+}
+
+.feed{
+background:#f59e0b;
+}
+
+.play{
+background:#10b981;
+}
+
+.sleep{
+background:#6366f1;
+}
+
+.wash{
+background:#0ea5e9;
+}
+
+.love{
+background:#ec4899;
+}
+
+.select-box{
+margin-bottom:25px;
+}
+
+select{
+padding:14px 20px;
+font-size:18px;
+border-radius:16px;
+border:none;
+font-weight:bold;
+}
+
+.back{
+margin-top:30px;
+}
+
+.back button{
+background:#7a284f;
+color:white;
+padding:16px 28px;
+border:none;
+border-radius:20px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🐶🐱 Dyresimulator</h1>
+
+<div class="subtitle">
+Ta vare på ditt virtuelle kjæledyr ❤️
+</div>
+
+<div class="select-box">
+
+<select id="petSelect" onchange="changePet()">
+
+<option value="dog">
+🐶 Hund
+</option>
+
+<option value="cat">
+🐱 Katt
+</option>
+
+</select>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+❤️ Humør:
+<span id="mood">80</span>
+</div>
+
+<div class="stat">
+⚡ Energi:
+<span id="energy">70</span>
+</div>
+
+<div class="stat">
+🍖 Mat:
+<span id="food">75</span>
+</div>
+
+<div class="stat">
+🏆 Level:
+<span id="level">1</span>
+</div>
+
+</div>
+
+<div class="pet-box">
+
+<img id="petImage"
+src="https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=800&auto=format&fit=crop">
+
+<div id="moodText">
+😊 Dyret har det bra!
+</div>
+
+</div>
+
+<div class="buttons">
+
+<button class="feed"
+onclick="feedPet()">
+
+🍖 Gi Mat
+
+</button>
+
+<button class="play"
+onclick="playPet()">
+
+🎾 Lek
+
+</button>
+
+<button class="sleep"
+onclick="sleepPet()">
+
+😴 Sov
+
+</button>
+
+<button class="wash"
+onclick="washPet()">
+
+🛁 Vask
+
+</button>
+
+<button class="love"
+onclick="lovePet()">
+
+❤️ Kos
+
+</button>
+
+</div>
+
+<div class="back">
+
+<button onclick="location.href='hundespill.html'">
+⬅️ Tilbake til spill
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let mood=80;
+let energy=70;
+let food=75;
+let level=1;
+
+function updateStats(){
+
+document.getElementById(
+"mood"
+).innerHTML=mood;
+
+document.getElementById(
+"energy"
+).innerHTML=energy;
+
+document.getElementById(
+"food"
+).innerHTML=food;
+
+document.getElementById(
+"level"
+).innerHTML=level;
+
+checkMood();
+
+}
+
+function checkMood(){
+
+let text="😊 Dyret har det bra!";
+
+if(mood<40){
+
+text="😢 Dyret er trist!";
+
+}
+
+if(energy<30){
+
+text="😴 Dyret er trøtt!";
+
+}
+
+if(food<30){
+
+text="🍖 Dyret er sultent!";
+
+}
+
+document.getElementById(
+"moodText"
+).innerHTML=text;
+
+}
+
+function levelUp(){
+
+if(mood>=100){
+
+level++;
+
+mood=80;
+
+document.getElementById(
+"moodText"
+).innerHTML=
+"🏆 Level Up!";
+
+}
+
+}
+
+function feedPet(){
+
+food+=10;
+mood+=5;
+
+if(food>100) food=100;
+if(mood>100) mood=100;
+
+levelUp();
+updateStats();
+
+}
+
+function playPet(){
+
+mood+=10;
+energy-=10;
+food-=5;
+
+if(mood>100) mood=100;
+if(energy<0) energy=0;
+if(food<0) food=0;
+
+levelUp();
+updateStats();
+
+}
+
+function sleepPet(){
+
+energy+=20;
+
+if(energy>100) energy=100;
+
+updateStats();
+
+}
+
+function washPet(){
+
+mood+=8;
+
+if(mood>100) mood=100;
+
+levelUp();
+updateStats();
+
+}
+
+function lovePet(){
+
+mood+=12;
+
+if(mood>100) mood=100;
+
+levelUp();
+updateStats();
+
+}
+
+function changePet(){
+
+const pet=
+document.getElementById(
+"petSelect"
+).value;
+
+const image=
+document.getElementById(
+"petImage"
+);
+
+if(pet==="dog"){
+
+image.src=
+"https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=800&auto=format&fit=crop";
+
+}else{
+
+image.src=
+"https://images.unsplash.com/photo-1519052537078-e6302a4968d4?q=80&w=800&auto=format&fit=crop";
+
+}
+
+}
+
+updateStats();
+
+</script>
+
+</body>
+</html>
