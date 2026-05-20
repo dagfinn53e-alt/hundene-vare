@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐶🐱 Dyresimulator DELUXE</title>
+<title>🐶🐱 Dyresimulator KIDS DELUXE</title>
 
 <style>
 
@@ -12,7 +12,6 @@ margin:0;
 font-family:Arial,sans-serif;
 background:linear-gradient(to bottom,#dbeafe,#fce7f3);
 text-align:center;
-color:#333;
 overflow-x:hidden;
 }
 
@@ -24,18 +23,18 @@ padding:20px;
 
 h1{
 font-size:42px;
-margin-bottom:10px;
 color:#7a284f;
+margin-bottom:10px;
 }
 
 .subtitle{
 font-size:20px;
-margin-bottom:30px;
+margin-bottom:25px;
 }
 
 .stats{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
 gap:15px;
 margin-bottom:25px;
 }
@@ -43,31 +42,30 @@ margin-bottom:25px;
 .stat{
 background:white;
 padding:18px;
-border-radius:20px;
+border-radius:22px;
 font-size:20px;
 font-weight:bold;
 box-shadow:0 5px 12px rgba(0,0,0,.12);
 }
 
 .pet-box{
+position:relative;
 background:white;
 padding:25px;
-border-radius:25px;
+border-radius:30px;
 box-shadow:0 8px 20px rgba(0,0,0,.15);
-margin-bottom:30px;
-position:relative;
 overflow:hidden;
 }
 
 .pet-box img{
-width:300px;
+width:320px;
 max-width:90%;
 border-radius:25px;
 transition:.3s;
 }
 
-.happy{
-animation:bounce .5s;
+.bounce{
+animation:bounce .6s;
 }
 
 @keyframes bounce{
@@ -76,12 +74,37 @@ animation:bounce .5s;
 100%{transform:translateY(0)}
 }
 
+#effect{
+position:absolute;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+font-size:80px;
+pointer-events:none;
+animation:pop .8s;
+}
+
+@keyframes pop{
+0%{
+opacity:0;
+transform:translateX(-50%) scale(.3);
+}
+50%{
+opacity:1;
+transform:translateX(-50%) scale(1.2);
+}
+100%{
+opacity:0;
+transform:translateX(-50%) scale(.6);
+}
+}
+
 #moodText{
 font-size:26px;
-margin-top:15px;
 font-weight:bold;
-color:#db2777;
+margin-top:18px;
 min-height:40px;
+color:#db2777;
 }
 
 .buttons{
@@ -94,7 +117,7 @@ margin-top:25px;
 .buttons button{
 padding:18px;
 border:none;
-border-radius:22px;
+border-radius:24px;
 font-size:22px;
 font-weight:bold;
 cursor:pointer;
@@ -104,7 +127,7 @@ box-shadow:0 5px 12px rgba(0,0,0,.12);
 }
 
 .buttons button:hover{
-transform:scale(1.03);
+transform:scale(1.04);
 }
 
 .feed{background:#f59e0b;}
@@ -113,16 +136,13 @@ transform:scale(1.03);
 .wash{background:#0ea5e9;}
 .love{background:#ec4899;}
 
-.select-box{
-margin-bottom:25px;
-}
-
 select{
 padding:14px 20px;
 font-size:18px;
 border-radius:16px;
 border:none;
 font-weight:bold;
+margin-bottom:20px;
 }
 
 .back{
@@ -140,10 +160,7 @@ font-weight:bold;
 cursor:pointer;
 }
 
-#coinsBox{
-margin-top:15px;
-font-size:22px;
-font-weight:bold;
+#coins{
 color:#f59e0b;
 }
 
@@ -154,13 +171,11 @@ color:#f59e0b;
 
 <div class="container">
 
-<h1>🐶🐱 Dyresimulator DELUXE</h1>
+<h1>🐶🐱 Dyresimulator KIDS DELUXE</h1>
 
 <div class="subtitle">
-Ta vare på ditt virtuelle kjæledyr ❤️
+Lek med ditt virtuelle kjæledyr 🎮
 </div>
-
-<div class="select-box">
 
 <select id="petSelect" onchange="changePet()">
 
@@ -173,8 +188,6 @@ Ta vare på ditt virtuelle kjæledyr ❤️
 </option>
 
 </select>
-
-</div>
 
 <div class="stats">
 
@@ -198,20 +211,22 @@ Ta vare på ditt virtuelle kjæledyr ❤️
 <span id="level">1</span>
 </div>
 
+<div class="stat">
+🪙 Mynter:
+<span id="coins">0</span>
+</div>
+
 </div>
 
 <div class="pet-box">
+
+<div id="effect"></div>
 
 <img id="petImage"
 src="https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=800&auto=format&fit=crop">
 
 <div id="moodText">
-😊 Dyret har det bra!
-</div>
-
-<div id="coinsBox">
-🪙 Mynter:
-<span id="coins">0</span>
+😊 Dyret har det kjempebra!
 </div>
 
 </div>
@@ -220,27 +235,37 @@ src="https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=800&aut
 
 <button class="feed"
 onclick="feedPet()">
+
 🍖 Gi Mat
+
 </button>
 
 <button class="play"
 onclick="playPet()">
+
 🎾 Lek
+
 </button>
 
 <button class="sleep"
 onclick="sleepPet()">
+
 😴 Sov
+
 </button>
 
 <button class="wash"
 onclick="washPet()">
+
 🛁 Vask
+
 </button>
 
 <button class="love"
 onclick="lovePet()">
+
 ❤️ Kos
+
 </button>
 
 </div>
@@ -282,68 +307,55 @@ document.getElementById(
 "petImage"
 );
 
-pet.classList.add("happy");
+pet.classList.add("bounce");
 
 setTimeout(()=>{
 
-pet.classList.remove("happy");
+pet.classList.remove(
+"bounce"
+);
 
-},500);
+},600);
 
 }
 
-function randomEvent(){
+function showEffect(icon){
 
-const events=[
+const effect=
+document.getElementById(
+"effect"
+);
+
+effect.innerHTML=icon;
+
+effect.style.animation="none";
+
+void effect.offsetWidth;
+
+effect.style.animation=
+"pop .8s";
+
+}
+
+function randomText(){
+
+const texts=[
 
 "🐶 Dyret elsker deg!",
-"🐱 Dyret spinner lykkelig!",
-"🎁 Du fant en bonus!",
-"⭐ Dyret lærte et nytt triks!",
-"🍖 Nam nam!"
+"🐱 Spinn spinn!",
+"⭐ Bonus!",
+"🎉 Så gøy!",
+"❤️ Bestevenn!",
+"🍖 Nam nam!",
+"🎾 Wohoo!"
+
 ];
 
-const random=
-events[
+return texts[
 Math.floor(
-Math.random()*events.length
+Math.random()*texts.length
 )
 ];
-
-document.getElementById(
-"moodText"
-).innerHTML=random;
-
-}
-
-function checkMood(){
-
-if(mood<30){
-
-document.getElementById(
-"moodText"
-).innerHTML=
-"😢 Dyret er trist!";
-
-}
-
-if(energy<25){
-
-document.getElementById(
-"moodText"
-).innerHTML=
-"😴 Dyret er slitent!";
-
-}
-
-if(food<25){
-
-document.getElementById(
-"moodText"
-).innerHTML=
-"🍖 Dyret er sultent!";
-
-}
 
 }
 
@@ -353,7 +365,7 @@ if(mood>=100){
 
 level++;
 
-coins+=20;
+coins+=25;
 
 mood=80;
 
@@ -369,22 +381,29 @@ document.getElementById(
 function feedPet(){
 
 food+=12;
-mood+=5;
-coins+=2;
+mood+=6;
+coins+=3;
 
 if(food>100)food=100;
 if(mood>100)mood=100;
 
 animatePet();
-randomEvent();
+
+showEffect("🍖");
+
+document.getElementById(
+"moodText"
+).innerHTML=randomText();
+
 levelUp();
+
 updateStats();
 
 }
 
 function playPet(){
 
-mood+=10;
+mood+=12;
 energy-=10;
 food-=5;
 coins+=5;
@@ -394,8 +413,15 @@ if(energy<0)energy=0;
 if(food<0)food=0;
 
 animatePet();
-randomEvent();
+
+showEffect("🎾");
+
+document.getElementById(
+"moodText"
+).innerHTML=randomText();
+
 levelUp();
+
 updateStats();
 
 }
@@ -403,11 +429,17 @@ updateStats();
 function sleepPet(){
 
 energy+=20;
-coins+=1;
+coins+=2;
 
 if(energy>100)energy=100;
 
-randomEvent();
+showEffect("😴");
+
+document.getElementById(
+"moodText"
+).innerHTML=
+"😴 Zzzzz...";
+
 updateStats();
 
 }
@@ -415,13 +447,21 @@ updateStats();
 function washPet(){
 
 mood+=8;
-coins+=3;
+coins+=4;
 
 if(mood>100)mood=100;
 
 animatePet();
-randomEvent();
+
+showEffect("🛁");
+
+document.getElementById(
+"moodText"
+).innerHTML=
+"🫧 Så ren og fin!";
+
 levelUp();
+
 updateStats();
 
 }
@@ -429,14 +469,53 @@ updateStats();
 function lovePet(){
 
 mood+=15;
-coins+=4;
+coins+=5;
 
 if(mood>100)mood=100;
 
 animatePet();
-randomEvent();
+
+showEffect("❤️");
+
+document.getElementById(
+"moodText"
+).innerHTML=
+"🥰 Dyret elsker kos!";
+
 levelUp();
+
 updateStats();
+
+}
+
+function checkMood(){
+
+if(food<25){
+
+document.getElementById(
+"moodText"
+).innerHTML=
+"🍖 Dyret er sultent!";
+
+}
+
+if(energy<25){
+
+document.getElementById(
+"moodText"
+).innerHTML=
+"😴 Dyret er slitent!";
+
+}
+
+if(mood<25){
+
+document.getElementById(
+"moodText"
+).innerHTML=
+"😢 Dyret er trist!";
+
+}
 
 }
 
