@@ -3,110 +3,161 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🧱 Byggeverden</title>
+<title>🐶 Hundehus Builder</title>
 
 <style>
+
 body{
 margin:0;
 font-family:Arial,sans-serif;
-background:#eef6ff;
+background:linear-gradient(to bottom,#c7e9ff,#eef6ff);
 text-align:center;
-color:#123c73;
-}
-
-.container{
-max-width:1000px;
-margin:auto;
-padding:20px;
+overflow:hidden;
 }
 
 h1{
-font-size:40px;
+margin-top:15px;
+color:#123c73;
 }
 
-.stats{
+#game{
 display:flex;
-gap:15px;
 justify-content:center;
+align-items:flex-start;
+gap:40px;
+margin-top:20px;
 flex-wrap:wrap;
-margin-bottom:20px;
 }
 
-.stat{
-background:white;
-padding:14px 20px;
-border-radius:18px;
-font-weight:bold;
-box-shadow:0 4px 10px rgba(0,0,0,.12);
-}
+/* MODEL */
 
-#buildArea{
-display:grid;
-grid-template-columns:repeat(8,55px);
-grid-template-rows:repeat(6,55px);
-gap:4px;
-justify-content:center;
+.panel{
 background:white;
 padding:20px;
 border-radius:25px;
-box-shadow:0 8px 20px rgba(0,0,0,.15);
-margin:auto;
-width:max-content;
+box-shadow:0 6px 18px rgba(0,0,0,.15);
 }
 
-.cell{
-width:55px;
-height:55px;
+.panel h2{
+margin-top:0;
+color:#123c73;
+}
+
+/* BUILD AREA */
+
+#buildArea{
+position:relative;
+width:320px;
+height:320px;
 background:#dbeafe;
-border-radius:10px;
+border-radius:20px;
+border:6px dashed #60a5fa;
+overflow:hidden;
+}
+
+/* PREVIEW HOUSE */
+
+.house{
+position:relative;
+width:220px;
+height:220px;
+margin:auto;
+margin-top:20px;
+}
+
+.roof{
+position:absolute;
+top:0;
+left:20px;
+width:0;
+height:0;
+border-left:90px solid transparent;
+border-right:90px solid transparent;
+border-bottom:90px solid #8b4513;
+}
+
+.walls{
+position:absolute;
+top:90px;
+left:40px;
+width:140px;
+height:110px;
+background:#c0392b;
+border:5px solid #922b21;
+}
+
+.door{
+position:absolute;
+bottom:0;
+left:50px;
+width:40px;
+height:65px;
+background:#6e2c00;
+}
+
+.window{
+position:absolute;
+top:20px;
+right:20px;
+width:35px;
+height:35px;
+background:#85c1e9;
+border:4px solid white;
+}
+
+/* DRAG ITEMS */
+
+.parts{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-top:25px;
+flex-wrap:wrap;
+}
+
+.part{
+width:100px;
+height:100px;
+border-radius:18px;
+cursor:grab;
+box-shadow:0 5px 12px rgba(0,0,0,.18);
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:30px;
-cursor:pointer;
-}
-
-.cell.correct{
-background:#86efac;
-}
-
-.cell.wrong{
-background:#fca5a5;
-}
-
-.tools{
-display:flex;
-gap:15px;
-justify-content:center;
-flex-wrap:wrap;
-margin-top:25px;
-}
-
-.tool{
-padding:18px 24px;
-border:none;
-border-radius:18px;
-font-size:28px;
+font-size:22px;
 font-weight:bold;
-cursor:pointer;
-background:#2563eb;
 color:white;
+user-select:none;
 }
 
-.tool.active{
-background:#10b981;
+.roofPart{
+background:#8b4513;
+}
+
+.wallPart{
+background:#c0392b;
+}
+
+.doorPart{
+background:#6e2c00;
+}
+
+.windowPart{
+background:#5dade2;
+}
+
+/* BUILD PIECES */
+
+.build-piece{
+position:absolute;
 }
 
 #message{
-font-size:24px;
+margin-top:20px;
+font-size:26px;
 font-weight:bold;
 color:#db2777;
-margin-top:20px;
 min-height:40px;
-}
-
-button{
-cursor:pointer;
 }
 
 #nextBtn{
@@ -115,21 +166,23 @@ margin-top:20px;
 padding:16px 30px;
 border:none;
 border-radius:18px;
-background:#f59e0b;
+background:#10b981;
 color:white;
 font-size:22px;
 font-weight:bold;
+cursor:pointer;
 }
 
 .back button{
-margin-top:25px;
-padding:16px 30px;
+margin-top:20px;
+padding:16px 28px;
 border:none;
 border-radius:18px;
-background:#123c73;
+background:#2563eb;
 color:white;
 font-size:20px;
 font-weight:bold;
+cursor:pointer;
 }
 
 </style>
@@ -137,195 +190,241 @@ font-weight:bold;
 
 <body>
 
-<div class="container">
+<h1>🐶 Hundehus Builder</h1>
 
-<h1>🧱 Byggeverden</h1>
+<div id="game">
 
-<div class="stats">
-<div class="stat">🏗️ Nivå: <span id="levelText">1</span></div>
-<div class="stat">⭐ Poeng: <span id="score">0</span></div>
-<div class="stat">🧱 Plassert: <span id="placed">0</span></div>
+<!-- MODEL -->
+
+<div class="panel">
+
+<h2>🏠 Modell</h2>
+
+<div class="house">
+
+<div class="roof"></div>
+
+<div class="walls">
+
+<div class="door"></div>
+
+<div class="window"></div>
+
 </div>
 
-<h2 id="buildName">🐶 Lite hundehus</h2>
+</div>
+
+</div>
+
+<!-- BUILD -->
+
+<div class="panel">
+
+<h2>🧱 Bygg her</h2>
 
 <div id="buildArea"></div>
 
-<div class="tools">
-<button class="tool" onclick="selectTool('🧱', this)">🧱 Vegg</button>
-<button class="tool" onclick="selectTool('🔺', this)">🔺 Tak</button>
-<button class="tool" onclick="selectTool('🚪', this)">🚪 Dør</button>
-<button class="tool" onclick="selectTool('🪟', this)">🪟 Vindu</button>
-<button class="tool" onclick="selectTool('🌳', this)">🌳 Tre</button>
 </div>
 
-<div id="message">Velg en kloss og bygg modellen 🧱</div>
+</div>
 
-<button id="nextBtn" onclick="nextLevel()">Neste nivå ➜</button>
+<!-- PARTS -->
+
+<div class="parts">
+
+<div class="part roofPart"
+draggable="true"
+data-type="roof">
+🏠 TAK
+</div>
+
+<div class="part wallPart"
+draggable="true"
+data-type="walls">
+🧱 VEGG
+</div>
+
+<div class="part doorPart"
+draggable="true"
+data-type="door">
+🚪 DØR
+</div>
+
+<div class="part windowPart"
+draggable="true"
+data-type="window">
+🪟 VINDU
+</div>
+
+</div>
+
+<div id="message">
+Dra delene inn i byggefeltet 🙂
+</div>
+
+<button id="nextBtn">
+🏆 Ferdig!
+</button>
 
 <div class="back">
-<button onclick="location.href='hundespill.html'">⬅️ Tilbake til spill</button>
-</div>
+
+<button onclick="location.href='hundespill.html'">
+⬅️ Tilbake til spill
+</button>
 
 </div>
 
 <script>
-const levels=[
-{
-name:"🐶 Lite hundehus",
-plan:[
-"........",
-"...🔺🔺...",
-"..🧱🧱🧱..",
-"..🧱🚪🧱..",
-"..🧱🧱🧱..",
-"........"
-]
-},
-{
-name:"🐱 Kattehus",
-plan:[
-"..🔺🔺🔺...",
-".🧱🧱🧱🧱..",
-".🧱🪟🚪🧱..",
-".🧱🧱🧱🧱..",
-"...🌳....",
-"........"
-]
-},
-{
-name:"🏠 Lite hus",
-plan:[
-"..🔺🔺🔺🔺..",
-".🧱🧱🧱🧱🧱.",
-".🧱🪟🧱🚪🧱.",
-".🧱🧱🧱🧱🧱.",
-"🌳......🌳",
-"........"
-]
-},
-{
-name:"🐶 Stor kennel",
-plan:[
-".🔺🔺🔺🔺🔺.",
-"🧱🧱🧱🧱🧱🧱",
-"🧱🚪🧱🪟🧱🧱",
-"🧱🧱🧱🧱🧱🧱",
-"🌳......🌳",
-"........"
-]
-}
-];
 
-let currentLevel=0;
-let selectedTool="";
-let score=0;
-let placed=0;
-let completed=0;
+const buildArea=
+document.getElementById(
+"buildArea"
+);
 
-function loadLevel(){
-placed=0;
-completed=0;
+let completed={
+roof:false,
+walls:false,
+door:false,
+window:false
+};
 
-document.getElementById("levelText").innerHTML=currentLevel+1;
-document.getElementById("buildName").innerHTML=levels[currentLevel].name;
-document.getElementById("placed").innerHTML=placed;
-document.getElementById("nextBtn").style.display="none";
-document.getElementById("message").innerHTML="Velg en kloss og bygg modellen 🧱";
+document.querySelectorAll(
+".part"
+).forEach(part=>{
 
-const area=document.getElementById("buildArea");
-area.innerHTML="";
+part.addEventListener(
+"dragstart",
+e=>{
 
-const plan=levels[currentLevel].plan;
+e.dataTransfer.setData(
+"text",
+part.dataset.type
+);
 
-for(let r=0;r<6;r++){
-for(let c=0;c<8;c++){
-const cell=document.createElement("div");
-cell.className="cell";
-cell.dataset.row=r;
-cell.dataset.col=c;
-cell.dataset.correct=plan[r][c];
-cell.onclick=()=>placeBlock(cell);
-area.appendChild(cell);
-}
-}
-}
-
-function selectTool(tool,button){
-selectedTool=tool;
-
-document.querySelectorAll(".tool").forEach(btn=>{
-btn.classList.remove("active");
 });
 
-button.classList.add("active");
+});
 
-document.getElementById("message").innerHTML=
-"Valgt kloss: "+tool;
-}
+buildArea.addEventListener(
+"dragover",
+e=>{
 
-function placeBlock(cell){
-if(selectedTool===""){
-document.getElementById("message").innerHTML="Velg en kloss først 🙂";
-return;
-}
+e.preventDefault();
 
-if(cell.innerHTML!=="") return;
+});
 
-const correct=cell.dataset.correct;
+buildArea.addEventListener(
+"drop",
+e=>{
 
-if(correct==="." || correct!==selectedTool){
-cell.innerHTML=selectedTool;
-cell.classList.add("wrong");
-score-=2;
-document.getElementById("message").innerHTML="❌ Feil kloss der!";
-}else{
-cell.innerHTML=selectedTool;
-cell.classList.add("correct");
-score+=10;
-placed++;
-completed++;
-document.getElementById("message").innerHTML="✅ Riktig plassert!";
-}
+e.preventDefault();
 
-document.getElementById("score").innerHTML=score;
-document.getElementById("placed").innerHTML=placed;
+const type=
+e.dataTransfer.getData(
+"text"
+);
+
+if(completed[type]) return;
+
+createPiece(type);
+
+completed[type]=true;
 
 checkComplete();
+
+});
+
+function createPiece(type){
+
+const piece=
+document.createElement("div");
+
+piece.className=
+"build-piece";
+
+if(type==="roof"){
+
+piece.style.top="40px";
+piece.style.left="60px";
+piece.style.width="0";
+piece.style.height="0";
+piece.style.borderLeft=
+"90px solid transparent";
+piece.style.borderRight=
+"90px solid transparent";
+piece.style.borderBottom=
+"90px solid #8b4513";
+
+}
+
+if(type==="walls"){
+
+piece.style.top="130px";
+piece.style.left="80px";
+piece.style.width="140px";
+piece.style.height="110px";
+piece.style.background="#c0392b";
+piece.style.border=
+"5px solid #922b21";
+
+}
+
+if(type==="door"){
+
+piece.style.top="180px";
+piece.style.left="130px";
+piece.style.width="40px";
+piece.style.height="65px";
+piece.style.background="#6e2c00";
+
+}
+
+if(type==="window"){
+
+piece.style.top="150px";
+piece.style.left="185px";
+piece.style.width="35px";
+piece.style.height="35px";
+piece.style.background="#85c1e9";
+piece.style.border=
+"4px solid white";
+
+}
+
+buildArea.appendChild(
+piece
+);
+
+document.getElementById(
+"message"
+).innerHTML=
+"✅ Bra jobbet!";
+
 }
 
 function checkComplete(){
-let needed=0;
-const plan=levels[currentLevel].plan;
 
-for(let r=0;r<6;r++){
-for(let c=0;c<8;c++){
-if(plan[r][c]!=="."){
-needed++;
-}
-}
-}
+if(
+completed.roof &&
+completed.walls &&
+completed.door &&
+completed.window
+){
 
-if(completed>=needed){
-document.getElementById("message").innerHTML=
-"🏆 Bygget er ferdig!";
-document.getElementById("nextBtn").style.display="inline-block";
-}
-}
+document.getElementById(
+"message"
+).innerHTML=
+"🏆 Hundehuset er ferdig!";
 
-function nextLevel(){
-currentLevel++;
+document.getElementById(
+"nextBtn"
+).style.display=
+"inline-block";
 
-if(currentLevel>=levels.length){
-alert("🏆 Gratulerer! Du fullførte Byggeverden!");
-location.reload();
-return;
 }
 
-loadLevel();
 }
 
-loadLevel();
 </script>
 
 </body>
