@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐶🐱 Dyresimulator 4.0</title>
+
+<style>
+
+body{
+margin:0;
+overflow:hidden;
+font-family:Arial,sans-serif;
+background:skyblue;
+}
+
+h1{
+position:absolute;
+top:10px;
+width:100%;
+text-align:center;
+color:white;
+text-shadow:2px 2px 4px black;
+z-index:100;
+}
+
+#game{
+position:relative;
+width:100vw;
+height:100vh;
+overflow:hidden;
+background:
+linear-gradient(to bottom,
+#87ceeb 0%,
+#87ceeb 70%,
+#7dd87d 70%,
+#7dd87d 100%);
+}
+
+/* SOL */
+
+#sun{
+position:absolute;
+top:40px;
+right:60px;
+width:100px;
+height:100px;
+background:yellow;
+border-radius:50%;
+box-shadow:0 0 40px yellow;
+}
+
+/* CLOUDS */
+
+.cloud{
+position:absolute;
+background:white;
+border-radius:50px;
+opacity:.9;
+}
+
+.cloud1{
+width:140px;
+height:60px;
+top:80px;
+left:100px;
+animation:cloudMove 50s linear infinite;
+}
+
+.cloud2{
+width:180px;
+height:70px;
+top:150px;
+left:500px;
+animation:cloudMove 70s linear infinite;
+}
+
+@keyframes cloudMove{
+from{
+transform:translateX(0);
+}
+to{
+transform:translateX(120vw);
+}
+}
+
+/* TREES */
+
+.tree{
+position:absolute;
+bottom:140px;
+width:70px;
+height:160px;
+}
+
+.tree .trunk{
+position:absolute;
+bottom:0;
+left:25px;
+width:20px;
+height:70px;
+background:#8b5a2b;
+}
+
+.tree .top{
+position:absolute;
+top:0;
+width:70px;
+height:100px;
+background:green;
+border-radius:50%;
+}
+
+.tree1{left:120px;}
+.tree2{left:900px;}
+.tree3{left:1450px;}
+
+/* HOUSE */
+
+#house{
+position:absolute;
+right:150px;
+bottom:140px;
+width:220px;
+height:180px;
+background:#ffcc80;
+border:5px solid #8b5a2b;
+}
+
+#roof{
+position:absolute;
+top:-90px;
+left:-20px;
+width:0;
+height:0;
+border-left:130px solid transparent;
+border-right:130px solid transparent;
+border-bottom:90px solid #c62828;
+}
+
+#door{
+position:absolute;
+bottom:0;
+left:80px;
+width:60px;
+height:90px;
+background:#5d4037;
+}
+
+/* PET */
+
+#pet{
+position:absolute;
+left:100px;
+bottom:140px;
+width:160px;
+transition:left 4s linear;
+z-index:20;
+}
+
+.walking .leg{
+animation:walk .4s infinite alternate;
+}
+
+.walking .tail{
+animation:wag .3s infinite alternate;
+}
+
+.body{
+position:absolute;
+width:100px;
+height:70px;
+background:#c08457;
+border-radius:50px;
+top:50px;
+left:30px;
+}
+
+.head{
+position:absolute;
+width:70px;
+height:70px;
+background:#c08457;
+border-radius:50%;
+top:20px;
+left:95px;
+}
+
+.ear{
+position:absolute;
+width:20px;
+height:35px;
+background:#8b5a2b;
+border-radius:50%;
+top:-8px;
+}
+
+.ear.left{left:10px;}
+.ear.right{right:10px;}
+
+.eye{
+position:absolute;
+width:8px;
+height:8px;
+background:black;
+border-radius:50%;
+top:25px;
+}
+
+.eye.left{left:18px;}
+.eye.right{right:18px;}
+
+.tail{
+position:absolute;
+width:50px;
+height:12px;
+background:#8b5a2b;
+border-radius:20px;
+left:-35px;
+top:25px;
+transform-origin:right center;
+}
+
+.leg{
+position:absolute;
+width:14px;
+height:45px;
+background:#8b5a2b;
+bottom:-35px;
+border-radius:10px;
+}
+
+.leg1{left:10px;}
+.leg2{left:35px;}
+.leg3{right:35px;}
+.leg4{right:10px;}
+
+@keyframes walk{
+from{
+transform:rotate(15deg);
+}
+to{
+transform:rotate(-15deg);
+}
+}
+
+@keyframes wag{
+from{
+transform:rotate(-20deg);
+}
+to{
+transform:rotate(20deg);
+}
+}
+
+/* OBJECTS */
+
+.object{
+position:absolute;
+bottom:140px;
+font-size:70px;
+display:none;
+}
+
+#food{
+left:1300px;
+}
+
+#ball{
+left:800px;
+}
+
+#bed{
+left:500px;
+}
+
+/* UI */
+
+#message{
+position:absolute;
+top:90px;
+width:100%;
+text-align:center;
+font-size:30px;
+font-weight:bold;
+color:white;
+text-shadow:2px 2px 4px black;
+z-index:100;
+}
+
+.buttons{
+position:absolute;
+bottom:20px;
+width:100%;
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+z-index:100;
+}
+
+button{
+padding:16px 24px;
+border:none;
+border-radius:20px;
+font-size:20px;
+font-weight:bold;
+cursor:pointer;
+color:white;
+}
+
+.feed{background:#f59e0b;}
+.play{background:#10b981;}
+.sleep{background:#6366f1;}
+.love{background:#ec4899;}
+.switch{background:#374151;}
+
+.stats{
+position:absolute;
+top:50px;
+width:100%;
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+z-index:100;
+}
+
+.stat{
+background:white;
+padding:10px 16px;
+border-radius:16px;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🐶🐱 Dyresimulator 4.0</h1>
+
+<div id="game">
+
+<div id="sun"></div>
+
+<div class="cloud cloud1"></div>
+<div class="cloud cloud2"></div>
+
+<div class="tree tree1">
+<div class="top"></div>
+<div class="trunk"></div>
+</div>
+
+<div class="tree tree2">
+<div class="top"></div>
+<div class="trunk"></div>
+</div>
+
+<div class="tree tree3">
+<div class="top"></div>
+<div class="trunk"></div>
+</div>
+
+<div id="house">
+
+<div id="roof"></div>
+
+<div id="door"></div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+❤️ Humør:
+<span id="mood">80</span>
+</div>
+
+<div class="stat">
+⚡ Energi:
+<span id="energy">70</span>
+</div>
+
+<div class="stat">
+🍖 Mat:
+<span id="foodStat">75</span>
+</div>
+
+</div>
+
+<div id="message">
+😊 Dyret koser seg ute!
+</div>
+
+<div id="food"
+class="object">
+🍖
+</div>
+
+<div id="ball"
+class="object">
+🎾
+</div>
+
+<div id="bed"
+class="object">
+🛏️
+</div>
+
+<div id="pet">
+
+<div class="body">
+
+<div class="tail"></div>
+
+<div class="leg leg1"></div>
+<div class="leg leg2"></div>
+<div class="leg leg3"></div>
+<div class="leg leg4"></div>
+
+</div>
+
+<div class="head">
+
+<div class="ear left"></div>
+<div class="ear right"></div>
+
+<div class="eye left"></div>
+<div class="eye right"></div>
+
+</div>
+
+</div>
+
+<div class="buttons">
+
+<button class="feed"
+onclick="feedPet()">
+🍖 Mat
+</button>
+
+<button class="play"
+onclick="playPet()">
+🎾 Lek
+</button>
+
+<button class="sleep"
+onclick="sleepPet()">
+😴 Sov
+</button>
+
+<button class="love"
+onclick="lovePet()">
+❤️ Kos
+</button>
+
+<button class="switch"
+onclick="switchPet()">
+🐶 / 🐱
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let mood=80;
+let energy=70;
+let food=75;
+
+let currentPet="dog";
+
+const pet=
+document.getElementById("pet");
+
+function updateStats(){
+
+document.getElementById(
+"mood"
+).innerHTML=mood;
+
+document.getElementById(
+"energy"
+).innerHTML=energy;
+
+document.getElementById(
+"foodStat"
+).innerHTML=food;
+
+}
+
+function walkTo(x){
+
+pet.classList.add("walking");
+
+pet.style.left=x+"px";
+
+setTimeout(()=>{
+
+pet.classList.remove("walking");
+
+},4000);
+
+}
+
+function hideObjects(){
+
+document.getElementById(
+"food"
+).style.display="none";
+
+document.getElementById(
+"ball"
+).style.display="none";
+
+document.getElementById(
+"bed"
+).style.display="none";
+
+}
+
+function feedPet(){
+
+hideObjects();
+
+document.getElementById(
+"food"
+).style.display="block";
+
+walkTo(1180);
+
+document.getElementById(
+"message"
+).innerHTML=
+"🍖 Dyret går til matskålen og spiser!";
+
+food+=10;
+mood+=5;
+
+if(food>100)food=100;
+if(mood>100)mood=100;
+
+updateStats();
+
+}
+
+function playPet(){
+
+hideObjects();
+
+document.getElementById(
+"ball"
+).style.display="block";
+
+walkTo(700);
+
+document.getElementById(
+"message"
+).innerHTML=
+"🎾 Dyret løper etter ballen!";
+
+mood+=10;
+energy-=10;
+
+if(mood>100)mood=100;
+if(energy<0)energy=0;
+
+updateStats();
+
+}
+
+function sleepPet(){
+
+hideObjects();
+
+document.getElementById(
+"bed"
+).style.display="block";
+
+walkTo(400);
+
+document.getElementById(
+"message"
+).innerHTML=
+"😴 Dyret går til sengen og sover!";
+
+energy+=20;
+
+if(energy>100)energy=100;
+
+updateStats();
+
+}
+
+function lovePet(){
+
+document.getElementById(
+"message"
+).innerHTML=
+"❤️ Dyret blir kjempeglad!";
+
+mood+=15;
+
+if(mood>100)mood=100;
+
+updateStats();
+
+}
+
+function switchPet(){
+
+const body=
+document.querySelector(
+".body"
+);
+
+const head=
+document.querySelector(
+".head"
+);
+
+if(currentPet==="dog"){
+
+currentPet="cat";
+
+body.style.background="#999";
+head.style.background="#999";
+
+document.getElementById(
+"message"
+).innerHTML=
+"🐱 Katten er klar!";
+
+}else{
+
+currentPet="dog";
+
+body.style.background="#c08457";
+head.style.background="#c08457";
+
+document.getElementById(
+"message"
+).innerHTML=
+"🐶 Hunden er tilbake!";
+
+}
+
+}
+
+setInterval(()=>{
+
+food-=1;
+energy-=1;
+
+if(food<0)food=0;
+if(energy<0)energy=0;
+
+if(food<30){
+
+document.getElementById(
+"message"
+).innerHTML=
+"🍖 Dyret er sultent!";
+
+}
+
+if(energy<25){
+
+document.getElementById(
+"message"
+).innerHTML=
+"😴 Dyret er trøtt!";
+
+}
+
+updateStats();
+
+},10000);
+
+updateStats();
+
+</script>
+
+</body>
+</html>
