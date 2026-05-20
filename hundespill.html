@@ -3,104 +3,197 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐶🐱 Hunde / Kattespill</title>
+<title>🧱 Byggeverden DELUXE</title>
 
 <style>
 
 body{
 margin:0;
 font-family:Arial,sans-serif;
-background:linear-gradient(to bottom,#fdf2f8,#eef6ff);
+background:linear-gradient(to bottom,#c7e9ff,#eef6ff);
 text-align:center;
+color:#123c73;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
 }
 
 h1{
 font-size:42px;
-margin-top:30px;
 margin-bottom:10px;
-color:#7a284f;
 }
 
-.subtitle{
-font-size:20px;
-margin-bottom:35px;
-color:#444;
-}
-
-.menu-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:20px;
-padding:20px;
-max-width:1100px;
-margin:auto;
-}
-
-.game-btn{
+.stats{
 display:flex;
-flex-direction:column;
 justify-content:center;
-align-items:center;
+gap:15px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
 
-min-height:180px;
-
-padding:25px;
-
-border:none;
-border-radius:28px;
-
-font-size:28px;
+.stat{
+background:white;
+padding:14px 22px;
+border-radius:18px;
 font-weight:bold;
+font-size:20px;
+box-shadow:0 4px 10px rgba(0,0,0,.12);
+}
 
-cursor:pointer;
+#buildName{
+margin-bottom:20px;
+font-size:30px;
+}
 
-color:white;
-
+#buildArea{
+display:grid;
+grid-template-columns:repeat(10,60px);
+grid-template-rows:repeat(7,60px);
+gap:4px;
+justify-content:center;
+background:#93c5fd;
+padding:20px;
+border-radius:30px;
 box-shadow:0 8px 20px rgba(0,0,0,.15);
+margin:auto;
+width:max-content;
+}
 
+.cell{
+width:60px;
+height:60px;
+background:#dbeafe;
+border-radius:10px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:34px;
+font-weight:bold;
+transition:.15s;
+}
+
+.cell:hover{
+transform:scale(1.04);
+}
+
+.correct{
+outline:4px solid #10b981;
+}
+
+.wrong{
+animation:shake .2s 2;
+}
+
+@keyframes shake{
+0%{transform:translateX(0)}
+25%{transform:translateX(-4px)}
+50%{transform:translateX(4px)}
+75%{transform:translateX(-4px)}
+100%{transform:translateX(0)}
+}
+
+.tools{
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+margin-top:25px;
+}
+
+.tool{
+width:90px;
+height:90px;
+border:none;
+border-radius:20px;
+cursor:pointer;
+font-size:42px;
+font-weight:bold;
 transition:.2s;
+box-shadow:0 5px 12px rgba(0,0,0,.15);
 }
 
-.game-btn:hover{
-transform:translateY(-5px) scale(1.02);
+.tool:hover{
+transform:scale(1.05);
 }
 
-.game-btn span{
-font-size:16px;
-font-weight:normal;
-margin-top:12px;
-line-height:1.4;
+.active{
+outline:5px solid #10b981;
 }
 
-.quiz{
-background:linear-gradient(135deg,#60a5fa,#2563eb);
+.wall{
+background:
+repeating-linear-gradient(
+45deg,
+#b91c1c,
+#b91c1c 10px,
+#991b1b 10px,
+#991b1b 20px
+);
+color:white;
 }
 
-.catquiz{
-background:linear-gradient(135deg,#f472b6,#db2777);
+.roof{
+background:
+repeating-linear-gradient(
+90deg,
+#7c2d12,
+#7c2d12 8px,
+#9a3412 8px,
+#9a3412 16px
+);
+color:white;
 }
 
-.puzzle{
-background:linear-gradient(135deg,#34d399,#059669);
+.window{
+background:#60a5fa;
+color:white;
 }
 
-.catpuzzle{
-background:linear-gradient(135deg,#fb7185,#e11d48);
+.door{
+background:#78350f;
+color:white;
 }
 
-.lab{
-background:linear-gradient(135deg,#fbbf24,#f59e0b);
+.tree{
+background:#15803d;
+color:white;
 }
 
-.sim{
-background:linear-gradient(135deg,#a78bfa,#7c3aed);
+#message{
+font-size:26px;
+font-weight:bold;
+margin-top:20px;
+color:#db2777;
+min-height:40px;
 }
 
-.footer{
-margin-top:40px;
-margin-bottom:30px;
-font-size:15px;
-color:#666;
+#nextBtn{
+display:none;
+margin-top:20px;
+padding:18px 30px;
+border:none;
+border-radius:20px;
+background:#f59e0b;
+color:white;
+font-size:22px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.back button{
+margin-top:25px;
+padding:16px 30px;
+border:none;
+border-radius:20px;
+background:#123c73;
+color:white;
+font-size:20px;
+font-weight:bold;
+cursor:pointer;
 }
 
 </style>
@@ -108,112 +201,346 @@ color:#666;
 
 <body>
 
-<h1>🐶🐱 Hunde / Kattespill</h1>
+<div class="container">
 
-<div class="subtitle">
-Velg et spill 🎮
+<h1>🧱 Byggeverden DELUXE</h1>
+
+<div class="stats">
+
+<div class="stat">
+🏗️ Nivå:
+<span id="levelText">1</span>
 </div>
 
-<div class="menu-grid">
+<div class="stat">
+⭐ Poeng:
+<span id="score">0</span>
+</div>
 
-<button class="game-btn quiz"
-onclick="location.href='hundelandquiz.html'">
+<div class="stat">
+🧱 Bygget:
+<span id="placed">0</span>
+</div>
 
-🐶 Hundeland Quiz
+</div>
 
-<span>
-Gjett hvilket land hunderasen kommer fra
-</span>
+<h2 id="buildName">
+🐶 Hundehus
+</h2>
 
+<div id="buildArea"></div>
+
+<div class="tools">
+
+<button class="tool wall"
+onclick="selectTool('🧱',this)">
+🧱
 </button>
 
-<button class="game-btn catquiz"
-onclick="location.href='kattelandquiz.html'">
-
-🐱 Katteland Quiz
-
-<span>
-Gjett hvilket land katterasen kommer fra
-</span>
-
+<button class="tool roof"
+onclick="selectTool('🏠',this)">
+🏠
 </button>
 
-<button class="game-btn puzzle"
-onclick="location.href='puslespill.html'">
-
-🐶🧩 Hundepuslespill
-
-<span>
-Bygg hundebilder i flere nivåer
-</span>
-
-</button>
-<button class="game-btn sim"
-onclick="location.href='byggeverden.html'">
-
-🧱 Byggeverden
-
-<span>
-Bygg hundehus, kattehus og små bygg med klosser
-</span>
-
-
-
+<button class="tool window"
+onclick="selectTool('🪟',this)">
+🪟
 </button>
 
-
-
+<button class="tool door"
+onclick="selectTool('🚪',this)">
+🚪
 </button>
 
-<button class="game-btn catpuzzle"
-onclick="location.href='kattepuslespill.html'">
-
-🐱🧩 Kattepuslespill
-
-<span>
-Puslespill med fine kattebilder
-</span>
-
-</button>
-
-<button class="game-btn sim"
-onclick="location.href='dyresimulator4.html'">
-
-🌍 Dyresimulator 4.0
-
-<span>
-Levende hund og katt i eget miljø
-</span>
-
-</button>
-
-
-
-
-<span>
-Finn veien gjennom labyrinten
-</span>
-
-</button>
-
-<button class="game-btn sim"
-
-onclick="location.href='dyresimulator2.html'"
-🎮 Dyresimulator
-
-<span>
-Utforsk dyreverdenen
-</span>
-
+<button class="tool tree"
+onclick="selectTool('🌳',this)">
+🌳
 </button>
 
 </div>
 
-<div class="footer">
+<div id="message">
+Velg byggedeler og bygg huset 🧱
+</div>
 
-🐶🐱 Spillportal laget med GitHub Pages
+<button id="nextBtn"
+onclick="nextLevel()">
+
+Neste nivå ➜
+
+</button>
+
+<div class="back">
+
+<button onclick="location.href='hundespill.html'">
+⬅️ Tilbake til spill
+</button>
 
 </div>
+
+</div>
+
+<script>
+
+const levels=[
+
+{
+name:"🐶 Hundehus",
+plan:[
+"..........",
+"...🏠🏠.....",
+"..🧱🧱🧱....",
+"..🧱🚪🧱....",
+"..🧱🧱🧱....",
+"...🌳......",
+".........."
+]
+},
+
+{
+name:"🐱 Kattehus",
+plan:[
+"...🏠🏠🏠...",
+"..🧱🧱🧱🧱..",
+"..🧱🪟🚪🧱..",
+"..🧱🧱🧱🧱..",
+"...🌳..🌳..",
+"..........",
+".........."
+]
+},
+
+{
+name:"🏠 Lite Hus",
+plan:[
+"..🏠🏠🏠🏠..",
+".🧱🧱🧱🧱🧱.",
+".🧱🪟🧱🚪🧱.",
+".🧱🧱🧱🧱🧱.",
+".🌳......🌳",
+"..........",
+".........."
+]
+}
+
+];
+
+let currentLevel=0;
+let selectedTool="";
+let score=0;
+let placed=0;
+let completed=0;
+
+function loadLevel(){
+
+placed=0;
+completed=0;
+
+document.getElementById(
+"levelText"
+).innerHTML=currentLevel+1;
+
+document.getElementById(
+"buildName"
+).innerHTML=
+levels[currentLevel].name;
+
+document.getElementById(
+"placed"
+).innerHTML=placed;
+
+document.getElementById(
+"nextBtn"
+).style.display="none";
+
+document.getElementById(
+"message"
+).innerHTML=
+"Velg byggedeler og bygg huset 🧱";
+
+const area=
+document.getElementById(
+"buildArea"
+);
+
+area.innerHTML="";
+
+const plan=
+levels[currentLevel].plan;
+
+for(let r=0;r<7;r++){
+
+for(let c=0;c<10;c++){
+
+const cell=
+document.createElement("div");
+
+cell.className="cell";
+
+cell.dataset.correct=
+plan[r][c];
+
+cell.onclick=
+()=>placeBlock(cell);
+
+area.appendChild(cell);
+
+}
+
+}
+
+}
+
+function selectTool(tool,button){
+
+selectedTool=tool;
+
+document.querySelectorAll(
+".tool"
+).forEach(btn=>{
+
+btn.classList.remove(
+"active"
+);
+
+});
+
+button.classList.add(
+"active"
+);
+
+}
+
+function placeBlock(cell){
+
+if(selectedTool===""){
+
+document.getElementById(
+"message"
+).innerHTML=
+"Velg en byggedel først 🙂";
+
+return;
+
+}
+
+if(cell.innerHTML!=="") return;
+
+const correct=
+cell.dataset.correct;
+
+if(
+correct==="." ||
+correct!==selectedTool
+){
+
+cell.innerHTML=selectedTool;
+
+cell.classList.add(
+"wrong"
+);
+
+score-=2;
+
+document.getElementById(
+"message"
+).innerHTML=
+"❌ Feil byggedel!";
+
+}else{
+
+cell.innerHTML=selectedTool;
+
+cell.classList.add(
+"correct"
+);
+
+score+=10;
+
+placed++;
+completed++;
+
+document.getElementById(
+"message"
+).innerHTML=
+"✅ Perfekt plassert!";
+
+}
+
+document.getElementById(
+"score"
+).innerHTML=score;
+
+document.getElementById(
+"placed"
+).innerHTML=placed;
+
+checkComplete();
+
+}
+
+function checkComplete(){
+
+let needed=0;
+
+const plan=
+levels[currentLevel].plan;
+
+for(let r=0;r<7;r++){
+
+for(let c=0;c<10;c++){
+
+if(plan[r][c]!=="."){
+
+needed++;
+
+}
+
+}
+
+}
+
+if(completed>=needed){
+
+document.getElementById(
+"message"
+).innerHTML=
+"🏆 Bygget er ferdig!";
+
+document.getElementById(
+"nextBtn"
+).style.display=
+"inline-block";
+
+}
+
+}
+
+function nextLevel(){
+
+currentLevel++;
+
+if(
+currentLevel>=levels.length
+){
+
+alert(
+"🏆 Gratulerer! Du fullførte Byggeverden DELUXE!"
+);
+
+location.reload();
+
+return;
+
+}
+
+loadLevel();
+
+}
+
+loadLevel();
+
+</script>
 
 </body>
 </html>
