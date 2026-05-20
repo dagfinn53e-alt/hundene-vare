@@ -314,11 +314,16 @@ piece%size;
 div.style.backgroundImage=
 `url('bilder/${imageFile}')`;
 
-div.style.backgroundSize=
-`${size*100}%`;
+div.style.backgroundSize =
+`${size * 100}% ${size * 100}%`;
 
-div.style.backgroundPosition=
-`${col*(100/(size-1))}% ${row*(100/(size-1))}%`;
+div.style.backgroundPosition =
+`${(col * 100) / (size - 1)}% ${(row * 100) / (size - 1)}%`;
+
+div.style.backgroundRepeat = "no-repeat";
+
+
+
 
 div.onclick=()=>selectPiece(index);
 
