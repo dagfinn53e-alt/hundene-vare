@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎁 Bonusbanen</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:
+linear-gradient(to bottom,#fef3c7,#fde68a);
+text-align:center;
+overflow-x:hidden;
+color:#92400e;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+h1{
+font-size:48px;
+margin-top:10px;
+}
+
+.stats{
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.stat{
+background:white;
+padding:14px 20px;
+border-radius:18px;
+font-size:20px;
+font-weight:bold;
+box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+
+#message{
+font-size:28px;
+font-weight:bold;
+color:#d97706;
+margin:20px;
+min-height:40px;
+}
+
+#gameBoard{
+display:grid;
+grid-template-columns:repeat(4,110px);
+gap:15px;
+justify-content:center;
+margin-top:20px;
+}
+
+/* CARD */
+
+.card{
+width:110px;
+height:110px;
+perspective:1000px;
+cursor:pointer;
+transition:.2s;
+animation:pop .4s;
+}
+
+@keyframes pop{
+from{
+transform:scale(.3);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.card:hover{
+transform:scale(1.05);
+}
+
+.inner{
+position:relative;
+width:100%;
+height:100%;
+transition:transform .6s;
+transform-style:preserve-3d;
+}
+
+.card.flipped .inner{
+transform:rotateY(180deg);
+}
+
+.front,.back{
+position:absolute;
+width:100%;
+height:100%;
+backface-visibility:hidden;
+border-radius:22px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:54px;
+box-shadow:0 6px 14px rgba(0,0,0,.18);
+}
+
+.front{
+background:
+linear-gradient(
+135deg,
+#f59e0b,
+#fcd34d
+);
+color:white;
+}
+
+.back{
+background:white;
+transform:rotateY(180deg);
+}
+
+.correct .back{
+box-shadow:
+0 0 35px gold;
+animation:goldGlow .8s infinite alternate;
+}
+
+@keyframes goldGlow{
+from{
+transform:rotateY(180deg) scale(1);
+}
+to{
+transform:rotateY(180deg) scale(1.08);
+}
+}
+
+.wrong{
+animation:shake .25s 2;
+}
+
+@keyframes shake{
+0%{transform:translateX(0)}
+25%{transform:translateX(-6px)}
+50%{transform:translateX(6px)}
+75%{transform:translateX(-6px)}
+100%{transform:translateX(0)}
+}
+
+/* BONUS STARS */
+
+.star{
+position:fixed;
+font-size:35px;
+opacity:.12;
+animation:float 10s linear infinite;
+pointer-events:none;
+}
+
+@keyframes float{
+from{
+transform:translateY(110vh);
+}
+to{
+transform:translateY(-120vh);
+}
+}
+
+/* WIN */
+
+#winBox{
+display:none;
+background:white;
+padding:30px;
+border-radius:25px;
+box-shadow:0 8px 20px rgba(0,0,0,.18);
+max-width:500px;
+margin:30px auto;
+}
+
+#winBox h2{
+font-size:42px;
+color:#d97706;
+}
+
+button{
+margin-top:20px;
+padding:16px 28px;
+border:none;
+border-radius:18px;
+background:#f59e0b;
+color:white;
+font-size:20px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.backBtn{
+background:#123c73;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="star" style="left:10%;">⭐</div>
+<div class="star" style="left:35%;animation-delay:2s;">✨</div>
+<div class="star" style="left:60%;animation-delay:5s;">⭐</div>
+<div class="star" style="left:85%;animation-delay:7s;">✨</div>
+
+<div class="container">
+
+<h1>🎁 Bonusbanen</h1>
+
+<div class="stats">
+
+<div class="stat">
+⭐ Poeng:
+<span id="score">0</span>
+</div>
+
+<div class="stat">
+🔥 Combo:
+<span id="combo">0</span>
+</div>
+
+<div class="stat">
+🎁 Bonus:
+<span id="bonusCount">0</span>
+</div>
+
+<div class="stat">
+⏱️ Tid:
+<span id="time">0</span>
+</div>
+
+</div>
+
+<div id="message">
+
+🎁 Finn bonuskort og samle poeng!
+
+</div>
+
+<div id="gameBoard"></div>
+
+<div id="winBox">
+
+<h2>🏆 Bonusbanen fullført!</h2>
+
+<div style="font-size:50px;">
+⭐⭐⭐
+</div>
+
+<p id="finalScore"></p>
+
+<button onclick="startGame()">
+
+🔄 Spill igjen
+
+</button>
+
+</div>
+
+<button class="backBtn"
+onclick="location.href='memorymap.html'">
+
+⬅️ Tilbake til kart
+
+</button>
+
+</div>
+
+<script>
+
+const symbols=[
+
+"🎁","🎁",
+"⭐","⭐",
+"💎","💎",
+"🪙","🪙",
+"🎉","🎉",
+"👑","👑",
+"💰","💰",
+"✨","✨"
+
+];
+
+let cards=[];
+let flipped=[];
+let matched=0;
+let score=0;
+let combo=0;
+let bonusCount=0;
+let timer=0;
+let interval;
+let lock=false;
+
+function startGame(){
+
+clearInterval(interval);
+
+cards=[...symbols];
+
+cards.sort(()=>Math.random()-0.5);
+
+flipped=[];
+matched=0;
+score=0;
+combo=0;
+bonusCount=0;
+timer=0;
+lock=false;
+
+updateStats();
+
+document.getElementById(
+"winBox"
+).style.display="none";
+
+document.getElementById(
+"message"
+).innerHTML=
+"🎁 Finn bonuskort og samle poeng!";
+
+const board=
+document.getElementById(
+"gameBoard"
+);
+
+board.innerHTML="";
+
+cards.forEach(symbol=>{
+
+const card=
+document.createElement("div");
+
+card.className="card";
+
+card.dataset.symbol=symbol;
+
+card.innerHTML=`
+
+<div class="inner">
+
+<div class="front">
+🎁
+</div>
+
+<div class="back">
+${symbol}
+</div>
+
+</div>
+
+`;
+
+card.onclick=
+()=>flipCard(card);
+
+board.appendChild(card);
+
+});
+
+interval=setInterval(()=>{
+
+timer++;
+
+document.getElementById(
+"time"
+).innerHTML=timer;
+
+},1000);
+
+}
+
+function flipCard(card){
+
+if(lock)return;
+
+if(flipped.length>=2)return;
+
+if(card.classList.contains(
+"flipped"
+)) return;
+
+if(card.classList.contains(
+"correct"
+)) return;
+
+card.classList.add(
+"flipped"
+);
+
+flipped.push(card);
+
+if(flipped.length===2){
+
+checkMatch();
+
+}
+
+}
+
+function checkMatch(){
+
+lock=true;
+
+const a=flipped[0];
+const b=flipped[1];
+
+if(
+a.dataset.symbol===
+b.dataset.symbol
+){
+
+a.classList.add(
+"correct"
+);
+
+b.classList.add(
+"correct"
+);
+
+matched+=2;
+
+combo++;
+
+if(a.dataset.symbol==="🎁"){
+
+score+=40;
+
+bonusCount++;
+
+document.getElementById(
+"message"
+).innerHTML=
+"🎁 SUPER BONUS! +40 poeng!";
+
+}else{
+
+score+=12+(combo*4);
+
+document.getElementById(
+"message"
+).innerHTML=
+"✨ Flott bonus-par!";
+
+}
+
+flipped=[];
+
+lock=false;
+
+updateStats();
+
+if(
+matched===cards.length
+){
+
+winGame();
+
+}
+
+}else{
+
+combo=0;
+
+score=Math.max(
+0,
+score-3
+);
+
+a.classList.add(
+"wrong"
+);
+
+b.classList.add(
+"wrong"
+);
+
+document.getElementById(
+"message"
+).innerHTML=
+"❌ Feil bonuskort";
+
+updateStats();
+
+setTimeout(()=>{
+
+a.classList.remove(
+"flipped",
+"wrong"
+);
+
+b.classList.remove(
+"flipped",
+"wrong"
+);
+
+flipped=[];
+
+lock=false;
+
+},900);
+
+}
+
+}
+
+function updateStats(){
+
+document.getElementById(
+"score"
+).innerHTML=score;
+
+document.getElementById(
+"combo"
+).innerHTML=combo;
+
+document.getElementById(
+"bonusCount"
+).innerHTML=bonusCount;
+
+document.getElementById(
+"time"
+).innerHTML=timer;
+
+}
+
+function winGame(){
+
+clearInterval(interval);
+
+document.getElementById(
+"winBox"
+).style.display=
+"block";
+
+document.getElementById(
+"finalScore"
+).innerHTML=
+`⭐ Poeng: ${score}<br>
+⏱️ Tid: ${timer}s<br>
+🎁 Bonuskort: ${bonusCount}`;
+
+document.getElementById(
+"message"
+).innerHTML=
+"🏆 Bonusbanen er fullført!";
+
+}
+
+startGame();
+
+</script>
+
+</body>
+</html>
