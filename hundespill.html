@@ -10,97 +10,79 @@
 body{
 margin:0;
 font-family:Arial,sans-serif;
-background:linear-gradient(to bottom,#fdf2f8,#eef6ff);
+background:linear-gradient(to bottom,#dbeafe,#f0f9ff);
 text-align:center;
+color:#123c73;
 }
 
 h1{
-font-size:42px;
-margin-top:30px;
-margin-bottom:10px;
-color:#7a284f;
+font-size:52px;
+margin-top:20px;
 }
 
 .subtitle{
-font-size:20px;
-margin-bottom:35px;
-color:#444;
+font-size:28px;
+margin-bottom:30px;
 }
 
-.menu-grid{
+.games{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:20px;
-padding:20px;
-max-width:1100px;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;
+max-width:1200px;
 margin:auto;
+padding:20px;
 }
 
 .game-btn{
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-
-min-height:180px;
-
-padding:25px;
-
 border:none;
 border-radius:28px;
-
-font-size:28px;
-font-weight:bold;
-
-cursor:pointer;
-
+padding:35px 20px;
 color:white;
-
+font-size:34px;
+font-weight:bold;
+cursor:pointer;
 box-shadow:0 8px 20px rgba(0,0,0,.15);
-
 transition:.2s;
+min-height:220px;
 }
 
 .game-btn:hover{
-transform:translateY(-5px) scale(1.02);
+transform:scale(1.04);
 }
 
 .game-btn span{
-font-size:16px;
+display:block;
+font-size:20px;
+margin-top:18px;
 font-weight:normal;
-margin-top:12px;
-line-height:1.4;
+line-height:1.5;
 }
 
-.quiz{
-background:linear-gradient(135deg,#60a5fa,#2563eb);
+/* COLORS */
+
+.blue{
+background:linear-gradient(135deg,#2563eb,#60a5fa);
 }
 
-.catquiz{
-background:linear-gradient(135deg,#f472b6,#db2777);
+.purple{
+background:linear-gradient(135deg,#c026d3,#ec4899);
 }
 
-.puzzle{
-background:linear-gradient(135deg,#34d399,#059669);
+.green{
+background:linear-gradient(135deg,#10b981,#34d399);
 }
 
-.catpuzzle{
-background:linear-gradient(135deg,#fb7185,#e11d48);
+.orange{
+background:linear-gradient(135deg,#f59e0b,#fbbf24);
 }
 
-.lab{
-background:linear-gradient(135deg,#fbbf24,#f59e0b);
+.red{
+background:linear-gradient(135deg,#ef4444,#fb7185);
 }
 
-.sim{
-background:linear-gradient(135deg,#a78bfa,#7c3aed);
-}
-
-.footer{
-margin-top:40px;
-margin-bottom:30px;
-font-size:15px;
-color:#666;
+.dark{
+background:linear-gradient(135deg,#1e293b,#334155);
 }
 
 </style>
@@ -111,12 +93,16 @@ color:#666;
 <h1>🐶🐱 Hunde / Kattespill</h1>
 
 <div class="subtitle">
+
 Velg et spill 🎮
+
 </div>
 
-<div class="menu-grid">
+<div class="games">
 
-<button class="game-btn quiz"
+<!-- HUNDELAND -->
+
+<button class="game-btn blue"
 onclick="location.href='hundelandquiz.html'">
 
 🐶 Hundeland Quiz
@@ -127,7 +113,9 @@ Gjett hvilket land hunderasen kommer fra
 
 </button>
 
-<button class="game-btn catquiz"
+<!-- KATTELAND -->
+
+<button class="game-btn purple"
 onclick="location.href='kattelandquiz.html'">
 
 🐱 Katteland Quiz
@@ -138,55 +126,22 @@ Gjett hvilket land katterasen kommer fra
 
 </button>
 
-<button class="game-btn puzzle"
-onclick="location.href='puslespill.html'">
+<!-- HUNDEPUSLESPILL -->
 
-🐶🧩 Hundepuslespill
+<button class="game-btn green"
+onclick="location.href='hundepuslespill.html'">
+
+🧩 Hundepuslespill
 
 <span>
 Bygg hundebilder i flere nivåer
 </span>
 
-<button class="game-btn sim"
-onclick="location.href='memory-kennel.html'">
-
-🏡 Kennelen
-
-<span>
-Bonuskort, combo og kennel-memory
-</span>
-
-
-
-
-
-</button>
-<button class="game-btn memory"
-onclick="location.href='memory.html'">
-
-🧠 Memory Spill
-
-<span>
-Finn like bilder og tren hukommelsen
-</span>
-<button class="game-btn sim"
-onclick="location.href='memory-darkforest.html'">
-
-🌲 Den mørke skogen
-
-<span>
-Dark Memory med tåke, skog og skjulte kort
-</span>
-
-
-
-
-
-
-
 </button>
 
-<button class="game-btn catpuzzle"
+<!-- KATTEPUSLESPILL -->
+
+<button class="game-btn red"
 onclick="location.href='kattepuslespill.html'">
 
 🐱🧩 Kattepuslespill
@@ -197,52 +152,44 @@ Puslespill med fine kattebilder
 
 </button>
 
-<button class="game-btn sim"
+<!-- BYGGEVERDEN -->
+
+<button class="game-btn orange"
+onclick="location.href='byggeverden.html'">
+
+🧱 Byggeverden
+
+<span>
+Bygg hundehus, kennel og kreative bygg
+</span>
+
+</button>
+
+<!-- KENNEL BUILDER -->
+
+<button class="game-btn blue"
+onclick="location.href='kennelbuilder.html'">
+
+🏡 Kennel Builder
+
+<span>
+Bygg kennel med hus, gjerder, trær og hunder
+</span>
+
+</button>
+
+<!-- MEMORY -->
+
+<button class="game-btn dark"
 onclick="location.href='memorymap.html'">
 
 🗺️ Memory Adventure MAP
 
 <span>
-Reis gjennom memory-verden med nivåer og utfordringer
+Alle memoryspill samlet i én stor adventure-verden
 </span>
 
 </button>
-
-
-
-
-
-
-
-<button class="game-btn sim"
-onclick="location.href='memory1.html'">
-
-🧠 Memory Adventure
-
-<span>
-Dark Memory, bonuskort og adventure mode
-</span>
-
-
-
-
-
-</button
-
-
-
-
-
-
-
-</button>
-
-<button class="game-btn sim"
-
-onclick="location.href='dyresimulator2.html'"
-🎮 Dyresimulator
-
-
 
 </div>
 
