@@ -22,11 +22,19 @@ font-size:48px;
 margin-top:20px;
 }
 
+#message{
+font-size:28px;
+font-weight:bold;
+color:#db2777;
+margin-top:20px;
+min-height:40px;
+}
+
 .map{
 display:grid;
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:30px;
-max-width:1000px;
+max-width:1200px;
 margin:40px auto;
 padding:20px;
 }
@@ -40,6 +48,7 @@ transition:.2s;
 cursor:pointer;
 position:relative;
 overflow:hidden;
+min-height:220px;
 }
 
 .level:hover{
@@ -47,19 +56,14 @@ transform:scale(1.04);
 }
 
 .level h2{
-font-size:32px;
+font-size:34px;
 margin-bottom:10px;
 }
 
 .level p{
 font-size:20px;
 font-weight:bold;
-}
-
-.locked{
-opacity:.45;
-filter:grayscale(100%);
-cursor:not-allowed;
+line-height:1.4;
 }
 
 .stars{
@@ -74,6 +78,7 @@ margin-top:10px;
 
 .backBtn{
 margin-top:30px;
+margin-bottom:40px;
 padding:18px 30px;
 border:none;
 border-radius:20px;
@@ -84,24 +89,20 @@ font-weight:bold;
 cursor:pointer;
 }
 
-#message{
-font-size:28px;
-font-weight:bold;
-color:#db2777;
-margin-top:20px;
-min-height:40px;
-}
-
 .cloud{
 position:absolute;
 font-size:50px;
-opacity:.2;
-animation:float 10s infinite linear;
+opacity:.12;
+animation:float 12s infinite linear;
 }
 
 @keyframes float{
-0%{transform:translateX(-50px)}
-100%{transform:translateX(1200px)}
+0%{
+transform:translateX(-50px);
+}
+100%{
+transform:translateX(1200px);
+}
 }
 
 </style>
@@ -113,18 +114,19 @@ animation:float 10s infinite linear;
 
 <div id="message">
 
-Velg et område for å starte eventyret 🙂
+Velg et område for å starte eventyret 😄
 
 </div>
 
 <div class="map">
 
-<!-- LEVEL 1 -->
+<!-- HUNDEPARKEN -->
 
 <div class="level"
-onclick="openLevel(1)">
+onclick="location.href='memory1.html'">
 
-<div class="cloud" style="top:10px;left:0;">
+<div class="cloud"
+style="top:10px;left:0;">
 ☁️
 </div>
 
@@ -146,12 +148,13 @@ Lett memory med søte hunder
 
 </div>
 
-<!-- LEVEL 2 -->
+<!-- MØRKE SKOGEN -->
 
 <div class="level"
-onclick="openLevel(2)">
+onclick="location.href='memory-darkforest.html'">
 
-<div class="cloud" style="top:50px;left:20px;">
+<div class="cloud"
+style="top:20px;left:10px;">
 ☁️
 </div>
 
@@ -173,12 +176,13 @@ Dark Memory utfordring
 
 </div>
 
-<!-- LEVEL 3 -->
+<!-- KENNELEN -->
 
 <div class="level"
-onclick="openLevel(3)">
+onclick="location.href='memory-kennel.html'">
 
-<div class="cloud" style="top:40px;left:30px;">
+<div class="cloud"
+style="top:15px;left:15px;">
 ☁️
 </div>
 
@@ -187,7 +191,7 @@ onclick="openLevel(3)">
 </h2>
 
 <p>
-Finn bonuskort og combo
+Bonuskort og combo-memory
 </p>
 
 <div class="stars">
@@ -200,74 +204,13 @@ Finn bonuskort og combo
 
 </div>
 
-<!-- LEVEL 4 -->
-
-<div class="level"
-onclick="openLevel(4)">
-
-<div class="cloud" style="top:15px;left:0;">
-☁️
-</div>
-
-<h2>
-🌙 Natt-memory
-<div class="level"
-onclick="location.href='memory-night.html'">
-
-<h2>
-🌙 Natt-memory
-</h2>
-
-<p>
-Kortene skjules veldig raskt
-</p>
-
-<div class="stars">
-⭐ ⭐ ⭐
-</div>
-
-<div class="path">
-➡️
-</div>
-
-</div>
-
-</div>
-
-<!-- LEVEL 5 -->
-
-<div class="level"
-onclick="openLevel(5)">
-
-<div class="cloud" style="top:15px;left:0;">
-☁️
-</div>
-
-<h2>
-🔥 Mesterbanen
-</h2>
-
-<p>
-Ekspert memory utfordring
-</p>
-
-<div class="stars">
-⭐ ⭐ ⭐
-</div>
-
-<div class="path">
-🏆
-</div>
-
-</div>
-
-<!-- LOCKED -->
 <!-- BONUSBANEN -->
 
 <div class="level"
-onclick="location.href='memory-bonus-levels.html">
+onclick="location.href='memory-bonus-levels.html'">
 
-<div class="cloud" style="top:15px;left:0;">
+<div class="cloud"
+style="top:12px;left:20px;">
 ☁️
 </div>
 
@@ -289,44 +232,19 @@ Mange bonuskort og raske poeng
 
 </div>
 
-<!-- KATTEBYEN -->
-
-<div class="level"
-onclick="location.href='memory-catcity.html'">
-
-<div class="cloud" style="top:20px;left:20px;">
-☁️
-</div>
-
-<h2>
-🐱 Kattebyen
-</h2>
-
-<p>
-Søte katter og mjau-memory
-</p>
-
-<div class="stars">
-⭐ ⭐
-</div>
-
-<div class="path">
-➡️
-</div>
-
-</div>
-
-<!-- NATT-MEMORY -->
+<!-- NATT MEMORY -->
 
 <div class="level"
 onclick="location.href='memory-night.html'">
 
-<div class="cloud" style="top:15px;left:10px;">
+<div class="cloud"
+style="top:18px;left:8px;">
 ☁️
 </div>
 
-
-
+<h2>
+🌙 Natt-memory
+</h2>
 
 <p>
 Kortene skjules veldig raskt
@@ -344,10 +262,10 @@ Kortene skjules veldig raskt
 
 <!-- MESTERBANEN -->
 
-<div class="level"
-onclick="location.href='memory-master.html'">
+<div class="level">
 
-<div class="cloud" style="top:18px;left:15px;">
+<div class="cloud"
+style="top:20px;left:5px;">
 ☁️
 </div>
 
@@ -356,7 +274,7 @@ onclick="location.href='memory-master.html'">
 </h2>
 
 <p>
-Ekspertbane med mange kort
+Ekspertbane kommer snart
 </p>
 
 <div class="stars">
@@ -369,12 +287,6 @@ Ekspertbane med mange kort
 
 </div>
 
-
-
-</div>
-
-</div>
-
 </div>
 
 <button class="backBtn"
@@ -383,49 +295,6 @@ onclick="location.href='hundespill.html'">
 ⬅️ Tilbake til spill
 
 </button>
-
-<script>
-
-function openLevel(level){
-
-if(level===1){
-
-location.href=
-"memory1.html";
-
-}
-
-if(level===2){
-
-location.href=
-"memory1.html";
-
-}
-
-if(level===3){
-
-location.href=
-"memory1.html";
-
-}
-
-if(level===4){
-
-location.href=
-"memory1.html";
-
-}
-
-if(level===5){
-
-location.href=
-"memory1.html";
-
-}
-
-}
-
-</script>
 
 </body>
 </html>
