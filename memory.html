@@ -3,122 +3,187 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🧠 Memory Arcade</title>
+<title>🧠 Memory Arcade DELUXE</title>
 
 <style>
 
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#eef6ff;
-  color:#123c73;
-  text-align:center;
-  transition:0.4s;
-}
-
-.darkMode{
-  background:#111827;
-  color:white;
-}
-
-.container{
-  max-width:1200px;
-  margin:20px auto;
-  background:white;
-  padding:25px;
-  border-radius:25px;
-  box-shadow:0 10px 25px rgba(0,0,0,.12);
-}
-
-.darkMode .container{
-  background:#1f2937;
+margin:0;
+font-family:Arial,sans-serif;
+background:
+linear-gradient(to bottom,#dbeafe,#eef6ff);
+text-align:center;
+overflow-x:hidden;
+color:#123c73;
 }
 
 h1{
-  margin-bottom:10px;
+font-size:48px;
+margin-top:20px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+.topbar{
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+margin-bottom:20px;
 }
 
 select,button{
-  padding:14px;
-  margin:10px;
-  border:none;
-  border-radius:14px;
-  font-size:18px;
-  font-weight:bold;
+padding:14px 20px;
+border:none;
+border-radius:18px;
+font-size:18px;
+font-weight:bold;
+box-shadow:0 4px 10px rgba(0,0,0,.12);
 }
 
 button{
-  background:#2563eb;
-  color:white;
-  cursor:pointer;
-}
-
-button:hover{
-  background:#1d4ed8;
+background:#2563eb;
+color:white;
+cursor:pointer;
 }
 
 .stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:12px;
-  margin:20px 0;
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+margin-bottom:25px;
 }
 
 .stat{
-  background:#f1f5ff;
-  padding:14px;
-  border-radius:18px;
-  font-weight:bold;
-}
-
-.darkMode .stat{
-  background:#374151;
+background:white;
+padding:14px 20px;
+border-radius:18px;
+font-size:20px;
+font-weight:bold;
+box-shadow:0 4px 10px rgba(0,0,0,.12);
+min-width:140px;
 }
 
 #gameBoard{
-  display:grid;
-  gap:10px;
-  justify-content:center;
-  margin-top:25px;
+display:grid;
+gap:15px;
+justify-content:center;
+margin-top:20px;
 }
+
+/* MEMORY CARD */
 
 .card{
-  width:90px;
-  height:90px;
-  border-radius:16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:38px;
-  cursor:pointer;
-  user-select:none;
-  transition:0.3s;
-  background:#2563eb;
-  color:white;
+width:110px;
+height:110px;
+perspective:1000px;
+cursor:pointer;
 }
 
-.card.flipped{
-  background:white;
-  color:#111827;
-  transform:rotateY(180deg);
+.inner{
+position:relative;
+width:100%;
+height:100%;
+transition:transform .6s;
+transform-style:preserve-3d;
 }
 
-.darkMode .card.flipped{
-  background:#374151;
-  color:white;
+.card.flipped .inner{
+transform:rotateY(180deg);
 }
 
-.card.matched{
-  background:#10b981;
-  color:white;
+.front,
+.back{
+position:absolute;
+width:100%;
+height:100%;
+backface-visibility:hidden;
+border-radius:20px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:54px;
+font-weight:bold;
+box-shadow:0 6px 14px rgba(0,0,0,.18);
+}
+
+.front{
+background:
+linear-gradient(
+135deg,
+#2563eb,
+#60a5fa
+);
+color:white;
 }
 
 .back{
-  display:inline-block;
-  margin-top:25px;
-  text-decoration:none;
-  color:#2563eb;
-  font-weight:bold;
+background:white;
+transform:rotateY(180deg);
+}
+
+.card:hover{
+transform:scale(1.05);
+}
+
+.correct .back{
+box-shadow:
+0 0 25px #22c55e,
+0 0 45px #22c55e;
+}
+
+.wrong{
+animation:shake .25s 2;
+}
+
+@keyframes shake{
+0%{transform:translateX(0)}
+25%{transform:translateX(-5px)}
+50%{transform:translateX(5px)}
+75%{transform:translateX(-5px)}
+100%{transform:translateX(0)}
+}
+
+/* WIN BOX */
+
+#winBox{
+display:none;
+margin-top:30px;
+background:white;
+padding:30px;
+border-radius:25px;
+box-shadow:0 8px 20px rgba(0,0,0,.18);
+max-width:500px;
+margin-left:auto;
+margin-right:auto;
+}
+
+#winBox h2{
+font-size:42px;
+margin:10px;
+color:#db2777;
+}
+
+#stars{
+font-size:48px;
+margin:15px;
+}
+
+.backBtn{
+margin-top:20px;
+padding:16px 28px;
+border:none;
+border-radius:18px;
+background:#123c73;
+color:white;
+font-size:20px;
+font-weight:bold;
+cursor:pointer;
 }
 
 </style>
@@ -128,91 +193,110 @@ button:hover{
 
 <div class="container">
 
-<h1>🧠 Memory Arcade</h1>
+<h1>🧠 Memory Arcade DELUXE</h1>
 
-<select id="theme">
+<div class="topbar">
+
+<select id="themeSelect">
 
 <option value="dogs">
 🐶 Hunde-memory
 </option>
 
-<option value="puppies">
-🐾 Valpe-memory
-</option>
-
-<option value="show">
-🏆 Hundeshow-memory
-</option>
-
-<option value="treats">
-🦴 Godbit-memory
+<option value="cats">
+🐱 Katte-memory
 </option>
 
 <option value="forest">
 🌲 Skog-memory
 </option>
 
-<option value="vet">
-🚑 Veterinær-memory
+<option value="food">
+🦴 Godbit-memory
 </option>
 
 </select>
 
-<select id="difficulty">
+<select id="difficultySelect">
 
-<option value="12">
+<option value="8">
 🙂 Lett
 </option>
 
-<option value="16">
+<option value="12">
 😎 Medium
 </option>
 
-<option value="20">
+<option value="16">
 🔥 Vanskelig
 </option>
 
-<option value="24">
-🌙 Expert
+<option value="20">
+👑 Ekspert
 </option>
 
 </select>
 
 <button onclick="startGame()">
+
 🚀 Start spill
+
 </button>
+
+</div>
 
 <div class="stats">
 
 <div class="stat">
-⭐ Poeng: <span id="score">0</span>
+⭐ Poeng:
+<span id="score">0</span>
 </div>
 
 <div class="stat">
-🔥 Combo: <span id="combo">0</span>
+🔥 Combo:
+<span id="combo">0</span>
 </div>
 
 <div class="stat">
-⏱️ Tid: <span id="time">60</span>
+⏱️ Tid:
+<span id="time">0</span>
 </div>
 
 <div class="stat">
-🏆 Highscore: <span id="highscore">0</span>
-</div>
-
-<div class="stat">
-🧠 Tema: <span id="themeText">
-Hunde-memory
-</span>
+🏆 Highscore:
+<span id="highscore">0</span>
 </div>
 
 </div>
 
 <div id="gameBoard"></div>
 
-<a class="back" href="hundespill.html">
-← Tilbake til spill
-</a>
+<div id="winBox">
+
+<h2>🎉 DU VANT!</h2>
+
+<div id="stars">
+⭐⭐⭐
+</div>
+
+<p id="finalScore"></p>
+
+<button onclick="startGame()">
+
+🔄 Spill igjen
+
+</button>
+
+</div>
+
+<br>
+
+<button class="backBtn"
+onclick="location.href='hundespill.html'">
+
+⬅️ Tilbake til spill
+
+</button>
 
 </div>
 
@@ -220,138 +304,58 @@ Hunde-memory
 
 const themes={
 
-dogs:[
-"🐶","🐕","🦮","🐩",
-"🐕‍🦺","🐾","🦴","🎾",
-"🐺","🐕","🐩","🦮"
-],
+dogs:["🐶","🐕","🦮","🐩","🐕‍🦺","🐾"],
 
-puppies:[
-"🐶","🍼","🧸","🎀",
-"🐾","🦴","🎾","❤️",
-"🥎","🐕","🐩","🐾"
-],
+cats:["🐱","🐈","😺","😸","🐾","😻"],
 
-show:[
-"🏆","🎀","✨","🐩",
-"👑","📸","⭐","🎉",
-"🐶","🎖️","🥇","🎗️"
-],
+forest:["🌲","🌳","🍄","🦊","🐿️","🍁"],
 
-treats:[
-"🦴","🍖","🥩","🧀",
-"🍗","🥓","🍼","🎾",
-"🐶","🥎","🍪","❤️"
-],
-
-forest:[
-"🌲","🍂","🦊","🐺",
-"🍄","🌳","🪵","🌧️",
-"🐾","🦴","🌙","🔥"
-],
-
-vet:[
-"🚑","💉","🩺","💊",
-"🩹","🐶","❤️","🧴",
-"🧠","⚕️","🏥","🩻"
-]
+food:["🦴","🍖","🥩","🍗","🧀","🥓"]
 
 };
 
 let cards=[];
-
 let flipped=[];
-
 let matched=0;
-
 let score=0;
-
 let combo=0;
-
-let timeLeft=60;
-
-let timer=null;
+let timer=0;
+let interval;
 
 function startGame(){
 
-clearInterval(timer);
+clearInterval(interval);
 
-document.body.classList.remove(
-"darkMode"
-);
+document.getElementById(
+"winBox"
+).style.display="none";
 
-const totalCards=
+score=0;
+combo=0;
+matched=0;
+timer=0;
+
+updateStats();
+
+const difficulty=
 parseInt(
 document.getElementById(
-"difficulty"
+"difficultySelect"
 ).value
 );
 
 const theme=
 document.getElementById(
-"theme"
+"themeSelect"
 ).value;
 
-document.getElementById(
-"themeText"
-).innerHTML=
-document.getElementById(
-"theme"
-).selectedOptions[0].text;
+let selected=
+themes[theme]
+.slice(0,difficulty/2);
 
-cards=[];
+cards=[...selected,...selected];
 
-const selected=
-themes[theme];
-
-for(let i=0;i<totalCards/2;i++){
-
-cards.push(selected[i]);
-cards.push(selected[i]);
-
-}
-
-shuffle(cards);
-
-matched=0;
-score=0;
-combo=0;
-
-timeLeft=
-totalCards===24
-? 45
-: 60;
-
-document.getElementById(
-"score"
-).innerHTML=score;
-
-document.getElementById(
-"combo"
-).innerHTML=combo;
-
-document.getElementById(
-"time"
-).innerHTML=timeLeft;
-
-if(totalCards===24){
-
-document.body.classList.add(
-"darkMode"
-);
-
-}
-
-createBoard();
-
-timer=setInterval(
-updateTimer,
-1000
-);
-
-}
-
-function createBoard(){
+cards.sort(()=>Math.random()-0.5);
 
 const board=
 document.getElementById(
@@ -360,27 +364,41 @@ document.getElementById(
 
 board.innerHTML="";
 
-const total=
-cards.length;
+let columns=4;
 
-const cols=
-Math.ceil(
-Math.sqrt(total)
-);
+if(difficulty===16)
+columns=4;
+
+if(difficulty===20)
+columns=5;
 
 board.style.gridTemplateColumns=
-`repeat(${cols},90px)`;
+`repeat(${columns},110px)`;
 
-cards.forEach((symbol,index)=>{
+cards.forEach((emoji,index)=>{
 
 const card=
 document.createElement("div");
 
 card.className="card";
 
-card.dataset.value=symbol;
+card.dataset.emoji=emoji;
 
-card.innerHTML="❓";
+card.innerHTML=`
+
+<div class="inner">
+
+<div class="front">
+❓
+</div>
+
+<div class="back">
+${emoji}
+</div>
+
+</div>
+
+`;
 
 card.onclick=
 ()=>flipCard(card);
@@ -389,30 +407,30 @@ board.appendChild(card);
 
 });
 
+interval=setInterval(()=>{
+
+timer++;
+
+document.getElementById(
+"time"
+).innerHTML=timer;
+
+},1000);
+
 }
 
 function flipCard(card){
 
 if(
+flipped.length>=2 ||
 card.classList.contains(
 "flipped"
 )
-||
-card.classList.contains(
-"matched"
-)
-||
-flipped.length>=2
-){
-return;
-}
+) return;
 
 card.classList.add(
 "flipped"
 );
-
-card.innerHTML=
-card.dataset.value;
 
 flipped.push(card);
 
@@ -426,55 +444,36 @@ checkMatch();
 
 function checkMatch(){
 
-const[a,b]=flipped;
+const [a,b]=flipped;
 
 if(
-a.dataset.value===
-b.dataset.value
+a.dataset.emoji===
+b.dataset.emoji
 ){
 
 a.classList.add(
-"matched"
+"correct"
 );
 
 b.classList.add(
-"matched"
+"correct"
 );
 
 matched+=2;
 
 combo++;
 
-const bonus=
-10+(combo*2);
-
-score+=bonus;
-
-document.getElementById(
-"score"
-).innerHTML=score;
-
-document.getElementById(
-"combo"
-).innerHTML=combo;
+score+=10+(combo*2);
 
 flipped=[];
 
-if(matched===cards.length){
+updateStats();
 
-clearInterval(timer);
+if(
+matched===cards.length
+){
 
-saveHighscore();
-
-setTimeout(()=>{
-
-alert(
-"🏆 Gratulerer! Du vant med "+
-score+
-" poeng!"
-);
-
-},300);
+winGame();
 
 }
 
@@ -482,9 +481,20 @@ score+
 
 combo=0;
 
-document.getElementById(
-"combo"
-).innerHTML=combo;
+score=Math.max(
+0,
+score-2
+);
+
+a.classList.add(
+"wrong"
+);
+
+b.classList.add(
+"wrong"
+);
+
+updateStats();
 
 setTimeout(()=>{
 
@@ -496,88 +506,74 @@ b.classList.remove(
 "flipped"
 );
 
-a.innerHTML="❓";
-b.innerHTML="❓";
+a.classList.remove(
+"wrong"
+);
+
+b.classList.remove(
+"wrong"
+);
 
 flipped=[];
 
-},700);
+},900);
 
 }
 
 }
 
-function updateTimer(){
+function updateStats(){
 
-timeLeft--;
+document.getElementById(
+"score"
+).innerHTML=score;
+
+document.getElementById(
+"combo"
+).innerHTML=combo;
 
 document.getElementById(
 "time"
-).innerHTML=timeLeft;
+).innerHTML=timer;
 
-if(timeLeft<=0){
-
-clearInterval(timer);
-
-alert(
-"⏱️ Tiden er ute!"
-);
-
-}
-
-}
-
-function saveHighscore(){
-
-const best=
+let high=
 localStorage.getItem(
-"memoryArcadeBest"
+"memoryHighscore"
 )||0;
 
-if(score>best){
+if(score>high){
 
 localStorage.setItem(
-"memoryArcadeBest",
+"memoryHighscore",
 score
 );
 
-}
-
-document.getElementById(
-"highscore"
-).innerHTML=
-localStorage.getItem(
-"memoryArcadeBest"
-)||0;
-
-}
-
-function shuffle(array){
-
-for(
-let i=array.length-1;
-i>0;
-i--
-){
-
-const j=
-Math.floor(
-Math.random()*(i+1)
-);
-
-[array[i],array[j]]=
-[array[j],array[i]];
-
-}
+high=score;
 
 }
 
 document.getElementById(
 "highscore"
+).innerHTML=high;
+
+}
+
+function winGame(){
+
+clearInterval(interval);
+
+document.getElementById(
+"winBox"
+).style.display="block";
+
+document.getElementById(
+"finalScore"
 ).innerHTML=
-localStorage.getItem(
-"memoryArcadeBest"
-)||0;
+`⭐ Poeng: ${score}<br>⏱️ Tid: ${timer}s`;
+
+}
+
+startGame();
 
 </script>
 
