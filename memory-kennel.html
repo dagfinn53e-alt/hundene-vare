@@ -271,7 +271,7 @@ transform:translateY(-120vh);
 </div>
 
 <button class="backBtn"
-onclick="location.href='memorymap2.html'">
+onclick="location.href='memorymap.html'"
 
 ⬅️ Tilbake til kart
 
@@ -310,8 +310,17 @@ clearInterval(interval);
 
 cards=[...symbols,...symbols];
 
-cards[0]="🎁";
-cards[1]="🎁";
+cards=[
+"🐶","🐶",
+"🦴","🦴",
+"🏠","🏠",
+"🎾","🎾",
+"🐕","🐕",
+"🦮","🦮",
+"🎁","🎁",
+"🐾","🐾"
+];
+
 
 cards.sort(()=>Math.random()-0.5);
 
