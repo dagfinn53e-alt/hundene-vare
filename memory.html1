@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧠 Memory Adventure</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:linear-gradient(to bottom,#dbeafe,#eef6ff);
+text-align:center;
+color:#123c73;
+}
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+h1{font-size:44px}
+.topbar,.stats{
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+select,button{
+padding:14px 20px;
+border:none;
+border-radius:18px;
+font-size:18px;
+font-weight:bold;
+}
+button{
+background:#2563eb;
+color:white;
+cursor:pointer;
+}
+.stat{
+background:white;
+padding:14px 20px;
+border-radius:18px;
+font-size:19px;
+font-weight:bold;
+box-shadow:0 4px 10px rgba(0,0,0,.12);
+}
+#gameBoard{
+display:grid;
+gap:15px;
+justify-content:center;
+margin-top:20px;
+}
+.card{
+width:110px;
+height:110px;
+perspective:1000px;
+cursor:pointer;
+animation:popIn .4s;
+}
+@keyframes popIn{
+from{transform:scale(.4);opacity:0}
+to{transform:scale(1);opacity:1}
+}
+.inner{
+position:relative;
+width:100%;
+height:100%;
+transition:transform .6s;
+transform-style:preserve-3d;
+}
+.card.flipped .inner{
+transform:rotateY(180deg);
+}
+.front,.back{
+position:absolute;
+width:100%;
+height:100%;
+backface-visibility:hidden;
+border-radius:20px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:54px;
+box-shadow:0 6px 14px rgba(0,0,0,.18);
+}
+.front{
+background:linear-gradient(135deg,#2563eb,#60a5fa);
+color:white;
+}
+.back{
+background:white;
+transform:rotateY(180deg);
+}
+.correct .back{
+box-shadow:0 0 25px #22c55e;
+}
+.wrong{
+animation:shake .25s 2;
+}
+@keyframes shake{
+0%{transform:translateX(0)}
+25%{transform:translateX(-6px)}
+50%{transform:translateX(6px)}
+75%{transform:translateX(-6px)}
+100%{transform:translateX(0)}
+}
+#message{
+font-size:26px;
+font-weight:bold;
+color:#db2777;
+min-height:40px;
+margin-top:20px;
+}
+#winBox{
+display:none;
+background:white;
+padding:30px;
+border-radius:25px;
+box-shadow:0 8px 20px rgba(0,0,0,.18);
+max-width:500px;
+margin:30px auto;
+}
+#winBox h2{
+font-size:42px;
+color:#db2777;
+}
+.backBtn{
+background:#123c73;
+margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🧠 Memory Adventure</h1>
+
+<div class="topbar">
+
+<select id="themeSelect">
+<option value="dogs">🐶 Hunde-memory</option>
+<option value="cats">🐱 Katte-memory</option>
+<option value="forest">🌲 Skog-memory</option>
+<option value="food">🦴 Godbit-memory</option>
+</select>
+
+<select id="modeSelect">
+<option value="normal">🙂 Vanlig</option>
+<option value="dark">🌙 Dark Memory</option>
+<option value="bonus">🎁 Bonuskort</option>
+<option value="adventure">🗺️ Adventure Mode</option>
+</select>
+
+<select id="difficultySelect">
+<option value="8">🙂 Lett</option>
+<option value="12">😎 Medium</option>
+<option value="16">🔥 Vanskelig</option>
+<option value="20">👑 Ekspert</option>
+</select>
+
+<button onclick="startGame()">🚀 Start spill</button>
+
+</div>
+
+<div class="stats">
+<div class="stat">⭐ Poeng: <span id="score">0</span></div>
+<div class="stat">🔥 Combo: <span id="combo">0</span></div>
+<div class="stat">⏱️ Tid: <span id="time">0</span></div>
+<div class="stat">🗺️ Nivå: <span id="level">1</span></div>
+</div>
+
+<div id="message">Velg modus og start spillet 🙂</div>
+
+<div id="gameBoard"></div>
+
+<div id="winBox">
+<h2>🎉 DU VANT!</h2>
+<div style="font-size:48px">⭐⭐⭐</div>
+<p id="finalScore"></p>
+<button onclick="startGame()">🔄 Spill igjen</button>
+</div>
+
+<button class="backBtn" onclick="location.href='hundespill.html'">
+⬅️ Tilbake til spill
+</button>
+
+</div>
+
+<script>
+const themes={
+dogs:["🐶","🐕","🦮","🐩","🐕‍🦺","🐾","🦴","🏠","🎾","🐕"],
+cats:["🐱","🐈","😺","😸","😻","🐾","🧶","🐟","🛏️","🐈‍⬛"],
+forest:["🌲","🌳","🍄","🦊","🐿️","🍁","🦉","🦔","🌼","🪵"],
+food:["🦴","🍖","🥩","🍗","🧀","🥓","🥣","🍪","🥕","🍎"]
+};
+
+let cards=[];
+let flipped=[];
+let matched=0;
+let score=0;
+let combo=0;
+let timer=0;
+let level=1;
+let interval;
+let lock=false;
+
+function startGame(){
+clearInterval(interval);
+
+score=0;
+combo=0;
+matched=0;
+timer=0;
+flipped=[];
+lock=false;
+
+document.getElementById("winBox").style.display="none";
+document.getElementById("message").innerHTML="Finn like kort 🧠";
+
+const mode=document.getElementById("modeSelect").value;
+let difficulty=parseInt(document.getElementById("difficultySelect").value);
+
+if(mode==="adventure"){
+difficulty=8+(level-1)*4;
+if(difficulty>20)difficulty=20;
+}
+
+const theme=document.getElementById("themeSelect").value;
+let selected=themes[theme].slice(0,difficulty/2);
+
+cards=[...selected,...selected];
+
+if(mode==="bonus"){
+cards[0]="🎁";
+cards[1]="🎁";
+}
+
+cards.sort(()=>Math.random()-0.5);
+
+drawBoard(difficulty);
+updateStats();
+
+interval=setInterval(()=>{
+timer++;
+document.getElementById("time").innerHTML=timer;
+},1000);
+
+if(mode==="dark"){
+document.getElementById("message").innerHTML="🌙 Husk kortene!";
+setTimeout(()=>{
+document.querySelectorAll(".card").forEach(card=>{
+card.classList.add("flipped");
+});
+},300);
+
+setTimeout(()=>{
+document.querySelectorAll(".card").forEach(card=>{
+card.classList.remove("flipped");
+});
+document.getElementById("message").innerHTML="🌙 Nå må du huske!";
+},2200);
+}
+}
+
+function drawBoard(difficulty){
+const board=document.getElementById("gameBoard");
+board.innerHTML="";
+
+let columns=4;
+if(difficulty===20)columns=5;
+
+board.style.gridTemplateColumns=`repeat(${columns},110px)`;
+
+cards.forEach((emoji,index)=>{
+const card=document.createElement("div");
+card.className="card";
+card.dataset.emoji=emoji;
+
+card.innerHTML=`
+<div class="inner">
+<div class="front">❓</div>
+<div class="back">${emoji}</div>
+</div>
+`;
+
+card.onclick=()=>flipCard(card);
+board.appendChild(card);
+});
+}
+
+function flipCard(card){
+if(lock)return;
+if(flipped.length>=2)return;
+if(card.classList.contains("flipped"))return;
+if(card.classList.contains("correct"))return;
+
+card.classList.add("flipped");
+flipped.push(card);
+
+if(flipped.length===2){
+checkMatch();
+}
+}
+
+function checkMatch(){
+lock=true;
+
+const [a,b]=flipped;
+
+if(a.dataset.emoji===b.dataset.emoji){
+a.classList.add("correct");
+b.classList.add("correct");
+
+matched+=2;
+combo++;
+
+if(a.dataset.emoji==="🎁"){
+score+=30;
+document.getElementById("message").innerHTML="🎁 Bonuskort! +30 poeng!";
+}else{
+score+=10+(combo*3);
+document.getElementById("message").innerHTML="🎉 Riktig par!";
+}
+
+flipped=[];
+lock=false;
+updateStats();
+
+if(matched===cards.length){
+winGame();
+}
+
+}else{
+combo=0;
+score=Math.max(0,score-2);
+
+a.classList.add("wrong");
+b.classList.add("wrong");
+
+document.getElementById("message").innerHTML="❌ Ikke likt par";
+
+updateStats();
+
+setTimeout(()=>{
+a.classList.remove("flipped","wrong");
+b.classList.remove("flipped","wrong");
+flipped=[];
+lock=false;
+},900);
+}
+}
+
+function updateStats(){
+document.getElementById("score").innerHTML=score;
+document.getElementById("combo").innerHTML=combo;
+document.getElementById("time").innerHTML=timer;
+document.getElementById("level").innerHTML=level;
+}
+
+function winGame(){
+clearInterval(interval);
+
+const mode=document.getElementById("modeSelect").value;
+
+document.getElementById("winBox").style.display="block";
+document.getElementById("finalScore").innerHTML=
+`⭐ Poeng: ${score}<br>⏱️ Tid: ${timer}s`;
+
+document.getElementById("message").innerHTML="🏆 Fantastisk jobbet!";
+
+if(mode==="adventure"){
+level++;
+if(level>4){
+alert("🏆 Du fullførte hele Adventure Mode!");
+level=1;
+}else{
+document.getElementById("message").innerHTML=
+"🗺️ Neste adventure-nivå er låst opp!";
+}
+}
+}
+
+startGame();
+</script>
+
+</body>
+</html>
