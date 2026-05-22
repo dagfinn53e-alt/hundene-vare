@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏡 Kennelen LEVELS + LYD</title>
+<title>🏡 Kennelen ULTRA</title>
 
 <style>
 
@@ -12,7 +12,7 @@ margin:0;
 font-family:Arial,sans-serif;
 background:linear-gradient(to bottom,#dcfce7,#bbf7d0);
 text-align:center;
-overflow-x:hidden;
+overflow:hidden;
 color:#14532d;
 }
 
@@ -20,12 +20,14 @@ color:#14532d;
 max-width:1200px;
 margin:auto;
 padding:20px;
+position:relative;
+z-index:2;
 }
 
 h1{
-font-size:48px;
+font-size:52px;
 margin-top:10px;
-text-shadow:0 0 12px #22c55e;
+text-shadow:0 0 15px #22c55e;
 }
 
 .stats{
@@ -46,11 +48,23 @@ box-shadow:0 4px 10px rgba(0,0,0,.15);
 }
 
 #message{
-font-size:28px;
+font-size:30px;
 font-weight:bold;
 color:#15803d;
 margin:20px;
 min-height:40px;
+transition:.3s;
+}
+
+.comboText{
+animation:comboPop .6s;
+color:#f59e0b !important;
+}
+
+@keyframes comboPop{
+0%{transform:scale(.5);}
+50%{transform:scale(1.5);}
+100%{transform:scale(1);}
 }
 
 #gameBoard{
@@ -69,7 +83,7 @@ transition:.2s;
 }
 
 .card:hover{
-transform:scale(1.05);
+transform:scale(1.06);
 }
 
 .inner{
@@ -108,7 +122,7 @@ transform:rotateY(180deg);
 }
 
 .correct .back{
-box-shadow:0 0 30px #22c55e;
+box-shadow:0 0 35px #22c55e;
 animation:kennelGlow .8s infinite alternate;
 }
 
@@ -117,7 +131,7 @@ from{
 transform:rotateY(180deg) scale(1);
 }
 to{
-transform:rotateY(180deg) scale(1.08);
+transform:rotateY(180deg) scale(1.1);
 }
 }
 
@@ -133,10 +147,12 @@ animation:shake .25s 2;
 100%{transform:translateX(0)}
 }
 
+/* HUNDER */
+
 .dog{
 position:fixed;
 font-size:30px;
-opacity:.12;
+opacity:.14;
 animation:dogFloat 14s linear infinite;
 pointer-events:none;
 }
@@ -150,6 +166,44 @@ transform:translateY(-120vh);
 }
 }
 
+/* FLASH */
+
+.flash{
+position:fixed;
+inset:0;
+background:white;
+opacity:0;
+pointer-events:none;
+z-index:9999;
+}
+
+.flash.active{
+animation:flashScreen .6s;
+}
+
+@keyframes flashScreen{
+0%{opacity:.8;}
+100%{opacity:0;}
+}
+
+/* KONFETTI */
+
+.confetti{
+position:fixed;
+width:12px;
+height:12px;
+top:-20px;
+animation:fall linear forwards;
+z-index:999;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh) rotate(720deg);
+opacity:0;
+}
+}
+
 #winBox{
 display:none;
 background:white;
@@ -158,10 +212,22 @@ border-radius:25px;
 box-shadow:0 8px 20px rgba(0,0,0,.18);
 max-width:500px;
 margin:30px auto;
+animation:winPop .7s;
+}
+
+@keyframes winPop{
+0%{
+transform:scale(.4);
+opacity:0;
+}
+100%{
+transform:scale(1);
+opacity:1;
+}
 }
 
 #winBox h2{
-font-size:42px;
+font-size:44px;
 color:#16a34a;
 }
 
@@ -186,6 +252,8 @@ background:#14532d;
 
 <body>
 
+<div class="flash" id="flash"></div>
+
 <div class="dog" style="left:10%;">🐶</div>
 <div class="dog" style="left:35%;animation-delay:3s;">🐾</div>
 <div class="dog" style="left:60%;animation-delay:5s;">🦴</div>
@@ -193,7 +261,7 @@ background:#14532d;
 
 <div class="container">
 
-<h1>🏡 Kennelen LEVELS + LYD</h1>
+<h1>🏡 Kennelen ULTRA</h1>
 
 <div class="stats">
 
@@ -220,27 +288,23 @@ background:#14532d;
 </div>
 
 <div id="message">
-
 🐶 Finn kennelkortene!
-
 </div>
 
 <div id="gameBoard"></div>
 
 <div id="winBox">
 
-<h2>🏆 Kennel fullført!</h2>
+<h2>🏆 LEVEL COMPLETE!</h2>
 
-<div style="font-size:52px;">
+<div style="font-size:60px;">
 🐶🏡🐾
 </div>
 
 <p id="finalScore"></p>
 
 <button onclick="nextLevel()">
-
 ➡️ Neste nivå
-
 </button>
 
 </div>
@@ -319,11 +383,6 @@ updateStats();
 document.getElementById(
 "winBox"
 ).style.display="none";
-
-document.getElementById(
-"message"
-).innerHTML=
-"🐶 Finn kennelkortene!";
 
 const board=
 document.getElementById(
@@ -431,10 +490,32 @@ score+=12+(combo*4);
 correctSound.currentTime=0;
 correctSound.play();
 
+const msg=
 document.getElementById(
 "message"
-).innerHTML=
-"🐾 Kennelpar funnet!";
+);
+
+msg.innerHTML=
+"🐾 KENNELPAR FUNNET!";
+
+if(combo>=3){
+
+msg.innerHTML=
+"🔥 SUPER COMBO x"+combo;
+
+msg.classList.add(
+"comboText"
+);
+
+setTimeout(()=>{
+
+msg.classList.remove(
+"comboText"
+);
+
+},600);
+
+}
 
 flipped=[];
 
@@ -498,12 +579,68 @@ document.getElementById("time").innerHTML=timer;
 
 }
 
+function flashScreen(){
+
+const flash=
+document.getElementById(
+"flash"
+);
+
+flash.classList.add(
+"active"
+);
+
+setTimeout(()=>{
+
+flash.classList.remove(
+"active"
+);
+
+},600);
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<80;i++){
+
+const conf=
+document.createElement("div");
+
+conf.className="confetti";
+
+conf.style.left=
+Math.random()*100+"vw";
+
+conf.style.background=
+`hsl(${Math.random()*360},
+100%,50%)`;
+
+conf.style.animationDuration=
+(3+Math.random()*3)+"s";
+
+document.body.appendChild(conf);
+
+setTimeout(()=>{
+
+conf.remove();
+
+},6000);
+
+}
+
+}
+
 function winLevel(){
 
 clearInterval(interval);
 
 winSound.currentTime=0;
 winSound.play();
+
+flashScreen();
+
+createConfetti();
 
 document.getElementById(
 "winBox"
@@ -518,7 +655,7 @@ document.getElementById(
 document.getElementById(
 "message"
 ).innerHTML=
-"🏆 Kennel nivå "+level+" fullført!";
+"🏆 LEVEL COMPLETE!";
 
 }
 
