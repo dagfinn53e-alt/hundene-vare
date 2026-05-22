@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎁 Bonusbanen LEVELS</title>
+<title>🎁 Bonusbanen LEVELS + LYD</title>
 
 <style>
 
@@ -60,26 +60,12 @@ justify-content:center;
 margin-top:20px;
 }
 
-/* CARD */
-
 .card{
 width:110px;
 height:110px;
 perspective:1000px;
 cursor:pointer;
 transition:.2s;
-animation:pop .4s;
-}
-
-@keyframes pop{
-from{
-transform:scale(.3);
-opacity:0;
-}
-to{
-transform:scale(1);
-opacity:1;
-}
 }
 
 .card:hover{
@@ -153,8 +139,6 @@ animation:shake .25s 2;
 100%{transform:translateX(0)}
 }
 
-/* WIN */
-
 #winBox{
 display:none;
 background:white;
@@ -180,6 +164,7 @@ color:white;
 font-size:20px;
 font-weight:bold;
 cursor:pointer;
+cursor:pointer;
 }
 
 .backBtn{
@@ -193,7 +178,7 @@ background:#123c73;
 
 <div class="container">
 
-<h1>🎁 Bonusbanen LEVELS</h1>
+<h1>🎁 Bonusbanen LEVELS + LYD</h1>
 
 <div class="stats">
 
@@ -256,6 +241,26 @@ onclick="location.href='memorymap.html'">
 
 <script>
 
+/* LYDER */
+
+const flipSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"
+);
+
+const correctSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"
+);
+
+const wrongSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"
+);
+
+const winSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"
+);
+
+/* SYMBOLER */
+
 const allSymbols=[
 
 "🎁",
@@ -287,7 +292,9 @@ clearInterval(interval);
 
 let pairs=4+(level-1)*2;
 
-if(pairs>10) pairs=10;
+if(pairs>10){
+pairs=10;
+}
 
 let selected=
 allSymbols.slice(0,pairs);
@@ -322,11 +329,9 @@ board.innerHTML="";
 
 let columns=4;
 
-if(cards.length>=16)
-columns=4;
-
-if(cards.length>=20)
+if(cards.length>=20){
 columns=5;
+}
 
 board.style.gridTemplateColumns=
 `repeat(${columns},110px)`;
@@ -393,6 +398,9 @@ card.classList.add(
 "flipped"
 );
 
+flipSound.currentTime=0;
+flipSound.play();
+
 flipped.push(card);
 
 if(flipped.length===2){
@@ -429,6 +437,9 @@ combo++;
 
 score+=10+(combo*3);
 
+correctSound.currentTime=0;
+correctSound.play();
+
 document.getElementById(
 "message"
 ).innerHTML=
@@ -456,6 +467,9 @@ score=Math.max(
 0,
 score-3
 );
+
+wrongSound.currentTime=0;
+wrongSound.play();
 
 a.classList.add(
 "wrong"
@@ -517,6 +531,9 @@ document.getElementById(
 function winLevel(){
 
 clearInterval(interval);
+
+winSound.currentTime=0;
+winSound.play();
 
 document.getElementById(
 "winBox"
