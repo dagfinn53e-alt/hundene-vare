@@ -10,8 +10,7 @@
 body{
 margin:0;
 font-family:Arial,sans-serif;
-background:
-linear-gradient(to bottom,#bfdbfe,#dbeafe);
+background:linear-gradient(to bottom,#bfdbfe,#dbeafe);
 text-align:center;
 overflow-x:hidden;
 color:#123c73;
@@ -27,7 +26,7 @@ font-size:28px;
 font-weight:bold;
 color:#db2777;
 margin-top:20px;
-min-height:40px;
+margin-bottom:10px;
 }
 
 .map{
@@ -76,6 +75,12 @@ font-size:40px;
 margin-top:10px;
 }
 
+.locked{
+opacity:.55;
+filter:grayscale(100%);
+cursor:not-allowed;
+}
+
 .backBtn{
 margin-top:30px;
 margin-bottom:40px;
@@ -92,7 +97,7 @@ cursor:pointer;
 .cloud{
 position:absolute;
 font-size:50px;
-opacity:.12;
+opacity:.10;
 animation:float 12s infinite linear;
 }
 
@@ -219,7 +224,7 @@ style="top:12px;left:20px;">
 </h2>
 
 <p>
-Mange bonuskort og raske poeng
+Flere nivåer med bonuskort
 </p>
 
 <div class="stars">
@@ -235,7 +240,7 @@ Mange bonuskort og raske poeng
 <!-- NATT MEMORY -->
 
 <div class="level"
-onclick="location.href='memory-night-levels.html'"
+onclick="location.href='memory-night.html'">
 
 <div class="cloud"
 style="top:18px;left:8px;">
@@ -262,7 +267,7 @@ Kortene skjules veldig raskt
 
 <!-- MESTERBANEN -->
 
-<div class="level">
+<div class="level locked">
 
 <div class="cloud"
 style="top:20px;left:5px;">
