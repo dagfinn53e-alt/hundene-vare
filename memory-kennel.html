@@ -3,18 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏡 Kennelen Memory</title>
+<title>🏡 Kennelen LEVELS + LYD</title>
 
 <style>
 
 body{
 margin:0;
 font-family:Arial,sans-serif;
-background:
-linear-gradient(to bottom,#dbeafe,#bbf7d0);
+background:linear-gradient(to bottom,#dcfce7,#bbf7d0);
 text-align:center;
 overflow-x:hidden;
-color:#123c73;
+color:#14532d;
 }
 
 .container{
@@ -24,8 +23,9 @@ padding:20px;
 }
 
 h1{
-font-size:46px;
+font-size:48px;
 margin-top:10px;
+text-shadow:0 0 12px #22c55e;
 }
 
 .stats{
@@ -46,26 +46,23 @@ box-shadow:0 4px 10px rgba(0,0,0,.15);
 }
 
 #message{
-font-size:26px;
+font-size:28px;
 font-weight:bold;
-color:#db2777;
+color:#15803d;
 margin:20px;
 min-height:40px;
 }
 
 #gameBoard{
 display:grid;
-grid-template-columns:repeat(4,110px);
 gap:15px;
 justify-content:center;
 margin-top:20px;
 }
 
-/* CARD */
-
 .card{
-width:110px;
-height:110px;
+width:105px;
+height:105px;
 perspective:1000px;
 cursor:pointer;
 transition:.2s;
@@ -92,21 +89,16 @@ position:absolute;
 width:100%;
 height:100%;
 backface-visibility:hidden;
-border-radius:20px;
+border-radius:22px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:54px;
+font-size:48px;
 box-shadow:0 6px 14px rgba(0,0,0,.18);
 }
 
 .front{
-background:
-linear-gradient(
-135deg,
-#2563eb,
-#60a5fa
-);
+background:linear-gradient(135deg,#16a34a,#4ade80);
 color:white;
 }
 
@@ -116,12 +108,11 @@ transform:rotateY(180deg);
 }
 
 .correct .back{
-box-shadow:
-0 0 30px #22c55e;
-animation:glow .8s infinite alternate;
+box-shadow:0 0 30px #22c55e;
+animation:kennelGlow .8s infinite alternate;
 }
 
-@keyframes glow{
+@keyframes kennelGlow{
 from{
 transform:rotateY(180deg) scale(1);
 }
@@ -142,19 +133,22 @@ animation:shake .25s 2;
 100%{transform:translateX(0)}
 }
 
-/* BONUS */
-
-.bonus{
-animation:bonusPulse 1s infinite;
+.dog{
+position:fixed;
+font-size:30px;
+opacity:.12;
+animation:dogFloat 14s linear infinite;
+pointer-events:none;
 }
 
-@keyframes bonusPulse{
-0%{transform:scale(1)}
-50%{transform:scale(1.08)}
-100%{transform:scale(1)}
+@keyframes dogFloat{
+from{
+transform:translateY(110vh);
 }
-
-/* WIN */
+to{
+transform:translateY(-120vh);
+}
+}
 
 #winBox{
 display:none;
@@ -168,7 +162,7 @@ margin:30px auto;
 
 #winBox h2{
 font-size:42px;
-color:#db2777;
+color:#16a34a;
 }
 
 button{
@@ -176,7 +170,7 @@ margin-top:20px;
 padding:16px 28px;
 border:none;
 border-radius:18px;
-background:#2563eb;
+background:#16a34a;
 color:white;
 font-size:20px;
 font-weight:bold;
@@ -184,26 +178,7 @@ cursor:pointer;
 }
 
 .backBtn{
-background:#123c73;
-}
-
-/* BACKGROUND DOGS */
-
-.dogPaw{
-position:fixed;
-font-size:45px;
-opacity:.08;
-animation:float 12s linear infinite;
-pointer-events:none;
-}
-
-@keyframes float{
-from{
-transform:translateY(100vh);
-}
-to{
-transform:translateY(-120vh);
-}
+background:#14532d;
 }
 
 </style>
@@ -211,16 +186,21 @@ transform:translateY(-120vh);
 
 <body>
 
-<div class="dogPaw" style="left:10%;">🐾</div>
-<div class="dogPaw" style="left:35%;animation-delay:2s;">🐾</div>
-<div class="dogPaw" style="left:60%;animation-delay:5s;">🐾</div>
-<div class="dogPaw" style="left:85%;animation-delay:8s;">🐾</div>
+<div class="dog" style="left:10%;">🐶</div>
+<div class="dog" style="left:35%;animation-delay:3s;">🐾</div>
+<div class="dog" style="left:60%;animation-delay:5s;">🦴</div>
+<div class="dog" style="left:85%;animation-delay:8s;">🐕</div>
 
 <div class="container">
 
-<h1>🏡 Kennelen</h1>
+<h1>🏡 Kennelen LEVELS + LYD</h1>
 
 <div class="stats">
+
+<div class="stat">
+🗺️ Nivå:
+<span id="level">1</span>
+</div>
 
 <div class="stat">
 ⭐ Poeng:
@@ -233,11 +213,6 @@ transform:translateY(-120vh);
 </div>
 
 <div class="stat">
-🎁 Bonus:
-<span id="bonusCount">0</span>
-</div>
-
-<div class="stat">
 ⏱️ Tid:
 <span id="time">0</span>
 </div>
@@ -246,7 +221,7 @@ transform:translateY(-120vh);
 
 <div id="message">
 
-🐶 Finn like kennel-kort!
+🐶 Finn kennelkortene!
 
 </div>
 
@@ -254,24 +229,24 @@ transform:translateY(-120vh);
 
 <div id="winBox">
 
-<h2>🏆 Kennelen fullført!</h2>
+<h2>🏆 Kennel fullført!</h2>
 
-<div style="font-size:48px;">
-⭐⭐⭐
+<div style="font-size:52px;">
+🐶🏡🐾
 </div>
 
 <p id="finalScore"></p>
 
-<button onclick="startGame()">
+<button onclick="nextLevel()">
 
-🔄 Spill igjen
+➡️ Neste nivå
 
 </button>
 
 </div>
 
 <button class="backBtn"
-onclick="location.href='memorymap.html'"
+onclick="location.href='memorymap.html'">
 
 ⬅️ Tilbake til kart
 
@@ -281,54 +256,61 @@ onclick="location.href='memorymap.html'"
 
 <script>
 
-const symbols=[
+/* LYDER */
 
-"🐶",
-"🦴",
-"🏠",
-"🎾",
-"🐕",
-"🦮",
-"🥎",
-"🐾"
+const flipSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"
+);
 
+const correctSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"
+);
+
+const wrongSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"
+);
+
+const winSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"
+);
+
+/* SYMBOLER */
+
+const allSymbols=[
+"🐶","🐕","🦴","🐾","🏡",
+"🦮","🐕‍🦺","🎾","🛖","🐩"
 ];
 
+let level=1;
 let cards=[];
 let flipped=[];
 let matched=0;
 let score=0;
 let combo=0;
-let bonusCount=0;
 let timer=0;
 let interval;
 let lock=false;
 
-function startGame(){
+function startLevel(){
 
 clearInterval(interval);
 
-cards=[...symbols,...symbols];
+let pairs=4+(level-1)*2;
 
-cards=[
-"🐶","🐶",
-"🦴","🦴",
-"🏠","🏠",
-"🎾","🎾",
-"🐕","🐕",
-"🦮","🦮",
-"🎁","🎁",
-"🐾","🐾"
-];
+if(pairs>10){
+pairs=10;
+}
 
+let selected=
+allSymbols.slice(0,pairs);
+
+cards=[...selected,...selected];
 
 cards.sort(()=>Math.random()-0.5);
 
 flipped=[];
 matched=0;
-score=0;
 combo=0;
-bonusCount=0;
 timer=0;
 lock=false;
 
@@ -341,7 +323,7 @@ document.getElementById(
 document.getElementById(
 "message"
 ).innerHTML=
-"🐶 Finn like kennel-kort!";
+"🐶 Finn kennelkortene!";
 
 const board=
 document.getElementById(
@@ -350,20 +332,21 @@ document.getElementById(
 
 board.innerHTML="";
 
+let columns=4;
+
+if(cards.length>=20){
+columns=5;
+}
+
+board.style.gridTemplateColumns=
+`repeat(${columns},105px)`;
+
 cards.forEach(symbol=>{
 
 const card=
 document.createElement("div");
 
 card.className="card";
-
-if(symbol==="🎁"){
-
-card.classList.add(
-"bonus"
-);
-
-}
 
 card.dataset.symbol=symbol;
 
@@ -372,7 +355,7 @@ card.innerHTML=`
 <div class="inner">
 
 <div class="front">
-🐾
+🏡
 </div>
 
 <div class="back">
@@ -408,17 +391,14 @@ if(lock)return;
 
 if(flipped.length>=2)return;
 
-if(card.classList.contains(
-"flipped"
-)) return;
+if(card.classList.contains("flipped"))return;
 
-if(card.classList.contains(
-"correct"
-)) return;
+if(card.classList.contains("correct"))return;
 
-card.classList.add(
-"flipped"
-);
+card.classList.add("flipped");
+
+flipSound.currentTime=0;
+flipSound.play();
 
 flipped.push(card);
 
@@ -437,44 +417,24 @@ lock=true;
 const a=flipped[0];
 const b=flipped[1];
 
-if(
-a.dataset.symbol===
-b.dataset.symbol
-){
+if(a.dataset.symbol===b.dataset.symbol){
 
-a.classList.add(
-"correct"
-);
-
-b.classList.add(
-"correct"
-);
+a.classList.add("correct");
+b.classList.add("correct");
 
 matched+=2;
 
 combo++;
 
-if(a.dataset.symbol==="🎁"){
+score+=12+(combo*4);
 
-score+=30;
-
-bonusCount++;
-
-document.getElementById(
-"message"
-).innerHTML=
-"🎁 BONUSKORT! +30 poeng!";
-
-}else{
-
-score+=10+(combo*3);
+correctSound.currentTime=0;
+correctSound.play();
 
 document.getElementById(
 "message"
 ).innerHTML=
-"✨ Flott jobbet!";
-
-}
+"🐾 Kennelpar funnet!";
 
 flipped=[];
 
@@ -482,11 +442,9 @@ lock=false;
 
 updateStats();
 
-if(
-matched===cards.length
-){
+if(matched===cards.length){
 
-winGame();
+winLevel();
 
 }
 
@@ -494,23 +452,18 @@ winGame();
 
 combo=0;
 
-score=Math.max(
-0,
-score-2
-);
+score=Math.max(0,score-3);
 
-a.classList.add(
-"wrong"
-);
+wrongSound.currentTime=0;
+wrongSound.play();
 
-b.classList.add(
-"wrong"
-);
+a.classList.add("wrong");
+b.classList.add("wrong");
 
 document.getElementById(
 "message"
 ).innerHTML=
-"❌ Ikke likt par";
+"❌ Feil kennelkort";
 
 updateStats();
 
@@ -530,7 +483,7 @@ flipped=[];
 
 lock=false;
 
-},900);
+},850);
 
 }
 
@@ -538,48 +491,57 @@ lock=false;
 
 function updateStats(){
 
-document.getElementById(
-"score"
-).innerHTML=score;
-
-document.getElementById(
-"combo"
-).innerHTML=combo;
-
-document.getElementById(
-"bonusCount"
-).innerHTML=bonusCount;
-
-document.getElementById(
-"time"
-).innerHTML=timer;
+document.getElementById("level").innerHTML=level;
+document.getElementById("score").innerHTML=score;
+document.getElementById("combo").innerHTML=combo;
+document.getElementById("time").innerHTML=timer;
 
 }
 
-function winGame(){
+function winLevel(){
 
 clearInterval(interval);
 
+winSound.currentTime=0;
+winSound.play();
+
 document.getElementById(
 "winBox"
-).style.display=
-"block";
+).style.display="block";
 
 document.getElementById(
 "finalScore"
 ).innerHTML=
 `⭐ Poeng: ${score}<br>
-⏱️ Tid: ${timer}s<br>
-🎁 Bonuskort: ${bonusCount}`;
+⏱️ Tid: ${timer}s`;
 
 document.getElementById(
 "message"
 ).innerHTML=
-"🏆 Kennelen er fullført!";
+"🏆 Kennel nivå "+level+" fullført!";
 
 }
 
-startGame();
+function nextLevel(){
+
+level++;
+
+if(level>5){
+
+alert(
+"🐶 Du fullførte hele Kennelen!"
+);
+
+level=1;
+score=0;
+
+}
+
+startLevel();
+
+}
+
+startLevel();
 
 </script>
 
