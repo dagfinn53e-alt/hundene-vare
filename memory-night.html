@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌙 Natt-memory LEVELS</title>
+<title>🌙 Natt-memory LEVELS + LYD</title>
 
 <style>
 
@@ -109,6 +109,16 @@ transform:rotateY(180deg);
 
 .correct .back{
 box-shadow:0 0 35px #60a5fa;
+animation:nightGlow .8s infinite alternate;
+}
+
+@keyframes nightGlow{
+from{
+transform:rotateY(180deg) scale(1);
+}
+to{
+transform:rotateY(180deg) scale(1.08);
+}
 }
 
 .wrong{
@@ -121,6 +131,23 @@ animation:shake .25s 2;
 50%{transform:translateX(6px)}
 75%{transform:translateX(-6px)}
 100%{transform:translateX(0)}
+}
+
+.star{
+position:fixed;
+font-size:28px;
+opacity:.18;
+animation:floatStar 12s linear infinite;
+pointer-events:none;
+}
+
+@keyframes floatStar{
+from{
+transform:translateY(110vh);
+}
+to{
+transform:translateY(-120vh);
+}
 }
 
 #winBox{
@@ -160,9 +187,14 @@ border:2px solid #60a5fa;
 
 <body>
 
+<div class="star" style="left:10%;">✨</div>
+<div class="star" style="left:30%;animation-delay:2s;">⭐</div>
+<div class="star" style="left:55%;animation-delay:4s;">✨</div>
+<div class="star" style="left:80%;animation-delay:7s;">⭐</div>
+
 <div class="container">
 
-<h1>🌙 Natt-memory LEVELS</h1>
+<h1>🌙 Natt-memory LEVELS + LYD</h1>
 
 <div class="stats">
 
@@ -189,7 +221,9 @@ border:2px solid #60a5fa;
 </div>
 
 <div id="message">
-🌙 Husk kortene før de skjules!
+
+🌙 Se nøye før kortene forsvinner...
+
 </div>
 
 <div id="gameBoard"></div>
@@ -205,7 +239,9 @@ border:2px solid #60a5fa;
 <p id="finalScore"></p>
 
 <button onclick="nextLevel()">
+
 ➡️ Neste nivå
+
 </button>
 
 </div>
@@ -220,6 +256,26 @@ onclick="location.href='memorymap.html'">
 </div>
 
 <script>
+
+/* LYDER */
+
+const flipSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"
+);
+
+const correctSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"
+);
+
+const wrongSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"
+);
+
+const winSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"
+);
+
+/* SYMBOLER */
 
 const allSymbols=[
 "🌙","⭐","🌌","🦉","🌲",
@@ -261,10 +317,14 @@ lock=true;
 
 updateStats();
 
-document.getElementById("winBox").style.display="none";
+document.getElementById(
+"winBox"
+).style.display="none";
 
 const board=
-document.getElementById("gameBoard");
+document.getElementById(
+"gameBoard"
+);
 
 board.innerHTML="";
 
@@ -282,11 +342,13 @@ cards.forEach(symbol=>{
 const card=
 document.createElement("div");
 
-card.className="card flipped";
+card.className=
+"card flipped";
 
 card.dataset.symbol=symbol;
 
 card.innerHTML=`
+
 <div class="inner">
 
 <div class="front">
@@ -298,9 +360,11 @@ ${symbol}
 </div>
 
 </div>
+
 `;
 
-card.onclick=()=>flipCard(card);
+card.onclick=
+()=>flipCard(card);
 
 board.appendChild(card);
 
@@ -323,7 +387,9 @@ card.classList.remove("flipped");
 
 lock=false;
 
-document.getElementById("message").innerHTML=
+document.getElementById(
+"message"
+).innerHTML=
 "🌌 Finn like nattkort!";
 
 },hideTime);
@@ -332,7 +398,9 @@ interval=setInterval(()=>{
 
 timer++;
 
-document.getElementById("time").innerHTML=timer;
+document.getElementById(
+"time"
+).innerHTML=timer;
 
 },1000);
 
@@ -349,6 +417,9 @@ if(card.classList.contains("flipped"))return;
 if(card.classList.contains("correct"))return;
 
 card.classList.add("flipped");
+
+flipSound.currentTime=0;
+flipSound.play();
 
 flipped.push(card);
 
@@ -378,7 +449,12 @@ combo++;
 
 score+=12+(combo*4);
 
-document.getElementById("message").innerHTML=
+correctSound.currentTime=0;
+correctSound.play();
+
+document.getElementById(
+"message"
+).innerHTML=
 "✨ Nattpar funnet!";
 
 flipped=[];
@@ -399,18 +475,30 @@ combo=0;
 
 score=Math.max(0,score-3);
 
+wrongSound.currentTime=0;
+wrongSound.play();
+
 a.classList.add("wrong");
 b.classList.add("wrong");
 
-document.getElementById("message").innerHTML=
+document.getElementById(
+"message"
+).innerHTML=
 "👻 Feil nattkort";
 
 updateStats();
 
 setTimeout(()=>{
 
-a.classList.remove("flipped","wrong");
-b.classList.remove("flipped","wrong");
+a.classList.remove(
+"flipped",
+"wrong"
+);
+
+b.classList.remove(
+"flipped",
+"wrong"
+);
 
 flipped=[];
 
@@ -435,13 +523,22 @@ function winLevel(){
 
 clearInterval(interval);
 
-document.getElementById("winBox").style.display="block";
+winSound.currentTime=0;
+winSound.play();
 
-document.getElementById("finalScore").innerHTML=
+document.getElementById(
+"winBox"
+).style.display="block";
+
+document.getElementById(
+"finalScore"
+).innerHTML=
 `⭐ Poeng: ${score}<br>
 ⏱️ Tid: ${timer}s`;
 
-document.getElementById("message").innerHTML=
+document.getElementById(
+"message"
+).innerHTML=
 "🏆 Nivå "+level+" fullført!";
 
 }
@@ -452,7 +549,9 @@ level++;
 
 if(level>5){
 
-alert("🌙 Du fullførte hele Natt-memory!");
+alert(
+"🌙 Du fullførte hele Natt-memory!"
+);
 
 level=1;
 score=0;
