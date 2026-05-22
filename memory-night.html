@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🗺️ Memory Adventure MAP</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:
+linear-gradient(to bottom,#bfdbfe,#dbeafe);
+text-align:center;
+overflow-x:hidden;
+color:#123c73;
+}
+
+h1{
+font-size:48px;
+margin-top:20px;
+}
+
+#message{
+font-size:28px;
+font-weight:bold;
+color:#db2777;
+margin-top:20px;
+min-height:40px;
+}
+
+.map{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:30px;
+max-width:1200px;
+margin:40px auto;
+padding:20px;
+}
+
+.level{
+background:white;
+border-radius:28px;
+padding:30px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+transition:.2s;
+cursor:pointer;
+position:relative;
+overflow:hidden;
+min-height:220px;
+}
+
+.level:hover{
+transform:scale(1.04);
+}
+
+.level h2{
+font-size:34px;
+margin-bottom:10px;
+}
+
+.level p{
+font-size:20px;
+font-weight:bold;
+line-height:1.4;
+}
+
+.stars{
+font-size:34px;
+margin-top:15px;
+}
+
+.path{
+font-size:40px;
+margin-top:10px;
+}
+
+.backBtn{
+margin-top:30px;
+margin-bottom:40px;
+padding:18px 30px;
+border:none;
+border-radius:20px;
+background:#123c73;
+color:white;
+font-size:22px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.locked{
+opacity:.55;
+filter:grayscale(100%);
+cursor:not-allowed;
+}
+
+.cloud{
+position:absolute;
+font-size:50px;
+opacity:.12;
+animation:float 12s infinite linear;
+}
+
+@keyframes float{
+0%{
+transform:translateX(-50px);
+}
+100%{
+transform:translateX(1200px);
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🗺️ Memory Adventure MAP</h1>
+
+<div id="message">
+
+Velg et område for å starte eventyret 😄
+
+</div>
+
+<div class="map">
+
+<!-- HUNDEPARKEN -->
+
+<div class="level"
+onclick="location.href='memory1.html'">
+
+<div class="cloud"
+style="top:10px;left:0;">
+☁️
+</div>
+
+<h2>
+🐶 Hundeparken
+</h2>
+
+<p>
+Lett memory med søte hunder
+</p>
+
+<div class="stars">
+⭐ ⭐ ⭐
+</div>
+
+<div class="path">
+➡️
+</div>
+
+</div>
+
+<!-- MØRKE SKOGEN -->
+
+<div class="level"
+onclick="location.href='memory-darkforest.html'">
+
+<div class="cloud"
+style="top:20px;left:10px;">
+☁️
+</div>
+
+<h2>
+🌲 Den mørke skogen
+</h2>
+
+<p>
+Dark Memory utfordring
+</p>
+
+<div class="stars">
+⭐ ⭐
+</div>
+
+<div class="path">
+➡️
+</div>
+
+</div>
+
+<!-- KENNELEN -->
+
+<div class="level"
+onclick="location.href='memory-kennel.html'">
+
+<div class="cloud"
+style="top:15px;left:15px;">
+☁️
+</div>
+
+<h2>
+🏡 Kennelen
+</h2>
+
+<p>
+Bonuskort og combo-memory
+</p>
+
+<div class="stars">
+⭐ ⭐ ⭐
+</div>
+
+<div class="path">
+➡️
+</div>
+
+</div>
+
+<!-- BONUSBANEN -->
+
+<div class="level"
+onclick="location.href='memory-bonus-levels.html'">
+
+<div class="cloud"
+style="top:12px;left:20px;">
+☁️
+</div>
+
+<h2>
+🎁 Bonusbanen
+</h2>
+
+<p>
+Flere nivåer med bonuskort
+</p>
+
+<div class="stars">
+⭐ ⭐ ⭐
+</div>
+
+<div class="path">
+➡️
+</div>
+
+</div>
+
+<!-- NATT MEMORY -->
+
+<div class="level"
+onclick="location.href='memory-night.html'">
+
+<div class="cloud"
+style="top:18px;left:8px;">
+☁️
+</div>
+
+<h2>
+🌙 Natt-memory
+</h2>
+
+<p>
+Kortene skjules veldig raskt
+</p>
+
+<div class="stars">
+⭐ ⭐ ⭐
+</div>
+
+<div class="path">
+➡️
+</div>
+
+</div>
+
+<!-- MESTERBANEN -->
+
+<div class="level locked">
+
+<div class="cloud"
+style="top:20px;left:5px;">
+☁️
+</div>
+
+<h2>
+🔥 Mesterbanen
+</h2>
+
+<p>
+Ekspertbane kommer snart
+</p>
+
+<div class="stars">
+⭐ ⭐ ⭐
+</div>
+
+<div class="path">
+🏆
+</div>
+
+</div>
+
+</div>
+
+<button class="backBtn"
+onclick="location.href='hundespill.html'">
+
+⬅️ Tilbake til spill
+
+</button>
+
+</body>
+</html>
