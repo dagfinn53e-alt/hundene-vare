@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌲 Den mørke skogen</title>
+<title>🌲 Den mørke skogen + LYD</title>
 
 <style>
+
 body{
 margin:0;
 font-family:Arial,sans-serif;
-background:linear-gradient(to bottom,#052e16,#14532d);
+background:
+linear-gradient(to bottom,#0f172a,#020617);
 color:white;
 text-align:center;
 overflow-x:hidden;
@@ -22,24 +24,9 @@ padding:20px;
 }
 
 h1{
-font-size:44px;
-text-shadow:2px 2px 6px black;
-}
-
-.fog{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:radial-gradient(circle,rgba(255,255,255,.12),transparent 60%);
-pointer-events:none;
-animation:fogMove 8s infinite alternate;
-}
-
-@keyframes fogMove{
-from{opacity:.2}
-to{opacity:.55}
+font-size:48px;
+margin-top:10px;
+text-shadow:0 0 15px #22c55e;
 }
 
 .stats{
@@ -51,35 +38,39 @@ margin-bottom:20px;
 }
 
 .stat{
-background:rgba(255,255,255,.15);
+background:rgba(255,255,255,.08);
 padding:14px 20px;
 border-radius:18px;
 font-size:20px;
 font-weight:bold;
-box-shadow:0 4px 12px rgba(0,0,0,.3);
+box-shadow:0 4px 12px rgba(0,0,0,.35);
 }
 
 #message{
-font-size:26px;
+font-size:28px;
 font-weight:bold;
-color:#bbf7d0;
+color:#86efac;
 margin:20px;
 min-height:40px;
 }
 
 #gameBoard{
 display:grid;
-grid-template-columns:repeat(4,110px);
 gap:15px;
 justify-content:center;
 margin-top:20px;
 }
 
 .card{
-width:110px;
-height:110px;
+width:105px;
+height:105px;
 perspective:1000px;
 cursor:pointer;
+transition:.2s;
+}
+
+.card:hover{
+transform:scale(1.05);
 }
 
 .inner{
@@ -99,27 +90,42 @@ position:absolute;
 width:100%;
 height:100%;
 backface-visibility:hidden;
-border-radius:20px;
+border-radius:22px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:54px;
-box-shadow:0 0 18px rgba(34,197,94,.45);
+font-size:48px;
+box-shadow:0 0 18px rgba(34,197,94,.25);
 }
 
 .front{
-background:linear-gradient(135deg,#064e3b,#166534);
-color:white;
+background:
+linear-gradient(
+135deg,
+#14532d,
+#166534
+);
 }
 
 .back{
-background:#ecfdf5;
-color:#14532d;
+background:#dcfce7;
+color:#052e16;
 transform:rotateY(180deg);
 }
 
 .correct .back{
-box-shadow:0 0 30px #22c55e;
+box-shadow:
+0 0 35px #22c55e;
+animation:forestGlow .8s infinite alternate;
+}
+
+@keyframes forestGlow{
+from{
+transform:rotateY(180deg) scale(1);
+}
+to{
+transform:rotateY(180deg) scale(1.08);
+}
 }
 
 .wrong{
@@ -134,14 +140,36 @@ animation:shake .25s 2;
 100%{transform:translateX(0)}
 }
 
+.forest{
+position:fixed;
+font-size:32px;
+opacity:.14;
+animation:forestFloat 14s linear infinite;
+pointer-events:none;
+}
+
+@keyframes forestFloat{
+from{
+transform:translateY(110vh);
+}
+to{
+transform:translateY(-120vh);
+}
+}
+
 #winBox{
 display:none;
-background:rgba(255,255,255,.15);
+background:rgba(255,255,255,.08);
 padding:30px;
 border-radius:25px;
 max-width:500px;
 margin:30px auto;
-box-shadow:0 8px 20px rgba(0,0,0,.35);
+box-shadow:0 8px 20px rgba(0,0,0,.45);
+}
+
+#winBox h2{
+font-size:42px;
+color:#86efac;
 }
 
 button{
@@ -149,7 +177,7 @@ margin-top:20px;
 padding:16px 28px;
 border:none;
 border-radius:18px;
-background:#22c55e;
+background:#166534;
 color:white;
 font-size:20px;
 font-weight:bold;
@@ -157,7 +185,8 @@ cursor:pointer;
 }
 
 .backBtn{
-background:#123c73;
+background:#020617;
+border:2px solid #22c55e;
 }
 
 </style>
@@ -165,40 +194,102 @@ background:#123c73;
 
 <body>
 
-<div class="fog"></div>
+<div class="forest" style="left:10%;">🌲</div>
+<div class="forest" style="left:35%;animation-delay:3s;">👻</div>
+<div class="forest" style="left:60%;animation-delay:5s;">🍄</div>
+<div class="forest" style="left:85%;animation-delay:8s;">🦉</div>
 
 <div class="container">
 
-<h1>🌲 Den mørke skogen</h1>
+<h1>🌲 Den mørke skogen + LYD</h1>
 
 <div class="stats">
-<div class="stat">⭐ Poeng: <span id="score">0</span></div>
-<div class="stat">🔥 Combo: <span id="combo">0</span></div>
-<div class="stat">⏱️ Tid: <span id="time">0</span></div>
+
+<div class="stat">
+🗺️ Nivå:
+<span id="level">1</span>
+</div>
+
+<div class="stat">
+⭐ Poeng:
+<span id="score">0</span>
+</div>
+
+<div class="stat">
+🔥 Combo:
+<span id="combo">0</span>
+</div>
+
+<div class="stat">
+⏱️ Tid:
+<span id="time">0</span>
+</div>
+
 </div>
 
 <div id="message">
-🌙 Se nøye! Kortene skjules snart...
+
+🌲 Finn skogskortene...
+
 </div>
 
 <div id="gameBoard"></div>
 
 <div id="winBox">
-<h2>🏆 Du klarte Den mørke skogen!</h2>
-<div style="font-size:48px;">⭐⭐⭐</div>
-<p id="finalScore"></p>
-<button onclick="startGame()">🔄 Spill igjen</button>
+
+<h2>🏆 Skogen fullført!</h2>
+
+<div style="font-size:52px;">
+🌲👻🌲
 </div>
 
-<button class="backBtn" onclick="location.href='memorymap.html'">
+<p id="finalScore"></p>
+
+<button onclick="nextLevel()">
+
+➡️ Neste nivå
+
+</button>
+
+</div>
+
+<button class="backBtn"
+onclick="location.href='memorymap.html'">
+
 ⬅️ Tilbake til kart
+
 </button>
 
 </div>
 
 <script>
-const symbols=["🌲","🌳","🍄","🦊","🐿️","🦉","🦔","🍁"];
 
+/* LYDER */
+
+const flipSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"
+);
+
+const correctSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"
+);
+
+const wrongSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"
+);
+
+const winSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"
+);
+
+/* SYMBOLER */
+
+const allSymbols=[
+"🌲","👻","🍄","🦉","🌙",
+"🕷️","🦇","🪵","✨","🐺"
+];
+
+let level=1;
 let cards=[];
 let flipped=[];
 let matched=0;
@@ -208,128 +299,258 @@ let timer=0;
 let interval;
 let lock=false;
 
-function startGame(){
+function startLevel(){
+
 clearInterval(interval);
 
-cards=[...symbols,...symbols];
+let pairs=4+(level-1)*2;
+
+if(pairs>10){
+pairs=10;
+}
+
+let selected=
+allSymbols.slice(0,pairs);
+
+cards=[...selected,...selected];
+
 cards.sort(()=>Math.random()-0.5);
 
 flipped=[];
 matched=0;
-score=0;
 combo=0;
 timer=0;
-lock=true;
+lock=false;
 
-document.getElementById("score").innerHTML=0;
-document.getElementById("combo").innerHTML=0;
-document.getElementById("time").innerHTML=0;
-document.getElementById("winBox").style.display="none";
-document.getElementById("message").innerHTML="🌙 Se nøye! Kortene skjules snart...";
+updateStats();
 
-const board=document.getElementById("gameBoard");
+document.getElementById(
+"winBox"
+).style.display="none";
+
+document.getElementById(
+"message"
+).innerHTML=
+"🌲 Finn skogskortene...";
+
+const board=
+document.getElementById(
+"gameBoard"
+);
+
 board.innerHTML="";
 
+let columns=4;
+
+if(cards.length>=20){
+columns=5;
+}
+
+board.style.gridTemplateColumns=
+`repeat(${columns},105px)`;
+
 cards.forEach(symbol=>{
-const card=document.createElement("div");
-card.className="card flipped";
+
+const card=
+document.createElement("div");
+
+card.className="card";
+
 card.dataset.symbol=symbol;
 
 card.innerHTML=`
+
 <div class="inner">
-<div class="front">🌙</div>
-<div class="back">${symbol}</div>
+
+<div class="front">
+🌲
 </div>
+
+<div class="back">
+${symbol}
+</div>
+
+</div>
+
 `;
 
-card.onclick=()=>flipCard(card);
-board.appendChild(card);
-});
+card.onclick=
+()=>flipCard(card);
 
-setTimeout(()=>{
-document.querySelectorAll(".card").forEach(card=>{
-card.classList.remove("flipped");
+board.appendChild(card);
+
 });
-lock=false;
-document.getElementById("message").innerHTML="🌲 Finn like skogskort!";
-},2500);
 
 interval=setInterval(()=>{
+
 timer++;
-document.getElementById("time").innerHTML=timer;
+
+document.getElementById(
+"time"
+).innerHTML=timer;
+
 },1000);
+
 }
 
 function flipCard(card){
+
 if(lock)return;
+
 if(flipped.length>=2)return;
+
 if(card.classList.contains("flipped"))return;
+
 if(card.classList.contains("correct"))return;
 
 card.classList.add("flipped");
+
+flipSound.currentTime=0;
+flipSound.play();
+
 flipped.push(card);
 
 if(flipped.length===2){
+
 checkMatch();
+
 }
+
 }
 
 function checkMatch(){
+
 lock=true;
 
 const a=flipped[0];
 const b=flipped[1];
 
 if(a.dataset.symbol===b.dataset.symbol){
+
 a.classList.add("correct");
 b.classList.add("correct");
 
 matched+=2;
-combo++;
-score+=10+(combo*3);
 
-document.getElementById("message").innerHTML="✨ Riktig par i skogen!";
+combo++;
+
+score+=12+(combo*4);
+
+correctSound.currentTime=0;
+correctSound.play();
+
+document.getElementById(
+"message"
+).innerHTML=
+"✨ Skogspar funnet!";
+
 flipped=[];
+
 lock=false;
+
 updateStats();
 
 if(matched===cards.length){
-winGame();
+
+winLevel();
+
 }
 
 }else{
+
 combo=0;
-score=Math.max(0,score-2);
+
+score=Math.max(0,score-3);
+
+wrongSound.currentTime=0;
+wrongSound.play();
 
 a.classList.add("wrong");
 b.classList.add("wrong");
 
-document.getElementById("message").innerHTML="🌫️ Feil par! Prøv igjen.";
+document.getElementById(
+"message"
+).innerHTML=
+"👻 Feil skogskort";
+
+updateStats();
 
 setTimeout(()=>{
-a.classList.remove("flipped","wrong");
-b.classList.remove("flipped","wrong");
+
+a.classList.remove(
+"flipped",
+"wrong"
+);
+
+b.classList.remove(
+"flipped",
+"wrong"
+);
+
 flipped=[];
+
 lock=false;
-updateStats();
-},900);
+
+},850);
+
 }
+
 }
 
 function updateStats(){
+
+document.getElementById("level").innerHTML=level;
 document.getElementById("score").innerHTML=score;
 document.getElementById("combo").innerHTML=combo;
+document.getElementById("time").innerHTML=timer;
+
 }
 
-function winGame(){
+function winLevel(){
+
 clearInterval(interval);
-document.getElementById("winBox").style.display="block";
-document.getElementById("finalScore").innerHTML=
-"⭐ Poeng: "+score+"<br>⏱️ Tid: "+timer+"s";
-document.getElementById("message").innerHTML="🏆 Skogen er fullført!";
+
+winSound.currentTime=0;
+winSound.play();
+
+document.getElementById(
+"winBox"
+).style.display="block";
+
+document.getElementById(
+"finalScore"
+).innerHTML=
+`⭐ Poeng: ${score}<br>
+⏱️ Tid: ${timer}s`;
+
+document.getElementById(
+"message"
+).innerHTML=
+"🏆 Skog nivå "+level+" fullført!";
+
 }
 
-startGame();
+function nextLevel(){
+
+level++;
+
+if(level>5){
+
+alert(
+"🌲 Du fullførte hele Den mørke skogen!"
+);
+
+level=1;
+score=0;
+
+}
+
+startLevel();
+
+}
+
+startLevel();
+
 </script>
 
 </body>
