@@ -260,9 +260,8 @@ Kortene skjules veldig raskt
 </div>
 
 <!-- MESTERBANEN -->
-
 <div class="level"
-onclick="location.href='memory-master.html'">
+id="masterLevel">
 
 <div class="cloud"
 style="top:20px;left:5px;">
@@ -273,8 +272,8 @@ style="top:20px;left:5px;">
 🔥 Mesterbanen
 </h2>
 
-<p>
-Ekspertbane med 10 nivåer
+<p id="masterText">
+🔒 Låst
 </p>
 
 <div class="stars">
@@ -287,6 +286,10 @@ Ekspertbane med 10 nivåer
 
 </div>
 
+
+
+</div>
+
 </div>
 
 <button class="backBtn"
@@ -295,6 +298,46 @@ onclick="location.href='hundespill.html'">
 ⬅️ Tilbake til spill
 
 </button>
+<script>
 
+const savedLevel =
+parseInt(
+localStorage.getItem(
+"bonusLevel"
+)
+) || 1;
+
+const masterBox =
+document.getElementById(
+"masterLevel"
+);
+
+const masterText =
+document.getElementById(
+"masterText"
+);
+
+if(savedLevel >= 3){
+
+masterText.innerHTML =
+"🔥 Ekspertbane med 10 nivåer";
+
+masterBox.onclick = () => {
+
+location.href =
+"memory-master.html";
+
+};
+
+}else{
+
+masterText.innerHTML =
+"🔒 Fullfør Bonusbanen nivå 3";
+
+masterBox.style.opacity = ".6";
+
+}
+
+</script>
 </body>
 </html>
