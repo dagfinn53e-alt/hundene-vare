@@ -345,15 +345,15 @@ const allSymbols=[
 "👑","💰","✨","🎈","🍀"
 ];
 
-let level=1;
+let level=
+parseInt(localStorage.getItem("bonusLevel")) || 1;
+
+let score=
+parseInt(localStorage.getItem("bonusScore")) || 0;
+
 let cards=[];
 let flipped=[];
 let matched=0;
-let score=0;
-let combo=0;
-let timer=0;
-let interval;
-let lock=false;
 
 function startLevel(){
 
@@ -571,7 +571,15 @@ lock=false;
 }
 
 function updateStats(){
+localStorage.setItem(
+"bonusLevel",
+level
+);
 
+localStorage.setItem(
+"bonusScore",
+score
+);
 document.getElementById("level").innerHTML=level;
 document.getElementById("score").innerHTML=score;
 document.getElementById("combo").innerHTML=combo;
