@@ -6,7 +6,6 @@
 <title>🗺️ Memory Adventure MAP</title>
 
 <style>
-
 body{
 margin:0;
 font-family:Arial,sans-serif;
@@ -95,20 +94,10 @@ opacity:.10;
 animation:float 12s infinite linear;
 }
 
-.locked{
-opacity:.55;
-filter:grayscale(100%);
-}
-
 @keyframes float{
-0%{
-transform:translateX(-50px);
+0%{transform:translateX(-50px);}
+100%{transform:translateX(1200px);}
 }
-100%{
-transform:translateX(1200px);
-}
-}
-
 </style>
 </head>
 
@@ -117,236 +106,64 @@ transform:translateX(1200px);
 <h1>🗺️ Memory Adventure MAP</h1>
 
 <div id="message">
-
 Velg et område for å starte eventyret 😄
-
 </div>
 
 <div class="map">
 
-<!-- HUNDEPARKEN -->
-
-<div class="level"
-onclick="location.href='memory1.html'">
-
-<div class="cloud" style="top:10px;left:0;">
-☁️
-</div>
-
+<div class="level" onclick="location.href='memory1.html'">
+<div class="cloud" style="top:10px;left:0;">☁️</div>
 <h2>🐶 Hundeparken</h2>
-
-<p>
-Lett memory med søte hunder
-</p>
-
-<div class="stars">
-⭐ ⭐ ⭐
+<p>Lett memory med søte hunder</p>
+<div class="stars">⭐ ⭐ ⭐</div>
+<div class="path">➡️</div>
 </div>
 
-<div class="path">
-➡️
-</div>
-
-</div>
-
-<!-- MØRKE SKOGEN -->
-
-<div class="level"
-onclick="location.href='memory-darkforest.html'">
-
-<div class="cloud" style="top:20px;left:10px;">
-☁️
-</div>
-
+<div class="level" onclick="location.href='memory-darkforest.html'">
+<div class="cloud" style="top:20px;left:10px;">☁️</div>
 <h2>🌲 Den mørke skogen</h2>
-
-<p>
-Dark Memory utfordring
-</p>
-
-<div class="stars">
-⭐ ⭐ ⭐
+<p>Dark Memory utfordring</p>
+<div class="stars">⭐ ⭐ ⭐</div>
+<div class="path">➡️</div>
 </div>
 
-<div class="path">
-➡️
-</div>
-
-</div>
-
-<!-- KENNELEN -->
-
-<div class="level"
-onclick="location.href='memory-kennel.html'">
-
-<div class="cloud" style="top:15px;left:15px;">
-☁️
-</div>
-
+<div class="level" onclick="location.href='memory-kennel.html'">
+<div class="cloud" style="top:15px;left:15px;">☁️</div>
 <h2>🏡 Kennelen</h2>
-
-<p>
-Bonuskort og combo-memory
-</p>
-
-<div class="stars">
-⭐ ⭐ ⭐
+<p>Bonuskort og combo-memory</p>
+<div class="stars">⭐ ⭐ ⭐</div>
+<div class="path">➡️</div>
 </div>
 
-<div class="path">
-➡️
-</div>
-
-</div>
-
-<!-- BONUSBANEN -->
-
-<div class="level"
-onclick="location.href='memory-bonus-levels.html'">
-
-<div class="cloud" style="top:12px;left:20px;">
-☁️
-</div>
-
+<div class="level" onclick="location.href='memory-bonus-levels.html'">
+<div class="cloud" style="top:12px;left:20px;">☁️</div>
 <h2>🎁 Bonusbanen</h2>
-
-<p>
-Flere nivåer med bonuskort
-</p>
-
-<div class="stars">
-⭐ ⭐ ⭐
+<p>Flere nivåer med bonuskort</p>
+<div class="stars">⭐ ⭐ ⭐</div>
+<div class="path">➡️</div>
 </div>
 
-<div class="path">
-➡️
-</div>
-
-</div>
-
-<!-- NATT MEMORY -->
-
-<div class="level"
-onclick="location.href='memory-night.html'">
-
-<div class="cloud" style="top:18px;left:8px;">
-☁️
-</div>
-
+<div class="level" onclick="location.href='memory-night.html'">
+<div class="cloud" style="top:18px;left:8px;">☁️</div>
 <h2>🌙 Natt-memory</h2>
-
-<p>
-Kortene skjules veldig raskt
-</p>
-
-<div class="stars">
-⭐ ⭐ ⭐
+<p>Kortene skjules veldig raskt</p>
+<div class="stars">⭐ ⭐ ⭐</div>
+<div class="path">➡️</div>
 </div>
 
-<div class="path">
-➡️
-</div>
-
-</div>
-
-<!-- MESTERBANEN -->
-
-<div class="level"
-id="masterLevel">
-
-<div class="cloud" style="top:20px;left:5px;">
-☁️
-</div>
-<div class="level"
-onclick="location.href='memory-master.html'">
-
-<div class="cloud" style="top:20px;left:5px;">
-☁️
-</div>
-
+<div class="level" onclick="location.href='memory-master.html'">
+<div class="cloud" style="top:20px;left:5px;">☁️</div>
 <h2>🔥 Mesterbanen</h2>
-
-<p>
-Ekspertbane med 10 nivåer
-</p>
-
-<div class="stars">
-⭐ ⭐ ⭐
-</div>
-
-<div class="path">
-🏆
+<p>Ekspertbane med 10 nivåer</p>
+<div class="stars">⭐ ⭐ ⭐</div>
+<div class="path">🏆</div>
 </div>
 
 </div>
 
-
-
-
-
-</div>
-
-</div>
-
-<button class="backBtn"
-onclick="location.href='hundespill.html'">
-
+<button class="backBtn" onclick="location.href='hundespill.html'">
 ⬅️ Tilbake til spill
-
 </button>
-
-<script>
-
-const savedLevel =
-parseInt(
-localStorage.getItem(
-"bonusLevel"
-)
-) || 1;
-
-const masterBox =
-document.getElementById(
-"masterLevel"
-);
-
-const masterText =
-document.getElementById(
-"masterText"
-);
-
-if(savedLevel >= 3){
-
-masterText.innerHTML =
-"🔥 Ekspertbane med 10 nivåer";
-
-masterBox.onclick = () => {
-
-location.href =
-"memory-master.html";
-
-};
-
-masterBox.classList.remove(
-"locked"
-);
-
-}else{
-
-masterBox.classList.add(
-"locked"
-);
-
-masterBox.onclick = () => {
-
-alert(
-"🔒 Fullfør Bonusbanen nivå 3 først!"
-);
-
-};
-
-}
-
-</script>
 
 </body>
 </html>
