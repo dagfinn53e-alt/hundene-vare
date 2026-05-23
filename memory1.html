@@ -6,13 +6,12 @@
 <title>🐶 Hundeparken IMAGE EDITION</title>
 
 <style>
-
 body{
 margin:0;
 font-family:Arial,sans-serif;
 background:linear-gradient(to bottom,#dbeafe,#bfdbfe);
 text-align:center;
-overflow:hidden;
+overflow-x:hidden;
 color:#123c73;
 }
 
@@ -20,14 +19,11 @@ color:#123c73;
 max-width:1200px;
 margin:auto;
 padding:20px;
-position:relative;
-z-index:2;
 }
 
 h1{
-font-size:52px;
+font-size:46px;
 margin-top:10px;
-text-shadow:0 0 15px #60a5fa;
 }
 
 .stats{
@@ -48,27 +44,16 @@ box-shadow:0 4px 10px rgba(0,0,0,.15);
 }
 
 #message{
-font-size:30px;
+font-size:28px;
 font-weight:bold;
 color:#2563eb;
 margin:20px;
 min-height:40px;
-transition:.3s;
-}
-
-.comboText{
-animation:comboPop .6s;
-color:#ef4444!important;
-}
-
-@keyframes comboPop{
-0%{transform:scale(.5)}
-50%{transform:scale(1.4)}
-100%{transform:scale(1)}
 }
 
 #gameBoard{
 display:grid;
+grid-template-columns:repeat(4,120px);
 gap:15px;
 justify-content:center;
 margin-top:20px;
@@ -79,11 +64,6 @@ width:120px;
 height:120px;
 perspective:1000px;
 cursor:pointer;
-transition:.2s;
-}
-
-.card:hover{
-transform:scale(1.05);
 }
 
 .inner{
@@ -129,17 +109,7 @@ object-fit:cover;
 }
 
 .correct .back{
-box-shadow:0 0 35px #60a5fa;
-animation:dogGlow .8s infinite alternate;
-}
-
-@keyframes dogGlow{
-from{
-transform:rotateY(180deg) scale(1);
-}
-to{
-transform:rotateY(180deg) scale(1.08);
-}
+box-shadow:0 0 30px #22c55e;
 }
 
 .wrong{
@@ -154,57 +124,6 @@ animation:shake .25s 2;
 100%{transform:translateX(0)}
 }
 
-.dog{
-position:fixed;
-font-size:30px;
-opacity:.14;
-animation:dogFloat 14s linear infinite;
-pointer-events:none;
-}
-
-@keyframes dogFloat{
-from{
-transform:translateY(110vh);
-}
-to{
-transform:translateY(-120vh);
-}
-}
-
-.flash{
-position:fixed;
-inset:0;
-background:white;
-opacity:0;
-pointer-events:none;
-z-index:9999;
-}
-
-.flash.active{
-animation:flashScreen .6s;
-}
-
-@keyframes flashScreen{
-0%{opacity:.8}
-100%{opacity:0}
-}
-
-.confetti{
-position:fixed;
-width:12px;
-height:12px;
-top:-20px;
-animation:fall linear forwards;
-z-index:999;
-}
-
-@keyframes fall{
-to{
-transform:translateY(110vh) rotate(720deg);
-opacity:0;
-}
-}
-
 #winBox{
 display:none;
 background:white;
@@ -213,23 +132,6 @@ border-radius:25px;
 box-shadow:0 8px 20px rgba(0,0,0,.18);
 max-width:500px;
 margin:30px auto;
-animation:winPop .7s;
-}
-
-@keyframes winPop{
-0%{
-transform:scale(.4);
-opacity:0;
-}
-100%{
-transform:scale(1);
-opacity:1;
-}
-}
-
-#winBox h2{
-font-size:44px;
-color:#2563eb;
 }
 
 button{
@@ -247,90 +149,43 @@ cursor:pointer;
 .backBtn{
 background:#123c73;
 }
-
 </style>
 </head>
 
 <body>
-
-<div class="flash" id="flash"></div>
-
-<div class="dog" style="left:10%;">🐶</div>
-<div class="dog" style="left:35%;animation-delay:3s;">🐾</div>
-<div class="dog" style="left:60%;animation-delay:5s;">🦴</div>
-<div class="dog" style="left:85%;animation-delay:8s;">🐕</div>
 
 <div class="container">
 
 <h1>🐶 Hundeparken IMAGE EDITION</h1>
 
 <div class="stats">
-
-<div class="stat">
-🗺️ Nivå:
-<span id="level">1</span>
+<div class="stat">🗺️ Nivå: <span id="level">1</span></div>
+<div class="stat">⭐ Poeng: <span id="score">0</span></div>
+<div class="stat">🔥 Combo: <span id="combo">0</span></div>
 </div>
 
-<div class="stat">
-⭐ Poeng:
-<span id="score">0</span>
-</div>
-
-<div class="stat">
-🔥 Combo:
-<span id="combo">0</span>
-</div>
-
-</div>
-
-<div id="message">
-🐶 Finn hundebildene!
-</div>
+<div id="message">🐶 Finn hundebildene!</div>
 
 <div id="gameBoard"></div>
 
 <div id="winBox">
-
 <h2>🏆 LEVEL COMPLETE!</h2>
-
-<div style="font-size:60px;">
-🐶🎉🐶
-</div>
-
+<div style="font-size:60px;">🐶🎉🐶</div>
 <p id="finalScore"></p>
-
-<button onclick="nextLevel()">
-➡️ Neste nivå
-</button>
-
+<button onclick="nextLevel()">➡️ Neste nivå</button>
 </div>
 
-<button class="backBtn"
-onclick="location.href='memorymap.html'">
-
+<button class="backBtn" onclick="location.href='memorymap.html'">
 ⬅️ Tilbake til kart
-
 </button>
 
 </div>
 
 <script>
-
-const flipSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"
-);
-
-const correctSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"
-);
-
-const wrongSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"
-);
-
-const winSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"
-);
+const flipSound=new Audio("https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3");
+const correctSound=new Audio("https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3");
+const wrongSound=new Audio("https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3");
+const winSound=new Audio("https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3");
 
 const allImages=[
 "dog1.jpg",
@@ -341,30 +196,20 @@ const allImages=[
 "dog6.jpg"
 ];
 
-];
-
 let level=1;
 let score=0;
 let combo=0;
-
 let cards=[];
 let flipped=[];
 let matched=0;
 let lock=false;
 
 function startLevel(){
-
 let pairs=3+level;
+if(pairs>6){pairs=6;}
 
-if(pairs>6){
-pairs=6;
-}
-
-let selected=
-allImages.slice(0,pairs);
-
+let selected=allImages.slice(0,pairs);
 cards=[...selected,...selected];
-
 cards.sort(()=>Math.random()-0.5);
 
 flipped=[];
@@ -372,147 +217,78 @@ matched=0;
 combo=0;
 lock=false;
 
-updateStats();
+document.getElementById("level").innerHTML=level;
+document.getElementById("combo").innerHTML=combo;
+document.getElementById("score").innerHTML=score;
+document.getElementById("winBox").style.display="none";
+document.getElementById("message").innerHTML="🐶 Finn hundebildene!";
 
-document.getElementById(
-"winBox"
-).style.display="none";
-
-const board=
-document.getElementById(
-"gameBoard"
-);
-
+const board=document.getElementById("gameBoard");
 board.innerHTML="";
 
-let columns=4;
-
-board.style.gridTemplateColumns=
-`repeat(${columns},120px)`;
-
 cards.forEach(image=>{
-
-const card=
-document.createElement("div");
-
+const card=document.createElement("div");
 card.className="card";
-
 card.dataset.image=image;
 
 card.innerHTML=`
-
 <div class="inner">
-
-<div class="front">
-🐶
+<div class="front">🐶</div>
+<div class="back"><img src="${image}"></div>
 </div>
-
-<div class="back">
-<img src="${image}">
-</div>
-
-</div>
-
 `;
 
-card.onclick=
-()=>flipCard(card);
-
+card.onclick=()=>flipCard(card);
 board.appendChild(card);
-
 });
-
 }
 
 function flipCard(card){
-
 if(lock)return;
-
 if(flipped.length>=2)return;
-
 if(card.classList.contains("flipped"))return;
-
 if(card.classList.contains("correct"))return;
 
 card.classList.add("flipped");
-
 flipSound.currentTime=0;
 flipSound.play();
 
 flipped.push(card);
 
 if(flipped.length===2){
-
 checkMatch();
-
 }
-
 }
 
 function checkMatch(){
-
 lock=true;
 
 const a=flipped[0];
 const b=flipped[1];
 
 if(a.dataset.image===b.dataset.image){
-
 a.classList.add("correct");
 b.classList.add("correct");
 
 matched+=2;
-
 combo++;
-
 score+=10+(combo*4);
 
 correctSound.currentTime=0;
 correctSound.play();
 
-const msg=
-document.getElementById(
-"message"
-);
-
-msg.innerHTML=
-"🐶 Hundepar funnet!";
-
-if(combo>=3){
-
-msg.innerHTML=
-"🔥 SUPER COMBO x"+combo;
-
-msg.classList.add(
-"comboText"
-);
-
-setTimeout(()=>{
-
-msg.classList.remove(
-"comboText"
-);
-
-},600);
-
-}
-
-flipped=[];
-
-lock=false;
-
+document.getElementById("message").innerHTML="🐶 Hundepar funnet!";
 updateStats();
 
+flipped=[];
+lock=false;
+
 if(matched===cards.length){
-
 winLevel();
-
 }
 
 }else{
-
 combo=0;
-
 score=Math.max(0,score-3);
 
 wrongSound.currentTime=0;
@@ -521,149 +297,46 @@ wrongSound.play();
 a.classList.add("wrong");
 b.classList.add("wrong");
 
-document.getElementById(
-"message"
-).innerHTML=
-"❌ Feil hund";
-
+document.getElementById("message").innerHTML="❌ Feil hund";
 updateStats();
 
 setTimeout(()=>{
-
-a.classList.remove(
-"flipped",
-"wrong"
-);
-
-b.classList.remove(
-"flipped",
-"wrong"
-);
-
+a.classList.remove("flipped","wrong");
+b.classList.remove("flipped","wrong");
 flipped=[];
-
 lock=false;
-
 },900);
-
 }
-
 }
 
 function updateStats(){
-
-document.getElementById(
-"level"
-).innerHTML=level;
-
-document.getElementById(
-"score"
-).innerHTML=score;
-
-document.getElementById(
-"combo"
-).innerHTML=combo;
-
-}
-
-function flashScreen(){
-
-const flash=
-document.getElementById(
-"flash"
-);
-
-flash.classList.add(
-"active"
-);
-
-setTimeout(()=>{
-
-flash.classList.remove(
-"active"
-);
-
-},600);
-
-}
-
-function createConfetti(){
-
-for(let i=0;i<80;i++){
-
-const conf=
-document.createElement("div");
-
-conf.className="confetti";
-
-conf.style.left=
-Math.random()*100+"vw";
-
-conf.style.background=
-`hsl(${Math.random()*360},
-100%,50%)`;
-
-conf.style.animationDuration=
-(3+Math.random()*3)+"s";
-
-document.body.appendChild(conf);
-
-setTimeout(()=>{
-
-conf.remove();
-
-},6000);
-
-}
-
+document.getElementById("level").innerHTML=level;
+document.getElementById("score").innerHTML=score;
+document.getElementById("combo").innerHTML=combo;
 }
 
 function winLevel(){
-
 winSound.currentTime=0;
 winSound.play();
 
-flashScreen();
-
-createConfetti();
-
-document.getElementById(
-"winBox"
-).style.display="block";
-
-document.getElementById(
-"finalScore"
-).innerHTML=
-`⭐ Poeng: ${score}`;
-
-document.getElementById(
-"message"
-).innerHTML=
-"🏆 LEVEL COMPLETE!";
-
+document.getElementById("winBox").style.display="block";
+document.getElementById("finalScore").innerHTML=`⭐ Poeng: ${score}`;
+document.getElementById("message").innerHTML="🏆 LEVEL COMPLETE!";
 }
 
 function nextLevel(){
-
 level++;
 
 if(level>3){
-
-alert(
-"🐶 Du fullførte Hundeparken!"
-);
-
+alert("🐶 Du fullførte Hundeparken!");
 level=1;
 score=0;
-
 }
 
 startLevel();
-
 }
 
 startLevel();
-
 </script>
 
 </body>
