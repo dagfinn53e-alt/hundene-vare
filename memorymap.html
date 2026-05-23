@@ -95,6 +95,11 @@ opacity:.10;
 animation:float 12s infinite linear;
 }
 
+.locked{
+opacity:.55;
+filter:grayscale(100%);
+}
+
 @keyframes float{
 0%{
 transform:translateX(-50px);
@@ -124,14 +129,11 @@ Velg et område for å starte eventyret 😄
 <div class="level"
 onclick="location.href='memory1.html'">
 
-<div class="cloud"
-style="top:10px;left:0;">
+<div class="cloud" style="top:10px;left:0;">
 ☁️
 </div>
 
-<h2>
-🐶 Hundeparken
-</h2>
+<h2>🐶 Hundeparken</h2>
 
 <p>
 Lett memory med søte hunder
@@ -152,21 +154,18 @@ Lett memory med søte hunder
 <div class="level"
 onclick="location.href='memory-darkforest.html'">
 
-<div class="cloud"
-style="top:20px;left:10px;">
+<div class="cloud" style="top:20px;left:10px;">
 ☁️
 </div>
 
-<h2>
-🌲 Den mørke skogen
-</h2>
+<h2>🌲 Den mørke skogen</h2>
 
 <p>
 Dark Memory utfordring
 </p>
 
 <div class="stars">
-⭐ ⭐
+⭐ ⭐ ⭐
 </div>
 
 <div class="path">
@@ -180,14 +179,11 @@ Dark Memory utfordring
 <div class="level"
 onclick="location.href='memory-kennel.html'">
 
-<div class="cloud"
-style="top:15px;left:15px;">
+<div class="cloud" style="top:15px;left:15px;">
 ☁️
 </div>
 
-<h2>
-🏡 Kennelen
-</h2>
+<h2>🏡 Kennelen</h2>
 
 <p>
 Bonuskort og combo-memory
@@ -208,14 +204,11 @@ Bonuskort og combo-memory
 <div class="level"
 onclick="location.href='memory-bonus-levels.html'">
 
-<div class="cloud"
-style="top:12px;left:20px;">
+<div class="cloud" style="top:12px;left:20px;">
 ☁️
 </div>
 
-<h2>
-🎁 Bonusbanen
-</h2>
+<h2>🎁 Bonusbanen</h2>
 
 <p>
 Flere nivåer med bonuskort
@@ -236,14 +229,11 @@ Flere nivåer med bonuskort
 <div class="level"
 onclick="location.href='memory-night.html'">
 
-<div class="cloud"
-style="top:18px;left:8px;">
+<div class="cloud" style="top:18px;left:8px;">
 ☁️
 </div>
 
-<h2>
-🌙 Natt-memory
-</h2>
+<h2>🌙 Natt-memory</h2>
 
 <p>
 Kortene skjules veldig raskt
@@ -260,20 +250,18 @@ Kortene skjules veldig raskt
 </div>
 
 <!-- MESTERBANEN -->
+
 <div class="level"
 id="masterLevel">
 
-<div class="cloud"
-style="top:20px;left:5px;">
+<div class="cloud" style="top:20px;left:5px;">
 ☁️
 </div>
 
-<h2>
-🔥 Mesterbanen
-</h2>
+<h2>🔥 Mesterbanen</h2>
 
 <p id="masterText">
-🔒 Låst
+🔒 Fullfør Bonusbanen nivå 3
 </p>
 
 <div class="stars">
@@ -286,10 +274,6 @@ style="top:20px;left:5px;">
 
 </div>
 
-
-
-</div>
-
 </div>
 
 <button class="backBtn"
@@ -298,6 +282,7 @@ onclick="location.href='hundespill.html'">
 ⬅️ Tilbake til spill
 
 </button>
+
 <script>
 
 const savedLevel =
@@ -329,15 +314,27 @@ location.href =
 
 };
 
+masterBox.classList.remove(
+"locked"
+);
+
 }else{
 
-masterText.innerHTML =
-"🔒 Fullfør Bonusbanen nivå 3";
+masterBox.classList.add(
+"locked"
+);
 
-masterBox.style.opacity = ".6";
+masterBox.onclick = () => {
+
+alert(
+"🔒 Fullfør Bonusbanen nivå 3 først!"
+);
+
+};
 
 }
 
 </script>
+
 </body>
 </html>
