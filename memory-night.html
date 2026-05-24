@@ -1,614 +1,494 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌙 Natt-memory LEVELS + LYD</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Adventure - Night</title>
 
-<style>
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:linear-gradient(to bottom,#020617,#0f172a);
-color:white;
-text-align:center;
-overflow-x:hidden;
-}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: white;
+      background:
+        radial-gradient(circle at top, #243b75 0%, #0b1026 45%, #03040a 100%);
+      overflow-x: hidden;
+      text-align: center;
+    }
 
-.container{
-max-width:1200px;
-margin:auto;
-padding:20px;
-}
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        radial-gradient(white 1px, transparent 1px),
+        radial-gradient(#8ecbff 1px, transparent 1px),
+        radial-gradient(#ffffff 1px, transparent 1px);
+      background-size: 80px 80px, 130px 130px, 200px 200px;
+      animation: twinkle 5s infinite alternate;
+      opacity: 0.7;
+    }
 
-h1{
-font-size:48px;
-margin-top:10px;
-text-shadow:0 0 15px #60a5fa;
-}
+    @keyframes twinkle {
+      from { opacity: 0.35; }
+      to { opacity: 0.9; }
+    }
 
-.stats{
-display:flex;
-justify-content:center;
-gap:15px;
-flex-wrap:wrap;
-margin-bottom:20px;
-}
+    .moon {
+      position: fixed;
+      top: 28px;
+      right: 28px;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #f7f0b9;
+      box-shadow: 0 0 35px #fff6a8;
+      z-index: 1;
+    }
 
-.stat{
-background:rgba(255,255,255,.08);
-padding:14px 20px;
-border-radius:18px;
-font-size:20px;
-font-weight:bold;
-box-shadow:0 4px 12px rgba(0,0,0,.35);
-}
+    .moon::after {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 14px;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #0b1026;
+    }
 
-#message{
-font-size:28px;
-font-weight:bold;
-color:#93c5fd;
-margin:20px;
-min-height:40px;
-}
+    .game {
+      position: relative;
+      z-index: 2;
+      width: min(96vw, 760px);
+      margin: 0 auto;
+      padding: 22px 12px 35px;
+    }
 
-#gameBoard{
-display:grid;
-gap:15px;
-justify-content:center;
-margin-top:20px;
-}
+    h1 {
+      margin: 12px 0 4px;
+      font-size: clamp(2rem, 8vw, 4rem);
+      text-shadow: 0 0 18px #8ecbff;
+    }
 
-.card{
-width:105px;
-height:105px;
-perspective:1000px;
-cursor:pointer;
-transition:.2s;
-}
+    .subtitle {
+      margin: 0 0 14px;
+      color: #d8e7ff;
+      font-size: 1rem;
+    }
 
-.card:hover{
-transform:scale(1.05);
-}
+    .panel {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 16px auto;
+      max-width: 520px;
+    }
 
-.inner{
-position:relative;
-width:100%;
-height:100%;
-transition:transform .6s;
-transform-style:preserve-3d;
-}
+    .stat {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 16px;
+      padding: 10px;
+      box-shadow: 0 0 18px rgba(142,203,255,0.18);
+    }
 
-.card.flipped .inner{
-transform:rotateY(180deg);
-}
+    .stat strong {
+      display: block;
+      font-size: 0.8rem;
+      color: #b9d8ff;
+    }
 
-.front,.back{
-position:absolute;
-width:100%;
-height:100%;
-backface-visibility:hidden;
-border-radius:22px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:50px;
-box-shadow:0 0 18px rgba(96,165,250,.25);
-}
+    .stat span {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
 
-.front{
-background:linear-gradient(135deg,#1e293b,#334155);
-}
+    .controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 14px 0;
+    }
 
-.back{
-background:#e0f2fe;
-color:#0f172a;
-transform:rotateY(180deg);
-}
+    button, a.button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(135deg, #4f7cff, #9b5cff);
+      box-shadow: 0 0 18px rgba(130,150,255,0.45);
+      text-decoration: none;
+    }
 
-.correct .back{
-box-shadow:0 0 35px #60a5fa;
-animation:nightGlow .8s infinite alternate;
-}
+    button:active, a.button:active {
+      transform: scale(0.96);
+    }
 
-@keyframes nightGlow{
-from{
-transform:rotateY(180deg) scale(1);
-}
-to{
-transform:rotateY(180deg) scale(1.08);
-}
-}
+    .sound-btn {
+      background: linear-gradient(135deg, #1bbf89, #29a8ff);
+    }
 
-.wrong{
-animation:shake .25s 2;
-}
+    .board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 18px auto;
+      max-width: 560px;
+    }
 
-@keyframes shake{
-0%{transform:translateX(0)}
-25%{transform:translateX(-6px)}
-50%{transform:translateX(6px)}
-75%{transform:translateX(-6px)}
-100%{transform:translateX(0)}
-}
+    .card {
+      aspect-ratio: 1 / 1;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #18255a, #060914);
+      border: 2px solid rgba(255,255,255,0.18);
+      display: grid;
+      place-items: center;
+      font-size: clamp(2rem, 10vw, 3.4rem);
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+      transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+    }
 
-.star{
-position:fixed;
-font-size:28px;
-opacity:.18;
-animation:floatStar 12s linear infinite;
-pointer-events:none;
-}
+    .card:hover {
+      box-shadow: 0 0 22px rgba(142,203,255,0.55);
+    }
 
-@keyframes floatStar{
-from{
-transform:translateY(110vh);
-}
-to{
-transform:translateY(-120vh);
-}
-}
+    .card.flipped {
+      background: linear-gradient(145deg, #fff8c6, #8ecbff);
+      transform: rotateY(180deg) scale(1.04);
+      color: #10173a;
+    }
 
-#winBox{
-display:none;
-background:rgba(255,255,255,.08);
-padding:30px;
-border-radius:25px;
-max-width:500px;
-margin:30px auto;
-box-shadow:0 8px 20px rgba(0,0,0,.4);
-}
+    .card.matched {
+      background: linear-gradient(145deg, #4dffb5, #58a6ff);
+      animation: matched 0.55s ease;
+      pointer-events: none;
+    }
 
-#winBox h2{
-font-size:42px;
-color:#93c5fd;
-}
+    @keyframes matched {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.18) rotate(5deg); }
+      100% { transform: scale(1); }
+    }
 
-button{
-margin-top:20px;
-padding:16px 28px;
-border:none;
-border-radius:18px;
-background:#2563eb;
-color:white;
-font-size:20px;
-font-weight:bold;
-cursor:pointer;
-}
+    .message {
+      min-height: 32px;
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: #fff6a8;
+      text-shadow: 0 0 12px #fff6a8;
+    }
 
-.backBtn{
-background:#0f172a;
-border:2px solid #60a5fa;
-}
-@media(max-width:700px){
+    .ultra {
+      animation: ultraPulse 0.9s infinite alternate;
+    }
 
-h1{
-font-size:30px;
-}
+    @keyframes ultraPulse {
+      from { filter: drop-shadow(0 0 4px #8ecbff); }
+      to { filter: drop-shadow(0 0 18px #fff6a8); }
+    }
 
-.stats{
-gap:8px;
-}
+    .confetti {
+      position: fixed;
+      top: -20px;
+      width: 10px;
+      height: 16px;
+      pointer-events: none;
+      z-index: 10;
+      animation: fall 1.8s linear forwards;
+    }
 
-.stat{
-font-size:15px;
-padding:10px 12px;
-}
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
 
-#message{
-font-size:20px;
-margin:15px;
-}
+    @media (max-width: 480px) {
+      .board {
+        gap: 8px;
+      }
 
-#gameBoard{
-gap:10px !important;
-}
+      .card {
+        border-radius: 14px;
+      }
 
-.card{
-width:85px !important;
-height:85px !important;
-}
+      .moon {
+        width: 52px;
+        height: 52px;
+        right: 16px;
+        top: 18px;
+      }
 
-.front,
-.back{
-font-size:34px !important;
-}
-
-button{
-font-size:16px;
-padding:12px 18px;
-}
-
-#winBox{
-width:90%;
-padding:20px;
-}
-
-}
-</style>
+      .moon::after {
+        width: 52px;
+        height: 52px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-
-<div class="star" style="left:10%;">✨</div>
-<div class="star" style="left:30%;animation-delay:2s;">⭐</div>
-<div class="star" style="left:55%;animation-delay:4s;">✨</div>
-<div class="star" style="left:80%;animation-delay:7s;">⭐</div>
-
-<div class="container">
-
-<h1>🌙 Natt-memory LEVELS + LYD</h1>
-
-<div class="stats">
-
-<div class="stat">
-🗺️ Nivå:
-<span id="level">1</span>
-</div>
-
-<div class="stat">
-⭐ Poeng:
-<span id="score">0</span>
-</div>
-
-<div class="stat">
-🔥 Combo:
-<span id="combo">0</span>
-</div>
-
-<div class="stat">
-⏱️ Tid:
-<span id="time">0</span>
-</div>
-
-</div>
-
-<div id="message">
-
-🌙 Se nøye før kortene forsvinner...
-
-</div>
-
-<div id="gameBoard"></div>
-
-<div id="winBox">
-
-<h2>🏆 Nivå fullført!</h2>
-
-<div style="font-size:50px;">
-⭐⭐⭐
-</div>
-
-<p id="finalScore"></p>
-
-<button onclick="nextLevel()">
-
-➡️ Neste nivå
-
-</button>
-
-</div>
-
-<button class="backBtn"
-onclick="location.href='memorymap.html'">
-
-⬅️ Tilbake til kart
-
-</button>
-
-</div>
-
-<script>
-
-/* LYDER */
-
-const flipSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"
-);
-
-const correctSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"
-);
-
-const wrongSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"
-);
-
-const winSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"
-);
-
-/* SYMBOLER */
-
-const allSymbols=[
-"🌙","⭐","🌌","🦉","🌲",
-"👻","✨","🦇","🌠","🔮"
-];
-
-let level=1;
-let cards=[];
-let flipped=[];
-let matched=0;
-let score=0;
-let combo=0;
-let timer=0;
-let interval;
-let lock=true;
-
-function startLevel(){
-
-clearInterval(interval);
-
-let pairs=4+(level-1)*2;
-
-if(pairs>10){
-pairs=10;
-}
-
-let selected=
-allSymbols.slice(0,pairs);
-
-cards=[...selected,...selected];
-
-cards.sort(()=>Math.random()-0.5);
-
-flipped=[];
-matched=0;
-combo=0;
-timer=0;
-lock=true;
-
-updateStats();
-
-document.getElementById(
-"winBox"
-).style.display="none";
-
-const board=
-document.getElementById(
-"gameBoard"
-);
-
-board.innerHTML="";
-
-let columns=4;
-
-if(cards.length>=20){
-columns=5;
-}
-
-board.style.gridTemplateColumns=
-`repeat(${columns},105px)`;
-
-cards.forEach(symbol=>{
-
-const card=
-document.createElement("div");
-
-card.className=
-"card flipped";
-
-card.dataset.symbol=symbol;
-
-card.innerHTML=`
-
-<div class="inner">
-
-<div class="front">
-🌙
-</div>
-
-<div class="back">
-${symbol}
-</div>
-
-</div>
-
-`;
-
-card.onclick=
-()=>flipCard(card);
-
-board.appendChild(card);
-
-});
-
-let hideTime=2500-(level*300);
-
-if(hideTime<700){
-hideTime=700;
-}
-
-setTimeout(()=>{
-
-document.querySelectorAll(".card")
-.forEach(card=>{
-
-card.classList.remove("flipped");
-
-});
-
-lock=false;
-
-document.getElementById(
-"message"
-).innerHTML=
-"🌌 Finn like nattkort!";
-
-},hideTime);
-
-interval=setInterval(()=>{
-
-timer++;
-
-document.getElementById(
-"time"
-).innerHTML=timer;
-
-},1000);
-
-}
-
-function flipCard(card){
-
-if(lock)return;
-
-if(flipped.length>=2)return;
-
-if(card.classList.contains("flipped"))return;
-
-if(card.classList.contains("correct"))return;
-
-card.classList.add("flipped");
-
-flipSound.currentTime=0;
-flipSound.play();
-
-flipped.push(card);
-
-if(flipped.length===2){
-
-checkMatch();
-
-}
-
-}
-
-function checkMatch(){
-
-lock=true;
-
-const a=flipped[0];
-const b=flipped[1];
-
-if(a.dataset.symbol===b.dataset.symbol){
-
-a.classList.add("correct");
-b.classList.add("correct");
-
-matched+=2;
-
-combo++;
-
-score+=12+(combo*4);
-
-correctSound.currentTime=0;
-correctSound.play();
-
-document.getElementById(
-"message"
-).innerHTML=
-"✨ Nattpar funnet!";
-
-flipped=[];
-
-lock=false;
-
-updateStats();
-
-if(matched===cards.length){
-
-winLevel();
-
-}
-
-}else{
-
-combo=0;
-
-score=Math.max(0,score-3);
-
-wrongSound.currentTime=0;
-wrongSound.play();
-
-a.classList.add("wrong");
-b.classList.add("wrong");
-
-document.getElementById(
-"message"
-).innerHTML=
-"👻 Feil nattkort";
-
-updateStats();
-
-setTimeout(()=>{
-
-a.classList.remove(
-"flipped",
-"wrong"
-);
-
-b.classList.remove(
-"flipped",
-"wrong"
-);
-
-flipped=[];
-
-lock=false;
-
-},850);
-
-}
-
-}
-
-function updateStats(){
-
-document.getElementById("level").innerHTML=level;
-document.getElementById("score").innerHTML=score;
-document.getElementById("combo").innerHTML=combo;
-document.getElementById("time").innerHTML=timer;
-
-}
-
-function winLevel(){
-
-clearInterval(interval);
-
-winSound.currentTime=0;
-winSound.play();
-
-document.getElementById(
-"winBox"
-).style.display="block";
-
-document.getElementById(
-"finalScore"
-).innerHTML=
-`⭐ Poeng: ${score}<br>
-⏱️ Tid: ${timer}s`;
-
-document.getElementById(
-"message"
-).innerHTML=
-"🏆 Nivå "+level+" fullført!";
-
-}
-
-function nextLevel(){
-
-level++;
-
-if(level>5){
-
-alert(
-"🌙 Du fullførte hele Natt-memory!"
-);
-
-level=1;
-score=0;
-
-}
-
-startLevel();
-
-}
-
-startLevel();
-
-</script>
-
+  <div class="stars"></div>
+  <div class="moon"></div>
+
+  <main class="game">
+    <h1 class="ultra">🌙 Memory Night</h1>
+    <p class="subtitle">Finn parene i måneskinnet!</p>
+
+    <div class="panel">
+      <div class="stat">
+        <strong>Nivå</strong>
+        <span id="level">1</span>
+      </div>
+      <div class="stat">
+        <strong>Trekk</strong>
+        <span id="moves">0</span>
+      </div>
+      <div class="stat">
+        <strong>Combo</strong>
+        <span id="combo">0</span>
+      </div>
+      <div class="stat">
+        <strong>Par</strong>
+        <span id="pairs">0</span>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button onclick="restartGame()">🔄 Start på nytt</button>
+      <button class="sound-btn" onclick="toggleSound()" id="soundBtn">🔊 Lyd på</button>
+      <a class="button" href="memorymap.html">🗺️ Kart</a>
+    </div>
+
+    <div class="message" id="message">Trykk på to kort!</div>
+
+    <section class="board" id="board"></section>
+  </main>
+
+  <script>
+    const symbols = ["🌙", "⭐", "🦉", "🦇", "🪐", "✨", "🌌", "☁️"];
+
+    let cards = [];
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+
+    let level = 1;
+    let moves = 0;
+    let combo = 0;
+    let pairs = 0;
+    let soundOn = true;
+
+    const board = document.getElementById("board");
+    const levelEl = document.getElementById("level");
+    const movesEl = document.getElementById("moves");
+    const comboEl = document.getElementById("combo");
+    const pairsEl = document.getElementById("pairs");
+    const messageEl = document.getElementById("message");
+    const soundBtn = document.getElementById("soundBtn");
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function makeSound(type) {
+      if (!soundOn) return;
+
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      oscillator.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (type === "flip") oscillator.frequency.value = 420;
+      if (type === "match") oscillator.frequency.value = 760;
+      if (type === "win") oscillator.frequency.value = 980;
+      if (type === "wrong") oscillator.frequency.value = 180;
+
+      oscillator.type = "sine";
+      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.25);
+    }
+
+    function startGame() {
+      board.innerHTML = "";
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+      moves = 0;
+      combo = 0;
+      pairs = 0;
+
+      const pairCount = Math.min(4 + level, 8);
+      const chosen = symbols.slice(0, pairCount);
+      cards = shuffle([...chosen, ...chosen]);
+
+      board.style.gridTemplateColumns = pairCount <= 6
+        ? "repeat(4, 1fr)"
+        : "repeat(4, 1fr)";
+
+      cards.forEach((symbol, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.symbol = symbol;
+        card.dataset.index = index;
+        card.textContent = "🌑";
+        card.addEventListener("click", () => flipCard(card));
+        board.appendChild(card);
+      });
+
+      updateStats();
+      messageEl.textContent = "Trykk på to kort!";
+    }
+
+    function flipCard(card) {
+      if (lockBoard) return;
+      if (card.classList.contains("flipped")) return;
+      if (card.classList.contains("matched")) return;
+
+      makeSound("flip");
+
+      card.classList.add("flipped");
+      card.textContent = card.dataset.symbol;
+
+      if (!firstCard) {
+        firstCard = card;
+        return;
+      }
+
+      secondCard = card;
+      moves++;
+      updateStats();
+      checkMatch();
+    }
+
+    function checkMatch() {
+      const isMatch = firstCard.dataset.symbol === secondCard.dataset.symbol;
+
+      if (isMatch) {
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
+
+        combo++;
+        pairs++;
+
+        makeSound("match");
+        messageEl.textContent = combo >= 3
+          ? "🔥 ULTRA COMBO!"
+          : "Bra! Du fant et par!";
+
+        sparkle(firstCard);
+        sparkle(secondCard);
+
+        resetTurn();
+        updateStats();
+
+        if (pairs === Math.min(4 + level, 8)) {
+          winLevel();
+        }
+      } else {
+        lockBoard = true;
+        combo = 0;
+        messageEl.textContent = "Ikke par. Prøv igjen!";
+        makeSound("wrong");
+
+        setTimeout(() => {
+          firstCard.classList.remove("flipped");
+          secondCard.classList.remove("flipped");
+          firstCard.textContent = "🌑";
+          secondCard.textContent = "🌑";
+          resetTurn();
+          updateStats();
+        }, 750);
+      }
+    }
+
+    function resetTurn() {
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+    }
+
+    function winLevel() {
+      makeSound("win");
+      confetti();
+      messageEl.textContent = "🌟 Nivå fullført! Neste natt starter snart...";
+
+      setTimeout(() => {
+        level++;
+        if (level > 5) {
+          messageEl.textContent = "🏆 Du mestret Memory Night!";
+          level = 5;
+          confetti();
+        } else {
+          startGame();
+        }
+        updateStats();
+      }, 1800);
+    }
+
+    function restartGame() {
+      startGame();
+    }
+
+    function toggleSound() {
+      soundOn = !soundOn;
+      soundBtn.textContent = soundOn ? "🔊 Lyd på" : "🔇 Lyd av";
+    }
+
+    function updateStats() {
+      levelEl.textContent = level;
+      movesEl.textContent = moves;
+      comboEl.textContent = combo;
+      pairsEl.textContent = pairs;
+    }
+
+    function confetti() {
+      const colors = ["#fff6a8", "#8ecbff", "#9b5cff", "#4dffb5", "#ffffff"];
+
+      for (let i = 0; i < 70; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDelay = Math.random() * 0.5 + "s";
+        piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+        document.body.appendChild(piece);
+
+        setTimeout(() => {
+          piece.remove();
+        }, 2300);
+      }
+    }
+
+    function sparkle(card) {
+      card.style.boxShadow = "0 0 30px #fff6a8, 0 0 55px #8ecbff";
+
+      setTimeout(() => {
+        card.style.boxShadow = "";
+      }, 500);
+    }
+
+    startGame();
+  </script>
 </body>
 </html>
