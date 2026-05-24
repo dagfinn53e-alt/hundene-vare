@@ -4,535 +4,128 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Memory Space</title>
+  <title>Startside - Memory Adventure</title>
 
   <style>
     *{
       box-sizing:border-box;
       margin:0;
       padding:0;
-      -webkit-tap-highlight-color:transparent;
     }
 
     body{
       font-family:Arial,sans-serif;
-      background:
-        radial-gradient(circle at top,#4f7cff 0%,#14052d 45%,#02010b 100%);
-      color:white;
-      text-align:center;
+
       min-height:100vh;
-      overflow-x:hidden;
-    }
-
-    .stars{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      opacity:0.7;
-
-      background-image:
-        radial-gradient(white 1px, transparent 1px),
-        radial-gradient(#8be9ff 1px, transparent 1px);
-
-      background-size:
-        90px 90px,
-        180px 180px;
-
-      animation:twinkle 5s infinite alternate;
-    }
-
-    @keyframes twinkle{
-      from{opacity:0.3;}
-      to{opacity:1;}
-    }
-
-    h1{
-      font-size:clamp(2rem,8vw,4rem);
-      margin-top:30px;
-
-      text-shadow:
-        0 0 12px #8be9ff,
-        0 0 28px #7b5cff;
-    }
-
-    .subtitle{
-      margin-top:10px;
-      margin-bottom:25px;
-
-      font-size:1.1rem;
-      font-weight:bold;
-
-      color:#dff6ff;
-    }
-
-    .panel{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-
-      gap:12px;
-
-      max-width:560px;
-
-      margin:0 auto 20px;
-
-      padding:0 12px;
-    }
-
-    .stat{
-      background:rgba(255,255,255,0.12);
-
-      border-radius:18px;
-
-      padding:14px;
-
-      border:1px solid rgba(255,255,255,0.25);
-
-      box-shadow:
-        0 0 18px rgba(139,233,255,0.15);
-    }
-
-    .stat strong{
-      display:block;
-      margin-bottom:5px;
-      color:#c9f6ff;
-    }
-
-    .stat span{
-      font-size:1.5rem;
-      font-weight:bold;
-    }
-
-    .controls{
-      display:flex;
-      justify-content:center;
-      flex-wrap:wrap;
-      gap:10px;
-
-      margin-bottom:18px;
-    }
-
-    button{
-      border:none;
-      border-radius:999px;
-
-      padding:12px 18px;
-
-      font-size:1rem;
-      font-weight:bold;
-
-      cursor:pointer;
-
-      color:white;
-
-      background:
-        linear-gradient(135deg,#7b5cff,#00bfff);
-
-      box-shadow:
-        0 0 18px rgba(123,92,255,0.4);
-
-      transition:0.2s;
-    }
-
-    button:hover{
-      transform:scale(1.05);
-    }
-
-    button:active{
-      transform:scale(0.95);
-    }
-
-    .message{
-      min-height:30px;
-
-      font-size:1.2rem;
-      font-weight:bold;
-
-      color:#fff7a8;
-
-      margin-bottom:18px;
-    }
-
-    .board{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-
-      gap:10px;
-
-      max-width:650px;
-
-      margin:0 auto;
-
-      padding:0 12px 40px;
-    }
-
-    .card{
-      aspect-ratio:1/1;
-
-      border-radius:18px;
-
-      background:
-        linear-gradient(145deg,#1b0a44,#03010f);
-
-      border:2px solid rgba(255,255,255,0.2);
 
       display:flex;
       align-items:center;
       justify-content:center;
 
+      background:
+        linear-gradient(180deg,#4f7cff 0%,#12052d 100%);
+
+      padding:20px;
+    }
+
+    .card{
+
+      width:min(92vw,420px);
+
+      background:
+        linear-gradient(180deg,#101a52,#1d2d85);
+
+      border-radius:30px;
+
+      padding:35px 25px;
+
+      text-align:center;
+
+      box-shadow:
+        0 0 30px rgba(0,0,0,0.3);
+    }
+
+    h1{
+      color:white;
+
       font-size:clamp(2rem,8vw,3.5rem);
 
-      cursor:pointer;
+      margin-bottom:18px;
 
-      user-select:none;
-
-      transition:0.25s;
+      line-height:1.1;
     }
 
-    .card:hover{
+    p{
+      color:#d8e7ff;
+
+      font-size:1.1rem;
+
+      line-height:1.5;
+
+      margin-bottom:30px;
+    }
+
+    .start-btn{
+
+      display:inline-flex;
+
+      align-items:center;
+      justify-content:center;
+
+      width:90px;
+      height:90px;
+
+      border-radius:50%;
+
+      text-decoration:none;
+
+      font-size:2.5rem;
+
+      background:
+        linear-gradient(145deg,#00bfff,#004cff);
+
+      color:white;
+
       box-shadow:
-        0 0 20px rgba(139,233,255,0.6);
+        0 0 25px rgba(0,191,255,0.6);
+
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s;
     }
 
-    .card.flipped{
-      background:
-        linear-gradient(145deg,#ffffff,#8be9ff);
+    .start-btn:hover{
+      transform:scale(1.08);
 
-      color:#12052d;
-
-      transform:scale(1.05);
+      box-shadow:
+        0 0 35px rgba(0,191,255,0.9);
     }
 
-    .card.matched{
-      background:
-        linear-gradient(145deg,#00ffc8,#ffe066);
-
-      pointer-events:none;
-    }
-
-    @media(max-width:600px){
-
-      .board{
-        gap:8px;
-      }
-
-      .card{
-        border-radius:14px;
-      }
+    .start-btn:active{
+      transform:scale(0.94);
     }
   </style>
 </head>
 
 <body>
 
-  <div class="stars"></div>
+  <div class="card">
 
-  <h1>🚀 Memory Space</h1>
+    <h1>
+      🗺️ Memory Adventure MAP
+    </h1>
 
-  <div class="subtitle">
-    Utforsk galaksen og finn rom-parene!
-  </div>
+    <p>
+      Alle memoryspill samlet i én stor eventyr-verden
+    </p>
 
-  <div class="panel">
+    <!-- DENNE GÅR TIL KARTET -->
 
-    <div class="stat">
-      <strong>Nivå</strong>
-      <span id="level">1</span>
-    </div>
-
-    <div class="stat">
-      <strong>Trekk</strong>
-      <span id="moves">0</span>
-    </div>
-
-    <div class="stat">
-      <strong>Combo</strong>
-      <span id="combo">0</span>
-    </div>
-
-    <div class="stat">
-      <strong>Poeng</strong>
-      <span id="score">0</span>
-    </div>
+    <a class="start-btn" href="memorymap.html">
+      ➡️
+    </a>
 
   </div>
-
-  <div class="controls">
-
-    <button onclick="restartGame()">
-      🔄 Start på nytt
-    </button>
-
-    <button onclick="toggleSound()" id="soundBtn">
-      🔊 Lyd på
-    </button>
-
-    <button onclick="window.location.href='https://www.hundenevåre.com/memorymap.html'">
-      🗺️ Kart
-    </button>
-
-  </div>
-
-  <div class="message" id="message">
-    Finn rom-parene!
-  </div>
-
-  <section class="board" id="board"></section>
-
-  <script>
-
-    const symbols = [
-      "🚀",
-      "🪐",
-      "👽",
-      "🌌",
-      "⭐",
-      "☄️",
-      "🛰️",
-      "🌙"
-    ];
-
-    let cards = [];
-
-    let firstCard = null;
-    let secondCard = null;
-
-    let lockBoard = false;
-
-    let level = 1;
-    let moves = 0;
-    let combo = 0;
-    let score = 0;
-    let pairs = 0;
-
-    let soundOn = true;
-
-    const board =
-      document.getElementById("board");
-
-    const levelEl =
-      document.getElementById("level");
-
-    const movesEl =
-      document.getElementById("moves");
-
-    const comboEl =
-      document.getElementById("combo");
-
-    const scoreEl =
-      document.getElementById("score");
-
-    const messageEl =
-      document.getElementById("message");
-
-    const soundBtn =
-      document.getElementById("soundBtn");
-
-    function shuffle(array){
-      return array.sort(() => Math.random() - 0.5);
-    }
-
-    function startGame(){
-
-      board.innerHTML = "";
-
-      firstCard = null;
-      secondCard = null;
-
-      lockBoard = false;
-
-      moves = 0;
-      combo = 0;
-      pairs = 0;
-
-      const pairCount =
-        Math.min(4 + level, 8);
-
-      const chosen =
-        symbols.slice(0, pairCount);
-
-      cards =
-        shuffle([...chosen, ...chosen]);
-
-      cards.forEach(symbol => {
-
-        const card =
-          document.createElement("div");
-
-        card.className = "card";
-
-        card.dataset.symbol = symbol;
-
-        card.textContent = "🛸";
-
-        card.onclick =
-          () => flipCard(card);
-
-        board.appendChild(card);
-
-      });
-
-      updateStats();
-
-      messageEl.textContent =
-        "Finn rom-parene!";
-    }
-
-    function flipCard(card){
-
-      if(lockBoard) return;
-
-      if(card.classList.contains("flipped")) return;
-
-      if(card.classList.contains("matched")) return;
-
-      card.classList.add("flipped");
-
-      card.textContent =
-        card.dataset.symbol;
-
-      if(!firstCard){
-
-        firstCard = card;
-
-        return;
-      }
-
-      secondCard = card;
-
-      moves++;
-
-      checkMatch();
-
-      updateStats();
-    }
-
-    function checkMatch(){
-
-      if(
-        firstCard.dataset.symbol ===
-        secondCard.dataset.symbol
-      ){
-
-        firstCard.classList.add("matched");
-        secondCard.classList.add("matched");
-
-        combo++;
-        pairs++;
-
-        score += 100 + combo * 20;
-
-        if(combo >= 3){
-
-          messageEl.textContent =
-            "⚡ ULTRA SPACE COMBO!";
-        }
-
-        else{
-
-          messageEl.textContent =
-            "🚀 Match!";
-        }
-
-        resetTurn();
-
-        updateStats();
-
-        if(
-          pairs ===
-          Math.min(4 + level, 8)
-        ){
-
-          setTimeout(winLevel,700);
-        }
-
-      }else{
-
-        lockBoard = true;
-
-        combo = 0;
-
-        messageEl.textContent =
-          "❌ Ingen match!";
-
-        setTimeout(() => {
-
-          firstCard.classList.remove("flipped");
-          secondCard.classList.remove("flipped");
-
-          firstCard.textContent = "🛸";
-          secondCard.textContent = "🛸";
-
-          resetTurn();
-
-          updateStats();
-
-        },700);
-      }
-    }
-
-    function resetTurn(){
-
-      firstCard = null;
-      secondCard = null;
-
-      lockBoard = false;
-    }
-
-    function winLevel(){
-
-      level++;
-
-      if(level > 5){
-
-        level = 5;
-
-        messageEl.textContent =
-          "🏆 Du vant Space!";
-      }
-
-      else{
-
-        messageEl.textContent =
-          "🌟 Neste nivå!";
-
-        setTimeout(startGame,700);
-      }
-
-      updateStats();
-    }
-
-    function restartGame(){
-
-      level = 1;
-      score = 0;
-
-      startGame();
-    }
-
-    function toggleSound(){
-
-      soundOn = !soundOn;
-
-      soundBtn.textContent =
-        soundOn
-          ? "🔊 Lyd på"
-          : "🔇 Lyd av";
-    }
-
-    function updateStats(){
-
-      levelEl.textContent = level;
-
-      movesEl.textContent = moves;
-
-      comboEl.textContent = combo;
-
-      scoreEl.textContent = score;
-    }
-
-    startGame();
-
-  </script>
 
 </body>
 </html>
