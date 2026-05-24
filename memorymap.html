@@ -289,47 +289,6 @@
       100%{transform:scale(1);}
     }
 
-    .ultra{
-      animation:ultraGlow 0.8s infinite alternate;
-    }
-
-    @keyframes ultraGlow{
-      from{
-        filter:drop-shadow(0 0 6px #8be9ff);
-      }
-
-      to{
-        filter:
-          drop-shadow(0 0 18px #7b5cff)
-          drop-shadow(0 0 28px #8be9ff);
-      }
-    }
-
-    .confetti{
-      position:fixed;
-
-      top:-20px;
-
-      width:10px;
-      height:16px;
-
-      pointer-events:none;
-
-      z-index:20;
-
-      animation:fall 2s linear forwards;
-    }
-
-    @keyframes fall{
-      to{
-        transform:
-          translateY(110vh)
-          rotate(720deg);
-
-        opacity:0;
-      }
-    }
-
     @media(max-width:600px){
 
       .board{
@@ -356,7 +315,7 @@
 
   <main class="game">
 
-    <h1 class="ultra">🚀 Memory Space</h1>
+    <h1>🚀 Memory Space</h1>
 
     <div class="subtitle">
       Utforsk galaksen og finn rom-parene!
@@ -396,7 +355,9 @@
         🔊 Lyd på
       </button>
 
-      <a class="map-btn" href="memorymap.html">
+      <!-- VIKTIG: DENNE GÅR TIL KARTET -->
+
+      <a class="map-btn" href="./memorymap.html">
         🗺️ Kart
       </a>
 
@@ -453,53 +414,6 @@
       return array.sort(() => Math.random() - 0.5);
     }
 
-    function playSound(type){
-
-      if(!soundOn) return;
-
-      const audioCtx =
-        new (window.AudioContext || window.webkitAudioContext)();
-
-      const oscillator = audioCtx.createOscillator();
-
-      const gain = audioCtx.createGain();
-
-      oscillator.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      if(type === "flip"){
-        oscillator.frequency.value = 500;
-      }
-
-      if(type === "match"){
-        oscillator.frequency.value = 850;
-      }
-
-      if(type === "wrong"){
-        oscillator.frequency.value = 180;
-      }
-
-      if(type === "win"){
-        oscillator.frequency.value = 1200;
-      }
-
-      oscillator.type = "sine";
-
-      gain.gain.setValueAtTime(
-        0.08,
-        audioCtx.currentTime
-      );
-
-      gain.gain.exponentialRampToValueAtTime(
-        0.001,
-        audioCtx.currentTime + 0.25
-      );
-
-      oscillator.start();
-
-      oscillator.stop(audioCtx.currentTime + 0.25);
-    }
-
     function startGame(){
 
       board.innerHTML = "";
@@ -543,9 +457,6 @@
       });
 
       updateStats();
-
-      messageEl.textContent =
-        "Finn rom-parene!";
     }
 
     function flipCard(card){
@@ -555,8 +466,6 @@
       if(card.classList.contains("flipped")) return;
 
       if(card.classList.contains("matched")) return;
-
-      playSound("flip");
 
       card.classList.add("flipped");
 
@@ -593,26 +502,10 @@
         combo++;
         pairs++;
 
-        score += 100 + combo * 20;
+        score += 100;
 
-        playSound("match");
-
-        if(combo >= 4){
-
-          messageEl.textContent =
-            "⚡ ULTRA SPACE COMBO!";
-
-        }else if(combo >= 2){
-
-          messageEl.textContent =
-            "🔥 Space combo!";
-        }
-
-        else{
-
-          messageEl.textContent =
-            "Bra jobbet!";
-        }
+        messageEl.textContent =
+          "🚀 Match!";
 
         resetTurn();
 
@@ -630,9 +523,7 @@
         combo = 0;
 
         messageEl.textContent =
-          "Ingen match!";
-
-        playSound("wrong");
+          "❌ Ingen match!";
 
         setTimeout(() => {
 
@@ -660,12 +551,8 @@
 
     function winLevel(){
 
-      playSound("win");
-
-      confetti();
-
       messageEl.textContent =
-        "🚀 Nivå fullført!";
+        "🏆 Nivå fullført!";
 
       setTimeout(() => {
 
@@ -676,9 +563,7 @@
           level = 5;
 
           messageEl.textContent =
-            "🏆 Du mestret Space!";
-
-          confetti();
+            "🌌 Du vant Space-eventyret!";
 
         }else{
 
@@ -687,7 +572,7 @@
 
         updateStats();
 
-      },1800);
+      },1500);
     }
 
     function restartGame(){
@@ -717,42 +602,6 @@
       comboEl.textContent = combo;
 
       scoreEl.textContent = score;
-    }
-
-    function confetti(){
-
-      const colors = [
-        "#ffffff",
-        "#8be9ff",
-        "#7b5cff",
-        "#ffe066",
-        "#00ffc8"
-      ];
-
-      for(let i = 0; i < 80; i++){
-
-        const piece =
-          document.createElement("div");
-
-        piece.className = "confetti";
-
-        piece.style.left =
-          Math.random() * 100 + "vw";
-
-        piece.style.background =
-          colors[
-            Math.floor(Math.random() * colors.length)
-          ];
-
-        piece.style.animationDelay =
-          Math.random() * 0.5 + "s";
-
-        document.body.appendChild(piece);
-
-        setTimeout(() => {
-          piece.remove();
-        },2300);
-      }
     }
 
     startGame();
