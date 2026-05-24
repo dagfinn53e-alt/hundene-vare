@@ -1,299 +1,514 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎁 Bonusbanen ULTRA</title>
-<style>
-body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(to bottom,#fef3c7,#fde68a);text-align:center;overflow:hidden;color:#92400e}
-.container{max-width:1200px;margin:auto;padding:20px;position:relative;z-index:2}
-h1{font-size:52px;margin-top:10px;text-shadow:0 0 15px gold}
-.stats{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-bottom:20px}
-.stat{background:white;padding:14px 20px;border-radius:18px;font-size:20px;font-weight:bold;box-shadow:0 4px 10px rgba(0,0,0,.15)}
-#message{font-size:30px;font-weight:bold;color:#d97706;margin:20px;min-height:40px;transition:.3s}
-.comboText{animation:comboPop .6s;color:#ef4444!important}
-@keyframes comboPop{0%{transform:scale(.5)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
-#gameBoard{display:grid;gap:15px;justify-content:center;margin-top:20px}
-.card{width:110px;height:110px;perspective:1000px;cursor:pointer;transition:.2s}
-.card:hover{transform:scale(1.06)}
-.inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
-.card.flipped .inner{transform:rotateY(180deg)}
-.front,.back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:54px;box-shadow:0 6px 14px rgba(0,0,0,.18)}
-.front{background:linear-gradient(135deg,#f59e0b,#fcd34d);color:white}
-.back{background:white;transform:rotateY(180deg)}
-.correct .back{box-shadow:0 0 35px gold;animation:goldGlow .8s infinite alternate}
-@keyframes goldGlow{from{transform:rotateY(180deg) scale(1)}to{transform:rotateY(180deg) scale(1.1)}}
-.wrong{animation:shake .25s 2}
-@keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-6px)}100%{transform:translateX(0)}}
-.star{position:fixed;font-size:30px;opacity:.14;animation:floatStar 12s linear infinite;pointer-events:none}
-@keyframes floatStar{from{transform:translateY(110vh)}to{transform:translateY(-120vh)}}
-.confetti{position:fixed;width:12px;height:12px;top:-20px;animation:fall linear forwards;z-index:999}
-@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
-.flash{position:fixed;inset:0;background:white;opacity:0;pointer-events:none;z-index:9999}
-.flash.active{animation:flashScreen .6s}
-@keyframes flashScreen{0%{opacity:.8}100%{opacity:0}}
-#winBox{display:none;background:white;padding:30px;border-radius:25px;box-shadow:0 8px 20px rgba(0,0,0,.18);max-width:500px;margin:30px auto;animation:winPop .7s}
-@keyframes winPop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
-#winBox h2{font-size:44px;color:#d97706}
-button{margin-top:20px;padding:16px 28px;border:none;border-radius:18px;background:#f59e0b;color:white;font-size:20px;font-weight:bold;cursor:pointer}
-.backBtn{background:#123c73}
-.resetBtn{background:#dc2626}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Adventure - Bonus Levels</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at top, #ffffff 0%, #ff4fd8 18%, #4820c9 48%, #050013 100%);
+    }
+
+    .bonus-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,0.35), transparent 18%),
+        radial-gradient(circle at 80% 25%, rgba(255,255,100,0.3), transparent 18%),
+        radial-gradient(circle at 40% 80%, rgba(0,255,220,0.24), transparent 22%);
+      animation: bgPulse 5s infinite alternate;
+    }
+
+    @keyframes bgPulse {
+      from { transform: scale(1); opacity: 0.65; }
+      to { transform: scale(1.08); opacity: 1; }
+    }
+
+    .game {
+      position: relative;
+      z-index: 2;
+      width: min(96vw, 850px);
+      margin: 0 auto;
+      padding: 22px 12px 38px;
+    }
+
+    h1 {
+      margin: 12px 0 4px;
+      font-size: clamp(2rem, 8vw, 4.3rem);
+      text-shadow:
+        0 0 12px #fff,
+        0 0 28px #ffef5c,
+        0 0 42px #00ffe0;
+    }
+
+    .subtitle {
+      margin: 0 0 14px;
+      color: #fff7b8;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .panel {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 16px auto;
+      max-width: 590px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.32);
+      border-radius: 18px;
+      padding: 10px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+      backdrop-filter: blur(7px);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 0.8rem;
+      color: #fff7b8;
+    }
+
+    .stat span {
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    button, a.button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(135deg, #ff4fd8, #4820c9);
+      box-shadow: 0 0 22px rgba(255,79,216,0.5);
+      text-decoration: none;
+    }
+
+    .sound-btn {
+      background: linear-gradient(135deg, #00d084, #00a8ff);
+    }
+
+    button:active, a.button:active {
+      transform: scale(0.96);
+    }
+
+    .message {
+      min-height: 34px;
+      margin: 8px 0;
+      font-size: 1.18rem;
+      font-weight: bold;
+      color: #fff7b8;
+      text-shadow: 0 0 14px #ffef5c;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 18px auto;
+      max-width: 660px;
+    }
+
+    .card {
+      aspect-ratio: 1 / 1;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      font-size: clamp(1.9rem, 9vw, 3.4rem);
+      cursor: pointer;
+      user-select: none;
+      background: linear-gradient(145deg, #250065, #050013);
+      border: 2px solid rgba(255,255,255,0.25);
+      box-shadow:
+        0 8px 20px rgba(0,0,0,0.35),
+        inset 0 0 18px rgba(255,255,255,0.06);
+      transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+    }
+
+    .card:hover {
+      box-shadow:
+        0 0 24px rgba(255,239,92,0.7),
+        0 0 44px rgba(0,255,224,0.35);
+    }
+
+    .card.flipped {
+      background: linear-gradient(145deg, #fff7b8, #00ffe0);
+      color: #180030;
+      transform: rotateY(180deg) scale(1.04);
+    }
+
+    .card.matched {
+      background: linear-gradient(145deg, #00ff9d, #ffef5c, #ff4fd8);
+      pointer-events: none;
+      animation: bonusMatch 0.62s ease;
+    }
+
+    @keyframes bonusMatch {
+      0% { transform: scale(1); }
+      35% { transform: scale(1.23) rotate(5deg); }
+      70% { transform: scale(1.08) rotate(-5deg); }
+      100% { transform: scale(1); }
+    }
+
+    .ultra {
+      animation: ultraBonus 0.75s infinite alternate;
+    }
+
+    @keyframes ultraBonus {
+      from {
+        filter: drop-shadow(0 0 6px #ffffff);
+      }
+      to {
+        filter:
+          drop-shadow(0 0 18px #ffef5c)
+          drop-shadow(0 0 30px #00ffe0);
+      }
+    }
+
+    .confetti {
+      position: fixed;
+      top: -24px;
+      width: 10px;
+      height: 16px;
+      pointer-events: none;
+      z-index: 20;
+      animation: fall 1.85s linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(112vh) rotate(780deg);
+        opacity: 0;
+      }
+    }
+
+    .spark {
+      position: fixed;
+      pointer-events: none;
+      z-index: 30;
+      font-size: 2rem;
+      animation: sparkPop 0.85s ease-out forwards;
+    }
+
+    @keyframes sparkPop {
+      from {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 1;
+      }
+      to {
+        transform: translate(-50%, -135%) scale(1.9);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .board {
+        gap: 8px;
+      }
+
+      .card {
+        border-radius: 15px;
+      }
+
+      button, a.button {
+        padding: 11px 15px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="bonus-bg"></div>
 
-<div class="flash" id="flash"></div>
-<div class="star" style="left:10%;">⭐</div>
-<div class="star" style="left:35%;animation-delay:2s;">✨</div>
-<div class="star" style="left:60%;animation-delay:5s;">⭐</div>
-<div class="star" style="left:85%;animation-delay:7s;">✨</div>
+  <main class="game">
+    <h1 class="ultra">🎁 Bonus Levels</h1>
+    <p class="subtitle">Ekstra raske bonusbaner med ULTRA-combo!</p>
 
-<div class="container">
+    <div class="panel">
+      <div class="stat">
+        <strong>Bonusnivå</strong>
+        <span id="level">1</span>
+      </div>
+      <div class="stat">
+        <strong>Trekk</strong>
+        <span id="moves">0</span>
+      </div>
+      <div class="stat">
+        <strong>Combo</strong>
+        <span id="combo">0</span>
+      </div>
+      <div class="stat">
+        <strong>Poeng</strong>
+        <span id="score">0</span>
+      </div>
+    </div>
 
-<h1>🎁 Bonusbanen ULTRA</h1>
+    <div class="controls">
+      <button onclick="restartGame()">🔄 Start på nytt</button>
+      <button class="sound-btn" onclick="toggleSound()" id="soundBtn">🔊 Lyd på</button>
+      <a class="button" href="memorymap.html">🗺️ Kart</a>
+    </div>
 
-<div class="stats">
-<div class="stat">🗺️ Nivå: <span id="level">1</span></div>
-<div class="stat">⭐ Poeng: <span id="score">0</span></div>
-<div class="stat">🔥 Combo: <span id="combo">0</span></div>
-<div class="stat">⏱️ Tid: <span id="time">0</span></div>
-</div>
+    <div class="message" id="message">Finn bonusparene!</div>
 
-<div id="message">🎁 Finn bonuskort!</div>
+    <section class="board" id="board"></section>
+  </main>
 
-<div id="gameBoard"></div>
+  <script>
+    const symbols = ["🎁", "💎", "⚡", "🌈", "🚀", "🔥", "⭐", "🪄"];
 
-<div id="winBox">
-<h2>🏆 LEVEL COMPLETE!</h2>
-<div style="font-size:60px;">🎉✨🎉</div>
-<p id="finalScore"></p>
-<button onclick="nextLevel()">➡️ Neste nivå</button>
-<br>
-<button class="resetBtn" onclick="resetProgress()">🔄 Start på nytt</button>
-</div>
+    let cards = [];
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
 
-<button class="backBtn" onclick="location.href='memorymap.html'">
-⬅️ Tilbake til kart
-</button>
+    let level = 1;
+    let moves = 0;
+    let combo = 0;
+    let pairs = 0;
+    let score = 0;
+    let soundOn = true;
 
-</div>
+    const board = document.getElementById("board");
+    const levelEl = document.getElementById("level");
+    const movesEl = document.getElementById("moves");
+    const comboEl = document.getElementById("combo");
+    const scoreEl = document.getElementById("score");
+    const messageEl = document.getElementById("message");
+    const soundBtn = document.getElementById("soundBtn");
 
-<script>
-const flipSound=new Audio("https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3");
-const correctSound=new Audio("https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3");
-const wrongSound=new Audio("https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3");
-const winSound=new Audio("https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3");
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
 
-const allSymbols=["🎁","⭐","💎","🪙","🎉","👑","💰","✨","🎈","🍀"];
+    function playSound(type) {
+      if (!soundOn) return;
 
-let level=parseInt(localStorage.getItem("bonusLevel")) || 1;
-let score=parseInt(localStorage.getItem("bonusScore")) || 0;
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
 
-let cards=[];
-let flipped=[];
-let matched=0;
-let combo=0;
-let timer=0;
-let interval;
-let lock=false;
+      oscillator.connect(gain);
+      gain.connect(audioCtx.destination);
 
-function saveProgress(){
-localStorage.setItem("bonusLevel",level);
-localStorage.setItem("bonusScore",score);
-}
+      if (type === "flip") oscillator.frequency.value = 520;
+      if (type === "match") oscillator.frequency.value = 880;
+      if (type === "wrong") oscillator.frequency.value = 160;
+      if (type === "win") oscillator.frequency.value = 1200;
 
-function startLevel(){
-clearInterval(interval);
+      oscillator.type = "sine";
+      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.23);
 
-let pairs=4+(level-1)*2;
-if(pairs>10){pairs=10;}
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.23);
+    }
 
-let selected=allSymbols.slice(0,pairs);
-cards=[...selected,...selected];
-cards.sort(()=>Math.random()-0.5);
+    function startGame() {
+      board.innerHTML = "";
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+      moves = 0;
+      combo = 0;
+      pairs = 0;
 
-flipped=[];
-matched=0;
-combo=0;
-timer=0;
-lock=false;
+      const pairCount = Math.min(4 + level, 8);
+      const chosen = symbols.slice(0, pairCount);
+      cards = shuffle([...chosen, ...chosen]);
 
-updateStats();
+      cards.forEach((symbol, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.symbol = symbol;
+        card.dataset.index = index;
+        card.textContent = "❔";
+        card.addEventListener("click", () => flipCard(card));
+        board.appendChild(card);
+      });
 
-document.getElementById("winBox").style.display="none";
-document.getElementById("message").innerHTML="🎁 Finn bonuskort!";
+      updateStats();
+      messageEl.textContent = "Finn bonusparene!";
+    }
 
-const board=document.getElementById("gameBoard");
-board.innerHTML="";
+    function flipCard(card) {
+      if (lockBoard) return;
+      if (card.classList.contains("flipped")) return;
+      if (card.classList.contains("matched")) return;
 
-let columns=4;
-if(cards.length>=20){columns=5;}
-board.style.gridTemplateColumns=`repeat(${columns},110px)`;
+      playSound("flip");
 
-cards.forEach(symbol=>{
-const card=document.createElement("div");
-card.className="card";
-card.dataset.symbol=symbol;
-card.innerHTML=`
-<div class="inner">
-<div class="front">🎁</div>
-<div class="back">${symbol}</div>
-</div>
-`;
-card.onclick=()=>flipCard(card);
-board.appendChild(card);
-});
+      card.classList.add("flipped");
+      card.textContent = card.dataset.symbol;
 
-interval=setInterval(()=>{
-timer++;
-document.getElementById("time").innerHTML=timer;
-},1000);
-}
+      if (!firstCard) {
+        firstCard = card;
+        return;
+      }
 
-function flipCard(card){
-if(lock)return;
-if(flipped.length>=2)return;
-if(card.classList.contains("flipped"))return;
-if(card.classList.contains("correct"))return;
+      secondCard = card;
+      moves++;
+      updateStats();
+      checkMatch();
+    }
 
-card.classList.add("flipped");
-flipSound.currentTime=0;
-flipSound.play();
+    function checkMatch() {
+      const isMatch = firstCard.dataset.symbol === secondCard.dataset.symbol;
 
-flipped.push(card);
+      if (isMatch) {
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
 
-if(flipped.length===2){
-checkMatch();
-}
-}
+        combo++;
+        pairs++;
 
-function checkMatch(){
-lock=true;
+        const bonusPoints = 100 + combo * 25;
+        score += bonusPoints;
 
-const a=flipped[0];
-const b=flipped[1];
+        playSound("match");
+        sparkPop(firstCard);
+        sparkPop(secondCard);
 
-if(a.dataset.symbol===b.dataset.symbol){
-a.classList.add("correct");
-b.classList.add("correct");
+        if (combo >= 5) {
+          messageEl.textContent = "💥 MEGA ULTRA BONUS COMBO!";
+        } else if (combo >= 3) {
+          messageEl.textContent = "⚡ ULTRA bonus-combo!";
+        } else if (combo >= 2) {
+          messageEl.textContent = "🔥 Bonus-combo!";
+        } else {
+          messageEl.textContent = "+" + bonusPoints + " poeng!";
+        }
 
-matched+=2;
-combo++;
-score+=10+(combo*4);
+        resetTurn();
+        updateStats();
 
-correctSound.currentTime=0;
-correctSound.play();
+        if (pairs === Math.min(4 + level, 8)) {
+          winLevel();
+        }
+      } else {
+        lockBoard = true;
+        combo = 0;
+        messageEl.textContent = "Bom! Combo nullstilt.";
+        playSound("wrong");
 
-const msg=document.getElementById("message");
-msg.innerHTML="✨ BONUSPAR FUNNET!";
+        setTimeout(() => {
+          firstCard.classList.remove("flipped");
+          secondCard.classList.remove("flipped");
+          firstCard.textContent = "❔";
+          secondCard.textContent = "❔";
+          resetTurn();
+          updateStats();
+        }, 720);
+      }
+    }
 
-if(combo>=3){
-msg.innerHTML="🔥 SUPER COMBO x"+combo;
-msg.classList.add("comboText");
-setTimeout(()=>{msg.classList.remove("comboText");},600);
-}
+    function resetTurn() {
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+    }
 
-flipped=[];
-lock=false;
+    function winLevel() {
+      playSound("win");
+      confetti();
+      messageEl.textContent = "🎁 Bonusnivå fullført!";
 
-updateStats();
-saveProgress();
+      setTimeout(() => {
+        level++;
 
-if(matched===cards.length){
-winLevel();
-}
+        if (level > 5) {
+          level = 5;
+          messageEl.textContent = "🏆 Du fullførte alle bonusnivåene!";
+          confetti();
+        } else {
+          startGame();
+        }
 
-}else{
-combo=0;
-score=Math.max(0,score-3);
+        updateStats();
+      }, 1700);
+    }
 
-wrongSound.currentTime=0;
-wrongSound.play();
+    function restartGame() {
+      score = 0;
+      level = 1;
+      startGame();
+    }
 
-a.classList.add("wrong");
-b.classList.add("wrong");
+    function toggleSound() {
+      soundOn = !soundOn;
+      soundBtn.textContent = soundOn ? "🔊 Lyd på" : "🔇 Lyd av";
+    }
 
-document.getElementById("message").innerHTML="❌ Feil par";
+    function updateStats() {
+      levelEl.textContent = level;
+      movesEl.textContent = moves;
+      comboEl.textContent = combo;
+      scoreEl.textContent = score;
+    }
 
-updateStats();
-saveProgress();
+    function confetti() {
+      const colors = ["#ffffff", "#ffef5c", "#00ffe0", "#ff4fd8", "#00ff9d"];
 
-setTimeout(()=>{
-a.classList.remove("flipped","wrong");
-b.classList.remove("flipped","wrong");
-flipped=[];
-lock=false;
-},900);
-}
-}
+      for (let i = 0; i < 95; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDelay = Math.random() * 0.55 + "s";
+        piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+        document.body.appendChild(piece);
 
-function updateStats(){
-document.getElementById("level").innerHTML=level;
-document.getElementById("score").innerHTML=score;
-document.getElementById("combo").innerHTML=combo;
-document.getElementById("time").innerHTML=timer;
-}
+        setTimeout(() => {
+          piece.remove();
+        }, 2400);
+      }
+    }
 
-function flashScreen(){
-const flash=document.getElementById("flash");
-flash.classList.add("active");
-setTimeout(()=>{flash.classList.remove("active");},600);
-}
+    function sparkPop(card) {
+      const rect = card.getBoundingClientRect();
+      const spark = document.createElement("div");
+      spark.className = "spark";
+      spark.textContent = combo >= 3 ? "⚡" : "✨";
+      spark.style.left = rect.left + rect.width / 2 + "px";
+      spark.style.top = rect.top + rect.height / 2 + "px";
 
-function createConfetti(){
-for(let i=0;i<80;i++){
-const conf=document.createElement("div");
-conf.className="confetti";
-conf.style.left=Math.random()*100+"vw";
-conf.style.background=`hsl(${Math.random()*360},100%,50%)`;
-conf.style.animationDuration=(3+Math.random()*3)+"s";
-document.body.appendChild(conf);
-setTimeout(()=>{conf.remove();},6000);
-}
-}
+      document.body.appendChild(spark);
 
-function winLevel(){
-clearInterval(interval);
+      setTimeout(() => {
+        spark.remove();
+      }, 900);
+    }
 
-winSound.currentTime=0;
-winSound.play();
-
-flashScreen();
-createConfetti();
-
-document.getElementById("winBox").style.display="block";
-
-document.getElementById("finalScore").innerHTML=
-`⭐ Poeng: ${score}<br>⏱️ Tid: ${timer}s`;
-
-document.getElementById("message").innerHTML="🏆 LEVEL COMPLETE!";
-
-saveProgress();
-}
-
-function nextLevel(){
-level++;
-
-if(level>5){
-alert("🎉 Du fullførte hele Bonusbanen!");
-level=1;
-score=0;
-}
-
-saveProgress();
-startLevel();
-}
-
-function resetProgress(){
-level=1;
-score=0;
-saveProgress();
-startLevel();
-}
-
-startLevel();
-</script>
-
+    startGame();
+  </script>
 </body>
 </html>
