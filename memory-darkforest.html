@@ -3,15 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌲 Den mørke skogen + LYD</title>
+<title>🌲 Den mørke skogen ULTRA</title>
 
 <style>
 
 body{
 margin:0;
 font-family:Arial,sans-serif;
-background:
-linear-gradient(to bottom,#0f172a,#020617);
+background:linear-gradient(to bottom,#0f172a,#020617);
 color:white;
 text-align:center;
 overflow-x:hidden;
@@ -52,6 +51,18 @@ font-weight:bold;
 color:#86efac;
 margin:20px;
 min-height:40px;
+transition:.3s;
+}
+
+.comboText{
+animation:comboPop .6s;
+color:#facc15!important;
+}
+
+@keyframes comboPop{
+0%{transform:scale(.5)}
+50%{transform:scale(1.5)}
+100%{transform:scale(1)}
 }
 
 #gameBoard{
@@ -99,12 +110,7 @@ box-shadow:0 0 18px rgba(34,197,94,.25);
 }
 
 .front{
-background:
-linear-gradient(
-135deg,
-#14532d,
-#166534
-);
+background:linear-gradient(135deg,#14532d,#166534);
 }
 
 .back{
@@ -114,8 +120,7 @@ transform:rotateY(180deg);
 }
 
 .correct .back{
-box-shadow:
-0 0 35px #22c55e;
+box-shadow:0 0 35px #22c55e;
 animation:forestGlow .8s infinite alternate;
 }
 
@@ -157,6 +162,40 @@ transform:translateY(-120vh);
 }
 }
 
+.flash{
+position:fixed;
+inset:0;
+background:white;
+opacity:0;
+pointer-events:none;
+z-index:9999;
+}
+
+.flash.active{
+animation:flashScreen .6s;
+}
+
+@keyframes flashScreen{
+0%{opacity:.8}
+100%{opacity:0}
+}
+
+.confetti{
+position:fixed;
+width:12px;
+height:12px;
+top:-20px;
+animation:fall linear forwards;
+z-index:999;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh) rotate(720deg);
+opacity:0;
+}
+}
+
 #winBox{
 display:none;
 background:rgba(255,255,255,.08);
@@ -165,6 +204,18 @@ border-radius:25px;
 max-width:500px;
 margin:30px auto;
 box-shadow:0 8px 20px rgba(0,0,0,.45);
+animation:winPop .7s;
+}
+
+@keyframes winPop{
+0%{
+transform:scale(.4);
+opacity:0;
+}
+100%{
+transform:scale(1);
+opacity:1;
+}
 }
 
 #winBox h2{
@@ -188,6 +239,9 @@ cursor:pointer;
 background:#020617;
 border:2px solid #22c55e;
 }
+
+/* MOBIL */
+
 @media(max-width:700px){
 
 h1{
@@ -209,17 +263,19 @@ margin:15px;
 }
 
 #gameBoard{
-gap:10px !important;
+gap:10px!important;
+grid-template-columns:
+repeat(3,85px)!important;
 }
 
 .card{
-width:85px !important;
-height:85px !important;
+width:85px!important;
+height:85px!important;
 }
 
 .front,
 .back{
-font-size:34px !important;
+font-size:34px!important;
 }
 
 button{
@@ -233,10 +289,13 @@ padding:20px;
 }
 
 }
+
 </style>
 </head>
 
 <body>
+
+<div class="flash" id="flash"></div>
 
 <div class="forest" style="left:10%;">🌲</div>
 <div class="forest" style="left:35%;animation-delay:3s;">👻</div>
@@ -245,7 +304,7 @@ padding:20px;
 
 <div class="container">
 
-<h1>🌲 Den mørke skogen + LYD</h1>
+<h1>🌲 Den mørke skogen ULTRA</h1>
 
 <div class="stats">
 
@@ -272,27 +331,23 @@ padding:20px;
 </div>
 
 <div id="message">
-
 🌲 Finn skogskortene...
-
 </div>
 
 <div id="gameBoard"></div>
 
 <div id="winBox">
 
-<h2>🏆 Skogen fullført!</h2>
+<h2>🏆 LEVEL COMPLETE!</h2>
 
-<div style="font-size:52px;">
+<div style="font-size:60px;">
 🌲👻🌲
 </div>
 
 <p id="finalScore"></p>
 
 <button onclick="nextLevel()">
-
 ➡️ Neste nivå
-
 </button>
 
 </div>
@@ -308,25 +363,21 @@ onclick="location.href='memorymap.html'">
 
 <script>
 
-/* LYDER */
-
-const flipSound = new Audio(
+const flipSound=new Audio(
 "https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"
 );
 
-const correctSound = new Audio(
+const correctSound=new Audio(
 "https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"
 );
 
-const wrongSound = new Audio(
+const wrongSound=new Audio(
 "https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"
 );
 
-const winSound = new Audio(
+const winSound=new Audio(
 "https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"
 );
-
-/* SYMBOLER */
 
 const allSymbols=[
 "🌲","👻","🍄","🦉","🌙",
@@ -483,10 +534,32 @@ score+=12+(combo*4);
 correctSound.currentTime=0;
 correctSound.play();
 
+const msg=
 document.getElementById(
 "message"
-).innerHTML=
+);
+
+msg.innerHTML=
 "✨ Skogspar funnet!";
+
+if(combo>=3){
+
+msg.innerHTML=
+"🔥 SUPER COMBO x"+combo;
+
+msg.classList.add(
+"comboText"
+);
+
+setTimeout(()=>{
+
+msg.classList.remove(
+"comboText"
+);
+
+},600);
+
+}
 
 flipped=[];
 
@@ -550,12 +623,68 @@ document.getElementById("time").innerHTML=timer;
 
 }
 
+function flashScreen(){
+
+const flash=
+document.getElementById(
+"flash"
+);
+
+flash.classList.add(
+"active"
+);
+
+setTimeout(()=>{
+
+flash.classList.remove(
+"active"
+);
+
+},600);
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<80;i++){
+
+const conf=
+document.createElement("div");
+
+conf.className="confetti";
+
+conf.style.left=
+Math.random()*100+"vw";
+
+conf.style.background=
+`hsl(${Math.random()*360},
+100%,50%)`;
+
+conf.style.animationDuration=
+(3+Math.random()*3)+"s";
+
+document.body.appendChild(conf);
+
+setTimeout(()=>{
+
+conf.remove();
+
+},6000);
+
+}
+
+}
+
 function winLevel(){
 
 clearInterval(interval);
 
 winSound.currentTime=0;
 winSound.play();
+
+flashScreen();
+
+createConfetti();
 
 document.getElementById(
 "winBox"
@@ -570,7 +699,7 @@ document.getElementById(
 document.getElementById(
 "message"
 ).innerHTML=
-"🏆 Skog nivå "+level+" fullført!";
+"🏆 LEVEL COMPLETE!";
 
 }
 
