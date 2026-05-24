@@ -1,776 +1,477 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🔥 Mesterbanen ULTRA</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Adventure - Master</title>
 
-<style>
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:linear-gradient(to bottom,#111827,#000000);
-color:white;
-text-align:center;
-overflow:hidden;
-}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at top, #ffe27a 0%, #43206d 35%, #080313 100%);
+    }
 
-.container{
-max-width:1300px;
-margin:auto;
-padding:20px;
-position:relative;
-z-index:2;
-}
+    .aura {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 230, 120, 0.28), transparent 25%),
+        radial-gradient(circle at 80% 30%, rgba(160, 90, 255, 0.25), transparent 28%),
+        radial-gradient(circle at 50% 80%, rgba(0, 220, 255, 0.18), transparent 30%);
+      animation: auraMove 6s infinite alternate;
+      z-index: 0;
+    }
 
-h1{
-font-size:54px;
-margin-top:10px;
-text-shadow:0 0 18px #ef4444;
-}
+    @keyframes auraMove {
+      from { transform: scale(1); opacity: 0.7; }
+      to { transform: scale(1.08); opacity: 1; }
+    }
 
-.stats{
-display:flex;
-justify-content:center;
-gap:15px;
-flex-wrap:wrap;
-margin-bottom:20px;
-}
+    .game {
+      position: relative;
+      z-index: 2;
+      width: min(96vw, 820px);
+      margin: 0 auto;
+      padding: 22px 12px 36px;
+    }
 
-.stat{
-background:rgba(255,255,255,.08);
-padding:14px 20px;
-border-radius:18px;
-font-size:20px;
-font-weight:bold;
-box-shadow:0 4px 12px rgba(0,0,0,.45);
-}
+    h1 {
+      margin: 12px 0 4px;
+      font-size: clamp(2rem, 8vw, 4.2rem);
+      text-shadow:
+        0 0 12px #fff1a8,
+        0 0 28px #b678ff;
+    }
 
-#message{
-font-size:30px;
-font-weight:bold;
-color:#fca5a5;
-margin:20px;
-min-height:40px;
-transition:.3s;
-}
+    .subtitle {
+      margin: 0 0 14px;
+      color: #fff3c4;
+      font-size: 1rem;
+      font-weight: bold;
+    }
 
-.comboText{
-animation:comboPop .6s;
-color:#facc15 !important;
-}
+    .panel {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 16px auto;
+      max-width: 560px;
+    }
 
-@keyframes comboPop{
-0%{transform:scale(.5);}
-50%{transform:scale(1.5);}
-100%{transform:scale(1);}
-}
+    .stat {
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 18px;
+      padding: 10px;
+      box-shadow: 0 0 18px rgba(255,230,120,0.18);
+      backdrop-filter: blur(6px);
+    }
 
-#gameBoard{
-display:grid;
-gap:14px;
-justify-content:center;
-margin-top:20px;
-}
+    .stat strong {
+      display: block;
+      font-size: 0.8rem;
+      color: #ffeaa5;
+    }
 
-.card{
-width:100px;
-height:100px;
-perspective:1000px;
-cursor:pointer;
-transition:.15s;
-}
+    .stat span {
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
 
-.card:hover{
-transform:scale(1.05);
-}
+    .controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 14px 0;
+    }
 
-.card.move{
-animation:moveCard 2s infinite alternate;
-}
+    button, a.button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(135deg, #ffb300, #8e4dff);
+      box-shadow: 0 0 20px rgba(255,210,90,0.42);
+      text-decoration: none;
+    }
 
-@keyframes moveCard{
-from{
-transform:translateY(0px);
-}
-to{
-transform:translateY(-6px);
-}
-}
+    .sound-btn {
+      background: linear-gradient(135deg, #00c6ff, #7d2cff);
+    }
 
-.inner{
-position:relative;
-width:100%;
-height:100%;
-transition:transform .5s;
-transform-style:preserve-3d;
-}
+    button:active, a.button:active {
+      transform: scale(0.96);
+    }
 
-.card.flipped .inner{
-transform:rotateY(180deg);
-}
+    .message {
+      min-height: 34px;
+      margin: 8px 0;
+      font-size: 1.18rem;
+      font-weight: bold;
+      color: #fff1a8;
+      text-shadow: 0 0 14px #ffdc6b;
+    }
 
-.front,.back{
-position:absolute;
-width:100%;
-height:100%;
-backface-visibility:hidden;
-border-radius:20px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:48px;
-box-shadow:0 0 18px rgba(239,68,68,.25);
-}
+    .board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 18px auto;
+      max-width: 640px;
+    }
 
-.front{
-background:linear-gradient(135deg,#7f1d1d,#dc2626);
-}
+    .card {
+      aspect-ratio: 1 / 1;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-size: clamp(1.9rem, 9vw, 3.4rem);
+      cursor: pointer;
+      user-select: none;
+      background: linear-gradient(145deg, #1b0d3a, #080313);
+      border: 2px solid rgba(255,255,255,0.22);
+      box-shadow:
+        0 8px 20px rgba(0,0,0,0.35),
+        inset 0 0 16px rgba(255,255,255,0.05);
+      transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+    }
 
-.back{
-background:#fef2f2;
-color:#111827;
-transform:rotateY(180deg);
-}
+    .card:hover {
+      box-shadow:
+        0 0 22px rgba(255,230,120,0.65),
+        0 0 36px rgba(160,90,255,0.35);
+    }
 
-.correct .back{
-box-shadow:0 0 35px #ef4444;
-animation:masterGlow .7s infinite alternate;
-}
+    .card.flipped {
+      background: linear-gradient(145deg, #fff2a7, #b678ff);
+      color: #160525;
+      transform: rotateY(180deg) scale(1.04);
+    }
 
-@keyframes masterGlow{
-from{
-transform:rotateY(180deg) scale(1);
-}
-to{
-transform:rotateY(180deg) scale(1.1);
-}
-}
+    .card.matched {
+      background: linear-gradient(145deg, #00f5c8, #ffe066);
+      pointer-events: none;
+      animation: masterMatch 0.6s ease;
+    }
 
-.wrong{
-animation:shake .2s 2;
-}
+    @keyframes masterMatch {
+      0% { transform: scale(1); }
+      45% { transform: scale(1.2) rotate(-5deg); }
+      100% { transform: scale(1); }
+    }
 
-@keyframes shake{
-0%{transform:translateX(0)}
-25%{transform:translateX(-5px)}
-50%{transform:translateX(5px)}
-75%{transform:translateX(-5px)}
-100%{transform:translateX(0)}
-}
+    .ultra {
+      animation: ultraGlow 0.8s infinite alternate;
+    }
 
-.fire{
-position:fixed;
-font-size:34px;
-opacity:.15;
-animation:fireFloat 10s linear infinite;
-pointer-events:none;
-}
+    @keyframes ultraGlow {
+      from {
+        filter: drop-shadow(0 0 6px #ffe066);
+      }
+      to {
+        filter: drop-shadow(0 0 22px #b678ff);
+      }
+    }
 
-@keyframes fireFloat{
-from{
-transform:translateY(110vh);
-}
-to{
-transform:translateY(-120vh);
-}
-}
+    .confetti {
+      position: fixed;
+      top: -24px;
+      width: 10px;
+      height: 16px;
+      pointer-events: none;
+      z-index: 20;
+      animation: fall 1.9s linear forwards;
+    }
 
-/* FLASH */
+    @keyframes fall {
+      to {
+        transform: translateY(112vh) rotate(760deg);
+        opacity: 0;
+      }
+    }
 
-.flash{
-position:fixed;
-inset:0;
-background:white;
-opacity:0;
-pointer-events:none;
-z-index:9999;
-}
+    @media (max-width: 500px) {
+      .board {
+        gap: 8px;
+      }
 
-.flash.active{
-animation:flashScreen .6s;
-}
+      .card {
+        border-radius: 14px;
+      }
 
-@keyframes flashScreen{
-0%{opacity:.8;}
-100%{opacity:0;}
-}
-
-/* KONFETTI */
-
-.confetti{
-position:fixed;
-width:12px;
-height:12px;
-top:-20px;
-animation:fall linear forwards;
-z-index:999;
-}
-
-@keyframes fall{
-to{
-transform:translateY(110vh) rotate(720deg);
-opacity:0;
-}
-}
-
-#winBox{
-display:none;
-background:rgba(255,255,255,.08);
-padding:30px;
-border-radius:25px;
-max-width:520px;
-margin:30px auto;
-box-shadow:0 8px 20px rgba(0,0,0,.45);
-animation:winPop .7s;
-}
-
-@keyframes winPop{
-0%{
-transform:scale(.4);
-opacity:0;
-}
-100%{
-transform:scale(1);
-opacity:1;
-}
-}
-
-#winBox h2{
-font-size:44px;
-color:#fca5a5;
-}
-
-button{
-margin-top:20px;
-padding:16px 28px;
-border:none;
-border-radius:18px;
-background:#dc2626;
-color:white;
-font-size:20px;
-font-weight:bold;
-cursor:pointer;
-}
-
-.backBtn{
-background:#111827;
-border:2px solid #ef4444;
-}
-@media(max-width:700px){
-
-h1{
-font-size:30px;
-}
-
-.stats{
-gap:8px;
-}
-
-.stat{
-font-size:15px;
-padding:10px 12px;
-}
-
-#message{
-font-size:20px;
-margin:15px;
-}
-
-#gameBoard{
-gap:10px !important;
-}
-
-.card{
-width:85px !important;
-height:85px !important;
-}
-
-.front,
-.back{
-font-size:34px !important;
-}
-
-button{
-font-size:16px;
-padding:12px 18px;
-}
-
-#winBox{
-width:90%;
-padding:20px;
-}
-
-}
-</style>
+      button, a.button {
+        padding: 11px 15px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
-
-<div class="flash" id="flash"></div>
-
-<div class="fire" style="left:10%;">🔥</div>
-<div class="fire" style="left:35%;animation-delay:2s;">🔥</div>
-<div class="fire" style="left:60%;animation-delay:5s;">🔥</div>
-<div class="fire" style="left:85%;animation-delay:7s;">🔥</div>
-
-<div class="container">
-
-<h1>🔥 Mesterbanen ULTRA</h1>
-
-<div class="stats">
-
-<div class="stat">
-🗺️ Nivå:
-<span id="level">1</span>
-</div>
-
-<div class="stat">
-⭐ Poeng:
-<span id="score">0</span>
-</div>
-
-<div class="stat">
-🔥 Combo:
-<span id="combo">0</span>
-</div>
-
-<div class="stat">
-⏱️ Tid:
-<span id="time">0</span>
-</div>
-
-</div>
-
-<div id="message">
-🔥 Velkommen til Mesterbanen!
-</div>
-
-<div id="gameBoard"></div>
-
-<div id="winBox">
-
-<h2>🏆 LEVEL COMPLETE!</h2>
-
-<div style="font-size:60px;">
-👑🔥👑
-</div>
-
-<p id="finalScore"></p>
-
-<button onclick="nextLevel()">
-➡️ Neste nivå
-</button>
-
-</div>
-
-<button class="backBtn"
-onclick="location.href='memorymap.html'">
-
-⬅️ Tilbake til kart
-
-</button>
-
-</div>
-
-<script>
-
-/* LYDER */
-
-const flipSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"
-);
-
-const correctSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"
-);
-
-const wrongSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"
-);
-
-const winSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"
-);
-
-/* SYMBOLER */
-
-const allSymbols=[
-"🔥","👑","💀","⚡","🧠",
-"👹","☠️","🦂","🗡️","💎",
-"🛡️","👁️"
-];
-
-let level=1;
-let cards=[];
-let flipped=[];
-let matched=0;
-let score=0;
-let combo=0;
-let timer=0;
-let interval;
-let lock=true;
-
-function startLevel(){
-
-clearInterval(interval);
-
-let pairs=4+(level-1);
-
-if(pairs>12){
-pairs=12;
-}
-
-let selected=
-allSymbols.slice(0,pairs);
-
-cards=[...selected,...selected];
-
-cards.sort(()=>Math.random()-0.5);
-
-flipped=[];
-matched=0;
-combo=0;
-timer=0;
-lock=true;
-
-updateStats();
-
-document.getElementById(
-"winBox"
-).style.display="none";
-
-const board=
-document.getElementById(
-"gameBoard"
-);
-
-board.innerHTML="";
-
-let columns=4;
-
-if(cards.length>=18){
-columns=5;
-}
-
-if(cards.length>=22){
-columns=6;
-}
-
-board.style.gridTemplateColumns=
-`repeat(${columns},100px)`;
-
-cards.forEach(symbol=>{
-
-const card=
-document.createElement("div");
-
-card.className=
-"card flipped";
-
-if(level>=5){
-card.classList.add("move");
-}
-
-card.dataset.symbol=symbol;
-
-card.innerHTML=`
-
-<div class="inner">
-
-<div class="front">
-🔥
-</div>
-
-<div class="back">
-${symbol}
-</div>
-
-</div>
-
-`;
-
-card.onclick=
-()=>flipCard(card);
-
-board.appendChild(card);
-
-});
-
-let hideTime=2200-(level*150);
-
-if(hideTime<500){
-hideTime=500;
-}
-
-setTimeout(()=>{
-
-document.querySelectorAll(".card")
-.forEach(card=>{
-
-card.classList.remove("flipped");
-
-});
-
-lock=false;
-
-document.getElementById(
-"message"
-).innerHTML=
-"👑 Finn alle mesterkortene!";
-
-},hideTime);
-
-interval=setInterval(()=>{
-
-timer++;
-
-document.getElementById(
-"time"
-).innerHTML=timer;
-
-},1000);
-
-}
-
-function flipCard(card){
-
-if(lock)return;
-
-if(flipped.length>=2)return;
-
-if(card.classList.contains("flipped"))return;
-
-if(card.classList.contains("correct"))return;
-
-card.classList.add("flipped");
-
-flipSound.currentTime=0;
-flipSound.play();
-
-flipped.push(card);
-
-if(flipped.length===2){
-
-checkMatch();
-
-}
-
-}
-
-function checkMatch(){
-
-lock=true;
-
-const a=flipped[0];
-const b=flipped[1];
-
-if(a.dataset.symbol===b.dataset.symbol){
-
-a.classList.add("correct");
-b.classList.add("correct");
-
-matched+=2;
-
-combo++;
-
-score+=15+(combo*5);
-
-correctSound.currentTime=0;
-correctSound.play();
-
-const msg=
-document.getElementById(
-"message"
-);
-
-msg.innerHTML=
-"🔥 MESTERPAR FUNNET!";
-
-if(combo>=3){
-
-msg.innerHTML=
-"⚡ SUPER COMBO x"+combo;
-
-msg.classList.add(
-"comboText"
-);
-
-setTimeout(()=>{
-
-msg.classList.remove(
-"comboText"
-);
-
-},600);
-
-}
-
-flipped=[];
-
-lock=false;
-
-updateStats();
-
-if(matched===cards.length){
-
-winLevel();
-
-}
-
-}else{
-
-combo=0;
-
-score=Math.max(0,score-5);
-
-wrongSound.currentTime=0;
-wrongSound.play();
-
-a.classList.add("wrong");
-b.classList.add("wrong");
-
-document.getElementById(
-"message"
-).innerHTML=
-"💀 Feil mesterkort";
-
-updateStats();
-
-setTimeout(()=>{
-
-a.classList.remove(
-"flipped",
-"wrong"
-);
-
-b.classList.remove(
-"flipped",
-"wrong"
-);
-
-flipped=[];
-
-lock=false;
-
-},700);
-
-}
-
-}
-
-function updateStats(){
-
-document.getElementById("level").innerHTML=level;
-document.getElementById("score").innerHTML=score;
-document.getElementById("combo").innerHTML=combo;
-document.getElementById("time").innerHTML=timer;
-
-}
-
-function flashScreen(){
-
-const flash=
-document.getElementById(
-"flash"
-);
-
-flash.classList.add(
-"active"
-);
-
-setTimeout(()=>{
-
-flash.classList.remove(
-"active"
-);
-
-},600);
-
-}
-
-function createConfetti(){
-
-for(let i=0;i<100;i++){
-
-const conf=
-document.createElement("div");
-
-conf.className="confetti";
-
-conf.style.left=
-Math.random()*100+"vw";
-
-conf.style.background=
-`hsl(${Math.random()*360},
-100%,50%)`;
-
-conf.style.animationDuration=
-(3+Math.random()*3)+"s";
-
-document.body.appendChild(conf);
-
-setTimeout(()=>{
-
-conf.remove();
-
-},6000);
-
-}
-
-}
-
-function winLevel(){
-
-clearInterval(interval);
-
-winSound.currentTime=0;
-winSound.play();
-
-flashScreen();
-
-createConfetti();
-
-document.getElementById(
-"winBox"
-).style.display="block";
-
-document.getElementById(
-"finalScore"
-).innerHTML=
-`⭐ Poeng: ${score}<br>
-⏱️ Tid: ${timer}s`;
-
-document.getElementById(
-"message"
-).innerHTML=
-"🏆 LEVEL COMPLETE!";
-
-}
-
-function nextLevel(){
-
-level++;
-
-if(level>10){
-
-alert(
-"👑 DU FULLFØRTE HELE MESTERBANEN!"
-);
-
-level=1;
-score=0;
-
-}
-
-startLevel();
-
-}
-
-startLevel();
-
-</script>
-
+  <div class="aura"></div>
+
+  <main class="game">
+    <h1 class="ultra">👑 Memory Master</h1>
+    <p class="subtitle">Mesterbanen for ekte memory-helter!</p>
+
+    <div class="panel">
+      <div class="stat">
+        <strong>Nivå</strong>
+        <span id="level">1</span>
+      </div>
+      <div class="stat">
+        <strong>Trekk</strong>
+        <span id="moves">0</span>
+      </div>
+      <div class="stat">
+        <strong>Combo</strong>
+        <span id="combo">0</span>
+      </div>
+      <div class="stat">
+        <strong>Par</strong>
+        <span id="pairs">0</span>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button onclick="restartGame()">🔄 Start på nytt</button>
+      <button class="sound-btn" onclick="toggleSound()" id="soundBtn">🔊 Lyd på</button>
+      <a class="button" href="memorymap.html">🗺️ Kart</a>
+    </div>
+
+    <div class="message" id="message">Finn alle mester-parene!</div>
+
+    <section class="board" id="board"></section>
+  </main>
+
+  <script>
+    const symbols = ["👑", "💎", "⚔️", "🛡️", "🔥", "🌟", "🐉", "🏆"];
+
+    let cards = [];
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+
+    let level = 1;
+    let moves = 0;
+    let combo = 0;
+    let pairs = 0;
+    let soundOn = true;
+
+    const board = document.getElementById("board");
+    const levelEl = document.getElementById("level");
+    const movesEl = document.getElementById("moves");
+    const comboEl = document.getElementById("combo");
+    const pairsEl = document.getElementById("pairs");
+    const messageEl = document.getElementById("message");
+    const soundBtn = document.getElementById("soundBtn");
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function playSound(type) {
+      if (!soundOn) return;
+
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      oscillator.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (type === "flip") oscillator.frequency.value = 480;
+      if (type === "match") oscillator.frequency.value = 820;
+      if (type === "wrong") oscillator.frequency.value = 170;
+      if (type === "win") oscillator.frequency.value = 1100;
+
+      oscillator.type = "sine";
+      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.25);
+    }
+
+    function startGame() {
+      board.innerHTML = "";
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+      moves = 0;
+      combo = 0;
+      pairs = 0;
+
+      const pairCount = Math.min(5 + level, 8);
+      const chosen = symbols.slice(0, pairCount);
+      cards = shuffle([...chosen, ...chosen]);
+
+      cards.forEach((symbol, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.symbol = symbol;
+        card.dataset.index = index;
+        card.textContent = "❖";
+        card.addEventListener("click", () => flipCard(card));
+        board.appendChild(card);
+      });
+
+      updateStats();
+      messageEl.textContent = "Finn alle mester-parene!";
+    }
+
+    function flipCard(card) {
+      if (lockBoard) return;
+      if (card.classList.contains("flipped")) return;
+      if (card.classList.contains("matched")) return;
+
+      playSound("flip");
+
+      card.classList.add("flipped");
+      card.textContent = card.dataset.symbol;
+
+      if (!firstCard) {
+        firstCard = card;
+        return;
+      }
+
+      secondCard = card;
+      moves++;
+      updateStats();
+      checkMatch();
+    }
+
+    function checkMatch() {
+      const isMatch = firstCard.dataset.symbol === secondCard.dataset.symbol;
+
+      if (isMatch) {
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
+
+        combo++;
+        pairs++;
+
+        playSound("match");
+        blast(firstCard);
+        blast(secondCard);
+
+        if (combo >= 4) {
+          messageEl.textContent = "⚡ MASTER ULTRA COMBO!";
+        } else if (combo >= 2) {
+          messageEl.textContent = "🔥 Sterk combo!";
+        } else {
+          messageEl.textContent = "Bra! Et mester-par!";
+        }
+
+        resetTurn();
+        updateStats();
+
+        if (pairs === Math.min(5 + level, 8)) {
+          winLevel();
+        }
+      } else {
+        lockBoard = true;
+        combo = 0;
+        messageEl.textContent = "Ikke par. Mesteren prøver igjen!";
+        playSound("wrong");
+
+        setTimeout(() => {
+          firstCard.classList.remove("flipped");
+          secondCard.classList.remove("flipped");
+          firstCard.textContent = "❖";
+          secondCard.textContent = "❖";
+          resetTurn();
+          updateStats();
+        }, 800);
+      }
+    }
+
+    function resetTurn() {
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+    }
+
+    function winLevel() {
+      playSound("win");
+      confetti();
+      messageEl.textContent = "🏆 Mester-nivå fullført!";
+
+      setTimeout(() => {
+        level++;
+
+        if (level > 4) {
+          level = 4;
+          messageEl.textContent = "👑 Du er Memory Master!";
+          confetti();
+        } else {
+          startGame();
+        }
+
+        updateStats();
+      }, 1800);
+    }
+
+    function restartGame() {
+      startGame();
+    }
+
+    function toggleSound() {
+      soundOn = !soundOn;
+      soundBtn.textContent = soundOn ? "🔊 Lyd på" : "🔇 Lyd av";
+    }
+
+    function updateStats() {
+      levelEl.textContent = level;
+      movesEl.textContent = moves;
+      comboEl.textContent = combo;
+      pairsEl.textContent = pairs;
+    }
+
+    function confetti() {
+      const colors = ["#ffe066", "#ffffff", "#b678ff", "#00f5c8", "#ff7bd5"];
+
+      for (let i = 0; i < 90; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDelay = Math.random() * 0.55 + "s";
+        piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+        document.body.appendChild(piece);
+
+        setTimeout(() => {
+          piece.remove();
+        }, 2400);
+      }
+    }
+
+    function blast(card) {
+      card.style.boxShadow =
+        "0 0 35px #ffe066, 0 0 65px #b678ff, 0 0 90px #00f5c8";
+
+      setTimeout(() => {
+        card.style.boxShadow = "";
+      }, 520);
+    }
+
+    startGame();
+  </script>
 </body>
 </html>
