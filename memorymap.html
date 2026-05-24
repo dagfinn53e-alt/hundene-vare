@@ -1,179 +1,311 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🗺️ Memory Adventure MAP</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:linear-gradient(to bottom,#bfdbfe,#dbeafe);
-text-align:center;
-overflow-x:hidden;
-color:#123c73;
-}
+  <title>Memory Adventure MAP</title>
 
-h1{
-font-size:48px;
-margin-top:20px;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-#message{
-font-size:28px;
-font-weight:bold;
-color:#db2777;
-margin-top:20px;
-margin-bottom:10px;
-}
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, #79b8ff 0%, #c9e8ff 100%);
+      padding: 20px;
+      text-align: center;
+      overflow-x: hidden;
+    }
 
-.map{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:30px;
-max-width:1200px;
-margin:40px auto;
-padding:20px;
-}
+    h1 {
+      margin-top: 10px;
+      font-size: clamp(2rem, 6vw, 4rem);
+      color: #041b4d;
+      text-shadow: 0 0 10px rgba(255,255,255,0.6);
+    }
 
-.level{
-background:white;
-border-radius:28px;
-padding:30px;
-box-shadow:0 8px 20px rgba(0,0,0,.15);
-transition:.2s;
-cursor:pointer;
-position:relative;
-overflow:hidden;
-min-height:220px;
-}
+    .subtitle {
+      margin-top: 15px;
+      margin-bottom: 30px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #5b1b1b;
+    }
 
-.level:hover{
-transform:scale(1.04);
-}
+    .map-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 22px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-.level h2{
-font-size:34px;
-margin-bottom:10px;
-}
+    .level-card {
+      background: white;
+      border-radius: 28px;
+      padding: 24px 18px;
+      min-height: 290px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 
-.level p{
-font-size:20px;
-font-weight:bold;
-line-height:1.4;
-}
+      box-shadow:
+        0 10px 24px rgba(0,0,0,0.12),
+        0 0 18px rgba(255,255,255,0.55);
 
-.stars{
-font-size:34px;
-margin-top:15px;
-}
+      transition:
+        transform 0.25s,
+        box-shadow 0.25s;
+    }
 
-.path{
-font-size:40px;
-margin-top:10px;
-}
+    .level-card:hover {
+      transform: translateY(-6px) scale(1.02);
 
-.backBtn{
-margin-top:30px;
-margin-bottom:40px;
-padding:18px 30px;
-border:none;
-border-radius:20px;
-background:#123c73;
-color:white;
-font-size:22px;
-font-weight:bold;
-cursor:pointer;
-}
+      box-shadow:
+        0 18px 34px rgba(0,0,0,0.18),
+        0 0 22px rgba(255,255,255,0.8);
+    }
 
-.cloud{
-position:absolute;
-font-size:50px;
-opacity:.10;
-animation:float 12s infinite linear;
-}
+    .level-card h2 {
+      font-size: 2rem;
+      color: #0d2b73;
+      margin-bottom: 14px;
+    }
 
-@keyframes float{
-0%{transform:translateX(-50px);}
-100%{transform:translateX(1200px);}
-}
-</style>
+    .level-card p {
+      font-size: 1.1rem;
+      color: #23396b;
+      line-height: 1.4;
+      margin-bottom: 18px;
+      min-height: 70px;
+    }
+
+    .stars {
+      font-size: 1.8rem;
+      margin-bottom: 18px;
+    }
+
+    .play-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 70px;
+      height: 70px;
+
+      margin: 0 auto;
+
+      border-radius: 50%;
+      text-decoration: none;
+
+      background:
+        linear-gradient(145deg, #1f8fff, #004cff);
+
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+
+      box-shadow:
+        0 0 20px rgba(0,76,255,0.45);
+
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+    }
+
+    .play-button:hover {
+      transform: scale(1.1);
+
+      box-shadow:
+        0 0 30px rgba(0,76,255,0.7);
+    }
+
+    .play-button:active {
+      transform: scale(0.95);
+    }
+
+    .footer {
+      margin-top: 40px;
+      color: #14346d;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 14px;
+      }
+
+      .map-grid {
+        gap: 16px;
+      }
+
+      .level-card {
+        min-height: 260px;
+        padding: 20px 14px;
+      }
+
+      .level-card h2 {
+        font-size: 1.8rem;
+      }
+
+      .play-button {
+        width: 62px;
+        height: 62px;
+        font-size: 1.7rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<h1>🗺️ Memory Adventure MAP</h1>
+  <h1>🗺️ Memory Adventure MAP</h1>
 
-<div id="message">
-Velg et område for å starte eventyret 😄
-</div>
+  <div class="subtitle">
+    Velg et område for å starte eventyret 😄
+  </div>
 
-<div class="map">
+  <div class="map-grid">
 
-<div class="level" onclick="location.href='memory1.html'">
-<div class="cloud" style="top:10px;left:0;">☁️</div>
-<h2>🐶 Hundeparken</h2>
-<p>Lett memory med søte hunder</p>
-<div class="stars">⭐ ⭐ ⭐</div>
-<div class="path">➡️</div>
-</div>
+    <!-- MEMORY 1 -->
 
-<div class="level" onclick="location.href='memory-darkforest.html'">
-<div class="cloud" style="top:20px;left:10px;">☁️</div>
-<h2>🌲 Den mørke skogen</h2>
-<p>Dark Memory utfordring</p>
-<div class="stars">⭐ ⭐ ⭐</div>
-<div class="path">➡️</div>
-</div>
+    <div class="level-card">
+      <h2>😀 Startbanen</h2>
 
-<div class="level" onclick="location.href='memory-kennel.html'">
-<div class="cloud" style="top:15px;left:15px;">☁️</div>
-<h2>🏡 Kennelen</h2>
-<p>Bonuskort og combo-memory</p>
-<div class="stars">⭐ ⭐ ⭐</div>
-<div class="path">➡️</div>
-</div>
+      <p>
+        Klassisk emoji-memory for nye eventyrere
+      </p>
 
-<div class="level" onclick="location.href='memory-bonus-levels.html'">
-<div class="cloud" style="top:12px;left:20px;">☁️</div>
-<h2>🎁 Bonusbanen</h2>
-<p>Flere nivåer med bonuskort</p>
-<div class="stars">⭐ ⭐ ⭐</div>
-<div class="path">➡️</div>
-</div>
+      <div class="stars">
+        ⭐ ⭐ ⭐
+      </div>
 
-<div class="level" onclick="location.href='memory-night.html'">
-<div class="cloud" style="top:18px;left:8px;">☁️</div>
-<h2>🌙 Natt-memory</h2>
-<p>Kortene skjules veldig raskt</p>
-<div class="stars">⭐ ⭐ ⭐</div>
-<div class="path">➡️</div>
-</div>
+      <a class="play-button" href="memory1.html">
+        ➡️
+      </a>
+    </div>
 
-<div class="level" onclick="location.href='memory-master.html'">
-<div class="cloud" style="top:20px;left:5px;">☁️</div>
-<h2>🔥 Mesterbanen</h2>
-<p>Ekspertbane med 10 nivåer</p>
-<div class="stars">⭐ ⭐ ⭐</div>
-<div class="path">🏆</div>
-</div>
-<div class="world-card">
-  <h2>🚀 Space</h2>
+    <!-- NIGHT -->
 
-  <p>Galaktisk memory-eventyr</p>
+    <div class="level-card">
+      <h2>🌙 Natt-memory</h2>
 
-  <div class="stars">⭐ ⭐ ⭐</div>
+      <p>
+        Kortene skjules raskt i mørket
+      </p>
 
-  <a href="memory-space.html" class="play-button">
-    ➡️
-  </a>
-</div>
-</div>
+      <div class="stars">
+        ⭐ ⭐ ⭐
+      </div>
 
-<button class="backBtn" onclick="location.href='hundespill.html'">
-⬅️ Tilbake til spill
-</button>
+      <a class="play-button" href="memory-night.html">
+        ➡️
+      </a>
+    </div>
+
+    <!-- DARK FOREST -->
+
+    <div class="level-card">
+      <h2>🌲 Den mørke skogen</h2>
+
+      <p>
+        Dark memory med ULTRA-effekter
+      </p>
+
+      <div class="stars">
+        ⭐ ⭐ ⭐
+      </div>
+
+      <a class="play-button" href="memory-darkforest.html">
+        ➡️
+      </a>
+    </div>
+
+    <!-- KENNEL -->
+
+    <div class="level-card">
+      <h2>🐶 Kennelen</h2>
+
+      <p>
+        Bonuskort og combo-memory med hunder
+      </p>
+
+      <div class="stars">
+        ⭐ ⭐ ⭐
+      </div>
+
+      <a class="play-button" href="memory-kennel.html">
+        ➡️
+      </a>
+    </div>
+
+    <!-- BONUS -->
+
+    <div class="level-card">
+      <h2>🎁 Bonusbanen</h2>
+
+      <p>
+        Flere nivåer med bonuskort og raske combos
+      </p>
+
+      <div class="stars">
+        ⭐ ⭐ ⭐
+      </div>
+
+      <a class="play-button" href="memory-bonus-levels.html">
+        ➡️
+      </a>
+    </div>
+
+    <!-- MASTER -->
+
+    <div class="level-card">
+      <h2>👑 Mesterbanen</h2>
+
+      <p>
+        Ekspertbane med harde memory-utfordringer
+      </p>
+
+      <div class="stars">
+        ⭐ ⭐ ⭐
+      </div>
+
+      <a class="play-button" href="memory-master.html">
+        🏆
+      </a>
+    </div>
+
+    <!-- SPACE -->
+
+    <div class="level-card">
+      <h2>🚀 Space</h2>
+
+      <p>
+        Galaktisk memory-eventyr blant stjerner og planeter
+      </p>
+
+      <div class="stars">
+        ⭐ ⭐ ⭐
+      </div>
+
+      <a class="play-button" href="memory-space.html">
+        ➡️
+      </a>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Memory Adventure © 2026
+  </div>
 
 </body>
 </html>
