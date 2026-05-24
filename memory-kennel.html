@@ -1,730 +1,506 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏡 Kennelen ULTRA</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Adventure - Kennel</title>
 
-<style>
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:linear-gradient(to bottom,#dcfce7,#bbf7d0);
-text-align:center;
-overflow:hidden;
-color:#14532d;
-}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at top, #ffd38a 0%, #b86b2d 38%, #3a1d0e 100%);
+    }
 
-.container{
-max-width:1200px;
-margin:auto;
-padding:20px;
-position:relative;
-z-index:2;
-}
+    .paw-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.16;
+      background-image:
+        radial-gradient(circle, #fff 18%, transparent 20%),
+        radial-gradient(circle, #fff 18%, transparent 20%);
+      background-size: 90px 90px;
+      background-position: 0 0, 45px 45px;
+      animation: pawDrift 10s linear infinite;
+    }
 
-h1{
-font-size:52px;
-margin-top:10px;
-text-shadow:0 0 15px #22c55e;
-}
+    @keyframes pawDrift {
+      from { transform: translateY(0); }
+      to { transform: translateY(90px); }
+    }
 
-.stats{
-display:flex;
-justify-content:center;
-gap:15px;
-flex-wrap:wrap;
-margin-bottom:20px;
-}
+    .game {
+      position: relative;
+      z-index: 2;
+      width: min(96vw, 820px);
+      margin: 0 auto;
+      padding: 22px 12px 36px;
+    }
 
-.stat{
-background:white;
-padding:14px 20px;
-border-radius:18px;
-font-size:20px;
-font-weight:bold;
-box-shadow:0 4px 10px rgba(0,0,0,.15);
-}
+    h1 {
+      margin: 12px 0 4px;
+      font-size: clamp(2rem, 8vw, 4.2rem);
+      text-shadow:
+        0 0 12px #ffe1aa,
+        0 0 28px #ff8a3d;
+    }
 
-#message{
-font-size:30px;
-font-weight:bold;
-color:#15803d;
-margin:20px;
-min-height:40px;
-transition:.3s;
-}
+    .subtitle {
+      margin: 0 0 14px;
+      color: #fff0cf;
+      font-size: 1rem;
+      font-weight: bold;
+    }
 
-.comboText{
-animation:comboPop .6s;
-color:#f59e0b !important;
-}
+    .panel {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 16px auto;
+      max-width: 560px;
+    }
 
-@keyframes comboPop{
-0%{transform:scale(.5);}
-50%{transform:scale(1.5);}
-100%{transform:scale(1);}
-}
+    .stat {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 18px;
+      padding: 10px;
+      box-shadow: 0 0 18px rgba(255,210,138,0.22);
+      backdrop-filter: blur(6px);
+    }
 
-#gameBoard{
-display:grid;
-gap:15px;
-justify-content:center;
-margin-top:20px;
-}
+    .stat strong {
+      display: block;
+      font-size: 0.8rem;
+      color: #ffe4b8;
+    }
 
-.card{
-width:105px;
-height:105px;
-perspective:1000px;
-cursor:pointer;
-transition:.2s;
-}
+    .stat span {
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
 
-.card:hover{
-transform:scale(1.06);
-}
+    .controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 14px 0;
+    }
 
-.inner{
-position:relative;
-width:100%;
-height:100%;
-transition:transform .6s;
-transform-style:preserve-3d;
-}
+    button, a.button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(135deg, #ff8a3d, #8b4a1d);
+      box-shadow: 0 0 20px rgba(255,180,100,0.45);
+      text-decoration: none;
+    }
 
-.card.flipped .inner{
-transform:rotateY(180deg);
-}
+    .sound-btn {
+      background: linear-gradient(135deg, #22c55e, #0f8f45);
+    }
 
-.front,.back{
-position:absolute;
-width:100%;
-height:100%;
-backface-visibility:hidden;
-border-radius:22px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:48px;
-box-shadow:0 6px 14px rgba(0,0,0,.18);
-}
+    button:active, a.button:active {
+      transform: scale(0.96);
+    }
 
-.front{
-background:linear-gradient(135deg,#16a34a,#4ade80);
-color:white;
-}
+    .message {
+      min-height: 34px;
+      margin: 8px 0;
+      font-size: 1.18rem;
+      font-weight: bold;
+      color: #fff1c2;
+      text-shadow: 0 0 14px #ffb45d;
+    }
 
-.back{
-background:white;
-transform:rotateY(180deg);
-}
+    .board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 18px auto;
+      max-width: 640px;
+    }
 
-.correct .back{
-box-shadow:0 0 35px #22c55e;
-animation:kennelGlow .8s infinite alternate;
-}
+    .card {
+      aspect-ratio: 1 / 1;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      font-size: clamp(1.9rem, 9vw, 3.4rem);
+      cursor: pointer;
+      user-select: none;
+      background:
+        linear-gradient(145deg, #7a3f18, #2a1208);
+      border: 2px solid rgba(255,255,255,0.25);
+      box-shadow:
+        0 8px 20px rgba(0,0,0,0.35),
+        inset 0 0 16px rgba(255,255,255,0.06);
+      transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+    }
 
-@keyframes kennelGlow{
-from{
-transform:rotateY(180deg) scale(1);
-}
-to{
-transform:rotateY(180deg) scale(1.1);
-}
-}
+    .card:hover {
+      box-shadow:
+        0 0 22px rgba(255,220,160,0.7),
+        0 0 36px rgba(255,130,60,0.4);
+    }
 
-.wrong{
-animation:shake .25s 2;
-}
+    .card.flipped {
+      background: linear-gradient(145deg, #fff1c2, #ffb45d);
+      color: #2a1208;
+      transform: rotateY(180deg) scale(1.04);
+    }
 
-@keyframes shake{
-0%{transform:translateX(0)}
-25%{transform:translateX(-6px)}
-50%{transform:translateX(6px)}
-75%{transform:translateX(-6px)}
-100%{transform:translateX(0)}
-}
+    .card.matched {
+      background: linear-gradient(145deg, #9cffb5, #ffd166);
+      pointer-events: none;
+      animation: dogMatch 0.6s ease;
+    }
 
-/* HUNDER */
+    @keyframes dogMatch {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.18) rotate(4deg); }
+      70% { transform: scale(1.08) rotate(-4deg); }
+      100% { transform: scale(1); }
+    }
 
-.dog{
-position:fixed;
-font-size:30px;
-opacity:.14;
-animation:dogFloat 14s linear infinite;
-pointer-events:none;
-}
+    .ultra {
+      animation: ultraBark 0.9s infinite alternate;
+    }
 
-@keyframes dogFloat{
-from{
-transform:translateY(110vh);
-}
-to{
-transform:translateY(-120vh);
-}
-}
+    @keyframes ultraBark {
+      from {
+        filter: drop-shadow(0 0 5px #ffe1aa);
+      }
+      to {
+        filter: drop-shadow(0 0 22px #ff8a3d);
+      }
+    }
 
-/* FLASH */
+    .confetti {
+      position: fixed;
+      top: -24px;
+      width: 10px;
+      height: 16px;
+      pointer-events: none;
+      z-index: 20;
+      animation: fall 1.9s linear forwards;
+    }
 
-.flash{
-position:fixed;
-inset:0;
-background:white;
-opacity:0;
-pointer-events:none;
-z-index:9999;
-}
+    @keyframes fall {
+      to {
+        transform: translateY(112vh) rotate(760deg);
+        opacity: 0;
+      }
+    }
 
-.flash.active{
-animation:flashScreen .6s;
-}
+    .paw-pop {
+      position: fixed;
+      pointer-events: none;
+      z-index: 30;
+      font-size: 2rem;
+      animation: pawPop 0.8s ease-out forwards;
+    }
 
-@keyframes flashScreen{
-0%{opacity:.8;}
-100%{opacity:0;}
-}
+    @keyframes pawPop {
+      from {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 1;
+      }
+      to {
+        transform: translate(-50%, -120%) scale(1.8);
+        opacity: 0;
+      }
+    }
 
-/* KONFETTI */
+    @media (max-width: 500px) {
+      .board {
+        gap: 8px;
+      }
 
-.confetti{
-position:fixed;
-width:12px;
-height:12px;
-top:-20px;
-animation:fall linear forwards;
-z-index:999;
-}
+      .card {
+        border-radius: 15px;
+      }
 
-@keyframes fall{
-to{
-transform:translateY(110vh) rotate(720deg);
-opacity:0;
-}
-}
-
-#winBox{
-display:none;
-background:white;
-padding:30px;
-border-radius:25px;
-box-shadow:0 8px 20px rgba(0,0,0,.18);
-max-width:500px;
-margin:30px auto;
-animation:winPop .7s;
-}
-
-@keyframes winPop{
-0%{
-transform:scale(.4);
-opacity:0;
-}
-100%{
-transform:scale(1);
-opacity:1;
-}
-}
-
-#winBox h2{
-font-size:44px;
-color:#16a34a;
-}
-
-button{
-margin-top:20px;
-padding:16px 28px;
-border:none;
-border-radius:18px;
-background:#16a34a;
-color:white;
-font-size:20px;
-font-weight:bold;
-cursor:pointer;
-}
-
-.backBtn{
-background:#14532d;
-}
-@media(max-width:700px){
-
-h1{
-font-size:30px;
-}
-
-.stats{
-gap:8px;
-}
-
-.stat{
-font-size:15px;
-padding:10px 12px;
-}
-
-#message{
-font-size:20px;
-margin:15px;
-}
-
-#gameBoard{
-gap:10px !important;
-}
-
-.card{
-width:85px !important;
-height:85px !important;
-}
-
-.front,
-.back{
-font-size:34px !important;
-}
-
-button{
-font-size:16px;
-padding:12px 18px;
-}
-
-#winBox{
-width:90%;
-padding:20px;
-}
-
-}
-</style>
+      button, a.button {
+        padding: 11px 15px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
-
-<div class="flash" id="flash"></div>
-
-<div class="dog" style="left:10%;">🐶</div>
-<div class="dog" style="left:35%;animation-delay:3s;">🐾</div>
-<div class="dog" style="left:60%;animation-delay:5s;">🦴</div>
-<div class="dog" style="left:85%;animation-delay:8s;">🐕</div>
-
-<div class="container">
-
-<h1>🏡 Kennelen ULTRA</h1>
-
-<div class="stats">
-
-<div class="stat">
-🗺️ Nivå:
-<span id="level">1</span>
-</div>
-
-<div class="stat">
-⭐ Poeng:
-<span id="score">0</span>
-</div>
-
-<div class="stat">
-🔥 Combo:
-<span id="combo">0</span>
-</div>
-
-<div class="stat">
-⏱️ Tid:
-<span id="time">0</span>
-</div>
-
-</div>
-
-<div id="message">
-🐶 Finn kennelkortene!
-</div>
-
-<div id="gameBoard"></div>
-
-<div id="winBox">
-
-<h2>🏆 LEVEL COMPLETE!</h2>
-
-<div style="font-size:60px;">
-🐶🏡🐾
-</div>
-
-<p id="finalScore"></p>
-
-<button onclick="nextLevel()">
-➡️ Neste nivå
-</button>
-
-</div>
-
-<button class="backBtn"
-onclick="location.href='memorymap.html'">
-
-⬅️ Tilbake til kart
-
-</button>
-
-</div>
-
-<script>
-
-/* LYDER */
-
-const flipSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"
-);
-
-const correctSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"
-);
-
-const wrongSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"
-);
-
-const winSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"
-);
-
-/* SYMBOLER */
-
-const allSymbols=[
-"🐶","🐕","🦴","🐾","🏡",
-"🦮","🐕‍🦺","🎾","🛖","🐩"
-];
-
-let level=1;
-let cards=[];
-let flipped=[];
-let matched=0;
-let score=0;
-let combo=0;
-let timer=0;
-let interval;
-let lock=false;
-
-function startLevel(){
-
-clearInterval(interval);
-
-let pairs=4+(level-1)*2;
-
-if(pairs>10){
-pairs=10;
-}
-
-let selected=
-allSymbols.slice(0,pairs);
-
-cards=[...selected,...selected];
-
-cards.sort(()=>Math.random()-0.5);
-
-flipped=[];
-matched=0;
-combo=0;
-timer=0;
-lock=false;
-
-updateStats();
-
-document.getElementById(
-"winBox"
-).style.display="none";
-
-const board=
-document.getElementById(
-"gameBoard"
-);
-
-board.innerHTML="";
-
-let columns=4;
-
-if(cards.length>=20){
-columns=5;
-}
-
-board.style.gridTemplateColumns=
-`repeat(${columns},105px)`;
-
-cards.forEach(symbol=>{
-
-const card=
-document.createElement("div");
-
-card.className="card";
-
-card.dataset.symbol=symbol;
-
-card.innerHTML=`
-
-<div class="inner">
-
-<div class="front">
-🏡
-</div>
-
-<div class="back">
-${symbol}
-</div>
-
-</div>
-
-`;
-
-card.onclick=
-()=>flipCard(card);
-
-board.appendChild(card);
-
-});
-
-interval=setInterval(()=>{
-
-timer++;
-
-document.getElementById(
-"time"
-).innerHTML=timer;
-
-},1000);
-
-}
-
-function flipCard(card){
-
-if(lock)return;
-
-if(flipped.length>=2)return;
-
-if(card.classList.contains("flipped"))return;
-
-if(card.classList.contains("correct"))return;
-
-card.classList.add("flipped");
-
-flipSound.currentTime=0;
-flipSound.play();
-
-flipped.push(card);
-
-if(flipped.length===2){
-
-checkMatch();
-
-}
-
-}
-
-function checkMatch(){
-
-lock=true;
-
-const a=flipped[0];
-const b=flipped[1];
-
-if(a.dataset.symbol===b.dataset.symbol){
-
-a.classList.add("correct");
-b.classList.add("correct");
-
-matched+=2;
-
-combo++;
-
-score+=12+(combo*4);
-
-correctSound.currentTime=0;
-correctSound.play();
-
-const msg=
-document.getElementById(
-"message"
-);
-
-msg.innerHTML=
-"🐾 KENNELPAR FUNNET!";
-
-if(combo>=3){
-
-msg.innerHTML=
-"🔥 SUPER COMBO x"+combo;
-
-msg.classList.add(
-"comboText"
-);
-
-setTimeout(()=>{
-
-msg.classList.remove(
-"comboText"
-);
-
-},600);
-
-}
-
-flipped=[];
-
-lock=false;
-
-updateStats();
-
-if(matched===cards.length){
-
-winLevel();
-
-}
-
-}else{
-
-combo=0;
-
-score=Math.max(0,score-3);
-
-wrongSound.currentTime=0;
-wrongSound.play();
-
-a.classList.add("wrong");
-b.classList.add("wrong");
-
-document.getElementById(
-"message"
-).innerHTML=
-"❌ Feil kennelkort";
-
-updateStats();
-
-setTimeout(()=>{
-
-a.classList.remove(
-"flipped",
-"wrong"
-);
-
-b.classList.remove(
-"flipped",
-"wrong"
-);
-
-flipped=[];
-
-lock=false;
-
-},850);
-
-}
-
-}
-
-function updateStats(){
-
-document.getElementById("level").innerHTML=level;
-document.getElementById("score").innerHTML=score;
-document.getElementById("combo").innerHTML=combo;
-document.getElementById("time").innerHTML=timer;
-
-}
-
-function flashScreen(){
-
-const flash=
-document.getElementById(
-"flash"
-);
-
-flash.classList.add(
-"active"
-);
-
-setTimeout(()=>{
-
-flash.classList.remove(
-"active"
-);
-
-},600);
-
-}
-
-function createConfetti(){
-
-for(let i=0;i<80;i++){
-
-const conf=
-document.createElement("div");
-
-conf.className="confetti";
-
-conf.style.left=
-Math.random()*100+"vw";
-
-conf.style.background=
-`hsl(${Math.random()*360},
-100%,50%)`;
-
-conf.style.animationDuration=
-(3+Math.random()*3)+"s";
-
-document.body.appendChild(conf);
-
-setTimeout(()=>{
-
-conf.remove();
-
-},6000);
-
-}
-
-}
-
-function winLevel(){
-
-clearInterval(interval);
-
-winSound.currentTime=0;
-winSound.play();
-
-flashScreen();
-
-createConfetti();
-
-document.getElementById(
-"winBox"
-).style.display="block";
-
-document.getElementById(
-"finalScore"
-).innerHTML=
-`⭐ Poeng: ${score}<br>
-⏱️ Tid: ${timer}s`;
-
-document.getElementById(
-"message"
-).innerHTML=
-"🏆 LEVEL COMPLETE!";
-
-}
-
-function nextLevel(){
-
-level++;
-
-if(level>5){
-
-alert(
-"🐶 Du fullførte hele Kennelen!"
-);
-
-level=1;
-score=0;
-
-}
-
-startLevel();
-
-}
-
-startLevel();
-
-</script>
-
+  <div class="paw-bg"></div>
+
+  <main class="game">
+    <h1 class="ultra">🐶 Memory Kennel</h1>
+    <p class="subtitle">Finn alle hundevennene i kennelen!</p>
+
+    <div class="panel">
+      <div class="stat">
+        <strong>Nivå</strong>
+        <span id="level">1</span>
+      </div>
+      <div class="stat">
+        <strong>Trekk</strong>
+        <span id="moves">0</span>
+      </div>
+      <div class="stat">
+        <strong>Combo</strong>
+        <span id="combo">0</span>
+      </div>
+      <div class="stat">
+        <strong>Par</strong>
+        <span id="pairs">0</span>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button onclick="restartGame()">🔄 Start på nytt</button>
+      <button class="sound-btn" onclick="toggleSound()" id="soundBtn">🔊 Lyd på</button>
+      <a class="button" href="memorymap.html">🗺️ Kart</a>
+    </div>
+
+    <div class="message" id="message">Snus deg frem til parene!</div>
+
+    <section class="board" id="board"></section>
+  </main>
+
+  <script>
+    const symbols = ["🐶", "🐕", "🦴", "🐾", "🏠", "🥎", "🦮", "🐕‍🦺"];
+
+    let cards = [];
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+
+    let level = 1;
+    let moves = 0;
+    let combo = 0;
+    let pairs = 0;
+    let soundOn = true;
+
+    const board = document.getElementById("board");
+    const levelEl = document.getElementById("level");
+    const movesEl = document.getElementById("moves");
+    const comboEl = document.getElementById("combo");
+    const pairsEl = document.getElementById("pairs");
+    const messageEl = document.getElementById("message");
+    const soundBtn = document.getElementById("soundBtn");
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function playSound(type) {
+      if (!soundOn) return;
+
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      oscillator.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (type === "flip") oscillator.frequency.value = 430;
+      if (type === "match") oscillator.frequency.value = 740;
+      if (type === "wrong") oscillator.frequency.value = 190;
+      if (type === "win") oscillator.frequency.value = 980;
+
+      oscillator.type = "sine";
+      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.24);
+
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.24);
+    }
+
+    function startGame() {
+      board.innerHTML = "";
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+      moves = 0;
+      combo = 0;
+      pairs = 0;
+
+      const pairCount = Math.min(4 + level, 8);
+      const chosen = symbols.slice(0, pairCount);
+      cards = shuffle([...chosen, ...chosen]);
+
+      cards.forEach((symbol, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.symbol = symbol;
+        card.dataset.index = index;
+        card.textContent = "🐾";
+        card.addEventListener("click", () => flipCard(card));
+        board.appendChild(card);
+      });
+
+      updateStats();
+      messageEl.textContent = "Snus deg frem til parene!";
+    }
+
+    function flipCard(card) {
+      if (lockBoard) return;
+      if (card.classList.contains("flipped")) return;
+      if (card.classList.contains("matched")) return;
+
+      playSound("flip");
+
+      card.classList.add("flipped");
+      card.textContent = card.dataset.symbol;
+
+      if (!firstCard) {
+        firstCard = card;
+        return;
+      }
+
+      secondCard = card;
+      moves++;
+      updateStats();
+      checkMatch();
+    }
+
+    function checkMatch() {
+      const isMatch = firstCard.dataset.symbol === secondCard.dataset.symbol;
+
+      if (isMatch) {
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
+
+        combo++;
+        pairs++;
+
+        playSound("match");
+        pawPop(firstCard);
+        pawPop(secondCard);
+
+        if (combo >= 4) {
+          messageEl.textContent = "🐕 ULTRA BJEFF-COMBO!";
+        } else if (combo >= 2) {
+          messageEl.textContent = "🔥 Super-snute combo!";
+        } else {
+          messageEl.textContent = "Bra! Du fant et hundepar!";
+        }
+
+        resetTurn();
+        updateStats();
+
+        if (pairs === Math.min(4 + level, 8)) {
+          winLevel();
+        }
+      } else {
+        lockBoard = true;
+        combo = 0;
+        messageEl.textContent = "Voff! Ikke par. Prøv igjen!";
+        playSound("wrong");
+
+        setTimeout(() => {
+          firstCard.classList.remove("flipped");
+          secondCard.classList.remove("flipped");
+          firstCard.textContent = "🐾";
+          secondCard.textContent = "🐾";
+          resetTurn();
+          updateStats();
+        }, 780);
+      }
+    }
+
+    function resetTurn() {
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+    }
+
+    function winLevel() {
+      playSound("win");
+      confetti();
+      messageEl.textContent = "🏆 Kennel-nivå fullført!";
+
+      setTimeout(() => {
+        level++;
+
+        if (level > 5) {
+          level = 5;
+          messageEl.textContent = "🐶 Du er kennel-mester!";
+          confetti();
+        } else {
+          startGame();
+        }
+
+        updateStats();
+      }, 1800);
+    }
+
+    function restartGame() {
+      startGame();
+    }
+
+    function toggleSound() {
+      soundOn = !soundOn;
+      soundBtn.textContent = soundOn ? "🔊 Lyd på" : "🔇 Lyd av";
+    }
+
+    function updateStats() {
+      levelEl.textContent = level;
+      movesEl.textContent = moves;
+      comboEl.textContent = combo;
+      pairsEl.textContent = pairs;
+    }
+
+    function confetti() {
+      const colors = ["#ffe1aa", "#ffffff", "#ff8a3d", "#9cffb5", "#ffd166"];
+
+      for (let i = 0; i < 80; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDelay = Math.random() * 0.55 + "s";
+        piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+        document.body.appendChild(piece);
+
+        setTimeout(() => {
+          piece.remove();
+        }, 2400);
+      }
+    }
+
+    function pawPop(card) {
+      const rect = card.getBoundingClientRect();
+      const paw = document.createElement("div");
+      paw.className = "paw-pop";
+      paw.textContent = "🐾";
+      paw.style.left = rect.left + rect.width / 2 + "px";
+      paw.style.top = rect.top + rect.height / 2 + "px";
+
+      document.body.appendChild(paw);
+
+      setTimeout(() => {
+        paw.remove();
+      }, 900);
+    }
+
+    startGame();
+  </script>
 </body>
 </html>
