@@ -1,13 +1,13 @@
-F<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="no">
 <head>
   <link rel="apple-touch-icon" href="icon-512.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hundene våre</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>F
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    :root{--blue:#2563eb;--blue-dark:#1d4ed8;--line:#dbeafe;--text:#0f172a;--muted:#64748b;--card:#fff;--shadow:F0 12px 30px rgba(15,23,42,.08)}
+    :root{--blue:#2563eb;--blue-dark:#1d4ed8;--line:#dbeafe;--text:#0f172a;--muted:#64748b;--card:#fff;--shadow:0 12px 30px rgba(15,23,42,.08)}
     *{box-sizing:border-box}
     body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:radial-gradient(circle at top left,#dbeafe 0%,transparent 30%),linear-gradient(180deg,#eff6ff 0%,#f8fbff 100%)}
     .wrap{
@@ -348,6 +348,7 @@ F<!DOCTYPE html>
     #imageModal img{max-width:95vw;max-height:90vh;border-radius:18px;width:auto;height:auto;object-fit:contain;
 padding:10px;
 background:transparent;
+    }
     #imageModalClose{position:absolute;top:14px;right:18px;width:42px;height:42px;border-radius:999px;background:#fff;color:#111827;font-size:24px;padding:0}
     .clickable-image{cursor:zoom-in}
 
@@ -532,9 +533,9 @@ background:transparent;
       .post img,.biz-main img,.club-card img,.turtip-card img{max-height:260px}
       .gallery img{height:160px}
       .menu-grid{grid-template-columns:repeat(3,1fr)}
-    }.menu-grid{grid-template-columns:repeat(3,1fr)}
-                    
-}.refresh-btn{
+    }
+
+.refresh-btn{
   background:#27ae60;
   color:white;
   border:none;
@@ -818,7 +819,6 @@ margin:24px auto;
 background:white;
     
 }
-}
 
 .slide::after{
   content:"";
@@ -920,16 +920,6 @@ setInterval(() => {
                   <div class="local-offer-sub">Ingen tilbud enda</div>
                 </div>
                 <div class="local-offer-pill">Se</div>
-                <div class="card">
-  <h2>Kafétilbud</h2>
-
-  <div id="homeCafeOffers" class="grid"></div>
-
-  <button onclick="window.location.href='cafe_tilbud.html'" class="menu-btn activity">
-🐱 Til Katten
-
-  
-</div>
               </div>
             </div>
           </div>
@@ -937,7 +927,7 @@ setInterval(() => {
       </div>
 
       <div class="menu-grid">
-        <button class="menu-btn offers" onclick="showPage('stories')">📰 Nyheter fra butikk</buton>
+        <button class="menu-btn offers" onclick="showPage('stories')">📰 Nyheter fra butikk</button>
         <button class="menu-btn activity" onclick="window.location.href='markedsplass.html'">🛒 Markedsplass</button>
         <button class="menu-btn activity" onclick="window.location.href='cafe_tilbud.html'">🐱 Til Katten</button>
         <button class="menu-btn activity" onclick="window.location.href='hundespill.html'">🎮 Hundespill</button>
@@ -1837,6 +1827,7 @@ updateInviteMessage();
   if (error) return;
 
   const container = document.getElementById('homeCafeOffers');
+  if (!container) return;
 
   if (!data || data.length === 0) {
     container.innerHTML = "<p>Ingen kafétilbud enda</p>";
@@ -1852,5 +1843,192 @@ updateInviteMessage();
   `).join('');
 }
 </script>
+
+
+<style id="pc-forside-polish">
+/* PC-FINPUSS: endrer bare forsiden/layout, ikke spill eller Supabase-logikk */
+:root{
+  --shadow:0 10px 24px rgba(15,23,42,.08);
+}
+
+@media (min-width: 900px){
+  body{
+    background:
+      radial-gradient(circle at top left, rgba(219,234,254,.9) 0%, transparent 28%),
+      linear-gradient(180deg,#eef6ff 0%,#f9fcff 100%);
+  }
+
+  .wrap{
+    max-width:1180px !important;
+    padding:14px 18px 36px !important;
+  }
+
+  .topbar{
+    max-width:1040px;
+    margin:0 auto 12px !important;
+    padding:8px 12px !important;
+    border-radius:18px !important;
+    position:sticky;
+    top:8px;
+  }
+
+  .brand{
+    font-size:17px !important;
+    padding:8px 12px !important;
+  }
+
+  .actions{
+    gap:7px !important;
+  }
+
+  .actions button,
+  .refresh-btn{
+    padding:8px 12px !important;
+    font-size:13px !important;
+    margin-left:0 !important;
+  }
+
+  .hero{
+    max-width:1040px;
+    min-height:145px !important;
+    margin:0 auto 12px !important;
+    padding:20px 24px !important;
+    border-radius:22px !important;
+  }
+
+  .hero h1{
+    font-size:34px !important;
+  }
+
+  .hero p{
+    font-size:14px !important;
+    max-width:520px;
+  }
+
+  #page-home > .card{
+    max-width:1040px !important;
+    margin:0 auto 14px !important;
+    padding:14px !important;
+    border-radius:22px !important;
+  }
+
+  .offers-top{
+    gap:10px !important;
+    align-items:center !important;
+    margin-bottom:10px !important;
+  }
+
+  .offer-link,
+  .offers-top a{
+    padding:9px 15px !important;
+    font-size:13px !important;
+    min-width:auto !important;
+  }
+
+  .top-slider{
+    max-width:300px !important;
+    height:100px !important;
+    margin:10px auto 12px !important;
+    box-shadow:0 8px 18px rgba(15,23,42,.10) !important;
+    border-radius:18px !important;
+    overflow:hidden !important;
+    background:white !important;
+  }
+
+  .top-slider img{
+    height:100px !important;
+    padding:6px !important;
+    object-fit:contain !important;
+  }
+
+  .promo-inline,
+  .promo-inline-inner{
+    min-height:118px !important;
+    border-radius:18px !important;
+  }
+
+  .promo-inline-inner{
+    padding:14px !important;
+  }
+
+  .promo-title{
+    font-size:21px !important;
+  }
+
+  .promo-sub{
+    font-size:13px !important;
+  }
+
+  .promo-pill{
+    min-width:86px !important;
+    padding:9px 14px !important;
+    font-size:14px !important;
+  }
+
+  .local-offers-grid{
+    grid-template-columns:repeat(3,1fr) !important;
+    gap:8px !important;
+  }
+
+  .local-offer-card,
+  .local-offer-inner{
+    min-height:94px !important;
+    border-radius:16px !important;
+  }
+
+  .local-offer-inner{
+    padding:10px !important;
+  }
+
+  .local-offer-region{
+    font-size:15px !important;
+  }
+
+  .local-offer-sub{
+    font-size:10px !important;
+  }
+
+  .local-offer-pill{
+    min-width:54px !important;
+    padding:6px 10px !important;
+    font-size:12px !important;
+  }
+
+  .menu-grid{
+    max-width:1040px !important;
+    margin:12px auto 0 !important;
+    grid-template-columns:repeat(3,1fr) !important;
+    gap:8px !important;
+  }
+
+  .menu-btn{
+    min-height:50px !important;
+    border-radius:16px !important;
+    padding:8px 10px !important;
+    font-size:13px !important;
+  }
+
+  .sharebox{
+    max-width:1040px;
+    margin:auto;
+    padding:12px !important;
+    border-radius:18px !important;
+  }
+}
+
+@media (max-width: 760px){
+  .top-slider{
+    max-width:92vw !important;
+    height:140px !important;
+    border-radius:18px !important;
+    overflow:hidden !important;
+  }
+
+  .top-slider img{
+    height:140px !important;
+  }
+}
+</style>
+
 </body>
 </html>
