@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hundene våre</title>
+  <!-- Stabil forside: PC-justert, spill ikke rørt -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root{--blue:#2563eb;--blue-dark:#1d4ed8;--line:#dbeafe;--text:#0f172a;--muted:#64748b;--card:#fff;--shadow:0 12px 30px rgba(15,23,42,.08)}
@@ -347,7 +348,8 @@
     #imageModal.open{display:flex}
     #imageModal img{max-width:95vw;max-height:90vh;border-radius:18px;width:auto;height:auto;object-fit:contain;
 padding:10px;
-background:transparent}
+background:transparent;
+    }
     #imageModalClose{position:absolute;top:14px;right:18px;width:42px;height:42px;border-radius:999px;background:#fff;color:#111827;font-size:24px;padding:0}
     .clickable-image{cursor:zoom-in}
 
@@ -534,8 +536,6 @@ background:transparent}
       .menu-grid{grid-template-columns:repeat(3,1fr)}
     }
 
-    .menu-grid{grid-template-columns:repeat(3,1fr)}
-
 .refresh-btn{
   background:#27ae60;
   color:white;
@@ -678,105 +678,6 @@ background:transparent}
   margin-bottom:16px;
   box-shadow:0 4px 12px rgba(0,0,0,.08);
 }
-
-
-/* --- REN FORSIDE / PC-FINPUSS --- */
-@media (min-width:980px){
-  .wrap{max-width:1120px;padding:22px 18px 70px}
-  .hero{min-height:260px;padding:34px;border-radius:28px}
-  .hero h1{font-size:44px}
-  .hero p{font-size:16px;max-width:620px}
-  .card.home-card{max-width:1040px;margin-left:auto;margin-right:auto;padding:22px;border-radius:28px}
-  .home-slider{max-width:760px;height:230px}
-  .home-menu-grid{grid-template-columns:repeat(4,1fr)}
-  .home-menu-grid .menu-btn{min-height:82px;font-size:15px}
-}
-
-.home-card{
-  overflow:hidden;
-}
-
-.home-intro{
-  text-align:center;
-  margin-bottom:16px;
-}
-
-.home-intro h2{
-  font-size:28px;
-  margin-bottom:6px;
-}
-
-.home-intro p{
-  color:var(--muted);
-  line-height:1.5;
-  max-width:720px;
-  margin:0 auto;
-}
-
-.home-slider{
-  position:relative;
-  width:100%;
-  max-width:680px;
-  height:210px;
-  margin:18px auto 24px;
-  border-radius:24px;
-  overflow:hidden;
-  background:#fff;
-  border:1px solid #dbeafe;
-  box-shadow:0 12px 28px rgba(15,23,42,.10);
-}
-
-.home-slide{
-  position:absolute;
-  inset:0;
-  opacity:0;
-  transition:opacity .7s ease;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#fff;
-}
-
-.home-slide.active{
-  opacity:1;
-  z-index:1;
-}
-
-.home-slide img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  padding:10px;
-  background:#fff;
-}
-
-.home-slide-label{
-  position:absolute;
-  left:14px;
-  bottom:12px;
-  z-index:2;
-  background:rgba(15,23,42,.72);
-  color:#fff;
-  padding:7px 12px;
-  border-radius:999px;
-  font-size:13px;
-  font-weight:800;
-}
-
-.home-menu-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin-top:14px;
-}
-
-@media (max-width:760px){
-  .home-slider{height:165px;border-radius:20px;margin:14px auto 18px}
-  .home-menu-grid{grid-template-columns:repeat(2,1fr);gap:10px}
-  .home-menu-grid .menu-btn{min-height:64px;font-size:13px}
-  .home-intro h2{font-size:24px}
-}
-
   </style>
 </head>
 <body>
@@ -803,46 +704,241 @@ background:transparent}
   <div id="page-home">
     <div class="hero">
       <h1>Hundene våre 🐾</h1>
-      <p>Finn butikker, kaféer, hundeklubber, nyheter og lokale tips samlet på ett sted.</p>
+      <p>Del hundebilder, historier og opplevelser. Logg inn og bli med i fellesskapet.</p>
     </div>
 
-    <div class="card home-card">
-      <div class="home-intro">
-        <h2>Velkommen 🐶</h2>
-        <p>En ryddigere forside med slider og hovedmeny i fokus. Tilbud ligger fortsatt på egen side, men tilbudsboksene er fjernet fra forsiden.</p>
+    <div class="card">
+      <div class="offers-panel">
+        <div class="offers-top">
+          <a class="offer-link" href="#" onclick="showPage('weekly'); return false;">🐾 Se Ukens tilbud</a>
+          
+
+</a>
+
+<a href="butikker.html" style="
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:16px 30px;
+  border-radius:999px;
+  background:#2563eb;
+  color:white;
+  text-decoration:none;
+  font-size:18px;
+  font-weight:700;
+  box-shadow:0 8px 20px rgba(37,99,235,.35);
+  min-width:240px;
+">
+  🏪 Se butikker
+</a>
+</a>
+
+</div>
+        </div>
+<!-- HUNDENE VÅRE SLIDER START -->
+<div class="top-slider">
+
+  <div class="slide active">
+    <img src="bilder/haugesund-dyrebutikk.jpg" alt="">
+    <div class="slide-text">
+🐶 Hundene våre
+</div>
+    
+    
+    </div>
+
+
+  <div class="slide">
+  <img src="bilder/Pet Salong&Spa.jpg" alt="">
+    
+    
+    </div>
+  
+
+  <div class="slide">
+  <img src="bilder/dyrisk.jpg.jpg" alt="">
+    
+    
+    </div>
+  
+
+  <div class="slide">
+  <img src="bilder/lykkepoten.jpg.jpg" alt="">
+  
+
+    </div>
+  
+
+
+<div class="slide">
+  <img src="bilder/buddy.jpg" alt="">
+</div>
+  
+     <div class="slide">
+  <img src="bilder/hegglund.jpg" alt="">
+</div>
+  <div class="slide">
+  <img src="bilder/andrea..jpg" alt="">
+</div>
+<div class="slide">
+  <img src="bilder/musti.jpg" alt="">
+</div>
+  <div class="slide">
+  <img src="bilder/snuten.jpg" alt="">
+</div>
+</div>
+<style>
+.top-slider{
+  position:relative;
+  width:100%;
+max-width:520px;
+height:160px;
+margin:24px auto;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
+.slide{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  transition:opacity .6s ease;
+}
+  .slide.active{
+  opacity:1;
+  z-index:2;
+}
+
+.top-slider img{
+    width:100%;
+    height:220px;
+    object-fit:contain;
+   padding:8px;
+background:white;
+    
+}
+
+.slide::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,.05));
+}
+
+.slide-text{
+  position:absolute;
+  left:14px;
+  bottom:8px;
+  color:white;
+  font-size:15px;
+  line-height:1.2;
+max-width:85%;
+  font-weight:700;
+  z-index:3;
+  text-shadow:0 3px 10px rgba(0,0,0,.4);
+  font-size:16px;
+text-shadow:0 2px 8px rgba(0,0,0,.8);
+bottom:14px;
+left:14px;
+
+}
+
+@keyframes zoomSlide{
+  0%{
+    transform:scale(1);
+  }
+  100%{
+    transform:scale(1.08);
+  }
+}
+</style>
+
+<script>
+const slides = document.querySelectorAll('.top-slider .slide');
+
+let currentSlide = 0;
+
+setInterval(() => {
+
+  slides[currentSlide].classList.remove('active');
+
+  currentSlide++;
+
+  if(currentSlide >= slides.length){
+    currentSlide = 0;
+  }
+
+  slides[currentSlide].classList.add('active');
+
+}, 4000);
+</script>
+<!-- HUNDENE VÅRE SLIDER SLUTT -->
+        <div class="offers-stack">
+          <div id="promoInlineBanner" class="promo-inline fallback" onclick="showPage('weekly')">
+            <div class="promo-inline-inner">
+              <div class="promo-inline-copy">
+                <div class="promo-kicker">UKENS TILBUD</div>
+                <div class="promo-title">Plass til butikktilbud 🐾</div>
+                <div class="promo-sub">Nyeste tilbudsbilde kan vises automatisk her</div>
+              </div>
+              <div class="promo-bottom">
+                <div class="promo-pill">Se nå</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="local-offers-grid">
+            <div id="localOfferHaugalandet" class="local-offer-card fallback" onclick="openWeeklyRegion('Haugalandet')">
+              <div class="local-offer-inner">
+                <div>
+                  <div class="local-offer-kicker">Lokale tilbud</div>
+                  <div class="local-offer-region">Haugalandet</div>
+                  <div class="local-offer-sub">Ingen tilbud enda</div>
+                </div>
+                <div class="local-offer-pill">Se</div>
+              </div>
+            </div>
+
+            <div id="localOfferStavanger" class="local-offer-card fallback" onclick="openWeeklyRegion('Stavanger')">
+              <div class="local-offer-inner">
+                <div>
+                  <div class="local-offer-kicker">Lokale tilbud</div>
+                  <div class="local-offer-region">Stavanger</div>
+                  <div class="local-offer-sub">Ingen tilbud enda</div>
+                </div>
+                <div class="local-offer-pill">Se</div>
+              </div>
+            </div>
+
+            <div id="localOfferStord" class="local-offer-card fallback" onclick="openWeeklyRegion('Stord')">
+              <div class="local-offer-inner">
+                <div>
+                  <div class="local-offer-kicker">Lokale tilbud</div>
+                  <div class="local-offer-region">Stord</div>
+                  <div class="local-offer-sub">Ingen tilbud enda</div>
+                </div>
+                <div class="local-offer-pill">Se</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="home-slider" id="homeSlider">
-        <div class="home-slide active">
-          <img src="bilder/haugesund-dyrebutikk.jpg" alt="Hundene våre">
-          <div class="home-slide-label">Hundene våre</div>
-        </div>
-        <div class="home-slide">
-          <img src="bilder/Pet Salong&Spa.jpg" alt="Pet Salong & Spa">
-          <div class="home-slide-label">Lokale butikker</div>
-        </div>
-        <div class="home-slide">
-          <img src="bilder/dyrisk.jpg.jpg" alt="Butikkbilde">
-          <div class="home-slide-label">Butikker og tjenester</div>
-        </div>
-        <div class="home-slide">
-          <img src="bilder/lykkepoten.jpg.jpg" alt="Lykkepoten">
-          <div class="home-slide-label">For hundeeiere</div>
-        </div>
-        <div class="home-slide">
-          <img src="bilder/buddy.jpg" alt="Buddy">
-          <div class="home-slide-label">Lokalt fellesskap</div>
-        </div>
-      </div>
-
-      <div class="home-menu-grid">
-        <button class="menu-btn offers" onclick="showPage('weekly')">⭐ Ukens tilbud</button>
+      <div class="menu-grid">
         <button class="menu-btn offers" onclick="showPage('stories')">📰 Nyheter fra butikk</button>
         <button class="menu-btn activity" onclick="window.location.href='markedsplass.html'">🛒 Markedsplass</button>
         <button class="menu-btn activity" onclick="window.location.href='cafe_tilbud.html'">🐱 Til Katten</button>
         <button class="menu-btn activity" onclick="window.location.href='hundespill.html'">🎮 Hundespill</button>
+      
+        
         <button class="menu-btn business" onclick="showPage('business')">🏪 Bedrift</button>
-        <button class="menu-btn activity" onclick="window.location.href='butikk-profil-skjema.html'">📝 Registrer butikk</button>
+          <button class="menu-btn activity"
+onclick="window.location.href='butikk-profil-skjema.html'">
+📝 Registrer butikk
+</button>
         <button class="menu-btn club" onclick="showPage('hundeklubber')">🐶 Hundeklubber</button>
         <button class="menu-btn activity" onclick="showPage('haugalandet')">📍 Butikker Haugalandet</button>
         <button class="menu-btn activity" onclick="showPage('stavanger')">📍 Stavanger</button>
@@ -851,19 +947,6 @@ background:transparent}
       </div>
     </div>
   </div>
-
-  <script>
-  (function(){
-    var homeSlides = document.querySelectorAll('.home-slider .home-slide');
-    if(!homeSlides.length) return;
-    var homeCurrent = 0;
-    setInterval(function(){
-      homeSlides[homeCurrent].classList.remove('active');
-      homeCurrent = (homeCurrent + 1) % homeSlides.length;
-      homeSlides[homeCurrent].classList.add('active');
-    }, 4200);
-  })();
-  </script>
 
   <div id="page-auth" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>Opprett konto / Logg inn</h2><div class="sub">Bruk e-post og passord.</div><input id="email" type="email" placeholder="E-post"><input id="password" type="password" placeholder="Passord"><div class="btnrow"><button type="button" onclick="signupUser()">Lag konto</button><button type="button" onclick="loginUser()">Logg inn</button><button type="button" class="alt" onclick="loadProfile()">Oppdater profil</button></div><div id="status" class="status">Klar.</div></div></div>
 
@@ -1057,7 +1140,7 @@ background:transparent}
 
   <div id="page-hundeklubber" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🐶 Hundeklubber</h2><div class="sub">Lokale hundeklubber og aktiviteter.</div><div id="dogClubsList"><div class="empty-box">Laster klubber ...</div></div></div><div class="card"><h2 style="font-size:24px;">➕ Legg til hundeklubb</h2><input id="clubName" placeholder="Klubbnavn"><input id="clubLocation" placeholder="Område / sted"><textarea id="clubDescription" placeholder="Beskrivelse"></textarea><input id="clubWebsite" placeholder="Nettside / Facebook-link"><div class="btnrow"><button type="button" onclick="saveDogClub()">Lagre klubb</button><button type="button" class="alt" onclick="loadDogClubs()">Oppdater liste</button></div><div id="clubStatus" class="status"></div></div></div>
 
-  <div class="card"><div class="sharebox"><div>Del appen med andre:</div><div class="sharelink">https://www.hundenevåre.com/</div><div class="btnrow"><button type="button" onclick="shareApp()">Del link</button><button type="button" class="alt" onclick="copyLink()">Kopier link</button></div></div></div>
+  <div class="card"><div class="sharebox"><div>Del appen med andre:</div><div class="sharelink">https://dagfinn53e-alt.github.io/hundene-vare/</div><div class="btnrow"><button type="button" onclick="shareApp()">Del link</button><button type="button" class="alt" onclick="copyLink()">Kopier link</button></div></div></div>
 </div>
 
 <div id="imageModal" onclick="closeImageModal(event)"><button id="imageModalClose" type="button" onclick="closeImageModal(event)">×</button><img id="imageModalImg" src="" alt="Forstørret bilde"></div>
@@ -1715,8 +1798,8 @@ function closeImageModal(event){if(event) event.stopPropagation();qs("imageModal
 document.addEventListener("keydown",function(e){if(e.key==="Escape") closeImageModal()})
 async function signupUser(){setStatusText("status","Prøver å opprette konto ...","blue");var email=qs("email").value.trim();var password=qs("password").value.trim();if(!email||!password){setStatusText("status","Skriv inn e-post og passord.","crimson");return;}var result=await supabase.auth.signUp({email:email,password:password});if(result.error){setStatusText("status","Feil: "+result.error.message,"crimson");return;}setStatusText("status","Konto opprettet.","green")}
 async function loginUser(){setStatusText("status","Prøver å logge inn ...","blue");var email=qs("email").value.trim();var password=qs("password").value.trim();if(!email||!password){setStatusText("status","Skriv inn e-post og passord.","crimson");return;}var result=await supabase.auth.signInWithPassword({email:email,password:password});if(result.error){setStatusText("status","Feil: "+result.error.message,"crimson");return;}setStatusText("status","Innlogget som "+email,"green");loadProfile();goHome()}
-function shareApp(){var url="https://www.hundenevåre.com/";if(navigator.share){navigator.share({title:"Hundene våre",text:"Se appen Hundene våre 🐶",url:url}).catch(function(){})} else {copyLink()}}
-function copyLink(){var url="https://www.hundenevåre.com/";navigator.clipboard.writeText(url).then(function(){setStatusText("status","Link kopiert.","green")}).catch(function(){setStatusText("status","Kunne ikke kopiere linken.","crimson")})}
+function shareApp(){var url="https://dagfinn53e-alt.github.io/hundene-vare/";if(navigator.share){navigator.share({title:"Hundene våre",text:"Se appen Hundene våre 🐶",url:url}).catch(function(){})} else {copyLink()}}
+function copyLink(){var url="https://dagfinn53e-alt.github.io/hundene-vare/";navigator.clipboard.writeText(url).then(function(){setStatusText("status","Link kopiert.","green")}).catch(function(){setStatusText("status","Kunne ikke kopiere linken.","crimson")})}
 
 goHome();
 updateStoriesRegionUI();
@@ -1761,5 +1844,192 @@ updateInviteMessage();
   `).join('');
 }
 </script>
+
+
+<style id="pc-forside-polish">
+/* PC-FINPUSS: endrer bare forsiden/layout, ikke spill eller Supabase-logikk */
+:root{
+  --shadow:0 10px 24px rgba(15,23,42,.08);
+}
+
+@media (min-width: 900px){
+  body{
+    background:
+      radial-gradient(circle at top left, rgba(219,234,254,.9) 0%, transparent 28%),
+      linear-gradient(180deg,#eef6ff 0%,#f9fcff 100%);
+  }
+
+  .wrap{
+    max-width:1180px !important;
+    padding:14px 18px 36px !important;
+  }
+
+  .topbar{
+    max-width:1040px;
+    margin:0 auto 12px !important;
+    padding:8px 12px !important;
+    border-radius:18px !important;
+    position:sticky;
+    top:8px;
+  }
+
+  .brand{
+    font-size:17px !important;
+    padding:8px 12px !important;
+  }
+
+  .actions{
+    gap:7px !important;
+  }
+
+  .actions button,
+  .refresh-btn{
+    padding:8px 12px !important;
+    font-size:13px !important;
+    margin-left:0 !important;
+  }
+
+  .hero{
+    max-width:1040px;
+    min-height:145px !important;
+    margin:0 auto 12px !important;
+    padding:20px 24px !important;
+    border-radius:22px !important;
+  }
+
+  .hero h1{
+    font-size:34px !important;
+  }
+
+  .hero p{
+    font-size:14px !important;
+    max-width:520px;
+  }
+
+  #page-home > .card{
+    max-width:1040px !important;
+    margin:0 auto 14px !important;
+    padding:14px !important;
+    border-radius:22px !important;
+  }
+
+  .offers-top{
+    gap:10px !important;
+    align-items:center !important;
+    margin-bottom:10px !important;
+  }
+
+  .offer-link,
+  .offers-top a{
+    padding:9px 15px !important;
+    font-size:13px !important;
+    min-width:auto !important;
+  }
+
+  .top-slider{
+    max-width:300px !important;
+    height:100px !important;
+    margin:10px auto 12px !important;
+    box-shadow:0 8px 18px rgba(15,23,42,.10) !important;
+    border-radius:18px !important;
+    overflow:hidden !important;
+    background:white !important;
+  }
+
+  .top-slider img{
+    height:100px !important;
+    padding:6px !important;
+    object-fit:contain !important;
+  }
+
+  .promo-inline,
+  .promo-inline-inner{
+    min-height:118px !important;
+    border-radius:18px !important;
+  }
+
+  .promo-inline-inner{
+    padding:14px !important;
+  }
+
+  .promo-title{
+    font-size:21px !important;
+  }
+
+  .promo-sub{
+    font-size:13px !important;
+  }
+
+  .promo-pill{
+    min-width:86px !important;
+    padding:9px 14px !important;
+    font-size:14px !important;
+  }
+
+  .local-offers-grid{
+    grid-template-columns:repeat(3,1fr) !important;
+    gap:8px !important;
+  }
+
+  .local-offer-card,
+  .local-offer-inner{
+    min-height:94px !important;
+    border-radius:16px !important;
+  }
+
+  .local-offer-inner{
+    padding:10px !important;
+  }
+
+  .local-offer-region{
+    font-size:15px !important;
+  }
+
+  .local-offer-sub{
+    font-size:10px !important;
+  }
+
+  .local-offer-pill{
+    min-width:54px !important;
+    padding:6px 10px !important;
+    font-size:12px !important;
+  }
+
+  .menu-grid{
+    max-width:1040px !important;
+    margin:12px auto 0 !important;
+    grid-template-columns:repeat(3,1fr) !important;
+    gap:8px !important;
+  }
+
+  .menu-btn{
+    min-height:50px !important;
+    border-radius:16px !important;
+    padding:8px 10px !important;
+    font-size:13px !important;
+  }
+
+  .sharebox{
+    max-width:1040px;
+    margin:auto;
+    padding:12px !important;
+    border-radius:18px !important;
+  }
+}
+
+@media (max-width: 760px){
+  .top-slider{
+    max-width:92vw !important;
+    height:140px !important;
+    border-radius:18px !important;
+    overflow:hidden !important;
+  }
+
+  .top-slider img{
+    height:140px !important;
+  }
+}
+</style>
+
 </body>
 </html>
