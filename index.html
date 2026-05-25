@@ -777,144 +777,7 @@ background:transparent}
   .home-intro h2{font-size:24px}
 }
 
-  
-/* --- LYSERE MODERNE FORSIDE / IKKE MØRK --- */
-:root{
-  --blue:#2563eb;
-  --blue-dark:#1d4ed8;
-  --purple:#7c3aed;
-  --line:#c9d8ee;
-  --text:#102033;
-  --muted:#5f7088;
-  --card:#eef4fb;
-  --shadow:0 14px 34px rgba(30,41,59,.12);
-}
-
-body{
-  color:var(--text);
-  background:
-    radial-gradient(circle at top left, rgba(124,58,237,.14) 0%, transparent 30%),
-    radial-gradient(circle at top right, rgba(37,99,235,.16) 0%, transparent 34%),
-    linear-gradient(180deg,#cfdced 0%,#e7eef7 48%,#f4f7fb 100%);
-}
-
-.wrap{
-  max-width:1120px;
-}
-
-.topbar{
-  background:rgba(239,246,255,.92);
-  border:1px solid rgba(148,163,184,.35);
-  box-shadow:0 10px 26px rgba(30,41,59,.12);
-}
-
-.brand{
-  background:linear-gradient(135deg,#ffffff,#e8f0ff);
-  color:#1d4ed8;
-  border:1px solid #c7d8f4;
-}
-
-.hero{
-  min-height:255px;
-  border-radius:30px;
-  box-shadow:0 18px 42px rgba(15,23,42,.18);
-}
-
-.hero h1{
-  font-size:44px;
-}
-
-.hero p{
-  font-size:17px;
-  max-width:650px;
-}
-
-.card{
-  background:linear-gradient(180deg,#eef4fb 0%,#e5edf7 100%);
-  border:1px solid rgba(148,163,184,.30);
-  box-shadow:0 14px 34px rgba(30,41,59,.11);
-}
-
-.card.home-card{
-  background:linear-gradient(180deg,#eaf2fb 0%,#dde8f5 100%);
-  padding:24px;
-}
-
-.home-slider{
-  margin-top:0;
-  background:#dfe9f5;
-  border:1px solid rgba(148,163,184,.35);
-  box-shadow:0 16px 34px rgba(30,41,59,.13);
-}
-
-.home-slide,
-.home-slide img{
-  background:#e8f0f8;
-}
-
-.home-slide-label{
-  background:linear-gradient(135deg,rgba(37,99,235,.92),rgba(124,58,237,.88));
-  color:#fff;
-  box-shadow:0 8px 20px rgba(37,99,235,.22);
-}
-
-.menu-btn{
-  background:linear-gradient(180deg,#f7fbff 0%,#e6eef9 100%);
-  color:#1e3a8a;
-  border:1px solid rgba(148,163,184,.35);
-  box-shadow:0 10px 24px rgba(30,41,59,.09);
-  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-
-.menu-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 16px 30px rgba(37,99,235,.15);
-  border-color:#93c5fd;
-}
-
-.menu-btn.offers{
-  background:linear-gradient(180deg,#eaf2ff 0%,#d9e8ff 100%);
-  color:#1d4ed8;
-  border-color:#b9d3ff;
-}
-
-.menu-btn.activity{
-  background:linear-gradient(180deg,#eefcff 0%,#dff4fb 100%);
-  color:#0369a1;
-  border-color:#b7e4f4;
-}
-
-.menu-btn.business{
-  background:linear-gradient(180deg,#fff7ed 0%,#f7e6d2 100%);
-  color:#b45309;
-  border-color:#f3c799;
-}
-
-.menu-btn.club{
-  background:linear-gradient(180deg,#f5f3ff 0%,#e8e3ff 100%);
-  color:#6d28d9;
-  border-color:#d7ccff;
-}
-
-@media (min-width:980px){
-  .wrap{max-width:1120px;padding:22px 18px 70px}
-  .card.home-card{max-width:1040px}
-  .home-slider{max-width:780px;height:225px}
-  .home-menu-grid{grid-template-columns:repeat(4,1fr)}
-  .home-menu-grid .menu-btn{min-height:84px;font-size:15px}
-}
-
-@media (max-width:760px){
-  body{
-    background:linear-gradient(180deg,#dbe7f5 0%,#f5f8fc 100%);
-  }
-  .hero{min-height:210px}
-  .hero h1{font-size:30px}
-  .hero p{font-size:15px}
-  .card.home-card{padding:16px}
-}
-
-</style>
+  </style>
 </head>
 <body>
 <div class="wrap">
@@ -944,7 +807,12 @@ body{
     </div>
 
     <div class="card home-card">
-<div class="home-slider" id="homeSlider">
+      <div class="home-intro">
+        <h2>Velkommen 🐶</h2>
+        <p>En ryddigere forside med slider og hovedmeny i fokus. Tilbud ligger fortsatt på egen side, men tilbudsboksene er fjernet fra forsiden.</p>
+      </div>
+
+      <div class="home-slider" id="homeSlider">
         <div class="home-slide active">
           <img src="bilder/haugesund-dyrebutikk.jpg" alt="Hundene våre">
           <div class="home-slide-label">Hundene våre</div>
