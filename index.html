@@ -2053,6 +2053,138 @@ body{
   background:#eef4ff;
 }
 
+
+/* --- STEG 7: MER LEVENDE BUTIKKSIDER --- */
+
+.biz-card{
+  position:relative;
+}
+
+.biz-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:28px;
+  padding:1px;
+  background:linear-gradient(135deg,rgba(37,99,235,.28),rgba(124,58,237,.18));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  pointer-events:none;
+}
+
+.biz-main{
+  position:relative;
+}
+
+.biz-main img{
+  transition:transform .28s ease;
+}
+
+.biz-card:hover .biz-main img{
+  transform:scale(1.02);
+}
+
+.biz-region{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  border-radius:999px;
+  padding:7px 12px;
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.biz-region.haugalandet{
+  background:#e0f2fe;
+  color:#0369a1;
+  border:1px solid #bae6fd;
+}
+
+.biz-region.stavanger{
+  background:#fef3c7;
+  color:#92400e;
+  border:1px solid #fde68a;
+}
+
+.biz-region.bergen{
+  background:#ede9fe;
+  color:#6d28d9;
+  border:1px solid #ddd6fe;
+}
+
+.biz-new{
+  position:absolute;
+  top:14px;
+  right:14px;
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+  color:#fff;
+  border-radius:999px;
+  padding:8px 12px;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.3px;
+  box-shadow:0 8px 18px rgba(34,197,94,.25);
+  z-index:5;
+}
+
+.biz-actions{
+  margin-top:16px;
+}
+
+.biz-actions .primary{
+  background:linear-gradient(135deg,#2563eb,#1d4ed8) !important;
+  color:#fff !important;
+  border:none !important;
+  box-shadow:0 10px 22px rgba(37,99,235,.22);
+}
+
+.biz-actions .phone{
+  background:#ecfeff !important;
+  color:#0f766e !important;
+  border:1px solid #99f6e4 !important;
+}
+
+.biz-actions .facebook{
+  background:#eef2ff !important;
+  color:#4338ca !important;
+  border:1px solid #c7d2fe !important;
+}
+
+.empty-box{
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+  border:2px dashed #cbdcf5;
+  border-radius:28px;
+  padding:32px 24px;
+  text-align:center;
+  color:#64748b;
+}
+
+.empty-box h3{
+  color:#1e3a8a;
+  margin-bottom:8px;
+}
+
+@media (max-width:760px){
+
+  .biz-main img{
+    max-height:220px;
+  }
+
+  .biz-actions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .biz-actions button,
+  .biz-actions a{
+    width:100%;
+  }
+}
+
 </style>
 </head>
 <body>
