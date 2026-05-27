@@ -1842,6 +1842,205 @@ body{
   }
 }
 
+
+/* --- STEG 6: MER PROFESJONELL FORSIDE --- */
+
+body{
+  background:
+    radial-gradient(circle at top left, rgba(96,165,250,.18) 0%, transparent 28%),
+    radial-gradient(circle at top right, rgba(124,58,237,.12) 0%, transparent 30%),
+    linear-gradient(180deg,#dbe7f5 0%,#edf4fb 45%,#f8fbff 100%);
+}
+
+.wrap{
+  max-width:1180px;
+}
+
+.topbar{
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(191,219,254,.75);
+  border-radius:28px;
+  padding:14px 18px;
+  box-shadow:0 16px 38px rgba(15,23,42,.10);
+}
+
+.brand{
+  font-size:24px;
+  padding:12px 18px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#ffffff,#eef4ff);
+  box-shadow:0 8px 18px rgba(37,99,235,.10);
+}
+
+.actions button{
+  min-height:44px;
+  border-radius:999px;
+  font-weight:800;
+  box-shadow:0 6px 16px rgba(15,23,42,.08);
+}
+
+.hero{
+  min-height:300px;
+  border-radius:34px;
+  overflow:hidden;
+  box-shadow:0 22px 48px rgba(15,23,42,.18);
+  margin-bottom:22px;
+}
+
+.hero h1{
+  font-size:52px;
+  line-height:1.05;
+  text-shadow:0 6px 18px rgba(0,0,0,.25);
+}
+
+.hero p{
+  font-size:18px;
+  max-width:680px;
+  color:#f8fafc;
+}
+
+.card.home-card{
+  border-radius:34px;
+  padding:28px;
+  background:linear-gradient(180deg,#eef5fd 0%,#e3edf8 100%);
+  box-shadow:0 20px 42px rgba(15,23,42,.12);
+}
+
+.home-slider{
+  max-width:860px;
+  height:260px;
+  border-radius:28px;
+  overflow:hidden;
+  background:#fff;
+  border:1px solid #dbeafe;
+  box-shadow:0 18px 38px rgba(15,23,42,.12);
+}
+
+.home-slide img{
+  object-fit:cover;
+  padding:0;
+}
+
+.home-slide-label{
+  left:18px;
+  bottom:16px;
+  padding:10px 16px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:900;
+  background:linear-gradient(135deg,rgba(37,99,235,.94),rgba(124,58,237,.92));
+  box-shadow:0 10px 24px rgba(37,99,235,.24);
+}
+
+.home-menu-grid{
+  gap:14px;
+  margin-top:22px;
+}
+
+.home-menu-grid .menu-btn{
+  min-height:88px;
+  border-radius:24px;
+  font-size:15px;
+  font-weight:900;
+  box-shadow:0 12px 26px rgba(15,23,42,.08);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+
+.home-menu-grid .menu-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 34px rgba(37,99,235,.14);
+}
+
+.home-menu-grid .menu-btn.business{
+  background:linear-gradient(180deg,#fff7ed 0%,#fce7d3 100%);
+}
+
+.home-menu-grid .menu-btn.offers{
+  background:linear-gradient(180deg,#eaf2ff 0%,#d9e8ff 100%);
+}
+
+.home-menu-grid .menu-btn.activity{
+  background:linear-gradient(180deg,#eefcff 0%,#dff4fb 100%);
+}
+
+.home-menu-grid .menu-btn.club{
+  background:linear-gradient(180deg,#f5f3ff 0%,#e9e2ff 100%);
+}
+
+@media (min-width:1000px){
+
+  .wrap{
+    padding:24px 20px 80px;
+  }
+
+  .hero{
+    padding:40px;
+  }
+
+  .home-menu-grid{
+    grid-template-columns:repeat(4,1fr);
+  }
+}
+
+@media (max-width:760px){
+
+  .wrap{
+    padding:14px 12px 50px;
+  }
+
+  .topbar{
+    border-radius:22px;
+    padding:12px;
+  }
+
+  .brand{
+    font-size:20px;
+    width:100%;
+    text-align:center;
+  }
+
+  .actions{
+    width:100%;
+    justify-content:center;
+  }
+
+  .hero{
+    min-height:240px;
+    border-radius:26px;
+    padding:24px;
+  }
+
+  .hero h1{
+    font-size:34px;
+  }
+
+  .hero p{
+    font-size:15px;
+  }
+
+  .card.home-card{
+    border-radius:26px;
+    padding:18px;
+  }
+
+  .home-slider{
+    height:180px;
+    border-radius:22px;
+  }
+
+  .home-menu-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+
+  .home-menu-grid .menu-btn{
+    min-height:74px;
+    border-radius:20px;
+    font-size:13px;
+  }
+}
+
 </style>
 </head>
 <body>
