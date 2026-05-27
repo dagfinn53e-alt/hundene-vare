@@ -1627,6 +1627,221 @@ body{
   }
 }
 
+
+/* --- STEG 5: PENERE NYHETER FRA BUTIKK --- */
+
+#page-stories .card{
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+  border:1px solid #dbeafe;
+  border-radius:30px;
+  box-shadow:0 16px 38px rgba(30,64,175,.10);
+}
+
+#page-stories h2{
+  font-size:34px;
+  color:#0f172a;
+  margin-bottom:10px;
+}
+
+#page-stories .sub{
+  color:#475569;
+  line-height:1.6;
+  font-size:15px;
+}
+
+#page-stories .region-tabs{
+  background:#eef4ff;
+  border:1px solid #cfe0ff;
+  border-radius:24px;
+  padding:10px;
+  gap:10px;
+}
+
+#page-stories .region-tab{
+  border-radius:18px;
+  min-height:52px;
+  font-weight:900;
+  background:#ffffff;
+  color:#1d4ed8;
+  border:1px solid #cfe0ff;
+  box-shadow:0 6px 14px rgba(15,23,42,.04);
+}
+
+#page-stories .region-tab.active{
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:#fff;
+  border-color:#2563eb;
+  box-shadow:0 10px 24px rgba(37,99,235,.22);
+}
+
+#page-stories .region-current{
+  background:#f8fbff;
+  border:1px solid #cfe0ff;
+  color:#1d4ed8;
+  border-radius:999px;
+  padding:9px 14px;
+  font-weight:900;
+}
+
+#feed{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:18px;
+}
+
+#feed .post{
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+  border:1px solid #cfe0ff;
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 16px 36px rgba(30,64,175,.10);
+  margin-top:0;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+#feed .post:hover{
+  transform:translateY(-2px);
+  border-color:#93c5fd;
+  box-shadow:0 20px 42px rgba(30,64,175,.15);
+}
+
+#feed .post-content{
+  padding:18px;
+}
+
+#feed .post-content h3{
+  font-size:25px;
+  line-height:1.15;
+  color:#0f172a;
+  font-weight:900;
+  margin-bottom:6px;
+}
+
+#feed .meta{
+  color:#64748b;
+  font-size:14px;
+  line-height:1.45;
+}
+
+#feed .post-content p{
+  color:#334155;
+  line-height:1.6;
+  font-size:15px;
+}
+
+#feed .post img{
+  max-height:280px;
+  object-fit:cover;
+  background:#eef4ff;
+  border-bottom:1px solid #e2e8f0;
+}
+
+#feed .gallery{
+  padding:0 18px 18px;
+  gap:10px;
+}
+
+#feed .gallery img{
+  border-radius:18px;
+  height:155px;
+  object-fit:cover;
+  border:1px solid #dbeafe;
+  box-shadow:0 8px 18px rgba(15,23,42,.06);
+}
+
+#feed .likebar{
+  border-top:1px solid #eef4ff;
+  padding-top:12px;
+  margin-top:14px;
+}
+
+#feed .comment{
+  border-radius:16px;
+  border:1px solid #e2e8f0;
+  background:#ffffff;
+}
+
+#page-stories input,
+#page-stories textarea{
+  border-radius:18px;
+  border:1px solid #cbdcf5;
+  background:#ffffff;
+  padding:15px 16px;
+  font-size:15px;
+  box-shadow:0 4px 12px rgba(15,23,42,.04);
+}
+
+#page-stories input:focus,
+#page-stories textarea:focus{
+  outline:none;
+  border-color:#60a5fa;
+  box-shadow:0 0 0 4px rgba(96,165,250,.18);
+}
+
+#page-stories label{
+  display:block;
+  margin-top:10px;
+  margin-bottom:6px;
+  font-size:14px;
+  font-weight:900;
+  color:#1e3a8a;
+}
+
+#page-stories .btnrow{
+  margin-top:16px;
+  gap:12px;
+}
+
+#page-stories button{
+  min-height:46px;
+  border-radius:999px;
+  font-weight:900;
+}
+
+@media (min-width:900px){
+  #page-stories .card{
+    max-width:980px;
+    margin-left:auto;
+    margin-right:auto;
+    padding:26px;
+  }
+
+  #feed{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  #feed .empty-box{
+    grid-column:1 / -1;
+  }
+}
+
+@media (max-width:760px){
+  #page-stories h2{
+    font-size:28px;
+  }
+
+  #page-stories .card{
+    border-radius:24px;
+    padding:18px;
+  }
+
+  #page-stories .region-tabs{
+    grid-template-columns:1fr;
+  }
+
+  #feed .post-content h3{
+    font-size:22px;
+  }
+
+  #page-stories .btnrow{
+    flex-direction:column;
+  }
+
+  #page-stories button{
+    width:100%;
+  }
+}
+
 </style>
 </head>
 <body>
