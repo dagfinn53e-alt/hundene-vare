@@ -914,6 +914,196 @@ body{
   .card.home-card{padding:16px}
 }
 
+
+/* --- STEG 1: PENERE BUTIKKORT / OMRÅDESIDER --- */
+
+#haugalandetContent,
+#stavangerContent,
+#bergenContent,
+#shopList,
+#groomerList,
+#vetList,
+#pensjonatList{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+}
+
+#haugalandetContent .biz-card,
+#stavangerContent .biz-card,
+#bergenContent .biz-card,
+#shopList .biz-card,
+#groomerList .biz-card,
+#vetList .biz-card,
+#pensjonatList .biz-card{
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+  border:1px solid #cfe0ff;
+  border-radius:26px;
+  box-shadow:0 14px 34px rgba(30,64,175,.10);
+  overflow:hidden;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+#haugalandetContent .biz-card:hover,
+#stavangerContent .biz-card:hover,
+#bergenContent .biz-card:hover,
+#shopList .biz-card:hover,
+#groomerList .biz-card:hover,
+#vetList .biz-card:hover,
+#pensjonatList .biz-card:hover{
+  transform:translateY(-2px);
+  border-color:#93c5fd;
+  box-shadow:0 18px 38px rgba(30,64,175,.15);
+}
+
+.biz-content{
+  padding:18px;
+}
+
+.biz-top{
+  align-items:flex-start;
+  gap:16px;
+}
+
+.biz-logo{
+  width:96px;
+  height:96px;
+  border-radius:22px;
+  background:#ffffff;
+  border:1px solid #dbeafe;
+  box-shadow:0 8px 20px rgba(15,23,42,.07);
+  object-fit:contain;
+  padding:8px;
+  flex-shrink:0;
+}
+
+.biz-content h3,
+.biz-content h2{
+  font-size:25px;
+  line-height:1.15;
+  color:#0f172a;
+  margin:0 0 6px 0;
+  font-weight:900;
+}
+
+.biz-content .meta{
+  color:#64748b;
+  font-size:14px;
+  line-height:1.45;
+}
+
+.biz-content p{
+  color:#334155;
+  line-height:1.55;
+  font-size:15px;
+}
+
+.biz-main img{
+  width:100%;
+  max-height:260px;
+  object-fit:cover;
+  background:#eef4ff;
+  border-bottom:1px solid #e2e8f0;
+}
+
+.biz-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.biz-actions button,
+.biz-actions a,
+.site-link{
+  min-height:42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px !important;
+  padding:10px 15px !important;
+  font-weight:900 !important;
+  text-decoration:none;
+}
+
+.biz-actions button,
+.site-link{
+  background:#eaf2ff !important;
+  color:#1d4ed8 !important;
+  border:1px solid #bfd7ff !important;
+}
+
+.biz-actions button:hover,
+.site-link:hover{
+  background:#2563eb !important;
+  color:#fff !important;
+}
+
+.badge.approved,
+.badge.pending{
+  border-radius:999px;
+  font-weight:900;
+}
+
+#haugalandetCategoryTitle,
+#stavangerCategoryTitle,
+#bergenCategoryTitle{
+  background:#eef4ff;
+  border:1px solid #cfe0ff;
+  color:#1d4ed8;
+  border-radius:18px;
+  padding:12px 14px;
+  font-weight:800;
+}
+
+@media (min-width:900px){
+  #haugalandetContent,
+  #stavangerContent,
+  #bergenContent,
+  #shopList,
+  #groomerList,
+  #vetList,
+  #pensjonatList{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  #haugalandetContent .empty-box,
+  #stavangerContent .empty-box,
+  #bergenContent .empty-box,
+  #shopList .empty-box,
+  #groomerList .empty-box,
+  #vetList .empty-box,
+  #pensjonatList .empty-box{
+    grid-column:1 / -1;
+  }
+}
+
+@media (max-width:620px){
+  .biz-top{
+    flex-direction:column;
+  }
+
+  .biz-logo{
+    width:82px;
+    height:82px;
+  }
+
+  .biz-content h3,
+  .biz-content h2{
+    font-size:22px;
+  }
+
+  .biz-actions{
+    flex-direction:column;
+  }
+
+  .biz-actions button,
+  .biz-actions a,
+  .site-link{
+    width:100%;
+  }
+}
+
 </style>
 </head>
 <body>
