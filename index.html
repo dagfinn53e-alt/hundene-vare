@@ -1243,6 +1243,153 @@ body{
   }
 }
 
+
+/* --- STEG 3: PENERE ADMINSIDE --- */
+
+#page-admin .card{
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+  border:1px solid #dbeafe;
+  border-radius:30px;
+  box-shadow:0 16px 38px rgba(30,64,175,.10);
+}
+
+#page-admin h2{
+  font-size:32px;
+  color:#0f172a;
+  margin-bottom:12px;
+}
+
+#page-admin .admin-alert{
+  background:linear-gradient(135deg,#fff7cc 0%,#fff1a8 100%);
+  border:2px solid #facc15;
+  color:#7c5800;
+  border-radius:22px;
+  padding:18px 20px;
+  font-size:18px;
+  font-weight:900;
+  box-shadow:0 12px 28px rgba(250,204,21,.18);
+}
+
+#adminStories .admin-item,
+#adminBusinesses .admin-item{
+  background:#ffffff;
+  border:1px solid #dbeafe;
+  border-radius:24px;
+  overflow:hidden;
+  margin-top:16px;
+  box-shadow:0 12px 28px rgba(30,64,175,.08);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+
+#adminStories .admin-item:hover,
+#adminBusinesses .admin-item:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 34px rgba(30,64,175,.12);
+}
+
+.admin-content{
+  padding:18px;
+}
+
+.admin-content h3{
+  font-size:24px;
+  color:#0f172a;
+  margin-bottom:6px;
+  font-weight:900;
+}
+
+.admin-content .meta{
+  color:#64748b;
+  font-size:14px;
+  margin-bottom:10px;
+}
+
+.admin-content p{
+  color:#334155;
+  line-height:1.55;
+}
+
+#page-admin .btnrow{
+  margin-top:14px;
+  gap:10px;
+}
+
+#page-admin button{
+  min-height:44px;
+  border-radius:999px;
+  padding:11px 16px;
+  font-weight:900;
+  box-shadow:0 8px 18px rgba(15,23,42,.08);
+}
+
+#page-admin button.ok{
+  background:#16a34a;
+  color:#fff;
+}
+
+#page-admin button.danger{
+  background:#dc2626;
+  color:#fff;
+}
+
+#page-admin button.alt{
+  background:#eef4ff;
+  color:#1d4ed8;
+  border:1px solid #bfd7ff;
+}
+
+#page-admin .status{
+  font-weight:800;
+  margin-top:12px;
+}
+
+@media (min-width:900px){
+
+  #page-admin .card{
+    max-width:980px;
+    margin-left:auto;
+    margin-right:auto;
+    padding:26px;
+  }
+
+  #adminStories,
+  #adminBusinesses{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+  }
+
+  #adminStories .admin-item,
+  #adminBusinesses .admin-item{
+    margin-top:0;
+  }
+}
+
+@media (max-width:760px){
+
+  #page-admin h2{
+    font-size:28px;
+  }
+
+  #page-admin .card{
+    border-radius:24px;
+    padding:18px;
+  }
+
+  #page-admin .btnrow{
+    flex-direction:column;
+  }
+
+  #page-admin button{
+    width:100%;
+  }
+
+  #page-admin .admin-alert{
+    font-size:16px;
+    padding:16px;
+  }
+}
+
 </style>
 </head>
 <body>
