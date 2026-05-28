@@ -5,7 +5,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hundene våre</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+function sendAboutMessage(){
+  var name = qs('aboutName') ? qs('aboutName').value.trim() : '';
+  var email = qs('aboutEmail') ? qs('aboutEmail').value.trim() : '';
+  var message = qs('aboutMessage') ? qs('aboutMessage').value.trim() : '';
+
+  var subject = encodeURIComponent('Melding fra HundeneVåre');
+  var body = encodeURIComponent(
+    'Navn: ' + name + '\n' +
+    'E-post: ' + email + '\n\n' +
+    'Melding:\n' + message
+  );
+
+  window.location.href = 'mailto:dagfinn53e@gmail.com?subject=' + subject + '&body=' + body;
+
+  if(qs('aboutStatus')){
+    qs('aboutStatus').textContent = 'Åpner e-postprogrammet ditt...';
+    qs('aboutStatus').style.color = '#1d4ed8';
+  }
+}
+
+</script>
   <style>
     :root{--blue:#2563eb;--blue-dark:#1d4ed8;--line:#dbeafe;--text:#0f172a;--muted:#64748b;--card:#fff;--shadow:0 12px 30px rgba(15,23,42,.08)}
     *{box-sizing:border-box}
@@ -2054,30 +2075,43 @@ body{
 }
 
 
-/* --- OM OSS SIDE --- */
+/* --- OM OSS SIDE - FIKSET --- */
 
-#page-about .card{
+.about-card{
   max-width:900px;
-  margin:auto;
+  margin-left:auto;
+  margin-right:auto;
   background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
   border:1px solid #dbeafe;
   border-radius:30px;
   box-shadow:0 18px 40px rgba(30,64,175,.10);
 }
 
-#page-about h2{
-  font-size:36px;
+.about-card h2{
+  font-size:34px;
   color:#0f172a;
+  margin-bottom:12px;
 }
 
-#page-about p,
-#page-about li{
+.about-lead{
+  font-size:18px;
+  color:#1d4ed8;
+  font-weight:900;
+}
+
+.about-card p,
+.about-card li{
   color:#334155;
   line-height:1.7;
+  font-size:15px;
 }
 
-#page-about .about-box,
-#page-about .about-contact{
+.about-card ul{
+  padding-left:22px;
+}
+
+.about-box,
+.about-contact{
   margin-top:22px;
   padding:20px;
   border-radius:24px;
@@ -2085,31 +2119,46 @@ body{
   border:1px solid #dbeafe;
 }
 
-#page-about .about-form{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  margin-top:16px;
+.about-box h3,
+.about-contact h3{
+  color:#1e3a8a;
+  margin-bottom:10px;
 }
 
-#page-about input,
-#page-about textarea{
+.about-contact input,
+.about-contact textarea{
+  width:100%;
   border-radius:18px;
   border:1px solid #cbdcf5;
   padding:14px 16px;
+  font-size:15px;
+  background:#fff;
+  margin:8px 0 12px;
 }
 
-#page-about textarea{
-  min-height:120px;
+.about-contact textarea{
+  min-height:130px;
 }
 
-#page-about button{
+.about-contact button{
+  width:100%;
   min-height:48px;
   border:none;
   border-radius:999px;
   background:linear-gradient(135deg,#2563eb,#7c3aed);
   color:#fff;
   font-weight:900;
+}
+
+@media(max-width:760px){
+  .about-card{
+    border-radius:24px;
+    padding:18px;
+  }
+
+  .about-card h2{
+    font-size:28px;
+  }
 }
 
 </style>
@@ -2396,6 +2445,83 @@ body{
 
   <div id="page-hundeklubber" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🐶 Hundeklubber</h2><div class="sub">Lokale hundeklubber og aktiviteter.</div><div id="dogClubsList"><div class="empty-box">Laster klubber ...</div></div></div><div class="card"><h2 style="font-size:24px;">➕ Legg til hundeklubb</h2><input id="clubName" placeholder="Klubbnavn"><input id="clubLocation" placeholder="Område / sted"><textarea id="clubDescription" placeholder="Beskrivelse"></textarea><input id="clubWebsite" placeholder="Nettside / Facebook-link"><div class="btnrow"><button type="button" onclick="saveDogClub()">Lagre klubb</button><button type="button" class="alt" onclick="loadDogClubs()">Oppdater liste</button></div><div id="clubStatus" class="status"></div></div></div>
 
+
+  <div id="page-about" class="hidden">
+    <div class="card about-card">
+      <div class="btnrow">
+        <button class="alt" onclick="goHome()">← Tilbake til forsiden</button>
+      </div>
+
+      <h2>🐶🐱 Om Oss</h2>
+
+      <p class="about-lead">
+        Velkommen til HundeneVåre!
+      </p>
+
+      <p>
+        HundeneVåre er laget for å samle lokale dyrebutikker, tjenester,
+        hundeklubber og tilbud på ett sted.
+      </p>
+
+      <p>
+        Målet er å gjøre det enklere for hunde- og katteeiere å finne butikker,
+        aktiviteter, tilbud og nyttig informasjon i sitt nærområde.
+      </p>
+
+      <p>
+        Appen startet som en idé om å skape en mer lokal og personlig møteplass
+        for alle som er glade i dyr — enten du leter etter dyrebutikk,
+        veterinær, hundeklubb eller spennende tilbud.
+      </p>
+
+      <div class="about-box">
+        <h3>🐾 Hva finner du i appen?</h3>
+
+        <ul>
+          <li>Lokale dyrebutikker</li>
+          <li>Butikker i Haugalandet, Stavanger og Bergen</li>
+          <li>Tilbud og kampanjer</li>
+          <li>Hundeklubber</li>
+          <li>Markedsplass</li>
+          <li>Nyheter fra butikker</li>
+          <li>Registrering av bedrifter og tjenester</li>
+        </ul>
+      </div>
+
+      <div class="about-box">
+        <h3>❤️ Hvorfor HundeneVåre?</h3>
+
+        <p>
+          Vi ønsker å løfte frem lokale butikker og gjøre det lettere for
+          dyreeiere å oppdage gode produkter, tjenester og tilbud i sitt område.
+        </p>
+
+        <p>
+          Samtidig ønsker vi å bygge et hyggelig miljø for alle som er opptatt
+          av hunder og katter.
+        </p>
+      </div>
+
+      <div class="about-contact">
+        <h3>📞 Kontakt Oss</h3>
+
+        <p>Har du spørsmål, forslag eller ønsker å registrere din bedrift?</p>
+
+        <p><strong>E-post:</strong> dagfinn53e@gmail.com</p>
+        <p><strong>Telefon:</strong> 482 07 914</p>
+
+        <input id="aboutName" type="text" placeholder="Navn">
+        <input id="aboutEmail" type="email" placeholder="E-post">
+        <textarea id="aboutMessage" placeholder="Skriv melding her..."></textarea>
+
+        <button type="button" onclick="sendAboutMessage()">📨 Send melding</button>
+
+        <div id="aboutStatus" class="status"></div>
+      </div>
+    </div>
+  </div>
+
+
   <div class="card"><div class="sharebox"><div>Del appen med andre:</div><div class="sharelink">https://www.hundenevåre.com/</div><div class="btnrow"><button type="button" onclick="shareApp()">Del link</button><button type="button" class="alt" onclick="copyLink()">Kopier link</button></div></div></div>
 </div>
 
@@ -2428,7 +2554,7 @@ function qs(id){return document.getElementById(id)}
 function setStatusText(id,text,color){var el=qs(id);if(el){el.textContent=text;el.style.color=color||"black"}}
 
 function goHome(){
-  var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','bergen','cafes','groomers','shops','pensjonat','vets','business','admin','favorites','hundeklubber'];
+  var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','bergen','cafes','groomers','shops','pensjonat','vets','business','about','admin','favorites','hundeklubber'];
   for(var i=0;i<pages.length;i++){
     var el=qs('page-'+pages[i]);
     if(el) el.classList.add('hidden');
@@ -2440,7 +2566,7 @@ function goHome(){
 
 function showPage(name){
   if(name==='home'){goHome();return;}
-  var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','bergen','cafes','groomers','shops','pensjonat','vets','business','admin','favorites','hundeklubber'];
+  var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','bergen','cafes','groomers','shops','pensjonat','vets','business','about','admin','favorites','hundeklubber'];
   for(var i=0;i<pages.length;i++){
     var el=qs('page-'+pages[i]);
     if(el) el.classList.add('hidden');
