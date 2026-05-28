@@ -6,25 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hundene våre</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-function sendAboutMessage(){
-  var name = qs('aboutName') ? qs('aboutName').value.trim() : '';
-  var email = qs('aboutEmail') ? qs('aboutEmail').value.trim() : '';
-  var message = qs('aboutMessage') ? qs('aboutMessage').value.trim() : '';
-
-  var subject = encodeURIComponent('Melding fra HundeneVåre');
-  var body = encodeURIComponent(
-    'Navn: ' + name + '\n' +
-    'E-post: ' + email + '\n\n' +
-    'Melding:\n' + message
-  );
-
-  window.location.href = 'mailto:dagfinn53e@gmail.com?subject=' + subject + '&body=' + body;
-
-  if(qs('aboutStatus')){
-    qs('aboutStatus').textContent = 'Åpner e-postprogrammet ditt...';
-    qs('aboutStatus').style.color = '#1d4ed8';
-  }
-}
+function sendAboutMessage(){}
 
 </script>
   <style>
@@ -2161,6 +2143,40 @@ body{
   }
 }
 
+
+/* --- FORMSPREE KONTAKTSKJEMA --- */
+.about-form{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:16px;
+}
+
+.about-form input,
+.about-form textarea{
+  width:100%;
+  border-radius:18px;
+  border:1px solid #cbdcf5;
+  padding:14px 16px;
+  font-size:15px;
+  background:#fff;
+}
+
+.about-form textarea{
+  min-height:130px;
+}
+
+.about-form button{
+  width:100%;
+  min-height:48px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+}
+
 </style>
 </head>
 <body>
@@ -2510,13 +2526,17 @@ body{
         <p><strong>E-post:</strong> dagfinn53e@gmail.com</p>
         <p><strong>Telefon:</strong> 482 07 914</p>
 
-        <input id="aboutName" type="text" placeholder="Navn">
-        <input id="aboutEmail" type="email" placeholder="E-post">
-        <textarea id="aboutMessage" placeholder="Skriv melding her..."></textarea>
+        <form class="about-form" action="https://formspree.io/f/mnjrlegb" method="POST">
+          <input id="aboutName" name="navn" type="text" placeholder="Navn" required>
+          <input id="aboutEmail" name="email" type="email" placeholder="E-post" required>
+          <textarea id="aboutMessage" name="melding" placeholder="Skriv melding her..." required></textarea>
 
-        <button type="button" onclick="sendAboutMessage()">📨 Send melding</button>
+          <input type="hidden" name="_subject" value="Ny melding fra HundeneVåre">
 
-        <div id="aboutStatus" class="status"></div>
+          <button type="submit">📨 Send melding</button>
+        </form>
+
+        <div id="aboutStatus" class="status">Meldingen sendes direkte til e-post via Formspree.</div>
       </div>
     </div>
   </div>
