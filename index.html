@@ -2498,6 +2498,63 @@ button[onclick*="business"]{
   font-weight:900;
 }
 
+
+/* --- STEG 16F: ARRANGEMENT DELT I KURS/UTSTILLING + BILDEMODAL --- */
+
+.event-section-title{
+  margin-top:16px;
+  margin-bottom:8px;
+  font-weight:900;
+  color:#1e3a8a;
+}
+
+.new-event-card img{
+  cursor:zoom-in;
+  transition:transform .18s ease;
+}
+
+.new-event-card img:hover{
+  transform:scale(1.05);
+}
+
+#eventImageModal{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.82);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:99999;
+}
+
+#eventImageModal.open{
+  display:flex;
+}
+
+#eventImageModal img{
+  max-width:94vw;
+  max-height:88vh;
+  object-fit:contain;
+  border-radius:18px;
+  background:#fff;
+  padding:10px;
+}
+
+#eventImageModal button{
+  position:absolute;
+  top:16px;
+  right:18px;
+  width:44px;
+  height:44px;
+  border-radius:999px;
+  border:none;
+  background:#fff;
+  color:#111827;
+  font-size:24px;
+  font-weight:900;
+}
+
 </style>
 </head>
 <body>
@@ -2649,9 +2706,16 @@ button[onclick*="business"]{
   <h2>📅 Nye arrangementer</h2>
   <p>Aktiviteter, treff og arrangementer for hund og katt.</p>
 
-  <div id="latestEvents" class="new-events-row">
-    <div class="new-event-card">📅<br><strong>Laster arrangementer...</strong></div>
+  <div class="event-section-title">🏆 Utstillinger</div>
+  <div id="latestShows" class="new-events-row">
+    <div class="new-event-card">Laster utstillinger...</div>
   </div>
+
+  <div class="event-section-title">🎓 Kurs</div>
+  <div id="latestCourses" class="new-events-row">
+    <div class="new-event-card">Laster kurs...</div>
+  </div>
+</div>
 </div>
 
 
@@ -3901,12 +3965,49 @@ async function deleteEvent(id){
 </script>
 
 
-<script>
-/* --- STEG 16E: VIS GODKJENTE ARRANGEMENTER PÅ FORSIDEN --- */
 
-async function loadApprovedEvents(){
-  var box = document.getElementById("latestEvents");
-  if(!box) return;
+
+
+<div id="eventImageModal" onclick="closeEventImageModal(event)">
+  <button type="button" onclick="closeEventImageModal(event)">×</button>
+  <img id="eventImageModalImg" src="" alt="Plakat">
+</div>
+
+
+<script>
+/* --- STEG 16F: VIS KURS OG UTSTILLING SEPARAT --- */
+
+function openEventImageModal(src){
+  var modal = document.getElementById("eventImageModal");
+  var img = document.getElementById("eventImageModalImg");
+  if(!modal || !img || !src) return;
+
+  img.src = src;
+  modal.classList.add("open");
+}
+
+function closeEventImageModal(event){
+  if(event){
+    event.stopPropagation();
+  }
+
+  var modal = document.getElementById("eventImageModal");
+  var img = document.getElementById("eventImageModalImg");
+
+  if(modal){
+    modal.classList.remove("open");
+  }
+
+  if(img){
+    img.src = "";
+  }
+}
+
+async function loadApprovedEventsSplit(){
+  var showsBox = document.getElementById("latestShows");
+  var coursesBox = document.getElementById("latestCourses");
+
+  if(!showsBox || !coursesBox) return;
 
   try{
     var result = await supabase
@@ -3914,41 +4015,61 @@ async function loadApprovedEvents(){
       .select("*")
       .eq("approved", true)
       .order("date_from", {ascending:true})
-      .limit(6);
+      .limit(20);
 
     var data = result.data;
     var error = result.error;
 
-    if(error || !data || data.length === 0){
-      box.innerHTML = '<div class="new-event-card">📅<br><strong>Ingen arrangementer ennå</strong><br>Kommer snart</div>';
+    if(error || !data){
+      showsBox.innerHTML = '<div class="new-event-card">Ingen utstillinger ennå</div>';
+      coursesBox.innerHTML = '<div class="new-event-card">Ingen kurs ennå</div>';
       return;
     }
 
-    box.innerHTML = data.map(function(e){
-      var icon = e.event_type === "Kurs" ? "🎓" : "🏆";
-      var dateText = e.date_from || "";
-      if(e.date_to && e.date_to !== e.date_from){
-        dateText += " - " + e.date_to;
+    var shows = data.filter(function(e){
+      return String(e.event_type || "").toLowerCase().includes("utstilling");
+    });
+
+    var courses = data.filter(function(e){
+      return String(e.event_type || "").toLowerCase().includes("kurs");
+    });
+
+    function render(list, emptyText, icon){
+      if(!list || list.length === 0){
+        return '<div class="new-event-card">' + emptyText + '</div>';
       }
 
-      return `
-        <div class="new-event-card">
-          ${e.poster_url ? `<img src="${e.poster_url}" style="width:70px;height:70px;object-fit:contain;border-radius:14px;background:white;margin-bottom:6px;"><br>` : icon + "<br>"}
-          <strong>${e.title || "Arrangement"}</strong><br>
-          ${e.event_type || ""}<br>
-          📅 ${dateText}<br>
-          📍 ${e.area || ""}
-        </div>
-      `;
-    }).join("");
+      return list.map(function(e){
+        var dateText = e.date_from || "";
+        if(e.date_to && e.date_to !== e.date_from){
+          dateText += " - " + e.date_to;
+        }
+
+        var poster = e.poster_url || "";
+
+        return `
+          <div class="new-event-card">
+            ${poster ? `<img src="${poster}" onclick="openEventImageModal('${poster}')" style="width:78px;height:78px;object-fit:contain;border-radius:14px;background:white;margin-bottom:6px;"><br>` : icon + "<br>"}
+            <strong>${e.title || "Arrangement"}</strong><br>
+            📅 ${dateText}<br>
+            📍 ${e.area || ""}<br>
+            <small>${e.place || ""}</small>
+          </div>
+        `;
+      }).join("");
+    }
+
+    showsBox.innerHTML = render(shows, "Ingen utstillinger ennå", "🏆");
+    coursesBox.innerHTML = render(courses, "Ingen kurs ennå", "🎓");
 
   }catch(e){
-    box.innerHTML = '<div class="new-event-card">📅<br><strong>Ingen arrangementer ennå</strong><br>Kommer snart</div>';
+    showsBox.innerHTML = '<div class="new-event-card">Ingen utstillinger ennå</div>';
+    coursesBox.innerHTML = '<div class="new-event-card">Ingen kurs ennå</div>';
   }
 }
 
 window.addEventListener("load", function(){
-  setTimeout(loadApprovedEvents, 1200);
+  setTimeout(loadApprovedEventsSplit, 1200);
 });
 </script>
 
