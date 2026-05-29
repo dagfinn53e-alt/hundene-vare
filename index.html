@@ -10,38 +10,7 @@ function sendAboutMessage(){}
 
 
 
-/* --- STEG 10B: HENT NYE BUTIKKER - RIKTIG SUPABASE --- */
 
-async function loadLatestBusinesses(){
-  const box = document.getElementById('latestBusinesses');
-  if(!box) return;
-
-  try{
-    const { data, error } = await supabase
-      .from('businesses')
-      .select('*')
-      .order('created_at',{ascending:false})
-      .limit(3);
-
-    if(error || !data || data.length === 0){
-      box.innerHTML = '<div class="new-shop-card">🐾<br>Nye butikker kommer snart</div>';
-      return;
-    }
-
-    box.innerHTML = data.map(b=>`
-      <div class="new-shop-card">
-        ${b.logo_url || b.image_url ? `<img src="${b.logo_url || b.image_url}" style="width:55px;height:55px;object-fit:contain;border-radius:12px;"><br>` : '🏪<br>'}
-        <strong>${b.name || b.title || 'Butikk'}</strong><br>
-        ${b.area || b.city || b.region || ''}
-      </div>
-    `).join('');
-
-  }catch(e){
-    box.innerHTML = '<div class="new-shop-card">🐾<br>Nye butikker kommer snart</div>';
-  }
-}
-
-setTimeout(loadLatestBusinesses,1000);
 
 
 </script>
@@ -2427,10 +2396,7 @@ body{
   <p>Her viser vi nye butikker og tjenester som kommer inn i appen.</p>
 
   <div id="latestBusinesses" class="new-shops-row">
-    <div class="new-shop-card">
-      🐾<br>
-      Henter nye butikker...
-    </div>
+    <div class="new-shop-card">🐾<br>Nye butikker kommer snart</div>
   </div>
 </div>
 
@@ -3421,5 +3387,53 @@ updateInviteMessage();
   `).join('');
 }
 </script>
+
+<script>
+/* --- STEG 10C: NYE BUTIKKER - KJØRES HELT TIL SLUTT --- */
+async function loadLatestBusinessesSafe(){
+  const box = document.getElementById('latestBusinesses');
+  if(!box) return;
+
+  try{
+    if(typeof supabase === 'undefined' || !supabase.from){
+      box.innerHTML = '<div class="new-shop-card">🐾<br>Nye butikker kommer snart</div>';
+      return;
+    }
+
+    const result = await supabase
+      .from('businesses')
+      .select('*')
+      .limit(3);
+
+    const data = result.data;
+    const error = result.error;
+
+    if(error || !data || data.length === 0){
+      box.innerHTML = '<div class="new-shop-card">🐾<br>Nye butikker kommer snart</div>';
+      return;
+    }
+
+    box.innerHTML = data.map(function(b){
+      const name = b.name || b.title || 'Butikk';
+      const region = b.region || b.area || b.city || b.place || '';
+      const img = b.logo_url || b.image_url || b.logo || b.image || b.main_image || b.photo || '';
+
+      return '<div class="new-shop-card">' +
+        (img ? '<img src="' + img + '" style="width:55px;height:55px;object-fit:contain;border-radius:12px;background:white;"><br>' : '🏪<br>') +
+        '<strong>' + name + '</strong><br>' +
+        region +
+        '</div>';
+    }).join('');
+
+  }catch(e){
+    box.innerHTML = '<div class="new-shop-card">🐾<br>Nye butikker kommer snart</div>';
+  }
+}
+
+window.addEventListener('load', function(){
+  setTimeout(loadLatestBusinessesSafe, 1500);
+});
+</script>
+
 </body>
 </html>
