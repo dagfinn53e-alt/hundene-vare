@@ -2251,6 +2251,52 @@ body{
   }
 }
 
+
+/* --- STEG 9: NYE BUTIKKER KOMPAKT --- */
+
+.new-shops-box{
+  margin:22px auto;
+  max-width:900px;
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+  border:1px solid #dbeafe;
+  border-radius:26px;
+  padding:18px;
+  box-shadow:0 14px 30px rgba(30,64,175,.10);
+}
+
+.new-shops-box h2{
+  font-size:22px;
+  color:#0f172a;
+}
+
+.new-shops-box p{
+  color:#64748b;
+  font-size:14px;
+}
+
+.new-shops-row{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding-top:12px;
+}
+
+.new-shop-card{
+  min-width:160px;
+  background:#eef4ff;
+  border:1px solid #cfe0ff;
+  border-radius:20px;
+  padding:16px;
+  text-align:center;
+  color:#1e3a8a;
+}
+
+@media(max-width:760px){
+  .new-shop-card{
+    min-width:140px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2338,7 +2384,21 @@ body{
   })();
   </script>
 
-  <div id="page-auth" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>Opprett konto / Logg inn</h2><div class="sub">Bruk e-post og passord.</div><input id="email" type="email" placeholder="E-post"><input id="password" type="password" placeholder="Passord"><div class="btnrow"><button type="button" onclick="signupUser()">Lag konto</button><button type="button" onclick="loginUser()">Logg inn</button><button type="button" class="alt" onclick="loadProfile()">Oppdater profil</button></div><div id="status" class="status">Klar.</div></div></div>
+  
+<!-- --- STEG 9: NYE BUTIKKER FORSIDE --- -->
+<div class="new-shops-box">
+  <h2>🆕 Nye butikker hos HundeneVåre</h2>
+  <p>Her viser vi nye butikker og tjenester som kommer inn i appen.</p>
+
+  <div class="new-shops-row">
+    <div class="new-shop-card">🏪<br><strong>Ny butikk</strong><br>Kommer snart</div>
+    <div class="new-shop-card">🐾<br><strong>Ny butikk</strong><br>Kommer snart</div>
+    <div class="new-shop-card">⭐<br><strong>Ny butikk</strong><br>Kommer snart</div>
+  </div>
+</div>
+
+
+<div id="page-auth" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>Opprett konto / Logg inn</h2><div class="sub">Bruk e-post og passord.</div><input id="email" type="email" placeholder="E-post"><input id="password" type="password" placeholder="Passord"><div class="btnrow"><button type="button" onclick="signupUser()">Lag konto</button><button type="button" onclick="loginUser()">Logg inn</button><button type="button" class="alt" onclick="loadProfile()">Oppdater profil</button></div><div id="status" class="status">Klar.</div></div></div>
 
   <div id="page-stories" class="hidden">
     <div class="card">
