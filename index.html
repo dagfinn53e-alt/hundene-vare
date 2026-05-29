@@ -2359,6 +2359,79 @@ body{
   }
 }
 
+
+/* --- STEG 13: RYDDIG FORSIDE UTEN SLIDER + ARRANGEMENT SKJEMA --- */
+
+.home-slider{
+  display:none !important;
+}
+
+/* Arrangement skjema */
+.event-form-box{
+  margin:22px auto;
+  max-width:900px;
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+  border:1px solid #dbeafe;
+  border-radius:26px;
+  padding:20px;
+  box-shadow:0 14px 30px rgba(30,64,175,.10);
+}
+
+.event-form-box h2{
+  color:#0f172a;
+  font-size:24px;
+}
+
+.event-form-box input,
+.event-form-box textarea,
+.event-form-box select{
+  width:100%;
+  margin-top:10px;
+  padding:14px;
+  border-radius:16px;
+  border:1px solid #cbdcf5;
+  font-size:15px;
+}
+
+.event-form-box textarea{
+  min-height:120px;
+}
+
+.event-form-box button{
+  margin-top:14px;
+  width:100%;
+  min-height:48px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:white;
+  font-weight:900;
+}
+
+@media(max-width:760px){
+  .event-form-box{
+    padding:16px;
+    border-radius:22px;
+  }
+}
+
+
+/* --- STEG 13B: SKJULT ARRANGEMENT SKJEMA --- */
+
+.open-event-btn{
+  display:block;
+  margin:18px auto;
+  max-width:320px;
+  width:100%;
+  min-height:48px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:white;
+  font-weight:900;
+  box-shadow:0 10px 22px rgba(37,99,235,.20);
+}
+
 </style>
 </head>
 <body>
@@ -2457,6 +2530,33 @@ body{
   </div>
 </div>
 
+
+
+
+<!-- --- STEG 13: REGISTRER ARRANGEMENT --- -->
+<button class="open-event-btn" onclick="toggleEventForm()">➕ Legg inn arrangement</button>
+
+<div id="eventFormBox" class="event-form-box" style="display:none;">
+  <h2>📅 Registrer arrangement</h2>
+
+  <input id="eventTitle" placeholder="Navn på arrangement">
+
+  <input id="eventDate" type="date">
+
+  <input id="eventPlace" placeholder="Sted">
+
+  <select id="eventArea">
+    <option>Haugalandet</option>
+    <option>Stavanger</option>
+    <option>Bergen</option>
+  </select>
+
+  <textarea id="eventText" placeholder="Beskrivelse av arrangement"></textarea>
+
+  <input id="eventImage" placeholder="Link til bilde/plakat">
+
+  <button type="button">📨 Send inn arrangement</button>
+</div>
 
 
 <!-- --- STEG 12: NYE ARRANGEMENTER --- -->
