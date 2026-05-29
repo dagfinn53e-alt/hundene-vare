@@ -2448,6 +2448,56 @@ button[onclick*="business"]{
   box-shadow:0 12px 28px rgba(37,99,235,.18);
 }
 
+
+/* --- STEG 15B: ARRANGEMENT SKJEMA FIKS --- */
+.event-form-box{
+  margin:22px auto;
+  max-width:900px;
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+  border:1px solid #dbeafe;
+  border-radius:26px;
+  padding:20px;
+  box-shadow:0 14px 30px rgba(30,64,175,.10);
+}
+
+.event-form-box h2{
+  color:#0f172a;
+  font-size:24px;
+}
+
+.event-form-box label{
+  display:block;
+  margin-top:10px;
+  font-weight:900;
+  color:#1e3a8a;
+}
+
+.event-form-box input,
+.event-form-box textarea,
+.event-form-box select{
+  width:100%;
+  margin-top:8px;
+  padding:14px;
+  border-radius:16px;
+  border:1px solid #cbdcf5;
+  font-size:15px;
+}
+
+.event-form-box textarea{
+  min-height:120px;
+}
+
+.event-form-box button{
+  margin-top:14px;
+  width:100%;
+  min-height:48px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:white;
+  font-weight:900;
+}
+
 </style>
 </head>
 <body>
@@ -3647,6 +3697,26 @@ window.addEventListener('load', function(){
 /* --- STEG 15: AKTIVT ARRANGEMENT SKJEMA --- */
 function saveEvent(){
   alert("Arrangement mottatt. Godkjenning/lagring kobles i neste steg.");
+}
+</script>
+
+
+<script>
+/* --- STEG 15B: ÅPNE/LUKKE ARRANGEMENT SKJEMA --- */
+function toggleEventForm(){
+  var box = document.getElementById('eventFormBox');
+  if(!box) return;
+
+  if(box.style.display === 'none' || box.style.display === ''){
+    box.style.display = 'block';
+    box.scrollIntoView({behavior:'smooth', block:'start'});
+  }else{
+    box.style.display = 'none';
+  }
+}
+
+function saveEvent(){
+  alert('Arrangement mottatt. Lagring/godkjenning kobles i neste steg.');
 }
 </script>
 
