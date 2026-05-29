@@ -2302,6 +2302,17 @@ body{
   }
 }
 
+
+.new-shop-card{
+  cursor:pointer;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+
+.new-shop-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 22px rgba(30,64,175,.15);
+}
+
 </style>
 </head>
 <body>
@@ -3417,8 +3428,11 @@ async function loadLatestBusinessesSafe(){
       const name = b.name || b.title || 'Butikk';
       const region = b.region || b.area || b.city || b.place || '';
       const img = b.logo_url || b.image_url || b.logo || b.image || b.main_image || b.photo || '';
+      const id = b.id || '';
 
-      return '<div class="new-shop-card">' +
+      return '<div class="new-shop-card" ' +
+        (id ? 'onclick="window.location.href=\'butikk.html?id=' + id + '\'" style="cursor:pointer;"' : '') +
+        '>' +
         (img ? '<img src="' + img + '" style="width:55px;height:55px;object-fit:contain;border-radius:12px;background:white;"><br>' : '🏪<br>') +
         '<strong>' + name + '</strong><br>' +
         region +
