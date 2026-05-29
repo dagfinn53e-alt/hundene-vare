@@ -2847,7 +2847,13 @@ button[onclick*="business"]{
 
   <div id="page-admin" class="hidden"><div class="admin-alert">
 🔔 Nye butikker til godkjenning: 0
-</div><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🛠️ Admin</h2><div id="adminStatus" class="status">Klar.</div></div><div class="card"><h2 style="font-size:24px;">Innlegg</h2><div id="adminStories">Laster ...</div></div><div class="card"><h2 style="font-size:24px;">Bedrifter</h2><div id="adminBusinesses">Laster ...</div></div></div>
+</div><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🛠️ Admin</h2><div id="adminStatus" class="status">Klar.</div></div><div class="card"><h2 style="font-size:24px;">Innlegg</h2><div id="adminStories">Laster ...</div></div><div class="card"><h2 style="font-size:24px;">Bedrifter</h2><div id="adminBusinesses">Laster ...</div></div>
+<div class="card">
+  <h2 style="font-size:24px;">📅 Arrangement til godkjenning</h2>
+  <button type="button" onclick="loadPendingEvents()">Hent arrangementer</button>
+  <div id="pendingEvents">Trykk på Hent arrangementer.</div>
+</div>
+</div>
 
   <div id="page-favorites" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>❤️ Mine favoritter</h2><div id="favoritesList">Laster favoritter ...</div></div></div>
 
@@ -3806,83 +3812,93 @@ function toggleEventForm(){
 /* --- STEG 16D: ADMIN GODKJENN ARRANGEMENT --- */
 
 async function loadPendingEvents(){
-  const box = document.getElementById("pendingEvents");
+  var box = document.getElementById("pendingEvents");
   if(!box) return;
 
   box.innerHTML = "Laster...";
 
-  const {data,error} = await supabase
-    .from("events")
-    .select("*")
-    .eq("approved",false)
-    .order("created_at",{ascending:false});
+  try{
+    var result = await supabase
+      .from("events")
+      .select("*")
+      .eq("approved",false)
+      .order("created_at",{ascending:false});
 
-  if(error){
+    var data = result.data;
+    var error = result.error;
+
+    if(error){
+      box.innerHTML = "Kunne ikke hente arrangement.";
+      return;
+    }
+
+    if(!data || data.length === 0){
+      box.innerHTML = "Ingen arrangement venter.";
+      return;
+    }
+
+    box.innerHTML = data.map(function(e){
+      return `
+        <div class="admin-item">
+          ${e.poster_url ? `<img src="${e.poster_url}" style="width:100%;max-height:220px;object-fit:contain;background:#fff;border-radius:16px;margin-bottom:12px;">` : ""}
+
+          <div class="admin-content">
+            <h3>${e.title || ""}</h3>
+
+            <p>
+              🏷 ${e.event_type || ""}<br>
+              📅 ${e.date_from || ""} - ${e.date_to || ""}<br>
+              📍 ${e.place || ""}<br>
+              🌍 ${e.area || ""}
+            </p>
+
+            <p>${e.description || ""}</p>
+
+            <div class="btnrow">
+              <button class="ok" type="button" onclick="approveEvent('${e.id}')">✅ Godkjenn</button>
+              <button class="danger" type="button" onclick="deleteEvent('${e.id}')">🗑 Slett</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+  }catch(e){
     box.innerHTML = "Kunne ikke hente arrangement.";
-    return;
   }
-
-  if(!data || data.length===0){
-    box.innerHTML = "Ingen arrangement venter.";
-    return;
-  }
-
-  box.innerHTML = data.map(e=>`
-    <div class="card">
-      ${e.poster_url ? `<img src="${e.poster_url}" style="max-width:200px;border-radius:16px;">` : ""}
-
-      <h3>${e.title}</h3>
-
-      <p>
-        🏷 ${e.event_type || ""}<br>
-        📅 ${e.date_from || ""} - ${e.date_to || ""}<br>
-        📍 ${e.place || ""}<br>
-        🌍 ${e.area || ""}
-      </p>
-
-      <p>${e.description || ""}</p>
-
-      <button onclick="approveEvent('${e.id}')">✅ Godkjenn</button>
-      <button onclick="deleteEvent('${e.id}')">🗑 Slett</button>
-    </div>
-  `).join("");
 }
 
-
 async function approveEvent(id){
-
-  const {error} = await supabase
+  var result = await supabase
     .from("events")
     .update({approved:true})
     .eq("id",id);
 
-  if(error){
-    alert("Kunne ikke godkjenne");
+  if(result.error){
+    alert("Kunne ikke godkjenne arrangement.");
     return;
   }
 
-  alert("Arrangement godkjent");
+  alert("Arrangement godkjent.");
   loadPendingEvents();
 }
 
-
 async function deleteEvent(id){
-
   if(!confirm("Slette arrangement?")) return;
 
-  const {error} = await supabase
+  var result = await supabase
     .from("events")
     .delete()
     .eq("id",id);
 
-  if(error){
-    alert("Kunne ikke slette");
+  if(result.error){
+    alert("Kunne ikke slette arrangement.");
     return;
   }
 
+  alert("Arrangement slettet.");
   loadPendingEvents();
 }
-
 </script>
 
 </body>
