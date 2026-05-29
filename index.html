@@ -8,6 +8,40 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 function sendAboutMessage(){}
 
+
+/* --- STEG 10: HENT NYE BUTIKKER AUTOMATISK --- */
+
+async function loadLatestBusinesses(){
+  const box = document.getElementById('latestBusinesses');
+  if(!box || !window.supabase) return;
+
+  try{
+    const { data, error } = await supabase
+      .from('businesses')
+      .select('*')
+      .order('created_at',{ascending:false})
+      .limit(3);
+
+    if(error || !data || data.length === 0){
+      box.innerHTML = '<div class="new-shop-card">🐾<br>Nye butikker kommer snart</div>';
+      return;
+    }
+
+    box.innerHTML = data.map(b=>`
+      <div class="new-shop-card">
+        🏪<br>
+        <strong>${b.name || 'Butikk'}</strong><br>
+        ${b.area || b.city || ''}
+      </div>
+    `).join('');
+
+  }catch(e){
+    box.innerHTML = '<div class="new-shop-card">🐾<br>Nye butikker kommer snart</div>';
+  }
+}
+
+setTimeout(loadLatestBusinesses,1000);
+
 </script>
   <style>
     :root{--blue:#2563eb;--blue-dark:#1d4ed8;--line:#dbeafe;--text:#0f172a;--muted:#64748b;--card:#fff;--shadow:0 12px 30px rgba(15,23,42,.08)}
@@ -2390,10 +2424,11 @@ body{
   <h2>🆕 Nye butikker hos HundeneVåre</h2>
   <p>Her viser vi nye butikker og tjenester som kommer inn i appen.</p>
 
-  <div class="new-shops-row">
-    <div class="new-shop-card">🏪<br><strong>Ny butikk</strong><br>Kommer snart</div>
-    <div class="new-shop-card">🐾<br><strong>Ny butikk</strong><br>Kommer snart</div>
-    <div class="new-shop-card">⭐<br><strong>Ny butikk</strong><br>Kommer snart</div>
+  <div id="latestBusinesses" class="new-shops-row">
+    <div class="new-shop-card">
+      🐾<br>
+      Henter nye butikker...
+    </div>
   </div>
 </div>
 
