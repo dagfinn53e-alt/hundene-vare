@@ -3801,5 +3801,89 @@ function toggleEventForm(){
 }
 </script>
 
+
+<script>
+/* --- STEG 16D: ADMIN GODKJENN ARRANGEMENT --- */
+
+async function loadPendingEvents(){
+  const box = document.getElementById("pendingEvents");
+  if(!box) return;
+
+  box.innerHTML = "Laster...";
+
+  const {data,error} = await supabase
+    .from("events")
+    .select("*")
+    .eq("approved",false)
+    .order("created_at",{ascending:false});
+
+  if(error){
+    box.innerHTML = "Kunne ikke hente arrangement.";
+    return;
+  }
+
+  if(!data || data.length===0){
+    box.innerHTML = "Ingen arrangement venter.";
+    return;
+  }
+
+  box.innerHTML = data.map(e=>`
+    <div class="card">
+      ${e.poster_url ? `<img src="${e.poster_url}" style="max-width:200px;border-radius:16px;">` : ""}
+
+      <h3>${e.title}</h3>
+
+      <p>
+        🏷 ${e.event_type || ""}<br>
+        📅 ${e.date_from || ""} - ${e.date_to || ""}<br>
+        📍 ${e.place || ""}<br>
+        🌍 ${e.area || ""}
+      </p>
+
+      <p>${e.description || ""}</p>
+
+      <button onclick="approveEvent('${e.id}')">✅ Godkjenn</button>
+      <button onclick="deleteEvent('${e.id}')">🗑 Slett</button>
+    </div>
+  `).join("");
+}
+
+
+async function approveEvent(id){
+
+  const {error} = await supabase
+    .from("events")
+    .update({approved:true})
+    .eq("id",id);
+
+  if(error){
+    alert("Kunne ikke godkjenne");
+    return;
+  }
+
+  alert("Arrangement godkjent");
+  loadPendingEvents();
+}
+
+
+async function deleteEvent(id){
+
+  if(!confirm("Slette arrangement?")) return;
+
+  const {error} = await supabase
+    .from("events")
+    .delete()
+    .eq("id",id);
+
+  if(error){
+    alert("Kunne ikke slette");
+    return;
+  }
+
+  loadPendingEvents();
+}
+
+</script>
+
 </body>
 </html>
