@@ -2432,6 +2432,22 @@ body{
   box-shadow:0 10px 22px rgba(37,99,235,.20);
 }
 
+
+/* --- STEG 14: SKJUL OMRÅDEKNAPPER PÅ FORSIDEN --- */
+
+/* Skjuler egne områdeknapper - de finnes fortsatt i koden */
+button[onclick*="haugalandet"],
+button[onclick*="stavanger"],
+button[onclick*="bergen"]{
+  display:none !important;
+}
+
+/* Gjør Se Butikker viktigere */
+button[onclick*="shops"],
+button[onclick*="business"]{
+  box-shadow:0 12px 28px rgba(37,99,235,.18);
+}
+
 </style>
 </head>
 <body>
