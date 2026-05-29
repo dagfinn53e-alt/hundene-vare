@@ -2313,6 +2313,52 @@ body{
   box-shadow:0 10px 22px rgba(30,64,175,.15);
 }
 
+
+/* --- STEG 12: ARRANGEMENTER KOMPAKT --- */
+
+.new-events-box{
+  margin:22px auto;
+  max-width:900px;
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+  border:1px solid #dbeafe;
+  border-radius:26px;
+  padding:18px;
+  box-shadow:0 14px 30px rgba(30,64,175,.10);
+}
+
+.new-events-box h2{
+  font-size:22px;
+  color:#0f172a;
+}
+
+.new-events-box p{
+  color:#64748b;
+  font-size:14px;
+}
+
+.new-events-row{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding-top:12px;
+}
+
+.new-event-card{
+  min-width:160px;
+  background:#f5f3ff;
+  border:1px solid #ddd6fe;
+  border-radius:20px;
+  padding:16px;
+  text-align:center;
+  color:#5b21b6;
+}
+
+@media(max-width:760px){
+  .new-event-card{
+    min-width:140px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2408,6 +2454,20 @@ body{
 
   <div id="latestBusinesses" class="new-shops-row">
     <div class="new-shop-card">🐾<br>Nye butikker kommer snart</div>
+  </div>
+</div>
+
+
+
+<!-- --- STEG 12: NYE ARRANGEMENTER --- -->
+<div class="new-events-box">
+  <h2>📅 Nye arrangementer</h2>
+  <p>Aktiviteter, treff og arrangementer for hund og katt.</p>
+
+  <div class="new-events-row">
+    <div class="new-event-card">🐶<br><strong>Hundetreff</strong><br>Kommer snart</div>
+    <div class="new-event-card">🏆<br><strong>Utstilling</strong><br>Kommer snart</div>
+    <div class="new-event-card">🐾<br><strong>Kurs</strong><br>Kommer snart</div>
   </div>
 </div>
 
