@@ -2557,21 +2557,39 @@ button[onclick*="business"]{
 
   <input id="eventTitle" placeholder="Navn på arrangement">
 
-  <input id="eventDate" type="date">
+  <label>Fra dato</label>
+  <input id="eventDateFrom" type="date">
+
+  <label>Til dato</label>
+  <input id="eventDateTo" type="date">
 
   <input id="eventPlace" placeholder="Sted">
 
+  <select id="eventType">
+    <option value="">Velg type</option>
+    <option>Utstilling</option>
+    <option>Kurs</option>
+  </select>
+
   <select id="eventArea">
+    <option value="">Velg område</option>
     <option>Haugalandet</option>
     <option>Stavanger</option>
     <option>Bergen</option>
+    <option>Stord</option>
+    <option>Karmøy</option>
+    <option>Haugesund</option>
+    <option>Sveio</option>
+    <option>Bømlo</option>
+    <option>Sandnes</option>
+    <option>Andre områder</option>
   </select>
 
   <textarea id="eventText" placeholder="Beskrivelse av arrangement"></textarea>
 
   <input id="eventImage" placeholder="Link til bilde/plakat">
 
-  <button type="button">📨 Send inn arrangement</button>
+  <button type="button" onclick="saveEvent()">📨 Send inn arrangement</button>
 </div>
 
 
@@ -2581,9 +2599,8 @@ button[onclick*="business"]{
   <p>Aktiviteter, treff og arrangementer for hund og katt.</p>
 
   <div class="new-events-row">
-    <div class="new-event-card">🐶<br><strong>Hundetreff</strong><br>Kommer snart</div>
-    <div class="new-event-card">🏆<br><strong>Utstilling</strong><br>Kommer snart</div>
-    <div class="new-event-card">🐾<br><strong>Kurs</strong><br>Kommer snart</div>
+    <div class="new-event-card">🏆<br><strong>Utstilling</strong><br>Se kommende utstillinger</div>
+    <div class="new-event-card">🎓<br><strong>Kurs</strong><br>Se kommende kurs</div>
   </div>
 </div>
 
@@ -3623,6 +3640,14 @@ async function loadLatestBusinessesSafe(){
 window.addEventListener('load', function(){
   setTimeout(loadLatestBusinessesSafe, 1500);
 });
+</script>
+
+
+<script>
+/* --- STEG 15: AKTIVT ARRANGEMENT SKJEMA --- */
+function saveEvent(){
+  alert("Arrangement mottatt. Godkjenning/lagring kobles i neste steg.");
+}
 </script>
 
 </body>
