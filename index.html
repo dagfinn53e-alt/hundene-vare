@@ -9,11 +9,12 @@
 function sendAboutMessage(){}
 
 
-/* --- STEG 10: HENT NYE BUTIKKER AUTOMATISK --- */
+
+/* --- STEG 10B: HENT NYE BUTIKKER - RIKTIG SUPABASE --- */
 
 async function loadLatestBusinesses(){
   const box = document.getElementById('latestBusinesses');
-  if(!box || !window.supabase) return;
+  if(!box) return;
 
   try{
     const { data, error } = await supabase
@@ -29,9 +30,9 @@ async function loadLatestBusinesses(){
 
     box.innerHTML = data.map(b=>`
       <div class="new-shop-card">
-        🏪<br>
-        <strong>${b.name || 'Butikk'}</strong><br>
-        ${b.area || b.city || ''}
+        ${b.logo_url || b.image_url ? `<img src="${b.logo_url || b.image_url}" style="width:55px;height:55px;object-fit:contain;border-radius:12px;"><br>` : '🏪<br>'}
+        <strong>${b.name || b.title || 'Butikk'}</strong><br>
+        ${b.area || b.city || b.region || ''}
       </div>
     `).join('');
 
@@ -41,6 +42,7 @@ async function loadLatestBusinesses(){
 }
 
 setTimeout(loadLatestBusinesses,1000);
+
 
 </script>
   <style>
