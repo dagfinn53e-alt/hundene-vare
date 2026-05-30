@@ -2812,6 +2812,34 @@ button[onclick*="business"]{
   }
 }
 
+
+/* --- STEG 20A: RYDDIG ADMIN --- */
+.admin-section{
+  margin-top:14px;
+  border:1px solid #dbeafe;
+  border-radius:22px;
+  overflow:hidden;
+}
+.admin-toggle{
+  width:100%;
+  text-align:left;
+  border:none;
+  border-radius:0;
+  padding:16px 18px;
+  font-size:18px;
+  font-weight:900;
+  background:#eef4ff;
+  color:#1d4ed8;
+}
+.admin-panel{
+  display:none;
+  padding:16px;
+  background:#fff;
+}
+.admin-panel.open{
+  display:block;
+}
+
 </style>
 </head>
 <body>
@@ -4353,6 +4381,14 @@ async function saveEvent(){
   }catch(e){
     alert("Feil: " + e.message);
   }
+}
+</script>
+
+
+<script>
+function toggleAdminSection(id){
+  const el=document.getElementById(id);
+  if(el) el.classList.toggle('open');
 }
 </script>
 
