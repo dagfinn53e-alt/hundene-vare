@@ -267,7 +267,70 @@
         width:100%;
       }
     }
-  </style>
+  
+/* --- STEG 22A: OMRÅDEKNAPPER PÅ BUTIKKER.HTML --- */
+
+.area-picker{
+  margin-bottom:16px;
+  padding:16px;
+  border-radius:24px;
+  background:#f8fbff;
+  border:1px solid #dbeafe;
+}
+
+.area-picker-title{
+  font-weight:900;
+  color:#1d4ed8;
+  margin-bottom:10px;
+  font-size:16px;
+}
+
+.area-buttons{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.area-btn{
+  border:none;
+  border-radius:18px;
+  padding:13px 10px;
+  background:#eef4ff;
+  color:#1d4ed8;
+  border:1px solid #bfd7ff;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.area-btn.active{
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:white;
+  border-color:#2563eb;
+}
+
+.area-start{
+  margin-top:14px;
+  background:#ffffff;
+  border:2px dashed #93c5fd;
+  color:#1d4ed8;
+  border-radius:22px;
+  padding:24px;
+  text-align:center;
+  font-weight:900;
+  grid-column:1 / -1;
+}
+
+#regionFilter{
+  display:none;
+}
+
+@media(max-width:760px){
+  .area-buttons{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+</style>
 </head>
 
 <body>
@@ -289,6 +352,18 @@
     </div>
 
     <div class="filters">
+
+      <div class="area-picker">
+        <div class="area-picker-title">📍 Velg område</div>
+
+        <div class="area-buttons">
+          <button class="area-btn" data-area="Haugalandet" onclick="chooseArea('Haugalandet')">Haugalandet</button>
+          <button class="area-btn" data-area="Stavanger" onclick="chooseArea('Stavanger')">Stavanger</button>
+          <button class="area-btn" data-area="Bergen" onclick="chooseArea('Bergen')">Bergen</button>
+          <button class="area-btn" data-area="Stord" onclick="chooseArea('Stord')">Stord</button>
+        </div>
+      </div>
+
       <div class="filter-grid">
         <input id="searchInput" placeholder="Søk på navn, sted eller tekst">
 
@@ -405,6 +480,14 @@
       const region = regionFilter.value;
       const type = typeFilter.value;
 
+      updateAreaCounts();
+
+      if(!region){
+        statusEl.textContent = "Velg område";
+        grid.innerHTML = '<div class="area-start">📍 Velg område for å se butikker</div>';
+        return;
+      }
+
       let list = allBusinesses.filter(b => {
         const name = getName(b).toLowerCase();
         const bRegion = getRegion(b);
@@ -420,7 +503,7 @@
           bRegion.toLowerCase().includes(search);
 
         const matchesRegion =
-          !region || bRegion === region;
+          bRegion === region;
 
         const matchesType =
           !type || bType === type;
@@ -428,10 +511,10 @@
         return matchesSearch && matchesRegion && matchesType;
       });
 
-      statusEl.textContent = list.length + " butikk(er) funnet";
+      statusEl.textContent = region + ": " + list.length + " butikk(er) funnet";
 
       if(list.length === 0){
-        grid.innerHTML = '<div class="empty">Ingen butikker funnet med dette søket.</div>';
+        grid.innerHTML = '<div class="empty">Ingen butikker funnet i valgt område.</div>';
         return;
       }
 
@@ -470,6 +553,39 @@
           </div>
         `;
       }).join("");
+    }
+
+    function chooseArea(area){
+      regionFilter.value = area;
+
+      document.querySelectorAll(".area-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.area === area);
+      });
+
+      renderBusinesses();
+    }
+
+    function updateAreaCounts(){
+      const counts = {
+        Haugalandet:0,
+        Stavanger:0,
+        Bergen:0,
+        Stord:0
+      };
+
+      allBusinesses.forEach(b => {
+        const region = getRegion(b);
+        if(counts[region] !== undefined){
+          counts[region]++;
+        }
+      });
+
+      document.querySelectorAll(".area-btn").forEach(btn => {
+        const area = btn.dataset.area;
+        if(counts[area] !== undefined){
+          btn.textContent = area + " (" + counts[area] + ")";
+        }
+      });
     }
 
     searchInput.addEventListener("input", renderBusinesses);
