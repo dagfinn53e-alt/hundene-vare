@@ -2812,58 +2812,22 @@ button[onclick*="business"]{
   }
 }
 
+</style>
 
-/* --- STEG 20B: ADMIN FAKTISK RYDDET I SEKSJONER --- */
-
-#page-admin .admin-section{
-  max-width:980px;
-  margin:0 auto 16px;
-  border:1px solid #dbeafe;
-  border-radius:26px;
-  overflow:hidden;
-  box-shadow:0 14px 30px rgba(30,64,175,.10);
-  background:#fff;
+<style>
+.active-areas-badge{
+ display:inline-block;
+ margin-top:14px;
+ padding:10px 16px;
+ border-radius:999px;
+ background:rgba(255,255,255,.92);
+ color:#1d4ed8;
+ font-weight:900;
+ font-size:14px;
 }
-
-#page-admin .admin-toggle{
-  width:100%;
-  text-align:left;
-  border:none;
-  border-radius:0;
-  padding:17px 20px;
-  font-size:18px;
-  font-weight:900;
-  background:linear-gradient(135deg,#eef4ff,#e0ecff);
-  color:#1d4ed8;
-}
-
-#page-admin .admin-panel{
-  display:none;
-  padding:16px;
-  background:#f8fbff;
-}
-
-#page-admin .admin-panel.open{
-  display:block;
-}
-
-#page-admin .admin-panel .card{
-  margin-bottom:14px;
-}
-
-@media(max-width:760px){
-  #page-admin .admin-toggle{
-    font-size:16px;
-    padding:15px 16px;
-  }
-
-  #page-admin .admin-panel{
-    padding:12px;
-  }
-}
-
 </style>
 </head>
+
 <body>
 <div class="wrap">
   <div class="topbar">
@@ -3170,100 +3134,58 @@ button[onclick*="business"]{
     </div>
   </div>
 
-  
-<div id="page-admin" class="hidden">
+  <div id="page-admin" class="hidden"><div class="admin-alert">
+🔔 Nye butikker til godkjenning: 0
+</div><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🛠️ Admin</h2><div id="adminStatus" class="status">Klar.</div></div><div class="card"><h2 style="font-size:24px;">Innlegg</h2><div id="adminStories">Laster ...</div></div><div class="card"><h2 style="font-size:24px;">Bedrifter</h2><div id="adminBusinesses">Laster ...</div></div>
 
-  <div class="admin-alert">
-    🔔 Nye butikker til godkjenning: 0
-  </div>
+<div class="card admin-event-form-card">
+  <h2 style="font-size:24px;">📅 Legg inn arrangement</h2>
+  <p class="sub">Legg inn kurs eller utstilling. Arrangementet lagres og kan godkjennes fra Admin.</p>
 
-  <div class="card">
-    <div class="btnrow">
-      <button class="alt" onclick="goHome()">← Tilbake til forsiden</button>
-    </div>
+  <input id="eventTitle" placeholder="Navn på arrangement">
 
-    <h2>🛠️ Admin</h2>
-    <div id="adminStatus" class="status">Klar.</div>
-  </div>
+  <label>Fra dato</label>
+  <input id="eventDateFrom" type="date">
 
-  <div class="admin-section">
-    <button type="button" class="admin-toggle" onclick="toggleAdminSection('adminEventsPanel')">
-      📅 Arrangementer ▼
-    </button>
+  <label>Til dato</label>
+  <input id="eventDateTo" type="date">
 
-    <div id="adminEventsPanel" class="admin-panel open">
+  <input id="eventPlace" placeholder="Sted">
 
-      <div class="card admin-event-form-card">
-        <h2 style="font-size:24px;">📅 Legg inn arrangement</h2>
-        <p class="sub">Legg inn kurs eller utstilling. Arrangementet lagres og kan godkjennes fra Admin.</p>
+  <select id="eventType">
+    <option value="">Velg type</option>
+    <option>Utstilling</option>
+    <option>Kurs</option>
+  </select>
 
-        <input id="eventTitle" placeholder="Navn på arrangement">
+  <select id="eventArea">
+    <option value="">Velg område</option>
+    <option>Haugalandet</option>
+    <option>Stavanger</option>
+    <option>Bergen</option>
+    <option>Stord</option>
+    <option>Karmøy</option>
+    <option>Haugesund</option>
+    <option>Sveio</option>
+    <option>Bømlo</option>
+    <option>Sandnes</option>
+    <option>Andre områder</option>
+  </select>
 
-        <label>Fra dato</label>
-        <input id="eventDateFrom" type="date">
+  <textarea id="eventText" placeholder="Beskrivelse av arrangement"></textarea>
 
-        <label>Til dato</label>
-        <input id="eventDateTo" type="date">
+  <label>Last opp plakat / bilde</label>
+  <input id="eventImageFile" type="file" accept="image/*">
 
-        <input id="eventPlace" placeholder="Sted">
+  <button type="button" onclick="saveEvent()">📨 Lagre arrangement</button>
+</div>
 
-        <select id="eventType">
-          <option value="">Velg type</option>
-          <option>Utstilling</option>
-          <option>Kurs</option>
-        </select>
 
-        <select id="eventArea">
-          <option value="">Velg område</option>
-          <option>Haugalandet</option>
-          <option>Stavanger</option>
-          <option>Bergen</option>
-          <option>Stord</option>
-          <option>Karmøy</option>
-          <option>Haugesund</option>
-          <option>Sveio</option>
-          <option>Bømlo</option>
-          <option>Sandnes</option>
-          <option>Andre områder</option>
-        </select>
-
-        <textarea id="eventText" placeholder="Beskrivelse av arrangement"></textarea>
-
-        <label>Last opp plakat / bilde</label>
-        <input id="eventImageFile" type="file" accept="image/*">
-
-        <button type="button" onclick="saveEvent()">📨 Lagre arrangement</button>
-      </div>
-
-      <div class="card">
-        <h2 style="font-size:24px;">📅 Arrangement til godkjenning</h2>
-        <button type="button" onclick="loadPendingEvents()">Hent arrangementer</button>
-        <div id="pendingEvents">Trykk på Hent arrangementer.</div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="admin-section">
-    <button type="button" class="admin-toggle" onclick="toggleAdminSection('adminBusinessPanel')">
-      🏪 Butikker og innlegg ▼
-    </button>
-
-    <div id="adminBusinessPanel" class="admin-panel">
-
-      <div class="card">
-        <h2 style="font-size:24px;">Innlegg</h2>
-        <div id="adminStories">Laster ...</div>
-      </div>
-
-      <div class="card">
-        <h2 style="font-size:24px;">Bedrifter</h2>
-        <div id="adminBusinesses">Laster ...</div>
-      </div>
-
-    </div>
-  </div>
-
+<div class="card">
+  <h2 style="font-size:24px;">📅 Arrangement til godkjenning</h2>
+  <button type="button" onclick="loadPendingEvents()">Hent arrangementer</button>
+  <div id="pendingEvents">Trykk på Hent arrangementer.</div>
+</div>
 </div>
 
   <div id="page-favorites" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>❤️ Mine favoritter</h2><div id="favoritesList">Laster favoritter ...</div></div></div>
@@ -4450,13 +4372,23 @@ async function saveEvent(){
 
 
 <script>
-/* --- STEG 20B: ÅPNE/LUKKE ADMIN-SEKSJONER --- */
-function toggleAdminSection(id){
-  var el = document.getElementById(id);
-  if(!el) return;
-  el.classList.toggle('open');
-}
-</script>
+document.addEventListener('DOMContentLoaded', function(){
+  const hero=document.querySelector('.hero');
+  if(!hero) return;
 
+  const p=hero.querySelector('p');
+  if(p){
+    p.innerHTML='Samler butikker, tilbud, kurs, utstillinger og aktiviteter for hund og katt på Haugalandet, i Stavanger, Bergen og Stord.';
+  }
+
+  if(!hero.querySelector('.active-areas-badge')){
+    const badge=document.createElement('div');
+    badge.className='active-areas-badge';
+    badge.textContent='📍 Aktive områder: Haugalandet • Stavanger • Bergen • Stord';
+    hero.appendChild(badge);
+  }
+});
+</script>
 </body>
+
 </html>
