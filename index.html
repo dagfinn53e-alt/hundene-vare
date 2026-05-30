@@ -2843,6 +2843,19 @@ button[onclick*="business"]{
   .area-filter-buttons{grid-template-columns:1fr 1fr;}
 }
 
+
+/* --- STEG 21C: SKJUL BUTIKKER TIL OMRÅDE ER VALGT --- */
+.area-start-message{
+  background:#fff;
+  border:1px dashed #93c5fd;
+  color:#1d4ed8;
+  border-radius:18px;
+  padding:16px;
+  margin:14px 0;
+  font-weight:900;
+  text-align:center;
+}
+
 </style>
 
 <style>
@@ -4500,6 +4513,49 @@ function updateAreaCounts(){
 
 document.addEventListener('DOMContentLoaded', ()=>{
   setTimeout(updateAreaCounts,1500);
+});
+</script>
+
+
+<script>
+/* STEG 21C - vis butikker først etter områdevalg */
+function hideBusinessesUntilArea(){
+  const cards = document.querySelectorAll('.biz-card');
+  if(!cards.length) return;
+
+  if(!window.selectedAreaFilter){
+    cards.forEach(card=>card.style.display='none');
+
+    const box = document.querySelector('.area-filter-box');
+    if(box && !document.getElementById('areaStartMessage')){
+      const msg = document.createElement('div');
+      msg.id = 'areaStartMessage';
+      msg.className = 'area-start-message';
+      msg.textContent = '📍 Velg område for å se butikker';
+      box.after(msg);
+    }
+  }
+}
+
+const oldSetAreaFilter = window.setAreaFilter;
+window.setAreaFilter = function(area){
+  window.selectedAreaFilter = area;
+
+  const msg = document.getElementById('areaStartMessage');
+  if(msg) msg.remove();
+
+  if(typeof oldSetAreaFilter === 'function'){
+    oldSetAreaFilter(area);
+  }else{
+    document.querySelectorAll('.biz-card').forEach(card=>{
+      const txt=(card.innerText||'').toLowerCase();
+      card.style.display = txt.includes(String(area).toLowerCase()) ? '' : 'none';
+    });
+  }
+};
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  setTimeout(hideBusinessesUntilArea,1800);
 });
 </script>
 
