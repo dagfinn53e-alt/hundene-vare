@@ -2812,6 +2812,37 @@ button[onclick*="business"]{
   }
 }
 
+
+/* --- STEG 21A: OMRÅDEFILTER PÅ SE BUTIKKER --- */
+.area-filter-box{
+  background:#f8fbff;
+  border:1px solid #dbeafe;
+  border-radius:22px;
+  padding:16px;
+  margin-bottom:16px;
+}
+.area-filter-title{
+  font-weight:900;
+  color:#1d4ed8;
+  margin-bottom:10px;
+}
+.area-filter-buttons{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+.area-filter-buttons button{
+  background:#eef4ff;
+  color:#1d4ed8;
+}
+.area-filter-buttons button.active{
+  background:#2563eb;
+  color:#fff;
+}
+@media(max-width:760px){
+  .area-filter-buttons{grid-template-columns:1fr 1fr;}
+}
+
 </style>
 
 <style>
@@ -4389,6 +4420,57 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 });
 </script>
+
+<script>
+window.selectedAreaFilter = '';
+
+function setAreaFilter(area){
+  window.selectedAreaFilter = area;
+
+  document.querySelectorAll('.area-filter-buttons button').forEach(btn=>{
+    btn.classList.remove('active');
+    if(btn.dataset.area === area){ btn.classList.add('active'); }
+  });
+
+  document.querySelectorAll('.biz-card').forEach(card=>{
+    const txt = (card.innerText || '').toLowerCase();
+    if(!area){
+      card.style.display='';
+    }else{
+      card.style.display = txt.includes(area.toLowerCase()) ? '' : 'none';
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  const targets = [
+    document.getElementById('page-haugalandet'),
+    document.getElementById('page-stavanger'),
+    document.getElementById('page-bergen')
+  ];
+
+  targets.forEach(page=>{
+    if(!page) return;
+
+    const card = page.querySelector('.card');
+    if(!card || page.querySelector('.area-filter-box')) return;
+
+    const box = document.createElement('div');
+    box.className='area-filter-box';
+    box.innerHTML=`
+      <div class="area-filter-title">📍 Velg område</div>
+      <div class="area-filter-buttons">
+        <button data-area="Haugalandet" onclick="setAreaFilter('Haugalandet')">Haugalandet</button>
+        <button data-area="Stavanger" onclick="setAreaFilter('Stavanger')">Stavanger</button>
+        <button data-area="Bergen" onclick="setAreaFilter('Bergen')">Bergen</button>
+        <button data-area="Stord" onclick="setAreaFilter('Stord')">Stord</button>
+      </div>`;
+
+    card.insertBefore(box, card.firstChild);
+  });
+});
+</script>
+
 </body>
 
 </html>
