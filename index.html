@@ -2844,7 +2844,7 @@ button[onclick*="business"]{
 }
 
 
-/* --- STEG 21C: SKJUL BUTIKKER TIL OMRÅDE ER VALGT --- */
+/* --- STEG 21D: VELG OMRÅDE FØRST - STERKERE FIKS --- */
 .area-start-message{
   background:#fff;
   border:1px dashed #93c5fd;
@@ -2854,6 +2854,9 @@ button[onclick*="business"]{
   margin:14px 0;
   font-weight:900;
   text-align:center;
+}
+body.area-not-selected .biz-card{
+  display:none !important;
 }
 
 </style>
@@ -4518,44 +4521,63 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 
 <script>
-/* STEG 21C - vis butikker først etter områdevalg */
-function hideBusinessesUntilArea(){
-  const cards = document.querySelectorAll('.biz-card');
-  if(!cards.length) return;
+/* STEG 21D - skjul butikker til område er valgt */
+window.selectedAreaFilter = window.selectedAreaFilter || '';
 
-  if(!window.selectedAreaFilter){
-    cards.forEach(card=>card.style.display='none');
+function addAreaStartMessage(){
+  const box = document.querySelector('.area-filter-box');
+  if(!box) return;
 
-    const box = document.querySelector('.area-filter-box');
-    if(box && !document.getElementById('areaStartMessage')){
-      const msg = document.createElement('div');
-      msg.id = 'areaStartMessage';
-      msg.className = 'area-start-message';
-      msg.textContent = '📍 Velg område for å se butikker';
-      box.after(msg);
-    }
+  if(!document.getElementById('areaStartMessage')){
+    const msg = document.createElement('div');
+    msg.id = 'areaStartMessage';
+    msg.className = 'area-start-message';
+    msg.textContent = '📍 Velg område for å se butikker';
+    box.after(msg);
   }
 }
 
-const oldSetAreaFilter = window.setAreaFilter;
-window.setAreaFilter = function(area){
-  window.selectedAreaFilter = area;
-
+function removeAreaStartMessage(){
   const msg = document.getElementById('areaStartMessage');
   if(msg) msg.remove();
+}
 
-  if(typeof oldSetAreaFilter === 'function'){
-    oldSetAreaFilter(area);
-  }else{
-    document.querySelectorAll('.biz-card').forEach(card=>{
-      const txt=(card.innerText||'').toLowerCase();
-      card.style.display = txt.includes(String(area).toLowerCase()) ? '' : 'none';
-    });
+function activateAreaStartMode(){
+  if(!window.selectedAreaFilter){
+    document.body.classList.add('area-not-selected');
+    addAreaStartMessage();
   }
+}
+
+const previousSetAreaFilter = window.setAreaFilter;
+
+window.setAreaFilter = function(area){
+  window.selectedAreaFilter = area;
+  document.body.classList.remove('area-not-selected');
+  removeAreaStartMessage();
+
+  document.querySelectorAll('.area-filter-buttons button').forEach(btn=>{
+    btn.classList.remove('active');
+    if(btn.dataset.area === area){ btn.classList.add('active'); }
+  });
+
+  document.querySelectorAll('.biz-card').forEach(card=>{
+    const txt = (card.innerText || '').toLowerCase();
+    card.style.display = txt.includes(String(area).toLowerCase()) ? '' : 'none';
+  });
 };
 
-document.addEventListener('DOMContentLoaded', ()=>{
-  setTimeout(hideBusinessesUntilArea,1800);
+document.addEventListener('DOMContentLoaded', function(){
+  activateAreaStartMode();
+
+  let tries = 0;
+  const timer = setInterval(function(){
+    tries++;
+    if(!window.selectedAreaFilter){
+      activateAreaStartMode();
+    }
+    if(tries > 12) clearInterval(timer);
+  }, 500);
 });
 </script>
 
