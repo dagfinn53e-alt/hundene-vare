@@ -2738,6 +2738,80 @@ button[onclick*="business"]{
   }
 }
 
+
+/* --- STEG 19: ARRANGEMENT SKJEMA KUN I ADMIN + STØRRE PLAKAT --- */
+
+.open-event-btn{
+  display:none !important;
+}
+
+.event-form-box{
+  display:none !important;
+}
+
+.admin-event-form-card label{
+  display:block;
+  margin-top:10px;
+  font-weight:900;
+  color:#1e3a8a;
+}
+
+.admin-event-form-card input,
+.admin-event-form-card textarea,
+.admin-event-form-card select{
+  width:100%;
+  margin-top:8px;
+  padding:14px;
+  border-radius:16px;
+  border:1px solid #cbdcf5;
+  font-size:15px;
+}
+
+.admin-event-form-card textarea{
+  min-height:120px;
+}
+
+.admin-event-form-card button{
+  margin-top:14px;
+  width:100%;
+  min-height:48px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:white;
+  font-weight:900;
+}
+
+.new-event-card img{
+  width:76px !important;
+  height:76px !important;
+  max-width:76px !important;
+  max-height:76px !important;
+  object-fit:contain !important;
+  margin:0 auto 4px !important;
+}
+
+.new-event-card{
+  min-height:138px !important;
+  height:138px !important;
+  overflow:hidden !important;
+  justify-content:flex-start !important;
+}
+
+@media(max-width:760px){
+  .new-event-card img{
+    width:72px !important;
+    height:72px !important;
+    max-width:72px !important;
+    max-height:72px !important;
+  }
+
+  .new-event-card{
+    height:138px !important;
+    min-height:138px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2840,58 +2914,11 @@ button[onclick*="business"]{
 
 
 <!-- --- STEG 13: REGISTRER ARRANGEMENT --- -->
-
-
-<div id="eventFormBox" class="event-form-box" style="display:none;">
-  <h2>📅 Registrer arrangement</h2>
-
-  <input id="eventTitle" placeholder="Navn på arrangement">
-
-  <label>Fra dato</label>
-  <input id="eventDateFrom" type="date">
-
-  <label>Til dato</label>
-  <input id="eventDateTo" type="date">
-
-  <input id="eventPlace" placeholder="Sted">
-
-  <select id="eventType">
-    <option value="">Velg type</option>
-    <option>Utstilling</option>
-    <option>Kurs</option>
-  </select>
-
-  <select id="eventArea">
-    <option value="">Velg område</option>
-    <option>Haugalandet</option>
-    <option>Stavanger</option>
-    <option>Bergen</option>
-    <option>Stord</option>
-    <option>Karmøy</option>
-    <option>Haugesund</option>
-    <option>Sveio</option>
-    <option>Bømlo</option>
-    <option>Sandnes</option>
-    <option>Andre områder</option>
-  </select>
-
-  <textarea id="eventText" placeholder="Beskrivelse av arrangement"></textarea>
-
-  <label>Last opp plakat / bilde</label>
-  <input id="eventImageFile" type="file" accept="image/*">
-
-  <button type="button" onclick="saveEvent()">📨 Send inn arrangement</button>
-</div>
-
-
 <!-- --- STEG 12: NYE ARRANGEMENTER --- -->
 <div class="new-events-box">
   <h2>📅 Nye arrangementer</h2>
   <p>Aktiviteter, treff og arrangementer for hund og katt.</p>
-
-  <button class="open-event-btn" onclick="toggleEventForm()">➕ Legg inn arrangement</button>
-
-  <div class="event-section-title">🏆 Utstillinger</div>
+<div class="event-section-title">🏆 Utstillinger</div>
   <div id="latestShows" class="new-events-row">
     <div class="new-event-card">Laster utstillinger...</div>
   </div>
@@ -3096,6 +3123,50 @@ button[onclick*="business"]{
   <div id="page-admin" class="hidden"><div class="admin-alert">
 🔔 Nye butikker til godkjenning: 0
 </div><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🛠️ Admin</h2><div id="adminStatus" class="status">Klar.</div></div><div class="card"><h2 style="font-size:24px;">Innlegg</h2><div id="adminStories">Laster ...</div></div><div class="card"><h2 style="font-size:24px;">Bedrifter</h2><div id="adminBusinesses">Laster ...</div></div>
+
+<div class="card admin-event-form-card">
+  <h2 style="font-size:24px;">📅 Legg inn arrangement</h2>
+  <p class="sub">Legg inn kurs eller utstilling. Arrangementet lagres og kan godkjennes fra Admin.</p>
+
+  <input id="eventTitle" placeholder="Navn på arrangement">
+
+  <label>Fra dato</label>
+  <input id="eventDateFrom" type="date">
+
+  <label>Til dato</label>
+  <input id="eventDateTo" type="date">
+
+  <input id="eventPlace" placeholder="Sted">
+
+  <select id="eventType">
+    <option value="">Velg type</option>
+    <option>Utstilling</option>
+    <option>Kurs</option>
+  </select>
+
+  <select id="eventArea">
+    <option value="">Velg område</option>
+    <option>Haugalandet</option>
+    <option>Stavanger</option>
+    <option>Bergen</option>
+    <option>Stord</option>
+    <option>Karmøy</option>
+    <option>Haugesund</option>
+    <option>Sveio</option>
+    <option>Bømlo</option>
+    <option>Sandnes</option>
+    <option>Andre områder</option>
+  </select>
+
+  <textarea id="eventText" placeholder="Beskrivelse av arrangement"></textarea>
+
+  <label>Last opp plakat / bilde</label>
+  <input id="eventImageFile" type="file" accept="image/*">
+
+  <button type="button" onclick="saveEvent()">📨 Lagre arrangement</button>
+</div>
+
+
 <div class="card">
   <h2 style="font-size:24px;">📅 Arrangement til godkjenning</h2>
   <button type="button" onclick="loadPendingEvents()">Hent arrangementer</button>
@@ -3957,87 +4028,7 @@ window.addEventListener('load', function(){
 
 
 
-<script>
-/* --- STEG 16C: LAGRE ARRANGEMENT MED PLAKAT OG GODKJENNING --- */
 
-async function uploadEventPoster(file){
-  if(!file) return "";
-
-  var safeName = Date.now() + "-" + file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
-  var filePath = "posters/" + safeName;
-
-  var upload = await supabase.storage
-    .from("event-images")
-    .upload(filePath, file);
-
-  if(upload.error){
-    throw new Error(upload.error.message);
-  }
-
-  var publicUrl = supabase.storage
-    .from("event-images")
-    .getPublicUrl(filePath).data.publicUrl;
-
-  return publicUrl || "";
-}
-
-async function saveEvent(){
-  var title = document.getElementById("eventTitle") ? document.getElementById("eventTitle").value.trim() : "";
-  var dateFrom = document.getElementById("eventDateFrom") ? document.getElementById("eventDateFrom").value : "";
-  var dateTo = document.getElementById("eventDateTo") ? document.getElementById("eventDateTo").value : "";
-  var place = document.getElementById("eventPlace") ? document.getElementById("eventPlace").value.trim() : "";
-  var eventType = document.getElementById("eventType") ? document.getElementById("eventType").value : "";
-  var area = document.getElementById("eventArea") ? document.getElementById("eventArea").value : "";
-  var description = document.getElementById("eventText") ? document.getElementById("eventText").value.trim() : "";
-  var fileInput = document.getElementById("eventImageFile");
-  var file = fileInput && fileInput.files.length ? fileInput.files[0] : null;
-
-  if(!title || !dateFrom || !place || !eventType || !area){
-    alert("Fyll inn tittel, fra dato, sted, type og område.");
-    return;
-  }
-
-  try{
-    var posterUrl = "";
-    if(file){
-      posterUrl = await uploadEventPoster(file);
-    }
-
-    var result = await supabase
-      .from("events")
-      .insert([{
-        title: title,
-        event_type: eventType,
-        date_from: dateFrom,
-        date_to: dateTo || dateFrom,
-        place: place,
-        area: area,
-        description: description,
-        poster_url: posterUrl,
-        approved: false
-      }]);
-
-    if(result.error){
-      alert("Kunne ikke lagre arrangement: " + result.error.message);
-      return;
-    }
-
-    alert("Arrangement er sendt inn og venter på godkjenning.");
-
-    document.getElementById("eventTitle").value = "";
-    document.getElementById("eventDateFrom").value = "";
-    document.getElementById("eventDateTo").value = "";
-    document.getElementById("eventPlace").value = "";
-    document.getElementById("eventType").value = "";
-    document.getElementById("eventArea").value = "";
-    document.getElementById("eventText").value = "";
-    if(fileInput) fileInput.value = "";
-
-  }catch(e){
-    alert("Feil: " + e.message);
-  }
-}
-</script>
 
 
 <script>
@@ -4276,6 +4267,93 @@ async function loadApprovedEventsSplit(){
 window.addEventListener("load", function(){
   setTimeout(loadApprovedEventsSplit, 1200);
 });
+</script>
+
+
+<script>
+/* --- STEG 19: LAGRE ARRANGEMENT FRA ADMIN --- */
+
+async function uploadEventPoster(file){
+  if(!file) return "";
+
+  var safeName = Date.now() + "-" + file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+  var filePath = "posters/" + safeName;
+
+  var upload = await supabase.storage
+    .from("event-images")
+    .upload(filePath, file);
+
+  if(upload.error){
+    throw new Error(upload.error.message);
+  }
+
+  var publicUrl = supabase.storage
+    .from("event-images")
+    .getPublicUrl(filePath).data.publicUrl;
+
+  return publicUrl || "";
+}
+
+async function saveEvent(){
+  var title = document.getElementById("eventTitle") ? document.getElementById("eventTitle").value.trim() : "";
+  var dateFrom = document.getElementById("eventDateFrom") ? document.getElementById("eventDateFrom").value : "";
+  var dateTo = document.getElementById("eventDateTo") ? document.getElementById("eventDateTo").value : "";
+  var place = document.getElementById("eventPlace") ? document.getElementById("eventPlace").value.trim() : "";
+  var eventType = document.getElementById("eventType") ? document.getElementById("eventType").value : "";
+  var area = document.getElementById("eventArea") ? document.getElementById("eventArea").value : "";
+  var description = document.getElementById("eventText") ? document.getElementById("eventText").value.trim() : "";
+  var fileInput = document.getElementById("eventImageFile");
+  var file = fileInput && fileInput.files.length ? fileInput.files[0] : null;
+
+  if(!title || !dateFrom || !place || !eventType || !area){
+    alert("Fyll inn tittel, fra dato, sted, type og område.");
+    return;
+  }
+
+  try{
+    var posterUrl = "";
+    if(file){
+      posterUrl = await uploadEventPoster(file);
+    }
+
+    var result = await supabase
+      .from("events")
+      .insert([{
+        title: title,
+        event_type: eventType,
+        date_from: dateFrom,
+        date_to: dateTo || dateFrom,
+        place: place,
+        area: area,
+        description: description,
+        poster_url: posterUrl,
+        approved: false
+      }]);
+
+    if(result.error){
+      alert("Kunne ikke lagre arrangement: " + result.error.message);
+      return;
+    }
+
+    alert("Arrangement er lagret og venter på godkjenning.");
+
+    document.getElementById("eventTitle").value = "";
+    document.getElementById("eventDateFrom").value = "";
+    document.getElementById("eventDateTo").value = "";
+    document.getElementById("eventPlace").value = "";
+    document.getElementById("eventType").value = "";
+    document.getElementById("eventArea").value = "";
+    document.getElementById("eventText").value = "";
+    if(fileInput) fileInput.value = "";
+
+    if(typeof loadPendingEvents === "function"){
+      loadPendingEvents();
+    }
+
+  }catch(e){
+    alert("Feil: " + e.message);
+  }
+}
 </script>
 
 </body>
