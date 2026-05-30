@@ -4471,6 +4471,38 @@ document.addEventListener('DOMContentLoaded', ()=>{
 });
 </script>
 
+
+<script>
+/* STEG 21B - teller butikker per område */
+function updateAreaCounts(){
+  const map = {
+    'Haugalandet':0,
+    'Stavanger':0,
+    'Bergen':0,
+    'Stord':0
+  };
+
+  document.querySelectorAll('.biz-card').forEach(card=>{
+    const txt=(card.innerText||'').toLowerCase();
+    if(txt.includes('haugalandet')) map['Haugalandet']++;
+    if(txt.includes('stavanger')) map['Stavanger']++;
+    if(txt.includes('bergen')) map['Bergen']++;
+    if(txt.includes('stord')) map['Stord']++;
+  });
+
+  document.querySelectorAll('.area-filter-buttons button').forEach(btn=>{
+    const area=btn.dataset.area;
+    if(map[area] !== undefined){
+      btn.textContent = area + ' (' + map[area] + ')';
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  setTimeout(updateAreaCounts,1500);
+});
+</script>
+
 </body>
 
 </html>
