@@ -2556,9 +2556,186 @@ button[onclick*="business"]{
 }
 
 
-/* --- STEG 18: SKJUL NYE BUTIKKER (KAN AKTIVERES SENERE) --- */
+/* --- STEG 17: MOBILVENNLIGE ARRANGEMENTER --- */
+
+.new-events-box{
+  margin-top:18px !important;
+}
+
+.new-events-box h2{
+  font-size:21px !important;
+  margin-bottom:4px !important;
+}
+
+.new-events-box p{
+  font-size:13px !important;
+  margin-bottom:6px !important;
+}
+
+.event-section-title{
+  margin-top:14px !important;
+  margin-bottom:8px !important;
+  font-size:15px !important;
+  font-weight:900 !important;
+  color:#1e3a8a !important;
+}
+
+.new-events-row{
+  display:flex !important;
+  gap:10px !important;
+  overflow-x:auto !important;
+  padding:6px 0 8px !important;
+  scroll-snap-type:x mandatory !important;
+}
+
+.new-events-row::-webkit-scrollbar{
+  display:none;
+}
+
+.new-event-card{
+  min-width:150px !important;
+  max-width:165px !important;
+  min-height:150px !important;
+  flex:0 0 auto !important;
+  scroll-snap-align:start !important;
+  padding:11px !important;
+  border-radius:18px !important;
+  font-size:12px !important;
+  line-height:1.32 !important;
+  cursor:pointer !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:3px !important;
+}
+
+.new-event-card strong{
+  font-size:13px !important;
+  line-height:1.2 !important;
+  display:-webkit-box !important;
+  -webkit-line-clamp:2 !important;
+  -webkit-box-orient:vertical !important;
+  overflow:hidden !important;
+}
+
+.new-event-card small{
+  font-size:11px !important;
+  line-height:1.2 !important;
+  color:#64748b !important;
+}
+
+.new-event-card img{
+  width:58px !important;
+  height:58px !important;
+  object-fit:contain !important;
+  border-radius:13px !important;
+  background:#fff !important;
+  margin-bottom:4px !important;
+  padding:3px !important;
+}
+
+.open-event-btn{
+  margin:10px auto 14px !important;
+  max-width:280px !important;
+  min-height:44px !important;
+  font-size:14px !important;
+}
+
+@media(max-width:760px){
+  .new-events-box{
+    padding:14px !important;
+    border-radius:22px !important;
+  }
+
+  .new-event-card{
+    min-width:138px !important;
+    max-width:150px !important;
+    min-height:142px !important;
+    padding:10px !important;
+  }
+
+  .new-event-card img{
+    width:54px !important;
+    height:54px !important;
+  }
+}
+
+
+/* --- STEG 18B: SKJUL NYE BUTIKKER, BEHOLD MOBIL ARRANGEMENT --- */
 .new-shops-box{
   display:none !important;
+}
+
+
+/* --- STEG 18B: KOMPAKTE KLIKKBARE ARRANGEMENTKORT --- */
+
+.new-events-row{
+  display:flex !important;
+  flex-wrap:nowrap !important;
+  gap:10px !important;
+  overflow-x:auto !important;
+  padding:6px 0 10px !important;
+  scroll-snap-type:x mandatory !important;
+}
+
+.new-events-row::-webkit-scrollbar{
+  display:none !important;
+}
+
+.new-event-card{
+  width:145px !important;
+  min-width:145px !important;
+  max-width:145px !important;
+  min-height:138px !important;
+  padding:10px !important;
+  border-radius:18px !important;
+  font-size:12px !important;
+  line-height:1.25 !important;
+  cursor:pointer !important;
+  scroll-snap-align:start !important;
+  overflow:hidden !important;
+}
+
+.new-event-card img{
+  width:52px !important;
+  height:52px !important;
+  object-fit:contain !important;
+  border-radius:12px !important;
+  background:white !important;
+  padding:3px !important;
+  margin:0 auto 4px !important;
+  display:block !important;
+}
+
+.new-event-card strong{
+  font-size:13px !important;
+  line-height:1.15 !important;
+  display:-webkit-box !important;
+  -webkit-line-clamp:2 !important;
+  -webkit-box-orient:vertical !important;
+  overflow:hidden !important;
+  margin-bottom:3px !important;
+}
+
+.new-event-card span,
+.new-event-card small{
+  font-size:11px !important;
+  line-height:1.2 !important;
+  display:block !important;
+}
+
+@media(max-width:760px){
+  .new-events-box{
+    padding:14px !important;
+  }
+
+  .new-event-card{
+    width:138px !important;
+    min-width:138px !important;
+    max-width:138px !important;
+    min-height:132px !important;
+  }
 }
 
 </style>
@@ -2663,7 +2840,7 @@ button[onclick*="business"]{
 
 
 <!-- --- STEG 13: REGISTRER ARRANGEMENT --- -->
-<button class="open-event-btn" onclick="toggleEventForm()">➕ Legg inn arrangement</button>
+
 
 <div id="eventFormBox" class="event-form-box" style="display:none;">
   <h2>📅 Registrer arrangement</h2>
@@ -2711,6 +2888,8 @@ button[onclick*="business"]{
 <div class="new-events-box">
   <h2>📅 Nye arrangementer</h2>
   <p>Aktiviteter, treff og arrangementer for hund og katt.</p>
+
+  <button class="open-event-btn" onclick="toggleEventForm()">➕ Legg inn arrangement</button>
 
   <div class="event-section-title">🏆 Utstillinger</div>
   <div id="latestShows" class="new-events-row">
@@ -3980,8 +4159,31 @@ async function deleteEvent(id){
 </div>
 
 
+
+
+
+
+
+
 <script>
-/* --- STEG 16F: VIS KURS OG UTSTILLING SEPARAT --- */
+/* --- STEG 18B: ARRANGEMENT KORT HELE KORTET KLIKKER --- */
+
+function formatShortDate(dateString){
+  if(!dateString) return "";
+  var parts = String(dateString).split("-");
+  if(parts.length !== 3) return dateString;
+  return parts[2] + "." + parts[1];
+}
+
+function formatEventDate(from,to){
+  var f = formatShortDate(from);
+  var t = formatShortDate(to);
+
+  if(!f) return "";
+  if(!t || t === f) return f;
+
+  return f + " – " + t;
+}
 
 function openEventImageModal(src){
   var modal = document.getElementById("eventImageModal");
@@ -4046,19 +4248,16 @@ async function loadApprovedEventsSplit(){
       }
 
       return list.map(function(e){
-        var dateText = e.date_from || "";
-        if(e.date_to && e.date_to !== e.date_from){
-          dateText += " - " + e.date_to;
-        }
-
+        var dateText = formatEventDate(e.date_from, e.date_to);
         var poster = e.poster_url || "";
+        var click = poster ? 'onclick="openEventImageModal(\'' + poster + '\')"' : "";
 
         return `
-          <div class="new-event-card">
-            ${poster ? `<img src="${poster}" onclick="openEventImageModal('${poster}')" style="width:78px;height:78px;object-fit:contain;border-radius:14px;background:white;margin-bottom:6px;"><br>` : icon + "<br>"}
-            <strong>${e.title || "Arrangement"}</strong><br>
-            📅 ${dateText}<br>
-            📍 ${e.area || ""}<br>
+          <div class="new-event-card" ${click} title="Trykk for å se plakat">
+            ${poster ? `<img src="${poster}" alt="Plakat">` : icon + "<br>"}
+            <strong>${e.title || "Arrangement"}</strong>
+            <span>📅 ${dateText}</span>
+            <span>📍 ${e.area || ""}</span>
             <small>${e.place || ""}</small>
           </div>
         `;
