@@ -2813,50 +2813,47 @@ button[onclick*="business"]{
 }
 
 
-/* --- STEG 21A: OMRÅDEFILTER PÅ SE BUTIKKER --- */
-.area-filter-box{
-  background:#f8fbff;
+/* --- STEG 23A: SE ARRANGEMENTER SOM EGEN SIDE --- */
+
+.new-events-box{
+  display:none !important;
+}
+
+.se-arrangementer-box{
+  margin:22px auto;
+  max-width:900px;
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
   border:1px solid #dbeafe;
-  border-radius:22px;
-  padding:16px;
-  margin-bottom:16px;
-}
-.area-filter-title{
-  font-weight:900;
-  color:#1d4ed8;
-  margin-bottom:10px;
-}
-.area-filter-buttons{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
-}
-.area-filter-buttons button{
-  background:#eef4ff;
-  color:#1d4ed8;
-}
-.area-filter-buttons button.active{
-  background:#2563eb;
-  color:#fff;
-}
-@media(max-width:760px){
-  .area-filter-buttons{grid-template-columns:1fr 1fr;}
-}
-
-
-/* --- STEG 21D: VELG OMRÅDE FØRST - STERKERE FIKS --- */
-.area-start-message{
-  background:#fff;
-  border:1px dashed #93c5fd;
-  color:#1d4ed8;
-  border-radius:18px;
-  padding:16px;
-  margin:14px 0;
-  font-weight:900;
+  border-radius:26px;
+  padding:18px;
+  box-shadow:0 14px 30px rgba(30,64,175,.10);
   text-align:center;
 }
-body.area-not-selected .biz-card{
-  display:none !important;
+
+.se-arrangementer-box h2{
+  font-size:22px;
+  color:#0f172a;
+  margin-bottom:6px;
+}
+
+.se-arrangementer-box p{
+  color:#64748b;
+  font-size:14px;
+  margin-bottom:14px;
+}
+
+.se-arrangementer-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:48px;
+  padding:12px 22px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:#fff;
+  font-weight:900;
+  text-decoration:none;
+  box-shadow:0 10px 22px rgba(37,99,235,.20);
 }
 
 </style>
@@ -2975,6 +2972,15 @@ body.area-not-selected .biz-card{
 
 
 <!-- --- STEG 13: REGISTRER ARRANGEMENT --- -->
+
+<!-- --- STEG 23A: SE ARRANGEMENTER KNAPP --- -->
+<div class="se-arrangementer-box">
+  <h2>📅 Se Arrangementer</h2>
+  <p>Finn kurs og utstillinger etter område.</p>
+  <a class="se-arrangementer-btn" href="arrangementer.html">📍 Se Arrangementer</a>
+</div>
+
+
 <!-- --- STEG 12: NYE ARRANGEMENTER --- -->
 <div class="new-events-box">
   <h2>📅 Nye arrangementer</h2>
@@ -4436,151 +4442,6 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 });
 </script>
-
-<script>
-window.selectedAreaFilter = '';
-
-function setAreaFilter(area){
-  window.selectedAreaFilter = area;
-
-  document.querySelectorAll('.area-filter-buttons button').forEach(btn=>{
-    btn.classList.remove('active');
-    if(btn.dataset.area === area){ btn.classList.add('active'); }
-  });
-
-  document.querySelectorAll('.biz-card').forEach(card=>{
-    const txt = (card.innerText || '').toLowerCase();
-    if(!area){
-      card.style.display='';
-    }else{
-      card.style.display = txt.includes(area.toLowerCase()) ? '' : 'none';
-    }
-  });
-}
-
-document.addEventListener('DOMContentLoaded', ()=>{
-  const targets = [
-    document.getElementById('page-haugalandet'),
-    document.getElementById('page-stavanger'),
-    document.getElementById('page-bergen')
-  ];
-
-  targets.forEach(page=>{
-    if(!page) return;
-
-    const card = page.querySelector('.card');
-    if(!card || page.querySelector('.area-filter-box')) return;
-
-    const box = document.createElement('div');
-    box.className='area-filter-box';
-    box.innerHTML=`
-      <div class="area-filter-title">📍 Velg område</div>
-      <div class="area-filter-buttons">
-        <button data-area="Haugalandet" onclick="setAreaFilter('Haugalandet')">Haugalandet</button>
-        <button data-area="Stavanger" onclick="setAreaFilter('Stavanger')">Stavanger</button>
-        <button data-area="Bergen" onclick="setAreaFilter('Bergen')">Bergen</button>
-        <button data-area="Stord" onclick="setAreaFilter('Stord')">Stord</button>
-      </div>`;
-
-    card.insertBefore(box, card.firstChild);
-  });
-});
-</script>
-
-
-<script>
-/* STEG 21B - teller butikker per område */
-function updateAreaCounts(){
-  const map = {
-    'Haugalandet':0,
-    'Stavanger':0,
-    'Bergen':0,
-    'Stord':0
-  };
-
-  document.querySelectorAll('.biz-card').forEach(card=>{
-    const txt=(card.innerText||'').toLowerCase();
-    if(txt.includes('haugalandet')) map['Haugalandet']++;
-    if(txt.includes('stavanger')) map['Stavanger']++;
-    if(txt.includes('bergen')) map['Bergen']++;
-    if(txt.includes('stord')) map['Stord']++;
-  });
-
-  document.querySelectorAll('.area-filter-buttons button').forEach(btn=>{
-    const area=btn.dataset.area;
-    if(map[area] !== undefined){
-      btn.textContent = area + ' (' + map[area] + ')';
-    }
-  });
-}
-
-document.addEventListener('DOMContentLoaded', ()=>{
-  setTimeout(updateAreaCounts,1500);
-});
-</script>
-
-
-<script>
-/* STEG 21D - skjul butikker til område er valgt */
-window.selectedAreaFilter = window.selectedAreaFilter || '';
-
-function addAreaStartMessage(){
-  const box = document.querySelector('.area-filter-box');
-  if(!box) return;
-
-  if(!document.getElementById('areaStartMessage')){
-    const msg = document.createElement('div');
-    msg.id = 'areaStartMessage';
-    msg.className = 'area-start-message';
-    msg.textContent = '📍 Velg område for å se butikker';
-    box.after(msg);
-  }
-}
-
-function removeAreaStartMessage(){
-  const msg = document.getElementById('areaStartMessage');
-  if(msg) msg.remove();
-}
-
-function activateAreaStartMode(){
-  if(!window.selectedAreaFilter){
-    document.body.classList.add('area-not-selected');
-    addAreaStartMessage();
-  }
-}
-
-const previousSetAreaFilter = window.setAreaFilter;
-
-window.setAreaFilter = function(area){
-  window.selectedAreaFilter = area;
-  document.body.classList.remove('area-not-selected');
-  removeAreaStartMessage();
-
-  document.querySelectorAll('.area-filter-buttons button').forEach(btn=>{
-    btn.classList.remove('active');
-    if(btn.dataset.area === area){ btn.classList.add('active'); }
-  });
-
-  document.querySelectorAll('.biz-card').forEach(card=>{
-    const txt = (card.innerText || '').toLowerCase();
-    card.style.display = txt.includes(String(area).toLowerCase()) ? '' : 'none';
-  });
-};
-
-document.addEventListener('DOMContentLoaded', function(){
-  activateAreaStartMode();
-
-  let tries = 0;
-  const timer = setInterval(function(){
-    tries++;
-    if(!window.selectedAreaFilter){
-      activateAreaStartMode();
-    }
-    if(tries > 12) clearInterval(timer);
-  }, 500);
-});
-</script>
-
 </body>
 
 </html>
