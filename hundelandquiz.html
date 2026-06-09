@@ -27,13 +27,14 @@ h1{margin-bottom:20px}
 <h1>🌍 Hvilket land kommer disse hundene fra?</h1>
 <div class="stats">
 <div class="stat">🏆 Poeng: <span id="score">0</span></div>
-<div class="stat">❤️ Liv: <span id="lives">3</span></div>
+<div class="stat">❌ Feil: <span id="lives">0</span></div>
 <div class="stat">❓ Spørsmål: <span id="questionNumber">1</span></div>
 </div>
 <div class="quiz-box">
 <img id="dogImage">
 <div id="breed"></div>
 <div class="question">Hvor kommer denne hunderasen fra?</div>
+<div style="font-size:16px;margin-bottom:14px;color:#64748b;font-weight:bold;">Svar feil? Spillet fortsetter likevel 👍</div>
 <div id="answers"></div>
 <button id="nextBtn" onclick="nextQuestion()">Neste ➜</button>
 </div>
@@ -87,7 +88,7 @@ const questions = [
 
 let currentQuestion=0;
 let score=0;
-let lives=3;
+let lives=0;
 
 function shuffleArray(array){
   const copy=[...array];
@@ -133,18 +134,12 @@ function checkAnswer(button,answer){
   if(answer===q.correct){
     score+=10;
   }else{
-    lives--;
+    lives++;
     button.classList.add("wrong");
   }
 
   document.getElementById("score").textContent=score;
   document.getElementById("lives").textContent=lives;
-
-  if(lives<=0){
-    alert("😅 Game Over! Du må starte på nytt.");
-    location.reload();
-    return;
-  }
 
   document.getElementById("nextBtn").style.display="inline-block";
 }
