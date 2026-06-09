@@ -43,9 +43,15 @@ button{
 button:hover{
   background:#fde047;
 }
+button:focus{
+  outline:none;
+}
 .back{
   background:#2563eb;
   color:white;
+}
+.back:hover{
+  background:#1d4ed8;
 }
 .choice{
   display:block;
@@ -53,6 +59,22 @@ button:hover{
   max-width:560px;
   margin:12px auto;
   background:white;
+  color:#111;
+}
+.choice:hover{
+  background:#f3f4f6;
+}
+.choice:focus{
+  background:white;
+  outline:none;
+}
+.choice.correct:hover{
+  background:#22c55e!important;
+  color:white;
+}
+.choice.wrong:hover{
+  background:#ef4444!important;
+  color:white;
 }
 .correct{
   background:#22c55e!important;
@@ -106,7 +128,7 @@ button:hover{
 
   <p id="chosen">Ingen valg enda</p>
   <button onclick="startQuiz()">Start Quiz</button>
-  <p class="note">Country har nå 50 spørsmål og trekker 10 tilfeldige hver runde.</p>
+  <p class="note">Country har 50 spørsmål og trekker 10 tilfeldige hver runde.</p>
 </div>
 
 <div id="quiz" class="card hidden">
@@ -312,6 +334,7 @@ function showQuestion(){
 }
 
 function checkAnswer(isCorrect,btn){
+  btn.blur();
   const buttons=document.querySelectorAll(".choice");
   buttons.forEach(b=>b.disabled=true);
 
