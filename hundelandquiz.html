@@ -4,559 +4,162 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🌍 Hundeland Quiz MASTER</title>
-
 <style>
-
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:linear-gradient(to bottom,#dbeafe,#eef6ff);
-text-align:center;
-color:#123c73;
-}
-
-.container{
-max-width:950px;
-margin:20px auto;
-padding:20px;
-}
-
-h1{
-margin-bottom:20px;
-}
-
-.stats{
-display:flex;
-gap:15px;
-flex-wrap:wrap;
-margin-bottom:20px;
-}
-
-.stat{
-flex:1;
-background:white;
-padding:15px;
-border-radius:18px;
-font-weight:bold;
-box-shadow:0 4px 10px rgba(0,0,0,.1);
-}
-
-.quiz-box{
-background:white;
-padding:25px;
-border-radius:28px;
-box-shadow:0 8px 20px rgba(0,0,0,.12);
-}
-
-#dogImage{
-width:100%;
-max-height:260px;
-object-fit:contain;
-background:white;
-border-radius:20px;
-margin-bottom:20px;
-}
-}
-
-#breed{
-font-size:34px;
-font-weight:bold;
-margin-bottom:10px;
-}
-
-.question{
-font-size:24px;
-margin-bottom:20px;
-}
-
-.answer-btn{
-display:block;
-width:100%;
-margin:12px 0;
-padding:20px;
-border:none;
-border-radius:18px;
-background:#dbeafe;
-font-size:24px;
-font-weight:bold;
-cursor:pointer;
-transition:.2s;
-}
-
-.answer-btn:hover{
-background:#bfdbfe;
-}
-
-.correct{
-background:#10b981 !important;
-color:white;
-}
-
-.wrong{
-background:#ef4444 !important;
-color:white;
-}
-
-#nextBtn{
-display:none;
-margin-top:20px;
-padding:18px 35px;
-border:none;
-border-radius:18px;
-background:#2563eb;
-color:white;
-font-size:22px;
-font-weight:bold;
-cursor:pointer;
-}
-
-.back button{
-margin-top:30px;
-padding:16px 30px;
-border:none;
-border-radius:18px;
-background:#123c73;
-color:white;
-font-size:20px;
-font-weight:bold;
-cursor:pointer;
-}
-
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(to bottom,#dbeafe,#eef6ff);text-align:center;color:#123c73}
+.container{max-width:950px;margin:20px auto;padding:20px}
+h1{margin-bottom:20px}
+.stats{display:flex;gap:15px;flex-wrap:wrap;margin-bottom:20px}
+.stat{flex:1;background:white;padding:15px;border-radius:18px;font-weight:bold;box-shadow:0 4px 10px rgba(0,0,0,.1)}
+.quiz-box{background:white;padding:25px;border-radius:28px;box-shadow:0 8px 20px rgba(0,0,0,.12)}
+#dogImage{width:100%;max-height:260px;object-fit:contain;background:white;border-radius:20px;margin-bottom:20px}
+#breed{font-size:34px;font-weight:bold;margin-bottom:10px}
+.question{font-size:24px;margin-bottom:20px}
+.answer-btn{display:block;width:100%;margin:12px 0;padding:20px;border:none;border-radius:18px;background:#dbeafe;font-size:24px;font-weight:bold;cursor:pointer;transition:.2s}
+.answer-btn:hover{background:#bfdbfe}
+.correct{background:#10b981!important;color:white}
+.wrong{background:#ef4444!important;color:white}
+#nextBtn{display:none;margin-top:20px;padding:18px 35px;border:none;border-radius:18px;background:#2563eb;color:white;font-size:22px;font-weight:bold;cursor:pointer}
+.back button{margin-top:30px;padding:16px 30px;border:none;border-radius:18px;background:#123c73;color:white;font-size:20px;font-weight:bold;cursor:pointer}
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
 <h1>🌍 Hvilket land kommer disse hundene fra?</h1>
-
 <div class="stats">
 <div class="stat">🏆 Poeng: <span id="score">0</span></div>
 <div class="stat">❤️ Liv: <span id="lives">3</span></div>
 <div class="stat">❓ Spørsmål: <span id="questionNumber">1</span></div>
 </div>
-
 <div class="quiz-box">
-
 <img id="dogImage">
-
 <div id="breed"></div>
-
-<div class="question">
-Hvor kommer denne hunderasen fra?
-</div>
-
+<div class="question">Hvor kommer denne hunderasen fra?</div>
 <div id="answers"></div>
-
-<button id="nextBtn" onclick="nextQuestion()">
-Neste ➜
-</button>
-
+<button id="nextBtn" onclick="nextQuestion()">Neste ➜</button>
 </div>
-
-<div class="back">
-<button onclick="location.href='hundespill.html'">
-⬅️ Tilbake til spill
-</button>
+<div class="back"><button onclick="location.href='hundespill.html'">⬅️ Tilbake til spill</button></div>
 </div>
-
-</div>
-
 <script>
 
 const questions = [
-
-{
-breed:"Kinesisk Nakenhund",
-image:"bilder/kinesisk-nakenhund.png",
-answers:["Kina","Japan","Mexico"],
-correct:"Kina"
-},
-
-{
-breed:"Chihuahua",
-image:"bilder/Chihuahua.png",
-answers:["Mexico","Spania","Italia"],
-correct:"Mexico"
-},
-
-{
-breed:"Dachs",
-image:"bilder/dachs.png",
-answers:["Tyskland","Sveits","Frankrike"],
-correct:"Tyskland"
-},
-
-{
-breed:"Briard",
-image:"bilder/briard.png",
-answers:["Frankrike","Belgia","Italia"],
-correct:"Frankrike"
-},
-
-{
-breed:"Norsk Lundehund",
-image:"bilder/lundehund.png",
-answers:["Norge","Sverige","Finland"],
-correct:"Norge"
-},
-
-{
-breed:"Shar Pei",
-image:"bilder/sharpei.png",
-answers:["Kina","Japan","Thailand"],
-correct:"Kina"
-},
-
-{
-breed:"Schæfer",
-image:"bilder/schafer.png",
-answers:["Tyskland","Nederland","Belgia"],
-correct:"Tyskland"
-},
-
-{
-breed:"Engelsk Cocker Spaniel",
-image:"bilder/cocker.png",
-answers:["England","USA","Australia"],
-correct:"England"
-},
-
-{
-breed:"Border Collie",
-image:"bilder/border-collie.png",
-answers:["Skottland","Irland","England"],
-correct:"Skottland"
-},
-
-{
-breed:"Husky",
-image:"bilder/husky.png",
-answers:["Russland","Canada","USA"],
-correct:"Russland"
-},
-
-{
-breed:"Golden Retriever",
-image:"bilder/golden.png",
-answers:["Skottland","USA","Canada"],
-correct:"Skottland"
-},
-
-{
-breed:"Dalmatiner",
-image:"bilder/dalmatiner.png",
-answers:["Kroatia","Italia","Hellas"],
-correct:"Kroatia"
-},
-
-{
-breed:"Dobermann",
-image:"bilder/dobermann.png",
-answers:["Tyskland","Russland","Frankrike"],
-correct:"Tyskland"
-},
-
-{
-breed:"Boxer",
-image:"bilder/boxer.png",
-answers:["Tyskland","England","USA"],
-correct:"Tyskland"
-},
-
-{
-breed:"Cavalier King Charles Spaniel",
-image:"bilder/cavalier.png",
-answers:["England","Frankrike","Italia"],
-correct:"England"
-},
-
-{
-breed:"Collie",
-image:"bilder/collie.png",
-answers:["Skottland","Irland","Wales"],
-correct:"Skottland"
-},
-
-{
-breed:"Newfoundland",
-image:"bilder/newfoundland.png",
-answers:["Canada","USA","Russland"],
-correct:"Canada"
-},
-
-{
-breed:"Mops",
-image:"bilder/mops.png",
-answers:["Kina","Japan","Thailand"],
-correct:"Kina"
-},
-
-{
-breed:"Puddel",
-image:"bilder/puddel.png",
-answers:["Tyskland","Frankrike","Spania"],
-correct:"Tyskland"
-},
-
-{
-breed:"Boston Terrier",
-image:"bilder/boston-terrier.png",
-answers:["USA","England","Canada"],
-correct:"USA"
-},
-
-{
-breed:"Irsk Ulvehund",
-image:"bilder/irsk-ulvehund.png",
-answers:["Irland","Skottland","England"],
-correct:"Irland"
-},
-
-{
-breed:"Lowchen",
-image:"bilder/lowchen.png",
-answers:["Frankrike","Tyskland","Belgia"],
-correct:"Frankrike"
-},
-
-{
-breed:"Lhasa Apso",
-image:"bilder/lhasa-apso.png",
-answers:["Tibet","Kina","Nepal"],
-correct:"Tibet"
-},
-
-{
-breed:"Pomeranian",
-image:"bilder/pomeranian.png",
-answers:["Tyskland","Polen","Russland"],
-correct:"Tyskland"
-},
-
-{
-breed:"Fransk Bulldog",
-image:"bilder/fransk-bulldog.png",
-answers:["Frankrike","Belgia","Italia"],
-correct:"Frankrike"
-},
-
-{
-breed:"Rottweiler",
-image:"bilder/rottweiler.png",
-answers:["Tyskland","Russland","Polen"],
-correct:"Tyskland"
-},
-
-{
-breed:"Basenji",
-image:"bilder/basenji.png",
-answers:["Kongo","Kenya","Egypt"],
-correct:"Kongo"
-},
-
-{
-breed:"Bull Terrier",
-image:"bilder/bull-terrier.png",
-answers:["England","USA","Canada"],
-correct:"England"
-},
-
-{
-breed:"Irsk Setter",
-image:"bilder/irsk-setter.png",
-answers:["Irland","Skottland","England"],
-correct:"Irland"
-},
-
-{
-breed:"Beagle",
-image:"bilder/beagle.png",
-answers:["England","USA","Canada"],
-correct:"England"
-},
-
-{
-breed:"Samojed",
-image:"bilder/samojed.png",
-answers:["Russland","Finland","Canada"],
-correct:"Russland"
-},
-
-{
-breed:"Akita",
-image:"bilder/akita.png",
-answers:["Japan","Kina","Thailand"],
-correct:"Japan"
-},
-
-{
-breed:"Shiba Inu",
-image:"bilder/shiba-inu.png",
-answers:["Japan","Kina","Sør-Korea"],
-correct:"Japan"
-},
-
-{
-breed:"Cane Corso",
-image:"bilder/cane-corso.png",
-answers:["Italia","Spania","Portugal"],
-correct:"Italia"
-},
-
-{
-breed:"Weimaraner",
-image:"bilder/weimaraner.png",
-answers:["Tyskland","Østerrike","Sveits"],
-correct:"Tyskland"
-},
-
-{
-breed:"Malteser",
-image:"bilder/malteser.png",
-answers:["Malta","Italia","Hellas"],
-correct:"Malta"
-},
-
-{
-breed:"Corgi",
-image:"bilder/corgi.png",
-answers:["Wales","Irland","England"],
-correct:"Wales"
-},
-
-{
-breed:"Grand Danois",
-image:"bilder/grand-danois.png",
-answers:["Tyskland","Danmark","Nederland"],
-correct:"Tyskland"
-},
-
-{
-breed:"Sankt Bernhard",
-image:"bilder/sankt-bernhard.png",
-answers:["Sveits","Tyskland","Østerrike"],
-correct:"Sveits"
-},
-
-{
-breed:"Australian Shepherd",
-image:"bilder/australian-shepherd.png",
-answers:["USA","Australia","Canada"],
-correct:"USA"
-}
-
+{breed:"Kinesisk Nakenhund",image:"bilder/kinesisk-nakenhund.png",answers:["Kina","Japan","Mexico"],correct:"Kina"},
+{breed:"Chihuahua",image:"bilder/Chihuahua.png",answers:["Mexico","Spania","Italia"],correct:"Mexico"},
+{breed:"Dachs",image:"bilder/dachs.png",answers:["Tyskland","Sveits","Frankrike"],correct:"Tyskland"},
+{breed:"Briard",image:"bilder/briard.png",answers:["Frankrike","Belgia","Italia"],correct:"Frankrike"},
+{breed:"Norsk Lundehund",image:"bilder/lundehund.png",answers:["Norge","Sverige","Finland"],correct:"Norge"},
+{breed:"Shar Pei",image:"bilder/sharpei.png",answers:["Kina","Japan","Thailand"],correct:"Kina"},
+{breed:"Schæfer",image:"bilder/schafer.png",answers:["Tyskland","Nederland","Belgia"],correct:"Tyskland"},
+{breed:"Engelsk Cocker Spaniel",image:"bilder/cocker.png",answers:["England","USA","Australia"],correct:"England"},
+{breed:"Border Collie",image:"bilder/border-collie.png",answers:["Skottland","Irland","England"],correct:"Skottland"},
+{breed:"Husky",image:"bilder/husky.png",answers:["Russland","Canada","USA"],correct:"Russland"},
+{breed:"Golden Retriever",image:"bilder/golden.png",answers:["Skottland","USA","Canada"],correct:"Skottland"},
+{breed:"Dalmatiner",image:"bilder/dalmatiner.png",answers:["Kroatia","Italia","Hellas"],correct:"Kroatia"},
+{breed:"Dobermann",image:"bilder/dobermann.png",answers:["Tyskland","Russland","Frankrike"],correct:"Tyskland"},
+{breed:"Boxer",image:"bilder/boxer.png",answers:["Tyskland","England","USA"],correct:"Tyskland"},
+{breed:"Cavalier King Charles Spaniel",image:"bilder/cavalier.png",answers:["England","Frankrike","Italia"],correct:"England"},
+{breed:"Collie",image:"bilder/collie.png",answers:["Skottland","Irland","Wales"],correct:"Skottland"},
+{breed:"Newfoundland",image:"bilder/newfoundland.png",answers:["Canada","USA","Russland"],correct:"Canada"},
+{breed:"Mops",image:"bilder/mops.png",answers:["Kina","Japan","Thailand"],correct:"Kina"},
+{breed:"Puddel",image:"bilder/puddel.png",answers:["Tyskland","Frankrike","Spania"],correct:"Tyskland"},
+{breed:"Boston Terrier",image:"bilder/boston-terrier.png",answers:["USA","England","Canada"],correct:"USA"},
+{breed:"Irsk Ulvehund",image:"bilder/irsk-ulvehund.png",answers:["Irland","Skottland","England"],correct:"Irland"},
+{breed:"Lowchen",image:"bilder/lowchen.png",answers:["Frankrike","Tyskland","Belgia"],correct:"Frankrike"},
+{breed:"Lhasa Apso",image:"bilder/lhasa-apso.png",answers:["Tibet","Kina","Nepal"],correct:"Tibet"},
+{breed:"Pomeranian",image:"bilder/pomeranian.png",answers:["Tyskland","Polen","Russland"],correct:"Tyskland"},
+{breed:"Fransk Bulldog",image:"bilder/fransk-bulldog.png",answers:["Frankrike","Belgia","Italia"],correct:"Frankrike"},
+{breed:"Rottweiler",image:"bilder/rottweiler.png",answers:["Tyskland","Russland","Polen"],correct:"Tyskland"},
+{breed:"Basenji",image:"bilder/basenji.png",answers:["Kongo","Kenya","Egypt"],correct:"Kongo"},
+{breed:"Bull Terrier",image:"bilder/bull-terrier.png",answers:["England","USA","Canada"],correct:"England"},
+{breed:"Irsk Setter",image:"bilder/irsk-setter.png",answers:["Irland","Skottland","England"],correct:"Irland"},
+{breed:"Beagle",image:"bilder/beagle.png",answers:["England","USA","Canada"],correct:"England"},
+{breed:"Samojed",image:"bilder/samojed.png",answers:["Russland","Finland","Canada"],correct:"Russland"},
+{breed:"Akita",image:"bilder/akita.png",answers:["Japan","Kina","Thailand"],correct:"Japan"},
+{breed:"Shiba Inu",image:"bilder/shiba-inu.png",answers:["Japan","Kina","Sør-Korea"],correct:"Japan"},
+{breed:"Cane Corso",image:"bilder/cane-corso.png",answers:["Italia","Spania","Portugal"],correct:"Italia"},
+{breed:"Weimaraner",image:"bilder/weimaraner.png",answers:["Tyskland","Østerrike","Sveits"],correct:"Tyskland"},
+{breed:"Malteser",image:"bilder/malteser.png",answers:["Malta","Italia","Hellas"],correct:"Malta"},
+{breed:"Corgi",image:"bilder/corgi.png",answers:["Wales","Irland","England"],correct:"Wales"},
+{breed:"Grand Danois",image:"bilder/grand-danois.png",answers:["Tyskland","Danmark","Nederland"],correct:"Tyskland"},
+{breed:"Sankt Bernhard",image:"bilder/sankt-bernhard.png",answers:["Sveits","Tyskland","Østerrike"],correct:"Sveits"},
+{breed:"Australian Shepherd",image:"bilder/australian-shepherd.png",answers:["USA","Australia","Canada"],correct:"USA"}
 ];
 
-let currentQuestion = 0;
-let score = 0;
-let lives = 3;
+
+let currentQuestion=0;
+let score=0;
+let lives=3;
+
+function shuffleArray(array){
+  const copy=[...array];
+  for(let i=copy.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [copy[i],copy[j]]=[copy[j],copy[i]];
+  }
+  return copy;
+}
 
 function loadQuestion(){
+  const q=questions[currentQuestion];
+  document.getElementById("dogImage").src=q.image;
+  document.getElementById("breed").textContent=q.breed;
+  document.getElementById("questionNumber").textContent=(currentQuestion+1)+"/"+questions.length;
 
-const q = questions[currentQuestion];
+  const answers=document.getElementById("answers");
+  answers.innerHTML="";
 
-document.getElementById("dogImage").src = q.image;
+  shuffleArray(q.answers).forEach(answer=>{
+    const btn=document.createElement("button");
+    btn.className="answer-btn";
+    btn.textContent=answer;
+    btn.dataset.answer=answer;
+    btn.onclick=()=>checkAnswer(btn,answer);
+    answers.appendChild(btn);
+  });
 
-document.getElementById("breed").innerHTML = q.breed;
-
-document.getElementById("questionNumber").innerHTML =
-(currentQuestion + 1) + "/" + questions.length;
-
-const answers = document.getElementById("answers");
-
-answers.innerHTML = "";
-
-q.answers.forEach(answer => {
-
-const btn = document.createElement("button");
-
-btn.className = "answer-btn";
-
-btn.innerHTML = answer;
-
-btn.onclick = () => checkAnswer(btn,answer);
-
-answers.appendChild(btn);
-
-});
-
-document.getElementById("nextBtn").style.display = "none";
-
+  document.getElementById("nextBtn").style.display="none";
 }
 
 function checkAnswer(button,answer){
+  const q=questions[currentQuestion];
+  const buttons=document.querySelectorAll(".answer-btn");
 
-const q = questions[currentQuestion];
+  buttons.forEach(btn=>{
+    btn.disabled=true;
+    if(btn.dataset.answer===q.correct){
+      btn.classList.add("correct");
+    }
+  });
 
-const buttons =
-document.querySelectorAll(".answer-btn");
+  if(answer===q.correct){
+    score+=10;
+  }else{
+    lives--;
+    button.classList.add("wrong");
+  }
 
-buttons.forEach(btn => {
+  document.getElementById("score").textContent=score;
+  document.getElementById("lives").textContent=lives;
 
-btn.disabled = true;
+  if(lives<=0){
+    alert("😅 Game Over! Du må starte på nytt.");
+    location.reload();
+    return;
+  }
 
-if(btn.innerHTML === q.correct){
-
-btn.classList.add("correct");
-
-}
-
-});
-
-if(answer === q.correct){
-
-score += 10;
-
-}else{
-
-lives--;
-
-button.classList.add("wrong");
-
-}
-
-document.getElementById("score").innerHTML = score;
-
-document.getElementById("lives").innerHTML = lives;
-
-if(lives <= 0){
-
-alert("😅 Game Over! Du må starte på nytt.");
-
-location.reload();
-
-return;
-
-}
-
-document.getElementById("nextBtn").style.display =
-"inline-block";
-
+  document.getElementById("nextBtn").style.display="inline-block";
 }
 
 function nextQuestion(){
-
-currentQuestion++;
-
-if(currentQuestion >= questions.length){
-
-alert("🏆 Gratulerer! Du fullførte Hundeland Quiz MASTER!");
-
-location.reload();
-
-return;
-
+  currentQuestion++;
+  if(currentQuestion>=questions.length){
+    alert("🏆 Gratulerer! Du fullførte Hundeland Quiz MASTER!");
+    location.reload();
+    return;
+  }
+  loadQuestion();
 }
 
 loadQuestion();
-
-}
-
-loadQuestion();
-
 </script>
-
 </body>
 </html>
