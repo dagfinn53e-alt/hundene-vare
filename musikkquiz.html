@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Musikk Quiz</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#111827,#4c1d95,#7c2d12);
+  color:white;
+  text-align:center;
+}
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:25px;
+}
+h1{
+  font-size:42px;
+  margin-bottom:10px;
+}
+.card{
+  background:rgba(255,255,255,0.12);
+  border-radius:20px;
+  padding:25px;
+  margin:20px 0;
+  box-shadow:0 8px 25px rgba(0,0,0,0.35);
+}
+button{
+  border:0;
+  border-radius:14px;
+  padding:14px 22px;
+  margin:8px;
+  font-size:18px;
+  cursor:pointer;
+  background:#facc15;
+  color:#111;
+  font-weight:bold;
+}
+button:hover{
+  background:#fde047;
+}
+.choice{
+  display:block;
+  width:90%;
+  max-width:500px;
+  margin:12px auto;
+  background:white;
+}
+.correct{
+  background:#22c55e !important;
+  color:white;
+}
+.wrong{
+  background:#ef4444 !important;
+  color:white;
+}
+.hidden{
+  display:none;
+}
+.small{
+  font-size:16px;
+  opacity:0.9;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>🎵 Musikk Quiz</h1>
+  <p class="small">Velg tiår og kategori</p>
+
+  <div id="setup" class="card">
+    <h2>Velg tiår</h2>
+    <div id="years">
+      <button onclick="selectYear('60')">60-tallet</button>
+      <button onclick="selectYear('70')">70-tallet</button>
+      <button onclick="selectYear('80')">80-tallet</button>
+      <button onclick="selectYear('90')">90-tallet</button>
+    </div>
+
+    <h2>Velg kategori</h2>
+    <div id="categories">
+      <button onclick="selectCategory('Country')">Country</button>
+      <button onclick="selectCategory('Soul')">Soul</button>
+      <button onclick="selectCategory('Pop')">Pop</button>
+      <button onclick="selectCategory('Rock')">Rock</button>
+    </div>
+
+    <p id="chosen">Ingen valg enda</p>
+    <button onclick="startQuiz()">Start Quiz</button>
+  </div>
+
+  <div id="quiz" class="card hidden">
+    <h2 id="question"></h2>
+    <div id="answers"></div>
+    <p id="progress"></p>
+    <p id="score"></p>
+  </div>
+
+  <div id="result" class="card hidden">
+    <h2>🎉 Ferdig!</h2>
+    <p id="finalScore"></p>
+    <button onclick="restart()">Spill igjen</button>
+  </div>
+
+</div>
+
+<script>
+let selectedYear = "";
+let selectedCategory = "";
+let currentQuestion = 0;
+let score = 0;
+let activeQuestions = [];
+
+const questions = {
+  "60_Pop": [
+    {
+      q: "Hvilket band ble svært kjent med Beatlemania på 60-tallet?",
+      a: ["The Beatles", "ABBA", "Queen", "U2"],
+      correct: 0
+    },
+    {
+      q: "Hvilken kvinnelig artist hadde stor suksess med pop og soul på 60-tallet?",
+      a: ["Dusty Springfield", "Madonna", "Cher", "Tina Turner"],
+      correct: 0
+    }
+  ],
+
+  "60_Rock": [
+    {
+      q: "Hvilket band hadde Mick Jagger som vokalist?",
+      a: ["The Rolling Stones", "The Beach Boys", "Bee Gees", "The Doors"],
+      correct: 0
+    },
+    {
+      q: "Hvem var kjent som en av de store gitarlegendene på 60-tallet?",
+      a: ["Jimi Hendrix", "Elvis Costello", "Bon Jovi", "Prince"],
+      correct: 0
+    }
+  ],
+
+  "70_Pop": [
+    {
+      q: "Hvilken svensk gruppe vant Eurovision i 1974?",
+      a: ["ABBA", "Roxette", "Ace of Base", "Europe"],
+      correct: 0
+    },
+    {
+      q: "Hvilket band var kjent for disco-pop på 70-tallet?",
+      a: ["Bee Gees", "Nirvana", "Oasis", "Coldplay"],
+      correct: 0
+    }
+  ],
+
+  "70_Rock": [
+    {
+      q: "Hvilket band ga ut albumet 'A Night at the Opera'?",
+      a: ["Queen", "Kiss", "Status Quo", "Deep Purple"],
+      correct: 0
+    },
+    {
+      q: "Hvilket band er kjent for låten 'Smoke on the Water'?",
+      a: ["Deep Purple", "ABBA", "Bee Gees", "The Police"],
+      correct: 0
+    }
+  ],
+
+  "80_Pop": [
+    {
+      q: "Hvem ble ofte kalt 'King of Pop'?",
+      a: ["Michael Jackson", "Elton John", "George Michael", "Phil Collins"],
+      correct: 0
+    },
+    {
+      q: "Hvilken norsk gruppe fikk stor internasjonal suksess på 80-tallet?",
+      a: ["a-ha", "D.D.E.", "Vamp", "Hellbillies"],
+      correct: 0
+    }
+  ],
+
+  "80_Rock": [
+    {
+      q: "Hvilket band er kjent for låten 'Livin' on a Prayer'?",
+      a: ["Bon Jovi", "Queen", "Metallica", "Europe"],
+      correct: 0
+    },
+    {
+      q: "Hvilket svensk rockeband hadde stor hit med 'The Final Countdown'?",
+      a: ["Europe", "ABBA", "Roxette", "Ace of Base"],
+      correct: 0
+    }
+  ],
+
+  "90_Pop": [
+    {
+      q: "Hvilken jentegruppe ble svært kjent på 90-tallet?",
+      a: ["Spice Girls", "Bananarama", "The Supremes", "Pointer Sisters"],
+      correct: 0
+    },
+    {
+      q: "Hvilken svensk gruppe hadde stor suksess med pop på 90-tallet?",
+      a: ["Ace of Base", "ABBA", "Europe", "The Cardigans"],
+      correct: 0
+    }
+  ],
+
+  "90_Rock": [
+    {
+      q: "Hvilket band forbindes sterkt med grunge på 90-tallet?",
+      a: ["Nirvana", "Queen", "Kiss", "The Beatles"],
+      correct: 0
+    },
+    {
+      q: "Hvem var vokalist i Nirvana?",
+      a: ["Kurt Cobain", "Axl Rose", "Bono", "Freddie Mercury"],
+      correct: 0
+    }
+  ],
+
+  "70_Country": [
+    {
+      q: "Hvilken artist er kjent som en stor country-legende?",
+      a: ["Dolly Parton", "Madonna", "Cher", "Whitney Houston"],
+      correct: 0
+    }
+  ],
+
+  "80_Country": [
+    {
+      q: "Hvilken countryartist ble svært kjent med både musikk og film?",
+      a: ["Kenny Rogers", "Prince", "Sting", "David Bowie"],
+      correct: 0
+    }
+  ],
+
+  "60_Soul": [
+    {
+      q: "Hvem ble kalt 'Queen of Soul'?",
+      a: ["Aretha Franklin", "Diana Ross", "Cher", "Madonna"],
+      correct: 0
+    }
+  ],
+
+  "70_Soul": [
+    {
+      q: "Hvilken artist er kjent for soul og låten 'Let's Stay Together'?",
+      a: ["Al Green", "Elvis Presley", "Bob Dylan", "David Bowie"],
+      correct: 0
+    }
+  ],
+
+  "80_Soul": [
+    {
+      q: "Hvilken kvinnelig artist ble en av 80-tallets største stemmer?",
+      a: ["Whitney Houston", "Dolly Parton", "Cyndi Lauper", "Tina Charles"],
+      correct: 0
+    }
+  ],
+
+  "90_Soul": [
+    {
+      q: "Hvilken artist hadde stor suksess med soul/R&B på 90-tallet?",
+      a: ["Mariah Carey", "Janis Joplin", "Patsy Cline", "Annie Lennox"],
+      correct: 0
+    }
+  ],
+
+  "60_Country": [
+    {
+      q: "Hvilken artist er kjent for countrylåten 'Ring of Fire'?",
+      a: ["Johnny Cash", "Elvis Presley", "Bob Marley", "Paul McCartney"],
+      correct: 0
+    }
+  ],
+
+  "90_Country": [
+    {
+      q: "Hvilken kvinnelig countryartist ble enormt populær på 90-tallet?",
+      a: ["Shania Twain", "Madonna", "Britney Spears", "Céline Dion"],
+      correct: 0
+    }
+  ]
+};
+
+function selectYear(year){
+  selectedYear = year;
+  updateChosen();
+}
+
+function selectCategory(category){
+  selectedCategory = category;
+  updateChosen();
+}
+
+function updateChosen(){
+  document.getElementById("chosen").innerHTML =
+    "Valgt: " + 
+    (selectedYear ? selectedYear + "-tallet" : "ingen tiår") + 
+    " / " + 
+    (selectedCategory || "ingen kategori");
+}
+
+function startQuiz(){
+  if(!selectedYear || !selectedCategory){
+    alert("Velg både tiår og kategori først.");
+    return;
+  }
+
+  const key = selectedYear + "_" + selectedCategory;
+  activeQuestions = questions[key] || [];
+
+  if(activeQuestions.length === 0){
+    alert("Denne kategorien har ikke spørsmål enda.");
+    return;
+  }
+
+  currentQuestion = 0;
+  score = 0;
+
+  document.getElementById("setup").classList.add("hidden");
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("quiz").classList.remove("hidden");
+
+  showQuestion();
+}
+
+function showQuestion(){
+  const q = activeQuestions[currentQuestion];
+
+  document.getElementById("question").innerText = q.q;
+  document.getElementById("answers").innerHTML = "";
+
+  q.a.forEach((answer, index) => {
+    const btn = document.createElement("button");
+    btn.className = "choice";
+    btn.innerText = answer;
+    btn.onclick = () => checkAnswer(index, btn);
+    document.getElementById("answers").appendChild(btn);
+  });
+
+  document.getElementById("progress").innerText =
+    "Spørsmål " + (currentQuestion + 1) + " av " + activeQuestions.length;
+
+  document.getElementById("score").innerText =
+    "Poeng: " + score;
+}
+
+function checkAnswer(index, btn){
+  const q = activeQuestions[currentQuestion];
+  const buttons = document.querySelectorAll(".choice");
+
+  buttons.forEach(b => b.disabled = true);
+
+  if(index === q.correct){
+    score++;
+    btn.classList.add("correct");
+  } else {
+    btn.classList.add("wrong");
+    buttons[q.correct].classList.add("correct");
+  }
+
+  setTimeout(() => {
+    currentQuestion++;
+
+    if(currentQuestion < activeQuestions.length){
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }, 1200);
+}
+
+function showResult(){
+  document.getElementById("quiz").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
+
+  document.getElementById("finalScore").innerText =
+    "Du fikk " + score + " av " + activeQuestions.length + " riktige.";
+}
+
+function restart(){
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("setup").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
