@@ -3,339 +3,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>❓ Hundequiz</title>
-
+<title>🌍 Hundeland Quiz MASTER</title>
 <style>
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#eef6ff;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
-}
-
-.quiz-box{
-  background:white;
-  width:90%;
-  max-width:650px;
-  padding:30px;
-  border-radius:25px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.12);
-  text-align:center;
-}
-
-h1{
-  color:#123c73;
-  margin-bottom:20px;
-}
-
-#question{
-  font-size:26px;
-  margin:25px 0;
-  color:#123c73;
-  font-weight:bold;
-}
-
-.answer-btn{
-  display:block;
-  width:100%;
-  margin:12px 0;
-  padding:16px;
-  border:none;
-  border-radius:18px;
-  background:#2563eb;
-  color:white;
-  font-size:18px;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.2s;
-}
-
-.answer-btn:hover{
-  background:#1d4ed8;
-  transform:scale(1.02);
-}
-
-#score{
-  margin-top:25px;
-  font-size:24px;
-  font-weight:bold;
-  color:#10b981;
-}
-
-.back{
-  display:inline-block;
-  margin-top:25px;
-  text-decoration:none;
-  color:#2563eb;
-  font-weight:bold;
-  font-size:18px;
-}
-
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(to bottom,#dbeafe,#eef6ff);text-align:center;color:#123c73}
+.container{max-width:950px;margin:20px auto;padding:20px}
+h1{margin-bottom:20px}
+.stats{display:flex;gap:15px;flex-wrap:wrap;margin-bottom:20px}
+.stat{flex:1;background:white;padding:15px;border-radius:18px;font-weight:bold;box-shadow:0 4px 10px rgba(0,0,0,.1)}
+.quiz-box{background:white;padding:25px;border-radius:28px;box-shadow:0 8px 20px rgba(0,0,0,.12)}
+#dogImage{width:100%;max-height:260px;object-fit:contain;background:white;border-radius:20px;margin-bottom:20px}
+#breed{font-size:34px;font-weight:bold;margin-bottom:10px}
+.question{font-size:24px;margin-bottom:20px}
+.answer-btn{display:block;width:100%;margin:12px 0;padding:20px;border:none;border-radius:18px;background:#dbeafe;font-size:24px;font-weight:bold;cursor:pointer;transition:.2s}
+.answer-btn:hover{background:#bfdbfe}
+.correct{background:#10b981!important;color:white}
+.wrong{background:#ef4444!important;color:white}
+#nextBtn{display:none;margin-top:20px;padding:18px 35px;border:none;border-radius:18px;background:#2563eb;color:white;font-size:22px;font-weight:bold;cursor:pointer}
+.back button{margin-top:30px;padding:16px 30px;border:none;border-radius:18px;background:#123c73;color:white;font-size:20px;font-weight:bold;cursor:pointer}
 </style>
 </head>
-
 <body>
-
+<div class="container">
+<h1>🌍 Hvilket land kommer disse hundene fra?</h1>
+<div class="stats">
+<div class="stat">🏆 Poeng: <span id="score">0</span></div>
+<div class="stat">❤️ Liv: <span id="lives">3</span></div>
+<div class="stat">❓ Spørsmål: <span id="questionNumber">1</span></div>
+</div>
 <div class="quiz-box">
-
-<h1>❓ Hundequiz</h1>
-
-<div id="question"></div>
-
+<img id="dogImage">
+<div id="breed"></div>
+<div class="question">Hvor kommer denne hunderasen fra?</div>
 <div id="answers"></div>
-
-<div id="score">
-Poeng: 0
+<button id="nextBtn" onclick="nextQuestion()">Neste ➜</button>
 </div>
-
-<a class="back" href="hundespill.html">
-← Tilbake til spill
-</a>
-
+<div class="back"><button onclick="location.href='hundespill.html'">⬅️ Tilbake til spill</button></div>
 </div>
-
 <script>
 
-const quiz = [
-
-{
-q:"Hva liker de fleste hunder best?",
-a:["Sjokolade","Tur og lek","Løk"],
-correct:1
-},
-
-{
-q:"Hvor mange bein har en vanlig hund?",
-a:["2","4","6"],
-correct:1
-},
-
-{
-q:"Hva sier en hund ofte?",
-a:["Mjau","Voff","Mø"],
-correct:1
-},
-
-{
-q:"Hva trenger hunder hver dag?",
-a:["Tur","Pizza","Brus"],
-correct:0
-},
-
-{
-q:"Hva bruker hunden nesen til?",
-a:["Lukte","Synge","Tegne"],
-correct:0
-},
-
-{
-q:"Hvilket dyr er kjent som menneskets beste venn?",
-a:["Hund","Ku","Fisk"],
-correct:0
-},
-
-{
-q:"Hva gjør en glad hund ofte?",
-a:["Logrer","Flyr","Sover"],
-correct:0
-},
-
-{
-q:"Hva bør en hund alltid ha tilgang til?",
-a:["Kaffe","Rent vann","Godteri"],
-correct:1
-},
-
-{
-q:"Hva liker mange hunder å leke med?",
-a:["Ball","TV","Mobil"],
-correct:0
-},
-
-{
-q:"Hva bør man gjøre før man klapper en ukjent hund?",
-a:["Spørre eieren","Løpe mot den","Rope høyt"],
-correct:0
-},
-
-{
-q:"Hvilken hunderase er veldig liten?",
-a:["Chihuahua","Ulvehund","Newfoundland"],
-correct:0
-},
-
-{
-q:"Hvilken hunderase er kjent for å være stor og sterk?",
-a:["Pomeranian","St. Bernard","Bichon Frise"],
-correct:1
-},
-
-{
-q:"Hva kan hunder lære?",
-a:["Triks","Å kjøre bil","Å fly"],
-correct:0
-},
-
-{
-q:"Hva heter babyen til en hund?",
-a:["Valp","Kalv","Kylling"],
-correct:0
-},
-
-{
-q:"Hva gjør hunder ofte når de er trøtte?",
-a:["Sover","Danser","Kjører buss"],
-correct:0
-},
-
-{
-q:"Hvilken sans er veldig sterk hos hunder?",
-a:["Luktesans","Smakssans","Syn"],
-correct:0
-},
-
-{
-q:"Hva bør hunder spise?",
-a:["Hundemat","Sjokolade","Potetgull"],
-correct:0
-},
-
-{
-q:"Hva bruker mange hunder rundt halsen?",
-a:["Halsbånd","Hjelm","Sko"],
-correct:0
-},
-
-{
-q:"Hva liker mange hunder å gjøre ute?",
-a:["Gå tur","Kjøre traktor","Svømme i brus"],
-correct:0
-},
-
-{
-q:"Hvilket dyr logrer med halen?",
-a:["Hund","Slange","Fugl"],
-correct:0
-},
-
-{
-q:"Hva gjør hunder ofte når noen kommer hjem?",
-a:["Hilser","Gjemmer seg i skap","Spiller gitar"],
-correct:0
-},
-
-{
-q:"Hva kan en hund hente?",
-a:["Ball","TV","Sofa"],
-correct:0
-},
-
-{
-q:"Hva trenger en valp mye av?",
-a:["Omsorg","Kaffe","Mobil"],
-correct:0
-},
-
-{
-q:"Hva heter stedet hunder kan bo når eieren reiser bort?",
-a:["Hundepensjonat","Skole","Bakeri"],
-correct:0
-},
-
-{
-q:"Hva er viktig for at hunder skal ha det bra?",
-a:["Mosjon og kjærlighet","Bare godteri","Kun søvn"],
-correct:0
-}
-
+const questions = [
+{breed:"Kinesisk Nakenhund",image:"bilder/kinesisk-nakenhund.png",answers:["Kina","Japan","Mexico"],correct:"Kina"},
+{breed:"Chihuahua",image:"bilder/Chihuahua.png",answers:["Mexico","Spania","Italia"],correct:"Mexico"},
+{breed:"Dachs",image:"bilder/dachs.png",answers:["Tyskland","Sveits","Frankrike"],correct:"Tyskland"},
+{breed:"Briard",image:"bilder/briard.png",answers:["Frankrike","Belgia","Italia"],correct:"Frankrike"},
+{breed:"Norsk Lundehund",image:"bilder/lundehund.png",answers:["Norge","Sverige","Finland"],correct:"Norge"},
+{breed:"Shar Pei",image:"bilder/sharpei.png",answers:["Kina","Japan","Thailand"],correct:"Kina"},
+{breed:"Schæfer",image:"bilder/schafer.png",answers:["Tyskland","Nederland","Belgia"],correct:"Tyskland"},
+{breed:"Engelsk Cocker Spaniel",image:"bilder/cocker.png",answers:["England","USA","Australia"],correct:"England"},
+{breed:"Border Collie",image:"bilder/border-collie.png",answers:["Skottland","Irland","England"],correct:"Skottland"},
+{breed:"Husky",image:"bilder/husky.png",answers:["Russland","Canada","USA"],correct:"Russland"},
+{breed:"Golden Retriever",image:"bilder/golden.png",answers:["Skottland","USA","Canada"],correct:"Skottland"},
+{breed:"Dalmatiner",image:"bilder/dalmatiner.png",answers:["Kroatia","Italia","Hellas"],correct:"Kroatia"},
+{breed:"Dobermann",image:"bilder/dobermann.png",answers:["Tyskland","Russland","Frankrike"],correct:"Tyskland"},
+{breed:"Boxer",image:"bilder/boxer.png",answers:["Tyskland","England","USA"],correct:"Tyskland"},
+{breed:"Cavalier King Charles Spaniel",image:"bilder/cavalier.png",answers:["England","Frankrike","Italia"],correct:"England"},
+{breed:"Collie",image:"bilder/collie.png",answers:["Skottland","Irland","Wales"],correct:"Skottland"},
+{breed:"Newfoundland",image:"bilder/newfoundland.png",answers:["Canada","USA","Russland"],correct:"Canada"},
+{breed:"Mops",image:"bilder/mops.png",answers:["Kina","Japan","Thailand"],correct:"Kina"},
+{breed:"Puddel",image:"bilder/puddel.png",answers:["Tyskland","Frankrike","Spania"],correct:"Tyskland"},
+{breed:"Boston Terrier",image:"bilder/boston-terrier.png",answers:["USA","England","Canada"],correct:"USA"},
+{breed:"Irsk Ulvehund",image:"bilder/irsk-ulvehund.png",answers:["Irland","Skottland","England"],correct:"Irland"},
+{breed:"Lowchen",image:"bilder/lowchen.png",answers:["Frankrike","Tyskland","Belgia"],correct:"Frankrike"},
+{breed:"Lhasa Apso",image:"bilder/lhasa-apso.png",answers:["Tibet","Kina","Nepal"],correct:"Tibet"},
+{breed:"Pomeranian",image:"bilder/pomeranian.png",answers:["Tyskland","Polen","Russland"],correct:"Tyskland"},
+{breed:"Fransk Bulldog",image:"bilder/fransk-bulldog.png",answers:["Frankrike","Belgia","Italia"],correct:"Frankrike"},
+{breed:"Rottweiler",image:"bilder/rottweiler.png",answers:["Tyskland","Russland","Polen"],correct:"Tyskland"},
+{breed:"Basenji",image:"bilder/basenji.png",answers:["Kongo","Kenya","Egypt"],correct:"Kongo"},
+{breed:"Bull Terrier",image:"bilder/bull-terrier.png",answers:["England","USA","Canada"],correct:"England"},
+{breed:"Irsk Setter",image:"bilder/irsk-setter.png",answers:["Irland","Skottland","England"],correct:"Irland"},
+{breed:"Beagle",image:"bilder/beagle.png",answers:["England","USA","Canada"],correct:"England"},
+{breed:"Samojed",image:"bilder/samojed.png",answers:["Russland","Finland","Canada"],correct:"Russland"},
+{breed:"Akita",image:"bilder/akita.png",answers:["Japan","Kina","Thailand"],correct:"Japan"},
+{breed:"Shiba Inu",image:"bilder/shiba-inu.png",answers:["Japan","Kina","Sør-Korea"],correct:"Japan"},
+{breed:"Cane Corso",image:"bilder/cane-corso.png",answers:["Italia","Spania","Portugal"],correct:"Italia"},
+{breed:"Weimaraner",image:"bilder/weimaraner.png",answers:["Tyskland","Østerrike","Sveits"],correct:"Tyskland"},
+{breed:"Malteser",image:"bilder/malteser.png",answers:["Malta","Italia","Hellas"],correct:"Malta"},
+{breed:"Corgi",image:"bilder/corgi.png",answers:["Wales","Irland","England"],correct:"Wales"},
+{breed:"Grand Danois",image:"bilder/grand-danois.png",answers:["Tyskland","Danmark","Nederland"],correct:"Tyskland"},
+{breed:"Sankt Bernhard",image:"bilder/sankt-bernhard.png",answers:["Sveits","Tyskland","Østerrike"],correct:"Sveits"},
+{breed:"Australian Shepherd",image:"bilder/australian-shepherd.png",answers:["USA","Australia","Canada"],correct:"USA"}
 ];
 
-let current = 0;
-let points = 0;
 
-function showQuestion(){
+let currentQuestion=0;
+let score=0;
+let lives=3;
 
-if(current >= quiz.length){
-
-document.getElementById("question").innerHTML =
-"🎉 Du er ferdig med quizzen!";
-
-document.getElementById("answers").innerHTML =
-`<button class="answer-btn" onclick="restartQuiz()">Start på nytt</button>`;
-
-document.getElementById("score").innerHTML =
-"Du fikk " + points + " poeng 🐶";
-
-return;
+function shuffleArray(array){
+  const copy=[...array];
+  for(let i=copy.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [copy[i],copy[j]]=[copy[j],copy[i]];
+  }
+  return copy;
 }
 
-const q = quiz[current];
+function loadQuestion(){
+  const q=questions[currentQuestion];
+  document.getElementById("dogImage").src=q.image;
+  document.getElementById("breed").textContent=q.breed;
+  document.getElementById("questionNumber").textContent=(currentQuestion+1)+"/"+questions.length;
 
-document.getElementById("question").innerHTML = q.q;
+  const answers=document.getElementById("answers");
+  answers.innerHTML="";
 
-const answersDiv = document.getElementById("answers");
+  shuffleArray(q.answers).forEach(answer=>{
+    const btn=document.createElement("button");
+    btn.className="answer-btn";
+    btn.textContent=answer;
+    btn.dataset.answer=answer;
+    btn.onclick=()=>checkAnswer(btn,answer);
+    answers.appendChild(btn);
+  });
 
-answersDiv.innerHTML = "";
-
-q.a.forEach((answer,index)=>{
-
-const btn = document.createElement("button");
-
-btn.className = "answer-btn";
-
-btn.innerHTML = answer;
-
-btn.onclick = ()=>checkAnswer(index);
-
-answersDiv.appendChild(btn);
-
-});
-
+  document.getElementById("nextBtn").style.display="none";
 }
 
-function checkAnswer(index){
+function checkAnswer(button,answer){
+  const q=questions[currentQuestion];
+  const buttons=document.querySelectorAll(".answer-btn");
 
-if(index === quiz[current].correct){
+  buttons.forEach(btn=>{
+    btn.disabled=true;
+    if(btn.dataset.answer===q.correct){
+      btn.classList.add("correct");
+    }
+  });
 
-points++;
+  if(answer===q.correct){
+    score+=10;
+  }else{
+    lives--;
+    button.classList.add("wrong");
+  }
 
-alert("🎉 Riktig!");
+  document.getElementById("score").textContent=score;
+  document.getElementById("lives").textContent=lives;
 
-}else{
+  if(lives<=0){
+    alert("😅 Game Over! Du må starte på nytt.");
+    location.reload();
+    return;
+  }
 
-alert("🙂 Feil!");
-
+  document.getElementById("nextBtn").style.display="inline-block";
 }
 
-current++;
-
-document.getElementById("score").innerHTML =
-"Poeng: " + points;
-
-showQuestion();
-
+function nextQuestion(){
+  currentQuestion++;
+  if(currentQuestion>=questions.length){
+    alert("🏆 Gratulerer! Du fullførte Hundeland Quiz MASTER!");
+    location.reload();
+    return;
+  }
+  loadQuestion();
 }
 
-function restartQuiz(){
-
-current = 0;
-points = 0;
-
-document.getElementById("score").innerHTML =
-"Poeng: 0";
-
-showQuestion();
-
-}
-
-showQuestion();
-
+loadQuestion();
 </script>
-
 </body>
 </html>
