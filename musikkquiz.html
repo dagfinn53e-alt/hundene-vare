@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="no">
 <head>
@@ -14,8 +13,15 @@ body{
   color:white;
   text-align:center;
 }
-.container{max-width:900px;margin:auto;padding:25px;}
-h1{font-size:44px;margin-bottom:10px;}
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:25px;
+}
+h1{
+  font-size:44px;
+  margin-bottom:10px;
+}
 .card{
   background:rgba(255,255,255,0.13);
   border-radius:22px;
@@ -34,8 +40,13 @@ button{
   color:#111;
   font-weight:bold;
 }
-button:hover{background:#fde047;}
-.back{background:#2563eb;color:white;}
+button:hover{
+  background:#fde047;
+}
+.back{
+  background:#2563eb;
+  color:white;
+}
 .choice{
   display:block;
   width:90%;
@@ -43,11 +54,29 @@ button:hover{background:#fde047;}
   margin:12px auto;
   background:white;
 }
-.correct{background:#22c55e!important;color:white;}
-.wrong{background:#ef4444!important;color:white;}
-.hidden{display:none;}
-.small{font-size:16px;opacity:.9;}
-.medal{font-size:32px;font-weight:bold;}
+.correct{
+  background:#22c55e!important;
+  color:white;
+}
+.wrong{
+  background:#ef4444!important;
+  color:white;
+}
+.hidden{
+  display:none;
+}
+.small{
+  font-size:16px;
+  opacity:.9;
+}
+.medal{
+  font-size:32px;
+  font-weight:bold;
+}
+.note{
+  font-size:15px;
+  opacity:.85;
+}
 </style>
 </head>
 
@@ -77,6 +106,7 @@ button:hover{background:#fde047;}
 
   <p id="chosen">Ingen valg enda</p>
   <button onclick="startQuiz()">Start Quiz</button>
+  <p class="note">Country har nå 50 spørsmål og trekker 10 tilfeldige hver runde.</p>
 </div>
 
 <div id="quiz" class="card hidden">
@@ -254,14 +284,24 @@ function startQuiz(){
 
 function showQuestion(){
   const q=activeQuestions[currentQuestion];
+
+  let mixedAnswers=q.a.map((answer,index)=>{
+    return {
+      text:answer,
+      isCorrect:index===q.correct
+    };
+  });
+
+  mixedAnswers=shuffleArray(mixedAnswers);
+
   document.getElementById("question").innerText=q.q;
   document.getElementById("answers").innerHTML="";
 
-  q.a.forEach((answer,index)=>{
+  mixedAnswers.forEach((item)=>{
     const btn=document.createElement("button");
     btn.className="choice";
-    btn.innerText=answer;
-    btn.onclick=()=>checkAnswer(index,btn);
+    btn.innerText=item.text;
+    btn.onclick=()=>checkAnswer(item.isCorrect,btn);
     document.getElementById("answers").appendChild(btn);
   });
 
@@ -271,17 +311,25 @@ function showQuestion(){
   document.getElementById("score").innerText="Poeng: "+score;
 }
 
-function checkAnswer(index,btn){
-  const q=activeQuestions[currentQuestion];
+function checkAnswer(isCorrect,btn){
   const buttons=document.querySelectorAll(".choice");
   buttons.forEach(b=>b.disabled=true);
 
-  if(index===q.correct){
+  if(isCorrect){
     score++;
     btn.classList.add("correct");
   }else{
     btn.classList.add("wrong");
-    buttons[q.correct].classList.add("correct");
+
+    buttons.forEach(b=>{
+      if(b.onclick && b.innerText){
+        const q=activeQuestions[currentQuestion];
+        const riktigSvar=q.a[q.correct];
+        if(b.innerText===riktigSvar){
+          b.classList.add("correct");
+        }
+      }
+    });
   }
 
   setTimeout(()=>{
@@ -318,4 +366,3 @@ function restart(){
 
 </body>
 </html>
-```
