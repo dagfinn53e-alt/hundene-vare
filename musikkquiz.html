@@ -128,7 +128,7 @@ button:focus{
 
   <p id="chosen">Ingen valg enda</p>
   <button onclick="startQuiz()">Start Quiz</button>
-  <p class="note">Country har 50 spørsmål. Rock er ferdig. Pop 60-, 70-, 80- og 90-tallet har nå 10 spørsmål hver.</p>
+  <p class="note">Country, Rock, Pop og Soul har nå egne spørsmål for 60-, 70-, 80- og 90-tallet. Prøv også Tilfeldig Musikkquiz!</p>
 </div>
 
 <div id="quiz" class="card hidden">
@@ -215,6 +215,20 @@ const questions={
 {q:"Hvem sang 'Wide Open Spaces'?",a:["Dixie Chicks","Shania Twain","Faith Hill","Reba McEntire"],correct:0}
 ],
 
+
+
+"60_Country":[
+{q:"Hvem sang 'Ring Of Fire'?",a:["Johnny Cash","Kenny Rogers","Willie Nelson","Merle Haggard"],correct:0},
+{q:"Hvem sang 'I Walk The Line'?",a:["Johnny Cash","Willie Nelson","Buck Owens","Merle Haggard"],correct:0},
+{q:"Hvem sang 'Crazy'?",a:["Patsy Cline","Dolly Parton","Tammy Wynette","Loretta Lynn"],correct:0},
+{q:"Hvem sang 'King Of The Road'?",a:["Roger Miller","Johnny Cash","Willie Nelson","Kenny Rogers"],correct:0},
+{q:"Hvem sang 'Act Naturally'?",a:["Buck Owens","Johnny Cash","Merle Haggard","Roger Miller"],correct:0},
+{q:"Hvem sang 'Harper Valley PTA'?",a:["Jeannie C. Riley","Patsy Cline","Tammy Wynette","Dolly Parton"],correct:0},
+{q:"Hvem sang 'The End Of The World'?",a:["Skeeter Davis","Patsy Cline","Tammy Wynette","Loretta Lynn"],correct:0},
+{q:"Hvem sang 'Mama Tried'?",a:["Merle Haggard","Johnny Cash","Buck Owens","Willie Nelson"],correct:0},
+{q:"Hvem sang 'Coal Miner's Daughter'?",a:["Loretta Lynn","Dolly Parton","Tammy Wynette","Patsy Cline"],correct:0},
+{q:"Hvem sang 'Walkin' After Midnight'?",a:["Patsy Cline","Dolly Parton","Tammy Wynette","Loretta Lynn"],correct:0}
+],
 
 "70_Country":[
 {q:"Hvem sang 'Before The Next Teardrop Falls'?",a:["Freddy Fender","Kenny Rogers","Johnny Cash","Willie Nelson"],correct:0},
@@ -400,8 +414,8 @@ const questions={
 {q:"Hvem sang 'Because You Loved Me'?",a:["Celine Dion","Mariah Carey","Whitney Houston","Cher"],correct:0},
 {q:"Hvem sang 'How Am I Supposed To Live Without You'?",a:["Michael Bolton","Seal","George Michael","Phil Collins"],correct:0},
 {q:"Hvem sang 'I Swear'?",a:["All-4-One","Boyz II Men","Backstreet Boys","Take That"],correct:0}
-],
-};;
+]
+};
 
 function selectYear(year){
   selectedYear=year;
@@ -429,7 +443,7 @@ function shuffleArray(array){
 
 
 function startRandomQuiz(){
-  const keys = Object.keys(questions).filter(k => k !== "Country");
+  const keys = Object.keys(questions).filter(k => k.includes("_"));
   let pool = [];
   keys.forEach(k => pool = pool.concat(questions[k]));
   activeQuestions = shuffleArray(pool).slice(0,10);
@@ -448,7 +462,7 @@ function startQuiz(){
     return;
   }
 
-  let key=selectedCategory==="Country" ? "Country" : selectedYear+"_"+selectedCategory;
+  let key = selectedYear + "_" + selectedCategory;
   let pool=questions[key] || [];
 
   if(pool.length===0){
