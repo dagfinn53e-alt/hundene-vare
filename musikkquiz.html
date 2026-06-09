@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="no">
 <head>
@@ -8,26 +9,19 @@
 <style>
 body{
   margin:0;
-  font-family:Arial, sans-serif;
+  font-family:Arial,sans-serif;
   background:linear-gradient(135deg,#111827,#4c1d95,#7c2d12);
   color:white;
   text-align:center;
 }
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:25px;
-}
-h1{
-  font-size:42px;
-  margin-bottom:10px;
-}
+.container{max-width:900px;margin:auto;padding:25px;}
+h1{font-size:44px;margin-bottom:10px;}
 .card{
-  background:rgba(255,255,255,0.12);
-  border-radius:20px;
+  background:rgba(255,255,255,0.13);
+  border-radius:22px;
   padding:25px;
   margin:20px 0;
-  box-shadow:0 8px 25px rgba(0,0,0,0.35);
+  box-shadow:0 8px 25px rgba(0,0,0,.35);
 }
 button{
   border:0;
@@ -40,284 +34,197 @@ button{
   color:#111;
   font-weight:bold;
 }
-button:hover{
-  background:#fde047;
-}
+button:hover{background:#fde047;}
+.back{background:#2563eb;color:white;}
 .choice{
   display:block;
   width:90%;
-  max-width:500px;
+  max-width:560px;
   margin:12px auto;
   background:white;
 }
-.correct{
-  background:#22c55e !important;
-  color:white;
-}
-.wrong{
-  background:#ef4444 !important;
-  color:white;
-}
-.hidden{
-  display:none;
-}
-.small{
-  font-size:16px;
-  opacity:0.9;
-}
+.correct{background:#22c55e!important;color:white;}
+.wrong{background:#ef4444!important;color:white;}
+.hidden{display:none;}
+.small{font-size:16px;opacity:.9;}
+.medal{font-size:32px;font-weight:bold;}
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-  <h1>🎵 Musikk Quiz</h1>
+<h1>🎵 Musikk Quiz</h1>
 
-<button onclick="location.href='hundespill.html'"
-style="
-background:#2563eb;
-color:white;
-border:none;
-padding:12px 20px;
-border-radius:12px;
-font-size:16px;
-cursor:pointer;
-margin-bottom:20px;
-">
+<button class="back" onclick="location.href='hundespill.html'">
 ⬅️ Tilbake til spill
 </button>
-  <p class="small">Velg tiår og kategori</p>
 
-  <div id="setup" class="card">
-    <h2>Velg tiår</h2>
-    <div id="years">
-      <button onclick="selectYear('60')">60-tallet</button>
-      <button onclick="selectYear('70')">70-tallet</button>
-      <button onclick="selectYear('80')">80-tallet</button>
-      <button onclick="selectYear('90')">90-tallet</button>
-    </div>
+<p class="small">Velg tiår og kategori</p>
 
-    <h2>Velg kategori</h2>
-    <div id="categories">
-      <button onclick="selectCategory('Country')">Country</button>
-      <button onclick="selectCategory('Soul')">Soul</button>
-      <button onclick="selectCategory('Pop')">Pop</button>
-      <button onclick="selectCategory('Rock')">Rock</button>
-    </div>
+<div id="setup" class="card">
+  <h2>Velg tiår</h2>
+  <button onclick="selectYear('60')">60-tallet</button>
+  <button onclick="selectYear('70')">70-tallet</button>
+  <button onclick="selectYear('80')">80-tallet</button>
+  <button onclick="selectYear('90')">90-tallet</button>
 
-    <p id="chosen">Ingen valg enda</p>
-    <button onclick="startQuiz()">Start Quiz</button>
-  </div>
+  <h2>Velg kategori</h2>
+  <button onclick="selectCategory('Country')">Country</button>
+  <button onclick="selectCategory('Soul')">Soul</button>
+  <button onclick="selectCategory('Pop')">Pop</button>
+  <button onclick="selectCategory('Rock')">Rock</button>
 
-  <div id="quiz" class="card hidden">
-    <h2 id="question"></h2>
-    <div id="answers"></div>
-    <p id="progress"></p>
-    <p id="score"></p>
-  </div>
+  <p id="chosen">Ingen valg enda</p>
+  <button onclick="startQuiz()">Start Quiz</button>
+</div>
 
-  <div id="result" class="card hidden">
-    <h2>🎉 Ferdig!</h2>
-    <p id="finalScore"></p>
-    <button onclick="restart()">Spill igjen</button>
-  </div>
+<div id="quiz" class="card hidden">
+  <h2 id="question"></h2>
+  <div id="answers"></div>
+  <p id="progress"></p>
+  <p id="score"></p>
+</div>
+
+<div id="result" class="card hidden">
+  <h2>🎉 Ferdig!</h2>
+  <p id="finalScore"></p>
+  <p id="medal" class="medal"></p>
+  <button onclick="restart()">Spill igjen</button>
+</div>
 
 </div>
 
 <script>
-let selectedYear = "";
-let selectedCategory = "";
-let currentQuestion = 0;
-let score = 0;
-let activeQuestions = [];
+let selectedYear="";
+let selectedCategory="";
+let currentQuestion=0;
+let score=0;
+let activeQuestions=[];
 
-const questions = {
-  "60_Pop": [
-    {
-      q: "Hvilket band ble svært kjent med Beatlemania på 60-tallet?",
-      a: ["The Beatles", "ABBA", "Queen", "U2"],
-      correct: 0
-    },
-    {
-      q: "Hvilken kvinnelig artist hadde stor suksess med pop og soul på 60-tallet?",
-      a: ["Dusty Springfield", "Madonna", "Cher", "Tina Turner"],
-      correct: 0
-    }
-  ],
+const questions={
 
-  "60_Rock": [
-    {
-      q: "Hvilket band hadde Mick Jagger som vokalist?",
-      a: ["The Rolling Stones", "The Beach Boys", "Bee Gees", "The Doors"],
-      correct: 0
-    },
-    {
-      q: "Hvem var kjent som en av de store gitarlegendene på 60-tallet?",
-      a: ["Jimi Hendrix", "Elvis Costello", "Bon Jovi", "Prince"],
-      correct: 0
-    }
-  ],
+"Country":[
+{q:"Hvem sang 'Ring of Fire'?",a:["Johnny Cash","Kenny Rogers","Willie Nelson","Merle Haggard"],correct:0},
+{q:"Hvem sang 'The Gambler'?",a:["Kenny Rogers","Johnny Cash","Alan Jackson","George Strait"],correct:0},
+{q:"Hvem sang 'Jolene'?",a:["Dolly Parton","Tammy Wynette","Patsy Cline","Loretta Lynn"],correct:0},
+{q:"Hvem sang 'On The Road Again'?",a:["Willie Nelson","Johnny Cash","Buck Owens","Kenny Rogers"],correct:0},
+{q:"Hvem sang 'Stand By Your Man'?",a:["Tammy Wynette","Dolly Parton","Skeeter Davis","Reba McEntire"],correct:0},
+{q:"Hvem sang 'Before The Next Teardrop Falls'?",a:["Freddy Fender","Merle Haggard","Buck Owens","Johnny Cash"],correct:0},
+{q:"Hvem sang 'Chattahoochee'?",a:["Alan Jackson","George Strait","Garth Brooks","Kenny Rogers"],correct:0},
+{q:"Hvem sang 'Friends in Low Places'?",a:["Garth Brooks","Alan Jackson","Willie Nelson","Johnny Cash"],correct:0},
+{q:"Hvem sang 'Achy Breaky Heart'?",a:["Billy Ray Cyrus","Kenny Rogers","George Strait","Alan Jackson"],correct:0},
+{q:"Hvem sang 'Man! I Feel Like a Woman!'?",a:["Shania Twain","Dolly Parton","Tammy Wynette","Reba McEntire"],correct:0},
 
-  "70_Pop": [
-    {
-      q: "Hvilken svensk gruppe vant Eurovision i 1974?",
-      a: ["ABBA", "Roxette", "Ace of Base", "Europe"],
-      correct: 0
-    },
-    {
-      q: "Hvilket band var kjent for disco-pop på 70-tallet?",
-      a: ["Bee Gees", "Nirvana", "Oasis", "Coldplay"],
-      correct: 0
-    }
-  ],
+{q:"Hvem sang 'I Walk the Line'?",a:["Johnny Cash","Willie Nelson","Merle Haggard","Buck Owens"],correct:0},
+{q:"Hvem sang 'Lucille'?",a:["Kenny Rogers","Johnny Cash","George Jones","Alan Jackson"],correct:0},
+{q:"Hvem sang 'Coat of Many Colors'?",a:["Dolly Parton","Tammy Wynette","Loretta Lynn","Skeeter Davis"],correct:0},
+{q:"Hvem sang 'Blue Eyes Crying in the Rain'?",a:["Willie Nelson","Kenny Rogers","Johnny Cash","George Strait"],correct:0},
+{q:"Hvem sang 'Harper Valley PTA'?",a:["Jeannie C. Riley","Dolly Parton","Tammy Wynette","Patsy Cline"],correct:0},
+{q:"Hvem sang 'Act Naturally'?",a:["Buck Owens","Johnny Cash","Merle Haggard","Freddy Fender"],correct:0},
+{q:"Hvem sang 'Okie from Muskogee'?",a:["Merle Haggard","Willie Nelson","Johnny Cash","Kenny Rogers"],correct:0},
+{q:"Hvem sang 'Rhinestone Cowboy'?",a:["Glen Campbell","Kenny Rogers","George Strait","Alan Jackson"],correct:0},
+{q:"Hvem sang 'The Dance'?",a:["Garth Brooks","Alan Jackson","Kenny Rogers","George Strait"],correct:0},
+{q:"Hvem sang 'Any Man of Mine'?",a:["Shania Twain","Dolly Parton","Reba McEntire","Faith Hill"],correct:0},
 
-  "70_Rock": [
-    {
-      q: "Hvilket band ga ut albumet 'A Night at the Opera'?",
-      a: ["Queen", "Kiss", "Status Quo", "Deep Purple"],
-      correct: 0
-    },
-    {
-      q: "Hvilket band er kjent for låten 'Smoke on the Water'?",
-      a: ["Deep Purple", "ABBA", "Bee Gees", "The Police"],
-      correct: 0
-    }
-  ],
+{q:"Hvem sang 'Folsom Prison Blues'?",a:["Johnny Cash","Merle Haggard","Buck Owens","Willie Nelson"],correct:0},
+{q:"Hvem sang 'Coward of the County'?",a:["Kenny Rogers","Johnny Cash","Garth Brooks","Alan Jackson"],correct:0},
+{q:"Hvem sang '9 to 5'?",a:["Dolly Parton","Shania Twain","Tammy Wynette","Reba McEntire"],correct:0},
+{q:"Hvem sang 'Always On My Mind'?",a:["Willie Nelson","Kenny Rogers","George Jones","Alan Jackson"],correct:0},
+{q:"Hvem sang 'The End of the World'?",a:["Skeeter Davis","Patsy Cline","Tammy Wynette","Dolly Parton"],correct:0},
+{q:"Hvem sang 'Together Again'?",a:["Buck Owens","Merle Haggard","Johnny Cash","Freddy Fender"],correct:0},
+{q:"Hvem sang 'Mama Tried'?",a:["Merle Haggard","Johnny Cash","Willie Nelson","Glen Campbell"],correct:0},
+{q:"Hvem sang 'Wichita Lineman'?",a:["Glen Campbell","Kenny Rogers","Alan Jackson","George Strait"],correct:0},
+{q:"Hvem sang 'Amarillo by Morning'?",a:["George Strait","Garth Brooks","Alan Jackson","Willie Nelson"],correct:0},
+{q:"Hvem sang 'That Don't Impress Me Much'?",a:["Shania Twain","Faith Hill","Reba McEntire","Dolly Parton"],correct:0},
 
-  "80_Pop": [
-    {
-      q: "Hvem ble ofte kalt 'King of Pop'?",
-      a: ["Michael Jackson", "Elton John", "George Michael", "Phil Collins"],
-      correct: 0
-    },
-    {
-      q: "Hvilken norsk gruppe fikk stor internasjonal suksess på 80-tallet?",
-      a: ["a-ha", "D.D.E.", "Vamp", "Hellbillies"],
-      correct: 0
-    }
-  ],
+{q:"Hvilken sang forbindes mest med Johnny Cash?",a:["Ring of Fire","Jolene","Lucille","The Gambler"],correct:0},
+{q:"Hvilken sang forbindes mest med Kenny Rogers?",a:["The Gambler","Stand By Your Man","Act Naturally","Chattahoochee"],correct:0},
+{q:"Hvilken sang forbindes mest med Dolly Parton?",a:["Jolene","Folsom Prison Blues","Mama Tried","Friends in Low Places"],correct:0},
+{q:"Hvilken sang forbindes mest med Willie Nelson?",a:["On The Road Again","9 to 5","The Dance","Lucille"],correct:0},
+{q:"Hvilken sang forbindes mest med Tammy Wynette?",a:["Stand By Your Man","Ring of Fire","Rhinestone Cowboy","Blue Eyes Crying in the Rain"],correct:0},
 
-  "80_Rock": [
-    {
-      q: "Hvilket band er kjent for låten 'Livin' on a Prayer'?",
-      a: ["Bon Jovi", "Queen", "Metallica", "Europe"],
-      correct: 0
-    },
-    {
-      q: "Hvilket svensk rockeband hadde stor hit med 'The Final Countdown'?",
-      a: ["Europe", "ABBA", "Roxette", "Ace of Base"],
-      correct: 0
-    }
-  ],
+{q:"Hvem ble ofte kalt 'The Man in Black'?",a:["Johnny Cash","Kenny Rogers","Willie Nelson","Merle Haggard"],correct:0},
+{q:"Hvilken artist forbindes med sangen 'On The Road Again'?",a:["Willie Nelson","Johnny Cash","Buck Owens","Glen Campbell"],correct:0},
+{q:"Hvilken kvinnelig artist er kjent for temaparken Dollywood?",a:["Dolly Parton","Shania Twain","Tammy Wynette","Faith Hill"],correct:0},
+{q:"Hvilken artist forbindes med Bakersfield-sounden?",a:["Buck Owens","Garth Brooks","Kenny Rogers","Alan Jackson"],correct:0},
+{q:"Hvem hadde en stor hit med 'A Boy Named Sue'?",a:["Johnny Cash","Willie Nelson","Merle Haggard","George Strait"],correct:0},
 
-  "90_Pop": [
-    {
-      q: "Hvilken jentegruppe ble svært kjent på 90-tallet?",
-      a: ["Spice Girls", "Bananarama", "The Supremes", "Pointer Sisters"],
-      correct: 0
-    },
-    {
-      q: "Hvilken svensk gruppe hadde stor suksess med pop på 90-tallet?",
-      a: ["Ace of Base", "ABBA", "Europe", "The Cardigans"],
-      correct: 0
-    }
-  ],
+{q:"Hvem sang 'Islands in the Stream' sammen med Dolly Parton?",a:["Kenny Rogers","Johnny Cash","Willie Nelson","Garth Brooks"],correct:0},
+{q:"Hvem sang 'He Stopped Loving Her Today'?",a:["George Jones","Kenny Rogers","Alan Jackson","Johnny Cash"],correct:0},
+{q:"Hvem sang 'Coal Miner's Daughter'?",a:["Loretta Lynn","Dolly Parton","Tammy Wynette","Skeeter Davis"],correct:0},
+{q:"Hvem sang 'Crazy'?",a:["Patsy Cline","Dolly Parton","Tammy Wynette","Shania Twain"],correct:0},
+{q:"Hvem sang 'Take Me Home, Country Roads'?",a:["John Denver","Johnny Cash","Kenny Rogers","Glen Campbell"],correct:0},
 
-  "90_Rock": [
-    {
-      q: "Hvilket band forbindes sterkt med grunge på 90-tallet?",
-      a: ["Nirvana", "Queen", "Kiss", "The Beatles"],
-      correct: 0
-    },
-    {
-      q: "Hvem var vokalist i Nirvana?",
-      a: ["Kurt Cobain", "Axl Rose", "Bono", "Freddie Mercury"],
-      correct: 0
-    }
-  ],
+{q:"Hvem sang 'Don't Rock the Jukebox'?",a:["Alan Jackson","George Strait","Garth Brooks","Kenny Rogers"],correct:0},
+{q:"Hvem sang 'Forever and Ever, Amen'?",a:["Randy Travis","Alan Jackson","George Strait","Willie Nelson"],correct:0},
+{q:"Hvem sang 'This Kiss'?",a:["Faith Hill","Shania Twain","Reba McEntire","Dolly Parton"],correct:0},
+{q:"Hvem sang 'Fancy'?",a:["Reba McEntire","Faith Hill","Shania Twain","Tammy Wynette"],correct:0},
+{q:"Hvem sang 'Wide Open Spaces'?",a:["Dixie Chicks","Shania Twain","Faith Hill","Reba McEntire"],correct:0}
+],
 
-  "70_Country": [
-    {
-      q: "Hvilken artist er kjent som en stor country-legende?",
-      a: ["Dolly Parton", "Madonna", "Cher", "Whitney Houston"],
-      correct: 0
-    }
-  ],
+"60_Pop":[
+{q:"Hvilket band ble svært kjent med Beatlemania?",a:["The Beatles","ABBA","Queen","U2"],correct:0}
+],
+"70_Pop":[
+{q:"Hvilken svensk gruppe vant Eurovision i 1974?",a:["ABBA","Roxette","Ace of Base","Europe"],correct:0}
+],
+"80_Pop":[
+{q:"Hvem ble ofte kalt 'King of Pop'?",a:["Michael Jackson","Elton John","George Michael","Phil Collins"],correct:0}
+],
+"90_Pop":[
+{q:"Hvilken jentegruppe ble svært kjent på 90-tallet?",a:["Spice Girls","Bananarama","The Supremes","Pointer Sisters"],correct:0}
+],
 
-  "80_Country": [
-    {
-      q: "Hvilken countryartist ble svært kjent med både musikk og film?",
-      a: ["Kenny Rogers", "Prince", "Sting", "David Bowie"],
-      correct: 0
-    }
-  ],
+"60_Rock":[
+{q:"Hvilket band hadde Mick Jagger som vokalist?",a:["The Rolling Stones","The Beach Boys","Bee Gees","The Doors"],correct:0}
+],
+"70_Rock":[
+{q:"Hvilket band er kjent for 'Smoke on the Water'?",a:["Deep Purple","ABBA","Bee Gees","The Police"],correct:0}
+],
+"80_Rock":[
+{q:"Hvilket band er kjent for 'Livin' on a Prayer'?",a:["Bon Jovi","Queen","Metallica","Europe"],correct:0}
+],
+"90_Rock":[
+{q:"Hvilket band forbindes sterkt med grunge?",a:["Nirvana","Queen","Kiss","The Beatles"],correct:0}
+],
 
-  "60_Soul": [
-    {
-      q: "Hvem ble kalt 'Queen of Soul'?",
-      a: ["Aretha Franklin", "Diana Ross", "Cher", "Madonna"],
-      correct: 0
-    }
-  ],
-
-  "70_Soul": [
-    {
-      q: "Hvilken artist er kjent for soul og låten 'Let's Stay Together'?",
-      a: ["Al Green", "Elvis Presley", "Bob Dylan", "David Bowie"],
-      correct: 0
-    }
-  ],
-
-  "80_Soul": [
-    {
-      q: "Hvilken kvinnelig artist ble en av 80-tallets største stemmer?",
-      a: ["Whitney Houston", "Dolly Parton", "Cyndi Lauper", "Tina Charles"],
-      correct: 0
-    }
-  ],
-
-  "90_Soul": [
-    {
-      q: "Hvilken artist hadde stor suksess med soul/R&B på 90-tallet?",
-      a: ["Mariah Carey", "Janis Joplin", "Patsy Cline", "Annie Lennox"],
-      correct: 0
-    }
-  ],
-
-  "60_Country": [
-    {
-      q: "Hvilken artist er kjent for countrylåten 'Ring of Fire'?",
-      a: ["Johnny Cash", "Elvis Presley", "Bob Marley", "Paul McCartney"],
-      correct: 0
-    }
-  ],
-
-  "90_Country": [
-    {
-      q: "Hvilken kvinnelig countryartist ble enormt populær på 90-tallet?",
-      a: ["Shania Twain", "Madonna", "Britney Spears", "Céline Dion"],
-      correct: 0
-    }
-  ]
+"60_Soul":[
+{q:"Hvem ble kalt 'Queen of Soul'?",a:["Aretha Franklin","Diana Ross","Cher","Madonna"],correct:0}
+],
+"70_Soul":[
+{q:"Hvilken artist er kjent for 'Let's Stay Together'?",a:["Al Green","Elvis Presley","Bob Dylan","David Bowie"],correct:0}
+],
+"80_Soul":[
+{q:"Hvilken kvinnelig artist ble en av 80-tallets største stemmer?",a:["Whitney Houston","Dolly Parton","Cyndi Lauper","Tina Charles"],correct:0}
+],
+"90_Soul":[
+{q:"Hvilken artist hadde stor suksess med soul/R&B på 90-tallet?",a:["Mariah Carey","Janis Joplin","Patsy Cline","Annie Lennox"],correct:0}
+]
 };
 
 function selectYear(year){
-  selectedYear = year;
+  selectedYear=year;
   updateChosen();
 }
 
 function selectCategory(category){
-  selectedCategory = category;
+  selectedCategory=category;
   updateChosen();
 }
 
 function updateChosen(){
-  document.getElementById("chosen").innerHTML =
-    "Valgt: " + 
-    (selectedYear ? selectedYear + "-tallet" : "ingen tiår") + 
-    " / " + 
-    (selectedCategory || "ingen kategori");
+  document.getElementById("chosen").innerHTML=
+  "Valgt: "+(selectedYear?selectedYear+"-tallet":"ingen tiår")+" / "+(selectedCategory||"ingen kategori");
+}
+
+function shuffleArray(array){
+  let copy=[...array];
+  for(let i=copy.length-1;i>0;i--){
+    let j=Math.floor(Math.random()*(i+1));
+    [copy[i],copy[j]]=[copy[j],copy[i]];
+  }
+  return copy;
 }
 
 function startQuiz(){
@@ -326,16 +233,17 @@ function startQuiz(){
     return;
   }
 
-  const key = selectedYear + "_" + selectedCategory;
-  activeQuestions = questions[key] || [];
+  let key=selectedCategory==="Country" ? "Country" : selectedYear+"_"+selectedCategory;
+  let pool=questions[key] || [];
 
-  if(activeQuestions.length === 0){
+  if(pool.length===0){
     alert("Denne kategorien har ikke spørsmål enda.");
     return;
   }
 
-  currentQuestion = 0;
-  score = 0;
+  activeQuestions=shuffleArray(pool).slice(0,10);
+  currentQuestion=0;
+  score=0;
 
   document.getElementById("setup").classList.add("hidden");
   document.getElementById("result").classList.add("hidden");
@@ -345,57 +253,61 @@ function startQuiz(){
 }
 
 function showQuestion(){
-  const q = activeQuestions[currentQuestion];
+  const q=activeQuestions[currentQuestion];
+  document.getElementById("question").innerText=q.q;
+  document.getElementById("answers").innerHTML="";
 
-  document.getElementById("question").innerText = q.q;
-  document.getElementById("answers").innerHTML = "";
-
-  q.a.forEach((answer, index) => {
-    const btn = document.createElement("button");
-    btn.className = "choice";
-    btn.innerText = answer;
-    btn.onclick = () => checkAnswer(index, btn);
+  q.a.forEach((answer,index)=>{
+    const btn=document.createElement("button");
+    btn.className="choice";
+    btn.innerText=answer;
+    btn.onclick=()=>checkAnswer(index,btn);
     document.getElementById("answers").appendChild(btn);
   });
 
-  document.getElementById("progress").innerText =
-    "Spørsmål " + (currentQuestion + 1) + " av " + activeQuestions.length;
+  document.getElementById("progress").innerText=
+  "Spørsmål "+(currentQuestion+1)+" av "+activeQuestions.length;
 
-  document.getElementById("score").innerText =
-    "Poeng: " + score;
+  document.getElementById("score").innerText="Poeng: "+score;
 }
 
-function checkAnswer(index, btn){
-  const q = activeQuestions[currentQuestion];
-  const buttons = document.querySelectorAll(".choice");
+function checkAnswer(index,btn){
+  const q=activeQuestions[currentQuestion];
+  const buttons=document.querySelectorAll(".choice");
+  buttons.forEach(b=>b.disabled=true);
 
-  buttons.forEach(b => b.disabled = true);
-
-  if(index === q.correct){
+  if(index===q.correct){
     score++;
     btn.classList.add("correct");
-  } else {
+  }else{
     btn.classList.add("wrong");
     buttons[q.correct].classList.add("correct");
   }
 
-  setTimeout(() => {
+  setTimeout(()=>{
     currentQuestion++;
-
-    if(currentQuestion < activeQuestions.length){
+    if(currentQuestion<activeQuestions.length){
       showQuestion();
-    } else {
+    }else{
       showResult();
     }
-  }, 1200);
+  },1200);
 }
 
 function showResult(){
   document.getElementById("quiz").classList.add("hidden");
   document.getElementById("result").classList.remove("hidden");
 
-  document.getElementById("finalScore").innerText =
-    "Du fikk " + score + " av " + activeQuestions.length + " riktige.";
+  document.getElementById("finalScore").innerText=
+  "Du fikk "+score+" av "+activeQuestions.length+" riktige.";
+
+  let medal="";
+  if(score>=9) medal="🏆 Gullplate!";
+  else if(score>=7) medal="🥈 Sølvplate!";
+  else if(score>=5) medal="🥉 Bronseplate!";
+  else medal="🎵 Prøv igjen!";
+
+  document.getElementById("medal").innerText=medal;
 }
 
 function restart(){
@@ -406,3 +318,4 @@ function restart(){
 
 </body>
 </html>
+```
