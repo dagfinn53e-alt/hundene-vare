@@ -6,7 +6,6 @@
 <title>🐱 Katteland Quiz MASTER</title>
 
 <style>
-
 body{
 margin:0;
 font-family:Arial,sans-serif;
@@ -132,7 +131,6 @@ font-weight:bold;
 color:#db2777;
 min-height:40px;
 }
-
 </style>
 </head>
 
@@ -143,22 +141,9 @@ min-height:40px;
 <h1>🐱 Katteland Quiz MASTER</h1>
 
 <div class="stats">
-
-<div class="stat">
-🏆 Poeng:
-<span id="score">0</span>
-</div>
-
-<div class="stat">
-❤️ Liv:
-<span id="lives">3</span>
-</div>
-
-<div class="stat">
-❓ Spørsmål:
-<span id="questionNumber">1</span>
-</div>
-
+<div class="stat">🏆 Poeng: <span id="score">0</span></div>
+<div class="stat">❤️ Liv: <span id="lives">3</span></div>
+<div class="stat">❓ Spørsmål: <span id="questionNumber">1</span></div>
 </div>
 
 <div class="quiz-box">
@@ -175,381 +160,135 @@ Hvor kommer denne katterasen fra?
 
 <div id="message"></div>
 
-<button id="nextBtn"
-onclick="nextQuestion()">
-
-Neste ➜
-
-</button>
+<button id="nextBtn" onclick="nextQuestion()">Neste ➜</button>
 
 </div>
 
 <div class="back">
-
 <button onclick="location.href='hundespill.html'">
 ⬅️ Tilbake til spill
 </button>
-
 </div>
 
 </div>
 
 <script>
-
 const questions=[
-
-{
-breed:"Maine Coon",
-image:"bilder/maine-coon.jpg",
-answers:["USA","Canada","England"],
-correct:"USA"
-},
-
-{
-breed:"Siameser",
-image:"bilder/siameser.jpg",
-answers:["Thailand","Japan","Kina"],
-correct:"Thailand"
-},
-
-{
-breed:"Perser",
-image:"bilder/perser.jpg",
-answers:["Iran","India","Tyrkia"],
-correct:"Iran"
-},
-
-{
-breed:"Bengal",
-image:"bilder/bengal.jpg",
-answers:["USA","India","Thailand"],
-correct:"USA"
-},
-
-{
-breed:"Abyssiner",
-image:"bilder/abyssiner.jpg",
-answers:["Etiopia","Egypt","Marokko"],
-correct:"Etiopia"
-},
-
-{
-breed:"Birma",
-image:"bilder/birma.jpg",
-answers:["Myanmar","Thailand","India"],
-correct:"Myanmar"
-},
-
-{
-breed:"Devon Rex",
-image:"bilder/devon-rex.jpg",
-answers:["England","USA","Frankrike"],
-correct:"England"
-},
-
-{
-breed:"Oriental Shorthair",
-image:"bilder/oriental-shorthair.jpg",
-answers:["England","Thailand","Japan"],
-correct:"England"
-},
-
-{
-breed:"Russian Blue",
-image:"bilder/russian-blue.jpg",
-answers:["Russland","Polen","Finland"],
-correct:"Russland"
-},
-
-{
-breed:"Scottish Fold",
-image:"bilder/scottish-fold.jpg",
-answers:["Skottland","Irland","Wales"],
-correct:"Skottland"
-},
-
-{
-breed:"Sibirsk Katt",
-image:"bilder/sibirsk-katt.jpg",
-answers:["Russland","Sverige","Norge"],
-correct:"Russland"
-},
-
-{
-breed:"Tyrkisk Angora",
-image:"bilder/tyrkisk-angora.jpg",
-answers:["Tyrkia","Iran","Egypt"],
-correct:"Tyrkia"
-},
-
-{
-breed:"Savannah",
-image:"bilder/savannah.jpg",
-answers:["USA","Kenya","Egypt"],
-correct:"USA"
-},
-
-{
-breed:"Munchkin",
-image:"bilder/munchkin.jpg",
-answers:["USA","Japan","England"],
-correct:"USA"
-},
-
-{
-breed:"Exotic Shorthair",
-image:"bilder/exotic-shorthair.jpg",
-answers:["USA","Iran","Russland"],
-correct:"USA"
-},
-
-{
-breed:"Turkish Van",
-image:"bilder/turkish-van.jpg",
-answers:["Tyrkia","Iran","Egypt"],
-correct:"Tyrkia"
-},
-
-{
-breed:"Bombay",
-image:"bilder/bombay.jpg",
-answers:["USA","India","Egypt"],
-correct:"USA"
-},
-
-{
-breed:"Cornish Rex",
-image:"bilder/cornish-rex.jpg",
-answers:["England","USA","Frankrike"],
-correct:"England"
-},
-
-{
-breed:"Ocicat",
-image:"bilder/ocicat.jpg",
-answers:["USA","Mexico","Egypt"],
-correct:"USA"
-},
-
-{
-breed:"Egyptian Mau",
-image:"bilder/egyptian-mau.jpg",
-answers:["Egypt","Iran","Tyrkia"],
-correct:"Egypt"
-},
-
-{
-breed:"Balineser",
-image:"bilder/balineser.jpg",
-answers:["USA","Indonesia","Thailand"],
-correct:"USA"
-},
-
-{
-breed:"American Curl",
-image:"bilder/american-curl.jpg",
-answers:["USA","Canada","England"],
-correct:"USA"
-},
-
-{
-breed:"Snowshoe",
-image:"bilder/snowshoe.jpg",
-answers:["USA","Thailand","Sverige"],
-correct:"USA"
-},
-
-{
-breed:"Manx",
-image:"bilder/manx.jpg",
-answers:["Isle of Man","Irland","Skottland"],
-correct:"Isle of Man"
-}
-
+{breed:"Maine Coon",image:"bilder/maine-coon.jpg",answers:["USA","Canada","England"],correct:"USA"},
+{breed:"Siameser",image:"bilder/siameser.jpg",answers:["Thailand","Japan","Kina"],correct:"Thailand"},
+{breed:"Perser",image:"bilder/perser.jpg",answers:["Iran","India","Tyrkia"],correct:"Iran"},
+{breed:"Bengal",image:"bilder/bengal.jpg",answers:["USA","India","Thailand"],correct:"USA"},
+{breed:"Abyssiner",image:"bilder/abyssiner.jpg",answers:["Etiopia","Egypt","Marokko"],correct:"Etiopia"},
+{breed:"Birma",image:"bilder/birma.jpg",answers:["Myanmar","Thailand","India"],correct:"Myanmar"},
+{breed:"Devon Rex",image:"bilder/devon-rex.jpg",answers:["England","USA","Frankrike"],correct:"England"},
+{breed:"Oriental Shorthair",image:"bilder/oriental-shorthair.jpg",answers:["England","Thailand","Japan"],correct:"England"},
+{breed:"Russian Blue",image:"bilder/russian-blue.jpg",answers:["Russland","Polen","Finland"],correct:"Russland"},
+{breed:"Scottish Fold",image:"bilder/scottish-fold.jpg",answers:["Skottland","Irland","Wales"],correct:"Skottland"},
+{breed:"Sibirsk Katt",image:"bilder/sibirsk-katt.jpg",answers:["Russland","Sverige","Norge"],correct:"Russland"},
+{breed:"Tyrkisk Angora",image:"bilder/tyrkisk-angora.jpg",answers:["Tyrkia","Iran","Egypt"],correct:"Tyrkia"},
+{breed:"Savannah",image:"bilder/savannah.jpg",answers:["USA","Kenya","Egypt"],correct:"USA"},
+{breed:"Munchkin",image:"bilder/munchkin.jpg",answers:["USA","Japan","England"],correct:"USA"},
+{breed:"Exotic Shorthair",image:"bilder/exotic-shorthair.jpg",answers:["USA","Iran","Russland"],correct:"USA"},
+{breed:"Turkish Van",image:"bilder/turkish-van.jpg",answers:["Tyrkia","Iran","Egypt"],correct:"Tyrkia"},
+{breed:"Bombay",image:"bilder/bombay.jpg",answers:["USA","India","Egypt"],correct:"USA"},
+{breed:"Cornish Rex",image:"bilder/cornish-rex.jpg",answers:["England","USA","Frankrike"],correct:"England"},
+{breed:"Ocicat",image:"bilder/ocicat.jpg",answers:["USA","Mexico","Egypt"],correct:"USA"},
+{breed:"Egyptian Mau",image:"bilder/egyptian-mau.jpg",answers:["Egypt","Iran","Tyrkia"],correct:"Egypt"},
+{breed:"Balineser",image:"bilder/balineser.jpg",answers:["USA","Indonesia","Thailand"],correct:"USA"},
+{breed:"American Curl",image:"bilder/american-curl.jpg",answers:["USA","Canada","England"],correct:"USA"},
+{breed:"Snowshoe",image:"bilder/snowshoe.jpg",answers:["USA","Thailand","Sverige"],correct:"USA"},
+{breed:"Manx",image:"bilder/manx.jpg",answers:["Isle of Man","Irland","Skottland"],correct:"Isle of Man"}
 ];
 
 let currentQuestion=0;
 let score=0;
 let lives=3;
+
 function shuffleArray(array){
+const copy=[...array];
 
-const copy = [...array];
-
-for(let i = copy.length - 1; i > 0; i--){
-
-const j = Math.floor(Math.random() * (i + 1));
-
-[copy[i], copy[j]] = [copy[j], copy[i]];
-
+for(let i=copy.length-1;i>0;i--){
+const j=Math.floor(Math.random()*(i+1));
+[copy[i],copy[j]]=[copy[j],copy[i]];
 }
 
 return copy;
-
 }
-function loadQuestion(){
 
+function loadQuestion(){
 const q=questions[currentQuestion];
 
-document.getElementById(
-"catImage"
-).src=q.image;
+document.getElementById("catImage").src=q.image;
+document.getElementById("breed").textContent=q.breed;
+document.getElementById("questionNumber").textContent=(currentQuestion+1)+"/"+questions.length;
 
-document.getElementById(
-"breed"
-).innerHTML=q.breed;
-
-document.getElementById(
-"questionNumber"
-).innerHTML=
-(currentQuestion+1)+
-"/"+
-questions.length;
-
-const answers=
-document.getElementById(
-"answers"
-);
-
+const answers=document.getElementById("answers");
 answers.innerHTML="";
 
-document.getElementById(
-"message"
-).innerHTML="";
+document.getElementById("message").textContent="";
 
-shuffleArray(q.answers).forEach(answer=>{
+const shuffledAnswers=shuffleArray(q.answers);
 
-const btn=
-document.createElement(
-"button"
-);
-
-btn.className=
-"answer-btn";
-
-btn.innerHTML=answer;
-
-btn.onclick=()=>
-checkAnswer(
-btn,
-answer
-);
-
+shuffledAnswers.forEach(answer=>{
+const btn=document.createElement("button");
+btn.className="answer-btn";
+btn.textContent=answer;
+btn.dataset.answer=answer;
+btn.onclick=()=>checkAnswer(btn,answer);
 answers.appendChild(btn);
-
 });
 
-document.getElementById(
-"nextBtn"
-).style.display="none";
-
+document.getElementById("nextBtn").style.display="none";
 }
 
 function checkAnswer(button,answer){
-
 const q=questions[currentQuestion];
-
-const buttons=
-document.querySelectorAll(
-".answer-btn"
-);
+const buttons=document.querySelectorAll(".answer-btn");
 
 buttons.forEach(btn=>{
-
 btn.disabled=true;
 
-if(
-btn.textContent===
-q.correct
-){
-
-btn.classList.add(
-"correct"
-);
-
+if(btn.dataset.answer===q.correct){
+btn.classList.add("correct");
 }
-
 });
 
 if(answer===q.correct){
-
 score+=10;
-
-document.getElementById(
-"message"
-).innerHTML=
-"🎉 Riktig svar!";
-
+document.getElementById("message").textContent="🎉 Riktig svar!";
 }else{
-
 lives--;
-
-button.classList.add(
-"wrong"
-);
-
-document.getElementById(
-"message"
-).innerHTML=
-"😿 Feil svar!";
-
+button.classList.add("wrong");
+document.getElementById("message").textContent="😿 Feil svar!";
 }
 
-document.getElementById(
-"score"
-).innerHTML=score;
-
-document.getElementById(
-"lives"
-).innerHTML=lives;
+document.getElementById("score").textContent=score;
+document.getElementById("lives").textContent=lives;
 
 if(lives<=0){
-
 setTimeout(()=>{
-
-alert(
-"😅 Game Over!"
-);
-
+alert("😅 Game Over!");
 location.reload();
-
 },500);
-
 return;
-
 }
 
-document.getElementById(
-"nextBtn"
-).style.display=
-"inline-block";
-
+document.getElementById("nextBtn").style.display="inline-block";
 }
 
 function nextQuestion(){
-
 currentQuestion++;
 
-if(
-currentQuestion>=
-questions.length
-){
-
-alert(
-"🏆 Gratulerer! Du fullførte Katteland Quiz!"
-);
-
+if(currentQuestion>=questions.length){
+alert("🏆 Gratulerer! Du fullførte Katteland Quiz!");
 location.reload();
-
 return;
-
 }
 
 loadQuestion();
-
 }
 
 loadQuestion();
-
 </script>
 
 </body>
