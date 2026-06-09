@@ -124,7 +124,7 @@ button:focus{
   <button onclick="selectCategory('Country')">Country</button>
   <button onclick="selectCategory('Soul')">Soul</button>
   <button onclick="selectCategory('Pop')">Pop</button>
-  <button onclick="selectCategory('Rock')">Rock</button>
+  <button onclick="selectCategory('Rock')">Rock</button><br><br><button onclick="startRandomQuiz()">🎲 Tilfeldig Musikkquiz</button>
 
   <p id="chosen">Ingen valg enda</p>
   <button onclick="startQuiz()">Start Quiz</button>
@@ -426,6 +426,21 @@ function shuffleArray(array){
   }
   return copy;
 }
+
+
+function startRandomQuiz(){
+  const keys = Object.keys(questions).filter(k => k !== "Country");
+  let pool = [];
+  keys.forEach(k => pool = pool.concat(questions[k]));
+  activeQuestions = shuffleArray(pool).slice(0,10);
+  currentQuestion=0;
+  score=0;
+  document.getElementById("setup").classList.add("hidden");
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("quiz").classList.remove("hidden");
+  showQuestion();
+}
+
 
 function startQuiz(){
   if(!selectedYear || !selectedCategory){
