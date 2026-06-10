@@ -100,16 +100,36 @@ button:focus{
   opacity:.85;
 }
 
+.statsBox{
+  background:rgba(255,255,255,0.16);
+  border-radius:18px;
+  padding:16px;
+  margin:18px auto;
+  max-width:620px;
+  font-size:18px;
+  line-height:1.7;
+}
+.levelBox{
+  margin-top:20px;
+}
+.levelBtn{
+  background:#a7f3d0;
+}
+.levelBtn.active{
+  background:#22c55e;
+  color:white;
+  transform:scale(1.05);
+}
 .confetti{
-position:fixed;
-font-size:28px;
-pointer-events:none;
-animation:fall 3s linear forwards;
-z-index:9999;
+  position:fixed;
+  font-size:28px;
+  pointer-events:none;
+  animation:fall 3s linear forwards;
+  z-index:9999;
 }
 @keyframes fall{
-0%{transform:translateY(-50px) rotate(0deg);opacity:1;}
-100%{transform:translateY(100vh) rotate(720deg);opacity:0;}
+  0%{transform:translateY(-50px) rotate(0deg);opacity:1;}
+  100%{transform:translateY(100vh) rotate(720deg);opacity:0;}
 }
 
 </style>
@@ -126,6 +146,13 @@ z-index:9999;
 
 <p class="small">Velg tiår og kategori</p>
 
+<div id="statsBox" class="statsBox">
+  🏆 Rekord: <span id="bestScore">0/10</span><br>
+  🎮 Spillt: <span id="gamesPlayed">0</span> ganger<br>
+  ⭐ Gullplater: <span id="goldRecords">0</span><br>
+  👑 Status: <span id="playerRank">Ny spiller</span>
+</div>
+
 <div id="setup" class="card">
   <h2>Velg tiår</h2>
   <button onclick="selectYear('60')">60-tallet</button>
@@ -140,8 +167,17 @@ z-index:9999;
   <button onclick="selectCategory('Rock')">Rock</button><br><br><button onclick="startRandomQuiz()">🎲 Tilfeldig Musikkquiz</button>
 
   <p id="chosen">Ingen valg enda</p>
+
+  <div class="levelBox">
+    <h2>Velg nivå</h2>
+    <button id="level10" class="levelBtn active" onclick="selectLevel(10)">🟢 Lett 10</button>
+    <button id="level20" class="levelBtn" onclick="selectLevel(20)">🟡 Medium 20</button>
+    <button id="level30" class="levelBtn" onclick="selectLevel(30)">🔴 Ekspert 30</button>
+    <button id="level50" class="levelBtn" onclick="selectLevel(50)">👑 Musikkmester 50</button>
+  </div>
+
   <button onclick="startQuiz()">Start Quiz</button>
-  <p class="note">Country, Rock, Pop og Soul har nå egne spørsmål for 60-, 70-, 80- og 90-tallet. Prøv også Tilfeldig Musikkquiz!</p>
+  <p class="note">Musikk Quiz 2.0: Velg nivå, slå rekorden din og samle gullplater!</p>
 </div>
 
 <div id="quiz" class="card hidden">
@@ -166,6 +202,7 @@ let selectedCategory="";
 let currentQuestion=0;
 let score=0;
 let activeQuestions=[];
+let quizLength=10;
 
 const questions={
 
@@ -455,11 +492,73 @@ function shuffleArray(array){
 }
 
 
+
+function selectLevel(amount){
+  quizLength=amount;
+  document.querySelectorAll(".levelBtn").forEach(b=>b.classList.remove("active"));
+  const btn=document.getElementById("level"+amount);
+  if(btn) btn.classList.add("active");
+  updateStatsBox();
+}
+
+function getStats(){
+  return {
+    best: parseInt(localStorage.getItem("musicQuizBest") || "0"),
+    games: parseInt(localStorage.getItem("musicQuizGames") || "0"),
+    gold: parseInt(localStorage.getItem("musicQuizGold") || "0")
+  };
+}
+
+function saveStats(){
+  let stats=getStats();
+  stats.games++;
+  if(score > stats.best) stats.best=score;
+  if(score === activeQuestions.length) stats.gold++;
+  localStorage.setItem("musicQuizBest", stats.best);
+  localStorage.setItem("musicQuizGames", stats.games);
+  localStorage.setItem("musicQuizGold", stats.gold);
+  updateStatsBox();
+}
+
+function updateStatsBox(){
+  const stats=getStats();
+  const bestText=document.getElementById("bestScore");
+  const gamesText=document.getElementById("gamesPlayed");
+  const goldText=document.getElementById("goldRecords");
+  const rankText=document.getElementById("playerRank");
+
+  if(bestText) bestText.innerText=stats.best+"/"+quizLength;
+  if(gamesText) gamesText.innerText=stats.games;
+  if(goldText) goldText.innerText=stats.gold;
+
+  let rank="Ny spiller";
+  if(stats.gold>=20) rank="👑 Musikklegende";
+  else if(stats.gold>=5) rank="💿 Platina Artist";
+  else if(stats.gold>=1) rank="🏆 Gullplate-vinner";
+  if(rankText) rankText.innerText=rank;
+}
+
+function launchConfetti(){
+ const emojis=['⭐','✨','🎉','🏆','🎵','💿'];
+ for(let i=0;i<55;i++){
+   const el=document.createElement('div');
+   el.className='confetti';
+   el.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+   el.style.left=Math.random()*100+'vw';
+   el.style.animationDelay=(Math.random()*0.7)+'s';
+   document.body.appendChild(el);
+   setTimeout(()=>el.remove(),3500);
+ }
+}
+
+window.addEventListener("load", updateStatsBox);
+
+
 function startRandomQuiz(){
   const keys = Object.keys(questions).filter(k => k.includes("_"));
   let pool = [];
   keys.forEach(k => pool = pool.concat(questions[k]));
-  activeQuestions = shuffleArray(pool).slice(0,10);
+  activeQuestions = shuffleArray(pool).slice(0,quizLength);
   currentQuestion=0;
   score=0;
   document.getElementById("setup").classList.add("hidden");
@@ -475,7 +574,7 @@ function startQuiz(){
     return;
   }
 
-  let key = selectedYear + "_" + selectedCategory;
+  let key=selectedCategory==="Country" ? "Country" : selectedYear+"_"+selectedCategory;
   let pool=questions[key] || [];
 
   if(pool.length===0){
@@ -483,7 +582,7 @@ function startQuiz(){
     return;
   }
 
-  activeQuestions=shuffleArray(pool).slice(0,10);
+  activeQuestions=shuffleArray(pool).slice(0,quizLength);
   currentQuestion=0;
   score=0;
 
@@ -555,42 +654,34 @@ function checkAnswer(isCorrect,btn){
   },1200);
 }
 
-
-function launchConfetti(){
- const emojis=['⭐','✨','🎉','🏆','🎵'];
- for(let i=0;i<40;i++){
-   const el=document.createElement('div');
-   el.className='confetti';
-   el.innerText=emojis[Math.floor(Math.random()*emojis.length)];
-   el.style.left=Math.random()*100+'vw';
-   el.style.animationDelay=(Math.random()*0.5)+'s';
-   document.body.appendChild(el);
-   setTimeout(()=>el.remove(),3500);
- }
-}
-
 function showResult(){
   document.getElementById("quiz").classList.add("hidden");
   document.getElementById("result").classList.remove("hidden");
+
+  saveStats();
 
   document.getElementById("finalScore").innerText=
   "Du fikk "+score+" av "+activeQuestions.length+" riktige.";
 
   let medal="";
-  if(score>=9) medal="🏆 Gullplate!";
-  else if(score>=7) medal="🥈 Sølvplate!";
-  else if(score>=5) medal="🥉 Bronseplate!";
+  let percent = score / activeQuestions.length;
+
+  if(score === activeQuestions.length && activeQuestions.length >= 50) medal="👑 LEGENDE!";
+  else if(score === activeQuestions.length && activeQuestions.length >= 30) medal="💿 PLATINA ARTIST!";
+  else if(score === activeQuestions.length) medal="🏆 GULLPLATE!";
+  else if(percent>=0.8) medal="🥈 Kjempebra!";
+  else if(percent>=0.5) medal="🥉 Bra jobbet!";
   else medal="🎵 Prøv igjen!";
 
   document.getElementById("medal").innerText=medal;
 
-  if(score===10){
-    document.getElementById("finalScore").innerHTML += "<br><br>🌟 GRATULERER! Du er en ekte MUSIKKMESTER! 🌟";
+  if(score===activeQuestions.length){
+    document.getElementById("finalScore").innerHTML += "<br><br>🌟 GRATULERER! Alt riktig – du er en ekte MUSIKKMESTER! 🌟";
     launchConfetti();
-  }else if(score>=8){
+  }else if(percent>=0.8){
     document.getElementById("finalScore").innerHTML += "<br><br>🎉 Fantastisk resultat!";
     launchConfetti();
-  }else if(score>=5){
+  }else if(percent>=0.5){
     document.getElementById("finalScore").innerHTML += "<br><br>👏 Bra jobbet!";
   }
 }
