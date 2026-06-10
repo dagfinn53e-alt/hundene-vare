@@ -177,7 +177,7 @@ button:focus{
   </div>
 
   <button onclick="startQuiz()">Start Quiz</button>
-  <p class="note">Musikk Quiz 2.0: Velg nivå, slå rekorden din og samle gullplater!</p>
+  <p class="note">Musikk Quiz 2.0: Ved 20/30/50 spørsmål blandes flere tiår innen valgt kategori.</p>
 </div>
 
 <div id="quiz" class="card hidden">
@@ -558,7 +558,10 @@ function startRandomQuiz(){
   const keys = Object.keys(questions).filter(k => k.includes("_"));
   let pool = [];
   keys.forEach(k => pool = pool.concat(questions[k]));
-  activeQuestions = shuffleArray(pool).slice(0,quizLength);
+
+  const amount = Math.min(quizLength, pool.length);
+
+  activeQuestions = shuffleArray(pool).slice(0,amount);
   currentQuestion=0;
   score=0;
   document.getElementById("setup").classList.add("hidden");
@@ -574,15 +577,28 @@ function startQuiz(){
     return;
   }
 
-  let key=selectedCategory==="Country" ? "Country" : selectedYear+"_"+selectedCategory;
-  let pool=questions[key] || [];
+  let key = selectedYear + "_" + selectedCategory;
+  let pool = questions[key] || [];
+
+  /*
+    Hver tiårskategori har ca. 10 spørsmål.
+    Hvis spilleren velger 20, 30 eller 50 spørsmål,
+    blander vi inn alle tiår fra samme kategori.
+  */
+  if(quizLength > pool.length){
+    const categoryKeys = Object.keys(questions).filter(k => k.endsWith("_" + selectedCategory));
+    pool = [];
+    categoryKeys.forEach(k => pool = pool.concat(questions[k]));
+  }
 
   if(pool.length===0){
     alert("Denne kategorien har ikke spørsmål enda.");
     return;
   }
 
-  activeQuestions=shuffleArray(pool).slice(0,quizLength);
+  const amount = Math.min(quizLength, pool.length);
+
+  activeQuestions=shuffleArray(pool).slice(0,amount);
   currentQuestion=0;
   score=0;
 
