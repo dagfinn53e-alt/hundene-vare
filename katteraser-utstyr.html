@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Katteraser Utstyr - Hundene våre</title>
+
+<style>
+:root{
+  --pink:#db2777;
+  --pink-dark:#9d174d;
+  --text:#102033;
+  --muted:#5f7088;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top left,rgba(244,114,182,.18) 0%,transparent 28%),
+    radial-gradient(circle at top right,rgba(124,58,237,.12) 0%,transparent 30%),
+    linear-gradient(180deg,#fce7f3 0%,#fdf2f8 45%,#f8fbff 100%);
+}
+
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:22px 18px 70px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+  padding:14px 18px;
+  border:1px solid rgba(251,207,232,.9);
+  border-radius:28px;
+  background:rgba(255,255,255,.90);
+  box-shadow:0 16px 38px rgba(15,23,42,.10);
+  position:sticky;
+  top:8px;
+  z-index:50;
+}
+
+.brand{
+  font-size:24px;
+  font-weight:900;
+  color:var(--pink-dark);
+  padding:12px 18px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#ffffff,#fdf2f8);
+  border:1px solid #fbcfe8;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.navbtn,.mainbtn{
+  border:none;
+  border-radius:999px;
+  padding:11px 16px;
+  background:var(--pink);
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 16px rgba(15,23,42,.08);
+}
+
+.navbtn.alt{
+  background:#fff1f2;
+  color:#9d174d;
+  border:1px solid #fbcfe8;
+}
+
+.navbtn.admin{
+  background:#fff7ed;
+  color:#b45309;
+  border:1px solid #fed7aa;
+}
+
+.hero{
+  min-height:255px;
+  border-radius:34px;
+  padding:38px;
+  color:white;
+  background:
+    linear-gradient(rgba(76,5,35,.46),rgba(76,5,35,.50)),
+    url('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
+  box-shadow:0 22px 48px rgba(15,23,42,.18);
+  margin-bottom:22px;
+}
+
+.hero h1{
+  margin:0 0 12px;
+  font-size:52px;
+  line-height:1.05;
+  text-shadow:0 6px 18px rgba(0,0,0,.25);
+}
+
+.hero p{
+  margin:0 0 18px;
+  max-width:820px;
+  font-size:18px;
+  line-height:1.6;
+  color:#f8fafc;
+}
+
+.mainbtn{
+  background:linear-gradient(135deg,#db2777,#7c3aed);
+  min-height:48px;
+  padding:13px 22px;
+}
+
+.card{
+  background:linear-gradient(180deg,#fff1f2 0%,#fce7f3 100%);
+  border:1px solid rgba(251,207,232,.8);
+  border-radius:34px;
+  padding:28px;
+  box-shadow:0 20px 42px rgba(15,23,42,.12);
+  margin-bottom:22px;
+}
+
+.section-title{
+  margin:0 0 8px;
+  font-size:34px;
+  color:#831843;
+}
+
+.sub{
+  color:var(--muted);
+  line-height:1.6;
+  margin:0 0 20px;
+}
+
+.searchbox{
+  width:100%;
+  max-width:520px;
+  padding:15px 18px;
+  border-radius:999px;
+  border:1px solid #f9a8d4;
+  font-size:17px;
+  margin-bottom:20px;
+  outline:none;
+}
+
+.equip-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.equip-card{
+  background:linear-gradient(180deg,#ffffff 0%,#fff7fb 100%);
+  border:1px solid #fbcfe8;
+  border-radius:28px;
+  padding:22px;
+  box-shadow:0 14px 32px rgba(157,23,77,.10);
+}
+
+.equip-card h3{
+  margin:0 0 12px;
+  font-size:27px;
+  color:#831843;
+}
+
+.quick-facts{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  margin-bottom:16px;
+}
+
+.quick{
+  padding:10px 12px;
+  border-radius:16px;
+  background:#fff1f2;
+  color:#9d174d;
+  border:1px solid #fbcfe8;
+  font-weight:900;
+}
+
+.equip-list p{
+  margin:10px 0;
+  line-height:1.58;
+  color:#334155;
+}
+
+.buy-box{
+  margin-top:16px;
+  padding:16px;
+  border-radius:20px;
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#9a3412;
+  line-height:1.6;
+}
+
+.buy-box span{
+  font-weight:900;
+  color:#b45309;
+}
+
+.shop-placeholder{
+  margin-top:8px;
+  font-size:13px;
+  color:#92400e;
+}
+
+.note{
+  margin-top:14px;
+  color:#475569;
+  line-height:1.6;
+  background:#fff;
+  border:1px dashed #f9a8d4;
+  border-radius:18px;
+  padding:12px;
+}
+
+.footer-note{
+  text-align:center;
+  color:#64748b;
+  font-size:14px;
+  margin-top:22px;
+}
+
+@media(max-width:900px){
+  .equip-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:760px){
+  .wrap{padding:14px 12px 50px}
+  .topbar{border-radius:22px;padding:12px}
+  .brand{width:100%;text-align:center;font-size:20px}
+  .actions{width:100%;justify-content:center}
+  .navbtn{flex:1 1 42%;font-size:13px;padding:10px 12px}
+  .hero{min-height:230px;border-radius:26px;padding:24px}
+  .hero h1{font-size:34px}
+  .hero p{font-size:15px}
+  .card{border-radius:26px;padding:18px}
+  .section-title{font-size:28px}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">🐶 Hundene våre</div>
+    <div class="actions">
+      <a class="navbtn alt" href="index.html">🏠 Forside</a>
+      <a class="navbtn alt" href="kunnskap.html">📚 Kunnskap</a>
+      <a class="navbtn alt" href="katteraser.html">🐱 Katteraser</a>
+      <a class="navbtn alt" href="hunderaser-utstyr.html">✂️ Hundeutstyr</a>
+      <a class="navbtn alt" href="helse.html">🏥 Helse</a>
+      <a class="navbtn admin" href="admin.html">🔧 Admin</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <h1>🐱 Katteraser Utstyr</h1>
+    <p>
+      En praktisk utstyrsguide for populære katteraser.
+      Her finner du pelsstellnivå, prisnivå, børster, sjampo, klotang og plass til “Kjøpes hos”.
+    </p>
+    <a class="mainbtn" href="kunnskap.html">⬅️ Tilbake til Kunnskapssenter</a>
+  </section>
+
+  <section class="card">
+    <h2 class="section-title">Finn utstyr til katterase</h2>
+    <p class="sub">Søk etter rase eller utstyr. Alle katter bør ha klotang tilgjengelig for trygg klostell.</p>
+    <input class="searchbox" id="searchInput" onkeyup="filterEquipment()" placeholder="Søk etter rase eller utstyr...">
+
+    <div class="equip-grid" id="equipGrid">
+      
+      <div class="equip-card" data-search="maine coon karde, metallkam og underullskam mild kattesjampo ved behov klotang for katt ⭐⭐⭐ middels">
+        <h3>🐱 Maine Coon</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐ Middels</div>
+          <div class="quick">💰💰 Middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Karde, metallkam og underullskam</p>
+          <p><b>✂️ Saks/klipp:</b><br>Vanligvis ikke nødvendig, men liten saks kan brukes til floker ved behov</p>
+          <p><b>🧴 Sjampo:</b><br>Mild kattesjampo ved behov</p>
+          <p><b>🐾 Klostell:</b><br>Klotang for katt – alle katter bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting 1–2 ganger i uken, oftere ved røyting.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / lokal butikk / nettbutikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Maine Coon har stor pels og bør vennes til børsting tidlig.</p>
+      </div>
+    
+      <div class="equip-card" data-search="norsk skogkatt karde, metallkam og underullskam mild kattesjampo ved behov klotang for katt ⭐⭐⭐ middels">
+        <h3>🐱 Norsk Skogkatt</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐ Middels</div>
+          <div class="quick">💰💰 Middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Karde, metallkam og underullskam</p>
+          <p><b>✂️ Saks/klipp:</b><br>Liten saks ved floker, men vær forsiktig nær huden</p>
+          <p><b>🧴 Sjampo:</b><br>Mild kattesjampo ved behov</p>
+          <p><b>🐾 Klostell:</b><br>Klotang for katt – alle katter bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting ukentlig, ekstra i røyteperioder.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / lokal butikk / nettbutikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Sjekk spesielt buk, bakbein og krage for floker.</p>
+      </div>
+    
+      <div class="equip-card" data-search="birma myk børste og metallkam mild kattesjampo ved behov klotang for katt ⭐⭐ middels/enkel">
+        <h3>🐱 Birma</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐ Middels/enkel</div>
+          <div class="quick">💰💰 Middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Myk børste og metallkam</p>
+          <p><b>✂️ Saks/klipp:</b><br>Liten saks ved behov</p>
+          <p><b>🧴 Sjampo:</b><br>Mild kattesjampo ved behov</p>
+          <p><b>🐾 Klostell:</b><br>Klotang for katt – alle katter bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting 1 gang i uken holder ofte godt.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / lokal butikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Birma har ofte silkemyk pels som er lettere å holde enn mange andre langhårskatter.</p>
+      </div>
+    
+      <div class="equip-card" data-search="perser karde, metallkam og flokekam kattesjampo for lang pels + balsam ved behov klotang for katt ⭐⭐⭐⭐⭐ krevende">
+        <h3>🐱 Perser</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐⭐⭐ Krevende</div>
+          <div class="quick">💰💰💰 Høy</div>
+          <div class="quick">👨‍👩‍👧 ⚠️ Litt erfaring</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Karde, metallkam og flokekam</p>
+          <p><b>✂️ Saks/klipp:</b><br>Liten butt saks til forsiktig flokeklipp</p>
+          <p><b>🧴 Sjampo:</b><br>Kattesjampo for lang pels + balsam ved behov</p>
+          <p><b>🐾 Klostell:</b><br>Klotang for katt – alle katter bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting helst daglig eller flere ganger i uken.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Profesjonell dyrebutikk / katteutstyr / nettbutikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Perser krever mye pelsstell. Floker kan komme raskt hvis pelsen ikke vedlikeholdes.</p>
+      </div>
+    
+      <div class="equip-card" data-search="bengal gummibørste eller myk børste mild kattesjampo kun ved behov klotang for katt ⭐ enkel">
+        <h3>🐱 Bengal</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐ Enkel</div>
+          <div class="quick">💰 Lav/middels</div>
+          <div class="quick">👨‍👩‍👧 ⚠️ Litt erfaring</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Gummibørste eller myk børste</p>
+          <p><b>✂️ Saks/klipp:</b><br>Vanligvis ikke nødvendig</p>
+          <p><b>🧴 Sjampo:</b><br>Mild kattesjampo kun ved behov</p>
+          <p><b>🐾 Klostell:</b><br>Klotang for katt – alle katter bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting av og til, mest for glans og løs pels.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / lokal butikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Bengal trenger ofte mer aktivisering enn pelsstell.</p>
+      </div>
+    
+      <div class="equip-card" data-search="siameser myk børste eller gummibørste mild kattesjampo ved behov klotang for katt ⭐ enkel">
+        <h3>🐱 Siameser</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐ Enkel</div>
+          <div class="quick">💰 Lav</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Myk børste eller gummibørste</p>
+          <p><b>✂️ Saks/klipp:</b><br>Vanligvis ikke nødvendig</p>
+          <p><b>🧴 Sjampo:</b><br>Mild kattesjampo ved behov</p>
+          <p><b>🐾 Klostell:</b><br>Klotang for katt – alle katter bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Kort pels – lett børsting ved behov.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / lokal butikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Siameser har kort pels, men klør bør sjekkes jevnlig.</p>
+      </div>
+    
+      <div class="equip-card" data-search="ragdoll karde, metallkam og myk børste mild kattesjampo ved behov klotang for katt ⭐⭐⭐ middels">
+        <h3>🐱 Ragdoll</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐ Middels</div>
+          <div class="quick">💰💰 Middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Karde, metallkam og myk børste</p>
+          <p><b>✂️ Saks/klipp:</b><br>Liten saks ved floker</p>
+          <p><b>🧴 Sjampo:</b><br>Mild kattesjampo ved behov</p>
+          <p><b>🐾 Klostell:</b><br>Klotang for katt – alle katter bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting 1–2 ganger i uken.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / lokal butikk / nettbutikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Ragdoll har halvlang pels og trenger rolig og jevnlig pelsstell.</p>
+      </div>
+    
+      <div class="equip-card" data-search="scottish fold myk børste eller karde mild kattesjampo ved behov klotang for katt ⭐⭐ enkel/middels">
+        <h3>🐱 Scottish Fold</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐ Enkel/middels</div>
+          <div class="quick">💰 Lav/middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Myk børste eller karde</p>
+          <p><b>✂️ Saks/klipp:</b><br>Vanligvis ikke nødvendig</p>
+          <p><b>🧴 Sjampo:</b><br>Mild kattesjampo ved behov</p>
+          <p><b>🐾 Klostell:</b><br>Klotang for katt – alle katter bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting ukentlig eller ved behov.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / lokal butikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Sjekk ører, pels og klør jevnlig.</p>
+      </div>
+    
+      <div class="equip-card" data-search="russian blue myk børste eller gummibørste mild kattesjampo kun ved behov klotang for katt ⭐ enkel">
+        <h3>🐱 Russian Blue</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐ Enkel</div>
+          <div class="quick">💰 Lav</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Myk børste eller gummibørste</p>
+          <p><b>✂️ Saks/klipp:</b><br>Vanligvis ikke nødvendig</p>
+          <p><b>🧴 Sjampo:</b><br>Mild kattesjampo kun ved behov</p>
+          <p><b>🐾 Klostell:</b><br>Klotang for katt – alle katter bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Lett børsting ukentlig eller ved behov.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / lokal butikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Russian Blue har kort pels som er lett å holde pen.</p>
+      </div>
+    
+      <div class="equip-card" data-search="devon rex svært myk børste eller stellehanske mild kattesjampo ved behov, hudvennlig klotang for katt ⭐⭐ enkel/middels">
+        <h3>🐱 Devon Rex</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐ Enkel/middels</div>
+          <div class="quick">💰💰 Middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Svært myk børste eller stellehanske</p>
+          <p><b>✂️ Saks/klipp:</b><br>Vanligvis ikke nødvendig</p>
+          <p><b>🧴 Sjampo:</b><br>Mild kattesjampo ved behov, hudvennlig</p>
+          <p><b>🐾 Klostell:</b><br>Klotang for katt – alle katter bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Forsiktig stell ved behov. Ikke børst for hardt.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / veterinærbutikk / lokal butikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Devon Rex har spesiell pels og hud. Bruk mykt utstyr.</p>
+      </div>
+    
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="section-title">Neste steg</h2>
+    <p class="sub">
+      Senere kan “Kjøpes hos” kobles direkte til butikkprofilene i Hundene våre, slik at katteeiere finner riktig utstyr hos lokale butikker.
+    </p>
+  </section>
+
+  <p class="footer-note">
+    Hundenevåre.com – Kunnskapssenter for hunder, katter og stell.
+  </p>
+
+</div>
+
+<script>
+function filterEquipment(){
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const cards = document.querySelectorAll(".equip-card");
+
+  cards.forEach(card=>{
+    const text = card.innerText.toLowerCase() + " " + card.dataset.search.toLowerCase();
+    card.style.display = text.includes(input) ? "block" : "none";
+  });
+}
+</script>
+
+</body>
+</html>
