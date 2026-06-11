@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐶 Hundepuslespill 2.0</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(to bottom,#dbeafe,#eef6ff);
+  color:#123c73;
+  text-align:center;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+
+h1{
+  margin-bottom:20px;
+  font-size:40px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+select,button{
+  padding:14px 20px;
+  border:none;
+  border-radius:16px;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+select{
+  background:white;
+  color:#123c73;
+  box-shadow:0 4px 10px rgba(0,0,0,.08);
+}
+
+button{
+  background:#2563eb;
+  color:white;
+}
+
+button:hover{
+  background:#1d4ed8;
+}
+
+.stats{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.stat{
+  background:white;
+  padding:14px 20px;
+  border-radius:18px;
+  font-weight:bold;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+
+.game-area{
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  gap:30px;
+  flex-wrap:wrap;
+}
+
+#preview{
+  width:220px;
+  background:white;
+  padding:10px;
+  border-radius:18px;
+  box-shadow:0 4px 12px rgba(0,0,0,.12);
+}
+
+#preview img{
+  width:100%;
+  border-radius:12px;
+}
+
+#board{
+  width:90vw;
+  max-width:600px;
+  height:90vw;
+  max-height:600px;
+  display:grid;
+  gap:2px;
+  background:white;
+  padding:4px;
+  border-radius:18px;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+.piece{
+  border-radius:6px;
+  background-repeat:no-repeat;
+  cursor:pointer;
+  border:1px solid white;
+  transition:.15s;
+}
+
+.piece:hover{
+  transform:scale(.98);
+}
+
+.selected{
+  outline:4px solid #10b981;
+}
+
+#message{
+  margin-top:20px;
+  font-size:24px;
+  font-weight:bold;
+  color:#2563eb;
+  min-height:36px;
+}
+
+.back button{
+  margin-top:30px;
+  background:#123c73;
+}
+
+.confetti{
+  position:fixed;
+  font-size:28px;
+  pointer-events:none;
+  animation:fall 3s linear forwards;
+  z-index:9999;
+}
+
+@keyframes fall{
+  0%{transform:translateY(-50px) rotate(0deg);opacity:1;}
+  100%{transform:translateY(100vh) rotate(720deg);opacity:0;}
+}
+
+@media(max-width:700px){
+  h1{font-size:30px}
+  select,button{font-size:16px;padding:12px 16px}
+  #preview{width:180px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🐶 Hundepuslespill 2.0</h1>
+
+<div class="topbar">
+
+<select id="dogSelect">
+  <option value="bichon.png">Bichon Frisé</option>
+  <option value="collie.png">Collie</option>
+  <option value="puddel.png">Puddel</option>
+  <option value="lhasa-apso.png">Lhasa Apso</option>
+  <option value="st-bernard.png">St. Bernard</option>
+  <option value="boston-terrier.png">Boston Terrier</option>
+  <option value="mops.png">Mops</option>
+</select>
+
+<select id="sizeSelect">
+  <option value="3">🙂 Lett - 9 brikker</option>
+  <option value="4">😎 Medium - 16 brikker</option>
+  <option value="5">🔥 Vanskelig - 25 brikker</option>
+  <option value="6">👑 Ekspert - 36 brikker</option>
+</select>
+
+<button onclick="startGame()">🧩 Start spill</button>
+
+</div>
+
+<div class="stats">
+  <div class="stat">🏆 Trekk: <span id="moves">0</span></div>
+  <div class="stat">⭐ Stjerner: <span id="stars">0</span></div>
+  <div class="stat">🎯 Nivå: <span id="levelName">Lett</span></div>
+</div>
+
+<div class="game-area">
+
+<div id="preview">
+  <h3>🐶 Originalbilde</h3>
+  <img id="previewImage" alt="Originalbilde">
+</div>
+
+<div id="board"></div>
+
+</div>
+
+<div id="message"></div>
+
+<div class="back">
+  <button onclick="location.href='spill.html'">⬅️ Tilbake til spill</button>
+</div>
+
+</div>
+
+<script>
+let size=3;
+let pieces=[];
+let selected=null;
+let moves=0;
+let stars=0;
+let imageFile="bichon.png";
+let gameWon=false;
+
+function shuffleArray(array){
+  const copy=[...array];
+  for(let i=copy.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [copy[i],copy[j]]=[copy[j],copy[i]];
+  }
+  return copy;
+}
+
+function startGame(){
+  size=parseInt(document.getElementById("sizeSelect").value);
+  imageFile=document.getElementById("dogSelect").value;
+
+  document.getElementById("previewImage").src="bilder/"+imageFile;
+
+  moves=0;
+  stars=0;
+  selected=null;
+  gameWon=false;
+
+  document.getElementById("moves").innerHTML=0;
+  document.getElementById("stars").innerHTML=0;
+  document.getElementById("message").innerHTML="";
+  document.getElementById("levelName").innerHTML=getLevelName();
+
+  createPuzzle();
+  drawBoard();
+}
+
+function getLevelName(){
+  if(size===3) return "Lett";
+  if(size===4) return "Medium";
+  if(size===5) return "Vanskelig";
+  if(size===6) return "Ekspert";
+  return "Ukjent";
+}
+
+function createPuzzle(){
+  pieces=[];
+  for(let i=0;i<size*size;i++){
+    pieces.push(i);
+  }
+
+  do{
+    pieces=shuffleArray(pieces);
+  }while(isSolved());
+}
+
+function isSolved(){
+  for(let i=0;i<pieces.length;i++){
+    if(pieces[i]!==i) return false;
+  }
+  return true;
+}
+
+function drawBoard(){
+  const board=document.getElementById("board");
+  board.innerHTML="";
+  board.style.gridTemplateColumns=`repeat(${size},1fr)`;
+
+  pieces.forEach((piece,index)=>{
+    const div=document.createElement("div");
+    div.classList.add("piece");
+
+    if(selected===index){
+      div.classList.add("selected");
+    }
+
+    const row=Math.floor(piece/size);
+    const col=piece%size;
+
+    div.style.backgroundImage=`url('bilder/${imageFile}')`;
+    div.style.backgroundSize=`${size*100}% ${size*100}%`;
+    div.style.backgroundPosition=`${(col*100)/(size-1)}% ${(row*100)/(size-1)}%`;
+
+    div.onclick=()=>selectPiece(index);
+    board.appendChild(div);
+  });
+}
+
+function selectPiece(index){
+  if(gameWon) return;
+
+  if(selected===null){
+    selected=index;
+    drawBoard();
+    return;
+  }
+
+  if(selected===index){
+    selected=null;
+    drawBoard();
+    return;
+  }
+
+  [pieces[selected],pieces[index]]=[pieces[index],pieces[selected]];
+
+  selected=null;
+  moves++;
+
+  document.getElementById("moves").innerHTML=moves;
+
+  drawBoard();
+  checkWin();
+}
+
+function checkWin(){
+  if(!isSolved()) return;
+
+  gameWon=true;
+  calculateStars();
+
+  document.getElementById("message").innerHTML=
+    "🏆 Gratulerer! Du klarte puslespillet med "+stars+" stjerner!";
+
+  launchConfetti();
+}
+
+function calculateStars(){
+  let three=20;
+  let two=40;
+
+  if(size===4){three=45;two=80;}
+  if(size===5){three=80;two=140;}
+  if(size===6){three=120;two=220;}
+
+  if(moves<=three){
+    stars=3;
+  }else if(moves<=two){
+    stars=2;
+  }else{
+    stars=1;
+  }
+
+  document.getElementById("stars").innerHTML=stars;
+}
+
+function launchConfetti(){
+ const emojis=['⭐','✨','🎉','🏆','🐶','🧩'];
+ for(let i=0;i<45;i++){
+   const el=document.createElement('div');
+   el.className='confetti';
+   el.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+   el.style.left=Math.random()*100+'vw';
+   el.style.animationDelay=(Math.random()*0.6)+'s';
+   document.body.appendChild(el);
+   setTimeout(()=>el.remove(),3500);
+ }
+}
+
+startGame();
+</script>
+
+</body>
+</html>
