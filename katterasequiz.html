@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐱 Katterase Quiz 2.0</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:linear-gradient(to bottom,#fce7f3,#fdf2f8);
+text-align:center;
+color:#7a284f;
+}
+
+.container{
+max-width:900px;
+margin:20px auto;
+padding:20px;
+}
+
+h1{
+margin-bottom:20px;
+font-size:40px;
+}
+
+.stats{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.stat{
+flex:1;
+background:white;
+padding:15px;
+border-radius:18px;
+font-weight:bold;
+box-shadow:0 4px 10px rgba(0,0,0,.1);
+font-size:20px;
+}
+
+.quiz-box{
+background:white;
+padding:25px;
+border-radius:28px;
+box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+
+#catImage{
+width:100%;
+max-height:280px;
+object-fit:contain;
+background:white;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+#breed{
+font-size:32px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.question{
+font-size:24px;
+margin-bottom:20px;
+}
+
+.answer-btn{
+display:block;
+width:100%;
+margin:12px 0;
+padding:18px;
+border:none;
+border-radius:18px;
+background:#fbcfe8;
+font-size:22px;
+font-weight:bold;
+cursor:pointer;
+color:#7a284f;
+transition:.2s;
+}
+
+.answer-btn:hover{
+background:#f9a8d4;
+transform:scale(1.02);
+}
+
+.correct{
+background:#10b981 !important;
+color:white;
+}
+
+.wrong{
+background:#ef4444 !important;
+color:white;
+}
+
+#nextBtn{
+display:none;
+margin-top:20px;
+padding:18px 35px;
+border:none;
+border-radius:18px;
+background:#db2777;
+color:white;
+font-size:22px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.back button{
+margin-top:25px;
+padding:16px 30px;
+border:none;
+border-radius:18px;
+background:#7a284f;
+color:white;
+font-size:20px;
+font-weight:bold;
+cursor:pointer;
+}
+
+#message{
+margin-top:20px;
+font-size:24px;
+font-weight:bold;
+color:#db2777;
+min-height:40px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🐱 Katterase Quiz 2.0</h1>
+
+<div class="stats">
+<div class="stat">🏆 Poeng: <span id="score">0</span></div>
+<div class="stat">✅ Riktige: <span id="correctCount">0</span></div>
+<div class="stat">❓ Spørsmål: <span id="questionNumber">1</span></div>
+</div>
+
+<div class="quiz-box">
+
+<img id="catImage">
+
+<div id="breed"></div>
+
+<div class="question">
+Hvilken katterase er dette?
+</div>
+
+<div id="answers"></div>
+
+<div id="message"></div>
+
+<button id="nextBtn" onclick="nextQuestion()">Neste ➜</button>
+
+</div>
+
+<div id="resultBox" class="quiz-box" style="display:none;margin-top:20px;">
+<h2>🎉 Ferdig!</h2>
+<p id="finalScore"></p>
+<p id="medal" style="font-size:34px;font-weight:900;"></p>
+<button id="restartBtn" onclick="restartQuiz()" style="margin-top:20px;padding:18px 35px;border:none;border-radius:18px;background:#db2777;color:white;font-size:22px;font-weight:bold;cursor:pointer;">Spill igjen</button>
+</div>
+
+<div class="back">
+<button onclick="location.href='spill.html'">
+⬅️ Tilbake til spill
+</button>
+</div>
+
+</div>
+
+<script>
+const questions=[
+{breed:"Maine Coon",image:"bilder/maine-coon.jpg",correct:"Maine Coon"},
+{breed:"Siameser",image:"bilder/siameser.jpg",correct:"Siameser"},
+{breed:"Perser",image:"bilder/perser.jpg",correct:"Perser"},
+{breed:"Bengal",image:"bilder/bengal.jpg",correct:"Bengal"},
+{breed:"Abyssiner",image:"bilder/abyssiner.jpg",correct:"Abyssiner"},
+{breed:"Birma",image:"bilder/birma.jpg",correct:"Birma"},
+{breed:"Devon Rex",image:"bilder/devon-rex.jpg",correct:"Devon Rex"},
+{breed:"Oriental Shorthair",image:"bilder/oriental-shorthair.jpg",correct:"Oriental Shorthair"},
+{breed:"Russian Blue",image:"bilder/russian-blue.jpg",correct:"Russian Blue"},
+{breed:"Scottish Fold",image:"bilder/scottish-fold.jpg",correct:"Scottish Fold"},
+{breed:"Sibirsk Katt",image:"bilder/sibirsk-katt.jpg",correct:"Sibirsk Katt"},
+{breed:"Tyrkisk Angora",image:"bilder/tyrkisk-angora.jpg",correct:"Tyrkisk Angora"},
+{breed:"Savannah",image:"bilder/savannah.jpg",correct:"Savannah"},
+{breed:"Munchkin",image:"bilder/munchkin.jpg",correct:"Munchkin"},
+{breed:"Exotic Shorthair",image:"bilder/exotic-shorthair.jpg",correct:"Exotic Shorthair"},
+{breed:"Turkish Van",image:"bilder/turkish-van.jpg",correct:"Turkish Van"},
+{breed:"Bombay",image:"bilder/bombay.jpg",correct:"Bombay"},
+{breed:"Cornish Rex",image:"bilder/cornish-rex.jpg",correct:"Cornish Rex"},
+{breed:"Ocicat",image:"bilder/ocicat.jpg",correct:"Ocicat"},
+{breed:"Egyptian Mau",image:"bilder/egyptian-mau.jpg",correct:"Egyptian Mau"},
+{breed:"Balineser",image:"bilder/balineser.jpg",correct:"Balineser"},
+{breed:"American Curl",image:"bilder/american-curl.jpg",correct:"American Curl"},
+{breed:"Snowshoe",image:"bilder/snowshoe.jpg",correct:"Snowshoe"},
+{breed:"Manx",image:"bilder/manx.jpg",correct:"Manx"}
+];
+const breedNames = questions.map(q => q.breed);
+
+let quizQuestions=[];
+let currentQuestion=0;
+let score=0;
+let correctCount=0;
+
+function shuffleArray(array){
+const copy=[...array];
+
+for(let i=copy.length-1;i>0;i--){
+const j=Math.floor(Math.random()*(i+1));
+[copy[i],copy[j]]=[copy[j],copy[i]];
+}
+
+return copy;
+}
+
+function loadQuestion(){
+const q=quizQuestions[currentQuestion];
+
+document.getElementById("catImage").src=q.image;
+document.getElementById("breed").textContent="";
+document.getElementById("questionNumber").textContent=(currentQuestion+1)+"/"+quizQuestions.length;
+
+const answers=document.getElementById("answers");
+answers.innerHTML="";
+
+document.getElementById("message").textContent="";
+
+let wrongAnswers = breedNames.filter(name => name !== q.correct);
+wrongAnswers = shuffleArray(wrongAnswers).slice(0,3);
+let answerOptions = shuffleArray([q.correct, ...wrongAnswers]);
+
+answerOptions.forEach(answer=>{
+const btn=document.createElement("button");
+btn.className="answer-btn";
+btn.textContent=answer;
+btn.dataset.answer=answer;
+btn.onclick=()=>checkAnswer(btn,answer);
+answers.appendChild(btn);
+});
+
+document.getElementById("nextBtn").style.display="none";
+});
+
+document.getElementById("nextBtn").style.display="none";
+}
+
+function checkAnswer(button,answer){
+const q=quizQuestions[currentQuestion];
+const buttons=document.querySelectorAll(".answer-btn");
+
+buttons.forEach(btn=>{
+btn.disabled=true;
+
+if(btn.dataset.answer===q.correct){
+btn.classList.add("correct");
+}
+});
+
+if(answer===q.correct){
+score+=10;
+correctCount++;
+document.getElementById("message").textContent="🎉 Riktig svar!";
+}else{
+button.classList.add("wrong");
+document.getElementById("message").textContent="😿 Feil svar!";
+}
+
+document.getElementById("score").textContent=score;
+document.getElementById("correctCount").textContent=correctCount;
+
+document.getElementById("nextBtn").style.display="inline-block";
+}
+});
+
+if(answer===q.correct){
+score+=10;
+document.getElementById("message").textContent="🎉 Riktig svar!";
+}else{
+lives--;
+button.classList.add("wrong");
+document.getElementById("message").textContent="😿 Feil svar!";
+}
+
+document.getElementById("score").textContent=score;
+document.getElementById("lives").textContent=lives;
+
+if(lives<=0){
+setTimeout(()=>{
+alert("😅 Game Over!");
+location.reload();
+},500);
+return;
+}
+
+document.getElementById("nextBtn").style.display="inline-block";
+}
+
+function nextQuestion(){
+currentQuestion++;
+
+if(currentQuestion>=quizQuestions.length){
+showResult();
+return;
+}
+
+
+function launchConfetti(){
+const emojis=['⭐','✨','🎉','🏆','🐱'];
+for(let i=0;i<45;i++){
+const el=document.createElement('div');
+el.style.position='fixed';
+el.style.fontSize='28px';
+el.style.pointerEvents='none';
+el.style.zIndex='9999';
+el.style.left=Math.random()*100+'vw';
+el.style.top='-40px';
+el.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+el.style.transition='transform 3s linear, opacity 3s linear';
+document.body.appendChild(el);
+setTimeout(()=>{el.style.transform='translateY(100vh) rotate(720deg)';el.style.opacity='0';},20);
+setTimeout(()=>el.remove(),3300);
+}
+}
+
+function showResult(){
+document.querySelector(".quiz-box").style.display="none";
+document.getElementById("resultBox").style.display="block";
+
+const total=quizQuestions.length;
+const percent=correctCount/total;
+
+document.getElementById("finalScore").innerHTML="Du fikk <b>"+correctCount+"</b> av <b>"+total+"</b> riktige.<br>Poeng: <b>"+score+"</b>";
+
+let medal="";
+if(percent===1) medal="🏆 KATTEMESTER! Alt riktig!";
+else if(percent>=0.85) medal="🥇 Gullpote!";
+else if(percent>=0.65) medal="🥈 Sølvpote!";
+else if(percent>=0.45) medal="🥉 Bronsepote!";
+else medal="🐾 Prøv igjen – neste runde går bedre!";
+
+document.getElementById("medal").textContent=medal;
+
+if(percent>=0.85){launchConfetti();}
+}
+
+function restartQuiz(){
+startQuiz();
+}
+
+function startQuiz(){
+quizQuestions=shuffleArray(questions);
+currentQuestion=0;
+score=0;
+correctCount=0;
+document.getElementById("score").textContent=score;
+document.getElementById("correctCount").textContent=correctCount;
+document.querySelector(".quiz-box").style.display="block";
+document.getElementById("resultBox").style.display="none";
+loadQuestion();
+}
+
+startQuiz();
+}
+
+
+function launchConfetti(){
+const emojis=['⭐','✨','🎉','🏆','🐱'];
+for(let i=0;i<45;i++){
+const el=document.createElement('div');
+el.style.position='fixed';
+el.style.fontSize='28px';
+el.style.pointerEvents='none';
+el.style.zIndex='9999';
+el.style.left=Math.random()*100+'vw';
+el.style.top='-40px';
+el.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+el.style.transition='transform 3s linear, opacity 3s linear';
+document.body.appendChild(el);
+setTimeout(()=>{el.style.transform='translateY(100vh) rotate(720deg)';el.style.opacity='0';},20);
+setTimeout(()=>el.remove(),3300);
+}
+}
+
+function showResult(){
+document.querySelector(".quiz-box").style.display="none";
+document.getElementById("resultBox").style.display="block";
+
+const total=quizQuestions.length;
+const percent=correctCount/total;
+
+document.getElementById("finalScore").innerHTML="Du fikk <b>"+correctCount+"</b> av <b>"+total+"</b> riktige.<br>Poeng: <b>"+score+"</b>";
+
+let medal="";
+if(percent===1) medal="🏆 KATTEMESTER! Alt riktig!";
+else if(percent>=0.85) medal="🥇 Gullpote!";
+else if(percent>=0.65) medal="🥈 Sølvpote!";
+else if(percent>=0.45) medal="🥉 Bronsepote!";
+else medal="🐾 Prøv igjen – neste runde går bedre!";
+
+document.getElementById("medal").textContent=medal;
+
+if(percent>=0.85){launchConfetti();}
+}
+
+function restartQuiz(){
+startQuiz();
+}
+
+function startQuiz(){
+quizQuestions=shuffleArray(questions);
+currentQuestion=0;
+score=0;
+correctCount=0;
+document.getElementById("score").textContent=score;
+document.getElementById("correctCount").textContent=correctCount;
+document.querySelector(".quiz-box").style.display="block";
+document.getElementById("resultBox").style.display="none";
+loadQuestion();
+}
+
+startQuiz();
+}
+
+
+function launchConfetti(){
+const emojis=['⭐','✨','🎉','🏆','🐱'];
+for(let i=0;i<45;i++){
+const el=document.createElement('div');
+el.style.position='fixed';
+el.style.fontSize='28px';
+el.style.pointerEvents='none';
+el.style.zIndex='9999';
+el.style.left=Math.random()*100+'vw';
+el.style.top='-40px';
+el.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+el.style.transition='transform 3s linear, opacity 3s linear';
+document.body.appendChild(el);
+setTimeout(()=>{el.style.transform='translateY(100vh) rotate(720deg)';el.style.opacity='0';},20);
+setTimeout(()=>el.remove(),3300);
+}
+}
+
+function showResult(){
+document.querySelector(".quiz-box").style.display="none";
+document.getElementById("resultBox").style.display="block";
+
+const total=quizQuestions.length;
+const percent=correctCount/total;
+
+document.getElementById("finalScore").innerHTML="Du fikk <b>"+correctCount+"</b> av <b>"+total+"</b> riktige.<br>Poeng: <b>"+score+"</b>";
+
+let medal="";
+if(percent===1) medal="🏆 KATTEMESTER! Alt riktig!";
+else if(percent>=0.85) medal="🥇 Gullpote!";
+else if(percent>=0.65) medal="🥈 Sølvpote!";
+else if(percent>=0.45) medal="🥉 Bronsepote!";
+else medal="🐾 Prøv igjen – neste runde går bedre!";
+
+document.getElementById("medal").textContent=medal;
+
+if(percent>=0.85){launchConfetti();}
+}
+
+function restartQuiz(){
+startQuiz();
+}
+
+function startQuiz(){
+quizQuestions=shuffleArray(questions);
+currentQuestion=0;
+score=0;
+correctCount=0;
+document.getElementById("score").textContent=score;
+document.getElementById("correctCount").textContent=correctCount;
+document.querySelector(".quiz-box").style.display="block";
+document.getElementById("resultBox").style.display="none";
+loadQuestion();
+}
+
+startQuiz();
+</script>
+
+</body>
+</html>
