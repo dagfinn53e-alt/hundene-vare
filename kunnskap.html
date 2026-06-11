@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kunnskapssenter - Hundene våre</title>
+<title>Hunderaser Utstyr 2.0 - Hundene våre</title>
 
 <style>
 :root{
   --blue:#2563eb;
   --blue-dark:#1d4ed8;
-  --purple:#7c3aed;
   --text:#102033;
   --muted:#5f7088;
 }
@@ -27,7 +26,7 @@ body{
 }
 
 .wrap{
-  max-width:1120px;
+  max-width:1180px;
   margin:0 auto;
   padding:22px 18px 70px;
 }
@@ -93,13 +92,13 @@ body{
 }
 
 .hero{
-  min-height:285px;
+  min-height:255px;
   border-radius:34px;
   padding:38px;
   color:white;
   background:
-    linear-gradient(rgba(15,23,42,.46),rgba(15,23,42,.48)),
-    url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
+    linear-gradient(rgba(15,23,42,.46),rgba(15,23,42,.50)),
+    url('https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
   box-shadow:0 22px 48px rgba(15,23,42,.18);
   margin-bottom:22px;
 }
@@ -113,7 +112,7 @@ body{
 
 .hero p{
   margin:0 0 18px;
-  max-width:780px;
+  max-width:820px;
   font-size:18px;
   line-height:1.6;
   color:#f8fafc;
@@ -146,86 +145,88 @@ body{
   margin:0 0 20px;
 }
 
-.knowledge-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
+.searchbox{
+  width:100%;
+  max-width:520px;
+  padding:15px 18px;
+  border-radius:999px;
+  border:1px solid #bfdbfe;
+  font-size:17px;
+  margin-bottom:20px;
+  outline:none;
 }
 
-.knowledge-card{
+.equip-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.equip-card{
   background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
   border:1px solid #dbeafe;
   border-radius:28px;
   padding:22px;
-  min-height:245px;
   box-shadow:0 14px 32px rgba(30,64,175,.10);
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
 }
 
-.knowledge-card:hover{
-  transform:translateY(-2px);
-  border-color:#93c5fd;
-  box-shadow:0 20px 42px rgba(30,64,175,.15);
-}
-
-.icon{
-  font-size:44px;
-  margin-bottom:10px;
-}
-
-.knowledge-card h3{
-  margin:0 0 8px;
-  font-size:25px;
+.equip-card h3{
+  margin:0 0 12px;
+  font-size:27px;
   color:#0f172a;
 }
 
-.knowledge-card p{
-  margin:0;
-  color:#475569;
-  line-height:1.55;
-  font-size:15px;
-}
-
-.openbtn{
-  margin-top:18px;
-  width:100%;
-  min-height:46px;
-  border-radius:999px;
-  background:linear-gradient(135deg,#2563eb,#7c3aed);
-  color:#fff;
-  font-weight:900;
-  text-decoration:none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.info-grid{
+.quick-facts{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
+  grid-template-columns:1fr;
+  gap:8px;
+  margin-bottom:16px;
+}
+
+.quick{
+  padding:10px 12px;
+  border-radius:16px;
+  background:#eaf2ff;
+  color:#1d4ed8;
+  border:1px solid #bfd7ff;
+  font-weight:900;
+}
+
+.equip-list p{
+  margin:10px 0;
+  line-height:1.58;
+  color:#334155;
+}
+
+.buy-box{
   margin-top:16px;
+  padding:16px;
+  border-radius:20px;
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#9a3412;
+  line-height:1.6;
 }
 
-.info-card{
-  background:#ffffff;
+.buy-box span{
+  font-weight:900;
+  color:#b45309;
+}
+
+.shop-placeholder{
+  margin-top:8px;
+  font-size:13px;
+  color:#92400e;
+}
+
+.note{
+  margin-top:14px;
+  color:#475569;
+  line-height:1.6;
+  background:#f8fbff;
   border:1px dashed #cbd5e1;
-  border-radius:24px;
-  padding:18px;
-}
-
-.info-card h3{
-  margin:0 0 8px;
-  font-size:22px;
-}
-
-.info-card p{
-  margin:0;
-  color:#64748b;
-  line-height:1.55;
+  border-radius:18px;
+  padding:12px;
 }
 
 .footer-note{
@@ -235,9 +236,8 @@ body{
   margin-top:22px;
 }
 
-@media(max-width:950px){
-  .knowledge-grid{grid-template-columns:1fr 1fr}
-  .info-grid{grid-template-columns:1fr}
+@media(max-width:900px){
+  .equip-grid{grid-template-columns:1fr}
 }
 
 @media(max-width:760px){
@@ -251,7 +251,6 @@ body{
   .hero p{font-size:15px}
   .card{border-radius:26px;padding:18px}
   .section-title{font-size:28px}
-  .knowledge-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -263,129 +262,317 @@ body{
     <div class="brand">🐶 Hundene våre</div>
     <div class="actions">
       <a class="navbtn alt" href="index.html">🏠 Forside</a>
-      <a class="navbtn alt" href="spill.html">🎮 Spill</a>
-      <a class="navbtn alt" href="se-butikker.html">🏪 Butikker</a>
-      <a class="navbtn alt" href="arrangementer.html">📅 Arrangementer</a>
-      <a class="navbtn alt" href="stories.html">📰 Nyheter</a>
-      <a class="navbtn alt" href="omoss.html">ℹ️ Om oss</a>
+      <a class="navbtn alt" href="kunnskap.html">📚 Kunnskap</a>
+      <a class="navbtn alt" href="hunderaser.html">🐶 Hunderaser</a>
+      <a class="navbtn alt" href="helse.html">🏥 Helse</a>
+      <a class="navbtn alt" href="trening.html">🎓 Trening</a>
       <a class="navbtn admin" href="admin.html">🔧 Admin</a>
     </div>
   </div>
 
   <section class="hero">
-    <h1>📚 Kunnskapssenter</h1>
+    <h1>✂️ Hunderaser Utstyr 2.0</h1>
     <p>
-      Velkommen til Kunnskapssenteret på Hundenevåre.
-      Her skal vi samle rasekunnskap, helse, trening, gode råd og turtips for hunde- og kattefolk.
+      En praktisk utstyrsguide for populære hunderaser.
+      Her finner du pelsstellnivå, prisnivå, nybegynnervennlighet, børster, sjampo, sakser, klotang og plass til “Kjøpes hos”.
     </p>
-    <a class="mainbtn" href="index.html">⬅️ Tilbake til forsiden</a>
+    <a class="mainbtn" href="kunnskap.html">⬅️ Tilbake til Kunnskapssenter</a>
   </section>
 
   <section class="card">
-    <h2 class="section-title">Velg tema</h2>
-    <p class="sub">
-      Kunnskapssenteret bygges steg for steg. Først lager vi hovedinngangen, deretter fyller vi på med raser, artikler og nyttige guider.
-    </p>
+    <h2 class="section-title">Finn utstyr til hunderase</h2>
+    <p class="sub">Søk etter rase eller utstyr. Alle raser har klotang med, fordi alle hunder trenger klostell.</p>
+    <input class="searchbox" id="searchInput" onkeyup="filterEquipment()" placeholder="Søk etter rase eller utstyr...">
 
-    <div class="knowledge-grid">
+    <div class="equip-grid" id="equipGrid">
+      
+      <div class="equip-card" data-search="bichon frisé karde, metallkam og liten flokekam buet saks, rett saks og effileringssaks mild hundesjampo, gjerne for hvit/lang pels + balsam medium klotang ⭐⭐⭐⭐⭐ krevende">
+        <h3>🐶 Bichon Frisé</h3>
 
-      <div class="knowledge-card">
-        <div>
-          <div class="icon">🐶</div>
-          <h3>Hunderaser</h3>
-          <p>Fakta om hunderaser, opprinnelse, størrelse, pelsstell, aktivitetsnivå og hvem rasen passer for.</p>
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐⭐⭐ Krevende</div>
+          <div class="quick">💰💰💰 Høy</div>
+          <div class="quick">👨‍👩‍👧 ⚠️ Litt erfaring</div>
         </div>
-        <a class="openbtn" href="hunderaser.html">🐶 Åpne Hunderaser</a>
-      </div>
 
-      <div class="knowledge-card">
-        <div>
-          <div class="icon">✂️</div>
-          <h3>Hunderaser Utstyr</h3>
-          <p>Børster, kammer, sjampo, sakser, klotang og anbefalt stellutstyr for ulike hunderaser.</p>
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Karde, metallkam og liten flokekam</p>
+          <p><b>✂️ Saks/klipp:</b><br>Buet saks, rett saks og effileringssaks</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild hundesjampo, gjerne for hvit/lang pels + balsam</p>
+          <p><b>🐾 Klostell:</b><br>Medium klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting flere ganger i uken. Klipp ca. hver 6.–8. uke.</p>
         </div>
-        <a class="openbtn" href="hunderaser-utstyr.html">
-          ✂️ Åpne Utstyrsguide
-        </a>
-      </div>
 
-
-      <div class="knowledge-card">
-        <div>
-          <div class="icon">🐱</div>
-          <h3>Katteraser</h3>
-          <p>Fakta om katteraser, lynne, pelsstell, størrelse, historie og hva som kjennetegner rasen.</p>
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>PetXL Haugesund / Musti / Aasheim Zoo / lokal dyrebutikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
         </div>
-        <a class="openbtn" href="katteraser.html">🐱 Åpne Katteraser</a>
-      </div>
 
-      <div class="knowledge-card">
-        <div>
-          <div class="icon">🏥</div>
-          <h3>Helse</h3>
-          <p>Enkle artikler om tannstell, flått, vaksiner, overvekt, forgiftning og førstehjelp.</p>
+        <p class="note">💡 Pelsen tover lett. Start pelsstell tidlig og gjør det til en rolig vane.</p>
+      </div>
+    
+      <div class="equip-card" data-search="golden retriever underullsrake, karde og metallkam potesaks og tynnesaks ved behov mild hundesjampo, balsam ved behov medium/stor klotang ⭐⭐⭐ middels">
+        <h3>🐶 Golden Retriever</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐ Middels</div>
+          <div class="quick">💰💰 Middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
         </div>
-        <a class="openbtn" href="helse.html">🏥 Åpne Helse</a>
-      </div>
 
-      <div class="knowledge-card">
-        <div>
-          <div class="icon">🎓</div>
-          <h3>Trening</h3>
-          <p>Tips om valpetrening, innkalling, båndtrening, sosialisering og gode hverdagsrutiner.</p>
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Underullsrake, karde og metallkam</p>
+          <p><b>✂️ Saks/klipp:</b><br>Potesaks og tynnesaks ved behov</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild hundesjampo, balsam ved behov</p>
+          <p><b>🐾 Klostell:</b><br>Medium/stor klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting ukentlig, ekstra i røyteperioder.</p>
         </div>
-        <a class="openbtn" href="trening.html">🎓 Åpne Trening</a>
-      </div>
 
-      <div class="knowledge-card">
-        <div>
-          <div class="icon">🚶</div>
-          <h3>Turtips</h3>
-          <p>Fine tursteder, lokale tips og gode opplevelser for hund og eier.</p>
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / hundefrisør / lokal butikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
         </div>
-        <a class="openbtn" href="turtips.html">🚶 Åpne Turtips</a>
-      </div>
 
-      <div class="knowledge-card">
-        <div>
-          <div class="icon">⭐</div>
-          <h3>Ukens tips</h3>
-          <p>Her kan vi senere vise ukens hunderase, ukens katterase eller et aktuelt helsetips.</p>
+        <p class="note">💡 Fokuser ekstra på faner, hale, bukser og poter.</p>
+      </div>
+    
+      <div class="equip-card" data-search="labrador retriever gummibørste, karde og røytebørste potesaks ved behov mild hundesjampo medium/stor klotang ⭐⭐ enkel/middels">
+        <h3>🐶 Labrador Retriever</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐ Enkel/middels</div>
+          <div class="quick">💰 Lav/middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
         </div>
-        <a class="openbtn" href="index.html">⭐ Kommer senere</a>
-      </div>
 
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Gummibørste, karde og røytebørste</p>
+          <p><b>✂️ Saks/klipp:</b><br>Potesaks ved behov</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild hundesjampo</p>
+          <p><b>🐾 Klostell:</b><br>Medium/stor klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting ukentlig, oftere ved røyting.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / veterinærbutikk / lokal butikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Kort pels betyr ikke null stell. Labrador kan røyte mye.</p>
+      </div>
+    
+      <div class="equip-card" data-search="schæfer underullsrake, karde og metallkam potesaks ved behov sjampo for normal pels stor klotang ⭐⭐⭐⭐ middels/høyt">
+        <h3>🐶 Schæfer</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐⭐ Middels/høyt</div>
+          <div class="quick">💰💰 Middels</div>
+          <div class="quick">👨‍👩‍👧 ⚠️ Litt erfaring</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Underullsrake, karde og metallkam</p>
+          <p><b>✂️ Saks/klipp:</b><br>Potesaks ved behov</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Sjampo for normal pels</p>
+          <p><b>🐾 Klostell:</b><br>Stor klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting ukentlig, ekstra grundig i røyteperioder.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk med godt pelsstellutvalg</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Underullen kan bli kraftig. Riktig børste gjør stell mye enklere.</p>
+      </div>
+    
+      <div class="equip-card" data-search="border collie karde, metallkam og underullsrake potesaks og lett tynnesaks ved behov mild hundesjampo medium klotang ⭐⭐⭐ middels">
+        <h3>🐶 Border Collie</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐ Middels</div>
+          <div class="quick">💰💰 Middels</div>
+          <div class="quick">👨‍👩‍👧 ⚠️ Litt erfaring</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Karde, metallkam og underullsrake</p>
+          <p><b>✂️ Saks/klipp:</b><br>Potesaks og lett tynnesaks ved behov</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild hundesjampo</p>
+          <p><b>🐾 Klostell:</b><br>Medium klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting 1–2 ganger i uken, mer ved røyting.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / hundefrisør / lokal butikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Se ekstra bak ører, på bukser, hale og under magen.</p>
+      </div>
+    
+      <div class="equip-card" data-search="fransk bulldog gummibørste eller myk børste vanligvis ikke nødvendig mild og hudvennlig sjampo medium klotang ⭐ enkel">
+        <h3>🐶 Fransk Bulldog</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐ Enkel</div>
+          <div class="quick">💰 Lav/middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Gummibørste eller myk børste</p>
+          <p><b>✂️ Saks/klipp:</b><br>Vanligvis ikke nødvendig</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild og hudvennlig sjampo</p>
+          <p><b>🐾 Klostell:</b><br>Medium klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting ukentlig. Hudfolder og poter sjekkes ofte.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / veterinærbutikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Hudfolder, ører og poter bør holdes rene og tørre.</p>
+      </div>
+    
+      <div class="equip-card" data-search="cavalier king charles spaniel karde, metallkam og myk børste potesaks og tynnesaks ved behov mild sjampo og balsam ved behov liten/medium klotang ⭐⭐⭐ middels">
+        <h3>🐶 Cavalier King Charles Spaniel</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐ Middels</div>
+          <div class="quick">💰💰 Middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Karde, metallkam og myk børste</p>
+          <p><b>✂️ Saks/klipp:</b><br>Potesaks og tynnesaks ved behov</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild sjampo og balsam ved behov</p>
+          <p><b>🐾 Klostell:</b><br>Liten/medium klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting flere ganger i uken, spesielt ører og faner.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / hundefrisør</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Ørene trenger ekstra oppfølging fordi pelsen lett floker seg.</p>
+      </div>
+    
+      <div class="equip-card" data-search="puddel karde og metallkam klippemaskin, buet saks, rett saks og effileringssaks sjampo og balsam for krøllet/lang pels medium klotang ⭐⭐⭐⭐⭐ krevende">
+        <h3>🐶 Puddel</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐⭐⭐ Krevende</div>
+          <div class="quick">💰💰💰 Høy</div>
+          <div class="quick">👨‍👩‍👧 ⚠️ Litt erfaring</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Karde og metallkam</p>
+          <p><b>✂️ Saks/klipp:</b><br>Klippemaskin, buet saks, rett saks og effileringssaks</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Sjampo og balsam for krøllet/lang pels</p>
+          <p><b>🐾 Klostell:</b><br>Medium klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting flere ganger i uken. Klipp ca. hver 4.–8. uke.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Hundefrisør / profesjonell dyrebutikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Puddelpels krever systematisk stell for å unngå tover.</p>
+      </div>
+    
+      <div class="equip-card" data-search="mops gummibørste eller myk børste vanligvis ikke nødvendig mild og hudvennlig sjampo medium klotang ⭐ enkel">
+        <h3>🐶 Mops</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐ Enkel</div>
+          <div class="quick">💰 Lav/middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Gummibørste eller myk børste</p>
+          <p><b>✂️ Saks/klipp:</b><br>Vanligvis ikke nødvendig</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild og hudvennlig sjampo</p>
+          <p><b>🐾 Klostell:</b><br>Medium klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting ukentlig. Hudfolder bør sjekkes jevnlig.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / veterinærbutikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Kort pels, men hudfolder og klør trenger fast rutine.</p>
+      </div>
+    
+      <div class="equip-card" data-search="chihuahua myk børste og liten kam liten potesaks ved behov mild sjampo for små hunder liten klotang ⭐ enkel">
+        <h3>🐶 Chihuahua</h3>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐ Enkel</div>
+          <div class="quick">💰 Lav</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
+
+        <div class="equip-list">
+          <p><b>🪮 Børster/kam:</b><br>Myk børste og liten kam</p>
+          <p><b>✂️ Saks/klipp:</b><br>Liten potesaks ved behov</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild sjampo for små hunder</p>
+          <p><b>🐾 Klostell:</b><br>Liten klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting etter pelstype. Klør sjekkes ofte.</p>
+        </div>
+
+        <div class="buy-box">
+          <b>🛒 Kjøpes hos:</b><br>
+          <span>Dyrebutikk / lokal butikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
+        </div>
+
+        <p class="note">💡 Små hunder kan få lange klør raskt. Klotang bør alltid være tilgjengelig.</p>
+      </div>
+    
     </div>
   </section>
 
   <section class="card">
-    <h2 class="section-title">Plan videre</h2>
+    <h2 class="section-title">Neste steg</h2>
     <p class="sub">
-      Første mål er å bygge opp en ryddig og nyttig kunnskapsbase som kan vokse sammen med Hundenevåre.
+      Senere kan “Kjøpes hos” kobles direkte til butikkprofilene i Hundene våre, slik at kunnskapssenteret også hjelper butikkene med trafikk.
     </p>
-
-    <div class="info-grid">
-      <div class="info-card">
-        <h3>🏆 Første mål</h3>
-        <p>Starte med 20–30 hunderaser og 10–20 katteraser.</p>
-      </div>
-
-      <div class="info-card">
-        <h3>📌 Neste steg</h3>
-        <p>Lage første side for hunderaser med kort, bilder og enkel rasefakta.</p>
-      </div>
-
-      <div class="info-card">
-        <h3>💡 Senere</h3>
-        <p>Ukens rase, sponset innhold, søk og flere nyttige artikler.</p>
-      </div>
-    </div>
   </section>
 
   <p class="footer-note">
-    Hundenevåre.com – for hunder, katter, butikker, arrangementer, spill og kunnskap.
+    Hundenevåre.com – Kunnskapssenter for hunder, katter og stell.
   </p>
 
 </div>
+
+<script>
+function filterEquipment(){
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const cards = document.querySelectorAll(".equip-card");
+
+  cards.forEach(card=>{
+    const text = card.innerText.toLowerCase() + " " + card.dataset.search.toLowerCase();
+    card.style.display = text.includes(input) ? "block" : "none";
+  });
+}
+</script>
+
 </body>
 </html>
