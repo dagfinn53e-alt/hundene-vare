@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hunderaser - Hundene våre</title>
+
+<style>
+:root{
+  --blue:#2563eb;
+  --blue-dark:#1d4ed8;
+  --purple:#7c3aed;
+  --text:#102033;
+  --muted:#5f7088;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top left,rgba(96,165,250,.18) 0%,transparent 28%),
+    radial-gradient(circle at top right,rgba(124,58,237,.12) 0%,transparent 30%),
+    linear-gradient(180deg,#dbe7f5 0%,#edf4fb 45%,#f8fbff 100%);
+}
+
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:22px 18px 70px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+  padding:14px 18px;
+  border:1px solid rgba(191,219,254,.75);
+  border-radius:28px;
+  background:rgba(255,255,255,.88);
+  box-shadow:0 16px 38px rgba(15,23,42,.10);
+  position:sticky;
+  top:8px;
+  z-index:50;
+}
+
+.brand{
+  font-size:24px;
+  font-weight:900;
+  color:var(--blue-dark);
+  padding:12px 18px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#ffffff,#eef4ff);
+  border:1px solid #c7d8f4;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.navbtn,.mainbtn{
+  border:none;
+  border-radius:999px;
+  padding:11px 16px;
+  background:var(--blue);
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 16px rgba(15,23,42,.08);
+}
+
+.navbtn.alt{
+  background:#eaf2ff;
+  color:var(--blue-dark);
+  border:1px solid #bfd7ff;
+}
+
+.navbtn.admin{
+  background:#fff7ed;
+  color:#b45309;
+  border:1px solid #fed7aa;
+}
+
+.hero{
+  min-height:255px;
+  border-radius:34px;
+  padding:38px;
+  color:white;
+  background:
+    linear-gradient(rgba(15,23,42,.46),rgba(15,23,42,.50)),
+    url('https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
+  box-shadow:0 22px 48px rgba(15,23,42,.18);
+  margin-bottom:22px;
+}
+
+.hero h1{
+  margin:0 0 12px;
+  font-size:52px;
+  line-height:1.05;
+  text-shadow:0 6px 18px rgba(0,0,0,.25);
+}
+
+.hero p{
+  margin:0 0 18px;
+  max-width:780px;
+  font-size:18px;
+  line-height:1.6;
+  color:#f8fafc;
+}
+
+.mainbtn{
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  min-height:48px;
+  padding:13px 22px;
+}
+
+.card{
+  background:linear-gradient(180deg,#eef5fd 0%,#e3edf8 100%);
+  border:1px solid rgba(148,163,184,.30);
+  border-radius:34px;
+  padding:28px;
+  box-shadow:0 20px 42px rgba(15,23,42,.12);
+  margin-bottom:22px;
+}
+
+.section-title{
+  margin:0 0 8px;
+  font-size:34px;
+  color:#0f172a;
+}
+
+.sub{
+  color:var(--muted);
+  line-height:1.6;
+  margin:0 0 20px;
+}
+
+.searchbox{
+  width:100%;
+  max-width:520px;
+  padding:15px 18px;
+  border-radius:999px;
+  border:1px solid #bfdbfe;
+  font-size:17px;
+  margin-bottom:20px;
+  outline:none;
+}
+
+.breed-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.breed-card{
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+  border:1px solid #dbeafe;
+  border-radius:28px;
+  padding:18px;
+  box-shadow:0 14px 32px rgba(30,64,175,.10);
+  overflow:hidden;
+}
+
+.breed-card img{
+  width:100%;
+  height:190px;
+  object-fit:contain;
+  background:#f8fafc;
+  border-radius:20px;
+  border:1px solid #e2e8f0;
+  padding:8px;
+}
+
+.breed-card h3{
+  margin:14px 0 8px;
+  font-size:24px;
+  color:#0f172a;
+}
+
+.facts{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:12px 0;
+}
+
+.fact{
+  background:#eef6ff;
+  border:1px solid #dbeafe;
+  border-radius:16px;
+  padding:9px;
+  font-size:14px;
+  color:#1e3a8a;
+  font-weight:700;
+}
+
+.desc{
+  color:#475569;
+  line-height:1.55;
+  font-size:15px;
+  margin-top:10px;
+}
+
+.footer-note{
+  text-align:center;
+  color:#64748b;
+  font-size:14px;
+  margin-top:22px;
+}
+
+@media(max-width:950px){
+  .breed-grid{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:760px){
+  .wrap{padding:14px 12px 50px}
+  .topbar{border-radius:22px;padding:12px}
+  .brand{width:100%;text-align:center;font-size:20px}
+  .actions{width:100%;justify-content:center}
+  .navbtn{flex:1 1 42%;font-size:13px;padding:10px 12px}
+  .hero{min-height:230px;border-radius:26px;padding:24px}
+  .hero h1{font-size:34px}
+  .hero p{font-size:15px}
+  .card{border-radius:26px;padding:18px}
+  .section-title{font-size:28px}
+  .breed-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">🐶 Hundene våre</div>
+    <div class="actions">
+      <a class="navbtn alt" href="index.html">🏠 Forside</a>
+      <a class="navbtn alt" href="kunnskap.html">📚 Kunnskap</a>
+      <a class="navbtn alt" href="spill.html">🎮 Spill</a>
+      <a class="navbtn alt" href="se-butikker.html">🏪 Butikker</a>
+      <a class="navbtn alt" href="arrangementer.html">📅 Arrangementer</a>
+      <a class="navbtn admin" href="admin.html">🔧 Admin</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <h1>🐶 Hunderaser</h1>
+    <p>
+      Her samler vi enkel og nyttig rasekunnskap om hunder.
+      Starten er 10 populære raser – senere kan vi bygge videre til 100+ raser.
+    </p>
+    <a class="mainbtn" href="kunnskap.html">⬅️ Tilbake til Kunnskapssenter</a>
+  </section>
+
+  <section class="card">
+    <h2 class="section-title">Finn en hunderase</h2>
+    <p class="sub">Søk etter rase, opprinnelse eller egenskap.</p>
+    <input class="searchbox" id="searchInput" onkeyup="filterBreeds()" placeholder="Søk etter hunderase...">
+
+    <div class="breed-grid" id="breedGrid">
+
+      <div class="breed-card" data-search="bichon frise frankrike belgia liten selskapshund pelsstell familie">
+        <img src="bilder/bichon.png" alt="Bichon Frisé">
+        <h3>🐶 Bichon Frisé</h3>
+        <div class="facts">
+          <div class="fact">📍 Frankrike / Belgia</div>
+          <div class="fact">⚖️ 5–8 kg</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">✂️ Høyt pelsstell</div>
+        </div>
+        <p class="desc">En glad, sosial og leken selskapshund som ofte passer godt for familier og eldre. Krever jevnlig pelsstell.</p>
+      </div>
+
+      <div class="breed-card" data-search="golden retriever skottland familiehund aktiv vennlig">
+        <img src="bilder/golden.png" alt="Golden Retriever">
+        <h3>🐶 Golden Retriever</h3>
+        <div class="facts">
+          <div class="fact">📍 Skottland</div>
+          <div class="fact">⚖️ 25–34 kg</div>
+          <div class="fact">❤️ 10–12 år</div>
+          <div class="fact">🏃 Aktiv</div>
+        </div>
+        <p class="desc">En av verdens mest populære familiehunder. Vennlig, lærevillig og glad i aktivitet, tur og kontakt med mennesker.</p>
+      </div>
+
+      <div class="breed-card" data-search="labrador retriever canada england familiehund aktiv apport">
+        <img src="bilder/labrador.png" alt="Labrador Retriever">
+        <h3>🐶 Labrador Retriever</h3>
+        <div class="facts">
+          <div class="fact">📍 Canada / England</div>
+          <div class="fact">⚖️ 25–36 kg</div>
+          <div class="fact">❤️ 10–12 år</div>
+          <div class="fact">🏃 Aktiv</div>
+        </div>
+        <p class="desc">En sosial, robust og lærevillig hund. Passer ofte godt for aktive familier og mennesker som liker tur og trening.</p>
+      </div>
+
+      <div class="breed-card" data-search="schæfer schaefer tyskland brukshund vakthund aktiv lydig">
+        <img src="bilder/schafer.png" alt="Schæfer">
+        <h3>🐶 Schæfer</h3>
+        <div class="facts">
+          <div class="fact">📍 Tyskland</div>
+          <div class="fact">⚖️ 22–40 kg</div>
+          <div class="fact">❤️ 9–13 år</div>
+          <div class="fact">🎓 Treningsvillig</div>
+        </div>
+        <p class="desc">En intelligent og allsidig brukshund som trenger tydelig trening, aktivitet og oppgaver for å trives godt.</p>
+      </div>
+
+      <div class="breed-card" data-search="puddel tyskland frankrike smart pelsstell familie allergivennlig">
+        <img src="bilder/puddel.png" alt="Puddel">
+        <h3>🐶 Puddel</h3>
+        <div class="facts">
+          <div class="fact">📍 Tyskland / Frankrike</div>
+          <div class="fact">⚖️ Varierer</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">✂️ Høyt pelsstell</div>
+        </div>
+        <p class="desc">En svært lærevillig og elegant hund som finnes i flere størrelser. Krever regelmessig pelsstell og mental aktivitet.</p>
+      </div>
+
+      <div class="breed-card" data-search="border collie skottland gjeterhund aktiv intelligent">
+        <img src="bilder/border-collie.png" alt="Border Collie">
+        <h3>🐶 Border Collie</h3>
+        <div class="facts">
+          <div class="fact">📍 Skottland</div>
+          <div class="fact">⚖️ 14–20 kg</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">⚡ Svært aktiv</div>
+        </div>
+        <p class="desc">En ekstremt intelligent gjeterhund som trenger mye aktivitet, trening og mentale utfordringer.</p>
+      </div>
+
+      <div class="breed-card" data-search="cavalier king charles spaniel england familie liten selskapshund">
+        <img src="bilder/cavalier.png" alt="Cavalier King Charles Spaniel">
+        <h3>🐶 Cavalier King Charles Spaniel</h3>
+        <div class="facts">
+          <div class="fact">📍 England</div>
+          <div class="fact">⚖️ 5–8 kg</div>
+          <div class="fact">❤️ 10–14 år</div>
+          <div class="fact">🏡 Familievennlig</div>
+        </div>
+        <p class="desc">En mild, kjærlig og sosial selskapshund som ofte trives godt i familier og sammen med mennesker.</p>
+      </div>
+
+      <div class="breed-card" data-search="chihuahua mexico liten selskapshund våken">
+        <img src="bilder/Chihuahua.png" alt="Chihuahua">
+        <h3>🐶 Chihuahua</h3>
+        <div class="facts">
+          <div class="fact">📍 Mexico</div>
+          <div class="fact">⚖️ 1,5–3 kg</div>
+          <div class="fact">❤️ 12–16 år</div>
+          <div class="fact">🐾 Liten</div>
+        </div>
+        <p class="desc">En svært liten, våken og personlig hund. Trenger trygg håndtering, sosialisering og varme omgivelser.</p>
+      </div>
+
+      <div class="breed-card" data-search="fransk bulldog frankrike liten familie selskapshund rolig">
+        <img src="bilder/fransk-bulldog.png" alt="Fransk Bulldog">
+        <h3>🐶 Fransk Bulldog</h3>
+        <div class="facts">
+          <div class="fact">📍 Frankrike</div>
+          <div class="fact">⚖️ 8–14 kg</div>
+          <div class="fact">❤️ 10–12 år</div>
+          <div class="fact">🏡 Selskapshund</div>
+        </div>
+        <p class="desc">En sosial og sjarmerende hund med mye personlighet. Trenger moderat aktivitet og oppmerksomhet på varme dager.</p>
+      </div>
+
+      <div class="breed-card" data-search="norsk lundehund norge sjelden spesiell klatrehund">
+        <img src="bilder/lundehund.png" alt="Norsk Lundehund">
+        <h3>🐶 Norsk Lundehund</h3>
+        <div class="facts">
+          <div class="fact">📍 Norge</div>
+          <div class="fact">⚖️ 6–9 kg</div>
+          <div class="fact">❤️ 12–14 år</div>
+          <div class="fact">⭐ Sjelden rase</div>
+        </div>
+        <p class="desc">En unik norsk rase med spesielle egenskaper, opprinnelig brukt til jakt på lundefugl langs kysten.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="section-title">Videre plan</h2>
+    <p class="sub">
+      Neste steg kan være å legge til flere raser, lage egne detaljsider og etter hvert vise “Ukens hunderase” på forsiden.
+    </p>
+  </section>
+
+  <p class="footer-note">
+    Hundenevåre.com – Kunnskapssenter for hunder og katter.
+  </p>
+
+</div>
+
+<script>
+function filterBreeds(){
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const cards = document.querySelectorAll(".breed-card");
+
+  cards.forEach(card=>{
+    const text = card.innerText.toLowerCase() + " " + card.dataset.search.toLowerCase();
+    card.style.display = text.includes(input) ? "block" : "none";
+  });
+}
+</script>
+
+</body>
+</html>
