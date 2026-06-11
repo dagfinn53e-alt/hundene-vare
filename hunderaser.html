@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hunderaser - Hundene våre</title>
+<title>Hunderaser 2.0 - Hundene våre</title>
 
 <style>
 :root{
@@ -157,6 +157,17 @@ body{
   outline:none;
 }
 
+.breed-count{
+  display:inline-flex;
+  margin-bottom:18px;
+  padding:8px 14px;
+  border-radius:999px;
+  background:#eaf2ff;
+  color:#1d4ed8;
+  border:1px solid #bfd7ff;
+  font-weight:900;
+}
+
 .breed-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -220,24 +231,6 @@ body{
   margin-top:22px;
 }
 
-@media(max-width:950px){
-  .breed-grid{grid-template-columns:1fr 1fr}
-}
-
-@media(max-width:760px){
-  .wrap{padding:14px 12px 50px}
-  .topbar{border-radius:22px;padding:12px}
-  .brand{width:100%;text-align:center;font-size:20px}
-  .actions{width:100%;justify-content:center}
-  .navbtn{flex:1 1 42%;font-size:13px;padding:10px 12px}
-  .hero{min-height:230px;border-radius:26px;padding:24px}
-  .hero h1{font-size:34px}
-  .hero p{font-size:15px}
-  .card{border-radius:26px;padding:18px}
-  .section-title{font-size:28px}
-  .breed-grid{grid-template-columns:1fr}
-}
-
 .modal{
 display:none;
 position:fixed;
@@ -267,6 +260,24 @@ color:white;
 cursor:pointer;
 }
 
+@media(max-width:950px){
+  .breed-grid{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:760px){
+  .wrap{padding:14px 12px 50px}
+  .topbar{border-radius:22px;padding:12px}
+  .brand{width:100%;text-align:center;font-size:20px}
+  .actions{width:100%;justify-content:center}
+  .navbtn{flex:1 1 42%;font-size:13px;padding:10px 12px}
+  .hero{min-height:230px;border-radius:26px;padding:24px}
+  .hero h1{font-size:34px}
+  .hero p{font-size:15px}
+  .card{border-radius:26px;padding:18px}
+  .section-title{font-size:28px}
+  .breed-grid{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr}
+}
 </style>
 </head>
 
@@ -286,10 +297,10 @@ cursor:pointer;
   </div>
 
   <section class="hero">
-    <h1>🐶 Hunderaser</h1>
+    <h1>🐶 Hunderaser 2.0</h1>
     <p>
       Her samler vi enkel og nyttig rasekunnskap om hunder.
-      Starten er 10 populære raser – senere kan vi bygge videre til 100+ raser.
+      Nå med 42 hunderaser, søk og klikkbare bilder.
     </p>
     <a class="mainbtn" href="kunnskap.html">⬅️ Tilbake til Kunnskapssenter</a>
   </section>
@@ -298,11 +309,12 @@ cursor:pointer;
     <h2 class="section-title">Finn en hunderase</h2>
     <p class="sub">Søk etter rase, opprinnelse eller egenskap.</p>
     <input class="searchbox" id="searchInput" onkeyup="filterBreeds()" placeholder="Søk etter hunderase...">
+    <div class="breed-count">🐶 42 hunderaser</div>
 
     <div class="breed-grid" id="breedGrid">
 
       <div class="breed-card" data-search="bichon frise frankrike belgia liten selskapshund pelsstell familie">
-        <img src="bilder/bichon.png" alt="Bichon Frisé">
+        <img src="bilder/bichon.png" alt="Bichon Frisé" onerror="this.style.display='none'">
         <h3>🐶 Bichon Frisé</h3>
         <div class="facts">
           <div class="fact">📍 Frankrike / Belgia</div>
@@ -312,9 +324,8 @@ cursor:pointer;
         </div>
         <p class="desc">En glad, sosial og leken selskapshund som ofte passer godt for familier og eldre. Krever jevnlig pelsstell.</p>
       </div>
-
       <div class="breed-card" data-search="golden retriever skottland familiehund aktiv vennlig">
-        <img src="bilder/golden.png" alt="Golden Retriever">
+        <img src="bilder/golden.png" alt="Golden Retriever" onerror="this.style.display='none'">
         <h3>🐶 Golden Retriever</h3>
         <div class="facts">
           <div class="fact">📍 Skottland</div>
@@ -322,11 +333,10 @@ cursor:pointer;
           <div class="fact">❤️ 10–12 år</div>
           <div class="fact">🏃 Aktiv</div>
         </div>
-        <p class="desc">En av verdens mest populære familiehunder. Vennlig, lærevillig og glad i aktivitet, tur og kontakt med mennesker.</p>
+        <p class="desc">En populær familiehund som er vennlig, lærevillig og glad i aktivitet, tur og kontakt med mennesker.</p>
       </div>
-
       <div class="breed-card" data-search="labrador retriever canada england familiehund aktiv apport">
-        <img src="bilder/labrador.png" alt="Labrador Retriever">
+        <img src="bilder/labrador.png" alt="Labrador Retriever" onerror="this.style.display='none'">
         <h3>🐶 Labrador Retriever</h3>
         <div class="facts">
           <div class="fact">📍 Canada / England</div>
@@ -336,9 +346,30 @@ cursor:pointer;
         </div>
         <p class="desc">En sosial, robust og lærevillig hund. Passer ofte godt for aktive familier og mennesker som liker tur og trening.</p>
       </div>
-
+      <div class="breed-card" data-search="flatcoated retriever england aktiv familiehund apport">
+        <img src="bilder/flatcoated-retriever.png" alt="Flatcoated Retriever" onerror="this.style.display='none'">
+        <h3>🐶 Flatcoated Retriever</h3>
+        <div class="facts">
+          <div class="fact">📍 England</div>
+          <div class="fact">⚖️ 25–36 kg</div>
+          <div class="fact">❤️ 10–12 år</div>
+          <div class="fact">🏃 Aktiv</div>
+        </div>
+        <p class="desc">En glad og energisk retriever med mye livsglede. Trives med aktivitet, apportering og tett kontakt med familien.</p>
+      </div>
+      <div class="breed-card" data-search="nova scotia duck tolling retriever toller canada aktiv">
+        <img src="bilder/nova-scotia-duck-tolling-retriever.png" alt="Nova Scotia Duck Tolling Retriever" onerror="this.style.display='none'">
+        <h3>🐶 Nova Scotia Duck Tolling Retriever</h3>
+        <div class="facts">
+          <div class="fact">📍 Canada</div>
+          <div class="fact">⚖️ 17–23 kg</div>
+          <div class="fact">❤️ 12–14 år</div>
+          <div class="fact">⚡ Aktiv</div>
+        </div>
+        <p class="desc">En smart og energisk retriever som ofte liker arbeid, trening og vann. Trenger mental og fysisk aktivitet.</p>
+      </div>
       <div class="breed-card" data-search="schæfer schaefer tyskland brukshund vakthund aktiv lydig">
-        <img src="bilder/schafer.png" alt="Schæfer">
+        <img src="bilder/schafer.png" alt="Schæfer" onerror="this.style.display='none'">
         <h3>🐶 Schæfer</h3>
         <div class="facts">
           <div class="fact">📍 Tyskland</div>
@@ -348,21 +379,8 @@ cursor:pointer;
         </div>
         <p class="desc">En intelligent og allsidig brukshund som trenger tydelig trening, aktivitet og oppgaver for å trives godt.</p>
       </div>
-
-      <div class="breed-card" data-search="puddel tyskland frankrike smart pelsstell familie allergivennlig">
-        <img src="bilder/puddel.png" alt="Puddel">
-        <h3>🐶 Puddel</h3>
-        <div class="facts">
-          <div class="fact">📍 Tyskland / Frankrike</div>
-          <div class="fact">⚖️ Varierer</div>
-          <div class="fact">❤️ 12–15 år</div>
-          <div class="fact">✂️ Høyt pelsstell</div>
-        </div>
-        <p class="desc">En svært lærevillig og elegant hund som finnes i flere størrelser. Krever regelmessig pelsstell og mental aktivitet.</p>
-      </div>
-
       <div class="breed-card" data-search="border collie skottland gjeterhund aktiv intelligent">
-        <img src="bilder/border-collie.png" alt="Border Collie">
+        <img src="bilder/border-collie.png" alt="Border Collie" onerror="this.style.display='none'">
         <h3>🐶 Border Collie</h3>
         <div class="facts">
           <div class="fact">📍 Skottland</div>
@@ -372,9 +390,30 @@ cursor:pointer;
         </div>
         <p class="desc">En ekstremt intelligent gjeterhund som trenger mye aktivitet, trening og mentale utfordringer.</p>
       </div>
-
+      <div class="breed-card" data-search="australian shepherd usa aktiv gjeterhund">
+        <img src="bilder/australian-shepherd.png" alt="Australian Shepherd" onerror="this.style.display='none'">
+        <h3>🐶 Australian Shepherd</h3>
+        <div class="facts">
+          <div class="fact">📍 USA</div>
+          <div class="fact">⚖️ 16–32 kg</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">⚡ Svært aktiv</div>
+        </div>
+        <p class="desc">En lærevillig og aktiv hund som ofte passer best for eiere som liker trening, tur og hundesport.</p>
+      </div>
+      <div class="breed-card" data-search="collie skottland familiehund mild">
+        <img src="bilder/collie.png" alt="Collie" onerror="this.style.display='none'">
+        <h3>🐶 Collie</h3>
+        <div class="facts">
+          <div class="fact">📍 Skottland</div>
+          <div class="fact">⚖️ 18–30 kg</div>
+          <div class="fact">❤️ 12–14 år</div>
+          <div class="fact">🏡 Familievennlig</div>
+        </div>
+        <p class="desc">En vakker og lojal familiehund som ofte er mild, våken og glad i kontakt med familien.</p>
+      </div>
       <div class="breed-card" data-search="cavalier king charles spaniel england familie liten selskapshund">
-        <img src="bilder/cavalier.png" alt="Cavalier King Charles Spaniel">
+        <img src="bilder/cavalier.png" alt="Cavalier King Charles Spaniel" onerror="this.style.display='none'">
         <h3>🐶 Cavalier King Charles Spaniel</h3>
         <div class="facts">
           <div class="fact">📍 England</div>
@@ -384,9 +423,8 @@ cursor:pointer;
         </div>
         <p class="desc">En mild, kjærlig og sosial selskapshund som ofte trives godt i familier og sammen med mennesker.</p>
       </div>
-
       <div class="breed-card" data-search="chihuahua mexico liten selskapshund våken">
-        <img src="bilder/Chihuahua.png" alt="Chihuahua">
+        <img src="bilder/Chihuahua.png" alt="Chihuahua" onerror="this.style.display='none'">
         <h3>🐶 Chihuahua</h3>
         <div class="facts">
           <div class="fact">📍 Mexico</div>
@@ -396,9 +434,8 @@ cursor:pointer;
         </div>
         <p class="desc">En svært liten, våken og personlig hund. Trenger trygg håndtering, sosialisering og varme omgivelser.</p>
       </div>
-
       <div class="breed-card" data-search="fransk bulldog frankrike liten familie selskapshund rolig">
-        <img src="bilder/fransk-bulldog.png" alt="Fransk Bulldog">
+        <img src="bilder/fransk-bulldog.png" alt="Fransk Bulldog" onerror="this.style.display='none'">
         <h3>🐶 Fransk Bulldog</h3>
         <div class="facts">
           <div class="fact">📍 Frankrike</div>
@@ -408,9 +445,184 @@ cursor:pointer;
         </div>
         <p class="desc">En sosial og sjarmerende hund med mye personlighet. Trenger moderat aktivitet og oppmerksomhet på varme dager.</p>
       </div>
-
+      <div class="breed-card" data-search="mops kina pug selskapshund liten">
+        <img src="bilder/mops.png" alt="Mops" onerror="this.style.display='none'">
+        <h3>🐶 Mops</h3>
+        <div class="facts">
+          <div class="fact">📍 Kina</div>
+          <div class="fact">⚖️ 6–8 kg</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">🏡 Selskapshund</div>
+        </div>
+        <p class="desc">En sosial, morsom og hengiven liten hund. Trenger moderat mosjon og ekstra omsorg i varmt vær.</p>
+      </div>
+      <div class="breed-card" data-search="puddel tyskland frankrike smart pelsstell familie allergivennlig">
+        <img src="bilder/puddel.png" alt="Puddel" onerror="this.style.display='none'">
+        <h3>🐶 Puddel</h3>
+        <div class="facts">
+          <div class="fact">📍 Tyskland / Frankrike</div>
+          <div class="fact">⚖️ Varierer</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">✂️ Høyt pelsstell</div>
+        </div>
+        <p class="desc">En svært lærevillig og elegant hund som finnes i flere størrelser. Krever regelmessig pelsstell og mental aktivitet.</p>
+      </div>
+      <div class="breed-card" data-search="dachs dachshund tyskland liten jakthund">
+        <img src="bilder/dachs.png" alt="Dachs" onerror="this.style.display='none'">
+        <h3>🐶 Dachs</h3>
+        <div class="facts">
+          <div class="fact">📍 Tyskland</div>
+          <div class="fact">⚖️ 4–12 kg</div>
+          <div class="fact">❤️ 12–16 år</div>
+          <div class="fact">🐾 Modig</div>
+        </div>
+        <p class="desc">En liten hund med stor personlighet. Opprinnelig jakthund, ofte våken, modig og selvstendig.</p>
+      </div>
+      <div class="breed-card" data-search="engelsk cocker spaniel england aktiv familie">
+        <img src="bilder/cocker.png" alt="Engelsk Cocker Spaniel" onerror="this.style.display='none'">
+        <h3>🐶 Engelsk Cocker Spaniel</h3>
+        <div class="facts">
+          <div class="fact">📍 England</div>
+          <div class="fact">⚖️ 12–16 kg</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">🏃 Aktiv</div>
+        </div>
+        <p class="desc">En glad og sosial hund som ofte liker tur, lek og nesearbeid. Krever jevnlig pelsstell.</p>
+      </div>
+      <div class="breed-card" data-search="engelsk springer spaniel england aktiv">
+        <img src="bilder/engelsk-springer-spaniel.png" alt="Engelsk Springer Spaniel" onerror="this.style.display='none'">
+        <h3>🐶 Engelsk Springer Spaniel</h3>
+        <div class="facts">
+          <div class="fact">📍 England</div>
+          <div class="fact">⚖️ 18–25 kg</div>
+          <div class="fact">❤️ 12–14 år</div>
+          <div class="fact">🏃 Aktiv</div>
+        </div>
+        <p class="desc">En energisk og vennlig spaniel som passer godt for aktive hjem og turglade eiere.</p>
+      </div>
+      <div class="breed-card" data-search="beagle england nesehund jakthund familie">
+        <img src="bilder/beagle.png" alt="Beagle" onerror="this.style.display='none'">
+        <h3>🐶 Beagle</h3>
+        <div class="facts">
+          <div class="fact">📍 England</div>
+          <div class="fact">⚖️ 9–14 kg</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">👃 Nesehund</div>
+        </div>
+        <p class="desc">En glad og nysgjerrig hund med sterk luktesans. Trenger aktivisering og trygg innkallingstrening.</p>
+      </div>
+      <div class="breed-card" data-search="corgi wales welsh corgi liten familie">
+        <img src="bilder/corgi.png" alt="Corgi" onerror="this.style.display='none'">
+        <h3>🐶 Corgi</h3>
+        <div class="facts">
+          <div class="fact">📍 Wales</div>
+          <div class="fact">⚖️ 10–14 kg</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">🏡 Familievennlig</div>
+        </div>
+        <p class="desc">En våken, morsom og robust liten gjeterhund med mye personlighet.</p>
+      </div>
+      <div class="breed-card" data-search="jack russell terrier england aktiv">
+        <img src="bilder/jack-russell-terrier.png" alt="Jack Russell Terrier" onerror="this.style.display='none'">
+        <h3>🐶 Jack Russell Terrier</h3>
+        <div class="facts">
+          <div class="fact">📍 England</div>
+          <div class="fact">⚖️ 5–8 kg</div>
+          <div class="fact">❤️ 13–16 år</div>
+          <div class="fact">⚡ Svært aktiv</div>
+        </div>
+        <p class="desc">En liten terrier med mye energi og stor arbeidslyst. Trenger aktivitet, grenser og mental stimulering.</p>
+      </div>
+      <div class="breed-card" data-search="bull terrier england robust">
+        <img src="bilder/bull-terrier.png" alt="Bull Terrier" onerror="this.style.display='none'">
+        <h3>🐶 Bull Terrier</h3>
+        <div class="facts">
+          <div class="fact">📍 England</div>
+          <div class="fact">⚖️ 20–30 kg</div>
+          <div class="fact">❤️ 10–14 år</div>
+          <div class="fact">🐾 Robust</div>
+        </div>
+        <p class="desc">En kraftig og leken terrier med særegent utseende. Trenger tydelig trening og god sosialisering.</p>
+      </div>
+      <div class="breed-card" data-search="boston terrier usa selskapshund">
+        <img src="bilder/boston-terrier.png" alt="Boston Terrier" onerror="this.style.display='none'">
+        <h3>🐶 Boston Terrier</h3>
+        <div class="facts">
+          <div class="fact">📍 USA</div>
+          <div class="fact">⚖️ 6–11 kg</div>
+          <div class="fact">❤️ 11–13 år</div>
+          <div class="fact">🏡 Selskapshund</div>
+        </div>
+        <p class="desc">En liten og livlig selskapshund med vennlig temperament. Passer ofte godt i by og familie.</p>
+      </div>
+      <div class="breed-card" data-search="yorkshire terrier england liten pelsstell">
+        <img src="bilder/yorkshire-terrier.png" alt="Yorkshire Terrier" onerror="this.style.display='none'">
+        <h3>🐶 Yorkshire Terrier</h3>
+        <div class="facts">
+          <div class="fact">📍 England</div>
+          <div class="fact">⚖️ 2–4 kg</div>
+          <div class="fact">❤️ 13–16 år</div>
+          <div class="fact">✂️ Pelsstell</div>
+        </div>
+        <p class="desc">En liten, våken og modig terrier med lang pels som krever stell hvis den holdes lang.</p>
+      </div>
+      <div class="breed-card" data-search="shih tzu tibet kina selskapshund pelsstell">
+        <img src="bilder/shih-tzu.png" alt="Shih Tzu" onerror="this.style.display='none'">
+        <h3>🐶 Shih Tzu</h3>
+        <div class="facts">
+          <div class="fact">📍 Tibet / Kina</div>
+          <div class="fact">⚖️ 4–8 kg</div>
+          <div class="fact">❤️ 10–16 år</div>
+          <div class="fact">✂️ Høyt pelsstell</div>
+        </div>
+        <p class="desc">En rolig og sosial selskapshund med lang pels. Trives ofte godt som familie- og kosehund.</p>
+      </div>
+      <div class="breed-card" data-search="lhasa apso tibet liten pelsstell">
+        <img src="bilder/lhasa-apso.png" alt="Lhasa Apso" onerror="this.style.display='none'">
+        <h3>🐶 Lhasa Apso</h3>
+        <div class="facts">
+          <div class="fact">📍 Tibet</div>
+          <div class="fact">⚖️ 5–8 kg</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">✂️ Høyt pelsstell</div>
+        </div>
+        <p class="desc">En liten og selvstendig selskapshund med lang pels og våken personlighet.</p>
+      </div>
+      <div class="breed-card" data-search="havaneser cuba selskapshund pelsstell">
+        <img src="bilder/havaneser.png" alt="Havaneser" onerror="this.style.display='none'">
+        <h3>🐶 Havaneser</h3>
+        <div class="facts">
+          <div class="fact">📍 Cuba</div>
+          <div class="fact">⚖️ 4–7 kg</div>
+          <div class="fact">❤️ 13–16 år</div>
+          <div class="fact">✂️ Pelsstell</div>
+        </div>
+        <p class="desc">En glad og sosial liten selskapshund som ofte passer godt i familier. Pelsen trenger jevnlig stell.</p>
+      </div>
+      <div class="breed-card" data-search="malteser malta liten hvit pelsstell">
+        <img src="bilder/malteser.png" alt="Malteser" onerror="this.style.display='none'">
+        <h3>🐶 Malteser</h3>
+        <div class="facts">
+          <div class="fact">📍 Malta</div>
+          <div class="fact">⚖️ 3–4 kg</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">✂️ Høyt pelsstell</div>
+        </div>
+        <p class="desc">En liten, elegant og hengiven selskapshund med hvit pels som krever regelmessig stell.</p>
+      </div>
+      <div class="breed-card" data-search="pomeranian tyskland polen liten spisshund">
+        <img src="bilder/pomeranian.png" alt="Pomeranian" onerror="this.style.display='none'">
+        <h3>🐶 Pomeranian</h3>
+        <div class="facts">
+          <div class="fact">📍 Tyskland / Polen</div>
+          <div class="fact">⚖️ 2–4 kg</div>
+          <div class="fact">❤️ 12–16 år</div>
+          <div class="fact">🪮 Pelsstell</div>
+        </div>
+        <p class="desc">En liten spisshund med stor personlighet og tykk pels som bør børstes jevnlig.</p>
+      </div>
       <div class="breed-card" data-search="norsk lundehund norge sjelden spesiell klatrehund">
-        <img src="bilder/lundehund.png" alt="Norsk Lundehund">
+        <img src="bilder/lundehund.png" alt="Norsk Lundehund" onerror="this.style.display='none'">
         <h3>🐶 Norsk Lundehund</h3>
         <div class="facts">
           <div class="fact">📍 Norge</div>
@@ -420,14 +632,156 @@ cursor:pointer;
         </div>
         <p class="desc">En unik norsk rase med spesielle egenskaper, opprinnelig brukt til jakt på lundefugl langs kysten.</p>
       </div>
-
+      <div class="breed-card" data-search="samojed russland hvit spisshund pels">
+        <img src="bilder/samojed.png" alt="Samojed" onerror="this.style.display='none'">
+        <h3>🐶 Samojed</h3>
+        <div class="facts">
+          <div class="fact">📍 Russland</div>
+          <div class="fact">⚖️ 16–30 kg</div>
+          <div class="fact">❤️ 12–14 år</div>
+          <div class="fact">❄️ Tykk pels</div>
+        </div>
+        <p class="desc">En vennlig og sosial spisshund med tykk hvit pels. Trenger aktivitet og jevnlig pelsstell.</p>
+      </div>
+      <div class="breed-card" data-search="siberian husky russland aktiv trekkhund">
+        <img src="bilder/husky.png" alt="Siberian Husky" onerror="this.style.display='none'">
+        <h3>🐶 Siberian Husky</h3>
+        <div class="facts">
+          <div class="fact">📍 Russland</div>
+          <div class="fact">⚖️ 16–28 kg</div>
+          <div class="fact">❤️ 12–14 år</div>
+          <div class="fact">⚡ Svært aktiv</div>
+        </div>
+        <p class="desc">En utholdende trekkhund som trenger mye mosjon, trygg innhegning og aktive eiere.</p>
+      </div>
+      <div class="breed-card" data-search="alaskan malamute usa polarhund aktiv">
+        <img src="bilder/alaskan-malamute.png" alt="Alaskan Malamute" onerror="this.style.display='none'">
+        <h3>🐶 Alaskan Malamute</h3>
+        <div class="facts">
+          <div class="fact">📍 USA</div>
+          <div class="fact">⚖️ 34–45 kg</div>
+          <div class="fact">❤️ 10–14 år</div>
+          <div class="fact">⚡ Svært aktiv</div>
+        </div>
+        <p class="desc">En sterk og utholdende polarhund. Trenger mye aktivitet, erfaring og tydelige rutiner.</p>
+      </div>
+      <div class="breed-card" data-search="akita japan spisshund selvstendig">
+        <img src="bilder/akita.png" alt="Akita" onerror="this.style.display='none'">
+        <h3>🐶 Akita</h3>
+        <div class="facts">
+          <div class="fact">📍 Japan</div>
+          <div class="fact">⚖️ 25–45 kg</div>
+          <div class="fact">❤️ 10–13 år</div>
+          <div class="fact">🐾 Selvstendig</div>
+        </div>
+        <p class="desc">En kraftig og lojal spisshund som trenger trygg sosialisering og erfaren håndtering.</p>
+      </div>
+      <div class="breed-card" data-search="shiba inu japan spisshund">
+        <img src="bilder/shiba-inu.png" alt="Shiba Inu" onerror="this.style.display='none'">
+        <h3>🐶 Shiba Inu</h3>
+        <div class="facts">
+          <div class="fact">📍 Japan</div>
+          <div class="fact">⚖️ 7–11 kg</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">🐾 Selvstendig</div>
+        </div>
+        <p class="desc">En liten japansk spisshund som ofte er selvstendig, renlig og våken.</p>
+      </div>
+      <div class="breed-card" data-search="rottweiler tyskland brukshund">
+        <img src="bilder/rottweiler.png" alt="Rottweiler" onerror="this.style.display='none'">
+        <h3>🐶 Rottweiler</h3>
+        <div class="facts">
+          <div class="fact">📍 Tyskland</div>
+          <div class="fact">⚖️ 35–60 kg</div>
+          <div class="fact">❤️ 8–10 år</div>
+          <div class="fact">🎓 Treningsvillig</div>
+        </div>
+        <p class="desc">En kraftig, lojal og arbeidsvillig hund som trenger god sosialisering og tydelig trening.</p>
+      </div>
+      <div class="breed-card" data-search="dobermann tyskland aktiv brukshund">
+        <img src="bilder/dobermann.png" alt="Dobermann" onerror="this.style.display='none'">
+        <h3>🐶 Dobermann</h3>
+        <div class="facts">
+          <div class="fact">📍 Tyskland</div>
+          <div class="fact">⚖️ 27–45 kg</div>
+          <div class="fact">❤️ 10–13 år</div>
+          <div class="fact">🏃 Aktiv</div>
+        </div>
+        <p class="desc">En elegant og aktiv brukshund som er lojal, våken og treningsvillig.</p>
+      </div>
+      <div class="breed-card" data-search="cane corso italia stor kraftig">
+        <img src="bilder/cane-corso.png" alt="Cane Corso" onerror="this.style.display='none'">
+        <h3>🐶 Cane Corso</h3>
+        <div class="facts">
+          <div class="fact">📍 Italia</div>
+          <div class="fact">⚖️ 40–50 kg</div>
+          <div class="fact">❤️ 9–12 år</div>
+          <div class="fact">🐾 Kraftig</div>
+        </div>
+        <p class="desc">En stor og kraftig hund som trenger trygg eier, god sosialisering og tydelig trening.</p>
+      </div>
+      <div class="breed-card" data-search="weimaraner tyskland jakthund aktiv">
+        <img src="bilder/weimaraner.png" alt="Weimaraner" onerror="this.style.display='none'">
+        <h3>🐶 Weimaraner</h3>
+        <div class="facts">
+          <div class="fact">📍 Tyskland</div>
+          <div class="fact">⚖️ 25–40 kg</div>
+          <div class="fact">❤️ 10–13 år</div>
+          <div class="fact">🏃 Aktiv</div>
+        </div>
+        <p class="desc">En energisk jakthund som trenger mye mosjon, mental trening og tett kontakt med eier.</p>
+      </div>
+      <div class="breed-card" data-search="berner sennenhund sveits stor familie">
+        <img src="bilder/berner-sennenhund.png" alt="Berner Sennenhund" onerror="this.style.display='none'">
+        <h3>🐶 Berner Sennenhund</h3>
+        <div class="facts">
+          <div class="fact">📍 Sveits</div>
+          <div class="fact">⚖️ 35–55 kg</div>
+          <div class="fact">❤️ 7–10 år</div>
+          <div class="fact">🏡 Familievennlig</div>
+        </div>
+        <p class="desc">En stor, rolig og vennlig familiehund. Trenger plass, turer og jevnlig pelsstell.</p>
+      </div>
+      <div class="breed-card" data-search="newfoundlandshund newfoundland canada stor vannhund">
+        <img src="bilder/newfoundland.png" alt="Newfoundlandshund" onerror="this.style.display='none'">
+        <h3>🐶 Newfoundlandshund</h3>
+        <div class="facts">
+          <div class="fact">📍 Canada</div>
+          <div class="fact">⚖️ 45–70 kg</div>
+          <div class="fact">❤️ 8–10 år</div>
+          <div class="fact">🌊 Vannhund</div>
+        </div>
+        <p class="desc">En stor, rolig og vennlig hund kjent for styrke og svømmeegenskaper. Krever plass og pelsstell.</p>
+      </div>
+      <div class="breed-card" data-search="grand danois tyskland stor">
+        <img src="bilder/grand-danois.png" alt="Grand Danois" onerror="this.style.display='none'">
+        <h3>🐶 Grand Danois</h3>
+        <div class="facts">
+          <div class="fact">📍 Tyskland</div>
+          <div class="fact">⚖️ 45–90 kg</div>
+          <div class="fact">❤️ 7–10 år</div>
+          <div class="fact">🐾 Svært stor</div>
+        </div>
+        <p class="desc">En svært stor, ofte mild og rolig hund. Trenger god plass, god oppfølging og riktig fôring.</p>
+      </div>
+      <div class="breed-card" data-search="sankt bernhard sveits stor">
+        <img src="bilder/sankt-bernhard.png" alt="Sankt Bernhard" onerror="this.style.display='none'">
+        <h3>🐶 Sankt Bernhard</h3>
+        <div class="facts">
+          <div class="fact">📍 Sveits</div>
+          <div class="fact">⚖️ 50–90 kg</div>
+          <div class="fact">❤️ 8–10 år</div>
+          <div class="fact">🐾 Svært stor</div>
+        </div>
+        <p class="desc">En stor og rolig familiehund med mye tyngde. Trenger plass, rolig mosjon og jevnlig pelsstell.</p>
+      </div>
     </div>
   </section>
 
   <section class="card">
-    <h2 class="section-title">Videre plan</h2>
+    <h2 class="section-title">Neste oppgradering</h2>
     <p class="sub">
-      Neste steg kan være å legge til flere raser, lage egne detaljsider og etter hvert vise “Ukens hunderase” på forsiden.
+      Neste steg blir Hunderaser 3.0 med pelsstellutstyr, klotang på alle raser, sjampo, børster, sakser og plass til “Kjøpes hos”.
     </p>
   </section>
 
@@ -435,6 +789,11 @@ cursor:pointer;
     Hundenevåre.com – Kunnskapssenter for hunder og katter.
   </p>
 
+</div>
+
+<div id="imageModal" class="modal">
+  <span class="close-modal" onclick="closeModal()">&times;</span>
+  <img id="modalImg" class="modal-content">
 </div>
 
 <script>
@@ -447,15 +806,6 @@ function filterBreeds(){
     card.style.display = text.includes(input) ? "block" : "none";
   });
 }
-</script>
-
-
-<div id="imageModal" class="modal">
-  <span class="close-modal" onclick="closeModal()">&times;</span>
-  <img id="modalImg" class="modal-content">
-</div>
-
-<script>
 
 function openModal(src){
  document.getElementById('imageModal').style.display='block';
@@ -473,7 +823,7 @@ document.querySelectorAll('.breed-card img').forEach(img=>{
 document.getElementById('imageModal').addEventListener('click',function(e){
  if(e.target===this) closeModal();
 });
-
 </script>
+
 </body>
 </html>
