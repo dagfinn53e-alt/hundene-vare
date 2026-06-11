@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helse - Hundene våre</title>
+
+<style>
+:root{
+  --blue:#2563eb;
+  --blue-dark:#1d4ed8;
+  --red:#dc2626;
+  --green:#16a34a;
+  --text:#102033;
+  --muted:#5f7088;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top left,rgba(239,68,68,.14) 0%,transparent 28%),
+    radial-gradient(circle at top right,rgba(37,99,235,.14) 0%,transparent 30%),
+    linear-gradient(180deg,#eaf2fb 0%,#f8fbff 100%);
+}
+
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:22px 18px 70px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+  padding:14px 18px;
+  border:1px solid rgba(191,219,254,.75);
+  border-radius:28px;
+  background:rgba(255,255,255,.90);
+  box-shadow:0 16px 38px rgba(15,23,42,.10);
+  position:sticky;
+  top:8px;
+  z-index:50;
+}
+
+.brand{
+  font-size:24px;
+  font-weight:900;
+  color:var(--blue-dark);
+  padding:12px 18px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#ffffff,#eef4ff);
+  border:1px solid #c7d8f4;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.navbtn,.mainbtn,.openbtn{
+  border:none;
+  border-radius:999px;
+  padding:11px 16px;
+  background:var(--blue);
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 16px rgba(15,23,42,.08);
+}
+
+.navbtn.alt{
+  background:#eaf2ff;
+  color:var(--blue-dark);
+  border:1px solid #bfd7ff;
+}
+
+.navbtn.admin{
+  background:#fff7ed;
+  color:#b45309;
+  border:1px solid #fed7aa;
+}
+
+.hero{
+  min-height:255px;
+  border-radius:34px;
+  padding:38px;
+  color:white;
+  background:
+    linear-gradient(rgba(15,23,42,.48),rgba(15,23,42,.50)),
+    url('https://images.unsplash.com/photo-1550831107-1553da8c8464?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
+  box-shadow:0 22px 48px rgba(15,23,42,.18);
+  margin-bottom:22px;
+}
+
+.hero h1{
+  margin:0 0 12px;
+  font-size:52px;
+  line-height:1.05;
+  text-shadow:0 6px 18px rgba(0,0,0,.25);
+}
+
+.hero p{
+  margin:0 0 18px;
+  max-width:780px;
+  font-size:18px;
+  line-height:1.6;
+  color:#f8fafc;
+}
+
+.mainbtn{
+  background:linear-gradient(135deg,#2563eb,#dc2626);
+  min-height:48px;
+  padding:13px 22px;
+}
+
+.card{
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+  border:1px solid rgba(191,219,254,.75);
+  border-radius:34px;
+  padding:28px;
+  box-shadow:0 20px 42px rgba(15,23,42,.10);
+  margin-bottom:22px;
+}
+
+.section-title{
+  margin:0 0 8px;
+  font-size:34px;
+  color:#0f172a;
+}
+
+.sub{
+  color:var(--muted);
+  line-height:1.6;
+  margin:0 0 20px;
+}
+
+.notice{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#9a3412;
+  border-radius:22px;
+  padding:16px;
+  font-weight:800;
+  line-height:1.6;
+  margin-bottom:20px;
+}
+
+.searchbox{
+  width:100%;
+  max-width:520px;
+  padding:15px 18px;
+  border-radius:999px;
+  border:1px solid #bfdbfe;
+  font-size:17px;
+  margin-bottom:20px;
+  outline:none;
+}
+
+.health-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.health-card{
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+  border:1px solid #dbeafe;
+  border-radius:28px;
+  padding:20px;
+  box-shadow:0 14px 32px rgba(30,64,175,.10);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height:265px;
+}
+
+.icon{
+  font-size:44px;
+  margin-bottom:10px;
+}
+
+.health-card h3{
+  margin:0 0 8px;
+  font-size:24px;
+  color:#0f172a;
+}
+
+.health-card p{
+  margin:0;
+  color:#475569;
+  line-height:1.55;
+  font-size:15px;
+}
+
+.tagrow{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.tag{
+  display:inline-flex;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  background:#eef4ff;
+  color:#1d4ed8;
+  border:1px solid #bfdbfe;
+}
+
+.tag.red{
+  background:#fee2e2;
+  color:#b91c1c;
+  border-color:#fecaca;
+}
+
+.tag.green{
+  background:#dcfce7;
+  color:#166534;
+  border-color:#bbf7d0;
+}
+
+.openbtn{
+  margin-top:18px;
+  width:100%;
+  min-height:46px;
+  background:linear-gradient(135deg,#2563eb,#dc2626);
+}
+
+.footer-note{
+  text-align:center;
+  color:#64748b;
+  font-size:14px;
+  margin-top:22px;
+}
+
+@media(max-width:950px){
+  .health-grid{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:760px){
+  .wrap{padding:14px 12px 50px}
+  .topbar{border-radius:22px;padding:12px}
+  .brand{width:100%;text-align:center;font-size:20px}
+  .actions{width:100%;justify-content:center}
+  .navbtn{flex:1 1 42%;font-size:13px;padding:10px 12px}
+  .hero{min-height:230px;border-radius:26px;padding:24px}
+  .hero h1{font-size:34px}
+  .hero p{font-size:15px}
+  .card{border-radius:26px;padding:18px}
+  .section-title{font-size:28px}
+  .health-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">🐶 Hundene våre</div>
+    <div class="actions">
+      <a class="navbtn alt" href="index.html">🏠 Forside</a>
+      <a class="navbtn alt" href="kunnskap.html">📚 Kunnskap</a>
+      <a class="navbtn alt" href="hunderaser.html">🐶 Hunderaser</a>
+      <a class="navbtn alt" href="katteraser.html">🐱 Katteraser</a>
+      <a class="navbtn alt" href="spill.html">🎮 Spill</a>
+      <a class="navbtn admin" href="admin.html">🔧 Admin</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <h1>🏥 Helse & Førstehjelp</h1>
+    <p>
+      Her samler vi enkle og nyttige helseartikler for hunde- og kattefolk.
+      Målet er å gi oversiktlige råd, faresignaler og når man bør kontakte veterinær.
+    </p>
+    <a class="mainbtn" href="kunnskap.html">⬅️ Tilbake til Kunnskapssenter</a>
+  </section>
+
+  <section class="card">
+    <h2 class="section-title">Viktig å vite</h2>
+    <div class="notice">
+      ⚠️ Dette er generell informasjon og erstatter ikke veterinær. Ved akutte symptomer, forgiftning, sterke smerter eller rask forverring bør veterinær kontaktes.
+    </div>
+
+    <p class="sub">Søk etter tema som flått, tannstell, vaksiner, førstehjelp eller forgiftning.</p>
+    <input class="searchbox" id="searchInput" onkeyup="filterHealth()" placeholder="Søk i helseartikler...">
+
+    <div class="health-grid" id="healthGrid">
+
+      <div class="health-card" data-search="flått hund katt borrelia fjerne flått forebygging">
+        <div>
+          <div class="icon">🕷️</div>
+          <h3>Flått på hund og katt</h3>
+          <p>Lær hvordan du fjerner flått, hva du bør følge med på etterpå og hvordan du kan forebygge flåttbitt.</p>
+          <div class="tagrow">
+            <span class="tag">Forebygging</span>
+            <span class="tag green">Vanlig tema</span>
+          </div>
+        </div>
+        <a class="openbtn" href="#">Les mer senere</a>
+      </div>
+
+      <div class="health-card" data-search="tannstell tenner tannstein tannkjøtt hund katt periodontitt">
+        <div>
+          <div class="icon">🦷</div>
+          <h3>Tannstell</h3>
+          <p>Tannhelse er viktig for både hund og katt. Her kan vi samle råd om tannpuss, tannstein og tegn på smerter.</p>
+          <div class="tagrow">
+            <span class="tag">Hverdag</span>
+            <span class="tag green">Viktig</span>
+          </div>
+        </div>
+        <a class="openbtn" href="#">Les mer senere</a>
+      </div>
+
+      <div class="health-card" data-search="forgiftning gift sjokolade løk druer rosiner medisiner hund katt">
+        <div>
+          <div class="icon">☠️</div>
+          <h3>Forgiftning</h3>
+          <p>Noen matvarer, planter og medisiner kan være farlige. Her kan vi lage en oversikt over faresignaler og tiltak.</p>
+          <div class="tagrow">
+            <span class="tag red">Akutt</span>
+            <span class="tag">Veterinær</span>
+          </div>
+        </div>
+        <a class="openbtn" href="#">Les mer senere</a>
+      </div>
+
+      <div class="health-card" data-search="førstehjelp sår skade blødning varme heteslag ulykke hund katt">
+        <div>
+          <div class="icon">🚑</div>
+          <h3>Førstehjelp</h3>
+          <p>Hva gjør du ved sår, blødning, heteslag, skade eller ulykke? En enkel førstehjelpsguide kan bli svært nyttig.</p>
+          <div class="tagrow">
+            <span class="tag red">Akutt</span>
+            <span class="tag">Guide</span>
+          </div>
+        </div>
+        <a class="openbtn" href="#">Les mer senere</a>
+      </div>
+
+      <div class="health-card" data-search="vaksiner vaksinering valp kattunge hund katt kennelhoste">
+        <div>
+          <div class="icon">💉</div>
+          <h3>Vaksiner</h3>
+          <p>En oversikt over vanlige vaksiner, hvorfor de er viktige og når man bør snakke med veterinær.</p>
+          <div class="tagrow">
+            <span class="tag">Forebygging</span>
+            <span class="tag">Valp/kattunge</span>
+          </div>
+        </div>
+        <a class="openbtn" href="#">Les mer senere</a>
+      </div>
+
+      <div class="health-card" data-search="overvekt vekt slanking fôr aktivitet hund katt">
+        <div>
+          <div class="icon">⚖️</div>
+          <h3>Overvekt</h3>
+          <p>Overvekt kan gi helseproblemer. Her kan vi samle råd om vekt, fôr, aktivitet og når man bør få hjelp.</p>
+          <div class="tagrow">
+            <span class="tag">Hverdag</span>
+            <span class="tag green">Forebygging</span>
+          </div>
+        </div>
+        <a class="openbtn" href="#">Les mer senere</a>
+      </div>
+
+      <div class="health-card" data-search="kloklipp klør poter hund katt blødning kloklipping">
+        <div>
+          <div class="icon">🐾</div>
+          <h3>Kloklipp og poter</h3>
+          <p>Tips om kloklipp, poter, sår hud og hva man gjør hvis man klipper litt for langt.</p>
+          <div class="tagrow">
+            <span class="tag">Stell</span>
+            <span class="tag">Poter</span>
+          </div>
+        </div>
+        <a class="openbtn" href="#">Les mer senere</a>
+      </div>
+
+      <div class="health-card" data-search="seniorhund seniorkatt gammel hund katt ledd helse alder">
+        <div>
+          <div class="icon">❤️</div>
+          <h3>Seniorhund og seniorkatt</h3>
+          <p>Eldre dyr trenger ofte litt ekstra oppfølging. Her kan vi samle råd om ledd, tenner, vekt og trivsel.</p>
+          <div class="tagrow">
+            <span class="tag">Senior</span>
+            <span class="tag green">Omsorg</span>
+          </div>
+        </div>
+        <a class="openbtn" href="#">Les mer senere</a>
+      </div>
+
+      <div class="health-card" data-search="allergi kløe hud ørebetennelse pels hund katt">
+        <div>
+          <div class="icon">🌿</div>
+          <h3>Allergi, hud og kløe</h3>
+          <p>Kløe, hudproblemer og øreplager er vanlige temaer. Her kan vi forklare typiske tegn og når man bør undersøke videre.</p>
+          <div class="tagrow">
+            <span class="tag">Hud</span>
+            <span class="tag">Kløe</span>
+          </div>
+        </div>
+        <a class="openbtn" href="#">Les mer senere</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="section-title">Videre plan</h2>
+    <p class="sub">
+      Neste steg kan være å lage egne artikler for hvert helsetema, med tydelige råd, faresignaler og lenker til relevante butikker eller veterinærer.
+    </p>
+  </section>
+
+  <p class="footer-note">
+    Hundenevåre.com – Kunnskapssenter for hunder og katter.
+  </p>
+
+</div>
+
+<script>
+function filterHealth(){
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const cards = document.querySelectorAll(".health-card");
+
+  cards.forEach(card=>{
+    const text = card.innerText.toLowerCase() + " " + card.dataset.search.toLowerCase();
+    card.style.display = text.includes(input) ? "flex" : "none";
+  });
+}
+</script>
+
+</body>
+</html>
