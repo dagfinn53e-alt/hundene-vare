@@ -173,6 +173,7 @@ body{
 }
 
 .breed-card img{
+  cursor:pointer;
   width:100%;
   height:190px;
   object-fit:contain;
@@ -236,6 +237,36 @@ body{
   .section-title{font-size:28px}
   .breed-grid{grid-template-columns:1fr}
 }
+
+.modal{
+display:none;
+position:fixed;
+z-index:9999;
+left:0;top:0;
+width:100%;height:100%;
+background:rgba(0,0,0,.85);
+}
+
+.modal-content{
+display:block;
+margin:40px auto;
+max-width:90%;
+max-height:85vh;
+border-radius:20px;
+background:white;
+padding:10px;
+}
+
+.close-modal{
+position:absolute;
+right:25px;
+top:15px;
+font-size:42px;
+font-weight:bold;
+color:white;
+cursor:pointer;
+}
+
 </style>
 </head>
 
@@ -418,5 +449,31 @@ function filterBreeds(){
 }
 </script>
 
+
+<div id="imageModal" class="modal">
+  <span class="close-modal" onclick="closeModal()">&times;</span>
+  <img id="modalImg" class="modal-content">
+</div>
+
+<script>
+
+function openModal(src){
+ document.getElementById('imageModal').style.display='block';
+ document.getElementById('modalImg').src=src;
+}
+
+function closeModal(){
+ document.getElementById('imageModal').style.display='none';
+}
+
+document.querySelectorAll('.breed-card img').forEach(img=>{
+ img.addEventListener('click',()=>openModal(img.src));
+});
+
+document.getElementById('imageModal').addEventListener('click',function(e){
+ if(e.target===this) closeModal();
+});
+
+</script>
 </body>
 </html>
