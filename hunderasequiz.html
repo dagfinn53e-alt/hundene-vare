@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐶 Hunderase Quiz 2.0</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(to bottom,#dbeafe,#eef6ff);text-align:center;color:#123c73}
+.container{max-width:950px;margin:20px auto;padding:20px}
+h1{margin-bottom:20px;font-size:38px}.stats{display:flex;gap:15px;flex-wrap:wrap;margin-bottom:20px}.stat{flex:1;background:white;padding:15px;border-radius:18px;font-weight:bold;box-shadow:0 4px 10px rgba(0,0,0,.1)}
+.quiz-box,.result-box{background:white;padding:25px;border-radius:28px;box-shadow:0 8px 20px rgba(0,0,0,.12)}
+#dogImage{width:100%;max-height:260px;object-fit:contain;background:white;border-radius:20px;margin-bottom:20px}#breed{font-size:34px;font-weight:bold;margin-bottom:10px}.question{font-size:24px;margin-bottom:20px}
+.answer-btn{display:block;width:100%;margin:12px 0;padding:20px;border:none;border-radius:18px;background:#dbeafe;font-size:24px;font-weight:bold;cursor:pointer;transition:.2s}.answer-btn:hover{background:#bfdbfe}.correct{background:#10b981!important;color:white}.wrong{background:#ef4444!important;color:white}
+#nextBtn,#restartBtn{margin-top:20px;padding:18px 35px;border:none;border-radius:18px;background:#2563eb;color:white;font-size:22px;font-weight:bold;cursor:pointer}#nextBtn{display:none}.back button{margin-top:30px;padding:16px 30px;border:none;border-radius:18px;background:#123c73;color:white;font-size:20px;font-weight:bold;cursor:pointer}.hidden{display:none}.medal{font-size:34px;font-weight:900;margin-top:18px}.confetti{position:fixed;font-size:28px;pointer-events:none;animation:fall 3s linear forwards;z-index:9999}@keyframes fall{0%{transform:translateY(-50px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@media(max-width:700px){h1{font-size:30px}#breed{font-size:28px}.question{font-size:20px}.answer-btn{font-size:20px;padding:16px}}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🐶 Hunderase Quiz 2.0</h1>
+<div class="stats"><div class="stat">🏆 Poeng: <span id="score">0</span></div><div class="stat">✅ Riktige: <span id="correctCount">0</span></div><div class="stat">❓ Spørsmål: <span id="questionNumber">1</span></div></div>
+<div id="quizBox" class="quiz-box"><img id="dogImage" alt="Hunderase"><div id="breed"></div><div class="question">Hvilken hunderase er dette?</div><div id="answers"></div><button id="nextBtn" onclick="nextQuestion()">Neste ➜</button></div>
+<div id="resultBox" class="result-box hidden"><h2>🎉 Ferdig!</h2><p id="finalScore"></p><p id="medal" class="medal"></p><button id="restartBtn" onclick="restartQuiz()">Spill igjen</button></div>
+<div class="back"><button onclick="location.href='spill.html'">⬅️ Tilbake til spill</button></div>
+</div>
+<script>
+const questions = [
+{breed:"Kinesisk Nakenhund",image:"bilder/kinesisk-nakenhund.png",correct:"Kinesisk Nakenhund"},
+{breed:"Chihuahua",image:"bilder/Chihuahua.png",correct:"Chihuahua"},
+{breed:"Dachs",image:"bilder/dachs.png",correct:"Dachs"},
+{breed:"Briard",image:"bilder/briard.png",correct:"Briard"},
+{breed:"Norsk Lundehund",image:"bilder/lundehund.png",correct:"Norsk Lundehund"},
+{breed:"Shar Pei",image:"bilder/sharpei.png",correct:"Shar Pei"},
+{breed:"Schæfer",image:"bilder/schafer.png",correct:"Schæfer"},
+{breed:"Engelsk Cocker Spaniel",image:"bilder/cocker.png",correct:"Engelsk Cocker Spaniel"},
+{breed:"Border Collie",image:"bilder/border-collie.png",correct:"Border Collie"},
+{breed:"Husky",image:"bilder/husky.png",correct:"Husky"},
+{breed:"Golden Retriever",image:"bilder/golden.png",correct:"Golden Retriever"},
+{breed:"Dalmatiner",image:"bilder/dalmatiner.png",correct:"Dalmatiner"},
+{breed:"Dobermann",image:"bilder/dobermann.png",correct:"Dobermann"},
+{breed:"Boxer",image:"bilder/boxer.png",correct:"Boxer"},
+{breed:"Cavalier King Charles Spaniel",image:"bilder/cavalier.png",correct:"Cavalier King Charles Spaniel"},
+{breed:"Collie",image:"bilder/collie.png",correct:"Collie"},
+{breed:"Newfoundland",image:"bilder/newfoundland.png",correct:"Newfoundland"},
+{breed:"Mops",image:"bilder/mops.png",correct:"Mops"},
+{breed:"Puddel",image:"bilder/puddel.png",correct:"Puddel"},
+{breed:"Boston Terrier",image:"bilder/boston-terrier.png",correct:"Boston Terrier"},
+{breed:"Irsk Ulvehund",image:"bilder/irsk-ulvehund.png",correct:"Irsk Ulvehund"},
+{breed:"Lowchen",image:"bilder/lowchen.png",correct:"Lowchen"},
+{breed:"Lhasa Apso",image:"bilder/lhasa-apso.png",correct:"Lhasa Apso"},
+{breed:"Pomeranian",image:"bilder/pomeranian.png",correct:"Pomeranian"},
+{breed:"Fransk Bulldog",image:"bilder/fransk-bulldog.png",correct:"Fransk Bulldog"},
+{breed:"Rottweiler",image:"bilder/rottweiler.png",correct:"Rottweiler"},
+{breed:"Basenji",image:"bilder/basenji.png",correct:"Basenji"},
+{breed:"Bull Terrier",image:"bilder/bull-terrier.png",correct:"Bull Terrier"},
+{breed:"Irsk Setter",image:"bilder/irsk-setter.png",correct:"Irsk Setter"},
+{breed:"Beagle",image:"bilder/beagle.png",correct:"Beagle"},
+{breed:"Samojed",image:"bilder/samojed.png",correct:"Samojed"},
+{breed:"Akita",image:"bilder/akita.png",correct:"Akita"},
+{breed:"Shiba Inu",image:"bilder/shiba-inu.png",correct:"Shiba Inu"},
+{breed:"Cane Corso",image:"bilder/cane-corso.png",correct:"Cane Corso"},
+{breed:"Weimaraner",image:"bilder/weimaraner.png",correct:"Weimaraner"},
+{breed:"Malteser",image:"bilder/malteser.png",correct:"Malteser"},
+{breed:"Corgi",image:"bilder/corgi.png",correct:"Corgi"},
+{breed:"Grand Danois",image:"bilder/grand-danois.png",correct:"Grand Danois"},
+{breed:"Sankt Bernhard",image:"bilder/sankt-bernhard.png",correct:"Sankt Bernhard"},
+{breed:"Australian Shepherd",image:"bilder/australian-shepherd.png",correct:"Australian Shepherd"}
+];
+const breedNames = questions.map(q => q.breed);
+
+let quizQuestions=[],currentQuestion=0,score=0,correctCount=0;
+function shuffleArray(array){const copy=[...array];for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]]}return copy}
+function startQuiz(){quizQuestions=shuffleArray(questions);currentQuestion=0;score=0;correctCount=0;document.getElementById("score").textContent=score;document.getElementById("correctCount").textContent=correctCount;document.getElementById("quizBox").classList.remove("hidden");document.getElementById("resultBox").classList.add("hidden");loadQuestion()}
+function loadQuestion(){
+const q=quizQuestions[currentQuestion];
+document.getElementById("dogImage").src=q.image;
+document.getElementById("breed").textContent="";
+document.getElementById("questionNumber").textContent=(currentQuestion+1)+"/"+quizQuestions.length;
+
+const answers=document.getElementById("answers");
+answers.innerHTML="";
+
+let wrongAnswers = breedNames.filter(name => name !== q.correct);
+wrongAnswers = shuffleArray(wrongAnswers).slice(0,3);
+let answerOptions = shuffleArray([q.correct, ...wrongAnswers]);
+
+answerOptions.forEach(answer=>{
+const btn=document.createElement("button");
+btn.className="answer-btn";
+btn.textContent=answer;
+btn.dataset.answer=answer;
+btn.onclick=()=>checkAnswer(btn,answer);
+answers.appendChild(btn);
+});
+document.getElementById("nextBtn").style.display="none";
+}
+function checkAnswer(button,answer){const q=quizQuestions[currentQuestion];const buttons=document.querySelectorAll(".answer-btn");buttons.forEach(btn=>{btn.disabled=true;if(btn.dataset.answer===q.correct){btn.classList.add("correct")}});if(answer===q.correct){score+=10;correctCount++}else{button.classList.add("wrong")}document.getElementById("score").textContent=score;document.getElementById("correctCount").textContent=correctCount;document.getElementById("nextBtn").style.display="inline-block"}
+function nextQuestion(){currentQuestion++;if(currentQuestion>=quizQuestions.length){showResult();return}loadQuestion()}
+function launchConfetti(){const emojis=['⭐','✨','🎉','🏆','🐶'];for(let i=0;i<45;i++){const el=document.createElement('div');el.className='confetti';el.innerText=emojis[Math.floor(Math.random()*emojis.length)];el.style.left=Math.random()*100+'vw';el.style.animationDelay=(Math.random()*0.6)+'s';document.body.appendChild(el);setTimeout(()=>el.remove(),3500)}}
+function showResult(){document.getElementById("quizBox").classList.add("hidden");document.getElementById("resultBox").classList.remove("hidden");const total=quizQuestions.length;const percent=correctCount/total;document.getElementById("finalScore").innerHTML="Du fikk <b>"+correctCount+"</b> av <b>"+total+"</b> riktige.<br>Poeng: <b>"+score+"</b>";let medal="";if(percent===1)medal="🏆 RASEMESTER! Alt riktig!";else if(percent>=0.85)medal="🥇 Gullpote!";else if(percent>=0.65)medal="🥈 Sølvpote!";else if(percent>=0.45)medal="🥉 Bronsepote!";else medal="🐾 Prøv igjen – neste runde går bedre!";document.getElementById("medal").textContent=medal;if(percent>=0.85){launchConfetti()}}
+function restartQuiz(){startQuiz()}
+startQuiz();
+</script>
+</body>
+</html>
