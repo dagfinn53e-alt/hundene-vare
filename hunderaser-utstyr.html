@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hunderaser utstyr - Hundene våre</title>
+<title>Hunderaser Utstyr 2.0 - Hundene våre</title>
 
 <style>
 :root{
@@ -171,25 +171,30 @@ body{
 }
 
 .equip-card h3{
-  margin:0 0 8px;
-  font-size:26px;
+  margin:0 0 12px;
+  font-size:27px;
   color:#0f172a;
 }
 
-.care-level{
-  display:inline-flex;
-  padding:7px 12px;
-  border-radius:999px;
+.quick-facts{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  margin-bottom:16px;
+}
+
+.quick{
+  padding:10px 12px;
+  border-radius:16px;
   background:#eaf2ff;
   color:#1d4ed8;
   border:1px solid #bfd7ff;
   font-weight:900;
-  margin-bottom:14px;
 }
 
 .equip-list p{
   margin:10px 0;
-  line-height:1.55;
+  line-height:1.58;
   color:#334155;
 }
 
@@ -208,7 +213,9 @@ body{
   color:#b45309;
 }
 
-.buy-box small{
+.shop-placeholder{
+  margin-top:8px;
+  font-size:13px;
   color:#92400e;
 }
 
@@ -216,6 +223,10 @@ body{
   margin-top:14px;
   color:#475569;
   line-height:1.6;
+  background:#f8fbff;
+  border:1px dashed #cbd5e1;
+  border-radius:18px;
+  padding:12px;
 }
 
 .footer-note{
@@ -260,10 +271,10 @@ body{
   </div>
 
   <section class="hero">
-    <h1>✂️ Hunderaser utstyr</h1>
+    <h1>✂️ Hunderaser Utstyr 2.0</h1>
     <p>
       En praktisk utstyrsguide for populære hunderaser.
-      Her finner du forslag til børster, kammer, sjampo, sakser og klotang – med plass til “Kjøpes hos”.
+      Her finner du pelsstellnivå, prisnivå, nybegynnervennlighet, børster, sjampo, sakser, klotang og plass til “Kjøpes hos”.
     </p>
     <a class="mainbtn" href="kunnskap.html">⬅️ Tilbake til Kunnskapssenter</a>
   </section>
@@ -275,204 +286,264 @@ body{
 
     <div class="equip-grid" id="equipGrid">
       
-      <div class="equip-card" data-search="bichon frisé karde + metallkam buet saks, rett saks og effileringssaks mild hundesjampo, gjerne for hvit/lang pels medium klotang">
+      <div class="equip-card" data-search="bichon frisé karde, metallkam og liten flokekam buet saks, rett saks og effileringssaks mild hundesjampo, gjerne for hvit/lang pels + balsam medium klotang ⭐⭐⭐⭐⭐ krevende">
         <h3>🐶 Bichon Frisé</h3>
-        <div class="care-level">✂️ Høyt</div>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐⭐⭐ Krevende</div>
+          <div class="quick">💰💰💰 Høy</div>
+          <div class="quick">👨‍👩‍👧 ⚠️ Litt erfaring</div>
+        </div>
 
         <div class="equip-list">
-          <p><b>🪮 Børster/kam:</b><br>Karde + metallkam</p>
+          <p><b>🪮 Børster/kam:</b><br>Karde, metallkam og liten flokekam</p>
           <p><b>✂️ Saks/klipp:</b><br>Buet saks, rett saks og effileringssaks</p>
-          <p><b>🧴 Sjampo:</b><br>Mild hundesjampo, gjerne for hvit/lang pels</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild hundesjampo, gjerne for hvit/lang pels + balsam</p>
           <p><b>🐾 Klostell:</b><br>Medium klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting flere ganger i uken. Klipp ca. hver 6.–8. uke.</p>
         </div>
 
         <div class="buy-box">
           <b>🛒 Kjøpes hos:</b><br>
-          <span>PetXL Haugesund / Musti / lokal dyrebutikk</span><br>
-          <small>Her kan vi senere legge inn konkret butikknavn og lenke til butikkprofil.</small>
+          <span>PetXL Haugesund / Musti / Aasheim Zoo / lokal dyrebutikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
         </div>
 
-        <p class="note">Bichon trenger jevnlig børsting og klipp. Pelsen tover lett hvis den ikke stelles.</p>
+        <p class="note">💡 Pelsen tover lett. Start pelsstell tidlig og gjør det til en rolig vane.</p>
       </div>
     
-      <div class="equip-card" data-search="golden retriever underullsrake, karde og metallkam potesaks og tynnesaks ved behov mild hundesjampo og balsam ved behov medium/stor klotang">
+      <div class="equip-card" data-search="golden retriever underullsrake, karde og metallkam potesaks og tynnesaks ved behov mild hundesjampo, balsam ved behov medium/stor klotang ⭐⭐⭐ middels">
         <h3>🐶 Golden Retriever</h3>
-        <div class="care-level">🪮 Middels</div>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐ Middels</div>
+          <div class="quick">💰💰 Middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
 
         <div class="equip-list">
           <p><b>🪮 Børster/kam:</b><br>Underullsrake, karde og metallkam</p>
           <p><b>✂️ Saks/klipp:</b><br>Potesaks og tynnesaks ved behov</p>
-          <p><b>🧴 Sjampo:</b><br>Mild hundesjampo og balsam ved behov</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild hundesjampo, balsam ved behov</p>
           <p><b>🐾 Klostell:</b><br>Medium/stor klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting ukentlig, ekstra i røyteperioder.</p>
         </div>
 
         <div class="buy-box">
           <b>🛒 Kjøpes hos:</b><br>
-          <span>Dyrebutikk eller pelsstellbutikk</span><br>
-          <small>Her kan vi senere legge inn konkret butikknavn og lenke til butikkprofil.</small>
+          <span>Dyrebutikk / hundefrisør / lokal butikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
         </div>
 
-        <p class="note">Golden røyter en del og trenger godt utstyr for underull og pelsstell.</p>
+        <p class="note">💡 Fokuser ekstra på faner, hale, bukser og poter.</p>
       </div>
     
-      <div class="equip-card" data-search="labrador retriever gummibørste, karde og røytebørste vanligvis lite saks, eventuelt potesaks mild hundesjampo medium/stor klotang">
+      <div class="equip-card" data-search="labrador retriever gummibørste, karde og røytebørste potesaks ved behov mild hundesjampo medium/stor klotang ⭐⭐ enkel/middels">
         <h3>🐶 Labrador Retriever</h3>
-        <div class="care-level">🪮 Lav/middels</div>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐ Enkel/middels</div>
+          <div class="quick">💰 Lav/middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
 
         <div class="equip-list">
           <p><b>🪮 Børster/kam:</b><br>Gummibørste, karde og røytebørste</p>
-          <p><b>✂️ Saks/klipp:</b><br>Vanligvis lite saks, eventuelt potesaks</p>
-          <p><b>🧴 Sjampo:</b><br>Mild hundesjampo</p>
+          <p><b>✂️ Saks/klipp:</b><br>Potesaks ved behov</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild hundesjampo</p>
           <p><b>🐾 Klostell:</b><br>Medium/stor klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting ukentlig, oftere ved røyting.</p>
         </div>
 
         <div class="buy-box">
           <b>🛒 Kjøpes hos:</b><br>
-          <span>Dyrebutikk / veterinærbutikk</span><br>
-          <small>Her kan vi senere legge inn konkret butikknavn og lenke til butikkprofil.</small>
+          <span>Dyrebutikk / veterinærbutikk / lokal butikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
         </div>
 
-        <p class="note">Labrador har kort pels, men kan røyte mye. Enkel børsting hjelper godt.</p>
+        <p class="note">💡 Kort pels betyr ikke null stell. Labrador kan røyte mye.</p>
       </div>
     
-      <div class="equip-card" data-search="schæfer underullsrake, karde og metallkam potesaks ved behov sjampo for normal pels stor klotang">
+      <div class="equip-card" data-search="schæfer underullsrake, karde og metallkam potesaks ved behov sjampo for normal pels stor klotang ⭐⭐⭐⭐ middels/høyt">
         <h3>🐶 Schæfer</h3>
-        <div class="care-level">🪮 Middels/høyt</div>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐⭐ Middels/høyt</div>
+          <div class="quick">💰💰 Middels</div>
+          <div class="quick">👨‍👩‍👧 ⚠️ Litt erfaring</div>
+        </div>
 
         <div class="equip-list">
           <p><b>🪮 Børster/kam:</b><br>Underullsrake, karde og metallkam</p>
           <p><b>✂️ Saks/klipp:</b><br>Potesaks ved behov</p>
-          <p><b>🧴 Sjampo:</b><br>Sjampo for normal pels</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Sjampo for normal pels</p>
           <p><b>🐾 Klostell:</b><br>Stor klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting ukentlig, ekstra grundig i røyteperioder.</p>
         </div>
 
         <div class="buy-box">
           <b>🛒 Kjøpes hos:</b><br>
-          <span>Dyrebutikk med godt pelsstellutvalg</span><br>
-          <small>Her kan vi senere legge inn konkret butikknavn og lenke til butikkprofil.</small>
+          <span>Dyrebutikk med godt pelsstellutvalg</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
         </div>
 
-        <p class="note">Schæfer har ofte mye underull og bør børstes ekstra godt i røyteperioder.</p>
+        <p class="note">💡 Underullen kan bli kraftig. Riktig børste gjør stell mye enklere.</p>
       </div>
     
-      <div class="equip-card" data-search="border collie karde, metallkam og underullsrake potesaks og lett tynnesaks ved behov mild hundesjampo medium klotang">
+      <div class="equip-card" data-search="border collie karde, metallkam og underullsrake potesaks og lett tynnesaks ved behov mild hundesjampo medium klotang ⭐⭐⭐ middels">
         <h3>🐶 Border Collie</h3>
-        <div class="care-level">🪮 Middels</div>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐ Middels</div>
+          <div class="quick">💰💰 Middels</div>
+          <div class="quick">👨‍👩‍👧 ⚠️ Litt erfaring</div>
+        </div>
 
         <div class="equip-list">
           <p><b>🪮 Børster/kam:</b><br>Karde, metallkam og underullsrake</p>
           <p><b>✂️ Saks/klipp:</b><br>Potesaks og lett tynnesaks ved behov</p>
-          <p><b>🧴 Sjampo:</b><br>Mild hundesjampo</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild hundesjampo</p>
           <p><b>🐾 Klostell:</b><br>Medium klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting 1–2 ganger i uken, mer ved røyting.</p>
         </div>
 
         <div class="buy-box">
           <b>🛒 Kjøpes hos:</b><br>
-          <span>Dyrebutikk / hundefrisør</span><br>
-          <small>Her kan vi senere legge inn konkret butikknavn og lenke til butikkprofil.</small>
+          <span>Dyrebutikk / hundefrisør / lokal butikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
         </div>
 
-        <p class="note">Border Collie trenger jevnlig pelsstell, spesielt bak ører, bukser og hale.</p>
+        <p class="note">💡 Se ekstra bak ører, på bukser, hale og under magen.</p>
       </div>
     
-      <div class="equip-card" data-search="fransk bulldog gummibørste eller myk børste vanligvis ikke saks mild sjampo, gjerne hudvennlig medium klotang">
+      <div class="equip-card" data-search="fransk bulldog gummibørste eller myk børste vanligvis ikke nødvendig mild og hudvennlig sjampo medium klotang ⭐ enkel">
         <h3>🐶 Fransk Bulldog</h3>
-        <div class="care-level">🪮 Lav</div>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐ Enkel</div>
+          <div class="quick">💰 Lav/middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
 
         <div class="equip-list">
           <p><b>🪮 Børster/kam:</b><br>Gummibørste eller myk børste</p>
-          <p><b>✂️ Saks/klipp:</b><br>Vanligvis ikke saks</p>
-          <p><b>🧴 Sjampo:</b><br>Mild sjampo, gjerne hudvennlig</p>
+          <p><b>✂️ Saks/klipp:</b><br>Vanligvis ikke nødvendig</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild og hudvennlig sjampo</p>
           <p><b>🐾 Klostell:</b><br>Medium klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting ukentlig. Hudfolder og poter sjekkes ofte.</p>
         </div>
 
         <div class="buy-box">
           <b>🛒 Kjøpes hos:</b><br>
-          <span>Dyrebutikk / veterinærbutikk</span><br>
-          <small>Her kan vi senere legge inn konkret butikknavn og lenke til butikkprofil.</small>
+          <span>Dyrebutikk / veterinærbutikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
         </div>
 
-        <p class="note">Kort pels, men hudfolder og poter bør sjekkes jevnlig.</p>
+        <p class="note">💡 Hudfolder, ører og poter bør holdes rene og tørre.</p>
       </div>
     
-      <div class="equip-card" data-search="cavalier king charles spaniel karde, metallkam og myk børste potesaks og tynnesaks ved behov mild sjampo og balsam ved behov liten/medium klotang">
+      <div class="equip-card" data-search="cavalier king charles spaniel karde, metallkam og myk børste potesaks og tynnesaks ved behov mild sjampo og balsam ved behov liten/medium klotang ⭐⭐⭐ middels">
         <h3>🐶 Cavalier King Charles Spaniel</h3>
-        <div class="care-level">🪮 Middels</div>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐ Middels</div>
+          <div class="quick">💰💰 Middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
 
         <div class="equip-list">
           <p><b>🪮 Børster/kam:</b><br>Karde, metallkam og myk børste</p>
           <p><b>✂️ Saks/klipp:</b><br>Potesaks og tynnesaks ved behov</p>
-          <p><b>🧴 Sjampo:</b><br>Mild sjampo og balsam ved behov</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild sjampo og balsam ved behov</p>
           <p><b>🐾 Klostell:</b><br>Liten/medium klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting flere ganger i uken, spesielt ører og faner.</p>
         </div>
 
         <div class="buy-box">
           <b>🛒 Kjøpes hos:</b><br>
-          <span>Dyrebutikk / hundefrisør</span><br>
-          <small>Her kan vi senere legge inn konkret butikknavn og lenke til butikkprofil.</small>
+          <span>Dyrebutikk / hundefrisør</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
         </div>
 
-        <p class="note">Cavalier trenger særlig stell rundt ører, faner, poter og hale.</p>
+        <p class="note">💡 Ørene trenger ekstra oppfølging fordi pelsen lett floker seg.</p>
       </div>
     
-      <div class="equip-card" data-search="puddel karde og metallkam klippemaskin, buet saks, rett saks og effileringssaks sjampo og balsam for krøllet/lang pels medium klotang">
+      <div class="equip-card" data-search="puddel karde og metallkam klippemaskin, buet saks, rett saks og effileringssaks sjampo og balsam for krøllet/lang pels medium klotang ⭐⭐⭐⭐⭐ krevende">
         <h3>🐶 Puddel</h3>
-        <div class="care-level">✂️ Høyt</div>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐⭐⭐⭐⭐ Krevende</div>
+          <div class="quick">💰💰💰 Høy</div>
+          <div class="quick">👨‍👩‍👧 ⚠️ Litt erfaring</div>
+        </div>
 
         <div class="equip-list">
           <p><b>🪮 Børster/kam:</b><br>Karde og metallkam</p>
           <p><b>✂️ Saks/klipp:</b><br>Klippemaskin, buet saks, rett saks og effileringssaks</p>
-          <p><b>🧴 Sjampo:</b><br>Sjampo og balsam for krøllet/lang pels</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Sjampo og balsam for krøllet/lang pels</p>
           <p><b>🐾 Klostell:</b><br>Medium klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting flere ganger i uken. Klipp ca. hver 4.–8. uke.</p>
         </div>
 
         <div class="buy-box">
           <b>🛒 Kjøpes hos:</b><br>
-          <span>Hundefrisør / profesjonell dyrebutikk</span><br>
-          <small>Her kan vi senere legge inn konkret butikknavn og lenke til butikkprofil.</small>
+          <span>Hundefrisør / profesjonell dyrebutikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
         </div>
 
-        <p class="note">Puddel krever regelmessig klipp og grundig børsting for å unngå tover.</p>
+        <p class="note">💡 Puddelpels krever systematisk stell for å unngå tover.</p>
       </div>
     
-      <div class="equip-card" data-search="mops gummibørste eller myk børste vanligvis ikke saks mild sjampo, gjerne hudvennlig medium klotang">
+      <div class="equip-card" data-search="mops gummibørste eller myk børste vanligvis ikke nødvendig mild og hudvennlig sjampo medium klotang ⭐ enkel">
         <h3>🐶 Mops</h3>
-        <div class="care-level">🪮 Lav</div>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐ Enkel</div>
+          <div class="quick">💰 Lav/middels</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
 
         <div class="equip-list">
           <p><b>🪮 Børster/kam:</b><br>Gummibørste eller myk børste</p>
-          <p><b>✂️ Saks/klipp:</b><br>Vanligvis ikke saks</p>
-          <p><b>🧴 Sjampo:</b><br>Mild sjampo, gjerne hudvennlig</p>
+          <p><b>✂️ Saks/klipp:</b><br>Vanligvis ikke nødvendig</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild og hudvennlig sjampo</p>
           <p><b>🐾 Klostell:</b><br>Medium klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting ukentlig. Hudfolder bør sjekkes jevnlig.</p>
         </div>
 
         <div class="buy-box">
           <b>🛒 Kjøpes hos:</b><br>
-          <span>Dyrebutikk / veterinærbutikk</span><br>
-          <small>Her kan vi senere legge inn konkret butikknavn og lenke til butikkprofil.</small>
+          <span>Dyrebutikk / veterinærbutikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
         </div>
 
-        <p class="note">Mops har kort pels, men hudfolder, ører og klør bør følges godt opp.</p>
+        <p class="note">💡 Kort pels, men hudfolder og klør trenger fast rutine.</p>
       </div>
     
-      <div class="equip-card" data-search="chihuahua myk børste og liten kam liten potesaks ved behov mild sjampo for små hunder liten klotang">
+      <div class="equip-card" data-search="chihuahua myk børste og liten kam liten potesaks ved behov mild sjampo for små hunder liten klotang ⭐ enkel">
         <h3>🐶 Chihuahua</h3>
-        <div class="care-level">🪮 Lav/middels</div>
+
+        <div class="quick-facts">
+          <div class="quick">✂️ ⭐ Enkel</div>
+          <div class="quick">💰 Lav</div>
+          <div class="quick">👨‍👩‍👧 ✅ Ja</div>
+        </div>
 
         <div class="equip-list">
           <p><b>🪮 Børster/kam:</b><br>Myk børste og liten kam</p>
           <p><b>✂️ Saks/klipp:</b><br>Liten potesaks ved behov</p>
-          <p><b>🧴 Sjampo:</b><br>Mild sjampo for små hunder</p>
+          <p><b>🧴 Sjampo/balsam:</b><br>Mild sjampo for små hunder</p>
           <p><b>🐾 Klostell:</b><br>Liten klotang – alle hunder bør ha klotang tilgjengelig.</p>
+          <p><b>📅 Stellintervall:</b><br>Børsting etter pelstype. Klør sjekkes ofte.</p>
         </div>
 
         <div class="buy-box">
           <b>🛒 Kjøpes hos:</b><br>
-          <span>Dyrebutikk / lokal butikk</span><br>
-          <small>Her kan vi senere legge inn konkret butikknavn og lenke til butikkprofil.</small>
+          <span>Dyrebutikk / lokal butikk</span>
+          <div class="shop-placeholder">Her kan vi senere legge inn konkret butikk og lenke til butikkprofil.</div>
         </div>
 
-        <p class="note">Chihuahua trenger lite pelsstell, men klør bør sjekkes ofte siden hunden er liten.</p>
+        <p class="note">💡 Små hunder kan få lange klør raskt. Klotang bør alltid være tilgjengelig.</p>
       </div>
     
     </div>
@@ -481,7 +552,7 @@ body{
   <section class="card">
     <h2 class="section-title">Neste steg</h2>
     <p class="sub">
-      Senere kan vi gjøre “Kjøpes hos” klikkbart og koble det direkte til butikkprofilene i Hundene våre.
+      Senere kan “Kjøpes hos” kobles direkte til butikkprofilene i Hundene våre, slik at kunnskapssenteret også hjelper butikkene med trafikk.
     </p>
   </section>
 
