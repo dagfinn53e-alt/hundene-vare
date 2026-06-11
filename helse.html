@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Helse - Hundene våre</title>
+<title>Helse 2.0 - Hundene våre</title>
 
 <style>
 :root{
@@ -14,9 +14,7 @@
   --text:#102033;
   --muted:#5f7088;
 }
-
 *{box-sizing:border-box}
-
 body{
   margin:0;
   font-family:Arial,sans-serif;
@@ -26,245 +24,84 @@ body{
     radial-gradient(circle at top right,rgba(37,99,235,.14) 0%,transparent 30%),
     linear-gradient(180deg,#eaf2fb 0%,#f8fbff 100%);
 }
-
-.wrap{
-  max-width:1180px;
-  margin:0 auto;
-  padding:22px 18px 70px;
-}
-
+.wrap{max-width:1180px;margin:0 auto;padding:22px 18px 70px}
 .topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-bottom:18px;
-  padding:14px 18px;
-  border:1px solid rgba(191,219,254,.75);
-  border-radius:28px;
-  background:rgba(255,255,255,.90);
-  box-shadow:0 16px 38px rgba(15,23,42,.10);
-  position:sticky;
-  top:8px;
-  z-index:50;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  margin-bottom:18px;padding:14px 18px;border:1px solid rgba(191,219,254,.75);
+  border-radius:28px;background:rgba(255,255,255,.90);box-shadow:0 16px 38px rgba(15,23,42,.10);
+  position:sticky;top:8px;z-index:50;
 }
-
 .brand{
-  font-size:24px;
-  font-weight:900;
-  color:var(--blue-dark);
-  padding:12px 18px;
-  border-radius:999px;
-  background:linear-gradient(135deg,#ffffff,#eef4ff);
-  border:1px solid #c7d8f4;
+  font-size:24px;font-weight:900;color:var(--blue-dark);padding:12px 18px;border-radius:999px;
+  background:linear-gradient(135deg,#ffffff,#eef4ff);border:1px solid #c7d8f4;
 }
-
-.actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
+.actions{display:flex;gap:10px;flex-wrap:wrap}
 .navbtn,.mainbtn,.openbtn{
-  border:none;
-  border-radius:999px;
-  padding:11px 16px;
-  background:var(--blue);
-  color:#fff;
-  font-weight:900;
-  cursor:pointer;
-  text-decoration:none;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
+  border:none;border-radius:999px;padding:11px 16px;background:var(--blue);color:#fff;font-weight:900;
+  cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
   box-shadow:0 6px 16px rgba(15,23,42,.08);
 }
-
-.navbtn.alt{
-  background:#eaf2ff;
-  color:var(--blue-dark);
-  border:1px solid #bfd7ff;
-}
-
-.navbtn.admin{
-  background:#fff7ed;
-  color:#b45309;
-  border:1px solid #fed7aa;
-}
-
+.navbtn.alt{background:#eaf2ff;color:var(--blue-dark);border:1px solid #bfd7ff}
+.navbtn.admin{background:#fff7ed;color:#b45309;border:1px solid #fed7aa}
 .hero{
-  min-height:255px;
-  border-radius:34px;
-  padding:38px;
-  color:white;
-  background:
-    linear-gradient(rgba(15,23,42,.48),rgba(15,23,42,.50)),
-    url('https://images.unsplash.com/photo-1550831107-1553da8c8464?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
-  box-shadow:0 22px 48px rgba(15,23,42,.18);
-  margin-bottom:22px;
+  min-height:255px;border-radius:34px;padding:38px;color:white;
+  background:linear-gradient(rgba(15,23,42,.48),rgba(15,23,42,.50)),
+  url('https://images.unsplash.com/photo-1550831107-1553da8c8464?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
+  box-shadow:0 22px 48px rgba(15,23,42,.18);margin-bottom:22px;
 }
-
-.hero h1{
-  margin:0 0 12px;
-  font-size:52px;
-  line-height:1.05;
-  text-shadow:0 6px 18px rgba(0,0,0,.25);
-}
-
-.hero p{
-  margin:0 0 18px;
-  max-width:780px;
-  font-size:18px;
-  line-height:1.6;
-  color:#f8fafc;
-}
-
-.mainbtn{
-  background:linear-gradient(135deg,#2563eb,#dc2626);
-  min-height:48px;
-  padding:13px 22px;
-}
-
+.hero h1{margin:0 0 12px;font-size:52px;line-height:1.05;text-shadow:0 6px 18px rgba(0,0,0,.25)}
+.hero p{margin:0 0 18px;max-width:820px;font-size:18px;line-height:1.6;color:#f8fafc}
+.mainbtn{background:linear-gradient(135deg,#2563eb,#dc2626);min-height:48px;padding:13px 22px}
 .card{
   background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
-  border:1px solid rgba(191,219,254,.75);
-  border-radius:34px;
-  padding:28px;
-  box-shadow:0 20px 42px rgba(15,23,42,.10);
-  margin-bottom:22px;
+  border:1px solid rgba(191,219,254,.75);border-radius:34px;padding:28px;
+  box-shadow:0 20px 42px rgba(15,23,42,.10);margin-bottom:22px;
 }
-
-.section-title{
-  margin:0 0 8px;
-  font-size:34px;
-  color:#0f172a;
-}
-
-.sub{
-  color:var(--muted);
-  line-height:1.6;
-  margin:0 0 20px;
-}
-
+.section-title{margin:0 0 8px;font-size:34px;color:#0f172a}
+.sub{color:var(--muted);line-height:1.6;margin:0 0 20px}
 .notice{
-  background:#fff7ed;
-  border:1px solid #fed7aa;
-  color:#9a3412;
-  border-radius:22px;
-  padding:16px;
-  font-weight:800;
-  line-height:1.6;
-  margin-bottom:20px;
+  background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:22px;
+  padding:16px;font-weight:800;line-height:1.6;margin-bottom:20px;
 }
-
 .searchbox{
-  width:100%;
-  max-width:520px;
-  padding:15px 18px;
-  border-radius:999px;
-  border:1px solid #bfdbfe;
-  font-size:17px;
-  margin-bottom:20px;
-  outline:none;
+  width:100%;max-width:520px;padding:15px 18px;border-radius:999px;border:1px solid #bfdbfe;
+  font-size:17px;margin-bottom:20px;outline:none;
 }
-
-.health-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-}
-
+.health-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
 .health-card{
   background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
-  border:1px solid #dbeafe;
-  border-radius:28px;
-  padding:20px;
+  border:1px solid #dbeafe;border-radius:28px;padding:22px;
   box-shadow:0 14px 32px rgba(30,64,175,.10);
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  min-height:265px;
 }
-
-.icon{
-  font-size:44px;
-  margin-bottom:10px;
+.icon{font-size:44px;margin-bottom:10px}
+.health-card h3{margin:0 0 8px;font-size:26px;color:#0f172a}
+.health-card p{margin:0 0 12px;color:#475569;line-height:1.58;font-size:15px}
+.mini-title{font-weight:900;color:#1e3a8a;margin:14px 0 8px}
+ul{margin:0 0 8px 0;padding-left:22px;color:#334155;line-height:1.65}
+li{margin-bottom:4px}
+.warning{
+  background:#fee2e2;border:1px solid #fecaca;color:#991b1b;border-radius:18px;
+  padding:12px;margin-top:12px;font-weight:800;line-height:1.55;
 }
-
-.health-card h3{
-  margin:0 0 8px;
-  font-size:24px;
-  color:#0f172a;
+.good{
+  background:#dcfce7;border:1px solid #bbf7d0;color:#166534;border-radius:18px;
+  padding:12px;margin-top:12px;font-weight:800;line-height:1.55;
 }
-
-.health-card p{
-  margin:0;
-  color:#475569;
-  line-height:1.55;
-  font-size:15px;
-}
-
-.tagrow{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:12px;
-}
-
+.tagrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .tag{
-  display:inline-flex;
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:900;
-  background:#eef4ff;
-  color:#1d4ed8;
-  border:1px solid #bfdbfe;
+  display:inline-flex;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:900;
+  background:#eef4ff;color:#1d4ed8;border:1px solid #bfdbfe;
 }
-
-.tag.red{
-  background:#fee2e2;
-  color:#b91c1c;
-  border-color:#fecaca;
-}
-
-.tag.green{
-  background:#dcfce7;
-  color:#166534;
-  border-color:#bbf7d0;
-}
-
-.openbtn{
-  margin-top:18px;
-  width:100%;
-  min-height:46px;
-  background:linear-gradient(135deg,#2563eb,#dc2626);
-}
-
-.footer-note{
-  text-align:center;
-  color:#64748b;
-  font-size:14px;
-  margin-top:22px;
-}
-
-@media(max-width:950px){
-  .health-grid{grid-template-columns:1fr 1fr}
-}
-
+.tag.red{background:#fee2e2;color:#b91c1c;border-color:#fecaca}
+.tag.green{background:#dcfce7;color:#166534;border-color:#bbf7d0}
+.footer-note{text-align:center;color:#64748b;font-size:14px;margin-top:22px}
+@media(max-width:900px){.health-grid{grid-template-columns:1fr}}
 @media(max-width:760px){
-  .wrap{padding:14px 12px 50px}
-  .topbar{border-radius:22px;padding:12px}
-  .brand{width:100%;text-align:center;font-size:20px}
-  .actions{width:100%;justify-content:center}
+  .wrap{padding:14px 12px 50px}.topbar{border-radius:22px;padding:12px}
+  .brand{width:100%;text-align:center;font-size:20px}.actions{width:100%;justify-content:center}
   .navbtn{flex:1 1 42%;font-size:13px;padding:10px 12px}
-  .hero{min-height:230px;border-radius:26px;padding:24px}
-  .hero h1{font-size:34px}
-  .hero p{font-size:15px}
-  .card{border-radius:26px;padding:18px}
-  .section-title{font-size:28px}
-  .health-grid{grid-template-columns:1fr}
+  .hero{min-height:230px;border-radius:26px;padding:24px}.hero h1{font-size:34px}.hero p{font-size:15px}
+  .card{border-radius:26px;padding:18px}.section-title{font-size:28px}
 }
 </style>
 </head>
@@ -279,16 +116,16 @@ body{
       <a class="navbtn alt" href="kunnskap.html">📚 Kunnskap</a>
       <a class="navbtn alt" href="hunderaser.html">🐶 Hunderaser</a>
       <a class="navbtn alt" href="katteraser.html">🐱 Katteraser</a>
-      <a class="navbtn alt" href="spill.html">🎮 Spill</a>
+      <a class="navbtn alt" href="trening.html">🎓 Trening</a>
       <a class="navbtn admin" href="admin.html">🔧 Admin</a>
     </div>
   </div>
 
   <section class="hero">
-    <h1>🏥 Helse & Førstehjelp</h1>
+    <h1>🏥 Helse & Førstehjelp 2.0</h1>
     <p>
-      Her samler vi enkle og nyttige helseartikler for hunde- og kattefolk.
-      Målet er å gi oversiktlige råd, faresignaler og når man bør kontakte veterinær.
+      Nyttige råd om vanlige helseutfordringer hos hund og katt.
+      Her finner du enkle forklaringer, faresignaler og når du bør kontakte veterinær.
     </p>
     <a class="mainbtn" href="kunnskap.html">⬅️ Tilbake til Kunnskapssenter</a>
   </section>
@@ -296,130 +133,183 @@ body{
   <section class="card">
     <h2 class="section-title">Viktig å vite</h2>
     <div class="notice">
-      ⚠️ Dette er generell informasjon og erstatter ikke veterinær. Ved akutte symptomer, forgiftning, sterke smerter eller rask forverring bør veterinær kontaktes.
+      ⚠️ Dette er generell informasjon og erstatter ikke veterinær. Ved akutte symptomer, forgiftning, sterke smerter, pustevansker, kramper, kraftig blødning eller rask forverring: kontakt veterinær straks.
     </div>
 
-    <p class="sub">Søk etter tema som flått, tannstell, vaksiner, førstehjelp eller forgiftning.</p>
+    <p class="sub">Søk etter tema som flått, forgiftning, tannstell, heteslag, vaksiner eller overvekt.</p>
     <input class="searchbox" id="searchInput" onkeyup="filterHealth()" placeholder="Søk i helseartikler...">
 
     <div class="health-grid" id="healthGrid">
 
-      <div class="health-card" data-search="flått hund katt borrelia fjerne flått forebygging">
-        <div>
-          <div class="icon">🕷️</div>
-          <h3>Flått på hund og katt</h3>
-          <p>Lær hvordan du fjerner flått, hva du bør følge med på etterpå og hvordan du kan forebygge flåttbitt.</p>
-          <div class="tagrow">
-            <span class="tag">Forebygging</span>
-            <span class="tag green">Vanlig tema</span>
-          </div>
-        </div>
-        <a class="openbtn" href="#">Les mer senere</a>
-      </div>
+      <article class="health-card" data-search="flått hund katt borrelia fjerne flått forebygging">
+        <div class="icon">🕷️</div>
+        <h3>Flått på hund og katt</h3>
+        <p>Flått bør fjernes så raskt som mulig. Jo lenger flåtten sitter, jo større er risikoen for smitte.</p>
+        <div class="mini-title">Slik gjør du:</div>
+        <ul>
+          <li>Bruk flåttfjerner eller pinsett.</li>
+          <li>Ta tak helt nede ved huden og dra rolig rett ut.</li>
+          <li>Ikke smør olje, smør eller andre midler på flåtten.</li>
+          <li>Vask området etterpå og følg med noen dager.</li>
+        </ul>
+        <div class="mini-title">Kontakt veterinær ved:</div>
+        <ul>
+          <li>slapphet, feber eller nedsatt matlyst</li>
+          <li>halthet, smerter eller hevelse</li>
+          <li>rødhet/sår som blir verre</li>
+        </ul>
+        <div class="tagrow"><span class="tag">Forebygging</span><span class="tag green">Vanlig tema</span></div>
+      </article>
 
-      <div class="health-card" data-search="tannstell tenner tannstein tannkjøtt hund katt periodontitt">
-        <div>
-          <div class="icon">🦷</div>
-          <h3>Tannstell</h3>
-          <p>Tannhelse er viktig for både hund og katt. Her kan vi samle råd om tannpuss, tannstein og tegn på smerter.</p>
-          <div class="tagrow">
-            <span class="tag">Hverdag</span>
-            <span class="tag green">Viktig</span>
-          </div>
-        </div>
-        <a class="openbtn" href="#">Les mer senere</a>
-      </div>
+      <article class="health-card" data-search="forgiftning gift sjokolade druer rosiner xylitol løk medisiner hund katt">
+        <div class="icon">☠️</div>
+        <h3>Forgiftning</h3>
+        <p>Ved mistanke om forgiftning er det viktig å handle raskt. Ikke vent på symptomer hvis dyret har spist noe farlig.</p>
+        <div class="mini-title">Vanlige farer:</div>
+        <ul>
+          <li>sjokolade</li>
+          <li>druer og rosiner</li>
+          <li>xylitol/søtningsstoff</li>
+          <li>løk og hvitløk</li>
+          <li>medisiner som paracetamol og ibuprofen</li>
+          <li>rottegift, planter og enkelte sopper</li>
+        </ul>
+        <div class="warning">🚨 Kontakt veterinær straks. Ha klart: hva dyret har spist, mengde, tidspunkt og dyrets vekt.</div>
+        <div class="tagrow"><span class="tag red">Akutt</span><span class="tag">Veterinær</span></div>
+      </article>
 
-      <div class="health-card" data-search="forgiftning gift sjokolade løk druer rosiner medisiner hund katt">
-        <div>
-          <div class="icon">☠️</div>
-          <h3>Forgiftning</h3>
-          <p>Noen matvarer, planter og medisiner kan være farlige. Her kan vi lage en oversikt over faresignaler og tiltak.</p>
-          <div class="tagrow">
-            <span class="tag red">Akutt</span>
-            <span class="tag">Veterinær</span>
-          </div>
-        </div>
-        <a class="openbtn" href="#">Les mer senere</a>
-      </div>
+      <article class="health-card" data-search="tannstell tenner tannstein tannkjøtt dårlig ånde hund katt">
+        <div class="icon">🦷</div>
+        <h3>Tannstell</h3>
+        <p>Plakk og tannstein kan gi smerter, dårlig ånde og betennelse. Mange dyr skjuler smerter i munnen lenge.</p>
+        <div class="mini-title">Gode vaner:</div>
+        <ul>
+          <li>Start forsiktig med tannpuss i korte økter.</li>
+          <li>Bruk tannbørste og tannkrem til hund/katt.</li>
+          <li>Belønn rolig etterpå.</li>
+          <li>Sjekk ånde, tannkjøtt og tygging jevnlig.</li>
+        </ul>
+        <div class="mini-title">Kontakt veterinær ved:</div>
+        <ul>
+          <li>dårlig ånde som ikke går over</li>
+          <li>blødende tannkjøtt</li>
+          <li>løse tenner eller smerter ved tygging</li>
+        </ul>
+        <div class="tagrow"><span class="tag">Hverdag</span><span class="tag green">Viktig</span></div>
+      </article>
 
-      <div class="health-card" data-search="førstehjelp sår skade blødning varme heteslag ulykke hund katt">
-        <div>
-          <div class="icon">🚑</div>
-          <h3>Førstehjelp</h3>
-          <p>Hva gjør du ved sår, blødning, heteslag, skade eller ulykke? En enkel førstehjelpsguide kan bli svært nyttig.</p>
-          <div class="tagrow">
-            <span class="tag red">Akutt</span>
-            <span class="tag">Guide</span>
-          </div>
-        </div>
-        <a class="openbtn" href="#">Les mer senere</a>
-      </div>
+      <article class="health-card" data-search="førstehjelp sår skade blødning heteslag varme ulykke hund katt">
+        <div class="icon">🚑</div>
+        <h3>Førstehjelp</h3>
+        <p>En enkel førstehjelpsplan kan være avgjørende når noe skjer. Hold deg rolig og vurder om det er akutt.</p>
+        <div class="mini-title">Ved sår og blødning:</div>
+        <ul>
+          <li>Legg trykk på blødende sår med rent klede.</li>
+          <li>Hold dyret rolig og varmt.</li>
+          <li>Ikke bruk sterke rengjøringsmidler i dype sår.</li>
+        </ul>
+        <div class="mini-title">Ved heteslag:</div>
+        <ul>
+          <li>Flytt dyret bort fra varmen.</li>
+          <li>Kjøl forsiktig med kjølig vann, ikke iskaldt.</li>
+          <li>Reis til veterinær raskt.</li>
+        </ul>
+        <div class="warning">🚨 Ved pustevansker, kollaps, kramper, kraftig blødning eller heteslag: kontakt veterinær straks.</div>
+        <div class="tagrow"><span class="tag red">Akutt</span><span class="tag">Guide</span></div>
+      </article>
 
-      <div class="health-card" data-search="vaksiner vaksinering valp kattunge hund katt kennelhoste">
-        <div>
-          <div class="icon">💉</div>
-          <h3>Vaksiner</h3>
-          <p>En oversikt over vanlige vaksiner, hvorfor de er viktige og når man bør snakke med veterinær.</p>
-          <div class="tagrow">
-            <span class="tag">Forebygging</span>
-            <span class="tag">Valp/kattunge</span>
-          </div>
-        </div>
-        <a class="openbtn" href="#">Les mer senere</a>
-      </div>
+      <article class="health-card" data-search="vaksiner vaksinering valp kattunge hund katt kennelhoste">
+        <div class="icon">💉</div>
+        <h3>Vaksiner</h3>
+        <p>Vaksiner beskytter mot alvorlige sykdommer og er spesielt viktig for valper, kattunger og dyr som møter mange andre dyr.</p>
+        <div class="mini-title">Dette bør du følge med på:</div>
+        <ul>
+          <li>Valp og kattunge trenger grunnvaksinering.</li>
+          <li>Voksne dyr trenger jevnlige oppdateringer.</li>
+          <li>Krav kan variere ved reise, kennel, utstilling og konkurranser.</li>
+        </ul>
+        <div class="good">✅ Spør veterinæren om vaksineplan som passer ditt dyr og din livsstil.</div>
+        <div class="tagrow"><span class="tag">Forebygging</span><span class="tag">Valp/kattunge</span></div>
+      </article>
 
-      <div class="health-card" data-search="overvekt vekt slanking fôr aktivitet hund katt">
-        <div>
-          <div class="icon">⚖️</div>
-          <h3>Overvekt</h3>
-          <p>Overvekt kan gi helseproblemer. Her kan vi samle råd om vekt, fôr, aktivitet og når man bør få hjelp.</p>
-          <div class="tagrow">
-            <span class="tag">Hverdag</span>
-            <span class="tag green">Forebygging</span>
-          </div>
-        </div>
-        <a class="openbtn" href="#">Les mer senere</a>
-      </div>
+      <article class="health-card" data-search="overvekt vekt slanking fôr aktivitet hund katt">
+        <div class="icon">⚖️</div>
+        <h3>Overvekt</h3>
+        <p>Overvekt kan belaste ledd, hjerte og pust, og kan gjøre dyret mindre aktivt og mer utsatt for helseproblemer.</p>
+        <div class="mini-title">Tegn å se etter:</div>
+        <ul>
+          <li>Du kjenner ikke ribbeina lett.</li>
+          <li>Dyret blir fort slitent.</li>
+          <li>Magen henger eller midjen er lite synlig.</li>
+        </ul>
+        <div class="mini-title">Gode tiltak:</div>
+        <ul>
+          <li>Vei fôret i stedet for å måle på øyemål.</li>
+          <li>Bytt noe godbit med lek, ros eller små fôrkuler.</li>
+          <li>Øk aktivitet gradvis.</li>
+        </ul>
+        <div class="tagrow"><span class="tag">Hverdag</span><span class="tag green">Forebygging</span></div>
+      </article>
 
-      <div class="health-card" data-search="kloklipp klør poter hund katt blødning kloklipping">
-        <div>
-          <div class="icon">🐾</div>
-          <h3>Kloklipp og poter</h3>
-          <p>Tips om kloklipp, poter, sår hud og hva man gjør hvis man klipper litt for langt.</p>
-          <div class="tagrow">
-            <span class="tag">Stell</span>
-            <span class="tag">Poter</span>
-          </div>
-        </div>
-        <a class="openbtn" href="#">Les mer senere</a>
-      </div>
+      <article class="health-card" data-search="kloklipp klør poter hund katt blødning kloklipping">
+        <div class="icon">🐾</div>
+        <h3>Kloklipp og poter</h3>
+        <p>Lange klør kan gi feil belastning og ubehag. Klipp litt og ofte, spesielt hvis dyret er usikkert.</p>
+        <div class="mini-title">Tips:</div>
+        <ul>
+          <li>Bruk god klotang.</li>
+          <li>Klipp små biter av gangen.</li>
+          <li>Belønn rolig underveis.</li>
+          <li>Ha blodstopp eller rent papir klart hvis du klipper for langt.</li>
+        </ul>
+        <div class="good">✅ Gjør potesjekk samtidig: se etter sår, sprekker, floker og fremmedlegemer.</div>
+        <div class="tagrow"><span class="tag">Stell</span><span class="tag">Poter</span></div>
+      </article>
 
-      <div class="health-card" data-search="seniorhund seniorkatt gammel hund katt ledd helse alder">
-        <div>
-          <div class="icon">❤️</div>
-          <h3>Seniorhund og seniorkatt</h3>
-          <p>Eldre dyr trenger ofte litt ekstra oppfølging. Her kan vi samle råd om ledd, tenner, vekt og trivsel.</p>
-          <div class="tagrow">
-            <span class="tag">Senior</span>
-            <span class="tag green">Omsorg</span>
-          </div>
-        </div>
-        <a class="openbtn" href="#">Les mer senere</a>
-      </div>
+      <article class="health-card" data-search="seniorhund seniorkatt gammel hund katt ledd helse alder">
+        <div class="icon">❤️</div>
+        <h3>Seniorhund og seniorkatt</h3>
+        <p>Eldre dyr kan få endringer i ledd, tenner, syn, hørsel, vekt og energinivå.</p>
+        <div class="mini-title">Følg med på:</div>
+        <ul>
+          <li>endret appetitt eller drikkelyst</li>
+          <li>stivhet, halting eller problemer med trapper</li>
+          <li>vekttap eller vektøkning</li>
+          <li>endret humør eller søvn</li>
+        </ul>
+        <div class="good">✅ Regelmessig helsesjekk kan oppdage problemer tidlig.</div>
+        <div class="tagrow"><span class="tag">Senior</span><span class="tag green">Omsorg</span></div>
+      </article>
 
-      <div class="health-card" data-search="allergi kløe hud ørebetennelse pels hund katt">
-        <div>
-          <div class="icon">🌿</div>
-          <h3>Allergi, hud og kløe</h3>
-          <p>Kløe, hudproblemer og øreplager er vanlige temaer. Her kan vi forklare typiske tegn og når man bør undersøke videre.</p>
-          <div class="tagrow">
-            <span class="tag">Hud</span>
-            <span class="tag">Kløe</span>
-          </div>
-        </div>
-        <a class="openbtn" href="#">Les mer senere</a>
-      </div>
+      <article class="health-card" data-search="allergi kløe hud ørebetennelse pels hund katt">
+        <div class="icon">🌿</div>
+        <h3>Allergi, hud og kløe</h3>
+        <p>Kløe, rød hud, slikking på poter og øreproblemer kan ha mange årsaker: allergi, parasitter, infeksjon eller fôrreaksjon.</p>
+        <div class="mini-title">Typiske tegn:</div>
+        <ul>
+          <li>mye kløing eller slikking</li>
+          <li>røde ører eller vond lukt</li>
+          <li>hårtap, skorper eller sår hud</li>
+          <li>gjentatte ørebetennelser</li>
+        </ul>
+        <div class="warning">⚠️ Langvarig kløe bør undersøkes. Ikke bruk menneskemedisin uten veterinærråd.</div>
+        <div class="tagrow"><span class="tag">Hud</span><span class="tag">Kløe</span></div>
+      </article>
+
+      <article class="health-card" data-search="mage tarm oppkast diaré hund katt matlyst feber salmonella">
+        <div class="icon">🤢</div>
+        <h3>Oppkast og diaré</h3>
+        <p>Mageproblemer kan skyldes alt fra fôrbytte til infeksjon, fremmedlegeme eller forgiftning.</p>
+        <div class="mini-title">Kontakt veterinær raskt ved:</div>
+        <ul>
+          <li>blod i oppkast eller avføring</li>
+          <li>slapphet, feber eller smerter</li>
+          <li>gjentatt oppkast</li>
+          <li>valp/kattunge eller eldre dyr som blir dårlige</li>
+          <li>mistanke om forgiftning eller fremmedlegeme</li>
+        </ul>
+        <div class="tagrow"><span class="tag red">Kan være akutt</span><span class="tag">Mage/tarm</span></div>
+      </article>
 
     </div>
   </section>
@@ -427,7 +317,8 @@ body{
   <section class="card">
     <h2 class="section-title">Videre plan</h2>
     <p class="sub">
-      Neste steg kan være å lage egne artikler for hvert helsetema, med tydelige råd, faresignaler og lenker til relevante butikker eller veterinærer.
+      Neste steg kan være å lage egne undersider for de viktigste temaene: Forgiftning, Flått, Tannstell og Førstehjelp.
+      Da kan hver artikkel få enda mer forklaring, sjekklister og relevante lenker til veterinærer eller butikker.
     </p>
   </section>
 
@@ -444,7 +335,7 @@ function filterHealth(){
 
   cards.forEach(card=>{
     const text = card.innerText.toLowerCase() + " " + card.dataset.search.toLowerCase();
-    card.style.display = text.includes(input) ? "flex" : "none";
+    card.style.display = text.includes(input) ? "block" : "none";
   });
 }
 </script>
