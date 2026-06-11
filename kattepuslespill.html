@@ -3,128 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐱 Kattepuslespill MASTER+</title>
+<title>🐱 Kattepuslespill 2.0</title>
 
 <style>
-
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:linear-gradient(to bottom,#fce7f3,#fdf2f8);
-text-align:center;
-color:#7a284f;
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(to bottom,#fce7f3,#fdf2f8);
+  text-align:center;
+  color:#7a284f;
 }
 
 .container{
-max-width:1200px;
-margin:auto;
-padding:20px;
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
 }
 
 h1{
-margin-bottom:20px;
+  margin-bottom:20px;
+  font-size:40px;
 }
 
 .topbar{
-display:flex;
-justify-content:center;
-gap:15px;
-flex-wrap:wrap;
-margin-bottom:20px;
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
 }
 
 select,button{
-padding:14px 20px;
-border:none;
-border-radius:16px;
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
+  padding:14px 20px;
+  border:none;
+  border-radius:16px;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+select{
+  background:white;
+  color:#7a284f;
+  box-shadow:0 4px 10px rgba(0,0,0,.08);
 }
 
 button{
-background:#db2777;
-color:white;
+  background:#db2777;
+  color:white;
 }
 
 .stats{
-display:flex;
-justify-content:center;
-gap:20px;
-flex-wrap:wrap;
-margin-bottom:20px;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
 }
 
 .stat{
-background:white;
-padding:14px 20px;
-border-radius:18px;
-font-weight:bold;
-box-shadow:0 4px 10px rgba(0,0,0,.1);
+  background:white;
+  padding:14px 20px;
+  border-radius:18px;
+  font-weight:bold;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
 }
 
 .game-area{
-display:flex;
-justify-content:center;
-align-items:flex-start;
-gap:30px;
-flex-wrap:wrap;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  gap:30px;
+  flex-wrap:wrap;
 }
 
 #preview{
-width:220px;
-background:white;
-padding:10px;
-border-radius:18px;
-box-shadow:0 4px 12px rgba(0,0,0,.12);
+  width:220px;
+  background:white;
+  padding:10px;
+  border-radius:18px;
+  box-shadow:0 4px 12px rgba(0,0,0,.12);
 }
 
 #preview img{
-width:100%;
-border-radius:12px;
+  width:100%;
+  border-radius:12px;
 }
 
 #board{
-width:90vw;
-max-width:600px;
-height:90vw;
-max-height:600px;
-display:grid;
-gap:2px;
-background:white;
-padding:4px;
-border-radius:18px;
-box-shadow:0 8px 20px rgba(0,0,0,.15);
+  width:90vw;
+  max-width:600px;
+  height:90vw;
+  max-height:600px;
+  display:grid;
+  gap:2px;
+  background:white;
+  padding:4px;
+  border-radius:18px;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
 }
 
 .piece{
-border-radius:6px;
-background-repeat:no-repeat;
-cursor:pointer;
-border:1px solid white;
-transition:.15s;
+  border-radius:6px;
+  background-repeat:no-repeat;
+  cursor:pointer;
+  border:1px solid white;
+  transition:.15s;
 }
 
 .piece:hover{
-transform:scale(.98);
+  transform:scale(.98);
 }
 
 .selected{
-outline:4px solid #10b981;
+  outline:4px solid #10b981;
 }
 
 #message{
-margin-top:20px;
-font-size:24px;
-font-weight:bold;
-color:#db2777;
+  margin-top:20px;
+  font-size:24px;
+  font-weight:bold;
+  color:#db2777;
+  min-height:36px;
 }
 
 .back button{
-margin-top:30px;
-background:#7a284f;
+  margin-top:30px;
+  background:#7a284f;
 }
 
+.confetti{
+  position:fixed;
+  font-size:28px;
+  pointer-events:none;
+  animation:fall 3s linear forwards;
+  z-index:9999;
+}
+
+@keyframes fall{
+  0%{transform:translateY(-50px) rotate(0deg);opacity:1;}
+  100%{transform:translateY(100vh) rotate(720deg);opacity:0;}
+}
+
+@media(max-width:700px){
+  h1{font-size:30px}
+  select,button{font-size:16px;padding:12px 16px}
+  #preview{width:180px}
+}
 </style>
 </head>
 
@@ -132,106 +157,47 @@ background:#7a284f;
 
 <div class="container">
 
-<h1>🐱 Kattepuslespill MASTER+</h1>
+<h1>🐱 Kattepuslespill 2.0</h1>
 
 <div class="topbar">
 
 <select id="catSelect">
-
-<option value="maine-coon-puzzle.jpg">
-Maine Coon
-</option>
-
-<option value="siameser-puzzle.jpg">
-Siameser
-</option>
-
-<option value="perser-puzzle.jpg">
-Perser
-</option>
-
-<option value="bengal-puzzle.jpg">
-Bengal
-</option>
-<option value="bengal-puzzle.jpg">
-Bengal
-</option>
-
-<option value="abyssiner.jpg">
-Abyssiner
-</option>
-
-<option value="birma.jpg">
-Birma
-</option>
-
-<option value="devon-rex.jpg">
-Devon Rex
-</option>
-
-<option value="oriental-shorthair.jpg">
-Oriental Shorthair
-</option>
-
-<option value="russian-blue.jpg">
-Russian Blue
-</option>
-
-<option value="scottish-fold.jpg">
-Scottish Fold
-</option>
-
-<option value="sibirsk-katt.jpg">
-Sibirsk Katt
-</option>
-
-<option value="tyrkisk-angora.jpg">
-Tyrkisk Angora
-</option>
-
-</select>
+  <option value="maine-coon-puzzle.jpg">Maine Coon</option>
+  <option value="siameser-puzzle.jpg">Siameser</option>
+  <option value="perser-puzzle.jpg">Perser</option>
+  <option value="bengal-puzzle.jpg">Bengal</option>
+  <option value="abyssiner.jpg">Abyssiner</option>
+  <option value="birma.jpg">Birma</option>
+  <option value="devon-rex.jpg">Devon Rex</option>
+  <option value="oriental-shorthair.jpg">Oriental Shorthair</option>
+  <option value="russian-blue.jpg">Russian Blue</option>
+  <option value="scottish-fold.jpg">Scottish Fold</option>
+  <option value="sibirsk-katt.jpg">Sibirsk Katt</option>
+  <option value="tyrkisk-angora.jpg">Tyrkisk Angora</option>
 </select>
 
 <select id="sizeSelect">
-
-<option value="3">
-🙂 Lett - 9 Brikker
-</option>
-
-<option value="4">
-😎 Medium - 16 Brikker
-</option>
-
+  <option value="3">🙂 Lett - 9 brikker</option>
+  <option value="4">😎 Medium - 16 brikker</option>
+  <option value="5">🔥 Vanskelig - 25 brikker</option>
+  <option value="6">👑 Ekspert - 36 brikker</option>
 </select>
 
-<button onclick="startGame()">
-🧩 Start Spill
-</button>
+<button onclick="startGame()">🧩 Start spill</button>
 
 </div>
 
 <div class="stats">
-
-<div class="stat">
-🏆 Trekk:
-<span id="moves">0</span>
-</div>
-
-<div class="stat">
-⭐ Stjerner:
-<span id="stars">0</span>
-</div>
-
+  <div class="stat">🏆 Trekk: <span id="moves">0</span></div>
+  <div class="stat">⭐ Stjerner: <span id="stars">0</span></div>
+  <div class="stat">🎯 Nivå: <span id="levelName">Lett</span></div>
 </div>
 
 <div class="game-area">
 
 <div id="preview">
-
-<h3>🐱 Originalbilde</h3>
-
-<img id="previewImage">
-
+  <h3>🐱 Originalbilde</h3>
+  <img id="previewImage" alt="Originalbilde">
 </div>
 
 <div id="board"></div>
@@ -241,208 +207,171 @@ Tyrkisk Angora
 <div id="message"></div>
 
 <div class="back">
-
-<button onclick="location.href='hundespill.html'">
-⬅️ Tilbake til spill
-</button>
-
+  <button onclick="location.href='spill.html'">⬅️ Tilbake til spill</button>
 </div>
 
 </div>
 
 <script>
-
 let size=3;
 let pieces=[];
 let selected=null;
 let moves=0;
 let stars=0;
 let imageFile="maine-coon-puzzle.jpg";
+let gameWon=false;
+
+function shuffleArray(array){
+  const copy=[...array];
+  for(let i=copy.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [copy[i],copy[j]]=[copy[j],copy[i]];
+  }
+  return copy;
+}
 
 function startGame(){
+  size=parseInt(document.getElementById("sizeSelect").value);
+  imageFile=document.getElementById("catSelect").value;
 
-size=parseInt(
-document.getElementById(
-"sizeSelect"
-).value
-);
+  document.getElementById("previewImage").src="bilder/"+imageFile;
 
-imageFile=
-document.getElementById(
-"catSelect"
-).value;
+  moves=0;
+  stars=0;
+  selected=null;
+  gameWon=false;
 
-document.getElementById(
-"previewImage"
-).src=
-"bilder/"+imageFile;
+  document.getElementById("moves").innerHTML=0;
+  document.getElementById("stars").innerHTML=0;
+  document.getElementById("message").innerHTML="";
+  document.getElementById("levelName").innerHTML=getLevelName();
 
-moves=0;
-stars=0;
+  createPuzzle();
+  drawBoard();
+}
 
-document.getElementById(
-"moves"
-).innerHTML=0;
-
-document.getElementById(
-"stars"
-).innerHTML=0;
-
-document.getElementById(
-"message"
-).innerHTML="";
-
-createPuzzle();
-
-drawBoard();
-
+function getLevelName(){
+  if(size===3) return "Lett";
+  if(size===4) return "Medium";
+  if(size===5) return "Vanskelig";
+  if(size===6) return "Ekspert";
+  return "Ukjent";
 }
 
 function createPuzzle(){
+  pieces=[];
+  for(let i=0;i<size*size;i++){
+    pieces.push(i);
+  }
 
-pieces=[];
-
-for(let i=0;i<size*size;i++){
-
-pieces.push(i);
-
+  do{
+    pieces=shuffleArray(pieces);
+  }while(isSolved());
 }
 
-pieces.sort(()=>Math.random()-0.5);
-
+function isSolved(){
+  for(let i=0;i<pieces.length;i++){
+    if(pieces[i]!==i) return false;
+  }
+  return true;
 }
 
 function drawBoard(){
+  const board=document.getElementById("board");
+  board.innerHTML="";
+  board.style.gridTemplateColumns=`repeat(${size},1fr)`;
 
-const board=
-document.getElementById(
-"board"
-);
+  pieces.forEach((piece,index)=>{
+    const div=document.createElement("div");
+    div.classList.add("piece");
 
-board.innerHTML="";
+    if(selected===index){
+      div.classList.add("selected");
+    }
 
-board.style.gridTemplateColumns=
-`repeat(${size},1fr)`;
+    const row=Math.floor(piece/size);
+    const col=piece%size;
 
-pieces.forEach((piece,index)=>{
+    div.style.backgroundImage=`url('bilder/${imageFile}')`;
+    div.style.backgroundSize=`${size*100}% ${size*100}%`;
+    div.style.backgroundPosition=`${(col*100)/(size-1)}% ${(row*100)/(size-1)}%`;
 
-const div=
-document.createElement("div");
-
-div.classList.add("piece");
-
-if(selected===index){
-
-div.classList.add(
-"selected"
-);
-
-}
-
-const row=
-Math.floor(piece/size);
-
-const col=
-piece%size;
-
-div.style.backgroundImage=
-`url('bilder/${imageFile}')`;
-
-div.style.backgroundSize=
-`${size*100}% ${size*100}%`;
-
-div.style.backgroundPosition=
-`${(col*100)/(size-1)}% ${(row*100)/(size-1)}%`;
-
-div.onclick=()=>selectPiece(index);
-
-board.appendChild(div);
-
-});
-
+    div.onclick=()=>selectPiece(index);
+    board.appendChild(div);
+  });
 }
 
 function selectPiece(index){
+  if(gameWon) return;
 
-if(selected===null){
+  if(selected===null){
+    selected=index;
+    drawBoard();
+    return;
+  }
 
-selected=index;
+  if(selected===index){
+    selected=null;
+    drawBoard();
+    return;
+  }
 
-drawBoard();
+  [pieces[selected],pieces[index]]=[pieces[index],pieces[selected]];
 
-return;
+  selected=null;
+  moves++;
 
-}
+  document.getElementById("moves").innerHTML=moves;
 
-[pieces[selected],pieces[index]]=
-[pieces[index],pieces[selected]];
-
-selected=null;
-
-moves++;
-
-document.getElementById(
-"moves"
-).innerHTML=moves;
-
-drawBoard();
-
-checkWin();
-
+  drawBoard();
+  checkWin();
 }
 
 function checkWin(){
+  if(!isSolved()) return;
 
-let won=true;
+  gameWon=true;
+  calculateStars();
 
-for(let i=0;i<pieces.length;i++){
+  document.getElementById("message").innerHTML=
+    "🏆 Gratulerer! Du klarte puslespillet med "+stars+" stjerner!";
 
-if(pieces[i]!==i){
-
-won=false;
-break;
-
-}
-
-}
-
-if(won){
-
-calculateStars();
-
-document.getElementById(
-"message"
-).innerHTML=
-"🏆 Gratulerer! Du klarte puslespillet!";
-
-}
-
+  launchConfetti();
 }
 
 function calculateStars(){
+  let three=20;
+  let two=40;
 
-if(moves<20){
+  if(size===4){three=45;two=80;}
+  if(size===5){three=80;two=140;}
+  if(size===6){three=120;two=220;}
 
-stars=3;
+  if(moves<=three){
+    stars=3;
+  }else if(moves<=two){
+    stars=2;
+  }else{
+    stars=1;
+  }
 
-}else if(moves<40){
-
-stars=2;
-
-}else{
-
-stars=1;
-
+  document.getElementById("stars").innerHTML=stars;
 }
 
-document.getElementById(
-"stars"
-).innerHTML=stars;
-
+function launchConfetti(){
+ const emojis=['⭐','✨','🎉','🏆','🐱','🧩'];
+ for(let i=0;i<45;i++){
+   const el=document.createElement('div');
+   el.className='confetti';
+   el.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+   el.style.left=Math.random()*100+'vw';
+   el.style.animationDelay=(Math.random()*0.6)+'s';
+   document.body.appendChild(el);
+   setTimeout(()=>el.remove(),3500);
+ }
 }
 
 startGame();
-
 </script>
 
 </body>
