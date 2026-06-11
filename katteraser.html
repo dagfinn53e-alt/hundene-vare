@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Katteraser - Hundene våre</title>
+
+<style>
+:root{
+  --blue:#2563eb;
+  --blue-dark:#1d4ed8;
+  --pink:#db2777;
+  --text:#102033;
+  --muted:#5f7088;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top left,rgba(244,114,182,.18) 0%,transparent 28%),
+    radial-gradient(circle at top right,rgba(124,58,237,.12) 0%,transparent 30%),
+    linear-gradient(180deg,#fce7f3 0%,#fdf2f8 45%,#f8fbff 100%);
+}
+
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:22px 18px 70px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+  padding:14px 18px;
+  border:1px solid rgba(251,207,232,.9);
+  border-radius:28px;
+  background:rgba(255,255,255,.90);
+  box-shadow:0 16px 38px rgba(15,23,42,.10);
+  position:sticky;
+  top:8px;
+  z-index:50;
+}
+
+.brand{
+  font-size:24px;
+  font-weight:900;
+  color:#9d174d;
+  padding:12px 18px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#ffffff,#fdf2f8);
+  border:1px solid #fbcfe8;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.navbtn,.mainbtn{
+  border:none;
+  border-radius:999px;
+  padding:11px 16px;
+  background:var(--pink);
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 16px rgba(15,23,42,.08);
+}
+
+.navbtn.alt{
+  background:#fff1f2;
+  color:#9d174d;
+  border:1px solid #fbcfe8;
+}
+
+.navbtn.admin{
+  background:#fff7ed;
+  color:#b45309;
+  border:1px solid #fed7aa;
+}
+
+.hero{
+  min-height:255px;
+  border-radius:34px;
+  padding:38px;
+  color:white;
+  background:
+    linear-gradient(rgba(76,5,35,.46),rgba(76,5,35,.50)),
+    url('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
+  box-shadow:0 22px 48px rgba(15,23,42,.18);
+  margin-bottom:22px;
+}
+
+.hero h1{
+  margin:0 0 12px;
+  font-size:52px;
+  line-height:1.05;
+  text-shadow:0 6px 18px rgba(0,0,0,.25);
+}
+
+.hero p{
+  margin:0 0 18px;
+  max-width:780px;
+  font-size:18px;
+  line-height:1.6;
+  color:#f8fafc;
+}
+
+.mainbtn{
+  background:linear-gradient(135deg,#db2777,#7c3aed);
+  min-height:48px;
+  padding:13px 22px;
+}
+
+.card{
+  background:linear-gradient(180deg,#fff1f2 0%,#fce7f3 100%);
+  border:1px solid rgba(251,207,232,.8);
+  border-radius:34px;
+  padding:28px;
+  box-shadow:0 20px 42px rgba(15,23,42,.12);
+  margin-bottom:22px;
+}
+
+.section-title{
+  margin:0 0 8px;
+  font-size:34px;
+  color:#831843;
+}
+
+.sub{
+  color:var(--muted);
+  line-height:1.6;
+  margin:0 0 20px;
+}
+
+.searchbox{
+  width:100%;
+  max-width:520px;
+  padding:15px 18px;
+  border-radius:999px;
+  border:1px solid #f9a8d4;
+  font-size:17px;
+  margin-bottom:20px;
+  outline:none;
+}
+
+.breed-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.breed-card{
+  background:linear-gradient(180deg,#ffffff 0%,#fff7fb 100%);
+  border:1px solid #fbcfe8;
+  border-radius:28px;
+  padding:18px;
+  box-shadow:0 14px 32px rgba(157,23,77,.10);
+  overflow:hidden;
+}
+
+.breed-card img{
+  width:100%;
+  height:190px;
+  object-fit:contain;
+  background:#fff;
+  border-radius:20px;
+  border:1px solid #fbcfe8;
+  padding:8px;
+}
+
+.breed-card h3{
+  margin:14px 0 8px;
+  font-size:24px;
+  color:#831843;
+}
+
+.facts{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:12px 0;
+}
+
+.fact{
+  background:#fff1f2;
+  border:1px solid #fbcfe8;
+  border-radius:16px;
+  padding:9px;
+  font-size:14px;
+  color:#9d174d;
+  font-weight:700;
+}
+
+.desc{
+  color:#475569;
+  line-height:1.55;
+  font-size:15px;
+  margin-top:10px;
+}
+
+.footer-note{
+  text-align:center;
+  color:#64748b;
+  font-size:14px;
+  margin-top:22px;
+}
+
+@media(max-width:950px){
+  .breed-grid{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:760px){
+  .wrap{padding:14px 12px 50px}
+  .topbar{border-radius:22px;padding:12px}
+  .brand{width:100%;text-align:center;font-size:20px}
+  .actions{width:100%;justify-content:center}
+  .navbtn{flex:1 1 42%;font-size:13px;padding:10px 12px}
+  .hero{min-height:230px;border-radius:26px;padding:24px}
+  .hero h1{font-size:34px}
+  .hero p{font-size:15px}
+  .card{border-radius:26px;padding:18px}
+  .section-title{font-size:28px}
+  .breed-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">🐶 Hundene våre</div>
+    <div class="actions">
+      <a class="navbtn alt" href="index.html">🏠 Forside</a>
+      <a class="navbtn alt" href="kunnskap.html">📚 Kunnskap</a>
+      <a class="navbtn alt" href="spill.html">🎮 Spill</a>
+      <a class="navbtn alt" href="se-butikker.html">🏪 Butikker</a>
+      <a class="navbtn alt" href="arrangementer.html">📅 Arrangementer</a>
+      <a class="navbtn admin" href="admin.html">🔧 Admin</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <h1>🐱 Katteraser</h1>
+    <p>
+      Her samler vi enkel og nyttig rasekunnskap om katter.
+      Starten er 10 populære katteraser – senere kan vi bygge videre med flere raser og mer fakta.
+    </p>
+    <a class="mainbtn" href="kunnskap.html">⬅️ Tilbake til Kunnskapssenter</a>
+  </section>
+
+  <section class="card">
+    <h2 class="section-title">Finn en katterase</h2>
+    <p class="sub">Søk etter rase, opprinnelse eller egenskap.</p>
+    <input class="searchbox" id="searchInput" onkeyup="filterBreeds()" placeholder="Søk etter katterase...">
+
+    <div class="breed-grid" id="breedGrid">
+
+      <div class="breed-card" data-search="maine coon usa stor sosial langhåret familie">
+        <img src="bilder/maine-coon.jpg" alt="Maine Coon">
+        <h3>🐱 Maine Coon</h3>
+        <div class="facts">
+          <div class="fact">📍 USA</div>
+          <div class="fact">⚖️ 4–9 kg</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">✂️ Middels pelsstell</div>
+        </div>
+        <p class="desc">En stor, sosial og rolig katt som ofte kalles en mild kjempe. Trives godt med mennesker og familieliv.</p>
+      </div>
+
+      <div class="breed-card" data-search="siameser thailand sosial pratsom elegant">
+        <img src="bilder/siameser.jpg" alt="Siameser">
+        <h3>🐱 Siameser</h3>
+        <div class="facts">
+          <div class="fact">📍 Thailand</div>
+          <div class="fact">⚖️ 3–5 kg</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">🗣️ Pratsom</div>
+        </div>
+        <p class="desc">En elegant, sosial og svært pratsom katterase som knytter seg sterkt til menneskene sine.</p>
+      </div>
+
+      <div class="breed-card" data-search="perser iran rolig langhåret pelsstell innekat">
+        <img src="bilder/perser.jpg" alt="Perser">
+        <h3>🐱 Perser</h3>
+        <div class="facts">
+          <div class="fact">📍 Iran</div>
+          <div class="fact">⚖️ 3–7 kg</div>
+          <div class="fact">❤️ 12–17 år</div>
+          <div class="fact">✂️ Høyt pelsstell</div>
+        </div>
+        <p class="desc">En rolig og kjærlig katt med lang pels. Krever jevnlig pelsstell og passer godt i rolige hjem.</p>
+      </div>
+
+      <div class="breed-card" data-search="bengal usa aktiv leopard mønster leken">
+        <img src="bilder/bengal.jpg" alt="Bengal">
+        <h3>🐱 Bengal</h3>
+        <div class="facts">
+          <div class="fact">📍 USA</div>
+          <div class="fact">⚖️ 4–8 kg</div>
+          <div class="fact">❤️ 12–16 år</div>
+          <div class="fact">⚡ Svært aktiv</div>
+        </div>
+        <p class="desc">En energisk og leken katt med vakkert mønster. Trenger aktivisering, lek og et stimulerende miljø.</p>
+      </div>
+
+      <div class="breed-card" data-search="birma myanmar rolig sosial halvlang pels familie">
+        <img src="bilder/birma.jpg" alt="Birma">
+        <h3>🐱 Birma</h3>
+        <div class="facts">
+          <div class="fact">📍 Myanmar</div>
+          <div class="fact">⚖️ 3–6 kg</div>
+          <div class="fact">❤️ 12–16 år</div>
+          <div class="fact">🏡 Familievennlig</div>
+        </div>
+        <p class="desc">En mild, sosial og vakker katt med halvlang pels. Ofte rolig og trivelig i familier.</p>
+      </div>
+
+      <div class="breed-card" data-search="russian blue russland blå rolig elegant kort pels">
+        <img src="bilder/russian-blue.jpg" alt="Russian Blue">
+        <h3>🐱 Russian Blue</h3>
+        <div class="facts">
+          <div class="fact">📍 Russland</div>
+          <div class="fact">⚖️ 3–6 kg</div>
+          <div class="fact">❤️ 15–20 år</div>
+          <div class="fact">🧘 Rolig</div>
+        </div>
+        <p class="desc">En elegant og rolig katt med blågrå pels. Kan være litt forsiktig, men blir ofte svært lojal mot sine mennesker.</p>
+      </div>
+
+      <div class="breed-card" data-search="scottish fold skottland rund øre rolig sosial">
+        <img src="bilder/scottish-fold.jpg" alt="Scottish Fold">
+        <h3>🐱 Scottish Fold</h3>
+        <div class="facts">
+          <div class="fact">📍 Skottland</div>
+          <div class="fact">⚖️ 3–6 kg</div>
+          <div class="fact">❤️ 11–14 år</div>
+          <div class="fact">🐾 Rolig</div>
+        </div>
+        <p class="desc">En rolig og sosial katt kjent for sitt runde uttrykk. Trives ofte godt i rolige hjem.</p>
+      </div>
+
+      <div class="breed-card" data-search="sibirsk katt russland kraftig langhåret allergivennlig sosial">
+        <img src="bilder/sibirsk-katt.jpg" alt="Sibirsk Katt">
+        <h3>🐱 Sibirsk Katt</h3>
+        <div class="facts">
+          <div class="fact">📍 Russland</div>
+          <div class="fact">⚖️ 4–9 kg</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">❄️ Kraftig pels</div>
+        </div>
+        <p class="desc">En robust og sosial katt med tykk pels. Ofte leken, trygg og glad i kontakt med familien.</p>
+      </div>
+
+      <div class="breed-card" data-search="tyrkisk angora tyrkia elegant aktiv sosial hvit">
+        <img src="bilder/tyrkisk-angora.jpg" alt="Tyrkisk Angora">
+        <h3>🐱 Tyrkisk Angora</h3>
+        <div class="facts">
+          <div class="fact">📍 Tyrkia</div>
+          <div class="fact">⚖️ 3–5 kg</div>
+          <div class="fact">❤️ 12–18 år</div>
+          <div class="fact">✨ Elegant</div>
+        </div>
+        <p class="desc">En livlig og elegant katt med lang historie. Ofte sosial, nysgjerrig og aktiv.</p>
+      </div>
+
+      <div class="breed-card" data-search="devon rex england krøllete pels leken sosial">
+        <img src="bilder/devon-rex.jpg" alt="Devon Rex">
+        <h3>🐱 Devon Rex</h3>
+        <div class="facts">
+          <div class="fact">📍 England</div>
+          <div class="fact">⚖️ 2,5–4,5 kg</div>
+          <div class="fact">❤️ 12–15 år</div>
+          <div class="fact">🎭 Leken</div>
+        </div>
+        <p class="desc">En morsom, sosial og aktiv katt med særegent utseende og bølgete pels. Liker ofte å være midt i familien.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="section-title">Videre plan</h2>
+    <p class="sub">
+      Neste steg kan være å legge til flere katteraser, lage egne detaljsider og vise “Ukens katterase”.
+    </p>
+  </section>
+
+  <p class="footer-note">
+    Hundenevåre.com – Kunnskapssenter for hunder og katter.
+  </p>
+
+</div>
+
+<script>
+function filterBreeds(){
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const cards = document.querySelectorAll(".breed-card");
+
+  cards.forEach(card=>{
+    const text = card.innerText.toLowerCase() + " " + card.dataset.search.toLowerCase();
+    card.style.display = text.includes(input) ? "block" : "none";
+  });
+}
+</script>
+
+</body>
+</html>
