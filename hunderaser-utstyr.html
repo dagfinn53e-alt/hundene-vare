@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hunderaser Utstyr 2.0 - Hundene våre</title>
+<title>Hunderaser Utstyr 3.0 - Hundene våre</title>
 
 <style>
 :root{
@@ -229,6 +229,30 @@ body{
   padding:12px;
 }
 
+
+.filter-status{
+  margin:0 0 14px;
+  padding:12px 16px;
+  border-radius:18px;
+  background:#ecfdf5;
+  border:1px solid #bbf7d0;
+  color:#166534;
+  font-weight:900;
+  line-height:1.5;
+}
+
+.show-all-btn{
+  border:none;
+  border-radius:999px;
+  padding:12px 18px;
+  margin:0 0 18px;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:white;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 6px 16px rgba(15,23,42,.08);
+}
+
 .footer-note{
   text-align:center;
   color:#64748b;
@@ -271,10 +295,10 @@ body{
   </div>
 
   <section class="hero">
-    <h1>✂️ Hunderaser Utstyr 2.0</h1>
+    <h1>✂️ Hunderaser Utstyr 3.0</h1>
     <p>
       En praktisk utstyrsguide for populære hunderaser.
-      Her finner du pelsstellnivå, prisnivå, nybegynnervennlighet, børster, sjampo, sakser, klotang og plass til “Kjøpes hos”.
+      Her finner du pelsstellnivå, prisnivå, nybegynnervennlighet, børster, sjampo, sakser, klotang og plass til “Kjøpes hos”. Siden kan nå åpnes direkte på én bestemt rase.
     </p>
     <a class="mainbtn" href="kunnskap.html">⬅️ Tilbake til Kunnskapssenter</a>
   </section>
@@ -284,9 +308,12 @@ body{
     <p class="sub">Søk etter rase eller utstyr. Alle raser har klotang med, fordi alle hunder trenger klostell.</p>
     <input class="searchbox" id="searchInput" onkeyup="filterEquipment()" placeholder="Søk etter rase eller utstyr...">
 
+    <div id="filterStatus" class="filter-status" style="display:none;"></div>
+    <button id="showAllBtn" class="show-all-btn" onclick="showAllBreeds()" style="display:none;">🔄 Vis alle raser</button>
+
     <div class="equip-grid" id="equipGrid">
       
-      <div class="equip-card" data-search="bichon frisé karde, metallkam og liten flokekam buet saks, rett saks og effileringssaks mild hundesjampo, gjerne for hvit/lang pels + balsam medium klotang ⭐⭐⭐⭐⭐ krevende">
+      <div class="equip-card" data-rase="bichon" data-search="bichon frisé karde, metallkam og liten flokekam buet saks, rett saks og effileringssaks mild hundesjampo, gjerne for hvit/lang pels + balsam medium klotang ⭐⭐⭐⭐⭐ krevende">
         <h3>🐶 Bichon Frisé</h3>
 
         <div class="quick-facts">
@@ -312,7 +339,7 @@ body{
         <p class="note">💡 Pelsen tover lett. Start pelsstell tidlig og gjør det til en rolig vane.</p>
       </div>
     
-      <div class="equip-card" data-search="golden retriever underullsrake, karde og metallkam potesaks og tynnesaks ved behov mild hundesjampo, balsam ved behov medium/stor klotang ⭐⭐⭐ middels">
+      <div class="equip-card" data-rase="golden" data-search="golden retriever underullsrake, karde og metallkam potesaks og tynnesaks ved behov mild hundesjampo, balsam ved behov medium/stor klotang ⭐⭐⭐ middels">
         <h3>🐶 Golden Retriever</h3>
 
         <div class="quick-facts">
@@ -338,7 +365,7 @@ body{
         <p class="note">💡 Fokuser ekstra på faner, hale, bukser og poter.</p>
       </div>
     
-      <div class="equip-card" data-search="labrador retriever gummibørste, karde og røytebørste potesaks ved behov mild hundesjampo medium/stor klotang ⭐⭐ enkel/middels">
+      <div class="equip-card" data-rase="labrador" data-search="labrador retriever gummibørste, karde og røytebørste potesaks ved behov mild hundesjampo medium/stor klotang ⭐⭐ enkel/middels">
         <h3>🐶 Labrador Retriever</h3>
 
         <div class="quick-facts">
@@ -364,7 +391,7 @@ body{
         <p class="note">💡 Kort pels betyr ikke null stell. Labrador kan røyte mye.</p>
       </div>
     
-      <div class="equip-card" data-search="schæfer underullsrake, karde og metallkam potesaks ved behov sjampo for normal pels stor klotang ⭐⭐⭐⭐ middels/høyt">
+      <div class="equip-card" data-rase="schafer" data-search="schæfer underullsrake, karde og metallkam potesaks ved behov sjampo for normal pels stor klotang ⭐⭐⭐⭐ middels/høyt">
         <h3>🐶 Schæfer</h3>
 
         <div class="quick-facts">
@@ -390,7 +417,7 @@ body{
         <p class="note">💡 Underullen kan bli kraftig. Riktig børste gjør stell mye enklere.</p>
       </div>
     
-      <div class="equip-card" data-search="border collie karde, metallkam og underullsrake potesaks og lett tynnesaks ved behov mild hundesjampo medium klotang ⭐⭐⭐ middels">
+      <div class="equip-card" data-rase="border-collie" data-search="border collie karde, metallkam og underullsrake potesaks og lett tynnesaks ved behov mild hundesjampo medium klotang ⭐⭐⭐ middels">
         <h3>🐶 Border Collie</h3>
 
         <div class="quick-facts">
@@ -416,7 +443,7 @@ body{
         <p class="note">💡 Se ekstra bak ører, på bukser, hale og under magen.</p>
       </div>
     
-      <div class="equip-card" data-search="fransk bulldog gummibørste eller myk børste vanligvis ikke nødvendig mild og hudvennlig sjampo medium klotang ⭐ enkel">
+      <div class="equip-card" data-rase="fransk-bulldog" data-search="fransk bulldog gummibørste eller myk børste vanligvis ikke nødvendig mild og hudvennlig sjampo medium klotang ⭐ enkel">
         <h3>🐶 Fransk Bulldog</h3>
 
         <div class="quick-facts">
@@ -442,7 +469,7 @@ body{
         <p class="note">💡 Hudfolder, ører og poter bør holdes rene og tørre.</p>
       </div>
     
-      <div class="equip-card" data-search="cavalier king charles spaniel karde, metallkam og myk børste potesaks og tynnesaks ved behov mild sjampo og balsam ved behov liten/medium klotang ⭐⭐⭐ middels">
+      <div class="equip-card" data-rase="cavalier" data-search="cavalier king charles spaniel karde, metallkam og myk børste potesaks og tynnesaks ved behov mild sjampo og balsam ved behov liten/medium klotang ⭐⭐⭐ middels">
         <h3>🐶 Cavalier King Charles Spaniel</h3>
 
         <div class="quick-facts">
@@ -468,7 +495,7 @@ body{
         <p class="note">💡 Ørene trenger ekstra oppfølging fordi pelsen lett floker seg.</p>
       </div>
     
-      <div class="equip-card" data-search="puddel karde og metallkam klippemaskin, buet saks, rett saks og effileringssaks sjampo og balsam for krøllet/lang pels medium klotang ⭐⭐⭐⭐⭐ krevende">
+      <div class="equip-card" data-rase="puddel" data-search="puddel karde og metallkam klippemaskin, buet saks, rett saks og effileringssaks sjampo og balsam for krøllet/lang pels medium klotang ⭐⭐⭐⭐⭐ krevende">
         <h3>🐶 Puddel</h3>
 
         <div class="quick-facts">
@@ -494,7 +521,7 @@ body{
         <p class="note">💡 Puddelpels krever systematisk stell for å unngå tover.</p>
       </div>
     
-      <div class="equip-card" data-search="mops gummibørste eller myk børste vanligvis ikke nødvendig mild og hudvennlig sjampo medium klotang ⭐ enkel">
+      <div class="equip-card" data-rase="mops" data-search="mops gummibørste eller myk børste vanligvis ikke nødvendig mild og hudvennlig sjampo medium klotang ⭐ enkel">
         <h3>🐶 Mops</h3>
 
         <div class="quick-facts">
@@ -520,7 +547,7 @@ body{
         <p class="note">💡 Kort pels, men hudfolder og klør trenger fast rutine.</p>
       </div>
     
-      <div class="equip-card" data-search="chihuahua myk børste og liten kam liten potesaks ved behov mild sjampo for små hunder liten klotang ⭐ enkel">
+      <div class="equip-card" data-rase="chihuahua" data-search="chihuahua myk børste og liten kam liten potesaks ved behov mild sjampo for små hunder liten klotang ⭐ enkel">
         <h3>🐶 Chihuahua</h3>
 
         <div class="quick-facts">
@@ -562,7 +589,22 @@ body{
 
 </div>
 
+
 <script>
+const breedNames = {
+  "bichon": "Bichon Frisé",
+  "golden": "Golden Retriever",
+  "labrador": "Labrador Retriever",
+  "schafer": "Schæfer",
+  "schæfer": "Schæfer",
+  "border-collie": "Border Collie",
+  "fransk-bulldog": "Fransk Bulldog",
+  "cavalier": "Cavalier King Charles Spaniel",
+  "puddel": "Puddel",
+  "mops": "Mops",
+  "chihuahua": "Chihuahua"
+};
+
 function filterEquipment(){
   const input = document.getElementById("searchInput").value.toLowerCase();
   const cards = document.querySelectorAll(".equip-card");
@@ -572,7 +614,78 @@ function filterEquipment(){
     card.style.display = text.includes(input) ? "block" : "none";
   });
 }
+
+function filterByBreedKey(key){
+  const cards = document.querySelectorAll(".equip-card");
+  let found = false;
+
+  cards.forEach(card=>{
+    if(card.dataset.rase === key){
+      card.style.display = "block";
+      found = true;
+    }else{
+      card.style.display = "none";
+    }
+  });
+
+  const status = document.getElementById("filterStatus");
+  const btn = document.getElementById("showAllBtn");
+  const input = document.getElementById("searchInput");
+
+  if(found){
+    const name = breedNames[key] || key;
+    input.value = name;
+    status.innerHTML = "✅ Viser anbefalt utstyr for: " + name;
+    status.style.display = "block";
+    btn.style.display = "inline-block";
+  }
+}
+
+function showAllBreeds(){
+  const cards = document.querySelectorAll(".equip-card");
+  cards.forEach(card=>{
+    card.style.display = "block";
+  });
+
+  document.getElementById("searchInput").value = "";
+  document.getElementById("filterStatus").style.display = "none";
+  document.getElementById("showAllBtn").style.display = "none";
+
+  if(window.history.replaceState){
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+}
+
+function applyUrlFilter(){
+  const params = new URLSearchParams(window.location.search);
+  let key = params.get("rase");
+
+  if(!key) return;
+
+  key = decodeURIComponent(key).toLowerCase().trim();
+
+  const aliases = {
+    "bichon frisé": "bichon",
+    "bichon frise": "bichon",
+    "golden retriever": "golden",
+    "labrador retriever": "labrador",
+    "schæfer": "schafer",
+    "schaefer": "schafer",
+    "border collie": "border-collie",
+    "fransk bulldog": "fransk-bulldog",
+    "cavalier king charles spaniel": "cavalier",
+    "puddel": "puddel",
+    "mops": "mops",
+    "chihuahua": "chihuahua"
+  };
+
+  key = aliases[key] || key;
+  filterByBreedKey(key);
+}
+
+document.addEventListener("DOMContentLoaded", applyUrlFilter);
 </script>
+
 
 </body>
 </html>
