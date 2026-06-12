@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kunnskapssenter - Hundene våre</title>
+<title>Kunnskapssenter 2.0 - Hundene våre</title>
 
 <style>
 :root{
@@ -157,7 +157,7 @@ body{
   border:1px solid #dbeafe;
   border-radius:28px;
   padding:22px;
-  min-height:245px;
+  min-height:420px;
   box-shadow:0 14px 32px rgba(30,64,175,.10);
   display:flex;
   flex-direction:column;
@@ -228,6 +228,30 @@ body{
   line-height:1.55;
 }
 
+
+.topic-image{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:18px;
+  margin-bottom:14px;
+  border:1px solid #dbeafe;
+  box-shadow:0 10px 22px rgba(15,23,42,.12);
+  background:#eef6ff;
+}
+
+.knowledge-card{
+  padding:16px;
+}
+
+.knowledge-card h3{
+  font-size:24px;
+}
+
+@media(max-width:760px){
+  .topic-image{height:210px}
+}
+
 .footer-note{
   text-align:center;
   color:#64748b;
@@ -273,7 +297,7 @@ body{
   </div>
 
   <section class="hero">
-    <h1>📚 Kunnskapssenter</h1>
+    <h1>📚 Kunnskapssenter 2.0</h1>
     <p>
       Velkommen til Kunnskapssenteret på Hundenevåre.
       Her skal vi samle rasekunnskap, helse, trening, gode råd og turtips for hunde- og kattefolk.
@@ -284,14 +308,14 @@ body{
   <section class="card">
     <h2 class="section-title">Velg tema</h2>
     <p class="sub">
-      Kunnskapssenteret bygges steg for steg. Først lager vi hovedinngangen, deretter fyller vi på med raser, artikler og nyttige guider.
+      Velg tema og finn nyttig informasjon om hunder, katter, helse, trening, utstyr, turer og gode råd.
     </p>
 
     <div class="knowledge-grid">
 
       <div class="knowledge-card">
         <div>
-          <div class="icon">🐶</div>
+          <img class="topic-image" src="bilder/kunnskap/hunderaser.png" alt="Hunderaser">
           <h3>Hunderaser</h3>
           <p>Fakta om hunderaser, opprinnelse, størrelse, pelsstell, aktivitetsnivå og hvem rasen passer for.</p>
         </div>
@@ -300,7 +324,7 @@ body{
 
       <div class="knowledge-card">
         <div>
-          <div class="icon">✂️</div>
+          <img class="topic-image" src="bilder/kunnskap/hunderaser-utstyr.png" alt="Hunderaser Utstyr">
           <h3>Hunderaser Utstyr</h3>
           <p>Børster, kammer, sjampo, sakser, klotang og anbefalt stellutstyr for ulike hunderaser.</p>
         </div>
@@ -312,7 +336,7 @@ body{
 
       <div class="knowledge-card">
         <div>
-          <div class="icon">🐱</div>
+          <img class="topic-image" src="bilder/kunnskap/katteraser.png" alt="Katteraser">
           <h3>Katteraser</h3>
           <p>Fakta om katteraser, lynne, pelsstell, størrelse, historie og hva som kjennetegner rasen.</p>
         </div>
@@ -321,7 +345,7 @@ body{
 
       <div class="knowledge-card">
         <div>
-          <div class="icon">🐱</div>
+          <img class="topic-image" src="bilder/kunnskap/katteraser-utstyr.png" alt="Katteraser Utstyr">
           <h3>Katteraser Utstyr</h3>
           <p>Børster, kammer, sjampo, klotang og anbefalt stellutstyr for ulike katteraser.</p>
         </div>
@@ -333,7 +357,7 @@ body{
 
       <div class="knowledge-card">
         <div>
-          <div class="icon">🏥</div>
+          <img class="topic-image" src="bilder/kunnskap/helse.png" alt="Helse">
           <h3>Helse</h3>
           <p>Enkle artikler om tannstell, flått, vaksiner, overvekt, forgiftning og førstehjelp.</p>
         </div>
@@ -342,7 +366,7 @@ body{
 
       <div class="knowledge-card">
         <div>
-          <div class="icon">🎓</div>
+          <img class="topic-image" src="bilder/kunnskap/trening.png" alt="Trening">
           <h3>Trening</h3>
           <p>Tips om valpetrening, innkalling, båndtrening, sosialisering og gode hverdagsrutiner.</p>
         </div>
@@ -351,7 +375,7 @@ body{
 
       <div class="knowledge-card">
         <div>
-          <div class="icon">🚶</div>
+          <img class="topic-image" src="bilder/kunnskap/turtips.png" alt="Turtips">
           <h3>Turtips</h3>
           <p>Fine tursteder, lokale tips og gode opplevelser for hund og eier.</p>
         </div>
@@ -360,7 +384,7 @@ body{
 
       <div class="knowledge-card">
         <div>
-          <div class="icon">⭐</div>
+          <img class="topic-image" src="bilder/kunnskap/ukens-tips.png" alt="Ukens tips">
           <h3>Ukens tips</h3>
           <p>Her kan vi senere vise ukens hunderase, ukens katterase eller et aktuelt helsetips.</p>
         </div>
@@ -373,23 +397,23 @@ body{
   <section class="card">
     <h2 class="section-title">Plan videre</h2>
     <p class="sub">
-      Første mål er å bygge opp en ryddig og nyttig kunnskapsbase som kan vokse sammen med Hundenevåre.
+      Kunnskapssenteret er nå koblet sammen med raser, utstyr, helse, trening og spill. Her kan vi bygge videre med flere guider og lokale tips.
     </p>
 
     <div class="info-grid">
       <div class="info-card">
         <h3>🏆 Første mål</h3>
-        <p>Starte med 20–30 hunderaser og 10–20 katteraser.</p>
+        <p>Flere raser, flere bilder og enda mer nyttig innhold.</p>
       </div>
 
       <div class="info-card">
         <h3>📌 Neste steg</h3>
-        <p>Lage første side for hunderaser med kort, bilder og enkel rasefakta.</p>
+        <p>Koble utstyr og helse videre mot butikker og lokale tjenester.</p>
       </div>
 
       <div class="info-card">
         <h3>💡 Senere</h3>
-        <p>Ukens rase, sponset innhold, søk og flere nyttige artikler.</p>
+        <p>Ukens rase, ukens tips, anbefalt utstyr og lokale tilbud.</p>
       </div>
     </div>
   </section>
