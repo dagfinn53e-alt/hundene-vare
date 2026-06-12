@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Katteraser Utstyr - Hundene våre</title>
+<title>Katteraser Utstyr 3.0 - Hundene våre</title>
 
 <style>
 :root{
@@ -229,6 +229,30 @@ body{
   padding:12px;
 }
 
+
+.filter-status{
+  margin:0 0 14px;
+  padding:12px 16px;
+  border-radius:18px;
+  background:#ecfdf5;
+  border:1px solid #bbf7d0;
+  color:#166534;
+  font-weight:900;
+  line-height:1.5;
+}
+
+.show-all-btn{
+  border:none;
+  border-radius:999px;
+  padding:12px 18px;
+  margin:0 0 18px;
+  background:linear-gradient(135deg,#db2777,#7c3aed);
+  color:white;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 6px 16px rgba(15,23,42,.08);
+}
+
 .footer-note{
   text-align:center;
   color:#64748b;
@@ -271,10 +295,10 @@ body{
   </div>
 
   <section class="hero">
-    <h1>🐱 Katteraser Utstyr</h1>
+    <h1>🐱 Katteraser Utstyr 3.0</h1>
     <p>
       En praktisk utstyrsguide for populære katteraser.
-      Her finner du pelsstellnivå, prisnivå, børster, sjampo, klotang og plass til “Kjøpes hos”.
+      Her finner du pelsstellnivå, prisnivå, børster, sjampo, klotang og plass til “Kjøpes hos”. Siden kan nå åpnes direkte på én bestemt katterase.
     </p>
     <a class="mainbtn" href="kunnskap.html">⬅️ Tilbake til Kunnskapssenter</a>
   </section>
@@ -284,9 +308,12 @@ body{
     <p class="sub">Søk etter rase eller utstyr. Alle katter bør ha klotang tilgjengelig for trygg klostell.</p>
     <input class="searchbox" id="searchInput" onkeyup="filterEquipment()" placeholder="Søk etter rase eller utstyr...">
 
+    <div id="filterStatus" class="filter-status" style="display:none;"></div>
+    <button id="showAllBtn" class="show-all-btn" onclick="showAllBreeds()" style="display:none;">🔄 Vis alle katteraser</button>
+
     <div class="equip-grid" id="equipGrid">
       
-      <div class="equip-card" data-search="maine coon karde, metallkam og underullskam mild kattesjampo ved behov klotang for katt ⭐⭐⭐ middels">
+      <div class="equip-card" data-rase="maine-coon" data-search="maine coon karde, metallkam og underullskam mild kattesjampo ved behov klotang for katt ⭐⭐⭐ middels">
         <h3>🐱 Maine Coon</h3>
 
         <div class="quick-facts">
@@ -312,7 +339,7 @@ body{
         <p class="note">💡 Maine Coon har stor pels og bør vennes til børsting tidlig.</p>
       </div>
     
-      <div class="equip-card" data-search="norsk skogkatt karde, metallkam og underullskam mild kattesjampo ved behov klotang for katt ⭐⭐⭐ middels">
+      <div class="equip-card" data-rase="norsk-skogkatt" data-search="norsk skogkatt karde, metallkam og underullskam mild kattesjampo ved behov klotang for katt ⭐⭐⭐ middels">
         <h3>🐱 Norsk Skogkatt</h3>
 
         <div class="quick-facts">
@@ -338,7 +365,7 @@ body{
         <p class="note">💡 Sjekk spesielt buk, bakbein og krage for floker.</p>
       </div>
     
-      <div class="equip-card" data-search="birma myk børste og metallkam mild kattesjampo ved behov klotang for katt ⭐⭐ middels/enkel">
+      <div class="equip-card" data-rase="birma" data-search="birma myk børste og metallkam mild kattesjampo ved behov klotang for katt ⭐⭐ middels/enkel">
         <h3>🐱 Birma</h3>
 
         <div class="quick-facts">
@@ -364,7 +391,7 @@ body{
         <p class="note">💡 Birma har ofte silkemyk pels som er lettere å holde enn mange andre langhårskatter.</p>
       </div>
     
-      <div class="equip-card" data-search="perser karde, metallkam og flokekam kattesjampo for lang pels + balsam ved behov klotang for katt ⭐⭐⭐⭐⭐ krevende">
+      <div class="equip-card" data-rase="perser" data-search="perser karde, metallkam og flokekam kattesjampo for lang pels + balsam ved behov klotang for katt ⭐⭐⭐⭐⭐ krevende">
         <h3>🐱 Perser</h3>
 
         <div class="quick-facts">
@@ -390,7 +417,7 @@ body{
         <p class="note">💡 Perser krever mye pelsstell. Floker kan komme raskt hvis pelsen ikke vedlikeholdes.</p>
       </div>
     
-      <div class="equip-card" data-search="bengal gummibørste eller myk børste mild kattesjampo kun ved behov klotang for katt ⭐ enkel">
+      <div class="equip-card" data-rase="bengal" data-search="bengal gummibørste eller myk børste mild kattesjampo kun ved behov klotang for katt ⭐ enkel">
         <h3>🐱 Bengal</h3>
 
         <div class="quick-facts">
@@ -416,7 +443,7 @@ body{
         <p class="note">💡 Bengal trenger ofte mer aktivisering enn pelsstell.</p>
       </div>
     
-      <div class="equip-card" data-search="siameser myk børste eller gummibørste mild kattesjampo ved behov klotang for katt ⭐ enkel">
+      <div class="equip-card" data-rase="siameser" data-search="siameser myk børste eller gummibørste mild kattesjampo ved behov klotang for katt ⭐ enkel">
         <h3>🐱 Siameser</h3>
 
         <div class="quick-facts">
@@ -442,7 +469,7 @@ body{
         <p class="note">💡 Siameser har kort pels, men klør bør sjekkes jevnlig.</p>
       </div>
     
-      <div class="equip-card" data-search="ragdoll karde, metallkam og myk børste mild kattesjampo ved behov klotang for katt ⭐⭐⭐ middels">
+      <div class="equip-card" data-rase="ragdoll" data-search="ragdoll karde, metallkam og myk børste mild kattesjampo ved behov klotang for katt ⭐⭐⭐ middels">
         <h3>🐱 Ragdoll</h3>
 
         <div class="quick-facts">
@@ -468,7 +495,7 @@ body{
         <p class="note">💡 Ragdoll har halvlang pels og trenger rolig og jevnlig pelsstell.</p>
       </div>
     
-      <div class="equip-card" data-search="scottish fold myk børste eller karde mild kattesjampo ved behov klotang for katt ⭐⭐ enkel/middels">
+      <div class="equip-card" data-rase="scottish-fold" data-search="scottish fold myk børste eller karde mild kattesjampo ved behov klotang for katt ⭐⭐ enkel/middels">
         <h3>🐱 Scottish Fold</h3>
 
         <div class="quick-facts">
@@ -494,7 +521,7 @@ body{
         <p class="note">💡 Sjekk ører, pels og klør jevnlig.</p>
       </div>
     
-      <div class="equip-card" data-search="russian blue myk børste eller gummibørste mild kattesjampo kun ved behov klotang for katt ⭐ enkel">
+      <div class="equip-card" data-rase="russian-blue" data-search="russian blue myk børste eller gummibørste mild kattesjampo kun ved behov klotang for katt ⭐ enkel">
         <h3>🐱 Russian Blue</h3>
 
         <div class="quick-facts">
@@ -520,7 +547,7 @@ body{
         <p class="note">💡 Russian Blue har kort pels som er lett å holde pen.</p>
       </div>
     
-      <div class="equip-card" data-search="devon rex svært myk børste eller stellehanske mild kattesjampo ved behov, hudvennlig klotang for katt ⭐⭐ enkel/middels">
+      <div class="equip-card" data-rase="devon-rex" data-search="devon rex svært myk børste eller stellehanske mild kattesjampo ved behov, hudvennlig klotang for katt ⭐⭐ enkel/middels">
         <h3>🐱 Devon Rex</h3>
 
         <div class="quick-facts">
@@ -562,7 +589,21 @@ body{
 
 </div>
 
+
 <script>
+const breedNames = {
+  "maine-coon": "Maine Coon",
+  "norsk-skogkatt": "Norsk Skogkatt",
+  "birma": "Birma",
+  "perser": "Perser",
+  "bengal": "Bengal",
+  "siameser": "Siameser",
+  "ragdoll": "Ragdoll",
+  "scottish-fold": "Scottish Fold",
+  "russian-blue": "Russian Blue",
+  "devon-rex": "Devon Rex"
+};
+
 function filterEquipment(){
   const input = document.getElementById("searchInput").value.toLowerCase();
   const cards = document.querySelectorAll(".equip-card");
@@ -572,7 +613,81 @@ function filterEquipment(){
     card.style.display = text.includes(input) ? "block" : "none";
   });
 }
+
+function filterByBreedKey(key){
+  const cards = document.querySelectorAll(".equip-card");
+  let found = false;
+
+  cards.forEach(card=>{
+    if(card.dataset.rase === key){
+      card.style.display = "block";
+      found = true;
+    }else{
+      card.style.display = "none";
+    }
+  });
+
+  const status = document.getElementById("filterStatus");
+  const btn = document.getElementById("showAllBtn");
+  const input = document.getElementById("searchInput");
+
+  if(found){
+    const name = breedNames[key] || key;
+    input.value = name;
+    status.innerHTML = "✅ Viser anbefalt utstyr for: " + name;
+    status.style.display = "block";
+    btn.style.display = "inline-block";
+  }
+}
+
+function showAllBreeds(){
+  const cards = document.querySelectorAll(".equip-card");
+  cards.forEach(card=>{
+    card.style.display = "block";
+  });
+
+  document.getElementById("searchInput").value = "";
+  document.getElementById("filterStatus").style.display = "none";
+  document.getElementById("showAllBtn").style.display = "none";
+
+  if(window.history.replaceState){
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+}
+
+function applyUrlFilter(){
+  const params = new URLSearchParams(window.location.search);
+  let key = params.get("rase");
+
+  if(!key) return;
+
+  key = decodeURIComponent(key).toLowerCase().trim();
+
+  const aliases = {
+    "maine coon": "maine-coon",
+    "maine-coon": "maine-coon",
+    "norsk skogkatt": "norsk-skogkatt",
+    "norsk-skogkatt": "norsk-skogkatt",
+    "birma": "birma",
+    "perser": "perser",
+    "bengal": "bengal",
+    "siameser": "siameser",
+    "ragdoll": "ragdoll",
+    "scottish fold": "scottish-fold",
+    "scottish-fold": "scottish-fold",
+    "russian blue": "russian-blue",
+    "russian-blue": "russian-blue",
+    "devon rex": "devon-rex",
+    "devon-rex": "devon-rex"
+  };
+
+  key = aliases[key] || key;
+  filterByBreedKey(key);
+}
+
+document.addEventListener("DOMContentLoaded", applyUrlFilter);
 </script>
+
 
 </body>
 </html>
