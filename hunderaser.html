@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hunderaser 2.1 - Hundene våre</title>
+<title>Hunderaser 3.0 - Hundene våre</title>
 
 <style>
 :root{
@@ -224,6 +224,44 @@ body{
   margin-top:10px;
 }
 
+
+.ratings{
+  margin-top:14px;
+  padding:12px;
+  border-radius:18px;
+  background:#f8fbff;
+  border:1px dashed #bfdbfe;
+  color:#1e3a8a;
+  line-height:1.7;
+  font-weight:800;
+  font-size:14px;
+}
+
+.breed-links{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  margin-top:14px;
+}
+
+.breed-links a{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  color:white;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  border-radius:999px;
+  padding:10px 12px;
+  font-weight:900;
+  font-size:14px;
+  box-shadow:0 6px 14px rgba(15,23,42,.08);
+}
+
+.breed-links a:hover{
+  filter:brightness(.96);
+}
+
 .footer-note{
   text-align:center;
   color:#64748b;
@@ -297,10 +335,10 @@ cursor:pointer;
   </div>
 
   <section class="hero">
-    <h1>🐶 Hunderaser 2.1</h1>
+    <h1>🐶 Hunderaser 3.0</h1>
     <p>
       Her samler vi enkel og nyttig rasekunnskap om hunder.
-      Denne versjonen bruker raser som har bilder i mappen, slik at siden ser ferdig og ryddig ut.
+      Nå med rasefakta, stjernevurderinger og raske knapper videre til utstyr, helse og trening.
     </p>
     <a class="mainbtn" href="kunnskap.html">⬅️ Tilbake til Kunnskapssenter</a>
   </section>
@@ -309,7 +347,7 @@ cursor:pointer;
     <h2 class="section-title">Finn en hunderase</h2>
     <p class="sub">Søk etter rase, opprinnelse eller egenskap. Trykk på et bilde for større visning.</p>
     <input class="searchbox" id="searchInput" onkeyup="filterBreeds()" placeholder="Søk etter hunderase...">
-    <div class="breed-count">🐶 41 hunderaser med bilder</div>
+    <div class="breed-count">🐶 41 hunderaser med stjerner og raske lenker</div>
 
     <div class="breed-grid" id="breedGrid">
 
@@ -323,6 +361,17 @@ cursor:pointer;
           <div class="fact">✂️ Høyt pelsstell</div>
         </div>
         <p class="desc">En glad, sosial og leken selskapshund som ofte passer godt for familier og eldre. Krever jevnlig pelsstell.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="golden retriever skottland familiehund aktiv vennlig">
         <img src="bilder/golden.png" alt="Golden Retriever">
@@ -334,6 +383,17 @@ cursor:pointer;
           <div class="fact">🏃 Aktiv</div>
         </div>
         <p class="desc">En populær familiehund som er vennlig, lærevillig og glad i aktivitet, tur og kontakt med mennesker.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="schæfer schaefer tyskland brukshund vakthund aktiv lydig">
         <img src="bilder/schafer.png" alt="Schæfer">
@@ -345,6 +405,17 @@ cursor:pointer;
           <div class="fact">🎓 Treningsvillig</div>
         </div>
         <p class="desc">En intelligent og allsidig brukshund som trenger tydelig trening, aktivitet og oppgaver for å trives godt.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="border collie skottland gjeterhund aktiv intelligent">
         <img src="bilder/border-collie.png" alt="Border Collie">
@@ -356,6 +427,17 @@ cursor:pointer;
           <div class="fact">⚡ Svært aktiv</div>
         </div>
         <p class="desc">En ekstremt intelligent gjeterhund som trenger mye aktivitet, trening og mentale utfordringer.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="australian shepherd usa aktiv gjeterhund">
         <img src="bilder/australian-shepherd.png" alt="Australian Shepherd">
@@ -367,6 +449,17 @@ cursor:pointer;
           <div class="fact">⚡ Svært aktiv</div>
         </div>
         <p class="desc">En lærevillig og aktiv hund som ofte passer best for eiere som liker trening, tur og hundesport.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="collie skottland familiehund mild">
         <img src="bilder/collie.png" alt="Collie">
@@ -378,6 +471,17 @@ cursor:pointer;
           <div class="fact">🏡 Familievennlig</div>
         </div>
         <p class="desc">En vakker og lojal familiehund som ofte er mild, våken og glad i kontakt med familien.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="cavalier king charles spaniel england familie liten selskapshund">
         <img src="bilder/cavalier.png" alt="Cavalier King Charles Spaniel">
@@ -389,6 +493,17 @@ cursor:pointer;
           <div class="fact">🏡 Familievennlig</div>
         </div>
         <p class="desc">En mild, kjærlig og sosial selskapshund som ofte trives godt i familier og sammen med mennesker.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="chihuahua mexico liten selskapshund våken">
         <img src="bilder/Chihuahua.png" alt="Chihuahua">
@@ -400,6 +515,17 @@ cursor:pointer;
           <div class="fact">🐾 Liten</div>
         </div>
         <p class="desc">En svært liten, våken og personlig hund. Trenger trygg håndtering, sosialisering og varme omgivelser.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="fransk bulldog frankrike liten familie selskapshund rolig">
         <img src="bilder/fransk-bulldog.png" alt="Fransk Bulldog">
@@ -411,6 +537,17 @@ cursor:pointer;
           <div class="fact">🏡 Selskapshund</div>
         </div>
         <p class="desc">En sosial og sjarmerende hund med mye personlighet. Trenger moderat aktivitet og oppmerksomhet på varme dager.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="mops kina pug selskapshund liten">
         <img src="bilder/mops.png" alt="Mops">
@@ -422,6 +559,17 @@ cursor:pointer;
           <div class="fact">🏡 Selskapshund</div>
         </div>
         <p class="desc">En sosial, morsom og hengiven liten hund. Trenger moderat mosjon og ekstra omsorg i varmt vær.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="puddel tyskland frankrike smart pelsstell familie allergivennlig">
         <img src="bilder/puddel.png" alt="Puddel">
@@ -433,6 +581,17 @@ cursor:pointer;
           <div class="fact">✂️ Høyt pelsstell</div>
         </div>
         <p class="desc">En svært lærevillig og elegant hund som finnes i flere størrelser. Krever regelmessig pelsstell og mental aktivitet.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="dachs dachshund tyskland liten jakthund">
         <img src="bilder/dachs.png" alt="Dachs">
@@ -444,6 +603,17 @@ cursor:pointer;
           <div class="fact">🐾 Modig</div>
         </div>
         <p class="desc">En liten hund med stor personlighet. Opprinnelig jakthund, ofte våken, modig og selvstendig.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="engelsk cocker spaniel england aktiv familie">
         <img src="bilder/cocker.png" alt="Engelsk Cocker Spaniel">
@@ -455,6 +625,17 @@ cursor:pointer;
           <div class="fact">🏃 Aktiv</div>
         </div>
         <p class="desc">En glad og sosial hund som ofte liker tur, lek og nesearbeid. Krever jevnlig pelsstell.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="beagle england nesehund jakthund familie">
         <img src="bilder/beagle.png" alt="Beagle">
@@ -466,6 +647,17 @@ cursor:pointer;
           <div class="fact">👃 Nesehund</div>
         </div>
         <p class="desc">En glad og nysgjerrig hund med sterk luktesans. Trenger aktivisering og trygg innkallingstrening.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="corgi wales welsh corgi liten familie">
         <img src="bilder/corgi.png" alt="Corgi">
@@ -477,6 +669,17 @@ cursor:pointer;
           <div class="fact">🏡 Familievennlig</div>
         </div>
         <p class="desc">En våken, morsom og robust liten gjeterhund med mye personlighet.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="bull terrier england robust">
         <img src="bilder/bull-terrier.png" alt="Bull Terrier">
@@ -488,6 +691,17 @@ cursor:pointer;
           <div class="fact">🐾 Robust</div>
         </div>
         <p class="desc">En kraftig og leken terrier med særegent utseende. Trenger tydelig trening og god sosialisering.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="boston terrier usa selskapshund">
         <img src="bilder/boston-terrier.png" alt="Boston Terrier">
@@ -499,6 +713,17 @@ cursor:pointer;
           <div class="fact">🏡 Selskapshund</div>
         </div>
         <p class="desc">En liten og livlig selskapshund med vennlig temperament. Passer ofte godt i by og familie.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="lhasa apso tibet liten pelsstell">
         <img src="bilder/lhasa-apso.png" alt="Lhasa Apso">
@@ -510,6 +735,17 @@ cursor:pointer;
           <div class="fact">✂️ Høyt pelsstell</div>
         </div>
         <p class="desc">En liten og selvstendig selskapshund med lang pels og våken personlighet.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="malteser malta liten hvit pelsstell">
         <img src="bilder/malteser.png" alt="Malteser">
@@ -521,6 +757,17 @@ cursor:pointer;
           <div class="fact">✂️ Høyt pelsstell</div>
         </div>
         <p class="desc">En liten, elegant og hengiven selskapshund med hvit pels som krever regelmessig stell.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="pomeranian tyskland polen liten spisshund">
         <img src="bilder/pomeranian.png" alt="Pomeranian">
@@ -532,6 +779,17 @@ cursor:pointer;
           <div class="fact">🪮 Pelsstell</div>
         </div>
         <p class="desc">En liten spisshund med stor personlighet og tykk pels som bør børstes jevnlig.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="norsk lundehund norge sjelden spesiell klatrehund">
         <img src="bilder/lundehund.png" alt="Norsk Lundehund">
@@ -543,6 +801,17 @@ cursor:pointer;
           <div class="fact">⭐ Sjelden rase</div>
         </div>
         <p class="desc">En unik norsk rase med spesielle egenskaper, opprinnelig brukt til jakt på lundefugl langs kysten.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="samojed russland hvit spisshund pels">
         <img src="bilder/samojed.png" alt="Samojed">
@@ -554,6 +823,17 @@ cursor:pointer;
           <div class="fact">❄️ Tykk pels</div>
         </div>
         <p class="desc">En vennlig og sosial spisshund med tykk hvit pels. Trenger aktivitet og jevnlig pelsstell.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="siberian husky russland aktiv trekkhund">
         <img src="bilder/husky.png" alt="Siberian Husky">
@@ -565,6 +845,17 @@ cursor:pointer;
           <div class="fact">⚡ Svært aktiv</div>
         </div>
         <p class="desc">En utholdende trekkhund som trenger mye mosjon, trygg innhegning og aktive eiere.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="akita japan spisshund selvstendig">
         <img src="bilder/akita.png" alt="Akita">
@@ -576,6 +867,17 @@ cursor:pointer;
           <div class="fact">🐾 Selvstendig</div>
         </div>
         <p class="desc">En kraftig og lojal spisshund som trenger trygg sosialisering og erfaren håndtering.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="shiba inu japan spisshund">
         <img src="bilder/shiba-inu.png" alt="Shiba Inu">
@@ -587,6 +889,17 @@ cursor:pointer;
           <div class="fact">🐾 Selvstendig</div>
         </div>
         <p class="desc">En liten japansk spisshund som ofte er selvstendig, renlig og våken.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="rottweiler tyskland brukshund">
         <img src="bilder/rottweiler.png" alt="Rottweiler">
@@ -598,6 +911,17 @@ cursor:pointer;
           <div class="fact">🎓 Treningsvillig</div>
         </div>
         <p class="desc">En kraftig, lojal og arbeidsvillig hund som trenger god sosialisering og tydelig trening.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="dobermann tyskland aktiv brukshund">
         <img src="bilder/dobermann.png" alt="Dobermann">
@@ -609,6 +933,17 @@ cursor:pointer;
           <div class="fact">🏃 Aktiv</div>
         </div>
         <p class="desc">En elegant og aktiv brukshund som er lojal, våken og treningsvillig.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="cane corso italia stor kraftig">
         <img src="bilder/cane-corso.png" alt="Cane Corso">
@@ -620,6 +955,17 @@ cursor:pointer;
           <div class="fact">🐾 Kraftig</div>
         </div>
         <p class="desc">En stor og kraftig hund som trenger trygg eier, god sosialisering og tydelig trening.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="newfoundlandshund newfoundland canada stor vannhund">
         <img src="bilder/newfoundland.png" alt="Newfoundlandshund">
@@ -631,6 +977,17 @@ cursor:pointer;
           <div class="fact">🌊 Vannhund</div>
         </div>
         <p class="desc">En stor, rolig og vennlig hund kjent for styrke og svømmeegenskaper. Krever plass og pelsstell.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="grand danois tyskland stor">
         <img src="bilder/grand-danois.png" alt="Grand Danois">
@@ -642,6 +999,17 @@ cursor:pointer;
           <div class="fact">🐾 Svært stor</div>
         </div>
         <p class="desc">En svært stor, ofte mild og rolig hund. Trenger god plass, god oppfølging og riktig fôring.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="sankt bernhard sveits stor">
         <img src="bilder/sankt-bernhard.png" alt="Sankt Bernhard">
@@ -653,6 +1021,17 @@ cursor:pointer;
           <div class="fact">🐾 Svært stor</div>
         </div>
         <p class="desc">En stor og rolig familiehund med mye tyngde. Trenger plass, rolig mosjon og jevnlig pelsstell.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="dalmatiner kroatia aktiv">
         <img src="bilder/dalmatiner.png" alt="Dalmatiner">
@@ -664,6 +1043,17 @@ cursor:pointer;
           <div class="fact">🏃 Aktiv</div>
         </div>
         <p class="desc">En elegant og aktiv hund med karakteristiske prikker. Trenger mosjon, trening og tydelige rutiner.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="boxer tyskland familie aktiv">
         <img src="bilder/boxer.png" alt="Boxer">
@@ -675,6 +1065,17 @@ cursor:pointer;
           <div class="fact">🏃 Aktiv</div>
         </div>
         <p class="desc">En leken, kraftig og sosial hund som ofte er glad i familien og trenger aktivitet.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="basenji kongo selvstendig">
         <img src="bilder/basenji.png" alt="Basenji">
@@ -686,6 +1087,17 @@ cursor:pointer;
           <div class="fact">🐾 Selvstendig</div>
         </div>
         <p class="desc">En spesiell og selvstendig hunderase kjent for å være våken, renlig og lite bjeffete.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="ridgeback rhodesian sør-afrika aktiv">
         <img src="bilder/ridgeback.png" alt="Ridgeback">
@@ -697,6 +1109,17 @@ cursor:pointer;
           <div class="fact">🏃 Aktiv</div>
         </div>
         <p class="desc">En stor og sterk hund som trenger trygge rammer, mosjon og god sosialisering.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="kinesisk nakenhund kina liten">
         <img src="bilder/kinesisk-nakenhund.png" alt="Kinesisk Nakenhund">
@@ -708,6 +1131,17 @@ cursor:pointer;
           <div class="fact">🐾 Spesiell pels</div>
         </div>
         <p class="desc">En liten selskapshund som finnes både naken og med pels. Trenger hud- eller pelsstell etter type.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="briard frankrike gjeterhund pelsstell">
         <img src="bilder/briard.png" alt="Briard">
@@ -719,6 +1153,17 @@ cursor:pointer;
           <div class="fact">✂️ Pelsstell</div>
         </div>
         <p class="desc">En stor fransk gjeterhund med lang pels. Trenger aktivitet, trening og jevnlig pelsstell.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="irsk setter irland aktiv">
         <img src="bilder/irsk-setter.png" alt="Irsk Setter">
@@ -730,6 +1175,17 @@ cursor:pointer;
           <div class="fact">🏃 Aktiv</div>
         </div>
         <p class="desc">En elegant, livlig og vennlig hund som trives med tur, løping og aktive eiere.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="irsk ulvehund irland stor">
         <img src="bilder/irsk-ulvehund.png" alt="Irsk Ulvehund">
@@ -741,6 +1197,17 @@ cursor:pointer;
           <div class="fact">🐾 Svært stor</div>
         </div>
         <p class="desc">En svært stor, rolig og vennlig hund. Trenger plass, rolig aktivitet og god oppfølging.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="shar pei sharpei kina">
         <img src="bilder/sharpei.png" alt="Shar Pei">
@@ -752,6 +1219,17 @@ cursor:pointer;
           <div class="fact">🐾 Selvstendig</div>
         </div>
         <p class="desc">En rolig og selvstendig hund med særpreget hud og rynker. Trenger god oppfølging av hud og ører.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
       <div class="breed-card" data-search="schnauzer tyskland pelsstell">
         <img src="bilder/schnauzer.png" alt="Schnauzer">
@@ -763,14 +1241,25 @@ cursor:pointer;
           <div class="fact">✂️ Pelsstell</div>
         </div>
         <p class="desc">En våken og robust hundetype som finnes i flere størrelser. Trenger aktivitet og regelmessig pelsstell.</p>
+        <div class="ratings">
+          👨‍👩‍👧 Familiehund: ⭐⭐⭐⭐<br>
+          🏃 Aktivitet: ⭐⭐⭐⭐<br>
+          🐕 Nybegynnervennlig: ⭐⭐⭐
+        </div>
+
+        <div class="breed-links">
+          <a href="hunderaser-utstyr.html">✂️ Se anbefalt utstyr</a>
+          <a href="helse-3-0.html">🏥 Helse og vanlige utfordringer</a>
+          <a href="trening.html">🎓 Treningstips</a>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="card">
-    <h2 class="section-title">Neste oppgradering</h2>
+    <h2 class="section-title">Slik bruker du Hunderaser 3.0</h2>
     <p class="sub">
-      Når flere bilder er lastet opp, kan vi legge inn enda flere raser. Etterpå bygger vi Hunderaser 3.0 med pelsstellutstyr, klotang på alle raser og “Kjøpes hos”.
+      Hver rase har nå rask vei videre til anbefalt utstyr, helseguide og treningstips. Målet er at Hunderaser-siden skal være inngangen til hele Kunnskapssenteret.
     </p>
   </section>
 
