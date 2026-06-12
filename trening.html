@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trening 2.0 - Hundene våre</title>
+<title>Trening 2.1 - Hundene våre</title>
 
 <style>
 :root{
@@ -250,6 +250,38 @@ object-fit:cover;
 border-radius:16px;
 margin-bottom:12px;
 }
+
+.guide-box{
+  display:none;
+  margin-top:14px;
+  padding:14px;
+  border-radius:18px;
+  background:#f0fdf4;
+  border:1px solid #bbf7d0;
+  color:#14532d;
+  line-height:1.6;
+  font-size:14px;
+}
+
+.guide-box h4{
+  margin:0 0 8px;
+  font-size:17px;
+  color:#166534;
+}
+
+.guide-box ol{
+  margin:0;
+  padding-left:20px;
+}
+
+.guide-box li{
+  margin-bottom:6px;
+}
+
+.openbtn{
+  border:0;
+}
+
 .footer-note{
 
   text-align:center;
@@ -294,7 +326,7 @@ margin-bottom:12px;
   </div>
 
   <section class="hero">
-    <h1>🎓 Trening & Hundeskole 2.0</h1>
+    <h1>🎓 Trening & Hundeskole 2.1</h1>
     <p>
       Her samler vi enkle og praktiske treningsråd for hundeeiere.
       Målet er å gjøre hverdagen enklere, tryggere og morsommere for både hund og eier.
@@ -316,109 +348,154 @@ margin-bottom:12px;
       <div class="training-card" data-search="valpetrening valp start trening trygghet rutiner">
         <div>
           <div class="icon">🐕</div>
-          <img class="training-image" src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1200" alt="Valpetrening"><h3>Valpetrening</h3><p>Valpetrening bør starte fra første dag i nytt hjem. Fokuser på trygghet, renslighet, navn, kontakt og gode rutiner. Korte økter på 2–5 minutter fungerer ofte best. Belønn ønsket adferd raskt og gjør treningen positiv. Sosialisering med mennesker, lyder og miljø er også viktig.</p>
+          <img class="training-image" src="https://source.unsplash.com/900x600/?puppy,dog,training" alt="Valpetrening"><h3>Valpetrening</h3><p>Valpetrening bør starte fra første dag i nytt hjem. Fokuser på trygghet, renslighet, navn, kontakt og gode rutiner. Korte økter på 2–5 minutter fungerer ofte best. Belønn ønsket adferd raskt og gjør treningen positiv. Sosialisering med mennesker, lyder og miljø er også viktig.</p>
           <div class="tagrow">
             <span class="tag">Valp</span>
             <span class="tag blue">Start her</span>
           </div>
         </div>
-        <a class="openbtn" href="#">📖 Les hele guiden</a>
+        <button class="openbtn" onclick="toggleGuide('guide-valpetrening')">📖 Les hele guiden</button>
+          <div class="guide-box" id="guide-valpetrening">
+            <h4>📖 Kort guide: Valpetrening</h4>
+            <ol><li>Start med navn, kontakt og trygghet i hjemmet.</li><li>Tren renslighet ved å gå ut etter søvn, mat og lek.</li><li>Belønn rolig når valpen gjør riktig.</li><li>Hold øktene korte, gjerne 2–5 minutter.</li><li>Ikke mas. Avslutt mens valpen fortsatt lykkes.</li></ol>
+          </div>
+        
       </div>
 
       <div class="training-card" data-search="innkalling kom hit løs hund belønning kontakt">
         <div>
           <div class="icon">📣</div>
-          <img class="training-image" src="https://images.unsplash.com/photo-1517849845537-4d257902454a?w=1200" alt="Innkalling"><h3>Innkalling</h3><p>Start innkalling på et rolig sted uten forstyrrelser. Bruk hundens navn og et fast innkallingsord. Belønn alltid når hunden kommer. Bruk gjerne langline i starten. Unngå å rope hvis du tror hunden ikke kommer, og gjør det alltid hyggelig å komme tilbake.</p>
+          <img class="training-image" src="https://source.unsplash.com/900x600/?dog,running,owner" alt="Innkalling"><h3>Innkalling</h3><p>Start innkalling på et rolig sted uten forstyrrelser. Bruk hundens navn og et fast innkallingsord. Belønn alltid når hunden kommer. Bruk gjerne langline i starten. Unngå å rope hvis du tror hunden ikke kommer, og gjør det alltid hyggelig å komme tilbake.</p>
           <div class="tagrow">
             <span class="tag">Kontakt</span>
             <span class="tag blue">Viktig</span>
           </div>
         </div>
-        <a class="openbtn" href="#">📖 Les hele guiden</a>
+        <button class="openbtn" onclick="toggleGuide('guide-innkalling')">📖 Les hele guiden</button>
+          <div class="guide-box" id="guide-innkalling">
+            <h4>📖 Kort guide: Innkalling</h4>
+            <ol><li>Start innendørs eller på et rolig område.</li><li>Bruk et fast ord, for eksempel «kom».</li><li>Belønn ekstra godt når hunden kommer.</li><li>Tren med langline ute før hunden slippes løs.</li><li>Ikke kall inn for å gjøre noe negativt, som å avslutte all moro hver gang.</li></ol>
+          </div>
+        
       </div>
 
       <div class="training-card" data-search="gå pent i bånd båndtrening tur trekking kontakt">
         <div>
           <div class="icon">🚶</div>
-          <img class="training-image" src="https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=1200" alt="Gå pent i bånd"><h3>Gå pent i bånd</h3><p>Når hunden trekker, stopp rolig opp eller skift retning. Belønn når hunden går ved siden av deg med slakt bånd. Korte økter gir best resultat. Mange små suksesser er bedre enn lange treningsøkter.</p>
+          <img class="training-image" src="https://source.unsplash.com/900x600/?dog,leash,walk" alt="Gå pent i bånd"><h3>Gå pent i bånd</h3><p>Når hunden trekker, stopp rolig opp eller skift retning. Belønn når hunden går ved siden av deg med slakt bånd. Korte økter gir best resultat. Mange små suksesser er bedre enn lange treningsøkter.</p>
           <div class="tagrow">
             <span class="tag">Tur</span>
             <span class="tag">Hverdag</span>
           </div>
         </div>
-        <a class="openbtn" href="#">📖 Les hele guiden</a>
+        <button class="openbtn" onclick="toggleGuide('guide-g-pent-i-b-nd')">📖 Les hele guiden</button>
+          <div class="guide-box" id="guide-g-pent-i-b-nd">
+            <h4>📖 Kort guide: Gå pent i bånd</h4>
+            <ol><li>Start på et rolig sted uten for mange forstyrrelser.</li><li>Belønn når hunden går med slakt bånd ved siden av deg.</li><li>Stopp rolig når hunden trekker.</li><li>Gå videre når båndet blir slakt igjen.</li><li>Tren korte turer ofte i stedet for én lang kamp.</li></ol>
+          </div>
+        
       </div>
 
       <div class="training-card" data-search="sosialisering valp hund mennesker miljø trygghet">
         <div>
           <div class="icon">🤝</div>
-          <img class="training-image" src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1200" alt="Sosialisering"><h3>Sosialisering</h3><p>Sosialisering handler om å gi hunden positive erfaringer med mennesker, hunder, miljøer og lyder. La hunden observere i eget tempo. Unngå å presse usikre hunder inn i situasjoner de ikke er komfortable med.</p>
+          <img class="training-image" src="https://source.unsplash.com/900x600/?dogs,people,park" alt="Sosialisering"><h3>Sosialisering</h3><p>Sosialisering handler om å gi hunden positive erfaringer med mennesker, hunder, miljøer og lyder. La hunden observere i eget tempo. Unngå å presse usikre hunder inn i situasjoner de ikke er komfortable med.</p>
           <div class="tagrow">
             <span class="tag">Trygghet</span>
             <span class="tag blue">Valp</span>
           </div>
         </div>
-        <a class="openbtn" href="#">📖 Les hele guiden</a>
+        <button class="openbtn" onclick="toggleGuide('guide-sosialisering')">📖 Les hele guiden</button>
+          <div class="guide-box" id="guide-sosialisering">
+            <h4>📖 Kort guide: Sosialisering</h4>
+            <ol><li>La hunden møte nye miljøer i rolig tempo.</li><li>Gi positive opplevelser med mennesker, hunder, lyder og trafikk.</li><li>Ikke tving hunden bort til noe den er redd for.</li><li>Belønn rolig nysgjerrighet.</li><li>Husk at sosialisering handler om trygghet, ikke flest mulig møter.</li></ol>
+          </div>
+        
       </div>
 
       <div class="training-card" data-search="klikkertrening klikker belønning shaping lære hund">
         <div>
           <div class="icon">🎯</div>
-          <img class="training-image" src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=1200" alt="Klikkertrening"><h3>Klikkertrening</h3><p>Klikkertrening gjør det lettere å fortelle hunden nøyaktig hva som var riktig. Klikk i samme øyeblikk som ønsket adferd skjer og gi deretter belønning. Metoden er effektiv for både enkle og avanserte øvelser.</p>
+          <img class="training-image" src="https://source.unsplash.com/900x600/?dog,training,treat" alt="Klikkertrening"><h3>Klikkertrening</h3><p>Klikkertrening gjør det lettere å fortelle hunden nøyaktig hva som var riktig. Klikk i samme øyeblikk som ønsket adferd skjer og gi deretter belønning. Metoden er effektiv for både enkle og avanserte øvelser.</p>
           <div class="tagrow">
             <span class="tag purple">Teknikk</span>
             <span class="tag">Belønning</span>
           </div>
         </div>
-        <a class="openbtn" href="#">📖 Les hele guiden</a>
+        <button class="openbtn" onclick="toggleGuide('guide-klikkertrening')">📖 Les hele guiden</button>
+          <div class="guide-box" id="guide-klikkertrening">
+            <h4>📖 Kort guide: Klikkertrening</h4>
+            <ol><li>Start med å klikke og gi godbit flere ganger.</li><li>Klikk akkurat når hunden gjør riktig.</li><li>Gi alltid belønning etter klikket.</li><li>Bruk klikkeren til enkle øvelser som sitt, kontakt og target.</li><li>Hold øktene korte og morsomme.</li></ol>
+          </div>
+        
       </div>
 
       <div class="training-card" data-search="hjemme alene trening separasjon ro trygghet alene hjemme">
         <div>
           <div class="icon">🏠</div>
-          <img class="training-image" src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1200" alt="Hjemme alene"><h3>Hjemme alene</h3><p>Begynn med få sekunder alene og øk gradvis. Hunden bør være rolig før du går ut døren. Ikke gjør stor sak av avskjed eller hjemkomst. Mange hunder trenger tid til å lære å være trygge alene.</p>
+          <img class="training-image" src="https://source.unsplash.com/900x600/?dog,bed,home" alt="Hjemme alene"><h3>Hjemme alene</h3><p>Begynn med få sekunder alene og øk gradvis. Hunden bør være rolig før du går ut døren. Ikke gjør stor sak av avskjed eller hjemkomst. Mange hunder trenger tid til å lære å være trygge alene.</p>
           <div class="tagrow">
             <span class="tag">Hverdag</span>
             <span class="tag blue">Trygghet</span>
           </div>
         </div>
-        <a class="openbtn" href="#">📖 Les hele guiden</a>
+        <button class="openbtn" onclick="toggleGuide('guide-hjemme-alene')">📖 Les hele guiden</button>
+          <div class="guide-box" id="guide-hjemme-alene">
+            <h4>📖 Kort guide: Hjemme alene</h4>
+            <ol><li>La hunden ha en trygg plass, for eksempel seng eller teppe.</li><li>Start med noen sekunder alene.</li><li>Øk tiden gradvis når hunden er rolig.</li><li>Unngå store avskjeder og voldsom hilsing når du kommer tilbake.</li><li>Gi gjerne rolig aktivisering før du går.</li></ol>
+          </div>
+        
       </div>
 
       <div class="training-card" data-search="aktivisering hjernetrim søk nesearbeid mental trening">
         <div>
           <div class="icon">🧠</div>
-          <img class="training-image" src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1200" alt="Aktivisering og hjernetrim"><h3>Aktivisering og hjernetrim</h3><p>Mental trening kan være like viktig som fysisk aktivitet. Godbitsøk, spor, problemløsningsspill og nesearbeid gir hjernen arbeid og kan redusere kjedsomhet og stress.</p>
+          <img class="training-image" src="https://source.unsplash.com/900x600/?dog,toy,play" alt="Aktivisering og hjernetrim"><h3>Aktivisering og hjernetrim</h3><p>Mental trening kan være like viktig som fysisk aktivitet. Godbitsøk, spor, problemløsningsspill og nesearbeid gir hjernen arbeid og kan redusere kjedsomhet og stress.</p>
           <div class="tagrow">
             <span class="tag">Hjernetrim</span>
             <span class="tag green">Moro</span>
           </div>
         </div>
-        <a class="openbtn" href="#">📖 Les hele guiden</a>
+        <button class="openbtn" onclick="toggleGuide('guide-aktivisering-og-hjernetrim')">📖 Les hele guiden</button>
+          <div class="guide-box" id="guide-aktivisering-og-hjernetrim">
+            <h4>📖 Kort guide: Aktivisering og hjernetrim</h4>
+            <ol><li>Bruk godbitsøk inne eller ute.</li><li>La hunden lete etter mat i håndkle, snusematte eller aktivitetsleke.</li><li>Tren enkle triks som touch, snurr eller rygg.</li><li>Bruk nesearbeid for å gjøre hunden mentalt sliten.</li><li>Tilpass vanskelighetsgraden slik at hunden lykkes.</li></ol>
+          </div>
+        
       </div>
 
       <div class="training-card" data-search="belønning motivasjon godbit lek ros positiv trening">
         <div>
           <div class="icon">⭐</div>
-          <img class="training-image" src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1200" alt="Belønning og motivasjon"><h3>Belønning og motivasjon</h3><p>Finn ut hva hunden liker best. Noen motiveres av godbiter, andre av lek eller ros. Variasjon kan øke motivasjonen. Belønn raskt og tydelig når hunden gjør noe riktig.</p>
+          <img class="training-image" src="https://source.unsplash.com/900x600/?dog,treat,hand" alt="Belønning og motivasjon"><h3>Belønning og motivasjon</h3><p>Finn ut hva hunden liker best. Noen motiveres av godbiter, andre av lek eller ros. Variasjon kan øke motivasjonen. Belønn raskt og tydelig når hunden gjør noe riktig.</p>
           <div class="tagrow">
             <span class="tag">Motivasjon</span>
             <span class="tag purple">Positiv trening</span>
           </div>
         </div>
-        <a class="openbtn" href="#">📖 Les hele guiden</a>
+        <button class="openbtn" onclick="toggleGuide('guide-bel-nning-og-motivasjon')">📖 Les hele guiden</button>
+          <div class="guide-box" id="guide-bel-nning-og-motivasjon">
+            <h4>📖 Kort guide: Belønning og motivasjon</h4>
+            <ol><li>Finn ut hva hunden liker best: godbit, leke, ros eller lek.</li><li>Bruk ekstra god belønning på vanskelige øvelser.</li><li>Belønn raskt når hunden gjør riktig.</li><li>Varier belønningene for å holde motivasjonen oppe.</li><li>Ikke spar på ros når hunden prøver.</li></ol>
+          </div>
+        
       </div>
 
       <div class="training-card" data-search="kontaktøvelser fokus hund eier oppmerksomhet trening">
         <div>
           <div class="icon">👀</div>
-          <img class="training-image" src="https://images.unsplash.com/photo-1517849845537-4d257902454a?w=1200" alt="Kontaktøvelser"><h3>Kontaktøvelser</h3><p>Kontaktøvelser bygger samarbeid mellom hund og eier. Belønn når hunden frivillig ser på deg. Øk gradvis vanskelighetsgraden ved å trene i miljøer med flere forstyrrelser.</p>
+          <img class="training-image" src="https://source.unsplash.com/900x600/?dog,eye,contact" alt="Kontaktøvelser"><h3>Kontaktøvelser</h3><p>Kontaktøvelser bygger samarbeid mellom hund og eier. Belønn når hunden frivillig ser på deg. Øk gradvis vanskelighetsgraden ved å trene i miljøer med flere forstyrrelser.</p>
           <div class="tagrow">
             <span class="tag">Fokus</span>
             <span class="tag blue">Grunntrening</span>
           </div>
         </div>
-        <a class="openbtn" href="#">📖 Les hele guiden</a>
+        <button class="openbtn" onclick="toggleGuide('guide-kontakt-velser')">📖 Les hele guiden</button>
+          <div class="guide-box" id="guide-kontakt-velser">
+            <h4>📖 Kort guide: Kontaktøvelser</h4>
+            <ol><li>Belønn når hunden frivillig ser på deg.</li><li>Si navnet én gang og belønn kontakt.</li><li>Tren først uten forstyrrelser.</li><li>Øk vanskelighetsgraden gradvis ute på tur.</li><li>Kontaktøvelser gjør båndtrening, innkalling og hverdagen enklere.</li></ol>
+          </div>
+        
       </div>
 
     </div>
@@ -438,6 +515,13 @@ margin-bottom:12px;
 </div>
 
 <script>
+
+function toggleGuide(id){
+  const box = document.getElementById(id);
+  if(!box) return;
+  box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
 function filterTraining(){
   const input = document.getElementById("searchInput").value.toLowerCase();
   const cards = document.querySelectorAll(".training-card");
