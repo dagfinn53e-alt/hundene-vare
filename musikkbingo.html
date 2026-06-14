@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Musikk Bingo - Hundene våre</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#111827,#4c1d95,#7c2d12);color:white;text-align:center}
+.container{max-width:1000px;margin:auto;padding:22px}
+h1{font-size:44px;margin:12px 0 8px}.small{font-size:16px;opacity:.9;line-height:1.5}
+.card{background:rgba(255,255,255,.13);border-radius:24px;padding:22px;margin:18px 0;box-shadow:0 8px 25px rgba(0,0,0,.35)}
+button{border:0;border-radius:999px;padding:13px 18px;margin:7px;font-size:17px;cursor:pointer;background:#facc15;color:#111;font-weight:bold;box-shadow:0 6px 16px rgba(0,0,0,.18)}
+button:hover{background:#fde047}.back{background:#2563eb;color:white}.back:hover{background:#1d4ed8}.hidden{display:none}
+.partner{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center;text-align:left;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:24px;padding:18px}
+.partner img{width:150px;height:150px;object-fit:cover;border-radius:18px;border:2px solid rgba(255,255,255,.65)}
+.partner .eyebrow{color:#facc15;font-weight:900;font-size:18px;margin-bottom:6px}.partner h2{margin:0 0 6px;font-size:28px}.partner p{margin:0 0 12px;line-height:1.55}
+.partner a{display:inline-flex;text-decoration:none;color:#111827;background:#facc15;border-radius:999px;padding:12px 18px;font-weight:900}
+.bingo-area{display:grid;grid-template-columns:1fr 280px;gap:18px;align-items:start}.board{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.cell{min-height:86px;background:white;color:#111;border-radius:18px;padding:10px;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.18);border:3px solid transparent;user-select:none}
+.cell:hover{background:#f3f4f6}.cell.marked{background:#22c55e;color:white;border-color:#bbf7d0}.cell.free{background:#facc15;color:#111}
+.drawbox{background:rgba(255,255,255,.16);border-radius:22px;padding:18px;min-height:260px}.draw-title{font-size:18px;opacity:.9}.draw-current{font-size:30px;font-weight:900;margin:18px 0;color:#facc15;line-height:1.2}
+.draw-list{text-align:left;max-height:280px;overflow:auto;background:rgba(0,0,0,.18);border-radius:16px;padding:12px;line-height:1.6}
+.bingo-message{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:9999;align-items:center;justify-content:center;padding:20px}
+.bingo-box{background:linear-gradient(135deg,#facc15,#7c3aed);color:white;border-radius:34px;padding:35px;max-width:620px;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.bingo-box h2{font-size:58px;margin:0 0 12px}.bingo-box p{font-size:20px;line-height:1.5}
+.confetti{position:fixed;font-size:28px;pointer-events:none;animation:fall 3s linear forwards;z-index:99999}
+@keyframes fall{0%{transform:translateY(-50px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+.footer{opacity:.8;font-size:14px;margin-top:24px}
+@media(max-width:850px){.bingo-area{grid-template-columns:1fr}.partner{grid-template-columns:1fr;text-align:center}.partner img{margin:auto}}
+@media(max-width:600px){.container{padding:14px}h1{font-size:34px}.board{gap:7px}.cell{min-height:66px;border-radius:14px;padding:7px;font-size:12px}.bingo-box h2{font-size:42px}}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🎵 Musikk Bingo</h1>
+<button class="back" onclick="location.href='spill.html'">⬅️ Tilbake til spill</button>
+<p class="small">Velg musikkstil, få et tilfeldig bingobrett og marker ruter når artistene eller sangene blir trukket. Få 5 på rad for BINGO!</p>
+
+<div class="partner">
+<img src="bilder/dreggen-cafe.jpg" alt="Dreggen Café" onerror="this.style.display='none'">
+<div>
+<div class="eyebrow">☕ Musikkpartner</div>
+<h2>Dreggen Café</h2>
+<p>Musikk Bingo presenteres av Dreggen Café. Ta en pause med en god kopp kaffe, noe godt å spise og hyggelig musikk i koselige omgivelser.</p>
+<a href="butikk.html?id=c7240be8-5620-4588-8d3b-f0f10e2c30e5">☕ Besøk Dreggen Café</a>
+</div>
+</div>
+
+<div id="setup" class="card">
+<h2>Velg bingo-type</h2>
+<button onclick="newGame('mix')">🎲 Mix Bingo</button>
+<button onclick="newGame('country')">🤠 Country</button>
+<button onclick="newGame('pop')">🎤 Pop</button>
+<button onclick="newGame('rock')">🎸 Rock</button>
+<button onclick="newGame('soul')">💿 Soul</button>
+<button onclick="newGame('norsk')">🇳🇴 Norsk nostalgi</button>
+</div>
+
+<div id="game" class="card hidden">
+<h2 id="gameTitle">🎲 Mix Bingo</h2>
+<p class="small">Trykk på rutene du har når navnet blir trukket. Midtruten er gratis.</p>
+<div class="bingo-area">
+<div class="board" id="board"></div>
+<div class="drawbox">
+<div class="draw-title">🎧 Nå trukket:</div>
+<div class="draw-current" id="currentDraw">Trykk "Trekk neste"</div>
+<button onclick="drawNext()">🎵 Trekk neste</button>
+<button onclick="newGame(currentMode)">🔄 Nytt brett</button>
+<div class="draw-list" id="drawList"></div>
+</div>
+</div>
+</div>
+<p class="footer">Hundenevåre.com – Musikkspill, quiz og moro.</p>
+</div>
+
+<div class="bingo-message" id="bingoMessage">
+<div class="bingo-box">
+<h2>🎉 BINGO!</h2>
+<p>Du fikk 5 på rad! Dette var musikk i toppklasse.</p>
+<button onclick="closeBingo()">Spill videre</button>
+<button onclick="newGame(currentMode);closeBingo()">Nytt brett</button>
+</div>
+</div>
+
+<script>
+const lists={
+country:["Johnny Cash","Dolly Parton","Kenny Rogers","Willie Nelson","Shania Twain","Garth Brooks","Alan Jackson","Tammy Wynette","Patsy Cline","George Strait","Ring of Fire","Jolene","The Gambler","On The Road Again","Friends in Low Places","9 to 5","Lucille","Stand By Your Man","Achy Breaky Heart","Chattahoochee","Merle Haggard","Glen Campbell","Loretta Lynn","Randy Travis","Faith Hill","Reba McEntire","John Denver","The Judds","Billy Ray Cyrus","Dixie Chicks"],
+pop:["ABBA","Michael Jackson","Madonna","a-ha","Bee Gees","Elvis Presley","Celine Dion","Whitney Houston","Spice Girls","Backstreet Boys","Dancing Queen","Billie Jean","Take On Me","Like a Virgin","Stayin' Alive","My Heart Will Go On","Wannabe","Barbie Girl","Believe","Sweet Caroline","Roxette","Ace of Base","Cher","George Michael","Phil Collins","Cyndi Lauper","Elton John","Boney M","Aqua","Mariah Carey"],
+rock:["Queen","The Beatles","The Rolling Stones","Bon Jovi","AC/DC","Guns N' Roses","Led Zeppelin","Deep Purple","Europe","Dire Straits","Bohemian Rhapsody","We Will Rock You","Hotel California","Smoke on the Water","The Final Countdown","Livin' on a Prayer","November Rain","Summer of 69","Stairway to Heaven","Satisfaction","Fleetwood Mac","Bryan Adams","Scorpions","Journey","Van Halen","The Doors","The Who","Boston","Kansas","Roxette"],
+soul:["Otis Redding","Percy Sledge","Ben E. King","Barry White","Al Green","Lionel Richie","Tina Turner","Whitney Houston","Mariah Carey","Boyz II Men","Stand By Me","When a Man Loves a Woman","Let's Stay Together","Hello","The Best","I Will Always Love You","Un-Break My Heart","End of the Road","Easy","My Girl","Aretha Franklin","Diana Ross","The Temptations","Four Tops","Billy Ocean","Luther Vandross","Anita Baker","Seal","Celine Dion","Michael Bolton"],
+norsk:["a-ha","Jahn Teigen","Wenche Myhre","DDE","Vazelina Bilopphøggers","Åge Aleksandersen","Hellbillies","Morten Harket","Sissel Kyrkjebø","Anita Skorgan","Take On Me","Optimist","Mil etter mil","Lys og varme","Splitter pine","Forelska i lærer'n","La det swinge","Rompa mi","Neste sommer","Har en drøm","Postgirobygget","Di Derre","deLillos","DumDum Boys","Mods","Marius Müller","Ole Ivars","Kurt Nilsen","Maria Mena","Karpe"]
+};
+let currentMode="mix",boardItems=[],drawnItems=[],bingoShown=false;
+function shuffle(a){let c=[...a];for(let i=c.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[c[i],c[j]]=[c[j],c[i]]}return c}
+function getPool(m){return m==="mix"?shuffle([...lists.country,...lists.pop,...lists.rock,...lists.soul,...lists.norsk]):shuffle(lists[m]||lists.pop)}
+function titleFor(m){return({mix:"🎲 Mix Bingo",country:"🤠 Country Bingo",pop:"🎤 Pop Bingo",rock:"🎸 Rock Bingo",soul:"💿 Soul Bingo",norsk:"🇳🇴 Norsk nostalgi Bingo"}[m]||"🎵 Musikk Bingo")}
+function newGame(m){currentMode=m||"mix";bingoShown=false;let pool=getPool(currentMode);boardItems=pool.slice(0,24);boardItems.splice(12,0,"GRATIS ⭐");drawnItems=[];document.getElementById("setup").classList.add("hidden");document.getElementById("game").classList.remove("hidden");document.getElementById("gameTitle").innerText=titleFor(currentMode);document.getElementById("currentDraw").innerText="Trykk «Trekk neste»";document.getElementById("drawList").innerHTML="";renderBoard()}
+function renderBoard(){const b=document.getElementById("board");b.innerHTML="";boardItems.forEach((item,index)=>{const d=document.createElement("div");d.className="cell";d.innerText=item;d.dataset.index=index;if(index===12)d.classList.add("marked","free");d.onclick=()=>{if(index!==12){d.classList.toggle("marked");checkBingo()}};b.appendChild(d)})}
+function drawNext(){const all=getPool(currentMode);const rem=all.filter(x=>!drawnItems.includes(x));if(rem.length===0){document.getElementById("currentDraw").innerText="Alle er trukket!";return}const next=rem[Math.floor(Math.random()*rem.length)];drawnItems.push(next);document.getElementById("currentDraw").innerText=next;document.getElementById("drawList").innerHTML=drawnItems.map((x,i)=>`${i+1}. ${x}`).reverse().join("<br>");autoHighlight(next)}
+function autoHighlight(n){document.querySelectorAll(".cell").forEach(c=>{if(c.innerText===n)c.style.borderColor="#facc15"})}
+function checkBingo(){const c=[...document.querySelectorAll(".cell")],m=c.map(x=>x.classList.contains("marked"));const lines=[[0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24],[0,5,10,15,20],[1,6,11,16,21],[2,7,12,17,22],[3,8,13,18,23],[4,9,14,19,24],[0,6,12,18,24],[4,8,12,16,20]];if(lines.some(l=>l.every(i=>m[i]))&&!bingoShown){bingoShown=true;showBingo()}}
+function showBingo(){document.getElementById("bingoMessage").style.display="flex";launchConfetti()}
+function closeBingo(){document.getElementById("bingoMessage").style.display="none"}
+function launchConfetti(){const e=['⭐','✨','🎉','🏆','🎵','💿','☕'];for(let i=0;i<65;i++){const el=document.createElement('div');el.className='confetti';el.innerText=e[Math.floor(Math.random()*e.length)];el.style.left=Math.random()*100+'vw';el.style.animationDelay=(Math.random()*0.8)+'s';document.body.appendChild(el);setTimeout(()=>el.remove(),3500)}}
+</script>
+</body>
+</html>
