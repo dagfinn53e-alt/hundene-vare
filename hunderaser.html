@@ -372,6 +372,37 @@ cursor:pointer;
   .breed-grid{grid-template-columns:1fr}
   .facts{grid-template-columns:1fr}
 }
+
+.memory-game-box{
+  border:1px solid rgba(124,58,237,.28);
+  background:
+    radial-gradient(circle at top left,rgba(124,58,237,.12),transparent 34%),
+    linear-gradient(180deg,#ffffff 0%,#f5f3ff 100%);
+}
+.memory-icon{
+  width:180px;
+  height:180px;
+  border-radius:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:82px;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:white;
+  box-shadow:0 14px 30px rgba(30,64,175,.20);
+}
+.memory-btn{
+  background:linear-gradient(135deg,#f97316,#7c3aed);
+}
+@media(max-width:760px){
+  .memory-icon{
+    width:140px;
+    height:140px;
+    font-size:64px;
+    margin:0 auto;
+  }
+}
+
 </style>
 </head>
 
@@ -410,6 +441,24 @@ cursor:pointer;
       <a class="partner-btn" href="butikk.html?id=25432b03-9a83-4b06-9245-5e39ddd55dcb">🏪 Besøk Dyrisk</a>
     </div>
   </section>
+
+
+  <section class="partner-box memory-game-box">
+    <div class="memory-icon">🧠</div>
+    <div>
+      <div class="partner-eyebrow">🐶 Nytt kunnskapsspill</div>
+      <h2 class="partner-title">Hva husker du? – Hunderaser</h2>
+      <p class="partner-text">
+        Test hvor mange hunderaser du klarer å kjenne igjen før tiden går ut.
+        Du får et 4×4 brett med hunderaser, hint på siden og 3 minutter på klokken.
+        Hver runde gir nye raser og nye utfordringer.
+      </p>
+      <a class="partner-btn memory-btn" href="hvahuskerdu_hunderaser.html">
+        🧠 Start Hva husker du?
+      </a>
+    </div>
+  </section>
+
 
   <section class="card">
     <h2 class="section-title">Finn en hunderase</h2>
