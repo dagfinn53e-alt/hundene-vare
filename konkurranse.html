@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konkurranse – Hundene våre</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#fff7ed,#eff6ff,#fdf2f8);
+  color:#102033;
+}
+.wrap{
+  max-width:1050px;
+  margin:0 auto;
+  padding:22px 16px 70px;
+}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  background:rgba(255,255,255,.9);
+  border-radius:26px;
+  padding:14px 18px;
+  box-shadow:0 12px 30px rgba(15,23,42,.10);
+  margin-bottom:20px;
+}
+.brand{
+  font-size:24px;
+  font-weight:900;
+  color:#1d4ed8;
+}
+.nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.nav a{
+  text-decoration:none;
+  background:#eaf2ff;
+  color:#1d4ed8;
+  border:1px solid #bfd7ff;
+  border-radius:999px;
+  padding:10px 15px;
+  font-weight:900;
+}
+.hero{
+  background:linear-gradient(135deg,#2563eb,#db2777,#f97316);
+  color:white;
+  border-radius:34px;
+  padding:36px;
+  box-shadow:0 18px 42px rgba(15,23,42,.18);
+  margin-bottom:22px;
+  text-align:center;
+}
+.hero h1{
+  font-size:48px;
+  margin:0 0 12px;
+}
+.hero p{
+  max-width:780px;
+  margin:0 auto;
+  font-size:18px;
+  line-height:1.6;
+}
+.card{
+  background:rgba(255,255,255,.93);
+  border-radius:28px;
+  padding:24px;
+  box-shadow:0 14px 34px rgba(15,23,42,.11);
+  border:1px solid rgba(191,219,254,.75);
+  margin-bottom:22px;
+}
+h2{
+  margin:0 0 12px;
+  color:#0f172a;
+  font-size:31px;
+}
+p,li{
+  line-height:1.6;
+  font-size:16px;
+}
+.prize{
+  background:linear-gradient(135deg,#fff7ed,#fef3c7);
+  border:1px solid #fed7aa;
+  color:#92400e;
+  border-radius:24px;
+  padding:20px;
+  font-weight:900;
+  text-align:center;
+  font-size:22px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+.game{
+  background:#f8fbff;
+  border:1px solid #dbeafe;
+  border-radius:20px;
+  padding:14px;
+  font-weight:900;
+}
+form{
+  display:grid;
+  gap:13px;
+}
+label{
+  font-weight:900;
+}
+input,select,textarea{
+  width:100%;
+  padding:14px;
+  border-radius:16px;
+  border:1px solid #cbd5e1;
+  font-size:16px;
+  box-sizing:border-box;
+}
+textarea{
+  min-height:90px;
+}
+.check{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  background:#f8fbff;
+  padding:14px;
+  border-radius:18px;
+  border:1px solid #dbeafe;
+}
+.check input{
+  width:auto;
+  margin-top:4px;
+}
+.btn{
+  border:none;
+  border-radius:999px;
+  padding:15px 22px;
+  background:linear-gradient(135deg,#16a34a,#2563eb);
+  color:white;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+}
+.notice{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#92400e;
+  border-radius:20px;
+  padding:16px;
+  font-weight:800;
+}
+.success{
+  display:none;
+  background:#dcfce7;
+  border:1px solid #bbf7d0;
+  color:#166534;
+  border-radius:20px;
+  padding:18px;
+  font-weight:900;
+  text-align:center;
+}
+.footer{
+  text-align:center;
+  color:#64748b;
+  font-size:14px;
+  margin-top:28px;
+}
+@media(max-width:760px){
+  .hero{padding:25px}
+  .hero h1{font-size:34px}
+  .grid{grid-template-columns:1fr}
+  .nav a{flex:1 1 40%;text-align:center}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">🐶 Hundene våre</div>
+    <div class="nav">
+      <a href="index.html">🏠 Forside</a>
+      <a href="spill.html">🎮 Spill</a>
+      <a href="kunnskap.html">📚 Kunnskap</a>
+      <a href="se-butikker.html">🏪 Butikker</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <h1>🎁 Månedens konkurranse</h1>
+    <p>
+      Spill et av Hundenevåre-spillene, få god poengsum og bli med i trekningen av premie fra en av våre samarbeidspartnere.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>🏆 Slik blir du med</h2>
+    <ol>
+      <li>Spill et av spillene på Hundenevåre.com.</li>
+      <li>Få minst <b>12 poeng</b> eller oppnå <b>Mester 👑</b>.</li>
+      <li>Fyll ut skjemaet under med navn, kontaktinfo, spill og poengsum.</li>
+      <li>Vinner trekkes manuelt av Hundenevåre.com.</li>
+    </ol>
+    <div class="notice">
+      Tips: Ta gjerne skjermbilde av resultatet ditt. Det kan bli brukt som kontroll dersom du blir trukket ut.
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🎁 Månedens premie</h2>
+    <div class="prize">
+      Premie fra månedens sponsorbutikk 🐶🐱
+    </div>
+    <p>
+      Premien kan være gavekort, hundeutstyr, katteutstyr, godbiter, leker eller annen premie fra sponsor.
+      Dette kan endres fra måned til måned.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>🎮 Spill som teller</h2>
+    <div class="grid">
+      <div class="game">🐶 Hva husker du? – Hunderaser</div>
+      <div class="game">🌍 Hva husker du? – Hundeland</div>
+      <div class="game">🐱 Hva husker du? – Katteraser</div>
+      <div class="game">🌍 Hva husker du? – Katteland</div>
+      <div class="game">🐾 Hva husker du? – Hundeutstyr</div>
+      <div class="game">🏥 Hva husker du? – Hundehelse</div>
+      <div class="game">🐱 Hva husker du? – Katteutstyr</div>
+      <div class="game">🎵 Musikk Bingo / Musikk Quiz</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>📝 Meld deg på</h2>
+
+    <div id="successBox" class="success">
+      ✅ Takk! Din påmelding er registrert på skjermen. Når skjema-kobling er lagt inn, kan dette sendes direkte til deg.
+    </div>
+
+    <form id="contestForm" onsubmit="submitContest(event)">
+      <div>
+        <label for="name">Navn</label>
+        <input id="name" name="name" required placeholder="Skriv navnet ditt">
+      </div>
+
+      <div>
+        <label for="email">E-post</label>
+        <input id="email" name="email" type="email" required placeholder="din@epost.no">
+      </div>
+
+      <div>
+        <label for="phone">Telefon</label>
+        <input id="phone" name="phone" required placeholder="Telefonnummer">
+      </div>
+
+      <div>
+        <label for="game">Hvilket spill spilte du?</label>
+        <select id="game" name="game" required>
+          <option value="">Velg spill</option>
+          <option>Hva husker du? – Hunderaser</option>
+          <option>Hva husker du? – Hundeland</option>
+          <option>Hva husker du? – Katteraser</option>
+          <option>Hva husker du? – Katteland</option>
+          <option>Hva husker du? – Hundeutstyr</option>
+          <option>Hva husker du? – Hundehelse</option>
+          <option>Hva husker du? – Katteutstyr</option>
+          <option>Musikk Bingo</option>
+          <option>Musikk Quiz</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="points">Poengsum</label>
+        <input id="points" name="points" required placeholder="F.eks. 14 eller Mester">
+      </div>
+
+      <div>
+        <label for="message">Kommentar</label>
+        <textarea id="message" name="message" placeholder="Valgfritt: skriv gjerne hvilken premie/sponsor du deltar på."></textarea>
+      </div>
+
+      <div class="check">
+        <input id="consent" type="checkbox" required>
+        <label for="consent">
+          Jeg samtykker til at Hundenevåre.com kan bruke kontaktinformasjonen min for å kontakte meg dersom jeg vinner.
+        </label>
+      </div>
+
+      <button class="btn" type="submit">🎁 Send påmelding</button>
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>📌 Regler</h2>
+    <ul>
+      <li>Én person kan delta flere ganger, men kun én premie per trekning.</li>
+      <li>Vinner kontaktes på e-post eller telefon.</li>
+      <li>Premie kan ikke byttes i kontanter.</li>
+      <li>Hundenevåre.com kan be om skjermbilde av resultatet.</li>
+      <li>Konkurransen er ikke sponset, administrert eller støttet av Facebook.</li>
+    </ul>
+  </section>
+
+  <p class="footer">Hundenevåre.com – Spill, kunnskap, butikker og moro.</p>
+</div>
+
+<script>
+function submitContest(e){
+  e.preventDefault();
+
+  const name = document.getElementById("name").value.trim();
+  const game = document.getElementById("game").value;
+  const points = document.getElementById("points").value.trim();
+
+  document.getElementById("successBox").style.display = "block";
+  document.getElementById("successBox").innerHTML =
+    "✅ Takk, " + name + "!<br>Påmelding registrert for <b>" + game + "</b> med poengsum <b>" + points + "</b>.<br><br>Foreløpig vises dette bare på siden. Neste steg er å koble skjemaet til e-post eller Supabase.";
+
+  document.getElementById("contestForm").reset();
+  window.scrollTo({top: document.getElementById("successBox").offsetTop - 80, behavior:"smooth"});
+}
+</script>
+
+</body>
+</html>
