@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hva husker du? – Hundehelse</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#f0fdf4,#eff6ff,#f8fafc);color:#0f172a;text-align:center}
+.container{max-width:1050px;margin:auto;padding:20px}
+h1{font-size:42px;margin:12px 0 8px;color:#166534}
+.small{font-size:16px;color:#334155;line-height:1.5}
+.card{background:rgba(255,255,255,.92);border-radius:24px;padding:22px;margin:18px 0;box-shadow:0 8px 25px rgba(15,23,42,.14);border:1px solid rgba(148,163,184,.35)}
+button{border:0;border-radius:999px;padding:13px 18px;margin:7px;font-size:17px;cursor:pointer;background:#16a34a;color:white;font-weight:bold;box-shadow:0 6px 16px rgba(15,23,42,.18)}
+button:hover{background:#15803d}
+.back{background:#2563eb}
+.hidden{display:none!important}
+.partner{max-width:820px;margin:18px auto 20px;padding:16px;display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center;text-align:left;background:white;border:1px solid rgba(22,163,74,.35);border-radius:22px;box-shadow:0 8px 25px rgba(15,23,42,.12)}
+.partner img{width:150px;height:150px;object-fit:contain;border-radius:16px;border:2px solid rgba(22,163,74,.35);background:white;padding:8px}
+.partner .eyebrow{color:#16a34a;font-weight:900;font-size:18px;margin-bottom:5px}
+.partner h2{margin:0 0 6px;font-size:28px;color:#0f172a}
+.partner p{margin:0 0 12px;line-height:1.45;font-size:16px;color:#334155}
+.partner a{display:inline-flex;text-decoration:none;color:white;background:#16a34a;border-radius:999px;padding:11px 18px;font-weight:900}
+.statusbar{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+.pill{background:#dcfce7;border:1px solid #bbf7d0;color:#166534;border-radius:999px;padding:11px 16px;font-weight:900}
+.timer{background:#fee2e2;color:#991b1b;border-color:#fecaca}
+.game-area{display:grid;grid-template-columns:1fr 330px;gap:18px;align-items:start}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.cell{min-height:88px;background:white;color:#111827;border-radius:18px;padding:10px;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 16px rgba(15,23,42,.13);border:3px solid transparent;user-select:none}
+.cell:hover{background:#f8fafc}
+.cell.correct{background:#22c55e;color:white;border-color:#bbf7d0}
+.cell.wrong{background:#ef4444;color:white;border-color:#fecaca}
+.cell.disabled{pointer-events:none;opacity:.85}
+.questionbox{background:linear-gradient(135deg,#166534,#16a34a);color:white;border-radius:22px;padding:18px;min-height:270px;box-shadow:0 8px 25px rgba(15,23,42,.16)}
+.question-title{font-size:18px;opacity:.95}
+.question{font-size:25px;font-weight:900;margin:16px 0;color:#facc15;line-height:1.25}
+.feedback{font-size:17px;line-height:1.45;background:rgba(255,255,255,.16);border-radius:14px;padding:12px;margin:10px 0;color:white}
+.warning{font-size:14px;color:#475569;background:#fff7ed;border:1px solid #fed7aa;border-radius:18px;padding:12px;line-height:1.5;margin:12px auto;max-width:850px}
+.result-message{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;align-items:center;justify-content:center;padding:20px}
+.result-box{background:linear-gradient(135deg,#16a34a,#2563eb);color:white;border-radius:34px;padding:35px;max-width:650px;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.result-box h2{font-size:46px;margin:0 0 12px}
+.result-box p{font-size:20px;line-height:1.5}
+.footer{opacity:.75;font-size:14px;margin-top:24px}
+@media(max-width:850px){.game-area{grid-template-columns:1fr}.partner{grid-template-columns:1fr;text-align:center;max-width:520px}.partner img{margin:auto}}
+@media(max-width:600px){.container{padding:14px}h1{font-size:31px}.board{gap:7px}.cell{min-height:67px;border-radius:14px;padding:7px;font-size:12px}.question{font-size:22px}.result-box h2{font-size:36px}}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🐶 Hva husker du? – Hundehelse</h1>
+<button class="back" onclick="location.href='kunnskap.html'">⬅️ Tilbake til kunnskap</button>
+<p class="small">Du får 3 minutter. Les hintet og trykk på riktig helseord. Nytt brett hver gang.</p>
+
+<div class="partner">
+<img src="data:image/jpeg;base64,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zzzzzzzzzC5zzzzzzzzzzzTzzyBjzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzRzzjATLDzzzzyxTzjRSx7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzTSjzjgxzzzjxTzzzBzzzzzzzx7zzzzzzzzzzzzzzzzzzzzzzzzxQyyyywTzzzgzjyyTTzzzjDTzzzzxDTzzzzzzzzzzzzzzzzzzzzRDzzzzyzRzzzzzwTzzzzwyxyzxxzjwCbzzrzzzzzzzzzzzzzzzzzSzzzzzzzzyxTzzjzxjzzzzzzzzzzzywzzzzxxzzzzzzzzzzzzzzzwTzzzzzzzzzwrTSTzwTzzzzzzzzzzzzzzxLzzyzDzzzzzzzzzzzzzjzzzzzzzzzzzyTzjTLzzzzzzzzzzzzzzzyxbzzzzTzzzzzzzzzzzhTzzzzzzzzzzzzyyzzDzzzzzzzzzzzzzzzzwjzzzwrzzzzzzzzzzyxzzzzzzzzzzzzzzzzxDzzzzzzzzzzzzzzzzzzzzzyxTzzzzzzzzzwbzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzhTzzzxzzzzzzzzzzyTDDDDDDDDDDDDDDDAjzzzyQSiTxTjjzzzzzDbTjDTxzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzjDzzzzzxzwIiQSSjYwwwwzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzyyhACzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzTzzzzzzzzzjTzzDjzzzzzzzzjTzTTjzzzzjTzTjTzzzzzzzzzzzzSrjhzTzTjzTTRTyjg7DzDjzTzzxgTxRzTjzjghiijDTzzzzzzzzzyySYCqxKrADgJxTyihSwS5S4hgDgxjyjjRxKwigQijSTzzzzzzzzzwBRzxJ6IRBwibxTyzxDgzx5hzwSCjjzyTaiaCSyijDzzzzzzzzzzzzxzzyzxzxzzxzxyzwzyxbzwyyzzwyywzxwzxxywyzyxzzzzzzzzzzzzzzzzzzzzzzzzzzzzxxzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz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" alt="Stord Dyreklinikk">
+<div>
+<div class="eyebrow">🏥 Helsepartner</div>
+<h2>Stord Dyreklinikk</h2>
+<p>Hva husker du? – Hundehelse presenteres av Stord Dyreklinikk. Et morsomt kunnskapsspill om helse, stell, trygghet og god omsorg for hund.</p>
+<a href="butikk.html?id=368e5c29-e9b6-4dce-8700-f280d8d7c537">🏥 Besøk Stord Dyreklinikk</a>
+</div>
+</div>
+
+<div class="warning">
+⚠️ Dette spillet er kun enkel kunnskap og underholdning. Ved sykdom, skade, forgiftning eller bekymring for hunden din bør du kontakte veterinær.
+</div>
+
+<div id="setup" class="card">
+<h2>Start spillet</h2>
+<p class="small">4×4 brett, 16 helseord og 3 minutter på klokken.</p>
+<button onclick="newGame()">🏥 Start Hundehelse</button>
+</div>
+
+<div id="game" class="card hidden">
+<div class="statusbar">
+<div class="pill timer" id="timer">⏱️ 03:00</div>
+<div class="pill" id="score">Poeng: 0</div>
+<div class="pill" id="left">Igjen: 16</div>
+</div>
+<div class="game-area">
+<div class="board" id="board"></div>
+<div class="questionbox">
+<div class="question-title">🏥 Hvilket helseord er dette?</div>
+<div class="question" id="question">Trykk start</div>
+<div class="feedback" id="feedback">Velg riktig svar på brettet.</div>
+<button onclick="nextQuestion()">➡️ Neste hint</button>
+<button onclick="newGame()">🔄 Nytt spill</button>
+</div>
+</div>
+</div>
+
+<p class="footer">Hundenevåre.com – Kunnskap, spill og moro.</p>
+</div>
+
+<div class="result-message" id="resultMessage">
+<div class="result-box">
+<h2 id="resultTitle">🏁 Tiden er ute!</h2>
+<p id="resultText"></p>
+<button onclick="closeResult();newGame()">Spill igjen</button>
+<button onclick="closeResult()">Lukk</button>
+</div>
+</div>
+
+<script>
+const allItems=[{"name": "Vaksine", "clue": "Hva gir veterinæren for å beskytte hunden mot enkelte smittsomme sykdommer?"}, {"name": "Flåttmiddel", "clue": "Hva brukes for å beskytte hunden mot flått?"}, {"name": "Ormekur", "clue": "Hva kan veterinæren anbefale mot innvollsorm hos hund?"}, {"name": "Tannpuss", "clue": "Hva bør gjøres jevnlig for å forebygge tannstein og dårlig ånde?"}, {"name": "Klotrim", "clue": "Hva bør gjøres når hundens klør blir for lange?"}, {"name": "Ørerens", "clue": "Hva kan brukes forsiktig ved skitne ører, etter råd fra veterinær?"}, {"name": "Førstehjelp", "clue": "Hva kalles enkel hjelp ved småskader før man eventuelt kontakter veterinær?"}, {"name": "Sårstell", "clue": "Hva kalles rengjøring og oppfølging av små sår?"}, {"name": "Halt hund", "clue": "Hva kan være tegn på smerte i bein, poter eller ledd?"}, {"name": "Diaré", "clue": "Hva kalles løs mage hos hund?"}, {"name": "Oppkast", "clue": "Hva kalles det når hunden kaster opp mat eller væske?"}, {"name": "Feber", "clue": "Hva kan hunden ha hvis den virker slapp og kroppstemperaturen er forhøyet?"}, {"name": "Overvekt", "clue": "Hva kan hunden få hvis den får for mye mat og for lite mosjon?"}, {"name": "Mosjon", "clue": "Hva trenger hunden daglig for kropp, hjerte og trivsel?"}, {"name": "Rent vann", "clue": "Hva bør hunden alltid ha tilgang til hjemme?"}, {"name": "Riktig fôr", "clue": "Hva er viktig for at hunden skal få nok næring og passe vekt?"}, {"name": "Allergi", "clue": "Hva kan gi kløe, rød hud, øreproblemer eller mageplager hos hund?"}, {"name": "Hudkløe", "clue": "Hva kan hunden ha hvis den slikker, biter eller klør mye på huden?"}, {"name": "Pelsstell", "clue": "Hva hjelper med å oppdage floker, hudplager og parasitter tidlig?"}, {"name": "Potestell", "clue": "Hva er viktig etter tur på salt, is, grus eller varm asfalt?"}, {"name": "Tannstein", "clue": "Hva kan komme på tennene hvis tannstell blir glemt over tid?"}, {"name": "Dårlig ånde", "clue": "Hva kan være tegn på tannproblemer hos hund?"}, {"name": "Våteksem", "clue": "Hva kalles irriterte, fuktige hudområder som kan komme raskt?"}, {"name": "Ørebetennelse", "clue": "Hva kan hunden ha hvis den rister mye på hodet og klør seg i øret?"}, {"name": "Øyebetennelse", "clue": "Hva kan gi røde, rennende eller irriterte øyne?"}, {"name": "Kennelhoste", "clue": "Hva kalles en smittsom luftveisinfeksjon som ofte gir hoste?"}, {"name": "Forgiftning", "clue": "Hva kan det være hvis hunden har spist noe farlig og blir dårlig?"}, {"name": "Sjokolade", "clue": "Hva er en matvare hunder ikke bør få fordi den kan være giftig?"}, {"name": "Xylitol", "clue": "Hvilket søtningsstoff kan være svært farlig for hund?"}, {"name": "Løk", "clue": "Hvilken vanlig matvare kan være skadelig for hund?"}, {"name": "Drue", "clue": "Hvilken liten frukt kan være farlig for hunder?"}, {"name": "Heteslag", "clue": "Hva kan hunden få hvis den blir for varm, for eksempel i bil eller sterk sol?"}, {"name": "Nedkjøling", "clue": "Hva kan skje hvis hunden blir veldig kald over tid?"}, {"name": "Veterinær", "clue": "Hvem bør kontaktes når hunden er syk, skadet eller du er usikker?"}, {"name": "ID-chip", "clue": "Hva hjelper til med å identifisere hunden hvis den blir borte?"}, {"name": "Løpetid", "clue": "Hva kalles perioden når en tispe kan bli drektig?"}, {"name": "Drektighet", "clue": "Hva kalles perioden når en tispe venter valper?"}, {"name": "Valpestell", "clue": "Hva kalles omsorg, fôring og oppfølging av unge hunder?"}, {"name": "Seniorhund", "clue": "Hva kaller vi ofte en eldre hund som kan trenge ekstra oppfølging?"}, {"name": "Årlig kontroll", "clue": "Hva er lurt å ta hos veterinær selv om hunden virker frisk?"}, {"name": "Parasitter", "clue": "Hva kalles små dyr som flått, lopper eller innvollsorm?"}, {"name": "Leddplager", "clue": "Hva kan gi stivhet, smerte eller problemer med å reise seg?"}, {"name": "HD", "clue": "Hva er forkortelsen for hofteleddsdysplasi?"}, {"name": "Patellaluksasjon", "clue": "Hva kalles det når kneskålen kan gli ut av stilling?"}, {"name": "Analkjertler", "clue": "Hva kan gi slikking bak, aking på rumpen og ubehag?"}, {"name": "Potesår", "clue": "Hva kan oppstå ved kutt, is, skarpe steiner eller varm asfalt?"}, {"name": "Ro og hvile", "clue": "Hva trenger hunden etter sykdom, skade eller hard aktivitet?"}, {"name": "Mental helse", "clue": "Hva handler om trygghet, ro, aktivisering og trivsel hos hund?"}];
+let boardItems=[],current=null,score=0,asked=[],seconds=180,timerId=null,gameOver=false;
+
+function shuffle(a){let c=[...a];for(let i=c.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[c[i],c[j]]=[c[j],c[i]]}return c}
+function formatTime(s){let m=Math.floor(s/60),r=s%60;return String(m).padStart(2,'0')+":"+String(r).padStart(2,'0')}
+function rankText(p){if(p<=4)return"Helse-valp 🐾";if(p<=8)return"Hundehelse-venn 🐶";if(p<=12)return"Helsekjenner 🏆";if(p<=15)return"Hundehelse-ekspert ⭐⭐⭐⭐";return"Hundehelse-Mester 👑"}
+
+function newGame(){
+ clearInterval(timerId);
+ gameOver=false;score=0;asked=[];seconds=180;
+ boardItems=shuffle(allItems).slice(0,16);
+ document.getElementById("setup").classList.add("hidden");
+ document.getElementById("game").classList.remove("hidden");
+ document.getElementById("score").innerText="Poeng: 0";
+ document.getElementById("left").innerText="Igjen: 16";
+ document.getElementById("timer").innerText="⏱️ 03:00";
+ document.getElementById("feedback").innerText="Velg riktig svar på brettet.";
+ renderBoard();
+ nextQuestion();
+ timerId=setInterval(tick,1000);
+}
+
+function renderBoard(){
+ let b=document.getElementById("board");b.innerHTML="";
+ boardItems.forEach(item=>{
+   let d=document.createElement("div");
+   d.className="cell";
+   d.innerText=item.name;
+   d.dataset.name=item.name;
+   d.onclick=()=>chooseAnswer(item.name,d);
+   b.appendChild(d);
+ });
+}
+
+function nextQuestion(){
+ if(gameOver)return;
+ let remaining=boardItems.filter(x=>!asked.includes(x.name));
+ if(remaining.length===0){finishGame("🎉 Alle helseordene er tatt!");return}
+ current=shuffle(remaining)[0];
+ asked.push(current.name);
+ document.getElementById("question").innerText=current.clue;
+ document.getElementById("feedback").innerText="Velg riktig svar på brettet.";
+ document.getElementById("left").innerText="Igjen: "+remaining.length;
+ document.querySelectorAll(".cell").forEach(c=>c.classList.remove("wrong"));
+}
+
+function chooseAnswer(name,cell){
+ if(gameOver||!current)return;
+ if(name===current.name){
+   score++;
+   document.getElementById("score").innerText="Poeng: "+score;
+   cell.classList.add("correct","disabled");
+   document.getElementById("feedback").innerHTML="✅ Riktig! Det var <b>"+current.name+"</b>.";
+   setTimeout(nextQuestion,700);
+ }else{
+   cell.classList.add("wrong");
+   document.getElementById("feedback").innerHTML="❌ Ikke helt. Prøv igjen eller trykk neste hint.";
+   setTimeout(()=>cell.classList.remove("wrong"),650);
+ }
+}
+
+function tick(){
+ seconds--;
+ document.getElementById("timer").innerText="⏱️ "+formatTime(seconds);
+ if(seconds<=0)finishGame("🏁 Tiden er ute!");
+}
+
+function finishGame(title){
+ gameOver=true;
+ clearInterval(timerId);
+ document.querySelectorAll(".cell").forEach(c=>c.classList.add("disabled"));
+ document.getElementById("resultTitle").innerText=title;
+ document.getElementById("resultText").innerHTML="Du fikk <b>"+score+"</b> poeng.<br><br>"+rankText(score);
+ document.getElementById("resultMessage").style.display="flex";
+}
+
+function closeResult(){document.getElementById("resultMessage").style.display="none"}
+</script>
+</body>
+</html>
