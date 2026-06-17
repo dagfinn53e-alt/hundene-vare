@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hunde Challenge – Rett eller Galt</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;color:#0f172a;text-align:center;background:radial-gradient(circle at top left,rgba(96,165,250,.20) 0%,transparent 30%),radial-gradient(circle at top right,rgba(249,115,22,.18) 0%,transparent 32%),linear-gradient(180deg,#dbeafe 0%,#fff7ed 48%,#f8fbff 100%)}
+.wrap{max-width:1050px;margin:auto;padding:20px 14px 60px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:rgba(255,255,255,.90);border:1px solid #dbeafe;border-radius:26px;padding:14px 18px;margin-bottom:18px;box-shadow:0 12px 30px rgba(15,23,42,.10)}
+.brand{font-size:24px;font-weight:900;color:#1d4ed8}
+.topbar a{text-decoration:none;background:#eaf2ff;color:#1d4ed8;border:1px solid #bfd7ff;padding:10px 15px;border-radius:999px;font-weight:900}
+.hero{background:linear-gradient(135deg,#2563eb,#f97316);color:white;border-radius:34px;padding:32px;margin-bottom:18px;box-shadow:0 18px 42px rgba(15,23,42,.18)}
+.hero h1{font-size:46px;margin:0 0 10px}
+.hero p{max-width:750px;margin:0 auto;line-height:1.6;font-size:17px}
+.adbox{background:linear-gradient(135deg,#ffffff,#fff7ed,#fef3c7);border:2px dashed #f97316;border-radius:30px;padding:24px;margin-bottom:18px;box-shadow:0 14px 34px rgba(15,23,42,.10)}
+.adbox .big{font-size:38px;font-weight:900;color:#c2410c;margin-bottom:8px}
+.adbox p{font-size:17px;color:#7c2d12;line-height:1.55;margin:0}
+.card{background:rgba(255,255,255,.94);border:1px solid #dbeafe;border-radius:30px;padding:24px;margin-bottom:18px;box-shadow:0 14px 34px rgba(15,23,42,.10)}
+.start-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
+.level-btn{min-height:76px;border:0;border-radius:22px;color:white;font-size:18px;font-weight:900;cursor:pointer;box-shadow:0 10px 24px rgba(15,23,42,.12)}
+.easy{background:linear-gradient(135deg,#22c55e,#16a34a)}
+.medium{background:linear-gradient(135deg,#f59e0b,#f97316)}
+.hard{background:linear-gradient(135deg,#ef4444,#7c3aed)}
+.statusbar{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+.pill{background:#eaf2ff;border:1px solid #bfd7ff;color:#1d4ed8;border-radius:999px;padding:11px 16px;font-weight:900}
+.timer{background:#fee2e2;color:#991b1b;border-color:#fecaca}
+.question-card{background:linear-gradient(135deg,#0f172a,#2563eb);color:white;border-radius:32px;padding:30px;box-shadow:0 18px 42px rgba(15,23,42,.20)}
+.countdown{font-size:56px;font-weight:900;color:#facc15;margin:0 0 8px}
+.level-label{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:8px 14px;font-weight:900;margin-bottom:16px}
+.question{font-size:34px;font-weight:900;line-height:1.25;margin:8px auto 24px;max-width:850px}
+.answer-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:700px;margin:0 auto}
+.answer-btn{border:0;border-radius:24px;padding:24px;font-size:28px;font-weight:900;color:white;cursor:pointer;box-shadow:0 12px 28px rgba(0,0,0,.18)}
+.truebtn{background:linear-gradient(135deg,#22c55e,#15803d)}
+.falsebtn{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+.answer-btn:disabled{opacity:.72;cursor:not-allowed}
+.feedback{margin-top:18px;font-size:22px;font-weight:900;min-height:32px;color:#facc15}
+.progress{width:100%;max-width:720px;height:14px;background:rgba(255,255,255,.24);border-radius:999px;overflow:hidden;margin:14px auto 0}
+.progress-fill{height:100%;width:100%;background:#facc15;transition:width .2s linear}
+.result-message{display:none;position:fixed;inset:0;background:rgba(0,0,0,.80);z-index:9999;align-items:center;justify-content:center;padding:20px}
+.result-box{background:linear-gradient(135deg,#2563eb,#f97316);color:white;border-radius:34px;padding:35px;max-width:680px;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.result-box h2{font-size:46px;margin:0 0 12px}
+.result-box p{font-size:20px;line-height:1.55}
+.result-box button{border:0;border-radius:999px;padding:14px 22px;margin:7px;background:white;color:#1d4ed8;font-size:17px;font-weight:900;cursor:pointer}
+.competition{background:#fff7ed!important;color:#9a3412!important}
+.footer{color:#64748b;font-size:14px;margin-top:22px}
+.hidden{display:none!important}
+@media(max-width:760px){.hero h1{font-size:34px}.question{font-size:25px}.answer-row{grid-template-columns:1fr;gap:10px}.answer-btn{font-size:24px;padding:20px}.start-grid{grid-template-columns:1fr}.adbox .big{font-size:29px}.countdown{font-size:44px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">🐶 Hundene våre</div>
+    <a href="spill.html">⬅️ Tilbake til spill</a>
+  </div>
+  <section class="hero">
+    <h1>⚡ Hunde Challenge</h1>
+    <p>Rett eller galt på tid! Du får 2 minutter. Hvert spørsmål varer maks 5 sekunder før neste kommer automatisk.</p>
+  </section>
+  <section class="adbox">
+    <div class="big">🐾 Her kunne din butikk stått</div>
+    <p>Denne plassen kan være månedens sponsor for Hunde Challenge. Perfekt for dyrebutikk, hundefrisør, veterinær, hundeklubb eller hundepensjonat.</p>
+  </section>
+  <section id="setup" class="card">
+    <h2>Velg vanskelighetsgrad</h2>
+    <p>Start med lett, eller prøv deg direkte på vanskelig. Spørsmålene trekkes tilfeldig hver runde.</p>
+    <div class="start-grid">
+      <button class="level-btn easy" onclick="startGame('Lett')">🐾 Lett</button>
+      <button class="level-btn medium" onclick="startGame('Medium')">🐶 Medium</button>
+      <button class="level-btn hard" onclick="startGame('Vanskelig')">🏆 Vanskelig</button>
+    </div>
+  </section>
+  <section id="game" class="card hidden">
+    <div class="statusbar">
+      <div class="pill timer" id="gameTimer">⏱️ 02:00</div>
+      <div class="pill" id="scoreBox">Poeng: 0</div>
+      <div class="pill" id="questionCount">Spørsmål: 0</div>
+      <div class="pill" id="levelBox">Nivå: Lett</div>
+    </div>
+    <div class="question-card">
+      <div class="countdown" id="questionTimer">5</div>
+      <div class="level-label" id="questionLevel">Lett</div>
+      <div class="question" id="questionText">Spørsmål kommer her</div>
+      <div class="answer-row">
+        <button class="answer-btn truebtn" id="trueBtn" onclick="answer(true)">✅ RETT</button>
+        <button class="answer-btn falsebtn" id="falseBtn" onclick="answer(false)">❌ GALT</button>
+      </div>
+      <div class="feedback" id="feedback">Svar før tiden går ut!</div>
+      <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </section>
+  <p class="footer">Hundenevåre.com – Spill, kunnskap og konkurranser.</p>
+</div>
+<div class="result-message" id="resultMessage">
+  <div class="result-box">
+    <h2 id="resultTitle">🏁 Ferdig!</h2>
+    <p id="resultText"></p>
+    <button onclick="closeResult();showSetup()">Spill igjen</button>
+    <button class="competition" onclick="location.href='konkurranse.html'">🎁 Delta i konkurranse</button>
+  </div>
+</div>
+<script>
+const allQuestions = [{"q": "Kommer Border Collie opprinnelig fra Storbritannia?", "a": true, "level": "Lett"}, {"q": "Kommer Labrador Retriever opprinnelig fra Norge?", "a": false, "level": "Lett"}, {"q": "Er Chihuahua en liten hunderase?", "a": true, "level": "Lett"}, {"q": "Er Grand Danois en svært liten hunderase?", "a": false, "level": "Lett"}, {"q": "Kommer Golden Retriever opprinnelig fra Skottland?", "a": true, "level": "Lett"}, {"q": "Er Bichon Frisé kjent for krøllete hvit pels?", "a": true, "level": "Lett"}, {"q": "Er Siberian Husky opprinnelig brukt som trekkhund?", "a": true, "level": "Lett"}, {"q": "Kommer Shih Tzu opprinnelig fra Danmark?", "a": false, "level": "Lett"}, {"q": "Er Dalmatiner kjent for prikker i pelsen?", "a": true, "level": "Lett"}, {"q": "Er Dachshund det samme som Dvergschnauzer?", "a": false, "level": "Lett"}, {"q": "Kommer Akita opprinnelig fra Japan?", "a": true, "level": "Lett"}, {"q": "Er Boxer vanligvis en katterase?", "a": false, "level": "Lett"}, {"q": "Er Norsk Elghund en norsk hunderase?", "a": true, "level": "Lett"}, {"q": "Kommer Rottweiler opprinnelig fra Tyskland?", "a": true, "level": "Lett"}, {"q": "Er Papillon kjent for store sommerfugl-lignende ører?", "a": true, "level": "Lett"}, {"q": "Kommer Beagle opprinnelig fra England?", "a": true, "level": "Lett"}, {"q": "Er Pomeranian en veldig stor brukshund?", "a": false, "level": "Lett"}, {"q": "Har Puddel flere størrelsesvarianter?", "a": true, "level": "Lett"}, {"q": "Er Engelsk Bulldog kjent for helt lang spiss snute?", "a": false, "level": "Lett"}, {"q": "Kommer Australian Shepherd opprinnelig fra Australia?", "a": false, "level": "Medium"}, {"q": "Er Basenji kjent for å bjeffe mye på vanlig måte?", "a": false, "level": "Medium"}, {"q": "Kommer Cavalier King Charles Spaniel fra Storbritannia?", "a": true, "level": "Medium"}, {"q": "Er Malteser vanligvis en stor vakthundrase?", "a": false, "level": "Medium"}, {"q": "Kommer Bernhardiner opprinnelig fra Sveits?", "a": true, "level": "Medium"}, {"q": "Er Whippet en mynde?", "a": true, "level": "Medium"}, {"q": "Kommer Dogo Argentino fra Argentina?", "a": true, "level": "Medium"}, {"q": "Er Samojed kjent for hvit pels og smilende uttrykk?", "a": true, "level": "Medium"}, {"q": "Kommer Havaneser opprinnelig fra Cuba?", "a": true, "level": "Medium"}, {"q": "Er Jack Russell Terrier opprinnelig avlet for jakt?", "a": true, "level": "Medium"}, {"q": "Kommer Cane Corso fra Italia?", "a": true, "level": "Medium"}, {"q": "Er Flatcoated Retriever vanligvis en rase uten retriever-egenskaper?", "a": false, "level": "Medium"}, {"q": "Kommer Nova Scotia Duck Tolling Retriever fra Canada?", "a": true, "level": "Medium"}, {"q": "Er Shar Pei kjent for rynkete hud?", "a": true, "level": "Medium"}, {"q": "Kommer Alaskan Malamute fra varme ørkenområder?", "a": false, "level": "Medium"}, {"q": "Er Border Terrier en terrierrase?", "a": true, "level": "Medium"}, {"q": "Kommer Lhasa Apso opprinnelig fra Tibet?", "a": true, "level": "Vanskelig"}, {"q": "Er Rhodesian Ridgeback kjent for en hårkam langs ryggen?", "a": true, "level": "Vanskelig"}, {"q": "Kommer Finsk Lapphund opprinnelig fra Finland?", "a": true, "level": "Vanskelig"}, {"q": "Er Leonberger opprinnelig en liten selskapshund på under 5 kg?", "a": false, "level": "Vanskelig"}, {"q": "Kommer Weimaraner fra Tyskland?", "a": true, "level": "Vanskelig"}, {"q": "Er Saluki en av de eldste mynderasene?", "a": true, "level": "Vanskelig"}, {"q": "Kommer Keeshond opprinnelig fra Nederland?", "a": true, "level": "Vanskelig"}, {"q": "Er Belgisk fårehund det samme som én enkelt pelsvariant?", "a": false, "level": "Vanskelig"}, {"q": "Kommer Welsh Corgi fra Wales?", "a": true, "level": "Vanskelig"}, {"q": "Er Irsk Ulvehund en av verdens høyeste hunderaser?", "a": true, "level": "Vanskelig"}, {"q": "Kommer Tibetansk Mastiff opprinnelig fra Tibet/Himalaya-området?", "a": true, "level": "Vanskelig"}, {"q": "Er Xoloitzcuintle en norsk elghundvariant?", "a": false, "level": "Vanskelig"}];
+let activeQuestions = [], current = null, score = 0, asked = 0, gameSeconds = 120, questionSeconds = 5;
+let gameTimerId = null, questionTimerId = null, gameOver = false, currentLevel = "Lett";
+function shuffle(arr){let a=[...arr];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function formatTime(s){let m=Math.floor(s/60), r=s%60;return String(m).padStart(2,"0")+":"+String(r).padStart(2,"0");}
+function rank(score){if(score < 8) return "Hundevenn 🐾"; if(score < 14) return "Hunde-kjenner 🐶"; if(score < 20) return "Hunde Challenge Ekspert ⭐"; return "Hunde Challenge Mester 👑";}
+function startGame(level){
+  currentLevel = level; gameOver = false; score = 0; asked = 0; gameSeconds = 120;
+  document.getElementById("setup").classList.add("hidden");
+  document.getElementById("game").classList.remove("hidden");
+  document.getElementById("scoreBox").innerText = "Poeng: 0";
+  document.getElementById("questionCount").innerText = "Spørsmål: 0";
+  document.getElementById("gameTimer").innerText = "⏱️ 02:00";
+  document.getElementById("levelBox").innerText = "Nivå: " + level;
+  activeQuestions = shuffle(allQuestions.filter(q => q.level === level));
+  if(activeQuestions.length < 5) activeQuestions = shuffle(allQuestions);
+  clearInterval(gameTimerId); clearInterval(questionTimerId);
+  nextQuestion();
+  gameTimerId = setInterval(() => {gameSeconds--;document.getElementById("gameTimer").innerText = "⏱️ " + formatTime(gameSeconds);if(gameSeconds <= 0) finishGame("🏁 Tiden er ute!");}, 1000);
+}
+function nextQuestion(){
+  if(gameOver) return;
+  clearInterval(questionTimerId);
+  if(activeQuestions.length === 0){activeQuestions = shuffle(allQuestions.filter(q => q.level === currentLevel));}
+  current = activeQuestions.pop(); asked++; questionSeconds = 5;
+  document.getElementById("questionText").innerText = current.q;
+  document.getElementById("questionLevel").innerText = current.level;
+  document.getElementById("questionTimer").innerText = questionSeconds;
+  document.getElementById("questionCount").innerText = "Spørsmål: " + asked;
+  document.getElementById("feedback").innerText = "Svar før tiden går ut!";
+  document.getElementById("progressFill").style.width = "100%";
+  document.getElementById("trueBtn").disabled = false; document.getElementById("falseBtn").disabled = false;
+  questionTimerId = setInterval(() => {questionSeconds--;document.getElementById("questionTimer").innerText = questionSeconds;document.getElementById("progressFill").style.width = (questionSeconds / 5 * 100) + "%";if(questionSeconds <= 0){clearInterval(questionTimerId);document.getElementById("feedback").innerText = "⏱️ Tiden gikk ut!";document.getElementById("trueBtn").disabled = true;document.getElementById("falseBtn").disabled = true;setTimeout(nextQuestion, 650);}}, 1000);
+}
+function answer(value){
+  if(gameOver || !current) return;
+  clearInterval(questionTimerId);
+  document.getElementById("trueBtn").disabled = true; document.getElementById("falseBtn").disabled = true;
+  if(value === current.a){score++;document.getElementById("scoreBox").innerText = "Poeng: " + score;document.getElementById("feedback").innerText = "✅ Riktig!";} else {document.getElementById("feedback").innerText = "❌ Galt!";}
+  setTimeout(nextQuestion, 650);
+}
+function finishGame(title){
+  if(gameOver) return;
+  gameOver = true; clearInterval(gameTimerId); clearInterval(questionTimerId);
+  document.getElementById("trueBtn").disabled = true; document.getElementById("falseBtn").disabled = true;
+  document.getElementById("resultTitle").innerText = title;
+  document.getElementById("resultText").innerHTML = "Du fikk <b>" + score + "</b> poeng på <b>" + asked + "</b> spørsmål.<br><br>" + rank(score) + "<br><br>" + (score >= 12 ? "🎁 Du er kvalifisert til konkurransen!" : "Prøv igjen og gå for minst 12 poeng.");
+  document.getElementById("resultMessage").style.display = "flex";
+}
+function closeResult(){document.getElementById("resultMessage").style.display = "none";}
+function showSetup(){document.getElementById("game").classList.add("hidden");document.getElementById("setup").classList.remove("hidden");}
+</script>
+</body>
+</html>
