@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hundens Ernæring 3.0 – Hundene våre</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  color:#0f172a;
+  background:
+    radial-gradient(circle at top left,rgba(96,165,250,.20) 0%,transparent 30%),
+    radial-gradient(circle at top right,rgba(249,115,22,.18) 0%,transparent 32%),
+    linear-gradient(180deg,#dbeafe 0%,#fff7ed 48%,#f8fbff 100%);
+}
+.wrap{max-width:1050px;margin:auto;padding:20px 14px 70px}
+.topbar{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+  background:rgba(255,255,255,.92);border:1px solid #dbeafe;border-radius:26px;
+  padding:14px 18px;margin-bottom:18px;box-shadow:0 12px 30px rgba(15,23,42,.10);
+}
+.brand{font-size:24px;font-weight:900;color:#1d4ed8}
+.topbar a{
+  text-decoration:none;background:#eaf2ff;color:#1d4ed8;border:1px solid #bfd7ff;
+  padding:10px 15px;border-radius:999px;font-weight:900;
+}
+.hero{
+  background:linear-gradient(135deg,#2563eb,#f97316);
+  color:white;border-radius:34px;padding:36px;margin-bottom:18px;
+  box-shadow:0 18px 42px rgba(15,23,42,.18);
+  text-align:center;
+}
+.hero h1{font-size:48px;margin:0 0 12px}
+.hero p{max-width:780px;margin:0 auto;line-height:1.65;font-size:18px}
+.adbox{
+  background:linear-gradient(135deg,#ffffff,#fff7ed,#fef3c7);
+  border:2px dashed #f97316;border-radius:30px;padding:26px;margin-bottom:18px;
+  box-shadow:0 14px 34px rgba(15,23,42,.10);
+  text-align:center;
+}
+.adbox .big{font-size:38px;font-weight:900;color:#c2410c;margin-bottom:8px}
+.adbox p{font-size:17px;color:#7c2d12;line-height:1.55;margin:0}
+.card{
+  background:rgba(255,255,255,.94);
+  border:1px solid #dbeafe;
+  border-radius:30px;
+  padding:24px;
+  margin-bottom:18px;
+  box-shadow:0 14px 34px rgba(15,23,42,.10);
+}
+.card h2{font-size:32px;margin:0 0 12px;color:#0f172a}
+.card h3{font-size:23px;margin:18px 0 8px;color:#1d4ed8}
+.card p,.card li{font-size:16px;line-height:1.7;color:#334155}
+.lead{
+  background:#eff6ff;
+  border:1px solid #bfd7ff;
+  border-radius:22px;
+  padding:18px;
+  font-weight:800;
+  color:#1e3a8a;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+.mini{
+  background:#f8fbff;
+  border:1px solid #dbeafe;
+  border-radius:22px;
+  padding:18px;
+}
+.warn{
+  background:#fff1f2;
+  border:1px solid #fecdd3;
+}
+.warn h2,.warn h3{color:#be123c}
+.good{
+  background:#f0fdf4;
+  border:1px solid #bbf7d0;
+}
+.good h2,.good h3{color:#166534}
+.tip{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#9a3412;
+  border-radius:22px;
+  padding:18px;
+  font-weight:900;
+  line-height:1.6;
+}
+.button-row{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-top:18px;
+}
+.bigbtn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:64px;
+  border-radius:999px;
+  text-decoration:none;
+  color:white;
+  font-weight:900;
+  font-size:18px;
+  padding:14px 20px;
+  box-shadow:0 12px 28px rgba(15,23,42,.14);
+}
+.blue{background:linear-gradient(135deg,#2563eb,#7c3aed)}
+.orange{background:linear-gradient(135deg,#f97316,#db2777)}
+.green{background:linear-gradient(135deg,#16a34a,#2563eb)}
+.footer{text-align:center;color:#64748b;font-size:14px;margin-top:25px}
+@media(max-width:760px){
+  .hero{padding:26px;border-radius:26px}
+  .hero h1{font-size:34px}
+  .hero p{font-size:16px}
+  .adbox .big{font-size:29px}
+  .grid,.button-row{grid-template-columns:1fr}
+  .card{padding:19px;border-radius:24px}
+  .card h2{font-size:27px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">🐶 Hundene våre</div>
+    <div>
+      <a href="kunnskap.html">⬅️ Tilbake til kunnskap</a>
+      <a href="index.html">🏠 Forside</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <h1>🍖 Hundens Ernæring 3.0</h1>
+    <p>
+      En enkel og nyttig guide om riktig fôring, godbiter, vann, overvekt og trygg ernæring
+      gjennom hele hundens liv.
+    </p>
+  </section>
+
+  <section class="adbox">
+    <div class="big">🐾 Her kunne din butikk stått</div>
+    <p>
+      Denne plassen kan være månedens sponsor for Hundens Ernæring 3.0.
+      Perfekt for dyrebutikk, veterinær, hundefrisør, hundeklubb eller hundepensjonat.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>🐶 Hvorfor er riktig ernæring viktig?</h2>
+    <div class="lead">
+      God ernæring er en av de viktigste faktorene for at hunden skal få et langt,
+      sunt og aktivt liv.
+    </div>
+    <p>
+      Riktig fôr gir kroppen det den trenger for å fungere godt hver dag. Det kan bidra til
+      sterke muskler, sunn hud, blank pels, god fordøyelse, bedre immunforsvar og mer energi.
+    </p>
+    <p>
+      Hundens behov endrer seg gjennom livet. En valp trenger ikke det samme som en voksen hund,
+      og en seniorhund kan ha helt andre behov enn en ung og aktiv hund. Derfor er det viktig å
+      velge fôr som passer alder, størrelse, aktivitetsnivå og helse.
+    </p>
+  </section>
+
+  <section class="grid">
+    <div class="mini">
+      <h2>🐾 Valper</h2>
+      <p>
+        Valper vokser raskt og trenger ekstra energi, protein, vitaminer og mineraler.
+        Et godt valpefôr støtter utvikling av skjelett, muskler, tenner og immunforsvar.
+      </p>
+      <p>
+        Valper bør ofte få flere små måltider om dagen. Store raser kan ha behov for fôr
+        som støtter jevn og kontrollert vekst.
+      </p>
+    </div>
+
+    <div class="mini">
+      <h2>🐶 Voksne hunder</h2>
+      <p>
+        Når hunden er voksen, er målet å holde den i god form og stabil vekt.
+        Aktive hunder trenger mer energi enn rolige familiehunder.
+      </p>
+      <p>
+        Følg fôringsanbefalingen på sekken, men juster etter hundens kropp, aktivitet og trivsel.
+      </p>
+    </div>
+
+    <div class="mini">
+      <h2>👴 Seniorhunder</h2>
+      <p>
+        Eldre hunder beveger seg ofte mindre og kan ha lettere for å legge på seg.
+        Seniorfôr kan være lettere å fordøye og kan støtte ledd, hjerte og immunforsvar.
+      </p>
+      <p>
+        En seniorhund bør følges ekstra godt opp, spesielt ved endret appetitt, vekt eller energi.
+      </p>
+    </div>
+
+    <div class="mini good">
+      <h2>💧 Vann</h2>
+      <p>
+        Hunden skal alltid ha tilgang til rent og friskt vann.
+        Vann er ekstra viktig på varme dager, etter aktivitet, på biltur og på lange turer.
+      </p>
+      <p>
+        Drikker hunden plutselig mye mer eller mye mindre enn vanlig, kan det være lurt å kontakte veterinær.
+      </p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🍖 Godbiter og snacks</h2>
+    <p>
+      Godbiter er fine til trening, kontakt og belønning. De kan gjøre læring morsommere og
+      hjelpe hunden å forstå hva den gjør riktig.
+    </p>
+    <p>
+      Men godbiter teller også som mat. For mange godbiter kan føre til overvekt, spesielt hos små
+      hunder eller hunder som ikke er veldig aktive.
+    </p>
+    <ul>
+      <li>Bruk små biter under trening.</li>
+      <li>Velg godbiter som passer hundens størrelse.</li>
+      <li>Trekk gjerne litt fra dagsrasjonen dersom hunden får mange godbiter.</li>
+      <li>Unngå veldig fete eller salte matvarer.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>⚖️ Overvekt hos hund</h2>
+    <p>
+      Overvekt er et vanlig problem hos hund. Det kan komme gradvis, og mange eiere merker det ikke før
+      hunden har blitt tydelig tyngre.
+    </p>
+    <p>
+      Overvekt kan belaste ledd, hjerte og pust, og kan gi lavere energi og kortere levetid.
+      Du bør kunne kjenne ribbeina uten å måtte presse hardt.
+    </p>
+    <div class="tip">
+      Tips: Er du usikker på hundens vekt, kan veterinær eller dyrebutikk ofte hjelpe deg med
+      en enkel vurdering og råd om fôringsmengde.
+    </div>
+  </section>
+
+  <section class="card warn">
+    <h2>🚫 Matvarer hunder ikke bør spise</h2>
+    <p>
+      Noen matvarer kan være farlige eller giftige for hund. Kontakt veterinær raskt dersom hunden
+      får i seg noe du er usikker på.
+    </p>
+    <div class="grid">
+      <div class="mini warn">
+        <h3>❌ Unngå dette</h3>
+        <ul>
+          <li>Sjokolade</li>
+          <li>Løk og hvitløk</li>
+          <li>Druer og rosiner</li>
+          <li>Alkohol</li>
+          <li>Koffein</li>
+          <li>Xylitol / kunstig søtning</li>
+        </ul>
+      </div>
+      <div class="mini warn">
+        <h3>⚠️ Vær obs på</h3>
+        <p>
+          Mengde, hundens størrelse og hvor raskt du reagerer kan ha mye å si.
+          Ikke vent for lenge hvis du tror hunden har spist noe farlig.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🥣 Nyttig utstyr til fôring</h2>
+    <p>
+      Gode rutiner gjør fôringen enklere, renere og tryggere. Dette utstyret kan være nyttig i hverdagen:
+    </p>
+    <ul>
+      <li>🥣 Matskål</li>
+      <li>💧 Vannskål</li>
+      <li>🧴 Fôrbeholder med lokk</li>
+      <li>⚖️ Målebeger for riktig porsjon</li>
+      <li>🎒 Reisevannskål</li>
+      <li>🦴 Godbitveske til trening</li>
+      <li>🧩 Aktivitetsleke for roligere spising og hjernetrim</li>
+    </ul>
+  </section>
+
+  <section class="card good">
+    <h2>🐶 Visste du?</h2>
+    <p>
+      Riktig ernæring, mosjon, kjærlighet og regelmessige helsesjekker er noe av det viktigste du kan gi
+      hunden din. Små justeringer i fôr og rutiner kan gjøre stor forskjell over tid.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>🏆 Test kunnskapen din</h2>
+    <p>
+      Snart kan du teste hva du husker om hundens ernæring i et eget kunnskapsspill.
+      Dette blir perfekt sammen med konkurranser og premier.
+    </p>
+    <div class="button-row">
+      <a class="bigbtn blue" href="spill.html">🎮 Se alle spill</a>
+      <a class="bigbtn orange" href="konkurranse.html">🎁 Delta i konkurransen</a>
+    </div>
+  </section>
+
+  <p class="footer">Hundenevåre.com – Kunnskap, spill og moro for hunde- og katteeiere.</p>
+
+</div>
+</body>
+</html>
