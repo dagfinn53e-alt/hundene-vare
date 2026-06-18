@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hva husker du? – Førstehjelp Hund</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;text-align:center;color:#102033;background:linear-gradient(180deg,#fee2e2,#eff6ff,#fff7ed)}
+.wrap{max-width:1050px;margin:auto;padding:20px 14px 60px}
+.topbar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#fff;border:1px solid #fecaca;border-radius:24px;padding:14px 18px;margin-bottom:18px;box-shadow:0 10px 25px #0001}
+.brand{font-size:24px;font-weight:900;color:#b91c1c}
+.topbar a{text-decoration:none;background:#fff1f2;color:#b91c1c;border:1px solid #fecaca;padding:10px 15px;border-radius:999px;font-weight:900}
+.hero{background:linear-gradient(135deg,#dc2626,#2563eb);color:white;border-radius:34px;padding:34px;margin-bottom:18px;box-shadow:0 18px 42px #0002}
+.hero h1{font-size:42px;margin:0 0 10px}.hero p{max-width:780px;margin:auto;line-height:1.6}
+.adbox{background:linear-gradient(135deg,#fff,#fff7ed,#fef3c7);border:2px dashed #f97316;border-radius:28px;padding:22px;margin-bottom:18px}
+.adbox .big{font-size:32px;font-weight:900;color:#c2410c}
+.card{background:#fff;border:1px solid #fecaca;border-radius:28px;padding:22px;margin-bottom:18px;box-shadow:0 10px 25px #0001}
+.statusbar{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+.pill{background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;border-radius:999px;padding:10px 15px;font-weight:900}
+.timer{background:#fee2e2;color:#991b1b}
+.question-card{background:linear-gradient(135deg,#111827,#dc2626);color:white;border-radius:30px;padding:28px}
+.countdown{font-size:54px;font-weight:900;color:#facc15}
+.level-label{display:inline-block;background:#ffffff30;border-radius:999px;padding:8px 14px;font-weight:900;margin-bottom:14px}
+.question{font-size:30px;font-weight:900;line-height:1.25;margin:8px auto 22px;max-width:850px}
+.answer-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:700px;margin:auto}
+.answer-btn{border:0;border-radius:24px;padding:24px;font-size:28px;font-weight:900;color:white;cursor:pointer}
+.truebtn{background:linear-gradient(135deg,#22c55e,#15803d)}
+.falsebtn{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+.answer-btn:disabled{opacity:.7}
+.feedback{margin-top:18px;font-size:22px;font-weight:900;min-height:32px;color:#facc15}
+.progress{height:14px;background:#ffffff40;border-radius:999px;overflow:hidden;margin:14px auto 0;max-width:720px}
+.progress-fill{height:100%;width:100%;background:#facc15}
+.start-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
+.level-btn{min-height:76px;border:0;border-radius:22px;color:white;font-size:18px;font-weight:900;cursor:pointer}
+.easy{background:linear-gradient(135deg,#22c55e,#16a34a)}.medium{background:linear-gradient(135deg,#f59e0b,#f97316)}.hard{background:linear-gradient(135deg,#ef4444,#7c3aed)}
+.result-message{display:none;position:fixed;inset:0;background:#000c;z-index:9999;align-items:center;justify-content:center;padding:20px}
+.result-box{background:linear-gradient(135deg,#dc2626,#2563eb);color:white;border-radius:34px;padding:35px;max-width:680px}
+.result-box h2{font-size:40px;margin:0 0 12px}.result-box p{font-size:20px;line-height:1.55}
+.result-box button{border:0;border-radius:999px;padding:14px 22px;margin:7px;background:white;color:#b91c1c;font-size:17px;font-weight:900;cursor:pointer}
+.competition{background:#fff7ed!important;color:#9a3412!important}
+.hidden{display:none!important}.footer{color:#64748b;font-size:14px}
+@media(max-width:760px){.hero h1{font-size:32px}.question{font-size:24px}.answer-row,.start-grid{grid-template-columns:1fr}.answer-btn{font-size:24px;padding:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="topbar"><div class="brand">🐶 Hundene våre</div><div><a href="spill.html">🎮 Til spill</a> <a href="forstehjelp-hund-3-0.html">📚 Les guiden</a></div></div>
+<section class="hero"><h1>🏥 Hva husker du? – Førstehjelp Hund</h1><p>Rett eller galt på tid! Du får 2 minutter. Hvert spørsmål varer maks 5 sekunder.</p></section>
+<section class="adbox"><div class="big">🐾 Her kunne din butikk stått</div><p>Denne plassen kan være månedens sponsor for Førstehjelp Hund-spillet.</p></section>
+<section id="setup" class="card"><h2>Velg vanskelighetsgrad</h2><p>Spørsmålene trekkes tilfeldig hver runde.</p><div class="start-grid"><button class="level-btn easy" onclick="startGame('Lett')">🐾 Lett</button><button class="level-btn medium" onclick="startGame('Medium')">🐶 Medium</button><button class="level-btn hard" onclick="startGame('Vanskelig')">🏆 Vanskelig</button></div></section>
+<section id="game" class="card hidden"><div class="statusbar"><div class="pill timer" id="gameTimer">⏱️ 02:00</div><div class="pill" id="scoreBox">Poeng: 0</div><div class="pill" id="questionCount">Spørsmål: 0</div><div class="pill" id="levelBox">Nivå: Lett</div></div><div class="question-card"><div class="countdown" id="questionTimer">5</div><div class="level-label" id="questionLevel">Lett</div><div class="question" id="questionText">Spørsmål kommer her</div><div class="answer-row"><button class="answer-btn truebtn" id="trueBtn" onclick="answer(true)">✅ RETT</button><button class="answer-btn falsebtn" id="falseBtn" onclick="answer(false)">❌ GALT</button></div><div class="feedback" id="feedback">Svar før tiden går ut!</div><div class="progress"><div class="progress-fill" id="progressFill"></div></div></div></section>
+<p class="footer">Hundenevåre.com – Kunnskap, spill og konkurranser.</p>
+</div>
+<div class="result-message" id="resultMessage"><div class="result-box"><h2 id="resultTitle">🏁 Ferdig!</h2><p id="resultText"></p><button onclick="closeResult();showSetup()">Spill igjen</button><button class="competition" onclick="location.href='konkurranse.html'">🎁 Delta i konkurranse</button></div></div>
+<script>
+const allQuestions=[
+{q:"Bør du kontakte veterinær raskt ved mistanke om huggormbitt?",a:true,level:"Lett"},
+{q:"Er sjokolade trygt for hunder i store mengder?",a:false,level:"Lett"},
+{q:"Er flåttfjerner nyttig å ha i førstehjelpsutstyret?",a:true,level:"Lett"},
+{q:"Bør en hund med pustevansker bare få sove det av seg?",a:false,level:"Lett"},
+{q:"Kan kraftig blødning være akutt?",a:true,level:"Lett"},
+{q:"Er det lurt å la hunden løpe hjem selv etter huggormbitt?",a:false,level:"Lett"},
+{q:"Bør hunden ha tilgang til ro hvis den er skadet?",a:true,level:"Lett"},
+{q:"Er xylitol ufarlig for hunder?",a:false,level:"Lett"},
+{q:"Kan kraftig pesing og slapphet være tegn på heteslag?",a:true,level:"Lett"},
+{q:"Trenger du aldri kontakte veterinær ved forgiftning?",a:false,level:"Lett"},
+{q:"Bør små sår holdes rene?",a:true,level:"Lett"},
+{q:"Er druer og rosiner alltid trygg hundemat?",a:false,level:"Lett"},
+{q:"Ved huggormbitt bør hunden holdes mest mulig i ro.",a:true,level:"Medium"},
+{q:"Det er best å vente mange timer ved mistanke om forgiftning.",a:false,level:"Medium"},
+{q:"Dype sår og bittskader bør undersøkes av veterinær.",a:true,level:"Medium"},
+{q:"En hund med kramper bør tas på alvor.",a:true,level:"Medium"},
+{q:"Hunden bør alltid få slikke mye på åpne sår.",a:false,level:"Medium"},
+{q:"Potesokk kan være nyttig ved poteskade.",a:true,level:"Medium"},
+{q:"Hvis hunden er bevisstløs, kan du trygt vente til neste dag.",a:false,level:"Medium"},
+{q:"Sårvask kan være nyttig i et førstehjelpssett.",a:true,level:"Medium"},
+{q:"Ved flåttbitt bør du følge med på rødhet eller sykdomstegn etterpå.",a:true,level:"Medium"},
+{q:"Ved heteslag er rask, kontrollert nedkjøling og veterinærkontakt viktig.",a:true,level:"Vanskelig"},
+{q:"En hund med huggormbitt bør stimuleres til mye bevegelse for å få ut giften.",a:false,level:"Vanskelig"},
+{q:"Xylitol kan gi alvorlig forgiftning hos hund.",a:true,level:"Vanskelig"},
+{q:"Mistanke om forgiftning bør håndteres ved å vente og se uten å ringe veterinær.",a:false,level:"Vanskelig"},
+{q:"Slapphet, ustø gange og kollaps kan være tegn på alvorlig tilstand.",a:true,level:"Vanskelig"},
+{q:"Sterile kompresser er unyttige i et førstehjelpssett.",a:false,level:"Vanskelig"},
+{q:"Ved flåttfjerning bør man ta tak nær huden.",a:true,level:"Vanskelig"},
+{q:"Hvis hunden ikke klarer å reise seg, bør det tas alvorlig.",a:true,level:"Vanskelig"}
+];
+let activeQuestions=[],current=null,score=0,asked=0,gameSeconds=120,questionSeconds=5,gameTimerId=null,questionTimerId=null,gameOver=false,currentLevel="Lett";
+function shuffle(arr){let a=[...arr];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function makeDeck(level){return shuffle(allQuestions.filter(q=>q.level===level));}
+function formatTime(s){let m=Math.floor(s/60),r=s%60;return String(m).padStart(2,"0")+":"+String(r).padStart(2,"0");}
+function rank(s){if(s<8)return"Førstehjelp-venn 🐾";if(s<14)return"Førstehjelp-kjenner 🐶";if(s<20)return"Førstehjelp-ekspert ⭐";return"Førstehjelp-mester 👑";}
+function startGame(level){currentLevel=level;gameOver=false;score=0;asked=0;gameSeconds=120;document.getElementById("setup").classList.add("hidden");document.getElementById("game").classList.remove("hidden");document.getElementById("scoreBox").innerText="Poeng: 0";document.getElementById("questionCount").innerText="Spørsmål: 0";document.getElementById("gameTimer").innerText="⏱️ 02:00";document.getElementById("levelBox").innerText="Nivå: "+level;activeQuestions=makeDeck(level);clearInterval(gameTimerId);clearInterval(questionTimerId);nextQuestion();gameTimerId=setInterval(()=>{gameSeconds--;document.getElementById("gameTimer").innerText="⏱️ "+formatTime(gameSeconds);if(gameSeconds<=0)finishGame("🏁 Tiden er ute!");},1000);}
+function nextQuestion(){if(gameOver)return;clearInterval(questionTimerId);if(activeQuestions.length===0){finishGame("🎉 Alle spørsmålene er tatt!");return;}current=activeQuestions.pop();asked++;questionSeconds=5;document.getElementById("questionText").innerText=current.q;document.getElementById("questionLevel").innerText=current.level;document.getElementById("questionTimer").innerText=questionSeconds;document.getElementById("questionCount").innerText="Spørsmål: "+asked;document.getElementById("feedback").innerText="Svar før tiden går ut!";document.getElementById("progressFill").style.width="100%";document.getElementById("trueBtn").disabled=false;document.getElementById("falseBtn").disabled=false;questionTimerId=setInterval(()=>{questionSeconds--;document.getElementById("questionTimer").innerText=questionSeconds;document.getElementById("progressFill").style.width=(questionSeconds/5*100)+"%";if(questionSeconds<=0){clearInterval(questionTimerId);document.getElementById("feedback").innerText="⏱️ Tiden gikk ut!";document.getElementById("trueBtn").disabled=true;document.getElementById("falseBtn").disabled=true;setTimeout(nextQuestion,650);}},1000);}
+function answer(value){if(gameOver||!current)return;clearInterval(questionTimerId);document.getElementById("trueBtn").disabled=true;document.getElementById("falseBtn").disabled=true;if(value===current.a){score++;document.getElementById("scoreBox").innerText="Poeng: "+score;document.getElementById("feedback").innerText="✅ Riktig!";}else{document.getElementById("feedback").innerText="❌ Galt!";}setTimeout(nextQuestion,650);}
+function finishGame(title){if(gameOver)return;gameOver=true;clearInterval(gameTimerId);clearInterval(questionTimerId);document.getElementById("resultTitle").innerText=title;document.getElementById("resultText").innerHTML="Du fikk <b>"+score+"</b> poeng på <b>"+asked+"</b> spørsmål.<br><br>"+rank(score)+"<br><br>"+(score>=12?"🎁 Du er kvalifisert til konkurransen!":"Prøv igjen og gå for minst 12 poeng.");document.getElementById("resultMessage").style.display="flex";}
+function closeResult(){document.getElementById("resultMessage").style.display="none";}
+function showSetup(){document.getElementById("game").classList.add("hidden");document.getElementById("setup").classList.remove("hidden");}
+</script>
+</body>
+</html>
