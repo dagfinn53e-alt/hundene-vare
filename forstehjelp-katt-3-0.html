@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Førstehjelp Katt 3.0</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+color:#102033;
+background:
+radial-gradient(circle at top left,rgba(236,72,153,.16) 0%,transparent 28%),
+linear-gradient(180deg,#fdf2f8 0%,#f8fbff 100%);
+}
+
+.wrap{
+max-width:1050px;
+margin:auto;
+padding:20px;
+}
+
+.hero{
+background:
+linear-gradient(rgba(0,0,0,.40),rgba(0,0,0,.40)),
+url('https://images.unsplash.com/photo-1511044568932-338cba0ad803?q=80&w=1400&auto=format&fit=crop') center/cover;
+color:white;
+border-radius:34px;
+padding:42px;
+text-align:center;
+box-shadow:0 18px 42px rgba(15,23,42,.18);
+}
+
+.hero h1{
+font-size:52px;
+margin:0 0 10px;
+}
+
+.hero p{
+font-size:18px;
+max-width:760px;
+margin:auto;
+line-height:1.6;
+}
+
+.card{
+background:white;
+border-radius:28px;
+padding:24px;
+margin:18px 0;
+box-shadow:0 12px 28px rgba(15,23,42,.10);
+}
+
+.ad{
+background:linear-gradient(135deg,#fff,#fff7ed,#fef3c7);
+border:2px dashed #f97316;
+text-align:center;
+}
+
+.ad h2{
+color:#c2410c;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:16px;
+}
+
+.box{
+background:#f8fbff;
+border:1px solid #dbeafe;
+border-radius:22px;
+padding:18px;
+}
+
+.box h2{
+color:#db2777;
+}
+
+.danger{
+background:#fff1f2;
+border:1px solid #fecdd3;
+}
+
+.danger h2{
+color:#be123c;
+}
+
+.good{
+background:#f0fdf4;
+border:1px solid #bbf7d0;
+}
+
+.good h2{
+color:#166534;
+}
+
+.tip{
+background:#fdf2f8;
+border:1px solid #fbcfe8;
+border-radius:18px;
+padding:16px;
+font-weight:700;
+color:#9d174d;
+}
+
+.warning{
+background:#fff1f2;
+border:1px solid #fecdd3;
+border-radius:18px;
+padding:16px;
+font-weight:800;
+color:#be123c;
+}
+
+.btns{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+margin-top:16px;
+}
+
+.btn{
+display:flex;
+align-items:center;
+justify-content:center;
+min-height:60px;
+border-radius:999px;
+text-decoration:none;
+font-weight:900;
+color:white;
+}
+
+.pink{
+background:linear-gradient(135deg,#db2777,#7c3aed);
+}
+
+.orange{
+background:linear-gradient(135deg,#f97316,#db2777);
+}
+
+.footer{
+text-align:center;
+color:#64748b;
+font-size:14px;
+margin-top:25px;
+}
+
+ul{
+line-height:1.7;
+}
+
+p{
+line-height:1.65;
+}
+
+@media(max-width:760px){
+.hero{
+padding:26px;
+}
+
+.hero h1{
+font-size:36px;
+}
+
+.hero p{
+font-size:16px;
+}
+
+.btns{
+grid-template-columns:1fr;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<section class="hero">
+<h1>🐱 Førstehjelp Katt 3.0</h1>
+
+<p>
+En enkel og nyttig guide for katteeiere.
+Lær hva du kan gjøre ved skader, forgiftning,
+flått, heteslag og andre situasjoner der katten trenger hjelp.
+</p>
+</section>
+
+<section class="card ad">
+<h2>🐾 Her kunne din butikk stått</h2>
+
+<p>
+Denne plassen kan være månedens sponsor for Førstehjelp Katt 3.0.
+Perfekt for veterinærer, dyrebutikker,
+katteklubber og kattepensjonater.
+</p>
+</section>
+
+<section class="card danger">
+<h2>🚨 Når må du kontakte veterinær raskt?</h2>
+
+<ul>
+<li>Pustevansker</li>
+<li>Kraftig blødning</li>
+<li>Bevisstløshet</li>
+<li>Kramper</li>
+<li>Mistanke om forgiftning</li>
+<li>Store fallskader</li>
+<li>Huggormbitt</li>
+<li>Alvorlig slapphet</li>
+<li>Store smerter</li>
+</ul>
+
+<div class="warning">
+⚠️ Kontakt veterinær raskt dersom du er usikker på kattens tilstand.
+</div>
+</section>
+
+<div class="grid">
+
+<div class="box">
+<h2>🩹 Kutt og sår</h2>
+<p>
+Små sår kan skylles forsiktig med rent vann.
+Dype sår, bittskader og kraftige blødninger bør undersøkes av veterinær.
+</p>
+</div>
+
+<div class="box danger">
+<h2>🐍 Huggormbitt</h2>
+<p>
+Hold katten mest mulig i ro og kontakt veterinær umiddelbart.
+Ikke vent på at symptomene skal utvikle seg.
+</p>
+</div>
+
+<div class="box danger">
+<h2>☀️ Heteslag</h2>
+<p>
+Katter kan også få heteslag.
+Flytt katten til et kjølig sted og kontakt veterinær ved mistanke.
+</p>
+</div>
+
+<div class="box">
+<h2>🕷️ Flått</h2>
+<p>
+Fjern flått så raskt som mulig med flåttfjerner.
+Følg med på rødhet eller tegn på sykdom etterpå.
+</p>
+</div>
+
+<div class="box danger">
+<h2>☠️ Forgiftning</h2>
+<p>
+Liljer, enkelte planter, medisiner og kjemikalier kan være svært farlige for katter.
+Kontakt veterinær umiddelbart ved mistanke.
+</p>
+</div>
+
+<div class="box">
+<h2>🦴 Fallskader</h2>
+<p>
+Katter lander ikke alltid på beina.
+Ved fall fra høyder bør katten undersøkes hvis den virker slapp eller har smerter.
+</p>
+</div>
+
+</div>
+
+<section class="card">
+<h2>🎒 Førstehjelpsutstyr</h2>
+
+<ul>
+<li>Sterile kompresser</li>
+<li>Bandasje</li>
+<li>Sårvask</li>
+<li>Flåttfjerner</li>
+<li>Pinsett</li>
+<li>Engangshansker</li>
+<li>Telefonnummer til veterinær</li>
+<li>Transportbur</li>
+</ul>
+</section>
+
+<section class="card good">
+<h2>❤️ Hold deg rolig</h2>
+
+<p>
+Katter blir ofte stresset når de er syke eller skadet.
+Rolig håndtering og rask kontakt med veterinær kan være avgjørende.
+</p>
+
+<div class="tip">
+🐱 En rolig eier hjelper katten best i en vanskelig situasjon.
+</div>
+</section>
+
+<section class="card">
+<h2>🏆 Test kunnskapen din</h2>
+
+<p>
+Snart kommer «Hva husker du? – Førstehjelp Katt» som eget spill.
+</p>
+
+<div class="btns">
+<a class="btn pink" href="spill.html">🎮 Se alle spill</a>
+<a class="btn orange" href="konkurranse.html">🎁 Delta i konkurransen</a>
+</div>
+</section>
+
+<p class="footer">
+Hundenevåre.com – Kunnskap, spill, konkurranser og gode råd for hunde- og katteeiere.
+</p>
+
+</div>
+
+</body>
+</html>
