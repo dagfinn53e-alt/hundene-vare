@@ -1,198 +1,49 @@
 <!DOCTYPE html>
 <html lang="no">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kunnskap Katt - Hundene våre</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Katt og Barn 3.0</title>
 <style>
-:root{
-  --blue:#2563eb;
-  --blue-dark:#1d4ed8;
-  --purple:#7c3aed;
-  --text:#102033;
-  --muted:#5f7088;
-}
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at top left,rgba(96,165,250,.18) 0%,transparent 28%),
-    radial-gradient(circle at top right,rgba(124,58,237,.12) 0%,transparent 30%),
-    linear-gradient(180deg,#dbe7f5 0%,#edf4fb 45%,#f8fbff 100%);
-}
-.wrap{max-width:1120px;margin:0 auto;padding:22px 18px 70px}
-.topbar{
-  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
-  margin-bottom:18px;padding:14px 18px;border:1px solid rgba(191,219,254,.75);
-  border-radius:28px;background:rgba(255,255,255,.88);box-shadow:0 16px 38px rgba(15,23,42,.10);
-  position:sticky;top:8px;z-index:50;
-}
-.brand{
-  font-size:24px;font-weight:900;color:var(--blue-dark);padding:12px 18px;border-radius:999px;
-  background:linear-gradient(135deg,#ffffff,#eef4ff);border:1px solid #c7d8f4;
-}
-.actions{display:flex;gap:10px;flex-wrap:wrap}
-.navbtn,.mainbtn{
-  border:none;border-radius:999px;padding:11px 16px;background:var(--blue);color:#fff;font-weight:900;
-  cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
-  box-shadow:0 6px 16px rgba(15,23,42,.08);
-}
-.navbtn.alt{background:#eaf2ff;color:var(--blue-dark);border:1px solid #bfd7ff}
-.navbtn.admin{background:#fff7ed;color:#b45309;border:1px solid #fed7aa}
-.hero{
-  min-height:285px;border-radius:34px;padding:38px;color:white;
-  background:linear-gradient(135deg,#2563eb,#7c3aed,#f97316);
-  box-shadow:0 22px 48px rgba(15,23,42,.18);margin-bottom:22px;
-}
-.hero h1{margin:0 0 12px;font-size:52px;line-height:1.05;text-shadow:0 6px 18px rgba(0,0,0,.25)}
-.hero p{margin:0 0 18px;max-width:780px;font-size:18px;line-height:1.6;color:#f8fafc}
-.mainbtn{background:linear-gradient(135deg,#2563eb,#7c3aed);min-height:48px;padding:13px 22px}
-.card{
-  background:linear-gradient(180deg,#eef5fd 0%,#e3edf8 100%);
-  border:1px solid rgba(148,163,184,.30);border-radius:34px;padding:28px;
-  box-shadow:0 20px 42px rgba(15,23,42,.12);margin-bottom:22px;
-}
-.section-title{margin:0 0 8px;font-size:34px;color:#0f172a}
-.sub{color:var(--muted);line-height:1.6;margin:0 0 20px}
-.knowledge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.knowledge-card{
-  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
-  border:1px solid #dbeafe;border-radius:28px;padding:16px;min-height:360px;
-  box-shadow:0 14px 32px rgba(30,64,175,.10);display:flex;flex-direction:column;
-  justify-content:space-between;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
-}
-.knowledge-card:hover{transform:translateY(-2px);border-color:#93c5fd;box-shadow:0 20px 42px rgba(30,64,175,.15)}
-.topic-image{
-  width:100%;height:180px;object-fit:cover;border-radius:18px;margin-bottom:14px;border:1px solid #dbeafe;
-  box-shadow:0 10px 22px rgba(15,23,42,.12);background:#eef6ff;
-}
-.iconbox{
-  display:flex;align-items:center;justify-content:center;font-size:76px;
-  background:linear-gradient(135deg,#eef6ff,#fff7ed,#fdf2f8);
-}
-.knowledge-card h3{margin:0 0 8px;font-size:24px;color:#0f172a}
-.knowledge-card p{margin:0;color:#475569;line-height:1.55;font-size:15px}
-.openbtn{
-  margin-top:18px;width:100%;min-height:46px;border-radius:999px;background:linear-gradient(135deg,#2563eb,#7c3aed);
-  color:#fff;font-weight:900;text-decoration:none;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;
-}
-.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
-.info-card{background:#fff;border:1px dashed #cbd5e1;border-radius:24px;padding:18px}
-.info-card h3{margin:0 0 8px;font-size:22px}
-.info-card p{margin:0;color:#64748b;line-height:1.55}
-.footer-note{text-align:center;color:#64748b;font-size:14px;margin-top:22px}
-@media(max-width:950px){.knowledge-grid{grid-template-columns:1fr 1fr}.info-grid{grid-template-columns:1fr}}
-@media(max-width:760px){
-  .wrap{padding:14px 12px 50px}.topbar{border-radius:22px;padding:12px}
-  .brand{width:100%;text-align:center;font-size:20px}.actions{width:100%;justify-content:center}
-  .navbtn{flex:1 1 42%;font-size:13px;padding:10px 12px}.hero{min-height:230px;border-radius:26px;padding:24px}
-  .hero h1{font-size:34px}.hero p{font-size:15px}.card{border-radius:26px;padding:18px}
-  .section-title{font-size:28px}.knowledge-grid{grid-template-columns:1fr}.topic-image{height:210px}
-}
+body{margin:0;font-family:Arial,sans-serif;color:#102033;background:linear-gradient(180deg,#fdf2f8,#eff6ff,#fff7ed)}
+.wrap{max-width:1080px;margin:auto;padding:20px}
+.hero{background:linear-gradient(rgba(15,23,42,.42),rgba(15,23,42,.44)),url('https://images.unsplash.com/photo-1511044568932-338cba0ad803?q=80&w=1400&auto=format&fit=crop') center/cover;color:white;border-radius:34px;padding:42px;text-align:center;box-shadow:0 18px 42px rgba(15,23,42,.18)}
+.hero h1{font-size:52px;margin:0 0 10px}.hero p{font-size:18px;max-width:800px;margin:auto;line-height:1.6}
+.card{background:white;border-radius:28px;padding:24px;margin:18px 0;box-shadow:0 12px 28px rgba(15,23,42,.10)}
+.ad{background:linear-gradient(135deg,#fff,#fff7ed,#fef3c7);border:2px dashed #f97316;text-align:center}.ad h2{color:#c2410c}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.box{background:#f8fbff;border:1px solid #dbeafe;border-radius:22px;padding:18px}.box h2{color:#db2777}
+.green{background:#f0fdf4;border-color:#bbf7d0}.green h2{color:#166534}.orange{background:#fff7ed;border-color:#fed7aa}.orange h2{color:#c2410c}.red{background:#fff1f2;border-color:#fecdd3}.red h2{color:#be123c}.purple{background:#f5f3ff;border-color:#ddd6fe}.purple h2{color:#6d28d9}
+.image-box{height:190px;border-radius:20px;margin-bottom:14px;display:flex;align-items:center;justify-content:center;font-size:72px;background:linear-gradient(135deg,#fdf2f8,#eff6ff);box-shadow:0 10px 22px rgba(15,23,42,.10)}
+.tip{background:#fdf2f8;border:1px solid #fbcfe8;border-radius:18px;padding:16px;font-weight:700;color:#9d174d}
+.warning{background:#fff1f2;border:1px solid #fecdd3;border-radius:18px;padding:16px;font-weight:800;color:#be123c}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:60px;border-radius:999px;text-decoration:none;font-weight:900;color:white;text-align:center;padding:12px 18px}
+.blue{background:linear-gradient(135deg,#2563eb,#7c3aed)}.pink{background:linear-gradient(135deg,#f97316,#db2777)}
+.footer{text-align:center;color:#64748b;font-size:14px;margin-top:25px}
+ul,p{line-height:1.65}
+@media(max-width:760px){.hero{padding:26px}.hero h1{font-size:36px}.hero p{font-size:16px}.btns{grid-template-columns:1fr}}
 </style>
 </head>
-<body><div class="wrap">
-
-  <div class="topbar">
-    <div class="brand">🐶 Hundene våre</div>
-    <div class="actions">
-      <a class="navbtn alt" href="index.html">🏠 Forside</a>
-      <a class="navbtn alt" href="kunnskap.html">📚 Kunnskap</a>
-      <a class="navbtn alt" href="spill.html">🎮 Spill</a>
-      <a class="navbtn alt" href="se-butikker.html">🏪 Butikker</a>
-      <a class="navbtn alt" href="arrangementer.html">📅 Arrangementer</a>
-      <a class="navbtn alt" href="stories.html">📰 Nyheter</a>
-      <a class="navbtn alt" href="omoss.html">ℹ️ Om oss</a>
-      <a class="navbtn admin" href="admin.html">🔧 Admin</a>
-    </div>
-  </div>
-
-<section class="hero">
-  <h1>🐱 Kunnskap om Katt</h1>
-  <p>Her finner du katteraser, katteutstyr, ernæring, kattungeguide, førstehjelp, språk og katt og barn.</p>
-  <a class="mainbtn" href="kunnskap.html">⬅️ Tilbake til Kunnskap</a>
-</section>
-<section class="card">
-  <h2 class="section-title">Velg kattetema</h2>
-  <p class="sub">Alt som handler om katt er samlet her for mindre scrolling og bedre oversikt.</p>
-  <div class="knowledge-grid">
-      <div class="knowledge-card">
-        <div>
-          <img class="topic-image" src="bilder/kunnskap/katteraser.png" alt="Katteraser">
-          <h3>Katteraser</h3>
-          <p>Fakta om katteraser, lynne, pelsstell, størrelse, historie og hva som kjennetegner rasen.</p>
-        </div>
-        <a class="openbtn" href="katteraser.html">
-          🐱 Åpne Katteraser
-        </a>
-      </div>
-
-      <div class="knowledge-card">
-        <div>
-          <img class="topic-image" src="bilder/kunnskap/katteraser-utstyr.png" alt="Katteraser Utstyr">
-          <h3>Katteraser Utstyr</h3>
-          <p>Børster, kammer, sjampo, klotang og anbefalt stellutstyr for ulike katteraser.</p>
-        </div>
-        <a class="openbtn" href="katteraser-utstyr.html">
-          🐱 Åpne Katteutstyr
-        </a>
-      </div>
-
-      <div class="knowledge-card">
-        <div>
-          <div class="topic-image iconbox" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3,#eef6ff);">🐱</div>
-          <h3>Kattens Ernæring</h3>
-          <p>Guide om kattunger, voksne katter, seniorkatter, vann, godbiter, overvekt og trygg ernæring.</p>
-        </div>
-        <a class="openbtn" href="kattens-ernaering-3-0.html">
-          🐱 Åpne Ernæring 3.0
-        </a>
-      </div>
-
-      <div class="knowledge-card">
-        <div>
-          <div class="topic-image iconbox" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3,#eef6ff);">🐱</div>
-          <h3>Kattungeguiden 3.0</h3>
-          <p>Alt om kattungens første tid hjemme, fôring, vaksiner, sosialisering, kattedo, lek og utstyr.</p>
-        </div>
-        <a class="openbtn" href="kattungeguiden-3-0.html">
-          🐱 Åpne Kattungeguiden 3.0
-        </a>
-      </div>
-
-      <div class="knowledge-card">
-        <div>
-          <div class="topic-image iconbox" style="background:linear-gradient(135deg,#fdf2f8,#fee2e2,#eef6ff);">🐱🏥</div>
-          <h3>Førstehjelp Katt 3.0</h3>
-          <p>Guide om sår, forgiftning, flått, heteslag, huggormbitt, fallskader og førstehjelpsutstyr.</p>
-        </div>
-        <a class="openbtn" href="forstehjelp-katt-3-0.html">
-          🐱🏥 Åpne Førstehjelp Katt 3.0
-        </a>
-      </div>
-
-      <div class="knowledge-card">
-        <div>
-          <div class="topic-image iconbox" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3,#eef6ff);">🐱💬</div>
-          <h3>Kattens Språk 3.0</h3>
-          <p>Lær å forstå kattens hale, ører, øyne, lyder, kroppsspråk, stress-signaler og behov for ro.</p>
-        </div>
-        <a class="openbtn" href="kattens-sprak-3-0.html">
-          🐱💬 Åpne Kattens Språk 3.0
-        </a>
-      </div>
-
-      <div class="knowledge-card">
-        <div>
-          <div class="topic-image iconbox" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3,#eef6ff);">🐱👶</div>
-          <h3>Katt og Barn 3.0</h3>
-          <p>Lær hvordan barn og katt kan bygge tillit, leke trygt og forstå kattens signaler.</p>
-        </div>
-        <a class="openbtn" href="katt-og-barn-3-0.html">
-          🐱👶 Åpne Katt og Barn 3.0
-        </a>
-      </div>
+<body>
+<div class="wrap">
+<section class="hero"><h1>🐱👶 Katt og Barn 3.0</h1><p>En trygg og enkel guide for familier. Lær hvordan barn og katt kan bygge tillit, leke trygt og forstå hverandre bedre.</p></section>
+<section class="card ad"><h2>🐾 Her kunne din butikk stått</h2><p>Denne plassen kan være månedens sponsor for Katt og Barn 3.0. Perfekt for dyrebutikker, veterinærer, katteklubber og familievennlige dyretjenester.</p></section>
+<section class="card"><h2>❤️ Trygghet først</h2><p>Katt og barn kan få et fint og nært forhold, men katten må få tid, ro og respekt. Mange katter liker kontakt, men de liker sjelden å bli jaget, løftet feil eller holdt fast.</p><p>Barn bør lære at katten er et levende dyr med egne grenser. Når barnet forstår kattens signaler, blir samspillet tryggere og hyggeligere for begge.</p><div class="tip">🐱 Den viktigste regelen: Katten må alltid få mulighet til å gå unna.</div></section>
+<div class="grid">
+<div class="box green"><div class="image-box">👋🐱</div><h2>Første møte</h2><p>La katten bestemme tempoet. Barnet bør sitte rolig, snakke lavt og la katten komme bort selv.</p><ul><li>Ikke løp etter katten.</li><li>Ikke løft katten uten voksen hjelp.</li><li>La katten snuse først.</li><li>Gi katten en trygg vei bort.</li></ul></div>
+<div class="box orange"><div class="image-box">🧶👶</div><h2>Trygg lek</h2><p>Lek med katt bør skje med en leke mellom barnet og katten, ikke med hender eller føtter.</p><ul><li>Bruk fiskestangleke eller ball.</li><li>Stopp leken hvis katten blir for intens.</li><li>Ikke dra katten i halen eller pelsen.</li><li>Ros rolig og hyggelig lek.</li></ul></div>
+<div class="box red"><div class="image-box">🛑🐈</div><h2>Når katten vil være i fred</h2><p>En katt som går bort, gjemmer seg, legger ørene bakover eller slår med halen, ønsker ofte ro.</p><ul><li>Ikke forstyrr katten når den sover.</li><li>Ikke forstyrr ved matskålen.</li><li>Ikke dra katten frem fra gjemmested.</li><li>La katten ha en trygg plass.</li></ul></div>
+<div class="box purple"><div class="image-box">😾🐱</div><h2>Kattens signaler</h2><p>Barn bør lære noen enkle tegn på at katten er usikker, stresset eller irritert.</p><ul><li>Ørene bakover.</li><li>Halen pisker raskt.</li><li>Katten gjemmer seg.</li><li>Katten freser eller knurrer.</li><li>Katten slår med poten.</li></ul></div>
+<div class="box"><div class="image-box">🏠🐾</div><h2>Regler i hjemmet</h2><p>Enkle regler gjør det tryggere for både barnet og katten.</p><ul><li>Katten får spise i fred.</li><li>Katten får sove i fred.</li><li>Barnet spør voksen før lek.</li><li>Rolige hender og rolig stemme.</li></ul></div>
+<div class="box green"><div class="image-box">💕🐱</div><h2>Bygg tillit</h2><p>Tillit bygges med rolige, gode opplevelser over tid. La barnet gi godbit eller leke forsiktig med voksen til stede.</p><ul><li>Rolig kontakt.</li><li>Korte økter.</li><li>Positive opplevelser.</li><li>La katten velge kontakt.</li></ul></div>
 </div>
-</section>
-<p class="footer-note">Hundenevåre.com – Kunnskap om katt.</p>
-</div></body></html>
+<section class="card red"><h2>⚠️ Vanlige feil voksne gjør</h2><p>Mange uhell skjer fordi voksne tror at katten «bare tåler litt». Katter kan bli redde eller stresset lenge før de klorer eller biter.</p><ul><li>Å la barn bære katten feil.</li><li>Å la barn jage katten.</li><li>Å overse hale, ører og fresing.</li><li>Å la barn dra katten frem fra skjulested.</li><li>Å la barn og katt være uten tilsyn for lenge.</li></ul><div class="warning">Fresing, knurring og slag med poten betyr ofte: «Jeg trenger avstand nå.»</div></section>
+<section class="card"><h2>👶 Små barn og katt</h2><p>Små barn forstår ikke alltid hvor hardt de tar. De kan gripe i pels, hale eller ører uten å mene noe vondt. Derfor bør voksne alltid følge ekstra godt med.</p><p>For små barn er det best med korte og rolige møter. Katten bør alltid ha et sted den kan trekke seg tilbake uten å bli forstyrret.</p></section>
+<section class="card green"><h2>❤️ Viktig å huske</h2><p>Et godt forhold mellom katt og barn bygges med ro, respekt og tålmodighet. Katten må få bestemme tempoet, og barnet må lære å lese signalene.</p><div class="tip">🐱 Trygg katt + rolig barn + våken voksen = best mulig samspill.</div></section>
+<section class="card"><h2>🏆 Test kunnskapen din</h2><p>Snart kommer «Hva husker du? – Katt og Barn» som eget spill.</p><div class="btns"><a class="btn blue" href="spill.html">🎮 Se alle spill</a><a class="btn pink" href="konkurranse.html">🎁 Delta i konkurransen</a></div></section>
+<p class="footer">Hundenevåre.com – Kunnskap, spill, konkurranser og gode råd for hunde- og katteeiere.</p>
+</div>
+</body>
+</html>
