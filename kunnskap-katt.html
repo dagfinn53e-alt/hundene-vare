@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="no">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kunnskap Katt - Hundene våre</title>
+<style>
+:root{
+  --blue:#2563eb;
+  --blue-dark:#1d4ed8;
+  --purple:#7c3aed;
+  --text:#102033;
+  --muted:#5f7088;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top left,rgba(96,165,250,.18) 0%,transparent 28%),
+    radial-gradient(circle at top right,rgba(124,58,237,.12) 0%,transparent 30%),
+    linear-gradient(180deg,#dbe7f5 0%,#edf4fb 45%,#f8fbff 100%);
+}
+.wrap{max-width:1120px;margin:0 auto;padding:22px 18px 70px}
+.topbar{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  margin-bottom:18px;padding:14px 18px;border:1px solid rgba(191,219,254,.75);
+  border-radius:28px;background:rgba(255,255,255,.88);box-shadow:0 16px 38px rgba(15,23,42,.10);
+  position:sticky;top:8px;z-index:50;
+}
+.brand{
+  font-size:24px;font-weight:900;color:var(--blue-dark);padding:12px 18px;border-radius:999px;
+  background:linear-gradient(135deg,#ffffff,#eef4ff);border:1px solid #c7d8f4;
+}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.navbtn,.mainbtn{
+  border:none;border-radius:999px;padding:11px 16px;background:var(--blue);color:#fff;font-weight:900;
+  cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 16px rgba(15,23,42,.08);
+}
+.navbtn.alt{background:#eaf2ff;color:var(--blue-dark);border:1px solid #bfd7ff}
+.navbtn.admin{background:#fff7ed;color:#b45309;border:1px solid #fed7aa}
+.hero{
+  min-height:285px;border-radius:34px;padding:38px;color:white;
+  background:linear-gradient(135deg,#2563eb,#7c3aed,#f97316);
+  box-shadow:0 22px 48px rgba(15,23,42,.18);margin-bottom:22px;
+}
+.hero h1{margin:0 0 12px;font-size:52px;line-height:1.05;text-shadow:0 6px 18px rgba(0,0,0,.25)}
+.hero p{margin:0 0 18px;max-width:780px;font-size:18px;line-height:1.6;color:#f8fafc}
+.mainbtn{background:linear-gradient(135deg,#2563eb,#7c3aed);min-height:48px;padding:13px 22px}
+.card{
+  background:linear-gradient(180deg,#eef5fd 0%,#e3edf8 100%);
+  border:1px solid rgba(148,163,184,.30);border-radius:34px;padding:28px;
+  box-shadow:0 20px 42px rgba(15,23,42,.12);margin-bottom:22px;
+}
+.section-title{margin:0 0 8px;font-size:34px;color:#0f172a}
+.sub{color:var(--muted);line-height:1.6;margin:0 0 20px}
+.knowledge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.knowledge-card{
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+  border:1px solid #dbeafe;border-radius:28px;padding:16px;min-height:360px;
+  box-shadow:0 14px 32px rgba(30,64,175,.10);display:flex;flex-direction:column;
+  justify-content:space-between;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+}
+.knowledge-card:hover{transform:translateY(-2px);border-color:#93c5fd;box-shadow:0 20px 42px rgba(30,64,175,.15)}
+.topic-image{
+  width:100%;height:180px;object-fit:cover;border-radius:18px;margin-bottom:14px;border:1px solid #dbeafe;
+  box-shadow:0 10px 22px rgba(15,23,42,.12);background:#eef6ff;
+}
+.iconbox{
+  display:flex;align-items:center;justify-content:center;font-size:76px;
+  background:linear-gradient(135deg,#eef6ff,#fff7ed,#fdf2f8);
+}
+.knowledge-card h3{margin:0 0 8px;font-size:24px;color:#0f172a}
+.knowledge-card p{margin:0;color:#475569;line-height:1.55;font-size:15px}
+.openbtn{
+  margin-top:18px;width:100%;min-height:46px;border-radius:999px;background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:#fff;font-weight:900;text-decoration:none;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;
+}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.info-card{background:#fff;border:1px dashed #cbd5e1;border-radius:24px;padding:18px}
+.info-card h3{margin:0 0 8px;font-size:22px}
+.info-card p{margin:0;color:#64748b;line-height:1.55}
+.footer-note{text-align:center;color:#64748b;font-size:14px;margin-top:22px}
+@media(max-width:950px){.knowledge-grid{grid-template-columns:1fr 1fr}.info-grid{grid-template-columns:1fr}}
+@media(max-width:760px){
+  .wrap{padding:14px 12px 50px}.topbar{border-radius:22px;padding:12px}
+  .brand{width:100%;text-align:center;font-size:20px}.actions{width:100%;justify-content:center}
+  .navbtn{flex:1 1 42%;font-size:13px;padding:10px 12px}.hero{min-height:230px;border-radius:26px;padding:24px}
+  .hero h1{font-size:34px}.hero p{font-size:15px}.card{border-radius:26px;padding:18px}
+  .section-title{font-size:28px}.knowledge-grid{grid-template-columns:1fr}.topic-image{height:210px}
+}
+</style>
+</head>
+<body><div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">🐶 Hundene våre</div>
+    <div class="actions">
+      <a class="navbtn alt" href="index.html">🏠 Forside</a>
+      <a class="navbtn alt" href="kunnskap.html">📚 Kunnskap</a>
+      <a class="navbtn alt" href="spill.html">🎮 Spill</a>
+      <a class="navbtn alt" href="se-butikker.html">🏪 Butikker</a>
+      <a class="navbtn alt" href="arrangementer.html">📅 Arrangementer</a>
+      <a class="navbtn alt" href="stories.html">📰 Nyheter</a>
+      <a class="navbtn alt" href="omoss.html">ℹ️ Om oss</a>
+      <a class="navbtn admin" href="admin.html">🔧 Admin</a>
+    </div>
+  </div>
+
+<section class="hero">
+  <h1>🐱 Kunnskap om Katt</h1>
+  <p>Her finner du katteraser, katteutstyr, ernæring, kattungeguide, førstehjelp, språk og katt og barn.</p>
+  <a class="mainbtn" href="kunnskap.html">⬅️ Tilbake til Kunnskap</a>
+</section>
+<section class="card">
+  <h2 class="section-title">Velg kattetema</h2>
+  <p class="sub">Alt som handler om katt er samlet her for mindre scrolling og bedre oversikt.</p>
+  <div class="knowledge-grid">
+      <div class="knowledge-card">
+        <div>
+          <img class="topic-image" src="bilder/kunnskap/katteraser.png" alt="Katteraser">
+          <h3>Katteraser</h3>
+          <p>Fakta om katteraser, lynne, pelsstell, størrelse, historie og hva som kjennetegner rasen.</p>
+        </div>
+        <a class="openbtn" href="katteraser.html">
+          🐱 Åpne Katteraser
+        </a>
+      </div>
+
+      <div class="knowledge-card">
+        <div>
+          <img class="topic-image" src="bilder/kunnskap/katteraser-utstyr.png" alt="Katteraser Utstyr">
+          <h3>Katteraser Utstyr</h3>
+          <p>Børster, kammer, sjampo, klotang og anbefalt stellutstyr for ulike katteraser.</p>
+        </div>
+        <a class="openbtn" href="katteraser-utstyr.html">
+          🐱 Åpne Katteutstyr
+        </a>
+      </div>
+
+      <div class="knowledge-card">
+        <div>
+          <div class="topic-image iconbox" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3,#eef6ff);">🐱</div>
+          <h3>Kattens Ernæring</h3>
+          <p>Guide om kattunger, voksne katter, seniorkatter, vann, godbiter, overvekt og trygg ernæring.</p>
+        </div>
+        <a class="openbtn" href="kattens-ernaering-3-0.html">
+          🐱 Åpne Ernæring 3.0
+        </a>
+      </div>
+
+      <div class="knowledge-card">
+        <div>
+          <div class="topic-image iconbox" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3,#eef6ff);">🐱</div>
+          <h3>Kattungeguiden 3.0</h3>
+          <p>Alt om kattungens første tid hjemme, fôring, vaksiner, sosialisering, kattedo, lek og utstyr.</p>
+        </div>
+        <a class="openbtn" href="kattungeguiden-3-0.html">
+          🐱 Åpne Kattungeguiden 3.0
+        </a>
+      </div>
+
+      <div class="knowledge-card">
+        <div>
+          <div class="topic-image iconbox" style="background:linear-gradient(135deg,#fdf2f8,#fee2e2,#eef6ff);">🐱🏥</div>
+          <h3>Førstehjelp Katt 3.0</h3>
+          <p>Guide om sår, forgiftning, flått, heteslag, huggormbitt, fallskader og førstehjelpsutstyr.</p>
+        </div>
+        <a class="openbtn" href="forstehjelp-katt-3-0.html">
+          🐱🏥 Åpne Førstehjelp Katt 3.0
+        </a>
+      </div>
+
+      <div class="knowledge-card">
+        <div>
+          <div class="topic-image iconbox" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3,#eef6ff);">🐱💬</div>
+          <h3>Kattens Språk 3.0</h3>
+          <p>Lær å forstå kattens hale, ører, øyne, lyder, kroppsspråk, stress-signaler og behov for ro.</p>
+        </div>
+        <a class="openbtn" href="kattens-sprak-3-0.html">
+          🐱💬 Åpne Kattens Språk 3.0
+        </a>
+      </div>
+
+      <div class="knowledge-card">
+        <div>
+          <div class="topic-image iconbox" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3,#eef6ff);">🐱👶</div>
+          <h3>Katt og Barn 3.0</h3>
+          <p>Lær hvordan barn og katt kan bygge tillit, leke trygt og forstå kattens signaler.</p>
+        </div>
+        <a class="openbtn" href="katt-og-barn-3-0.html">
+          🐱👶 Åpne Katt og Barn 3.0
+        </a>
+      </div>
+</div>
+</section>
+<p class="footer-note">Hundenevåre.com – Kunnskap om katt.</p>
+</div></body></html>
