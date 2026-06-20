@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hvilken hunderase passer meg? 3.0</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;color:#102033;background:linear-gradient(180deg,#dbeafe,#fff7ed,#f8fbff)}
+.wrap{max-width:1080px;margin:auto;padding:20px}
+.hero{background:linear-gradient(135deg,#2563eb,#7c3aed,#f97316);color:white;border-radius:34px;padding:42px;text-align:center;box-shadow:0 18px 42px rgba(15,23,42,.18)}
+.hero h1{font-size:48px;margin:0 0 10px}.hero p{font-size:18px;max-width:800px;margin:auto;line-height:1.6}
+.card{background:white;border-radius:28px;padding:24px;margin:18px 0;box-shadow:0 12px 28px rgba(15,23,42,.10)}
+.ad{background:linear-gradient(135deg,#fff,#fff7ed,#fef3c7);border:2px dashed #f97316;text-align:center}.ad h2{color:#c2410c}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.box{background:#f8fbff;border:1px solid #dbeafe;border-radius:22px;padding:18px}.box h2{color:#1d4ed8}
+.green{background:#f0fdf4;border-color:#bbf7d0}.green h2{color:#166534}
+.orange{background:#fff7ed;border-color:#fed7aa}.orange h2{color:#c2410c}
+.purple{background:#f5f3ff;border-color:#ddd6fe}.purple h2{color:#6d28d9}
+.red{background:#fff1f2;border-color:#fecdd3}.red h2{color:#be123c}
+.image-box{height:180px;border-radius:20px;margin-bottom:14px;display:flex;align-items:center;justify-content:center;font-size:72px;background:linear-gradient(135deg,#eff6ff,#fff7ed);box-shadow:0 10px 22px rgba(15,23,42,.10)}
+.tip{background:#eff6ff;border:1px solid #bfdbfe;border-radius:18px;padding:16px;font-weight:700;color:#1e3a8a}
+.warning{background:#fff7ed;border:1px solid #fed7aa;border-radius:18px;padding:16px;font-weight:800;color:#9a3412}
+.quiz{background:linear-gradient(180deg,#eef5fd,#ffffff);border:1px solid #bfdbfe}
+.question{background:#ffffff;border:1px solid #dbeafe;border-radius:22px;padding:18px;margin:12px 0;text-align:left}
+.question h3{margin:0 0 10px;color:#1d4ed8}
+.options{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.options label{background:#f8fbff;border:1px solid #dbeafe;border-radius:999px;padding:12px 14px;font-weight:800;cursor:pointer}
+.options input{margin-right:7px}
+.result{display:none;background:linear-gradient(135deg,#2563eb,#7c3aed);color:white;border-radius:28px;padding:24px;margin-top:18px;text-align:left}
+.result h2{margin-top:0;color:white}
+.result a{display:inline-flex;margin:6px 6px 0 0;padding:10px 14px;border-radius:999px;background:white;color:#1d4ed8;text-decoration:none;font-weight:900}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.btn,button.btn{border:none;display:flex;align-items:center;justify-content:center;min-height:60px;border-radius:999px;text-decoration:none;font-weight:900;color:white;text-align:center;padding:12px 18px;cursor:pointer;font-size:16px}
+.blue{background:linear-gradient(135deg,#2563eb,#7c3aed)}.pink{background:linear-gradient(135deg,#f97316,#db2777)}
+.footer{text-align:center;color:#64748b;font-size:14px;margin-top:25px}
+ul,p{line-height:1.65}
+@media(max-width:760px){.hero{padding:26px}.hero h1{font-size:34px}.hero p{font-size:16px}.btns{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="hero"><h1>🐶 Hvilken hunderase passer meg? 3.0</h1><p>Finn hunderaser som kan passe bedre til bolig, familie, aktivitetsnivå, pelsstell og hvor mye tid hunden må være alene hjemme.</p></section>
+<section class="card ad"><h2>🐾 Her kunne din butikk stått</h2><p>Denne plassen kan være sponsor for Hvilken hunderase passer meg? 3.0. Perfekt for dyrebutikker, hundeskoler, oppdrettere, veterinærer og hundetjenester.</p></section>
+<section class="card"><h2>🐾 Før du velger hund</h2><p>Å velge hunderase handler ikke bare om utseende. Hunden skal passe til hverdagen din, boligen din, familien din, hvor mye tid du har, og hvor aktiv du ønsker å være.</p><p>Denne siden gir forslag til raser som ofte kan passe ulike livssituasjoner. Det er likevel viktig å huske at hver hund er et individ. Oppdretter, miljø, trening, helse og erfaring betyr mye.</p><div class="tip">🐶 Målet er ikke å finne «den perfekte hunden», men å finne en hund som passer best mulig til livet ditt.</div></section>
+
+<section class="card quiz"><h2>🧭 Enkel rasevelger</h2><p>Svar på spørsmålene under og trykk på knappen for å få et forslag.</p>
+<div class="question"><h3>🏠 Hvordan bor du?</h3><div class="options"><label><input type="radio" name="home" value="apartment">Leilighet</label><label><input type="radio" name="home" value="house">Hus/rekkehus</label><label><input type="radio" name="home" value="farm">Stor eiendom/gård</label></div></div>
+<div class="question"><h3>👶 Har du barn i huset?</h3><div class="options"><label><input type="radio" name="kids" value="small">Små barn</label><label><input type="radio" name="kids" value="older">Store barn</label><label><input type="radio" name="kids" value="none">Ingen barn</label></div></div>
+<div class="question"><h3>🚶 Hvor aktiv er du?</h3><div class="options"><label><input type="radio" name="activity" value="low">Rolig hverdag</label><label><input type="radio" name="activity" value="medium">Middels aktiv</label><label><input type="radio" name="activity" value="high">Veldig aktiv</label></div></div>
+<div class="question"><h3>⏰ Hvor lenge må hunden være alene?</h3><div class="options"><label><input type="radio" name="alone" value="little">Lite alene</label><label><input type="radio" name="alone" value="medium">3–6 timer</label><label><input type="radio" name="alone" value="much">Over 6 timer</label></div></div>
+<div class="question"><h3>✂️ Hvor mye pelsstell ønsker du?</h3><div class="options"><label><input type="radio" name="coat" value="low">Lite pelsstell</label><label><input type="radio" name="coat" value="medium">Middels pelsstell</label><label><input type="radio" name="coat" value="high">Mye pelsstell går fint</label></div></div>
+<button class="btn blue" onclick="showResult()">🐶 Finn forslag</button>
+<div id="result" class="result"><h2 id="resultTitle">Forslag</h2><p id="resultText"></p><div id="resultLinks"></div></div>
+</section>
+
+<section class="grid">
+<div class="box green"><div class="image-box">🏠🐶</div><h2>Leilighet</h2><p>Raser som ofte kan passe i leilighet er mindre eller rolige raser, så lenge de får tur, kontakt og mental aktivisering.</p><ul><li>Bichon Frisé</li><li>Havaneser</li><li>Cavalier King Charles Spaniel</li><li>Shih Tzu</li><li>Fransk Bulldog</li></ul></div>
+<div class="box orange"><div class="image-box">👨‍👩‍👧🐕</div><h2>Familie med barn</h2><p>Familier bør se etter raser som ofte er sosiale, tålmodige og robuste, men barn og hund må alltid følges opp av voksne.</p><ul><li>Labrador Retriever</li><li>Golden Retriever</li><li>Bichon Frisé</li><li>Cavalier King Charles Spaniel</li><li>Newfoundlandshund</li></ul></div>
+<div class="box purple"><div class="image-box">🚶🐕</div><h2>Aktiv familie</h2><p>Aktive familier kan trives med raser som liker tur, trening og oppgaver.</p><ul><li>Labrador Retriever</li><li>Golden Retriever</li><li>Engelsk Springer Spaniel</li><li>Toller</li><li>Flatcoated Retriever</li></ul></div>
+<div class="box red"><div class="image-box">🏃🐶</div><h2>Svært aktiv eier</h2><p>Noen raser krever mye aktivitet, trening og oppgaver. Disse passer best for eiere som virkelig vil jobbe med hund.</p><ul><li>Border Collie</li><li>Australian Shepherd</li><li>Belgisk Fårehund/Malinois</li><li>Siberian Husky</li><li>Alaskan Malamute</li></ul></div>
+<div class="box"><div class="image-box">✂️🐩</div><h2>Pelsstell</h2><p>Noen raser røyter lite, men trenger mye børsting, klipp og pelsstell.</p><ul><li>Bichon Frisé</li><li>Havaneser</li><li>Puddel</li><li>Shih Tzu</li><li>Yorkshire Terrier</li></ul></div>
+<div class="box orange"><div class="image-box">⏰🐾</div><h2>Alene hjemme</h2><p>Ingen hunder bør være mye alene hver dag uten god tilvenning. Valper kan ikke være alene lenge.</p><ul><li>Start med korte økter.</li><li>Bygg trygghet gradvis.</li><li>Gi lufting og aktivisering før alene-tid.</li><li>Vurder hjelp hvis hunden må være lenge alene.</li></ul></div>
+</section>
+
+<section class="card"><h2>🏆 Våre enkle anbefalinger</h2><div class="grid"><div class="box"><h2>Førstegangseier</h2><ul><li>🥇 Labrador Retriever</li><li>🥈 Golden Retriever</li><li>🥉 Bichon Frisé</li></ul></div><div class="box"><h2>Eldre eller rolig hjem</h2><ul><li>🥇 Bichon Frisé</li><li>🥈 Havaneser</li><li>🥉 Cavalier King Charles Spaniel</li></ul></div><div class="box"><h2>Turglad familie</h2><ul><li>🥇 Labrador Retriever</li><li>🥈 Engelsk Springer Spaniel</li><li>🥉 Toller</li></ul></div></div></section>
+<section class="card red"><h2>⚠️ Viktig å huske</h2><p>Raseforslag er bare veiledning. Før du kjøper eller adopterer hund, bør du snakke med seriøse oppdrettere, raseklubber, veterinær eller erfarne hundefolk. Møt gjerne rasen i virkeligheten før du bestemmer deg.</p><div class="warning">🐶 En hund er et familiemedlem i mange år. Bruk tid på valget.</div></section>
+<section class="card"><h2>🏆 Test kunnskapen din</h2><p>Senere kan vi lage «Hva husker du? – Hvilken hund passer meg?» som eget spill.</p><div class="btns"><a class="btn blue" href="kunnskap-hund.html">🐶 Til hundekunnskap</a><a class="btn pink" href="konkurranse.html">🎁 Delta i konkurransen</a></div></section>
+<p class="footer">Hundenevåre.com – Kunnskap, spill, konkurranser og gode råd for hundeeiere.</p>
+</div>
+
+<script>
+function checked(name){const el=document.querySelector('input[name="'+name+'"]:checked');return el?el.value:"";}
+function showResult(){
+ const home=checked("home"), kids=checked("kids"), activity=checked("activity"), alone=checked("alone"), coat=checked("coat");
+ let breeds=[], text="";
+ if(activity==="high"){breeds=["Border Collie","Australian Shepherd","Engelsk Springer Spaniel"];text="Du virker aktiv og kan passe bedre til raser som trenger mye tur, trening og oppgaver.";}
+ else if(kids==="small"){breeds=["Labrador Retriever","Golden Retriever","Bichon Frisé"];text="Med små barn er det lurt å se etter sosiale og familievennlige raser, men voksne må alltid følge med.";}
+ else if(home==="apartment" && coat==="high"){breeds=["Bichon Frisé","Havaneser","Shih Tzu"];text="Du bor mindre og tåler pelsstell. Da kan små, sosiale selskapshunder passe godt.";}
+ else if(home==="apartment"){breeds=["Cavalier King Charles Spaniel","Bichon Frisé","Havaneser"];text="I leilighet passer ofte mindre eller rolige raser, så lenge de får tur og aktivisering.";}
+ else if(activity==="medium"){breeds=["Labrador Retriever","Cocker Spaniel","Beagle"];text="Du ønsker en middels aktiv hund som kan passe godt til vanlig familiehverdag med turer.";}
+ else{breeds=["Bichon Frisé","Havaneser","Cavalier King Charles Spaniel"];text="Du virker å ønske en roligere familiehund eller selskapshund.";}
+ if(alone==="much"){text += " Siden hunden må være mye alene, bør du planlegge gradvis alene-trening, lufting og eventuelt hjelp på dagtid.";}
+ document.getElementById("resultTitle").innerText="🐶 Forslag til hunderaser";
+ document.getElementById("resultText").innerHTML=text+"<br><br><b>Forslag:</b><br>🥇 "+breeds[0]+"<br>🥈 "+breeds[1]+"<br>🥉 "+breeds[2];
+ document.getElementById("resultLinks").innerHTML='<a href="hunderaser.html">🐶 Les mer om hunderaser</a><a href="hundens-sprak-3-0.html">🐶 Hundens språk</a><a href="valpeguiden-3-0.html">🐶 Valpeguiden</a>';
+ document.getElementById("result").style.display="block";
+ document.getElementById("result").scrollIntoView({behavior:"smooth",block:"center"});
+}
+</script>
+</body>
+</html>
