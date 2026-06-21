@@ -30,15 +30,15 @@
 
   <a class="back" href="index.html">← Tilbake til appen</a>
 
-  <h1>🐶 Registrer butikk</h1>
+  <h1>🐶 Registrer butikk / samarbeidspartner</h1>
 
   <p class="sub">
-    Fyll inn informasjon om butikken. Når du trykker lagre, blir butikken sendt til godkjenning.
+    Fyll inn informasjon om butikk, klubb eller samarbeidspartner. Når du trykker lagre, blir den sendt til godkjenning.
   </p>
 
   <div class="form-group">
-    <label>Butikknavn</label>
-    <input type="text" id="shopName" placeholder="Skriv butikknavn">
+    <label>Navn på butikk / gruppe / samarbeidspartner</label>
+    <input type="text" id="shopName" placeholder="Skriv navn">
   </div>
 
   <div class="form-group">
@@ -50,6 +50,7 @@
       <option>Zoo butikk</option>
       <option>Kafé</option>
       <option>Hundeklubb</option>
+      <option>Samarbeidspartner</option>
     </select>
   </div>
 
@@ -79,7 +80,7 @@
 
   <div class="form-group">
     <label>Beskrivelse</label>
-    <textarea id="shopDescription" placeholder="Beskrivelse av butikken"></textarea>
+    <textarea id="shopDescription" placeholder="Beskrivelse av butikk, gruppe eller samarbeidspartner"></textarea>
   </div>
 
   <div class="form-group">
@@ -95,7 +96,7 @@
   </div>
 
   <button type="button" onclick="saveShop()">
-    Lagre butikk
+    Lagre og send til godkjenning
   </button>
 
   <div id="status" class="status">Klar.</div>
@@ -164,8 +165,8 @@
       const imageFiles = document.getElementById("imageUpload").files;
 
       if(!name){
-        setStatus("Skriv inn butikknavn.", "crimson");
-        alert("Skriv inn butikknavn.");
+        setStatus("Skriv inn navn.", "crimson");
+        alert("Skriv inn navn.");
         return;
       }
 
@@ -182,7 +183,7 @@
         galleryUrls = await uploadManyFiles(imageFiles, "butikk-bilder");
       }
 
-      setStatus("Lagrer butikk ...", "#1d4ed8");
+      setStatus("Lagrer og sender til godkjenning ...", "#1d4ed8");
 
       const { error } = await supabaseClient
         .from("businesses")
@@ -213,8 +214,8 @@
       document.getElementById("logoUpload").value = "";
       document.getElementById("imageUpload").value = "";
 
-      setStatus("Butikken er sendt til godkjenning 😊", "green");
-      alert("Butikken er sendt til godkjenning 😊");
+      setStatus("Sendt til godkjenning 😊", "green");
+      alert("Sendt til godkjenning 😊");
 
     }catch(error){
       setStatus("Feil: " + error.message, "crimson");
