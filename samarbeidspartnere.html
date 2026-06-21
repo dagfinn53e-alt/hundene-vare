@@ -1,31 +1,137 @@
-<!-- LEGG INN I SAMARBEIDSPARTNER-SKJEMAET -->
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samarbeidspartnere - Hundene våre</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;color:#102033;background:linear-gradient(180deg,#eff6ff,#fff7ed,#f8fbff)}
+.wrap{max-width:1120px;margin:auto;padding:22px 18px 70px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;padding:14px 18px;border:1px solid #bfd7ff;border-radius:28px;background:rgba(255,255,255,.9);box-shadow:0 16px 38px rgba(15,23,42,.10);position:sticky;top:8px;z-index:50}
+.brand{font-size:24px;font-weight:900;color:#1d4ed8;padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,#fff,#eef4ff);border:1px solid #c7d8f4}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.navbtn,.mainbtn{border:none;border-radius:999px;padding:11px 16px;background:#2563eb;color:#fff;font-weight:900;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.navbtn.alt{background:#eaf2ff;color:#1d4ed8;border:1px solid #bfd7ff}.navbtn.admin{background:#fff7ed;color:#b45309;border:1px solid #fed7aa}
+.hero{border-radius:34px;padding:42px;color:white;background:linear-gradient(135deg,#2563eb,#7c3aed,#db2777);box-shadow:0 22px 48px rgba(15,23,42,.18);margin-bottom:22px;text-align:center}
+.hero h1{margin:0 0 12px;font-size:50px}.hero p{margin:0 auto 18px;max-width:820px;font-size:18px;line-height:1.6}
+.card{background:white;border-radius:28px;padding:24px;margin:18px 0;box-shadow:0 12px 28px rgba(15,23,42,.10)}
+.section-title{margin:0 0 8px;font-size:34px;color:#0f172a}.sub{color:#5f7088;line-height:1.6;margin:0 0 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.partner-card{background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid #dbeafe;border-radius:28px;padding:20px;box-shadow:0 14px 32px rgba(30,64,175,.10);display:flex;flex-direction:column;justify-content:space-between;min-height:360px}
+.iconbox{height:180px;border-radius:20px;margin-bottom:14px;display:flex;align-items:center;justify-content:center;font-size:74px;background:linear-gradient(135deg,#eff6ff,#fff7ed,#fdf2f8);box-shadow:0 10px 22px rgba(15,23,42,.10)}
+.partner-card h3{font-size:25px;margin:0 0 8px}.partner-card p{margin:0;color:#475569;line-height:1.55}
+.openbtn{margin-top:18px;width:100%;min-height:48px;border-radius:999px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:white;font-weight:900;text-decoration:none;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px}
+.pink{background:linear-gradient(135deg,#db2777,#f97316)}.green{background:linear-gradient(135deg,#16a34a,#0ea5e9)}
+.info{background:#eff6ff;border:1px solid #bfdbfe;border-radius:20px;padding:18px;color:#1e3a8a;font-weight:800;line-height:1.6}
+.ad{background:linear-gradient(135deg,#fff,#fff7ed,#fef3c7);border:2px dashed #f97316;text-align:center}
+.formbox{background:linear-gradient(135deg,#f0fdf4,#eff6ff);border:1px solid #bbf7d0}
+input,textarea{width:100%;padding:13px;border-radius:14px;border:1px solid #cbd5e1;margin:7px 0 14px;font-size:16px}
+label{font-weight:900;color:#1e3a8a}
+button{width:100%;min-height:54px;border:none;border-radius:999px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:white;font-weight:900;font-size:16px;cursor:pointer}
+.footer-note{text-align:center;color:#64748b;font-size:14px;margin-top:22px}ul{line-height:1.7}
+@media(max-width:760px){.wrap{padding:14px 12px 50px}.brand{width:100%;text-align:center}.actions{width:100%;justify-content:center}.navbtn{flex:1 1 42%;font-size:13px}.hero{padding:26px}.hero h1{font-size:34px}.section-title{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="wrap">
 
-<label>Logo for gruppe / organisasjon</label>
-<input type="file" id="partnerLogo" accept="image/*">
+<div class="topbar">
+  <div class="brand">🐶 Hundene våre</div>
+  <div class="actions">
+    <a class="navbtn alt" href="index.html">🏠 Forside</a>
+    <a class="navbtn alt" href="kunnskap.html">📚 Kunnskap</a>
+    <a class="navbtn alt" href="spill.html">🎮 Spill</a>
+    <a class="navbtn alt" href="se-butikker.html">🏪 Butikker</a>
+    <a class="navbtn alt" href="arrangementer.html">📅 Arrangementer</a>
+    <a class="navbtn alt" href="omoss.html">ℹ️ Om oss</a>
+    <a class="navbtn admin" href="admin.html">🔧 Admin</a>
+  </div>
+</div>
 
-<label>Facebook-gruppe eller side</label>
-<input type="url" name="facebook" placeholder="https://facebook.com/...">
+<section class="hero">
+  <h1>❤️ Samarbeidspartnere</h1>
+  <p>Her samler vi gode dyrevenner, frivillige grupper, organisasjoner, Facebook-grupper og aktører som ønsker å bidra til bedre dyrevelferd, mer kunnskap og mer synlighet for hund og katt i Norge.</p>
+  <a class="mainbtn" href="index.html">⬅️ Tilbake til forsiden</a>
+</section>
 
-<!-- Når skjema sendes -->
-<!-- status skal settes til pending slik at Admin må godkjenne -->
+<section class="card ad">
+  <h2>🐾 Vil du bli samarbeidspartner?</h2>
+  <p>Har du en gruppe, organisasjon, klubb eller side som jobber for hunder, katter eller dyrevelferd? Da kan du søke om å bli vist her.</p>
+</section>
 
-const partnerData = {
-  navn,
-  beskrivelse,
-  facebook,
-  logoUrl,
-  status: "pending",
-  created_at: new Date().toISOString()
-};
+<section class="card">
+  <h2 class="section-title">Våre samarbeidspartnere</h2>
+  <p class="sub">Samarbeidspartnere er ikke nødvendigvis butikker eller sponsorer. Dette er aktører som bidrar med fellesskap, hjelp, kunnskap, deling eller engasjement for dyr.</p>
 
-<!-- I Admin -->
-<!-- Vis kun poster med status='pending' -->
+  <div class="grid">
+    <div class="partner-card">
+      <div>
+        <div class="iconbox">🐶❤️</div>
+        <h3>Hund hjelper hund</h3>
+        <p>En Facebook-gruppe for hundefolk som ønsker å hjelpe hverandre, dele erfaringer og bidra positivt for hunder og hundeeiere.</p>
+        <ul><li>Fellesskap for hundeeiere</li><li>Deling av erfaringer</li><li>Hjelp, råd og støtte</li><li>Engasjement for hund</li></ul>
+      </div>
+      <a class="openbtn pink" href="#" target="_blank">❤️ Besøk gruppen</a>
+    </div>
 
-<button onclick="godkjennPartner(id)">✅ Godkjenn</button>
+    <div class="partner-card">
+      <div>
+        <div class="iconbox">🐾🤝</div>
+        <h3>Her kan din gruppe stå</h3>
+        <p>Har du en hundegruppe, kattegruppe, frivillig organisasjon, omplasseringsgruppe eller dyrevennlig prosjekt?</p>
+        <ul><li>Eget kort på siden</li><li>Lenke til Facebook eller nettside</li><li>Kort presentasjon</li><li>Synlighet for dyrevenner</li></ul>
+      </div>
+      <a class="openbtn" href="#skjema">📝 Send forespørsel</a>
+    </div>
 
-async function godkjennPartner(id){
-  await supabase
-    .from('partners')
-    .update({status:'approved'})
-    .eq('id', id);
-}
+    <div class="partner-card">
+      <div>
+        <div class="iconbox">🏆🐱</div>
+        <h3>Aktuelle samarbeid</h3>
+        <p>Dette området passer godt for frivillige, ideelle og dyrevennlige miljøer som ønsker å gjøre noe positivt sammen med Hundene våre.</p>
+        <ul><li>Dyrevern og omplassering</li><li>Hundeklubber og katteklubber</li><li>Facebook-grupper</li><li>Lokale og nasjonale prosjekter</li></ul>
+      </div>
+      <a class="openbtn green" href="kunnskap.html">📚 Se Kunnskapssenteret</a>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2 class="section-title">Hva får en samarbeidspartner?</h2>
+  <div class="grid">
+    <div class="partner-card"><div><div class="iconbox">👀</div><h3>Synlighet</h3><p>Et eget kort med navn, kort tekst og lenke til Facebook-gruppe eller nettside.</p></div></div>
+    <div class="partner-card"><div><div class="iconbox">🤝</div><h3>Felles deling</h3><p>Dere kan dele Hundene våre, og Hundene våre kan vise frem gode samarbeidspartnere.</p></div></div>
+    <div class="partner-card"><div><div class="iconbox">❤️</div><h3>Dyrevennlig profil</h3><p>Dette er for aktører som ønsker å bidra positivt for hunder, katter og eiere.</p></div></div>
+  </div>
+</section>
+
+<section id="skjema" class="card formbox">
+  <h2 class="section-title">📝 Forespørsel om samarbeid</h2>
+  <p class="sub">Dette skjemaet kan kobles til Formspree senere. Bytt ut DITT-SKJEMA-ID når du har laget skjemaet.</p>
+
+  <form action="https://formspree.io/f/DITT-SKJEMA-ID" method="POST">
+    <label>Navn på gruppe / organisasjon</label>
+    <input type="text" name="navn" placeholder="F.eks. Hund hjelper hund" required>
+    <label>Kontaktperson</label>
+    <input type="text" name="kontaktperson" placeholder="Navn">
+    <label>E-post eller Messenger</label>
+    <input type="text" name="kontakt" placeholder="E-post, telefon eller Messenger">
+    <label>Lenke til Facebook-gruppe / nettside</label>
+    <input type="url" name="lenke" placeholder="https://...">
+    <label>Hva handler gruppen om?</label>
+    <textarea name="beskrivelse" rows="5" placeholder="Skriv kort hva dere gjør og hvorfor dere ønsker samarbeid."></textarea>
+    <button type="submit">📩 Send forespørsel</button>
+  </form>
+</section>
+
+<section class="card">
+  <h2 class="section-title">Viktig</h2>
+  <div class="info">Samarbeidspartnere vurderes manuelt. Målet er å holde siden trygg, seriøs og relevant for hunde- og katteeiere.</div>
+</section>
+
+<p class="footer-note">Hundenevåre.com – kunnskap, fellesskap og samarbeid for hunder og katter.</p>
+
+</div>
+</body>
+</html>
