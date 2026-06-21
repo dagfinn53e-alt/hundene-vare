@@ -108,9 +108,9 @@ button{width:100%;min-height:54px;border:none;border-radius:999px;background:lin
 
 <section id="skjema" class="card formbox">
   <h2 class="section-title">📝 Forespørsel om samarbeid</h2>
-  <p class="sub">Fyll ut skjemaet under. Forespørselen sendes til Admin og vurderes manuelt før eventuell publisering.</p>
+  <p class="sub">Fyll ut skjemaet under. Forespørselen sendes til Admin og vurderes manuelt før eventuell publisering. Logo/bilde kan sendes på Messenger eller e-post etterpå.</p>
 
-  <form action="https://formspree.io/f/xlgyraqn" method="POST" enctype="multipart/form-data">
+  <form action="https://formspree.io/f/xlgyraqn" method="POST">
     <input type="hidden" name="_subject" value="Ny samarbeidspartner - Hundene våre">
     <label>Navn på gruppe / organisasjon</label>
     <input type="text" name="navn" placeholder="F.eks. Hund hjelper hund" required>
@@ -124,8 +124,8 @@ button{width:100%;min-height:54px;border:none;border-radius:999px;background:lin
     <label>Lenke til Facebook-gruppe / nettside</label>
     <input type="url" name="lenke" placeholder="https://...">
 
-    <label>Logo for gruppe / organisasjon</label>
-    <input type="file" name="logo" accept="image/*">
+    <label>Logo / bilde</label>
+    <input type="text" name="logo_info" placeholder="Logo kan sendes på Messenger eller e-post etterpå. Skriv gjerne hvor vi kan få logoen.">
 
     <label>Antall medlemmer/følgere</label>
     <input type="text" name="medlemmer" placeholder="F.eks. 2500">
