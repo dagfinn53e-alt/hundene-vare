@@ -108,15 +108,19 @@ button{width:100%;min-height:54px;border:none;border-radius:999px;background:lin
 
 <section id="skjema" class="card formbox">
   <h2 class="section-title">📝 Forespørsel om samarbeid</h2>
-  <p class="sub">Dette skjemaet kan kobles til Formspree senere. Bytt ut DITT-SKJEMA-ID når du har laget skjemaet.</p>
+  <p class="sub">Fyll ut skjemaet under. Forespørselen sendes til Admin og vurderes manuelt før eventuell publisering.</p>
 
-  <form action="https://formspree.io/f/DITT-SKJEMA-ID" method="POST">
+  <form action="https://formspree.io/f/xlgyraqn" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_subject" value="Ny samarbeidspartner - Hundene våre">
     <label>Navn på gruppe / organisasjon</label>
     <input type="text" name="navn" placeholder="F.eks. Hund hjelper hund" required>
     <label>Kontaktperson</label>
     <input type="text" name="kontaktperson" placeholder="Navn">
-    <label>E-post eller Messenger</label>
-    <input type="text" name="kontakt" placeholder="E-post, telefon eller Messenger">
+    <label>E-post</label>
+    <input type="email" name="email" placeholder="din@epost.no" required>
+
+    <label>Messenger eller telefon</label>
+    <input type="text" name="kontakt" placeholder="Messenger-navn eller telefon">
     <label>Lenke til Facebook-gruppe / nettside</label>
     <input type="url" name="lenke" placeholder="https://...">
 
@@ -133,11 +137,7 @@ button{width:100%;min-height:54px;border:none;border-radius:999px;background:lin
 
 <section class="card">
   <h2 class="section-title">Viktig</h2>
-  <div class="info">
-Samarbeidspartnere vurderes manuelt av Admin før publisering.
-Alle nye forespørsler skal godkjennes før de vises på siden.
-Målet er å holde siden trygg, seriøs og relevant for hunde- og katteeiere.
-</div>
+  <div class="info">Samarbeidspartnere vurderes manuelt av Admin før publisering. Ingen nye samarbeidspartnere legges ut automatisk. Målet er å holde siden trygg, seriøs og relevant for hunde- og katteeiere.</div>
 </section>
 
 <p class="footer-note">Hundenevåre.com – kunnskap, fellesskap og samarbeid for hunder og katter.</p>
