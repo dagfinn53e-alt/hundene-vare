@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sammenlign hunderaser - Hundene våre</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;color:#102033;background:linear-gradient(180deg,#eff6ff,#fff7ed,#f8fbff)}
+.wrap{max-width:1100px;margin:auto;padding:22px 18px 70px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;padding:14px 18px;border:1px solid #bfd7ff;border-radius:28px;background:white;box-shadow:0 16px 38px rgba(15,23,42,.10);position:sticky;top:8px;z-index:20}
+.brand{font-size:24px;font-weight:900;color:#1d4ed8;padding:12px 18px;border-radius:999px;background:#eef4ff}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.nav a,.btn{border:none;border-radius:999px;padding:11px 16px;background:#eaf2ff;color:#1d4ed8;border:1px solid #bfd7ff;font-weight:900;text-decoration:none;display:inline-flex;justify-content:center;align-items:center;cursor:pointer}
+.nav a.admin{background:#fff7ed;color:#b45309;border-color:#fed7aa}
+.hero{border-radius:34px;padding:38px;color:white;background:linear-gradient(135deg,#2563eb,#7c3aed,#db2777);box-shadow:0 24px 54px rgba(15,23,42,.20);margin-bottom:22px}
+.hero h1{margin:0 0 12px;font-size:50px}.hero p{font-size:18px;line-height:1.6;max-width:800px}
+.card{background:white;border:1px solid #dbeafe;border-radius:30px;padding:24px;margin:18px 0;box-shadow:0 16px 36px rgba(15,23,42,.10)}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+select{width:100%;padding:16px 18px;border-radius:999px;border:1px solid #bfdbfe;font-size:16px;background:white;font-weight:800;color:#1d4ed8}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.dog{background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid #dbeafe;border-radius:30px;padding:22px;box-shadow:0 14px 32px rgba(30,64,175,.10)}
+.dog h2{margin:0 0 8px;font-size:30px}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
+.meta div{background:#eef4ff;border:1px solid #bfd7ff;border-radius:16px;padding:10px;font-weight:900;color:#1d4ed8}
+.score{font-size:22px;font-weight:900;color:#0f172a;margin:8px 0}
+.table{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;align-items:center;background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:12px}
+.val{font-weight:900;text-align:center;color:#1d4ed8}
+.barwrap{height:11px;background:#e2e8f0;border-radius:999px;overflow:hidden;margin-top:6px}
+.bar{height:100%;background:linear-gradient(135deg,#2563eb,#7c3aed)}
+.result,.sponsor{background:linear-gradient(135deg,#fff7ed,#fef3c7,#fff);border:2px dashed #f97316;text-align:center}
+.result h2,.sponsor h2{margin:0 0 10px;color:#9a3412}
+@media(max-width:760px){.wrap{padding:14px 12px 50px}.brand{width:100%;text-align:center}.nav{width:100%;justify-content:center}.nav a{flex:1 1 42%;font-size:13px}.hero{padding:28px;border-radius:28px}.hero h1{font-size:34px}.controls,.compare{grid-template-columns:1fr}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar">
+ <div class="brand">🐶 Hundene våre</div>
+ <nav class="nav">
+  <a href="index.html">🏠 Forside</a>
+  <a href="kunnskap.html">📚 Kunnskap</a>
+  <a href="kunnskap-hund.html">🐶 Hund</a>
+  <a href="hunderaser-4-0.html">🐾 Leksikon</a>
+  <a class="admin" href="admin.html">🔧 Admin</a>
+ </nav>
+</header>
+
+<section class="hero">
+ <h1>📊 Sammenlign hunderaser</h1>
+ <p>Velg to hunderaser og se forskjeller på familievennlighet, barn, trening, aktivitet, pelsstell, røyting og førstegangseier.</p>
+ <a class="btn" style="background:white;color:#1d4ed8" href="kunnskap-hund.html">⬅️ Tilbake til Hundesenter</a>
+</section>
+
+<section class="card sponsor">
+ <h2>⭐ Sponsor her</h2>
+ <p>Her kunne din butikk, nettbutikk, hundeklubb eller samarbeidspartner stått.</p>
+ <a class="btn" href="samarbeidspartnere.html">❤️ Se samarbeidspartnere</a>
+</section>
+
+<section class="card">
+ <h2>Velg raser</h2>
+ <div class="controls"><select id="dogA"></select><select id="dogB"></select></div>
+</section>
+
+<section class="compare"><div id="cardA" class="dog"></div><div id="cardB" class="dog"></div></section>
+<section class="card"><h2>📋 Sammenligning</h2><div id="table" class="table"></div></section>
+<section id="result" class="card result"></section>
+</div>
+
+<script>
+const BREEDS = [{"name": "Golden Retriever", "size": "Stor", "country": "Skottland", "weight": "25–34 kg", "life": "10–12 år", "family": 10, "kids": 10, "training": 10, "activity": 9, "grooming": 7, "first": 10, "shedding": 7, "guard": 3, "text": "Vennlig, sosial og svært lærevillig familiehund."}, {"name": "Labrador Retriever", "size": "Stor", "country": "Canada / Storbritannia", "weight": "25–36 kg", "life": "10–14 år", "family": 10, "kids": 10, "training": 10, "activity": 8, "grooming": 8, "first": 10, "shedding": 7, "guard": 3, "text": "En av verdens mest populære familiehunder. Matglad, sosial og lett å trene."}, {"name": "Bichon Frisé", "size": "Liten", "country": "Frankrike / Belgia", "weight": "5–8 kg", "life": "12–15 år", "family": 10, "kids": 10, "training": 8, "activity": 7, "grooming": 5, "first": 10, "shedding": 9, "guard": 3, "text": "Glad, sosial og liten selskapshund som røyter lite, men krever pelsstell."}, {"name": "Havaneser", "size": "Liten", "country": "Cuba", "weight": "4–8 kg", "life": "13–16 år", "family": 10, "kids": 10, "training": 9, "activity": 7, "grooming": 7, "first": 10, "shedding": 8, "guard": 3, "text": "Vennlig og morsom liten familiehund som passer godt i leilighet."}, {"name": "Puddel", "size": "Varierer", "country": "Frankrike / Tyskland", "weight": "2–32 kg", "life": "12–16 år", "family": 10, "kids": 10, "training": 10, "activity": 8, "grooming": 5, "first": 10, "shedding": 9, "guard": 4, "text": "Svært intelligent, lite røyting og finnes i flere størrelser."}, {"name": "Border Collie", "size": "Mellomstor", "country": "Storbritannia", "weight": "12–20 kg", "life": "12–15 år", "family": 8, "kids": 8, "training": 10, "activity": 10, "grooming": 8, "first": 5, "shedding": 6, "guard": 5, "text": "Ekstremt intelligent gjeterhund for aktive eiere med tid til trening."}, {"name": "Schäferhund", "size": "Stor", "country": "Tyskland", "weight": "22–40 kg", "life": "9–13 år", "family": 9, "kids": 8, "training": 10, "activity": 10, "grooming": 7, "first": 6, "shedding": 6, "guard": 10, "text": "Lojal og intelligent brukshund som krever trening og aktivitet."}, {"name": "Berner Sennenhund", "size": "Stor", "country": "Sveits", "weight": "36–50 kg", "life": "7–10 år", "family": 10, "kids": 10, "training": 8, "activity": 7, "grooming": 6, "first": 8, "shedding": 5, "guard": 7, "text": "Stor, rolig og familievennlig hund. Kjent som en snill kjempe."}, {"name": "Jack Russell Terrier", "size": "Liten", "country": "England", "weight": "5–8 kg", "life": "13–16 år", "family": 8, "kids": 8, "training": 10, "activity": 10, "grooming": 9, "first": 6, "shedding": 7, "guard": 6, "text": "Liten hund med enorm energi, intelligens og jaktinstinkt."}, {"name": "Norsk Elghund Grå", "size": "Mellomstor", "country": "Norge", "weight": "18–27 kg", "life": "12–15 år", "family": 9, "kids": 9, "training": 8, "activity": 10, "grooming": 7, "first": 7, "shedding": 5, "guard": 8, "text": "Norsk jakthund og friluftshund med sterk personlighet."}, {"name": "Finsk Lapphund", "size": "Mellomstor", "country": "Finland", "weight": "15–24 kg", "life": "12–15 år", "family": 10, "kids": 10, "training": 9, "activity": 8, "grooming": 6, "first": 9, "shedding": 5, "guard": 6, "text": "Vennlig nordisk familiehund som tåler kulde og liker friluftsliv."}, {"name": "Fransk Bulldog", "size": "Liten", "country": "Frankrike", "weight": "8–14 kg", "life": "10–12 år", "family": 10, "kids": 10, "training": 8, "activity": 7, "grooming": 9, "first": 10, "shedding": 7, "guard": 4, "text": "Sjarmerende by- og familiehund. Tåler varme dårlig."}, {"name": "Rottweiler", "size": "Stor", "country": "Tyskland", "weight": "35–60 kg", "life": "8–11 år", "family": 9, "kids": 9, "training": 10, "activity": 9, "grooming": 9, "first": 6, "shedding": 7, "guard": 10, "text": "Sterk, lojal og intelligent brukshund for eiere som gir god trening."}, {"name": "Beagle", "size": "Mellomstor", "country": "England", "weight": "9–14 kg", "life": "12–15 år", "family": 10, "kids": 10, "training": 7, "activity": 8, "grooming": 9, "first": 8, "shedding": 7, "guard": 4, "text": "Sosial sporhund med fantastisk luktesans og mye personlighet."}];
+const fields = [["family","Familie"],["kids","Barn"],["training","Trening"],["activity","Aktivitet"],["grooming","Lite pelsstell"],["first","Førstegangshund"],["shedding","Lite røyting"],["guard","Vakthund"]];
+const dogA=document.getElementById("dogA"),dogB=document.getElementById("dogB");
+function stars(n){let f=Math.round(n/2);return "⭐".repeat(f)+"☆".repeat(5-f)}
+function options(){dogA.innerHTML=BREEDS.map((b,i)=>`<option value="${i}">${b.name}</option>`).join("");dogB.innerHTML=dogA.innerHTML;dogB.value=1}
+function dogCard(b){return `<h2>🐶 ${b.name}</h2><div class="score">${stars(b.family)}</div><p style="color:#64748b;line-height:1.6">${b.text}</p><div class="meta"><div>🌍 ${b.country}</div><div>📏 ${b.size}</div><div>⚖️ ${b.weight}</div><div>📅 ${b.life}</div></div>`}
+function bar(v){return `<div class="barwrap"><div class="bar" style="width:${v*10}%"></div></div>`}
+function render(){const a=BREEDS[dogA.value],b=BREEDS[dogB.value];document.getElementById("cardA").innerHTML=dogCard(a);document.getElementById("cardB").innerHTML=dogCard(b);document.getElementById("table").innerHTML=fields.map(([key,label])=>`<div class="row"><b>${label}</b><div class="val">${a[key]}/10 ${bar(a[key])}</div><div class="val">${b[key]}/10 ${bar(b[key])}</div></div>`).join("");const sumA=fields.reduce((s,[k])=>s+a[k],0),sumB=fields.reduce((s,[k])=>s+b[k],0);let winner=sumA===sumB?"Begge rasene kommer veldig likt ut.":(sumA>sumB?`${a.name} passer litt best ut fra disse punktene.`:`${b.name} passer litt best ut fra disse punktene.`);document.getElementById("result").innerHTML=`<h2>🏆 Resultat</h2><p style="font-size:18px;font-weight:900;color:#7c2d12">${winner}</p><p>Dette er bare en enkel veiledning. Valg av hund bør alltid vurderes ut fra tid, erfaring, familie, bolig, økonomi og aktivitetsnivå.</p>`}
+dogA.addEventListener("change",render);dogB.addEventListener("change",render);options();render();
+</script>
+</body>
+</html>
