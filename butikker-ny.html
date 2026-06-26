@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Butikker 3.0 - Hundene våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blue:#0b5cff;--blue2:#2563eb;--dark:#0f172a;--muted:#64748b;--line:#dbeafe;--orange:#f97316;--pink:#db2777}
+body{font-family:Arial,sans-serif;color:var(--dark);background:radial-gradient(circle at top left,rgba(96,165,250,.22),transparent 28%),linear-gradient(180deg,#eff6ff,#fff7ed 45%,#f8fbff);min-height:100vh}
+.wrap{max-width:1220px;margin:0 auto;padding:18px 14px 80px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px;padding:14px 18px;border-radius:30px;background:rgba(255,255,255,.94);border:1px solid #bfd7ff;box-shadow:0 16px 38px rgba(15,23,42,.10);position:sticky;top:8px;z-index:50}
+.brand{display:flex;align-items:center;gap:10px;font-size:25px;font-weight:900;color:#0757d8;text-decoration:none}
+.logo{width:42px;height:42px;border-radius:14px;background:#fff3e8;display:flex;align-items:center;justify-content:center;font-size:25px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.nav a,.btn{text-decoration:none;border:none;border-radius:999px;padding:11px 16px;background:#eaf2ff;color:#0b4fd4;border:1px solid #bfd7ff;font-weight:900;display:inline-flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 6px 16px rgba(15,23,42,.07);cursor:pointer}
+.nav a.active,.btn.primary{background:linear-gradient(135deg,#0b5cff,#2563eb);color:white;border:none}.nav a.admin{background:#fff7ed;color:#b45309;border-color:#fed7aa}
+.hero{position:relative;overflow:hidden;border-radius:34px;margin-bottom:20px;color:white;background:linear-gradient(90deg,rgba(5,24,73,.96),rgba(10,68,163,.88),rgba(15,23,42,.20)),url('https://images.unsplash.com/photo-1601758228041-f3b2795255f1?q=80&w=1600&auto=format&fit=crop') center/cover;box-shadow:0 24px 56px rgba(15,23,42,.22);min-height:305px;padding:36px}
+.badge24{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,.35);border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:10px 13px;font-weight:900;margin-bottom:16px}
+.hero h1{font-size:58px;line-height:1.02;margin-bottom:12px;text-shadow:0 8px 22px rgba(0,0,0,.25)}
+.hero p{font-size:18px;line-height:1.55;max-width:670px;margin-bottom:22px}
+.stats{display:grid;grid-template-columns:repeat(4,150px);gap:14px}.stat{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:14px;display:flex;gap:12px;align-items:center}.stat-icon{font-size:30px;width:45px;height:45px;border-radius:14px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center}.stat b{font-size:25px;display:block}.stat span{font-size:13px;color:#eaf2ff;font-weight:800}
+.panel{background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:30px;padding:22px;margin-bottom:20px;box-shadow:0 18px 40px rgba(15,23,42,.09)}
+.search-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:14px;align-items:end}.field label{display:block;font-weight:900;color:#0b4fd4;margin-bottom:8px}input,select{width:100%;padding:15px 16px;border-radius:16px;border:1px solid #cbdcf5;background:white;font-size:15px}
+
+.service-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
+.service-card{
+  border:1px solid #cfe0ff;background:linear-gradient(180deg,#fff,#f8fbff);
+  border-radius:22px;padding:16px 12px;cursor:pointer;text-align:center;
+  box-shadow:0 10px 22px rgba(30,64,175,.08);min-height:125px;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;
+}
+.service-card.active{border:2px solid #0b5cff;background:#eef4ff}
+.service-icon{font-size:38px}
+.service-name{font-weight:900;color:#0f172a}
+.service-count{font-weight:900;color:#0b4fd4;background:#eaf2ff;border-radius:999px;padding:6px 10px;font-size:13px}
+@media(max-width:1000px){.service-grid{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:700px){.service-grid{grid-template-columns:1fr 1fr}.service-card{min-height:115px}}
+
+.area-title{font-size:22px;margin:20px 0 12px;color:#0b4fd4}.area-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.area-btn{border:1px solid #cfe0ff;background:linear-gradient(180deg,#fff,#f8fbff);border-radius:20px;padding:12px;cursor:pointer;display:grid;grid-template-columns:62px 1fr auto;align-items:center;gap:12px;text-align:left;box-shadow:0 10px 22px rgba(30,64,175,.08)}.area-btn.active{border:2px solid #0b5cff;background:#eef4ff}.area-img{height:50px;border-radius:13px;background:#dbeafe center/cover}.area-name{font-weight:900}.area-count{font-weight:900;color:#0b4fd4;background:#eaf2ff;border-radius:12px;padding:8px 10px}
+.category-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.cat-chip{border:1px solid #bfd7ff;background:#eef4ff;color:#0b4fd4;border-radius:999px;padding:10px 14px;font-weight:900;cursor:pointer}.cat-chip.active{background:linear-gradient(135deg,#0b5cff,#2563eb);color:white;border:none}
+.cta{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;background:linear-gradient(135deg,#eef6ff,#eaf2ff,#fff);border:1px solid #dbeafe;border-radius:24px;padding:18px;margin-top:20px}.cta-icon{font-size:42px;width:70px;height:70px;border-radius:20px;background:white;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 25px rgba(15,23,42,.08)}.cta h3{font-size:23px}.cta p{color:#475569;line-height:1.45;margin-top:4px}
+.section-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin:4px 0 16px}.section-head h2{font-size:27px}.status{color:#64748b;font-weight:800;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.biz-card{background:white;border:1px solid #cfe0ff;border-radius:28px;overflow:hidden;box-shadow:0 16px 36px rgba(30,64,175,.10)}.biz-img{height:165px;background:#eef4ff;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}.biz-img img{width:100%;height:100%;object-fit:cover}.placeholder{font-size:64px}.open-tag{position:absolute;right:12px;top:12px;background:#0f9f63;color:white;border-radius:12px;padding:7px 10px;font-weight:900;font-size:13px}.biz-body{padding:18px}.biz-title-row{display:flex;gap:12px;align-items:center;margin-bottom:8px}.biz-logo{width:58px;height:58px;border-radius:50%;background:#fff;box-shadow:0 8px 18px rgba(15,23,42,.14);display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;flex:0 0 auto}.biz-logo img{width:100%;height:100%;object-fit:contain}.biz-title{font-size:20px;font-weight:900}.biz-place{color:#64748b;font-size:14px;margin-top:3px}.chips{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.chip{font-size:12px;font-weight:900;border-radius:999px;padding:6px 9px;background:#eef4ff;color:#0b4fd4}.desc{color:#334155;line-height:1.55;font-size:14px;margin:10px 0 14px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.rating{font-weight:900;margin-bottom:14px}.rating span{color:#f59e0b}.card-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.empty{grid-column:1/-1;background:#fff;border:2px dashed #93c5fd;border-radius:28px;padding:32px;text-align:center;color:#0b4fd4;font-weight:900;font-size:20px}.footer-note{text-align:center;color:#64748b;font-size:14px;margin-top:24px}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(2,150px)}.search-grid{grid-template-columns:1fr 1fr}.area-grid{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.wrap{padding:12px 10px 70px}.brand{width:100%;justify-content:center}.nav{width:100%;justify-content:center}.nav a{flex:1 1 42%;font-size:13px;padding:10px}.hero{padding:24px;border-radius:28px;min-height:0}.hero h1{font-size:42px}.hero p{font-size:16px}.stats{grid-template-columns:1fr 1fr}.stat{padding:12px}.search-grid{grid-template-columns:1fr}.area-grid{grid-template-columns:1fr}.cta{grid-template-columns:1fr;text-align:center}.cta-icon{margin:auto}.grid{grid-template-columns:1fr}.card-actions{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar"><a class="brand" href="index.html"><span class="logo">🐶</span> Hundene våre</a><nav class="nav"><a href="index.html">🏠 Forside</a><a href="kunnskap.html">📚 Kunnskap</a><a href="spill.html">🎮 Spill</a><a class="active" href="butikker-3-0.html">🏪 Butikker</a><a href="om-oss.html">ℹ️ Om oss</a><a class="admin" href="admin.html">🔧 Admin</a></nav></header>
+<section class="hero"><div class="badge24">🏪 24/7</div><h1>Se Butikker</h1><p>Finn dyrebutikker, veterinærer, hundesalonger, hundepensjonat, hundepass og hundeklubber over hele Norge. Søk på navn, velg fylke eller bruk filtre for å finne det du leter etter.</p><div class="stats"><div class="stat"><div class="stat-icon">🏪</div><div><b id="statStores">0</b><span>Butikker</span></div></div><div class="stat"><div class="stat-icon">📍</div><div><b id="statRegions">0</b><span>Områder</span></div></div><div class="stat"><div class="stat-icon">🏷️</div><div><b id="statCats">0</b><span>Kategorier</span></div></div><div class="stat"><div class="stat-icon">⭐</div><div><b>4.9</b><span>Snitt vurdering</span></div></div></div></section>
+<section class="panel"><div class="search-grid"><div class="field"><label>Hva leter du etter?</label><input id="searchInput" placeholder="Søk på navn, sted eller tjeneste..."></div><div class="field"><label>Kategori</label><select id="typeFilter"><option value="">Alle kategorier</option><option value="Zoo butikk">Zoo butikk</option><option value="Dyrebutikk">Dyrebutikk</option><option value="Frisør">Frisør</option><option value="Veterinær">Veterinær</option><option value="Hundepensjonat">Hundepensjonat</option>
+        <option value="Hundepass">Hundepass</option><option value="Hundeklubb">Hundeklubb</option><option value="Kafé">Kafé</option><option value="Samarbeidspartner">Samarbeidspartner</option></select></div><div class="field"><label>Sorter etter</label><select id="sortFilter"><option value="name">Navn</option><option value="region">Område</option><option value="type">Kategori</option></select></div><button class="btn" id="clearBtn">🔄 Nullstill</button></div><h2 class="area-title">📍 Velg område</h2><div id="areaButtons" class="area-grid"></div><div class="category-row" id="categoryChips"><button class="cat-chip active" data-type="">Alle</button><button class="cat-chip" data-type="Zoo butikk">Dyrebutikker</button><button class="cat-chip" data-type="Veterinær">Veterinær</button><button class="cat-chip" data-type="Frisør">Hundesalong</button><button class="cat-chip" data-type="Hundeklubb">Hundeklubb</button><button class="cat-chip" data-type="Samarbeidspartner">Samarbeid</button><button class="cat-chip" data-type="Hundepensjonat">Pensjonat</button><button class="cat-chip" data-type="Hundepass">Hundepass</button></div><div class="cta"><div class="cta-icon">🏪</div><div><h3>Her kunne din butikk stått</h3><p>Registrer butikken, klinikken, hundesalongen, hundepasset eller hundeklubben din og bli synlig for dyreeiere i hele Norge.</p></div><a class="btn primary" href="registrer-butikk.html">Registrer din bedrift →</a></div></section>
+<section class="panel"><div class="section-head"><div><h2>🏪 Butikker i valgt område</h2><div id="status" class="status">Laster butikker ...</div></div></div><div id="businessGrid" class="grid"></div></section>
+<p class="footer-note">Hundenevåre.com – butikker og tjenester for hund og katt i hele Norge.</p>
+</div>
+<script>
+const supabaseClient=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
+let allBusinesses=[],selectedRegion="";
+const grid=document.getElementById("businessGrid"),statusEl=document.getElementById("status"),searchInput=document.getElementById("searchInput"),typeFilter=document.getElementById("typeFilter"),sortFilter=document.getElementById("sortFilter"),areaButtons=document.getElementById("areaButtons");
+const regionImages={"Haugalandet":"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=500&auto=format&fit=crop","Stavanger":"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=500&auto=format&fit=crop","Bergen":"https://images.unsplash.com/photo-1520769669658-f07657f5a307?q=80&w=500&auto=format&fit=crop","Stord":"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=500&auto=format&fit=crop"};
+function safeText(v){return String(v||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+function getImage(b){return b.image_url||b.logo_url||b.logo||b.image||b.main_image||b.photo||""} function getLogo(b){return b.logo_url||b.logo||""} function getName(b){return b.name||b.title||b.bizName||"Uten navn"} function getRegion(b){return b.region||b.area||b.city||b.place||""} function getType(b){return b.type||b.category||b.bizType||""} function getDescription(b){return b.text||b.description||b.bizText||""} function getPhone(b){return b.phone||b.telephone||b.bizPhone||""} function getWebsite(b){return b.website||b.url||b.facebook||b.bizWebsite||""} function normalizeUrl(url){if(!url)return"";return url.startsWith("http")?url:"https://"+url}
+async function loadBusinesses(){statusEl.textContent="Laster butikker ...";try{const {data,error}=await supabaseClient.from("businesses").select("*");if(error){statusEl.textContent="Kunne ikke laste butikker.";grid.innerHTML='<div class="empty">Noe gikk galt ved lasting av butikker.</div>';return}allBusinesses=data||[];buildAreas();updateStats();renderBusinesses()}catch(e){statusEl.textContent="Kunne ikke laste butikker.";grid.innerHTML='<div class="empty">Noe gikk galt ved lasting av butikker.</div>'}}
+function updateStats(){const regions=new Set(allBusinesses.map(getRegion).filter(Boolean));const cats=new Set(allBusinesses.map(getType).filter(Boolean));document.getElementById("statStores").textContent=allBusinesses.length;document.getElementById("statRegions").textContent=regions.size||0;document.getElementById("statCats").textContent=cats.size||0}
+
+function countType(type){
+  if(type === "Zoo butikk"){
+    return allBusinesses.filter(b => getType(b) === "Zoo butikk" || getType(b) === "Dyrebutikk").length;
+  }
+  return allBusinesses.filter(b => getType(b) === type).length;
+}
+
+function buildServices(){
+  serviceGrid.innerHTML = serviceTypes.map(s => `
+    <button class="service-card ${selectedType===s.type?'active':''}" data-type="${safeText(s.type)}" type="button">
+      <div class="service-icon">${s.icon}</div>
+      <div class="service-name">${s.label}</div>
+      <div class="service-count">${countType(s.type)}</div>
+    </button>
+  `).join("");
+
+  serviceGrid.querySelectorAll(".service-card").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      selectedType = selectedType === btn.dataset.type ? "" : btn.dataset.type;
+      typeFilter.value = selectedType;
+      buildServices();
+      renderBusinesses();
+    });
+  });
+}
+
+function buildAreas(){const counts={};allBusinesses.forEach(b=>{const r=getRegion(b);if(r)counts[r]=(counts[r]||0)+1});const preferred=["Haugalandet","Stavanger","Bergen","Stord"];const rest=Object.keys(counts).filter(r=>!preferred.includes(r)).sort();const regions=[...preferred.filter(r=>counts[r]!==undefined),...rest];areaButtons.innerHTML=regions.map(r=>`<button class="area-btn ${selectedRegion===r?'active':''}" data-region="${safeText(r)}" type="button"><div class="area-img" style="background-image:url('${regionImages[r]||regionImages.Haugalandet}')"></div><div class="area-name">${safeText(r)}</div><div class="area-count">${counts[r]}</div></button>`).join("")||'<div class="empty">Ingen områder funnet ennå.</div>';areaButtons.querySelectorAll(".area-btn").forEach(btn=>btn.addEventListener("click",()=>{selectedRegion=btn.dataset.region;buildAreas();renderBusinesses()}))}
+function renderBusinesses(){const search=searchInput.value.trim().toLowerCase(),type=typeFilter.value;let list=allBusinesses.filter(b=>{const name=getName(b).toLowerCase(),region=getRegion(b),bType=getType(b),desc=getDescription(b).toLowerCase(),place=String(b.place||b.city||"").toLowerCase();return(!search||name.includes(search)||desc.includes(search)||place.includes(search)||String(region).toLowerCase().includes(search))&&(!selectedRegion||region===selectedRegion)&&(!type||bType===type)});const sort=sortFilter.value;list.sort((a,b)=>String(sort==="region"?getRegion(a):sort==="type"?getType(a):getName(a)).localeCompare(String(sort==="region"?getRegion(b):sort==="type"?getType(b):getName(b))));statusEl.textContent=selectedRegion?selectedRegion+": "+list.length+" butikk(er) funnet":"Velg område eller søk i alle butikker";if(!selectedRegion&&!search&&!type){grid.innerHTML='<div class="empty">📍 Velg område for å se butikker, eller bruk søkefeltet.</div>';return}if(list.length===0){grid.innerHTML='<div class="empty">Ingen butikker funnet. Prøv et annet område eller søk.</div>';return}grid.innerHTML=list.map(b=>{const id=b.id||"",name=safeText(getName(b)),region=safeText(getRegion(b)),type=safeText(getType(b)),desc=safeText(getDescription(b))||"Ingen beskrivelse lagt inn ennå.",img=getImage(b),logo=getLogo(b),phone=getPhone(b),website=normalizeUrl(getWebsite(b));return `<article class="biz-card"><div class="biz-img">${img?`<img src="${img}" alt="${name}">`:`<div class="placeholder">🏪</div>`}<div class="open-tag">Åpen nå</div></div><div class="biz-body"><div class="biz-title-row"><div class="biz-logo">${logo?`<img src="${logo}" alt="${name} logo">`:"🏪"}</div><div><div class="biz-title">${name}</div><div class="biz-place">📍 ${region||"Norge"}</div></div></div><div class="chips">${type?`<span class="chip">${type}</span>`:""}<span class="chip">Hund</span><span class="chip">Katt</span></div><div class="desc">${desc}</div><div class="rating">4.9 <span>★</span> <small>(Hundene våre)</small></div><div class="card-actions">${id?`<a class="btn primary" href="butikk.html?id=${id}">Se butikk →</a>`:""}${website?`<a class="btn" href="${website}" target="_blank">Nettside</a>`:""}${phone?`<a class="btn" href="tel:${phone}">Ring</a>`:""}</div></div></article>`}).join("")}
+document.getElementById("clearBtn").addEventListener("click",()=>{searchInput.value="";typeFilter.value="";sortFilter.value="name";selectedRegion="";buildAreas();renderBusinesses()});
+document.querySelectorAll(".cat-chip").forEach(chip=>chip.addEventListener("click",()=>{document.querySelectorAll(".cat-chip").forEach(c=>c.classList.remove("active"));chip.classList.add("active");typeFilter.value=chip.dataset.type||"";renderBusinesses()}));
+searchInput.addEventListener("input",renderBusinesses);typeFilter.addEventListener("change",()=>{
+  selectedType = typeFilter.value;
+  buildServices();
+  renderBusinesses();
+});sortFilter.addEventListener("change",renderBusinesses);loadBusinesses();
+</script>
+</body>
+</html>
