@@ -182,31 +182,80 @@ function getImage(b){return b.image_url||b.logo_url||b.logo||b.image||b.main_ima
 async function loadBusinesses(){statusEl.textContent="Laster butikker ...";try{const {data,error}=await supabaseClient.from("businesses").select("*");if(error){statusEl.textContent="Kunne ikke laste butikker.";grid.innerHTML='<div class="empty">Noe gikk galt ved lasting av butikker.</div>';return}allBusinesses=data||[];buildServices();buildAreas();updateStats();renderBusinesses()}catch(e){statusEl.textContent="Kunne ikke laste butikker.";grid.innerHTML='<div class="empty">Noe gikk galt ved lasting av butikker.</div>'}}
 function countType(type){if(type==="Zoo butikk")return allBusinesses.filter(b=>getType(b)==="Zoo butikk"||getType(b)==="Dyrebutikk").length;return allBusinesses.filter(b=>getType(b)===type).length}
 function buildServices(){serviceGrid.innerHTML=services.map(s=>`<button class="service-card ${selectedType===s.type?'active':''}" data-type="${safeText(s.type)}" type="button"><div class="service-icon">${s.icon}</div><div class="service-name">${s.label}</div><div class="service-desc">${s.desc}</div><div class="service-count">${countType(s.type)}</div></button>`).join("");serviceGrid.querySelectorAll(".service-card").forEach(btn=>btn.addEventListener("click",()=>{selectedType=selectedType===btn.dataset.type?"":btn.dataset.type;typeFilter.value=selectedType;mainType.value=selectedType;buildServices();renderBusinesses()}))}
-function updateStats(){const regions=new Set(allBusinesses.map(getRegion).filter(Boolean));const cats=new Set(allBusinesses.map(getType).filter(Boolean));document.getElementById("statStores").textContent=allBusinesses.length;document.getElementById("statRegions").textContent=regions.size||0;document.getElementById("statCats").textContent=cats.size||0}
-function buildAreas(){const counts={};allBusinesses.forEach(b=>{const r=getRegion(b);if(r)counts[r]=(counts[r]||0)+1});const preferred=["Haugalandet","Stavanger","Bergen","Stord"];const rest=Object.keys(counts).filter(r=>!preferred.includes(r)).sort();const regions=[...preferred.filter(r=>counts[r]!==undefined),...rest];areaButtons.innerHTML=regions.map(r=>`<button class="area-card ${selectedRegion===r?'active':''}" data-region="${safeText(r)}" type="button"><div class="area-img" style="background-image:url('${regionImages[r]||regionImages.Haugalandet}')"></div><div class="area-body"><div class="area-name">${safeText(r)}</div><div class="area-count">${counts[r]}</div></div></button>`).join("")||'<div class="empty">Ingen områder funnet ennå.</div>';areaButtons.querySelectorAll(".area-card").forEach(btn=>btn.addEventListener("click",()=>{selectedRegion=selectedRegion===btn.dataset.region?"":btn.dataset.region;buildAreas();renderBusinesses()}))}
+function updateStats(){const regions=new Set(allBusinesses.map(b=>getDisplayRegion(getRegion(b))).filter(r=>r && !isAddressLikeRegion(r)));const cats=new Set(allBusinesses.map(getType).filter(Boolean));document.getElementById("statStores").textContent=allBusinesses.length;document.getElementById("statRegions").textContent=regions.size||0;document.getElementById("statCats").textContent=cats.size||0}
+function isAddressLikeRegion(region){
+  const r = String(region || "").trim();
+  if(!r) return true;
 
-function updateWeekStore(list){
-  const box=document.getElementById("weekStore");
-  if(!box) return;
-  const b=(list&&list.length)?list[0]:(allBusinesses&&allBusinesses.length?allBusinesses[0]:null);
-  if(!b) return;
-  const id=b.id||"";
-  const name=safeText(getName(b));
-  const region=safeText(getRegion(b));
-  const type=safeText(getType(b));
-  const desc=safeText(getDescription(b))||"En registrert butikk eller tjeneste i Hundene våre.";
-  const logo=getLogo(b);
-  box.innerHTML=`<div class="week-logo">${logo?`<img src="${logo}" alt="${name} logo">`:"🏪"}</div>
-  <div>
-    <h2>🌟 Ukens butikk</h2>
-    <h3 style="font-size:26px;margin-bottom:6px">${name}</h3>
-    <p>${desc}</p>
-    <p style="font-weight:900">📍 ${region||"Norge"} ${type? " · 🏷️ "+type : ""}</p>
-    ${id?`<a class="btn" href="butikk.html?id=${id}">Se butikk →</a>`:`<a class="btn" href="#businessGrid">Se butikker</a>`}
-  </div>`;
+  const lower = r.toLowerCase();
+
+  // Ikke vis adresser eller småsteder som egne områdekort
+  if(/\d/.test(r)) return true;
+  if(lower.includes("vegen") || lower.includes("veien") || lower.includes("gata") || lower.includes("gate")) return true;
+  if(lower.includes("norway") || lower.includes("germany")) return true;
+  if(["karmøy","karmoy","skudeneshavn","haugesund","avaldenes","norheim"].includes(lower)) return true;
+
+  return false;
 }
 
-function renderBusinesses(){const search=searchInput.value.trim().toLowerCase(),type=typeFilter.value;let list=allBusinesses.filter(b=>{const name=getName(b).toLowerCase(),region=getRegion(b),bType=getType(b),desc=getDescription(b).toLowerCase(),place=String(b.place||b.city||"").toLowerCase();return(!search||name.includes(search)||desc.includes(search)||place.includes(search)||String(region).toLowerCase().includes(search))&&(!selectedRegion||region===selectedRegion)&&(!type||bType===type||(type==="Zoo butikk"&&bType==="Dyrebutikk"))});const sort=sortFilter.value;list.sort((a,b)=>String(sort==="region"?getRegion(a):sort==="type"?getType(a):getName(a)).localeCompare(String(sort==="region"?getRegion(b):sort==="type"?getType(b):getName(b))));statusEl.textContent=(selectedRegion?selectedRegion+": ":"")+list.length+" resultat(er)";
+function getDisplayRegion(rawRegion){
+  const r = String(rawRegion || "").trim();
+  const lower = r.toLowerCase();
+
+  // Samle lokale steder under Haugalandet
+  if(
+    lower.includes("haugesund") ||
+    lower.includes("karmøy") ||
+    lower.includes("karmoy") ||
+    lower.includes("skudeneshavn") ||
+    lower.includes("avaldenes") ||
+    lower.includes("norheim") ||
+    lower.includes("visnes") ||
+    lower.includes("jovegen") ||
+    lower.includes("norheimvegen")
+  ){
+    return "Haugalandet";
+  }
+
+  return r;
+}
+
+function buildAreas(){
+  const counts = {};
+  allBusinesses.forEach(b=>{
+    const displayRegion = getDisplayRegion(getRegion(b));
+    if(!displayRegion || isAddressLikeRegion(displayRegion)) return;
+    counts[displayRegion] = (counts[displayRegion] || 0) + 1;
+  });
+
+  const startAreas = ["Haugalandet","Stavanger","Stord"];
+  const extraAreas = Object.keys(counts)
+    .filter(r => !startAreas.includes(r))
+    .filter(r => !isAddressLikeRegion(r))
+    .sort();
+
+  const regions = [
+    ...startAreas.filter(r => counts[r] !== undefined || r === "Haugalandet" || r === "Stavanger" || r === "Stord"),
+    ...extraAreas
+  ];
+
+  areaButtons.innerHTML = regions.map(r=>`
+    <button class="area-card ${selectedRegion===r?'active':''}" data-region="${safeText(r)}" type="button">
+      <div class="area-img" style="background-image:url('${regionImages[r] || regionImages.Haugalandet}')"></div>
+      <div class="area-body"><div class="area-name">${safeText(r)}</div><div class="area-count">${counts[r] || 0}</div></div>
+    </button>
+  `).join("");
+
+  areaButtons.querySelectorAll(".area-card").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      selectedRegion = selectedRegion === btn.dataset.region ? "" : btn.dataset.region;
+      buildAreas();
+      renderBusinesses();
+    });
+  });
+}
+
+function renderBusinesses(){const search=searchInput.value.trim().toLowerCase(),type=typeFilter.value;let list=allBusinesses.filter(b=>{const name=getName(b).toLowerCase(),rawRegion=getRegion(b),region=getDisplayRegion(rawRegion),bType=getType(b),desc=getDescription(b).toLowerCase(),place=String(b.place||b.city||"").toLowerCase();return(!search||name.includes(search)||desc.includes(search)||place.includes(search)||String(region).toLowerCase().includes(search)||String(rawRegion).toLowerCase().includes(search))&&(!selectedRegion||region===selectedRegion)&&(!type||bType===type||(type==="Zoo butikk"&&bType==="Dyrebutikk"))});const sort=sortFilter.value;list.sort((a,b)=>String(sort==="region"?getRegion(a):sort==="type"?getType(a):getName(a)).localeCompare(String(sort==="region"?getRegion(b):sort==="type"?getType(b):getName(b))));statusEl.textContent=(selectedRegion?selectedRegion+": ":"")+list.length+" resultat(er)";
 updateWeekStore(list);if(!selectedRegion&&!search&&!type){grid.innerHTML='<div class="empty">📍 Velg område, kategori eller bruk søkefeltet.</div>';return}if(list.length===0){grid.innerHTML='<div class="empty">Ingen resultater funnet. Prøv et annet område eller søk.</div>';return}grid.innerHTML=list.map(b=>{const id=b.id||"",name=safeText(getName(b)),region=safeText(getRegion(b)),type=safeText(getType(b)),desc=safeText(getDescription(b))||"Ingen beskrivelse lagt inn ennå.",img=getImage(b),logo=getLogo(b),phone=getPhone(b),website=normalizeUrl(getWebsite(b));return `<article class="biz-card"><div class="biz-img">${img?`<img src="${img}" alt="${name}">`:`<div class="placeholder">🏪</div>`}<div class="open-tag">Synlig</div></div><div class="biz-body"><div class="biz-title-row"><div class="biz-logo">${logo?`<img src="${logo}" alt="${name} logo">`:"🏪"}</div><div><div class="biz-title">${name}</div><div class="biz-place">📍 ${region||"Norge"}</div></div></div><div class="chips">${type?`<span class="chip">${type}</span>`:""}<span class="chip">Hund</span><span class="chip">Katt</span></div><div class="desc">${desc}</div><div class="rating">4.9 <span>★</span> <small>(Hundene våre)</small></div><div class="card-actions">${id?`<a class="btn primary" href="butikk.html?id=${id}">Se butikk →</a>`:""}${website?`<a class="btn" href="${website}" target="_blank">Nettside</a>`:""}${phone?`<a class="btn" href="tel:${phone}">Ring</a>`:""}</div></div></article>`}).join("")}
 document.getElementById("heroBtn").addEventListener("click",()=>{searchInput.value=mainSearch.value;typeFilter.value=mainType.value;selectedType=mainType.value;buildServices();renderBusinesses();document.getElementById("businessGrid").scrollIntoView({behavior:"smooth",block:"start"})});
 document.getElementById("clearBtn").addEventListener("click",()=>{searchInput.value="";mainSearch.value="";typeFilter.value="";mainType.value="";sortFilter.value="name";selectedRegion="";selectedType="";buildServices();buildAreas();renderBusinesses()});
