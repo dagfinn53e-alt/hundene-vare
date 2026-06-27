@@ -8,20 +8,90 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--blue:#0b5cff;--dark:#0f172a;--muted:#64748b;--line:#dbeafe;--orange:#f97316;--pink:#db2777}
 body{font-family:Arial,sans-serif;color:var(--dark);background:radial-gradient(circle at top left,rgba(96,165,250,.24),transparent 30%),radial-gradient(circle at top right,rgba(249,115,22,.16),transparent 32%),linear-gradient(180deg,#eff6ff,#fff7ed 48%,#f8fbff);min-height:100vh}
-.wrap{max-width:1260px;margin:auto;padding:18px 14px 80px}
+.wrap{max-width:1260px;margin:auto;padding:18px 14px 70px}
 .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;margin-bottom:18px;border-radius:30px;background:rgba(255,255,255,.94);border:1px solid #bfd7ff;box-shadow:0 16px 38px rgba(15,23,42,.10);position:sticky;top:8px;z-index:50}
-.brand{display:flex;align-items:center;gap:10px;font-size:25px;font-weight:900;color:#0757d8;text-decoration:none}.logo{width:44px;height:44px;border-radius:15px;background:#fff3e8;display:flex;align-items:center;justify-content:center;font-size:26px}
-.nav{display:flex;gap:10px;flex-wrap:wrap}.nav a,.btn{text-decoration:none;border:none;border-radius:999px;padding:11px 16px;background:#eaf2ff;color:#0b4fd4;border:1px solid #bfd7ff;font-weight:900;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(15,23,42,.07);cursor:pointer}.nav a.active,.btn.primary{background:linear-gradient(135deg,#0b5cff,#2563eb);color:white;border:none}.nav a.admin{background:#fff7ed;color:#b45309;border-color:#fed7aa}.btn.orange{background:linear-gradient(135deg,var(--orange),var(--pink));color:white;border:none}.btn.white{background:white;color:#0b4fd4;border:none}
-.hero{border-radius:40px;margin-bottom:20px;padding:46px;color:white;overflow:hidden;background:linear-gradient(90deg,rgba(4,18,55,.98),rgba(10,68,163,.88),rgba(15,23,42,.12)),url('https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?q=80&w=1700&auto=format&fit=crop') center/cover;box-shadow:0 28px 64px rgba(15,23,42,.24)}
-.badge{display:inline-flex;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);padding:10px 14px;border-radius:999px;font-weight:900;margin-bottom:16px}.hero h1{font-size:66px;line-height:1.02;margin-bottom:14px;text-shadow:0 8px 22px rgba(0,0,0,.25);max-width:850px}.hero p{font-size:20px;line-height:1.6;max-width:840px;margin-bottom:24px;color:#eef6ff}.hero-actions{display:flex;gap:12px;flex-wrap:wrap}.hero-actions .btn{padding:14px 20px;font-size:16px}
-.free-strip{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;background:linear-gradient(135deg,#fff7ed,#fef3c7,#fff);border:2px dashed var(--orange);border-radius:32px;padding:24px;margin-bottom:20px;box-shadow:0 18px 40px rgba(15,23,42,.09)}.free-icon{font-size:48px;width:84px;height:84px;border-radius:26px;background:white;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(15,23,42,.08)}.free-strip h2{font-size:34px;color:#9a3412;margin-bottom:7px}.free-strip p{color:#7c2d12;font-weight:800;line-height:1.55}
-.panel{background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:34px;padding:26px;margin-bottom:20px;box-shadow:0 18px 40px rgba(15,23,42,.09)}.section-title{font-size:34px;color:#0f172a;margin-bottom:8px}.sub{color:#64748b;line-height:1.6;margin-bottom:18px}
-.launch-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.launch-card{min-height:156px;text-decoration:none;color:#0f172a;background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid #dbeafe;border-radius:26px;padding:16px;text-align:center;display:flex;flex-direction:column;gap:8px;justify-content:center;align-items:center;box-shadow:0 12px 28px rgba(30,64,175,.09);transition:.18s}.launch-card:hover{transform:translateY(-3px);box-shadow:0 20px 42px rgba(30,64,175,.15)}.launch-card.feature{background:linear-gradient(135deg,#0b5cff,#2563eb);color:white}.launch-card.free{background:linear-gradient(135deg,#fff7ed,#fef3c7,#fff)}.launch-icon{font-size:42px}.launch-card h3{font-size:18px}.launch-card p{font-size:12px;line-height:1.35;color:#64748b}.launch-card.feature p{color:#eaf2ff}
-.portal-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.big-card{border-radius:34px;padding:28px;background:linear-gradient(135deg,#051849,#0b5cff);color:white;box-shadow:0 18px 40px rgba(15,23,42,.14);min-height:300px;display:flex;flex-direction:column;justify-content:space-between}.big-card h2{font-size:38px;margin-bottom:10px}.big-card p{color:#eaf2ff;line-height:1.6;font-size:17px;max-width:720px}.big-card .btn{width:max-content;margin-top:18px}.side-stack{display:grid;gap:14px}.side-card,.why-card,.business-card{background:white;border:1px solid #dbeafe;border-radius:28px;padding:20px;box-shadow:0 12px 28px rgba(30,64,175,.08)}.side-card h3,.why-card h3{font-size:22px;margin-bottom:8px}.side-card p,.why-card p,.business-card p{color:#64748b;line-height:1.5;font-size:14px}
-.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.business-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.business-card h3{font-size:24px;margin-bottom:10px}.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px;color:#334155;font-weight:800;font-size:14px}
-.cta{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;background:linear-gradient(135deg,#051849,#0b5cff);color:white;border-radius:34px;padding:30px;margin-bottom:20px;box-shadow:0 18px 40px rgba(15,23,42,.14)}.cta-icon{font-size:48px;width:86px;height:86px;border-radius:28px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center}.cta h2{font-size:34px;margin-bottom:6px}.cta p{color:#eaf2ff;line-height:1.5}.cta .btn{background:linear-gradient(135deg,var(--orange),var(--pink));color:white;border:none}.footer-note{text-align:center;color:#64748b;font-size:14px;margin-top:24px}
-@media(max-width:1100px){.launch-grid{grid-template-columns:repeat(3,1fr)}.portal-grid{grid-template-columns:1fr}.why-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:760px){.wrap{padding:12px 10px 70px}.brand{width:100%;justify-content:center}.nav{width:100%;justify-content:center}.nav a{flex:1 1 42%;font-size:13px;padding:10px}.hero{padding:26px;border-radius:30px}.hero h1{font-size:40px}.hero p{font-size:16px}.hero-actions .btn{width:100%}.free-strip,.cta{grid-template-columns:1fr;text-align:center}.free-icon,.cta-icon{margin:auto}.launch-grid,.why-grid,.business-grid{grid-template-columns:1fr}.section-title{font-size:28px}.big-card h2{font-size:30px}.checks{grid-template-columns:1fr}}
+.brand{display:flex;align-items:center;gap:10px;font-size:25px;font-weight:900;color:#0757d8;text-decoration:none}
+.logo{width:44px;height:44px;border-radius:15px;background:#fff3e8;display:flex;align-items:center;justify-content:center;font-size:26px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.nav a,.btn{text-decoration:none;border:none;border-radius:999px;padding:11px 16px;background:#eaf2ff;color:#0b4fd4;border:1px solid #bfd7ff;font-weight:900;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(15,23,42,.07);cursor:pointer}
+.nav a.active,.btn.primary{background:linear-gradient(135deg,#0b5cff,#2563eb);color:white;border:none}
+.nav a.admin{background:#fff7ed;color:#b45309;border-color:#fed7aa}
+.btn.orange{background:linear-gradient(135deg,var(--orange),var(--pink));color:white;border:none}
+.btn.white{background:white;color:#0b4fd4;border:none}
+
+.hero{border-radius:38px;margin-bottom:16px;padding:42px;color:white;overflow:hidden;background:linear-gradient(90deg,rgba(4,18,55,.98),rgba(10,68,163,.88),rgba(15,23,42,.12)),url('https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?q=80&w=1700&auto=format&fit=crop') center/cover;box-shadow:0 28px 64px rgba(15,23,42,.24)}
+.badge{display:inline-flex;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);padding:10px 14px;border-radius:999px;font-weight:900;margin-bottom:14px}
+.hero h1{font-size:60px;line-height:1.02;margin-bottom:12px;text-shadow:0 8px 22px rgba(0,0,0,.25);max-width:860px}
+.hero p{font-size:19px;line-height:1.55;max-width:840px;margin-bottom:20px;color:#eef6ff}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.hero-actions .btn{padding:14px 20px;font-size:16px}
+
+.free-strip{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;background:linear-gradient(135deg,#fff7ed,#fef3c7,#fff);border:2px dashed var(--orange);border-radius:28px;padding:18px;margin-bottom:16px;box-shadow:0 14px 34px rgba(15,23,42,.08)}
+.free-icon{font-size:38px;width:66px;height:66px;border-radius:22px;background:white;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 22px rgba(15,23,42,.08)}
+.free-strip h2{font-size:28px;color:#9a3412;margin-bottom:5px}
+.free-strip p{color:#7c2d12;font-weight:800;line-height:1.45}
+
+.panel{background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:30px;padding:22px;margin-bottom:16px;box-shadow:0 16px 36px rgba(15,23,42,.08)}
+.section-title{font-size:30px;color:#0f172a;margin-bottom:8px}
+.sub{color:#64748b;line-height:1.5;margin-bottom:16px}
+
+.launch-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.launch-card{min-height:142px;text-decoration:none;color:#0f172a;background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid #dbeafe;border-radius:24px;padding:14px;text-align:center;display:flex;flex-direction:column;gap:7px;justify-content:center;align-items:center;box-shadow:0 10px 24px rgba(30,64,175,.08);transition:.18s}
+.launch-card:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(30,64,175,.14)}
+.launch-card.feature{background:linear-gradient(135deg,#0b5cff,#2563eb);color:white}
+.launch-card.free{background:linear-gradient(135deg,#fff7ed,#fef3c7,#fff)}
+.launch-icon{font-size:38px}.launch-card h3{font-size:18px}.launch-card p{font-size:12px;line-height:1.3;color:#64748b}.launch-card.feature p{color:#eaf2ff}
+
+.quick-row{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+.big-card{border-radius:30px;padding:24px;background:linear-gradient(135deg,#051849,#0b5cff);color:white;box-shadow:0 16px 34px rgba(15,23,42,.13);display:flex;flex-direction:column;justify-content:space-between;min-height:230px}
+.big-card h2{font-size:32px;margin-bottom:8px}.big-card p{color:#eaf2ff;line-height:1.5;font-size:16px;max-width:720px}.big-card .btn{width:max-content;margin-top:14px}
+.side-stack{display:grid;gap:12px}
+.side-card,.why-card{background:white;border:1px solid #dbeafe;border-radius:24px;padding:16px;box-shadow:0 10px 24px rgba(30,64,175,.07)}
+.side-card h3,.why-card h3{font-size:20px;margin-bottom:6px}.side-card p,.why-card p{color:#64748b;line-height:1.4;font-size:14px}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+.cta{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;background:linear-gradient(135deg,#051849,#0b5cff);color:white;border-radius:30px;padding:24px;margin-bottom:18px;box-shadow:0 16px 34px rgba(15,23,42,.13)}
+.cta-icon{font-size:42px;width:72px;height:72px;border-radius:24px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center}
+.cta h2{font-size:30px;margin-bottom:5px}.cta p{color:#eaf2ff;line-height:1.45}
+.cta .btn{background:linear-gradient(135deg,var(--orange),var(--pink));color:white;border:none}
+.footer-note{text-align:center;color:#64748b;font-size:14px;margin-top:20px}
+
+@media(max-width:1100px){.launch-grid{grid-template-columns:repeat(3,1fr)}.quick-row{grid-template-columns:1fr}.why-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){
+  .wrap{padding:10px 9px 55px}
+  .topbar{padding:10px;border-radius:22px;margin-bottom:12px}
+  .brand{width:100%;justify-content:center;font-size:21px}
+  .logo{width:38px;height:38px;font-size:23px}
+  .nav{width:100%;justify-content:center;gap:7px}
+  .nav a{flex:1 1 42%;font-size:12px;padding:9px 8px}
+  .hero{padding:24px;border-radius:28px;margin-bottom:12px}
+  .badge{font-size:13px;padding:8px 11px;margin-bottom:10px}
+  .hero h1{font-size:34px;margin-bottom:9px}
+  .hero p{font-size:15px;line-height:1.42;margin-bottom:14px}
+  .hero-actions{gap:8px}
+  .hero-actions .btn{width:100%;padding:12px 14px;font-size:14px}
+  .free-strip{grid-template-columns:1fr;text-align:center;padding:15px;border-radius:24px;margin-bottom:12px}
+  .free-icon{margin:auto;width:54px;height:54px;font-size:32px}
+  .free-strip h2{font-size:23px}
+  .free-strip p{font-size:14px}
+  .panel{padding:16px;border-radius:24px;margin-bottom:12px}
+  .section-title{font-size:24px}
+  .sub{font-size:14px;margin-bottom:12px}
+  .launch-grid{grid-template-columns:repeat(2,1fr);gap:9px}
+  .launch-card{min-height:105px;padding:10px;border-radius:20px}
+  .launch-icon{font-size:30px}
+  .launch-card h3{font-size:15px}
+  .launch-card p{display:none}
+  .big-card{min-height:0;padding:18px;border-radius:24px}
+  .big-card h2{font-size:24px}
+  .big-card p{font-size:14px}
+  .why-grid{grid-template-columns:1fr}
+  .why-card:nth-child(n+4){display:none}
+  .cta{grid-template-columns:1fr;text-align:center;padding:18px;border-radius:24px}
+  .cta-icon{margin:auto;width:58px;height:58px;font-size:34px}
+  .cta h2{font-size:24px}
+  .cta p{font-size:14px}
+}
 </style>
 </head>
 <body>
@@ -29,7 +99,13 @@ body{font-family:Arial,sans-serif;color:var(--dark);background:radial-gradient(c
 <header class="topbar">
   <a class="brand" href="index.html"><span class="logo">🐶</span> Hundene våre</a>
   <nav class="nav">
-    <a class="active" href="index.html">🏠 Forside</a><a href="butikker-ny.html">🏪 Butikker</a><a href="kunnskap.html">📚 Kunnskap</a><a href="spill.html">🎮 Spill</a><a href="arrangementer.html">📅 Arrangementer</a><a href="om-oss.html">ℹ️ Om oss</a><a class="admin" href="admin.html">🔧 Admin</a>
+    <a class="active" href="index.html">🏠 Forside</a>
+    <a href="butikker-ny.html">🏪 Butikker</a>
+    <a href="kunnskap.html">📚 Kunnskap</a>
+    <a href="spill.html">🎮 Spill</a>
+    <a href="arrangementer.html">📅 Arrangementer</a>
+    <a href="om-oss.html">ℹ️ Om oss</a>
+    <a class="admin" href="admin.html">🔧 Admin</a>
   </nav>
 </header>
 
@@ -46,7 +122,10 @@ body{font-family:Arial,sans-serif;color:var(--dark);background:radial-gradient(c
 
 <section class="free-strip">
   <div class="free-icon">🎉</div>
-  <div><h2>Registrer bedriften din GRATIS!</h2><p>Driver du dyrebutikk, veterinærklinikk, hundesalong, hundepass, hundepensjonat eller hundeklubb? Bli synlig i Hundene våre uten kostnad.</p></div>
+  <div>
+    <h2>Registrer bedriften din GRATIS!</h2>
+    <p>Dyrebutikk, veterinær, hundesalong, hundepass, pensjonat eller hundeklubb? Bli synlig i Hundene våre uten kostnad.</p>
+  </div>
   <a class="btn orange" href="registrer-butikk.html">Registrer nå →</a>
 </section>
 
@@ -66,11 +145,16 @@ body{font-family:Arial,sans-serif;color:var(--dark);background:radial-gradient(c
 <section class="panel">
   <h2 class="section-title">Utforsk portalen</h2>
   <p class="sub">Hundene våre samler det viktigste for dyreeiere og bedrifter.</p>
-  <div class="portal-grid">
-    <div class="big-card"><div><h2>🏪 Finn butikker og tjenester i hele Norge</h2><p>Butikkportalen samler dyrebutikker, veterinærer, hundesalonger, hundepass, hundepensjonat og hundeklubber i én enkel oversikt.</p></div><a class="btn white" href="butikker-ny.html">Åpne butikkportalen</a></div>
+  <div class="quick-row">
+    <div class="big-card">
+      <div>
+        <h2>🏪 Finn butikker og tjenester i hele Norge</h2>
+        <p>Butikkportalen samler dyrebutikker, veterinærer, hundesalonger, hundepass, pensjonat og hundeklubber i én enkel oversikt.</p>
+      </div>
+      <a class="btn white" href="butikker-ny.html">Åpne butikkportalen</a>
+    </div>
     <div class="side-stack">
       <div class="side-card"><h3>🐶 Hundesenter</h3><p>Raser, sammenligning, utstyr og testen «Finn hunden som passer deg».</p></div>
-      <div class="side-card"><h3>🐱 Kattesenter</h3><p>Kunnskap og utstyr for katteeiere bygges videre i samme stil.</p></div>
       <div class="side-card"><h3>🎮 Spill og quiz</h3><p>Lær om hund og katt på en morsom måte.</p></div>
     </div>
   </div>
@@ -78,29 +162,20 @@ body{font-family:Arial,sans-serif;color:var(--dark);background:radial-gradient(c
 
 <section class="panel">
   <h2 class="section-title">🌟 Derfor velger dyreeiere Hundene våre</h2>
-  <p class="sub">En portal som er enkel å forstå og lett å bruke.</p>
+  <p class="sub">Kort fortalt: enkelt, norsk og samlet.</p>
   <div class="why-grid">
     <div class="why-card"><h3>🐶 Alt samlet</h3><p>Butikker, kunnskap, spill og arrangementer på ett sted.</p></div>
-    <div class="why-card"><h3>🇳🇴 For Norge</h3><p>Bygget for norske hunde- og katteeiere.</p></div>
     <div class="why-card"><h3>📱 Mobilvennlig</h3><p>Laget for folk som åpner siden via QR-kode og visittkort.</p></div>
-    <div class="why-card"><h3>🏪 Bedrifter synlig</h3><p>Butikker og tjenester får egen profilside.</p></div>
-    <div class="why-card"><h3>📚 Nyttig innhold</h3><p>Kunnskap om raser, helse, trening og utstyr.</p></div>
     <div class="why-card"><h3>🎉 Gratis start</h3><p>Bedrifter kan registrere seg gratis i portalen.</p></div>
-  </div>
-</section>
-
-<section class="panel">
-  <h2 class="section-title">For bedrifter og tjenester</h2>
-  <p class="sub">Gjør det enkelt for nye kunder å finne deg.</p>
-  <div class="business-grid">
-    <div class="business-card"><h3>⭐ Hva får du?</h3><p>En synlig profil i portalen med informasjon, logo, bilder og lenker.</p><div class="checks"><span>✅ Egen profilside</span><span>✅ Logo og bilder</span><span>✅ Nettside-lenke</span><span>✅ Telefonkontakt</span><span>✅ Område og kategori</span><span>✅ Synlig for dyreeiere</span></div></div>
-    <div class="business-card"><h3>🏪 Hvem passer det for?</h3><p>Alle seriøse aktører som tilbyr produkter eller tjenester til hunde- og katteeiere.</p><div class="checks"><span>🏪 Dyrebutikk</span><span>🏥 Veterinær</span><span>✂️ Hundesalong</span><span>🐾 Hundepass</span><span>🏡 Pensjonat</span><span>🎓 Hundeklubb</span></div></div>
   </div>
 </section>
 
 <section class="cta">
   <div class="cta-icon">🚀</div>
-  <div><h2>Bli med før lanseringen</h2><p>Hundene våre bygges nå fram mot hundeutstilling og nye besøkende. Registrer bedriften din gratis og bli med fra starten.</p></div>
+  <div>
+    <h2>Bli med før lanseringen</h2>
+    <p>Registrer bedriften din gratis og bli med fra starten.</p>
+  </div>
   <a class="btn" href="registrer-butikk.html">Registrer bedriften GRATIS →</a>
 </section>
 
