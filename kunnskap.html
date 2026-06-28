@@ -6,79 +6,289 @@
 <title>Kunnskap - Hundene våre</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--blue:#0b5cff;--dark:#0f172a;--muted:#64748b;--line:#dbeafe;--orange:#f97316;--pink:#db2777}
-body{font-family:Arial,sans-serif;color:var(--dark);background:radial-gradient(circle at top left,rgba(96,165,250,.24),transparent 30%),radial-gradient(circle at top right,rgba(249,115,22,.16),transparent 32%),linear-gradient(180deg,#eff6ff,#fff7ed 48%,#f8fbff);min-height:100vh}
+:root{
+  --blue:#0b5cff;
+  --blue2:#2563eb;
+  --dark:#0f172a;
+  --muted:#64748b;
+  --line:#dbeafe;
+  --orange:#f97316;
+  --pink:#db2777;
+  --green:#16a34a;
+}
+body{
+  font-family:Arial,sans-serif;
+  color:var(--dark);
+  background:
+    radial-gradient(circle at top left,rgba(96,165,250,.24),transparent 30%),
+    radial-gradient(circle at top right,rgba(249,115,22,.16),transparent 32%),
+    linear-gradient(180deg,#eff6ff,#fff7ed 48%,#f8fbff);
+  min-height:100vh;
+}
 .wrap{max-width:1260px;margin:auto;padding:18px 14px 70px}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;margin-bottom:18px;border-radius:30px;background:rgba(255,255,255,.94);border:1px solid #bfd7ff;box-shadow:0 16px 38px rgba(15,23,42,.10);position:sticky;top:8px;z-index:50}
+.topbar{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:14px 18px;margin-bottom:18px;border-radius:30px;background:rgba(255,255,255,.94);
+  border:1px solid #bfd7ff;box-shadow:0 16px 38px rgba(15,23,42,.10);
+  position:sticky;top:8px;z-index:50;
+}
 .brand{display:flex;align-items:center;gap:10px;font-size:25px;font-weight:900;color:#0757d8;text-decoration:none}
 .logo{width:44px;height:44px;border-radius:15px;background:#fff3e8;display:flex;align-items:center;justify-content:center;font-size:26px}
 .nav{display:flex;gap:10px;flex-wrap:wrap}
-.nav a,.btn{text-decoration:none;border:none;border-radius:999px;padding:11px 16px;background:#eaf2ff;color:#0b4fd4;border:1px solid #bfd7ff;font-weight:900;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(15,23,42,.07);cursor:pointer}
-.nav a.active,.btn.primary{background:linear-gradient(135deg,#0b5cff,#2563eb);color:white;border:none}.nav a.admin{background:#fff7ed;color:#b45309;border-color:#fed7aa}
-.btn.orange{background:linear-gradient(135deg,var(--orange),var(--pink));color:white;border:none}.btn.white{background:white;color:#0b4fd4;border:none}
-.hero{border-radius:40px;margin-bottom:18px;padding:44px;color:white;overflow:hidden;background:linear-gradient(90deg,rgba(4,18,55,.98),rgba(10,68,163,.86),rgba(15,23,42,.16)),url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=1700&auto=format&fit=crop') center/cover;box-shadow:0 28px 64px rgba(15,23,42,.24)}
-.badge{display:inline-flex;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);padding:10px 14px;border-radius:999px;font-weight:900;margin-bottom:16px}
-.hero h1{font-size:62px;line-height:1.02;margin-bottom:14px;text-shadow:0 8px 22px rgba(0,0,0,.25);max-width:900px}
-.hero p{font-size:20px;line-height:1.55;max-width:850px;margin-bottom:22px;color:#eef6ff}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap}.hero-actions .btn{padding:14px 20px;font-size:16px}
+.nav a,.btn{
+  text-decoration:none;border:none;border-radius:999px;padding:11px 16px;background:#eaf2ff;color:#0b4fd4;
+  border:1px solid #bfd7ff;font-weight:900;display:inline-flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 16px rgba(15,23,42,.07);cursor:pointer;
+}
+.nav a.active,.btn.primary{background:linear-gradient(135deg,#0b5cff,#2563eb);color:white;border:none}
+.nav a.admin{background:#fff7ed;color:#b45309;border-color:#fed7aa}
+.btn.orange{background:linear-gradient(135deg,var(--orange),var(--pink));color:white;border:none}
+.btn.white{background:white;color:#0b4fd4;border:none}
+
+.hero{
+  border-radius:40px;margin-bottom:18px;padding:44px;color:white;overflow:hidden;position:relative;
+  background:
+    linear-gradient(90deg,rgba(4,18,55,.98),rgba(10,68,163,.88),rgba(15,23,42,.18)),
+    url('https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?q=80&w=1700&auto=format&fit=crop') center/cover;
+  box-shadow:0 28px 64px rgba(15,23,42,.24);
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  right:-90px;
+  bottom:-90px;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  background:rgba(255,255,255,.12);
+}
+.badge{
+  display:inline-flex;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);
+  padding:10px 14px;border-radius:999px;font-weight:900;margin-bottom:16px;
+}
+.hero h1{font-size:62px;line-height:1.02;margin-bottom:14px;text-shadow:0 8px 22px rgba(0,0,0,.25);max-width:920px}
+.hero p{font-size:20px;line-height:1.55;max-width:860px;margin-bottom:22px;color:#eef6ff}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:2}
+.hero-actions .btn{padding:14px 20px;font-size:16px}
+
+.feature-strip{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:16px;
+  margin-bottom:18px;
+}
+.feature-main{
+  background:linear-gradient(135deg,#051849,#0b5cff);
+  color:white;
+  border-radius:34px;
+  padding:26px;
+  box-shadow:0 18px 40px rgba(15,23,42,.14);
+}
+.feature-main h2{font-size:34px;margin-bottom:8px}
+.feature-main p{color:#eaf2ff;line-height:1.55;margin-bottom:16px}
+.feature-pills{display:flex;gap:10px;flex-wrap:wrap}
+.pill{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:9px 12px;font-weight:900}
+.feature-side{
+  background:linear-gradient(135deg,#fff7ed,#fef3c7,#fff);
+  border:2px dashed var(--orange);
+  border-radius:34px;
+  padding:26px;
+  box-shadow:0 18px 40px rgba(15,23,42,.09);
+}
+.feature-side h2{font-size:30px;color:#9a3412;margin-bottom:8px}
+.feature-side p{color:#7c2d12;line-height:1.55;font-weight:800}
+
 .quick-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
-.quick-card{background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:28px;padding:20px;box-shadow:0 16px 36px rgba(15,23,42,.08);text-decoration:none;color:#0f172a;display:flex;gap:14px;align-items:center;transition:.18s}
+.quick-card{
+  background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:28px;padding:20px;
+  box-shadow:0 16px 36px rgba(15,23,42,.08);text-decoration:none;color:#0f172a;
+  display:flex;gap:14px;align-items:center;transition:.18s;
+}
 .quick-card:hover{transform:translateY(-3px);box-shadow:0 22px 44px rgba(30,64,175,.14)}
 .quick-icon{font-size:42px;width:64px;height:64px;border-radius:22px;background:#eef4ff;display:flex;align-items:center;justify-content:center}
-.quick-card h3{font-size:22px;margin-bottom:5px}.quick-card p{font-size:14px;color:#64748b;line-height:1.4}
-.panel{background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:34px;padding:26px;margin-bottom:18px;box-shadow:0 18px 40px rgba(15,23,42,.09)}
-.section-title{font-size:34px;color:#0f172a;margin-bottom:8px}.sub{color:#64748b;line-height:1.6;margin-bottom:18px}
+.quick-card h3{font-size:22px;margin-bottom:5px}
+.quick-card p{font-size:14px;color:#64748b;line-height:1.4}
+
+.panel{
+  background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:34px;
+  padding:26px;margin-bottom:18px;box-shadow:0 18px 40px rgba(15,23,42,.09);
+}
+.section-title{font-size:34px;color:#0f172a;margin-bottom:8px}
+.sub{color:#64748b;line-height:1.6;margin-bottom:18px}
+
 .knowledge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.knowledge-card{min-height:390px;color:#0f172a;background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid #dbeafe;border-radius:32px;padding:17px;box-shadow:0 16px 34px rgba(30,64,175,.10);display:flex;flex-direction:column;justify-content:space-between;transition:.18s;overflow:hidden}
+.knowledge-card{
+  min-height:385px;color:#0f172a;background:linear-gradient(180deg,#fff,#f8fbff);
+  border:1px solid #dbeafe;border-radius:32px;padding:17px;box-shadow:0 16px 34px rgba(30,64,175,.10);
+  display:flex;flex-direction:column;justify-content:space-between;transition:.18s;overflow:hidden;position:relative;
+}
+.knowledge-card:before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto 0;
+  height:5px;
+  background:linear-gradient(90deg,#0b5cff,#f97316,#db2777);
+}
 .knowledge-card:hover{transform:translateY(-4px);box-shadow:0 26px 52px rgba(30,64,175,.17);border-color:#93c5fd}
-.topic-image{width:100%;height:190px;object-fit:cover;border-radius:22px;margin-bottom:15px;border:1px solid #dbeafe;box-shadow:0 10px 22px rgba(15,23,42,.10);background:#eef6ff}
+.topic-image{
+  width:100%;height:185px;object-fit:cover;border-radius:22px;margin-bottom:15px;border:1px solid #dbeafe;
+  box-shadow:0 10px 22px rgba(15,23,42,.10);background:#eef6ff;
+}
 .iconbox{display:flex;align-items:center;justify-content:center;font-size:82px;background:linear-gradient(135deg,#eef6ff,#fff7ed,#fdf2f8)}
-.knowledge-card h3{font-size:25px;margin-bottom:8px}.knowledge-card p{color:#475569;line-height:1.55;font-size:15px}
-.openbtn{margin-top:18px;width:100%;min-height:48px;border-radius:999px;background:linear-gradient(135deg,#0b5cff,#2563eb);color:#fff;font-weight:900;text-decoration:none;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px}
-.openbtn.pink{background:linear-gradient(135deg,#db2777,#7c3aed)}.openbtn.orange{background:linear-gradient(135deg,#f97316,#db2777)}
-.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.value-card{background:white;border:1px solid #dbeafe;border-radius:26px;padding:20px;box-shadow:0 12px 28px rgba(30,64,175,.08)}
-.value-card h3{font-size:22px;margin-bottom:8px}.value-card p{color:#64748b;line-height:1.5;font-size:14px}
-.cta{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;background:linear-gradient(135deg,#051849,#0b5cff);color:white;border-radius:34px;padding:28px;margin-bottom:20px;box-shadow:0 18px 40px rgba(15,23,42,.14)}
+.knowledge-card h3{font-size:25px;margin-bottom:8px}
+.knowledge-card p{color:#475569;line-height:1.55;font-size:15px}
+.openbtn{
+  margin-top:18px;width:100%;min-height:48px;border-radius:999px;background:linear-gradient(135deg,#0b5cff,#2563eb);
+  color:#fff;font-weight:900;text-decoration:none;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;
+}
+.openbtn.pink{background:linear-gradient(135deg,#db2777,#7c3aed)}
+.openbtn.orange{background:linear-gradient(135deg,#f97316,#db2777)}
+
+.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.value-card{background:white;border:1px solid #dbeafe;border-radius:26px;padding:20px;box-shadow:0 12px 28px rgba(30,64,175,.08)}
+.value-card h3{font-size:22px;margin-bottom:8px}
+.value-card p{color:#64748b;line-height:1.5;font-size:14px}
+
+.cta{
+  display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;
+  background:linear-gradient(135deg,#051849,#0b5cff);color:white;border-radius:34px;padding:28px;margin-bottom:20px;
+  box-shadow:0 18px 40px rgba(15,23,42,.14)
+}
 .cta-icon{font-size:46px;width:82px;height:82px;border-radius:26px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center}
-.cta h2{font-size:32px;margin-bottom:6px}.cta p{color:#eaf2ff;line-height:1.5}.footer-note{text-align:center;color:#64748b;font-size:14px;margin-top:20px}
-@media(max-width:1050px){.knowledge-grid{grid-template-columns:1fr 1fr}.quick-strip,.value-grid{grid-template-columns:1fr}}
-@media(max-width:760px){.wrap{padding:10px 9px 55px}.topbar{padding:10px;border-radius:22px;margin-bottom:12px}.brand{width:100%;justify-content:center;font-size:21px}.logo{width:38px;height:38px;font-size:23px}.nav{width:100%;justify-content:center;gap:7px}.nav a{flex:1 1 42%;font-size:12px;padding:9px 8px}.hero{padding:24px;border-radius:28px;margin-bottom:12px}.badge{font-size:13px;padding:8px 11px;margin-bottom:10px}.hero h1{font-size:34px;margin-bottom:9px}.hero p{font-size:15px;line-height:1.42;margin-bottom:14px}.hero-actions .btn{width:100%;padding:12px 14px;font-size:14px}.quick-card{padding:15px;border-radius:24px}.quick-icon{width:54px;height:54px;font-size:34px}.panel{padding:16px;border-radius:24px;margin-bottom:12px}.section-title{font-size:25px}.sub{font-size:14px;margin-bottom:12px}.knowledge-grid{grid-template-columns:1fr;gap:12px}.knowledge-card{min-height:0;border-radius:24px;padding:13px}.topic-image{height:170px;border-radius:18px;margin-bottom:12px}.iconbox{font-size:64px}.knowledge-card h3{font-size:21px}.knowledge-card p{font-size:14px}.openbtn{min-height:44px}.cta{grid-template-columns:1fr;text-align:center;padding:18px;border-radius:24px}.cta-icon{margin:auto;width:58px;height:58px;font-size:34px}.cta h2{font-size:24px}.cta p{font-size:14px}}
+.cta h2{font-size:32px;margin-bottom:6px}
+.cta p{color:#eaf2ff;line-height:1.5}
+.footer-note{text-align:center;color:#64748b;font-size:14px;margin-top:20px}
+
+@media(max-width:1050px){
+  .knowledge-grid{grid-template-columns:1fr 1fr}
+  .quick-strip,.value-grid,.feature-strip{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  .wrap{padding:10px 9px 55px}
+  .topbar{padding:10px;border-radius:22px;margin-bottom:12px}
+  .brand{width:100%;justify-content:center;font-size:21px}
+  .logo{width:38px;height:38px;font-size:23px}
+  .nav{width:100%;justify-content:center;gap:7px}
+  .nav a{flex:1 1 42%;font-size:12px;padding:9px 8px}
+  .hero{padding:24px;border-radius:28px;margin-bottom:12px}
+  .badge{font-size:13px;padding:8px 11px;margin-bottom:10px}
+  .hero h1{font-size:34px;margin-bottom:9px}
+  .hero p{font-size:15px;line-height:1.42;margin-bottom:14px}
+  .hero-actions .btn{width:100%;padding:12px 14px;font-size:14px}
+  .feature-main,.feature-side{padding:18px;border-radius:24px}
+  .feature-main h2,.feature-side h2{font-size:24px}
+  .quick-card{padding:15px;border-radius:24px}
+  .quick-icon{width:54px;height:54px;font-size:34px}
+  .panel{padding:16px;border-radius:24px;margin-bottom:12px}
+  .section-title{font-size:25px}
+  .sub{font-size:14px;margin-bottom:12px}
+  .knowledge-grid{grid-template-columns:1fr;gap:12px}
+  .knowledge-card{min-height:0;border-radius:24px;padding:13px}
+  .topic-image{height:165px;border-radius:18px;margin-bottom:12px}
+  .iconbox{font-size:64px}
+  .knowledge-card h3{font-size:21px}
+  .knowledge-card p{font-size:14px}
+  .openbtn{min-height:44px}
+  .cta{grid-template-columns:1fr;text-align:center;padding:18px;border-radius:24px}
+  .cta-icon{margin:auto;width:58px;height:58px;font-size:34px}
+  .cta h2{font-size:24px}.cta p{font-size:14px}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
+
 <header class="topbar">
   <a class="brand" href="index.html"><span class="logo">🐶</span> Hundene våre</a>
   <nav class="nav">
-    <a href="index.html">🏠 Forside</a><a href="butikker-ny.html">🏪 Butikker</a><a class="active" href="kunnskap.html">📚 Kunnskap</a><a href="spill.html">🎮 Spill</a><a href="arrangementer.html">📅 Arrangementer</a><a href="om-oss.html">ℹ️ Om oss</a><a class="admin" href="admin.html">🔧 Admin</a>
+    <a href="index.html">🏠 Forside</a>
+    <a href="butikker-ny.html">🏪 Butikker</a>
+    <a class="active" href="kunnskap.html">📚 Kunnskap</a>
+    <a href="spill.html">🎮 Spill</a>
+    <a href="arrangementer.html">📅 Arrangementer</a>
+    <a href="om-oss.html">ℹ️ Om oss</a>
+    <a class="admin" href="admin.html">🔧 Admin</a>
   </nav>
 </header>
+
 <section class="hero">
-  <div class="badge">📚 Kunnskap 4.0</div>
-  <h1>Norges kunnskapssenter for hund og katt</h1>
-  <p>Raser, helse, trening, utstyr, turtips, spill og nyttige guider – samlet på ett sted for hunde- og katteeiere.</p>
-  <div class="hero-actions"><a class="btn primary" href="kunnskap-hund.html">🐶 Start med hund</a><a class="btn orange" href="kunnskap-katt.html">🐱 Start med katt</a><a class="btn white" href="helse-og-sikkerhet.html">🏥 Helse og sikkerhet</a></div>
+  <div class="badge">📚 Kunnskap 4.1</div>
+  <h1>Lær mer om hund og katt</h1>
+  <p>Raser, helse, trening, utstyr, turtips, spill og nyttige guider – samlet i ett moderne kunnskapssenter.</p>
+  <div class="hero-actions">
+    <a class="btn primary" href="kunnskap-hund.html">🐶 Start med hund</a>
+    <a class="btn orange" href="kunnskap-katt.html">🐱 Start med katt</a>
+    <a class="btn white" href="helse-og-sikkerhet.html">🏥 Helse og sikkerhet</a>
+  </div>
 </section>
+
+<section class="feature-strip">
+  <div class="feature-main">
+    <h2>🐶🐱 En trygg start for nye dyreeiere</h2>
+    <p>Her finner du raske innganger til de viktigste temaene: valg av rase, helse, sikkerhet, trening og utstyr.</p>
+    <div class="feature-pills">
+      <span class="pill">🐾 Raseguider</span>
+      <span class="pill">🏥 Helse</span>
+      <span class="pill">🎓 Trening</span>
+      <span class="pill">🎮 Læring</span>
+    </div>
+  </div>
+  <div class="feature-side">
+    <h2>⭐ Tips</h2>
+    <p>Begynn med rase-testen hvis du vurderer ny hund eller katt. Det gir en god pekepinn før du leser mer om rasene.</p>
+    <a class="btn orange" href="hvilken-hunderase-passer-meg-5-0.html" style="margin-top:14px;">Start testen →</a>
+  </div>
+</section>
+
 <section class="quick-strip">
   <a class="quick-card" href="hvilken-hunderase-passer-meg-5-0.html"><div class="quick-icon">❤️</div><div><h3>Finn hunden som passer deg</h3><p>Ta testen og få hjelp til å finne riktig rase.</p></div></a>
   <a class="quick-card" href="helse-og-sikkerhet.html"><div class="quick-icon">🏥</div><div><h3>Helse først</h3><p>Trygge råd om helse, sikkerhet og førstehjelp.</p></div></a>
   <a class="quick-card" href="spill.html"><div class="quick-icon">🎮</div><div><h3>Lær med spill</h3><p>Quiz og spill som gjør læring morsommere.</p></div></a>
 </section>
+
 <section class="panel">
-  <h2 class="section-title">Velg område</h2><p class="sub">Start med hund eller katt, eller gå direkte til helse, spill, turtips og ukens tips.</p>
+  <h2 class="section-title">Velg kunnskapsområde</h2>
+  <p class="sub">Start med hund eller katt, eller gå direkte til helse, spill, turtips og ukens tips.</p>
   <div class="knowledge-grid">
+
     <article class="knowledge-card"><div><div class="topic-image iconbox">🐶</div><h3>Hund</h3><p>Alt om hunderaser, utstyr, ernæring, valp, førstehjelp, språk, barn, trening og tur.</p></div><a class="openbtn" href="kunnskap-hund.html">🐶 Åpne Hund</a></article>
+
     <article class="knowledge-card"><div><div class="topic-image iconbox" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3,#eef6ff);">🐱</div><h3>Katt</h3><p>Alt om katteraser, katteutstyr, ernæring, kattunge, førstehjelp, språk og barn.</p></div><a class="openbtn pink" href="kunnskap-katt.html">🐱 Åpne Katt</a></article>
+
     <article class="knowledge-card"><div><div class="topic-image iconbox" style="background:linear-gradient(135deg,#fff7ed,#eff6ff,#fdf2f8);">🐶🐱</div><h3>Hvilken rase passer meg?</h3><p>Finn ut hvilken hunderase eller katterase som kan passe best til bolig, familie, barn, aktivitet og hverdag.</p></div><a class="openbtn" href="hvilken-hunderase-passer-meg-5-0.html">🐶 Start med hund</a><a class="openbtn pink" href="hvilken-katterase-passer-meg-3-0.html" style="margin-top:10px;">🐱 Start med katt</a></article>
+
     <article class="knowledge-card"><div><div class="topic-image iconbox" style="background:linear-gradient(135deg,#fee2e2,#fff1f2,#eef6ff);">🏥</div><h3>Helse og sikkerhet</h3><p>Viktige guider om forgiftninger, huggorm, flått, tannhelse, vaksiner, varme og kulde.</p></div><a class="openbtn orange" href="helse-og-sikkerhet.html">🏥 Åpne Helse</a></article>
+
     <article class="knowledge-card"><div><div class="topic-image iconbox" style="background:linear-gradient(135deg,#eff6ff,#fff7ed,#fef3c7);">🎮</div><h3>Spill og quiz</h3><p>Test kunnskapen din med quiz, challenge og morsomme læringsspill.</p></div><a class="openbtn" href="spill.html">🎮 Åpne Spill</a></article>
+
     <article class="knowledge-card"><div><img class="topic-image" src="bilder/kunnskap/turtips.png" alt="Turtips"><h3>Turtips</h3><p>Fine tursteder, lokale tips og gode opplevelser for hund og eier.</p></div><a class="openbtn" href="turtips.html">🚶 Åpne Turtips</a></article>
+
     <article class="knowledge-card"><div><img class="topic-image" src="bilder/kunnskap/ukens-tips.png" alt="Ukens tips"><h3>Ukens tips</h3><p>Her kan vi vise ukens hunderase, katterase, helsetips eller nyttig råd.</p></div><a class="openbtn orange" href="ukenstips.html">⭐ Åpne Ukens tips</a></article>
+
   </div>
 </section>
-<section class="panel"><h2 class="section-title">🌟 Derfor bruker folk Kunnskapssenteret</h2><p class="sub">Rask tilgang til nyttig innhold når du trenger det.</p><div class="value-grid"><div class="value-card"><h3>🐶 Enkle guider</h3><p>Skrevet slik at alle kan forstå og bruke rådene i hverdagen.</p></div><div class="value-card"><h3>🏥 Trygg oversikt</h3><p>Helse, sikkerhet og viktige tema samlet på ett sted.</p></div><div class="value-card"><h3>🎓 Lær noe nytt</h3><p>Raser, trening, utstyr og quiz gjør portalen nyttig og morsom.</p></div></div></section>
-<section class="cta"><div class="cta-icon">🚀</div><div><h2>Finner du ikke det du leter etter?</h2><p>Kunnskapssenteret bygges videre med nye guider, raser, tips og temaer.</p></div><a class="btn white" href="index.html">Til forsiden →</a></section>
+
+<section class="panel">
+  <h2 class="section-title">🌟 Derfor bruker folk Kunnskapssenteret</h2>
+  <p class="sub">Rask tilgang til nyttig innhold når du trenger det.</p>
+  <div class="value-grid">
+    <div class="value-card"><h3>🐶 Enkle guider</h3><p>Skrevet slik at alle kan forstå og bruke rådene i hverdagen.</p></div>
+    <div class="value-card"><h3>🏥 Trygg oversikt</h3><p>Helse, sikkerhet og viktige tema samlet på ett sted.</p></div>
+    <div class="value-card"><h3>🎓 Lær noe nytt</h3><p>Raser, trening, utstyr og quiz gjør portalen nyttig og morsom.</p></div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="cta-icon">🚀</div>
+  <div>
+    <h2>Kunnskapssenteret vokser videre</h2>
+    <p>Vi legger stadig til nye guider, raser, tips og temaer for hunde- og katteeiere.</p>
+  </div>
+  <a class="btn white" href="index.html">Til forsiden →</a>
+</section>
+
 <p class="footer-note">Hundenevåre.com – kunnskap, butikker, arrangementer og spill for hund og katt.</p>
+
 </div>
 </body>
 </html>
