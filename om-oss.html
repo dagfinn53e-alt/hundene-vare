@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Om oss - Hundene våre</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blue:#0b5cff;--dark:#0f172a;--line:#dbeafe;--orange:#f97316;--pink:#db2777}
+body{font-family:Arial,sans-serif;color:var(--dark);background:radial-gradient(circle at top left,rgba(96,165,250,.24),transparent 30%),radial-gradient(circle at top right,rgba(249,115,22,.16),transparent 32%),linear-gradient(180deg,#eff6ff,#fff7ed 48%,#f8fbff);min-height:100vh}
+.wrap{max-width:1120px;margin:auto;padding:18px 14px 70px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;margin-bottom:18px;border-radius:30px;background:rgba(255,255,255,.94);border:1px solid #bfd7ff;box-shadow:0 16px 38px rgba(15,23,42,.10);position:sticky;top:8px;z-index:50}
+.brand{display:flex;align-items:center;gap:10px;font-size:25px;font-weight:900;color:#0757d8;text-decoration:none}
+.logo{width:44px;height:44px;border-radius:15px;background:#fff3e8;display:flex;align-items:center;justify-content:center;font-size:26px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.nav a,.btn{text-decoration:none;border:none;border-radius:999px;padding:11px 16px;background:#eaf2ff;color:#0b4fd4;border:1px solid #bfd7ff;font-weight:900;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(15,23,42,.07);cursor:pointer}
+.nav a.active,.btn.primary{background:linear-gradient(135deg,#0b5cff,#2563eb);color:white;border:none}
+.nav a.admin{background:#fff7ed;color:#b45309;border-color:#fed7aa}
+.hero{border-radius:34px;margin-bottom:18px;padding:34px;color:white;background:linear-gradient(90deg,rgba(4,18,55,.98),rgba(10,68,163,.88)),url('https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=1400&auto=format&fit=crop') center/cover;box-shadow:0 24px 56px rgba(15,23,42,.20)}
+.hero h1{font-size:46px;margin-bottom:10px}.hero p{font-size:17px;line-height:1.55;max-width:760px;color:#eef6ff}
+.card{background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);border:1px solid #dbeafe;border-radius:30px;box-shadow:0 18px 40px rgba(30,64,175,.10);padding:26px;margin-bottom:18px}
+.about-card{max-width:900px;margin-left:auto;margin-right:auto}
+.about-card h2{font-size:34px;color:#0f172a;margin-bottom:12px}
+.about-lead{font-size:18px;color:#1d4ed8;font-weight:900}
+.about-card p,.about-card li{color:#334155;line-height:1.7;font-size:15px;margin-bottom:10px}
+.about-card ul{padding-left:22px}
+.about-box,.about-contact{margin-top:22px;padding:20px;border-radius:24px;background:#f8fbff;border:1px solid #dbeafe}
+.about-box h3,.about-contact h3{color:#1e3a8a;margin-bottom:10px}
+.about-form{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+.about-form input,.about-form textarea{width:100%;border-radius:18px;border:1px solid #cbdcf5;padding:14px 16px;font-size:15px;background:#fff}
+.about-form textarea{min-height:130px}
+.about-form button{width:100%;min-height:48px;border:none;border-radius:999px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-weight:900;cursor:pointer}
+.status{font-weight:800;color:#64748b;margin-top:12px}
+.footer-note{text-align:center;color:#64748b;font-size:14px;margin-top:20px}
+@media(max-width:760px){.wrap{padding:10px 9px 55px}.topbar{padding:10px;border-radius:22px}.brand{width:100%;justify-content:center;font-size:21px}.logo{width:38px;height:38px;font-size:23px}.nav{width:100%;justify-content:center;gap:7px}.nav a{flex:1 1 42%;font-size:12px;padding:9px 8px}.hero{padding:24px;border-radius:28px}.hero h1{font-size:34px}.hero p{font-size:15px}.card{border-radius:24px;padding:18px}.about-card h2{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar">
+  <a class="brand" href="index.html"><span class="logo">🐶</span> Hundene våre</a>
+  <nav class="nav">
+    <a href="index.html">🏠 Forside</a>
+    <a href="butikker-ny.html">🏪 Butikker</a>
+    <a href="kunnskap.html">📚 Kunnskap</a>
+    <a href="spill.html">🎮 Spill</a>
+    <a href="arrangementer.html">📅 Arrangementer</a>
+    <a class="active" href="om-oss.html">ℹ️ Om oss</a>
+    <a class="admin" href="admin.html">🔧 Admin</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>🐶🐱 Om Hundene våre</h1>
+  <p>Norges nye portal for hund og katt – laget for dyreeiere, butikker, klubber og tjenester.</p>
+</section>
+
+<section class="card about-card">
+  <h2>🐶🐱 Om Oss</h2>
+  <p class="about-lead">Velkommen til HundeneVåre!</p>
+
+  <p>HundeneVåre er laget for å samle dyrebutikker, tjenester, hundeklubber, kunnskap, spill, arrangementer og tilbud på ett sted.</p>
+
+  <p>Målet er å gjøre det enklere for hunde- og katteeiere å finne butikker, aktiviteter, tilbud og nyttig informasjon – uansett hvor i Norge de bor.</p>
+
+  <p>Appen startet som en idé om å skape en lokal og personlig møteplass for alle som er glade i dyr. Nå bygger vi videre mot en portal for hele Norge.</p>
+
+  <div class="about-box">
+    <h3>🐾 Hva finner du i portalen?</h3>
+    <ul>
+      <li>Dyrebutikker og tjenester</li>
+      <li>Veterinærer, hundesalonger, hundepass og pensjonat</li>
+      <li>Hundeklubber og arrangementer</li>
+      <li>Kunnskap om hund og katt</li>
+      <li>Spill, quiz og raseguider</li>
+      <li>Registrering av bedrifter og samarbeidspartnere</li>
+    </ul>
+  </div>
+
+  <div class="about-box">
+    <h3>❤️ Hvorfor HundeneVåre?</h3>
+    <p>Vi ønsker å løfte frem butikker og tjenester og gjøre det lettere for dyreeiere å oppdage gode produkter, tjenester og aktiviteter.</p>
+    <p>Samtidig ønsker vi å bygge et hyggelig miljø for alle som er opptatt av hunder og katter.</p>
+  </div>
+
+  <div class="about-contact">
+    <h3>📞 Kontakt Oss</h3>
+    <p>Har du spørsmål, forslag eller ønsker å registrere din bedrift?</p>
+
+    <p><strong>E-post:</strong> dagfinn53e@gmail.com</p>
+    <p><strong>Telefon:</strong> 482 07 914</p>
+
+    <form class="about-form" action="https://formspree.io/f/mnjrlegb" method="POST">
+      <input name="navn" type="text" placeholder="Navn" required>
+      <input name="email" type="email" placeholder="E-post" required>
+      <textarea name="melding" placeholder="Skriv melding her." required></textarea>
+      <input type="hidden" name="_subject" value="Ny melding fra HundeneVåre">
+      <button type="submit">📨 Send melding</button>
+    </form>
+
+    <div class="status">Meldingen sendes direkte til e-post via Formspree.</div>
+  </div>
+</section>
+
+<p class="footer-note">Hundenevåre.com – utviklet med ❤️ for alle hunde- og katteelskere.</p>
+</div>
+</body>
+</html>
