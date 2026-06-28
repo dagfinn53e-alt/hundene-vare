@@ -87,7 +87,7 @@ body{
 .feature-main h2{font-size:34px;margin-bottom:8px}
 .feature-main p{color:#eaf2ff;line-height:1.55;margin-bottom:16px}
 .feature-pills{display:flex;gap:10px;flex-wrap:wrap}
-.pill{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:9px 12px;font-weight:900}
+.pill{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:9px 12px;font-weight:900;color:white;text-decoration:none;display:inline-flex}
 .feature-side{
   background:linear-gradient(135deg,#fff7ed,#fef3c7,#fff);
   border:2px dashed var(--orange);
@@ -175,21 +175,23 @@ body{
   .hero h1{font-size:34px;margin-bottom:9px}
   .hero p{font-size:15px;line-height:1.42;margin-bottom:14px}
   .hero-actions .btn{width:100%;padding:12px 14px;font-size:14px}
-  .feature-main,.feature-side{padding:18px;border-radius:24px}
-  .feature-main h2,.feature-side h2{font-size:24px}
-  .quick-card{padding:15px;border-radius:24px}
-  .quick-icon{width:54px;height:54px;font-size:34px}
-  .panel{padding:16px;border-radius:24px;margin-bottom:12px}
+  .feature-main,.feature-side{padding:14px;border-radius:22px}
+  .feature-main h2,.feature-side h2{font-size:21px}
+  .quick-card{padding:12px;border-radius:22px}
+  .quick-icon{width:46px;height:46px;font-size:28px}
+  .panel{padding:14px;border-radius:22px;margin-bottom:10px}
   .section-title{font-size:25px}
   .sub{font-size:14px;margin-bottom:12px}
   .knowledge-grid{grid-template-columns:1fr;gap:12px}
-  .knowledge-card{min-height:0;border-radius:24px;padding:13px}
-  .topic-image{height:165px;border-radius:18px;margin-bottom:12px}
+  .knowledge-card{min-height:0;border-radius:22px;padding:11px}
+  .topic-image{height:125px;border-radius:16px;margin-bottom:9px}
   .iconbox{font-size:64px}
   .knowledge-card h3{font-size:21px}
-  .knowledge-card p{font-size:14px}
-  .openbtn{min-height:44px}
-  .cta{grid-template-columns:1fr;text-align:center;padding:18px;border-radius:24px}
+  .knowledge-card p{font-size:13px;line-height:1.35}
+  .openbtn{min-height:40px;margin-top:10px;font-size:13px}
+  .value-grid{display:none}
+  .panel:has(.value-grid){display:none}
+  .cta{grid-template-columns:1fr;text-align:center;padding:16px;border-radius:22px}
   .cta-icon{margin:auto;width:58px;height:58px;font-size:34px}
   .cta h2{font-size:24px}.cta p{font-size:14px}
 }
@@ -227,10 +229,10 @@ body{
     <h2>🐶🐱 En trygg start for nye dyreeiere</h2>
     <p>Her finner du raske innganger til de viktigste temaene: valg av rase, helse, sikkerhet, trening og utstyr.</p>
     <div class="feature-pills">
-      <span class="pill">🐾 Raseguider</span>
-      <span class="pill">🏥 Helse</span>
-      <span class="pill">🎓 Trening</span>
-      <span class="pill">🎮 Læring</span>
+      <a class="pill" href="kunnskap-hund.html">🐾 Raseguider</a>
+      <a class="pill" href="helse-og-sikkerhet.html">🏥 Helse</a>
+      <a class="pill" href="trening.html">🎓 Trening</a>
+      <a class="pill" href="spill.html">🎮 Læring</a>
     </div>
   </div>
   <div class="feature-side">
