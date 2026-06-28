@@ -1,196 +1,271 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spill – Hundene våre</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(180deg,#dbeafe,#fff7ed,#f8fbff);color:#102033}
-.wrap{max-width:1120px;margin:auto;padding:22px 16px 70px}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:#fff;border:1px solid #dbeafe;border-radius:26px;padding:14px 18px;margin-bottom:20px;box-shadow:0 12px 28px rgba(15,23,42,.10)}
-.brand{font-size:24px;font-weight:900;color:#1d4ed8}
-.nav a{display:inline-flex;margin:4px;text-decoration:none;background:#eaf2ff;color:#1d4ed8;border:1px solid #bfd7ff;border-radius:999px;padding:10px 14px;font-weight:900}
-.hero{background:linear-gradient(135deg,#2563eb,#7c3aed,#f97316);color:#fff;border-radius:34px;padding:36px;text-align:center;margin-bottom:22px;box-shadow:0 18px 42px rgba(15,23,42,.18)}
-.hero h1{font-size:46px;margin:0 0 10px}.hero p{font-size:18px;line-height:1.6;margin:0}
-.game-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.game-card{background:#fff;border:1px solid #dbeafe;border-radius:28px;padding:16px;text-decoration:none;color:#102033;box-shadow:0 14px 32px rgba(30,64,175,.10);display:flex;flex-direction:column;justify-content:space-between;min-height:350px;transition:.18s}
-.game-card:hover{transform:translateY(-3px);box-shadow:0 20px 42px rgba(30,64,175,.16)}
-.game-card h3{font-size:24px;margin:10px 0 8px}.game-card p{line-height:1.55;color:#475569;margin:0}
-.playbtn{display:flex;align-items:center;justify-content:center;margin-top:16px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:white;border-radius:999px;min-height:48px;font-weight:900}
-.game-icon{width:100%;height:205px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:76px;background:linear-gradient(135deg,#eff6ff,#fff7ed);box-shadow:0 10px 22px rgba(15,23,42,.10)}
-.prize{background:linear-gradient(135deg,#fff,#fff7ed,#fef3c7)!important;border:2px solid rgba(249,115,22,.40)!important}
-.challenge{background:linear-gradient(135deg,#fff,#eff6ff,#fff7ed)!important;border:2px solid rgba(37,99,235,.32)!important}
-.firstaid{background:linear-gradient(135deg,#fff,#fff1f2,#eff6ff)!important;border:2px solid rgba(220,38,38,.30)!important}
-.cat{background:linear-gradient(135deg,#fff,#fdf2f8,#eff6ff)!important}
-.note{margin-top:12px;padding:10px;border-radius:14px;background:#eaf2ff;border:1px solid #bfd7ff;color:#1d4ed8;font-size:14px;font-weight:900}
-.soon{margin-top:12px;padding:10px;border-radius:14px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:14px;font-weight:900;line-height:1.45}
-.footer{text-align:center;color:#64748b;font-size:14px;margin-top:25px}
-@media(max-width:900px){.game-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:650px){.game-grid{grid-template-columns:1fr}.hero h1{font-size:34px}.nav{width:100%}.nav a{flex:1 1 42%;justify-content:center}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spill | Hundene våre</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #fff7ed, #fde68a);
+      color: #4a2c14;
+    }
+
+    header {
+      background: linear-gradient(135deg, #7c3f16, #b45309);
+      color: white;
+      text-align: center;
+      padding: 30px 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 38px;
+    }
+
+    header p {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    .top-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 22px auto;
+      padding: 0 15px;
+    }
+
+    .top-buttons a {
+      background: #92400e;
+      color: white;
+      text-decoration: none;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: bold;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+
+    .top-buttons a:hover {
+      background: #78350f;
+    }
+
+    .intro {
+      max-width: 850px;
+      margin: 0 auto 25px;
+      text-align: center;
+      padding: 0 18px;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .games-grid {
+      max-width: 1150px;
+      margin: 0 auto 45px;
+      padding: 0 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .game-card {
+      background: white;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.16);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: 3px solid #facc15;
+    }
+
+    .game-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+    }
+
+    .game-card img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      display: block;
+      background: #fef3c7;
+    }
+
+    .game-content {
+      padding: 18px;
+      text-align: center;
+    }
+
+    .game-content h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      color: #7c2d12;
+    }
+
+    .game-content p {
+      font-size: 15px;
+      min-height: 48px;
+      line-height: 1.4;
+      margin-bottom: 18px;
+    }
+
+    .play-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.22);
+    }
+
+    .play-btn:hover {
+      background: linear-gradient(135deg, #ea580c, #c2410c);
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 15px;
+      background: #7c3f16;
+      color: white;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 30px;
+      }
+
+      header p {
+        font-size: 16px;
+      }
+
+      .games-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .game-card img {
+        height: 135px;
+      }
+
+      .game-content h2 {
+        font-size: 20px;
+      }
+
+      .game-content p {
+        min-height: auto;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="wrap">
 
-<div class="topbar">
-  <div class="brand">🐶 Hundene våre</div>
-  <div class="nav">
-    <a href="index.html">🏠 Forside</a>
-    <a href="kunnskap.html">📚 Kunnskap</a>
-    <a href="konkurranse.html">🎁 Vinn premier</a>
+  <header>
+    <h1>🐶 Spill og Moro 🐱</h1>
+    <p>Quiz, puslespill og memory for hunde- og kattevenner</p>
+  </header>
+
+  <div class="top-buttons">
+    <a href="index.html">🏠 Tilbake til forsiden</a>
+    <a href="admin.html">🔐 Admin</a>
   </div>
-</div>
 
-<section class="hero">
-  <h1>🎮 Spill og quiz</h1>
-  <p>Velg et spill, test kunnskapen din og bli med i konkurranser.</p>
-</section>
+  <section class="intro">
+    <p>
+      Velkommen til spillsiden på <strong>Hundene våre</strong>.
+      Her finner du morsomme spill for både hundeelskere og katteelskere.
+    </p>
+  </section>
 
-<div class="game-grid">
+  <main class="games-grid">
 
-  <a class="game-card prize" href="konkurranse.html">
-    <div class="game-icon">🎁</div>
-    <div>
-      <h3>🏆 Vinn premier</h3>
-      <p>Spill våre quiz- og kunnskapsspill. Oppnå minst 12 poeng eller Mester-status og bli med i trekningen.</p>
-      <div class="soon">🚀 Kommer snart<br>Highscore • Månedens Mester • Diplom</div>
+    <div class="game-card">
+      <img src="bilder/spill/hundeland.png" alt="Hundeland Quiz">
+      <div class="game-content">
+        <h2>🌍 Hundeland Quiz</h2>
+        <p>Gjett hvilket land hunderasene kommer fra.</p>
+        <a class="play-btn" href="hundelandquiz.html">Spill nå</a>
+      </div>
     </div>
-    <span class="playbtn">🎁 Delta i konkurransen</span>
-  </a>
 
-  <a class="game-card challenge" href="hundechallenge.html">
-    <div class="game-icon">⚡🐶</div>
-    <div>
-      <h3>⚡ Hunde Challenge</h3>
-      <p>Rett eller galt på tid! 2 minutter, 5 sekunder per spørsmål, og nivåene Lett, Medium og Vanskelig.</p>
-      <div class="note">🆕 Lynraskt spill</div>
+    <div class="game-card">
+      <img src="bilder/spill/katteland.png" alt="Katteland Quiz">
+      <div class="game-content">
+        <h2>🌍 Katteland Quiz</h2>
+        <p>Gjett hvilket land katterasene kommer fra.</p>
+        <a class="play-btn" href="kattelandquiz.html">Spill nå</a>
+      </div>
     </div>
-    <span class="playbtn">▶️ Spill nå</span>
-  </a>
 
-  <a class="game-card firstaid" href="hvahuskerdu_forstehjelp_hund.html">
-    <div class="game-icon">🏥🐶</div>
-    <div>
-      <h3>🏥 Førstehjelp Hund</h3>
-      <p>Test hva du husker om sår, flått, heteslag, forgiftning og huggormbitt.</p>
-      <div class="note">🆕 Nytt kunnskapsspill</div>
+    <div class="game-card">
+      <img src="bilder/spill/hunderase.png" alt="Hunderase Quiz">
+      <div class="game-content">
+        <h2>🐕 Hunderase Quiz</h2>
+        <p>Se bildet og gjett hvilken hunderase det er.</p>
+        <a class="play-btn" href="hunderasequiz.html">Spill nå</a>
+      </div>
     </div>
-    <span class="playbtn">▶️ Spill nå</span>
-  </a>
 
-  <a class="game-card" href="hvahuskerdu_hunderaser.html">
-    <div class="game-icon">🐶</div>
-    <div>
-      <h3>Hva husker du? – Hunderaser</h3>
-      <p>Test hva du husker om hunderaser, opprinnelse, størrelse og kjennetegn.</p>
+    <div class="game-card">
+      <img src="bilder/spill/katterase.png" alt="Katterase Quiz">
+      <div class="game-content">
+        <h2>🐈 Katterase Quiz</h2>
+        <p>Se bildet og gjett hvilken katterase det er.</p>
+        <a class="play-btn" href="katterasequiz.html">Spill nå</a>
+      </div>
     </div>
-    <span class="playbtn">▶️ Spill nå</span>
-  </a>
 
-  <a class="game-card" href="hvahuskerdu_hundeland.html">
-    <div class="game-icon">🌍🐶</div>
-    <div>
-      <h3>Hva husker du? – Hundeland</h3>
-      <p>Hvilket land kommer hunderasene fra? Test kunnskapen din.</p>
+    <div class="game-card">
+      <img src="bilder/spill/hundepuslespill.png" alt="Hundepuslespill">
+      <div class="game-content">
+        <h2>🧩 Hundepuslespill</h2>
+        <p>Sett sammen fine hundebilder i flere nivåer.</p>
+        <a class="play-btn" href="hundepuslespill.html">Spill nå</a>
+      </div>
     </div>
-    <span class="playbtn">▶️ Spill nå</span>
-  </a>
 
-  <a class="game-card" href="hvahuskerdu_hundeutstyr.html">
-    <div class="game-icon">🐾</div>
-    <div>
-      <h3>Hva husker du? – Hundeutstyr</h3>
-      <p>Spørsmål om utstyr, pelsstell, kloklipp, børster og daglig stell.</p>
+    <div class="game-card">
+      <img src="bilder/spill/kattepuslespill.png" alt="Kattepuslespill">
+      <div class="game-content">
+        <h2>🧩 Kattepuslespill</h2>
+        <p>Sett sammen koselige kattebilder i flere nivåer.</p>
+        <a class="play-btn" href="kattepuslespill.html">Spill nå</a>
+      </div>
     </div>
-    <span class="playbtn">▶️ Spill nå</span>
-  </a>
 
-  <a class="game-card" href="hvahuskerdu_hundehelse.html">
-    <div class="game-icon">🏥</div>
-    <div>
-      <h3>Hva husker du? – Hundehelse</h3>
-      <p>Test kunnskap om helse, tannstell, flått, vaksiner og trygg hundehverdag.</p>
+    <div class="game-card">
+      <img src="bilder/spill/memory.png" alt="Memory Adventure">
+      <div class="game-content">
+        <h2>⭐ Memory Adventure</h2>
+        <p>Finn like par og tren hukommelsen med hund og katt.</p>
+        <a class="play-btn" href="memory.html">Spill nå</a>
+      </div>
     </div>
-    <span class="playbtn">▶️ Spill nå</span>
-  </a>
 
-  <a class="game-card cat" href="hvahuskerdu_katteraser.html">
-    <div class="game-icon">🐱</div>
-    <div>
-      <h3>Hva husker du? – Katteraser</h3>
-      <p>Test hva du husker om katteraser, lynne, pelsstell og kjennetegn.</p>
+    <div class="game-card">
+      <img src="bilder/spill/musikkquiz.png" alt="Musikkquiz">
+      <div class="game-content">
+        <h2>🎵 Musikkquiz</h2>
+        <p>Test deg på musikk fra 60-, 70-, 80- og 90-tallet.</p>
+        <a class="play-btn" href="musikkquiz.html">Spill nå</a>
+      </div>
     </div>
-    <span class="playbtn">▶️ Spill nå</span>
-  </a>
 
-  <a class="game-card cat" href="hvahuskerdu_katteland.html">
-    <div class="game-icon">🌍🐱</div>
-    <div>
-      <h3>Hva husker du? – Katteland</h3>
-      <p>Hvilket land forbindes katterasene med? Test deg selv.</p>
-    </div>
-    <span class="playbtn">▶️ Spill nå</span>
-  </a>
+  </main>
 
-  <a class="game-card cat" href="hvahuskerdu_katteutstyr.html">
-    <div class="game-icon">🧶</div>
-    <div>
-      <h3>Hva husker du? – Katteutstyr</h3>
-      <p>Spørsmål om kattens utstyr, pelsstell, klorestativ og aktivisering.</p>
-    </div>
-    <span class="playbtn">▶️ Spill nå</span>
-  </a>
+  <footer>
+    <p>© Hundene våre</p>
+  </footer>
 
-  <a class="game-card" href="hundelandquiz.html">
-    <div class="game-icon">🗺️🐶</div>
-    <div>
-      <h3>Hundeland Quiz</h3>
-      <p>Velg riktig land for hunderaser.</p>
-    </div>
-    <span class="playbtn">▶️ Spill nå</span>
-  </a>
-
-  <a class="game-card cat" href="kattelandquiz.html">
-    <div class="game-icon">🗺️🐱</div>
-    <div>
-      <h3>Katteland Quiz</h3>
-      <p>Velg riktig land for katteraser.</p>
-    </div>
-    <span class="playbtn">▶️ Spill nå</span>
-  </a>
-
-  <a class="game-card" href="hunderasequiz.html">
-    <div class="game-icon">🐕</div>
-    <div>
-      <h3>Hunderase Quiz</h3>
-      <p>Gjett riktig hunderase.</p>
-    </div>
-    <span class="playbtn">▶️ Spill nå</span>
-  </a>
-
-  <a class="game-card cat" href="katterasequiz.html">
-    <div class="game-icon">🐈</div>
-    <div>
-      <h3>Katterase Quiz</h3>
-      <p>Gjett riktig katterase.</p>
-    </div>
-    <span class="playbtn">▶️ Spill nå</span>
-  </a>
-
-  <a class="game-card" href="musikkquiz.html">
-    <div class="game-icon">🎵</div>
-    <div>
-      <h3>Musikk Quiz</h3>
-      <p>Quiz med musikk fra 60-, 70-, 80- og 90-tallet.</p>
-    </div>
-    <span class="playbtn">▶️ Spill nå</span>
-  </a>
-
-</div>
-
-<p class="footer">Hundenevåre.com – Spill, kunnskap og konkurranser.</p>
-
-</div>
 </body>
 </html>
