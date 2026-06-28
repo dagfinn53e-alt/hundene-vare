@@ -2879,7 +2879,7 @@ button[onclick*="business"]{
     
       <div class="actions">
   <button type="button" onclick="showPage('auth')">Opprett konto / Logg inn</button>
-  <button type="button" onclick="goHome()">Forside</button>
+  <button type="button" onclick="window.location.href='index.html'">Forside</button>
   <button type="button" onclick="showPage('about')">Om Oss</button>
   <button type="button" onclick="showPage('admin')">Admin</button>
 
@@ -2999,11 +2999,11 @@ button[onclick*="business"]{
 </div>
 
 
-<div id="page-auth" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>Opprett konto / Logg inn</h2><div class="sub">Bruk e-post og passord.</div><input id="email" type="email" placeholder="E-post"><input id="password" type="password" placeholder="Passord"><div class="btnrow"><button type="button" onclick="signupUser()">Lag konto</button><button type="button" onclick="loginUser()">Logg inn</button><button type="button" class="alt" onclick="loadProfile()">Oppdater profil</button></div><div id="status" class="status">Klar.</div></div></div>
+<div id="page-auth" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div><h2>Opprett konto / Logg inn</h2><div class="sub">Bruk e-post og passord.</div><input id="email" type="email" placeholder="E-post"><input id="password" type="password" placeholder="Passord"><div class="btnrow"><button type="button" onclick="signupUser()">Lag konto</button><button type="button" onclick="loginUser()">Logg inn</button><button type="button" class="alt" onclick="loadProfile()">Oppdater profil</button></div><div id="status" class="status">Klar.</div></div></div>
 
   <div id="page-stories" class="hidden">
     <div class="card">
-      <div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div>
+      <div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div>
       <h2>📰 Nyheter fra butikk</h2>
       <div class="sub">Velg område for å vise bare lokale butikknyheter.</div>
 
@@ -3049,7 +3049,7 @@ button[onclick*="business"]{
 
   <div id="page-weekly" class="hidden">
     <div class="card">
-      <div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div>
+      <div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div>
       <h2>⭐ Ukens tilbud</h2>
       <div class="sub">Her vises kun tilbud som skal være med på Ukens tilbud.</div>
 
@@ -3088,26 +3088,26 @@ button[onclick*="business"]{
     </div>
   </div>
 
-  <div id="page-turtips" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🥾 Turtips</h2><div class="sub">Del fine turer du anbefaler til andre hundeeiere.</div><div id="turtipsList" class="turtips-list">Laster turtips ...</div></div><div class="card"><h2 style="font-size:24px;">➕ Legg inn turtips</h2><input id="ttTitle" placeholder="Tittel på turen"><input id="ttPlace" placeholder="Sted"><textarea id="ttDescription" placeholder="Beskrivelse av turen"></textarea><input id="ttParking" placeholder="Parkering"><input id="ttLength" placeholder="Lengde, f.eks. 3 km"><select id="ttDifficulty"><option>Lett</option><option>Middels</option><option>Krevende</option></select><label>Last opp bilde</label><input id="ttImage" type="file" accept="image/*"><div class="btnrow"><button type="button" onclick="saveTurtip()">Lagre turtips</button><button type="button" class="alt" onclick="loadTurtips()">Oppdater turtips</button></div><div id="turtipStatus" class="status">Klar.</div></div></div>
+  <div id="page-turtips" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div><h2>🥾 Turtips</h2><div class="sub">Del fine turer du anbefaler til andre hundeeiere.</div><div id="turtipsList" class="turtips-list">Laster turtips ...</div></div><div class="card"><h2 style="font-size:24px;">➕ Legg inn turtips</h2><input id="ttTitle" placeholder="Tittel på turen"><input id="ttPlace" placeholder="Sted"><textarea id="ttDescription" placeholder="Beskrivelse av turen"></textarea><input id="ttParking" placeholder="Parkering"><input id="ttLength" placeholder="Lengde, f.eks. 3 km"><select id="ttDifficulty"><option>Lett</option><option>Middels</option><option>Krevende</option></select><label>Last opp bilde</label><input id="ttImage" type="file" accept="image/*"><div class="btnrow"><button type="button" onclick="saveTurtip()">Lagre turtips</button><button type="button" class="alt" onclick="loadTurtips()">Oppdater turtips</button></div><div id="turtipStatus" class="status">Klar.</div></div></div>
 
-  <div id="page-stavanger" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>📍 Stavanger</h2><div class="sub">Velg kategori for å vise kun det du vil se i Stavanger.</div><div class="menu-grid"><button class="menu-btn shop" type="button" onclick="loadStavangerCategory('Zoo butikk')">🐾 Zoo butikker</button><button class="menu-btn groom" type="button" onclick="loadStavangerCategory('Frisør')">✂️ Frisører</button><button class="menu-btn vet" type="button" onclick="loadStavangerCategory('Veterinær')">🏥 Veterinærer</button><button class="menu-btn shop" type="button" onclick="loadStavangerCategory('Hundepensjonat')">🐶 Hundepensjonat</button></div><div id="stavangerCategoryTitle" class="sub" style="margin-top:14px;">Velg en kategori over.</div><div id="stavangerContent"><div class="empty-box">Ingen kategori valgt ennå.</div></div></div></div>
+  <div id="page-stavanger" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div><h2>📍 Stavanger</h2><div class="sub">Velg kategori for å vise kun det du vil se i Stavanger.</div><div class="menu-grid"><button class="menu-btn shop" type="button" onclick="loadStavangerCategory('Zoo butikk')">🐾 Zoo butikker</button><button class="menu-btn groom" type="button" onclick="loadStavangerCategory('Frisør')">✂️ Frisører</button><button class="menu-btn vet" type="button" onclick="loadStavangerCategory('Veterinær')">🏥 Veterinærer</button><button class="menu-btn shop" type="button" onclick="loadStavangerCategory('Hundepensjonat')">🐶 Hundepensjonat</button></div><div id="stavangerCategoryTitle" class="sub" style="margin-top:14px;">Velg en kategori over.</div><div id="stavangerContent"><div class="empty-box">Ingen kategori valgt ennå.</div></div></div></div>
 
-  <div id="page-haugalandet" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>📍 Haugalandet</h2><div class="sub">Velg kategori for å vise kun det du vil se i Haugalandet.</div><div class="menu-grid"><button class="menu-btn shop" type="button" onclick="loadHaugalandetCategory('Zoo butikk')">🐾 Zoo butikker</button><button class="menu-btn groom" type="button" onclick="loadHaugalandetCategory('Frisør')">✂️ Frisører</button><button class="menu-btn vet" type="button" onclick="loadHaugalandetCategory('Veterinær')">🏥 Veterinærer</button><button class="menu-btn shop" type="button" onclick="loadHaugalandetCategory('Hundepensjonat')">🐶 Hundepensjonat</button></div><div id="haugalandetCategoryTitle" class="sub" style="margin-top:14px;">Velg en kategori over.</div><div id="haugalandetContent"><div class="empty-box">Ingen kategori valgt ennå.</div></div></div></div>
-
-
+  <div id="page-haugalandet" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div><h2>📍 Haugalandet</h2><div class="sub">Velg kategori for å vise kun det du vil se i Haugalandet.</div><div class="menu-grid"><button class="menu-btn shop" type="button" onclick="loadHaugalandetCategory('Zoo butikk')">🐾 Zoo butikker</button><button class="menu-btn groom" type="button" onclick="loadHaugalandetCategory('Frisør')">✂️ Frisører</button><button class="menu-btn vet" type="button" onclick="loadHaugalandetCategory('Veterinær')">🏥 Veterinærer</button><button class="menu-btn shop" type="button" onclick="loadHaugalandetCategory('Hundepensjonat')">🐶 Hundepensjonat</button></div><div id="haugalandetCategoryTitle" class="sub" style="margin-top:14px;">Velg en kategori over.</div><div id="haugalandetContent"><div class="empty-box">Ingen kategori valgt ennå.</div></div></div></div>
 
 
-  <div id="page-bergen" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>📍 Bergen</h2><div class="sub">Velg kategori for å vise kun det du vil se i Bergen.</div><div class="menu-grid"><button class="menu-btn shop" type="button" onclick="loadBergenCategory('Zoo butikk')">🐾 Zoo butikker</button><button class="menu-btn groom" type="button" onclick="loadBergenCategory('Frisør')">✂️ Frisører</button><button class="menu-btn vet" type="button" onclick="loadBergenCategory('Veterinær')">🏥 Veterinærer</button><button class="menu-btn shop" type="button" onclick="loadBergenCategory('Hundepensjonat')">🐶 Hundepensjonat</button></div><div id="bergenCategoryTitle" class="sub" style="margin-top:14px;">Velg en kategori over.</div><div id="bergenContent"><div class="empty-box">Ingen kategori valgt ennå.</div></div></div></div>
 
-  <div id="page-cafes" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>☕ Kaféer med hund</h2><div class="sub">Finn kaféer og steder der du kan ha med hund. Velg område under.</div><div class="menu-grid"><button class="menu-btn activity" type="button" onclick="loadCafeRegion('Haugalandet')">📍 Haugalandet</button><button class="menu-btn activity" type="button" onclick="loadCafeRegion('Stavanger')">📍 Stavanger</button><button class="menu-btn activity" type="button" onclick="loadCafeRegion('Stord')">📍 Stord</button></div><div id="cafesCategoryTitle" class="sub" style="margin-top:14px;">Velg et område over.</div><div id="cafesContent"><div class="empty-box">Ingen område valgt ennå.</div></div></div></div>
 
-  <div id="page-groomers" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>✂️ Frisører</h2><div class="search-grid"><input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()"><select id="filterFavoritesGroomers" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchGroomers" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="groomerList"></div></div></div>
+  <div id="page-bergen" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div><h2>📍 Bergen</h2><div class="sub">Velg kategori for å vise kun det du vil se i Bergen.</div><div class="menu-grid"><button class="menu-btn shop" type="button" onclick="loadBergenCategory('Zoo butikk')">🐾 Zoo butikker</button><button class="menu-btn groom" type="button" onclick="loadBergenCategory('Frisør')">✂️ Frisører</button><button class="menu-btn vet" type="button" onclick="loadBergenCategory('Veterinær')">🏥 Veterinærer</button><button class="menu-btn shop" type="button" onclick="loadBergenCategory('Hundepensjonat')">🐶 Hundepensjonat</button></div><div id="bergenCategoryTitle" class="sub" style="margin-top:14px;">Velg en kategori over.</div><div id="bergenContent"><div class="empty-box">Ingen kategori valgt ennå.</div></div></div></div>
 
-  <div id="page-shops" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🐾 Zoo butikker</h2><div class="search-grid"><input id="searchShops" placeholder="Søk butikk eller sted" oninput="loadBusinesses()"><select id="filterFavoritesShops" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchShops" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="shopList"></div></div></div>
+  <div id="page-cafes" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div><h2>☕ Kaféer med hund</h2><div class="sub">Finn kaféer og steder der du kan ha med hund. Velg område under.</div><div class="menu-grid"><button class="menu-btn activity" type="button" onclick="loadCafeRegion('Haugalandet')">📍 Haugalandet</button><button class="menu-btn activity" type="button" onclick="loadCafeRegion('Stavanger')">📍 Stavanger</button><button class="menu-btn activity" type="button" onclick="loadCafeRegion('Stord')">📍 Stord</button></div><div id="cafesCategoryTitle" class="sub" style="margin-top:14px;">Velg et område over.</div><div id="cafesContent"><div class="empty-box">Ingen område valgt ennå.</div></div></div></div>
 
-  <div id="page-pensjonat" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🐶 Hundepensjonat & Hundepass</h2><div class="search-grid"><input id="searchPensjonat" placeholder="Søk pensjonat eller sted" oninput="loadBusinesses()"><select id="filterFavoritesPensjonat" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchPensjonat" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="pensjonatList"></div></div></div>
+  <div id="page-groomers" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div><h2>✂️ Frisører</h2><div class="search-grid"><input id="searchGroomers" placeholder="Søk frisør eller sted" oninput="loadBusinesses()"><select id="filterFavoritesGroomers" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchGroomers" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="groomerList"></div></div></div>
 
-  <div id="page-vets" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🏥 Veterinærer</h2><div class="search-grid"><input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()"><select id="filterFavoritesVets" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchVets" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="vetList"></div></div></div>
+  <div id="page-shops" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div><h2>🐾 Zoo butikker</h2><div class="search-grid"><input id="searchShops" placeholder="Søk butikk eller sted" oninput="loadBusinesses()"><select id="filterFavoritesShops" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchShops" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="shopList"></div></div></div>
+
+  <div id="page-pensjonat" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div><h2>🐶 Hundepensjonat & Hundepass</h2><div class="search-grid"><input id="searchPensjonat" placeholder="Søk pensjonat eller sted" oninput="loadBusinesses()"><select id="filterFavoritesPensjonat" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchPensjonat" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="pensjonatList"></div></div></div>
+
+  <div id="page-vets" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div><h2>🏥 Veterinærer</h2><div class="search-grid"><input id="searchVets" placeholder="Søk veterinær eller sted" oninput="loadBusinesses()"><select id="filterFavoritesVets" onchange="loadBusinesses()"><option value="all">Alle</option><option value="fav">Kun favoritter</option></select><input id="mapSearchVets" placeholder="Sted for kart-link" oninput="loadBusinesses()"></div><div id="vetList"></div></div></div>
 <div id="page-cafe" class="hidden">
   <div class="card">
     <h2>Til Katten</h2>
@@ -3124,7 +3124,7 @@ button[onclick*="business"]{
 </div>
   <div id="page-business" class="hidden">
     <div class="card">
-      <div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div>
+      <div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div>
       <h2>🏪 Registrer / rediger bedrift</h2>
       <div class="sub">Nye bedrifter og endringer settes til ventende til admin har godkjent dem.</div>
       <select id="editBusinessSelect" onchange="loadBusinessIntoForm()"><option value="">Ny bedrift</option></select>
@@ -3190,7 +3190,7 @@ button[onclick*="business"]{
 
   <div id="page-admin" class="hidden"><div class="admin-alert">
 🔔 Nye butikker til godkjenning: 0
-</div><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🛠️ Admin</h2><div id="adminStatus" class="status">Klar.</div></div><div class="card"><h2 style="font-size:24px;">Innlegg</h2><div id="adminStories">Laster ...</div></div><div class="card"><h2 style="font-size:24px;">Bedrifter</h2><div id="adminBusinesses">Laster ...</div></div>
+</div><div class="card"><div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div><h2>🛠️ Admin</h2><div id="adminStatus" class="status">Klar.</div></div><div class="card"><h2 style="font-size:24px;">Innlegg</h2><div id="adminStories">Laster ...</div></div><div class="card"><h2 style="font-size:24px;">Bedrifter</h2><div id="adminBusinesses">Laster ...</div></div>
 
 <div class="card admin-event-form-card">
   <h2 style="font-size:24px;">📅 Legg inn arrangement</h2>
@@ -3242,15 +3242,15 @@ button[onclick*="business"]{
 </div>
 </div>
 
-  <div id="page-favorites" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>❤️ Mine favoritter</h2><div id="favoritesList">Laster favoritter ...</div></div></div>
+  <div id="page-favorites" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div><h2>❤️ Mine favoritter</h2><div id="favoritesList">Laster favoritter ...</div></div></div>
 
-  <div id="page-hundeklubber" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="goHome()">← Tilbake til forsiden</button></div><h2>🐶 Hundeklubber</h2><div class="sub">Lokale hundeklubber og aktiviteter.</div><div id="dogClubsList"><div class="empty-box">Laster klubber ...</div></div></div><div class="card"><h2 style="font-size:24px;">➕ Legg til hundeklubb</h2><input id="clubName" placeholder="Klubbnavn"><input id="clubLocation" placeholder="Område / sted"><textarea id="clubDescription" placeholder="Beskrivelse"></textarea><input id="clubWebsite" placeholder="Nettside / Facebook-link"><div class="btnrow"><button type="button" onclick="saveDogClub()">Lagre klubb</button><button type="button" class="alt" onclick="loadDogClubs()">Oppdater liste</button></div><div id="clubStatus" class="status"></div></div></div>
+  <div id="page-hundeklubber" class="hidden"><div class="card"><div class="btnrow"><button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button></div><h2>🐶 Hundeklubber</h2><div class="sub">Lokale hundeklubber og aktiviteter.</div><div id="dogClubsList"><div class="empty-box">Laster klubber ...</div></div></div><div class="card"><h2 style="font-size:24px;">➕ Legg til hundeklubb</h2><input id="clubName" placeholder="Klubbnavn"><input id="clubLocation" placeholder="Område / sted"><textarea id="clubDescription" placeholder="Beskrivelse"></textarea><input id="clubWebsite" placeholder="Nettside / Facebook-link"><div class="btnrow"><button type="button" onclick="saveDogClub()">Lagre klubb</button><button type="button" class="alt" onclick="loadDogClubs()">Oppdater liste</button></div><div id="clubStatus" class="status"></div></div></div>
 
 
   <div id="page-about" class="hidden">
     <div class="card about-card">
       <div class="btnrow">
-        <button class="alt" onclick="goHome()">← Tilbake til forsiden</button>
+        <button class="alt" onclick="window.location.href='index.html'">← Tilbake til forsiden</button>
       </div>
 
       <h2>🐶🐱 Om Oss</h2>
@@ -3358,7 +3358,7 @@ checkPendingBusinesses();
 function qs(id){return document.getElementById(id)}
 function setStatusText(id,text,color){var el=qs(id);if(el){el.textContent=text;el.style.color=color||"black"}}
 
-function goHome(){
+function window.location.href='index.html'{
   var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','bergen','cafes','groomers','shops','pensjonat','vets','business','about','admin','favorites','hundeklubber'];
   for(var i=0;i<pages.length;i++){
     var el=qs('page-'+pages[i]);
@@ -3370,7 +3370,7 @@ function goHome(){
 }
 
 function showPage(name){
-  if(name==='home'){goHome();return;}
+  if(name==='home'){window.location.href='index.html';return;}
   var pages=['home','auth','stories','weekly','turtips','stavanger','haugalandet','bergen','cafes','groomers','shops','pensjonat','vets','business','about','admin','favorites','hundeklubber'];
   for(var i=0;i<pages.length;i++){
     var el=qs('page-'+pages[i]);
@@ -3988,11 +3988,11 @@ function openImageModal(src){if(!src) return;qs("imageModalImg").src=src;qs("ima
 function closeImageModal(event){if(event) event.stopPropagation();qs("imageModal").classList.remove("open");qs("imageModalImg").src="";document.body.style.overflow=""}
 document.addEventListener("keydown",function(e){if(e.key==="Escape") closeImageModal()})
 async function signupUser(){setStatusText("status","Prøver å opprette konto ...","blue");var email=qs("email").value.trim();var password=qs("password").value.trim();if(!email||!password){setStatusText("status","Skriv inn e-post og passord.","crimson");return;}var result=await supabase.auth.signUp({email:email,password:password});if(result.error){setStatusText("status","Feil: "+result.error.message,"crimson");return;}setStatusText("status","Konto opprettet.","green")}
-async function loginUser(){setStatusText("status","Prøver å logge inn ...","blue");var email=qs("email").value.trim();var password=qs("password").value.trim();if(!email||!password){setStatusText("status","Skriv inn e-post og passord.","crimson");return;}var result=await supabase.auth.signInWithPassword({email:email,password:password});if(result.error){setStatusText("status","Feil: "+result.error.message,"crimson");return;}setStatusText("status","Innlogget som "+email,"green");loadProfile();goHome()}
+async function loginUser(){setStatusText("status","Prøver å logge inn ...","blue");var email=qs("email").value.trim();var password=qs("password").value.trim();if(!email||!password){setStatusText("status","Skriv inn e-post og passord.","crimson");return;}var result=await supabase.auth.signInWithPassword({email:email,password:password});if(result.error){setStatusText("status","Feil: "+result.error.message,"crimson");return;}setStatusText("status","Innlogget som "+email,"green");loadProfile();window.location.href='index.html'}
 function shareApp(){var url="https://www.hundenevåre.com/";if(navigator.share){navigator.share({title:"Hundene våre",text:"Se appen Hundene våre 🐶",url:url}).catch(function(){})} else {copyLink()}}
 function copyLink(){var url="https://www.hundenevåre.com/";navigator.clipboard.writeText(url).then(function(){setStatusText("status","Link kopiert.","green")}).catch(function(){setStatusText("status","Kunne ikke kopiere linken.","crimson")})}
 
-goHome();
+window.location.href='index.html';
 updateStoriesRegionUI();
 updateWeeklyRegionUI();
  
@@ -4460,6 +4460,26 @@ window.addEventListener("load", function(){
       console.log(e);
     }
   }, 300);
+});
+</script>
+
+
+<script>
+window.addEventListener("load", function(){
+  document.querySelectorAll("button, a").forEach(function(el){
+    const txt = (el.textContent || "").toLowerCase();
+    if(txt.includes("til forsiden") || txt.trim() === "forside" || txt.includes("🏠")){
+      if(!el.closest(".topbar")){
+        el.onclick = function(e){
+          e.preventDefault();
+          window.location.href = "index.html";
+        };
+        if(el.tagName.toLowerCase() === "a"){
+          el.setAttribute("href","index.html");
+        }
+      }
+    }
+  });
 });
 </script>
 
