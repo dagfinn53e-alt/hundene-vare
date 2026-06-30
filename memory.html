@@ -3,578 +3,638 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🧠 Memory Arcade DELUXE</title>
+<title>Memory Adventure – Hundene våre</title>
 
 <style>
+*{box-sizing:border-box}
 
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:
-linear-gradient(to bottom,#dbeafe,#eef6ff);
-text-align:center;
-overflow-x:hidden;
-color:#123c73;
+  margin:0;
+  font-family:Arial,sans-serif;
+  color:#102033;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 10% 8%,rgba(96,165,250,.42),transparent 28%),
+    radial-gradient(circle at 90% 10%,rgba(250,204,21,.35),transparent 32%),
+    linear-gradient(180deg,#dbeafe,#f0f9ff,#fff7ed);
 }
 
-h1{
-font-size:48px;
-margin-top:20px;
-}
-
-.container{
-max-width:1200px;
-margin:auto;
-padding:20px;
+.wrap{
+  max-width:1180px;
+  margin:auto;
+  padding:18px 14px 60px;
 }
 
 .topbar{
-display:flex;
-justify-content:center;
-gap:15px;
-flex-wrap:wrap;
-margin-bottom:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  background:rgba(255,255,255,.9);
+  border:1px solid #dbeafe;
+  border-radius:28px;
+  padding:14px 18px;
+  box-shadow:0 14px 35px rgba(15,23,42,.12);
+  margin-bottom:18px;
 }
 
-select,button{
-padding:14px 20px;
-border:none;
-border-radius:18px;
-font-size:18px;
-font-weight:bold;
-box-shadow:0 4px 10px rgba(0,0,0,.12);
+.brand{
+  font-size:24px;
+  font-weight:900;
+  color:#1d4ed8;
 }
 
-button{
-background:#2563eb;
-color:white;
-cursor:pointer;
+.nav{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.nav a,.nav button{
+  border:none;
+  text-decoration:none;
+  background:#eaf2ff;
+  color:#1d4ed8;
+  border:1px solid #bfd7ff;
+  border-radius:999px;
+  padding:10px 14px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  border-radius:38px;
+  padding:34px 22px;
+  text-align:center;
+  color:white;
+  background:linear-gradient(135deg,#2563eb,#7c3aed,#f97316);
+  box-shadow:0 24px 58px rgba(15,23,42,.22);
+}
+
+.hero h1{
+  margin:0 0 10px;
+  font-size:46px;
+}
+
+.hero p{
+  margin:0 auto;
+  max-width:720px;
+  line-height:1.6;
+  font-size:18px;
+  color:#eef6ff;
 }
 
 .stats{
-display:flex;
-justify-content:center;
-gap:15px;
-flex-wrap:wrap;
-margin-bottom:25px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin:18px 0;
 }
 
 .stat{
-background:white;
-padding:14px 20px;
-border-radius:18px;
-font-size:20px;
-font-weight:bold;
-box-shadow:0 4px 10px rgba(0,0,0,.12);
-min-width:140px;
+  background:rgba(255,255,255,.92);
+  border:1px solid #dbeafe;
+  border-radius:22px;
+  padding:16px;
+  text-align:center;
+  box-shadow:0 14px 30px rgba(15,23,42,.10);
 }
 
-#gameBoard{
-display:grid;
-gap:15px;
-justify-content:center;
-margin-top:20px;
+.stat strong{
+  display:block;
+  color:#1d4ed8;
+  font-size:24px;
 }
 
-/* MEMORY CARD */
-
-.card{
-width:110px;
-height:110px;
-perspective:1000px;
-cursor:pointer;
+.map-title{
+  text-align:center;
+  margin:30px 0 18px;
 }
 
-.inner{
-position:relative;
-width:100%;
-height:100%;
-transition:transform .6s;
-transform-style:preserve-3d;
+.map-title h2{
+  font-size:34px;
+  margin:0 0 8px;
+  color:#172554;
 }
 
-.card.flipped .inner{
-transform:rotateY(180deg);
+.map-title p{
+  margin:0;
+  color:#64748b;
 }
 
-.front,
-.back{
-position:absolute;
-width:100%;
-height:100%;
-backface-visibility:hidden;
-border-radius:20px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:54px;
-font-weight:bold;
-box-shadow:0 6px 14px rgba(0,0,0,.18);
+.world-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
 }
 
-.front{
-background:
-linear-gradient(
-135deg,
-#2563eb,
-#60a5fa
-);
-color:white;
+.world{
+  position:relative;
+  overflow:hidden;
+  min-height:300px;
+  border-radius:30px;
+  padding:22px;
+  background:rgba(255,255,255,.94);
+  border:1px solid #dbeafe;
+  box-shadow:0 18px 38px rgba(15,23,42,.13);
+  cursor:pointer;
+  transition:.2s;
 }
 
-.back{
-background:white;
-transform:rotateY(180deg);
+.world:hover{
+  transform:translateY(-6px);
+  box-shadow:0 26px 52px rgba(15,23,42,.20);
 }
 
-.card:hover{
-transform:scale(1.05);
+.world-icon{
+  height:130px;
+  border-radius:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:70px;
+  background:linear-gradient(135deg,#eff6ff,#fff7ed);
+  margin-bottom:15px;
 }
 
-.correct .back{
-box-shadow:
-0 0 25px #22c55e,
-0 0 45px #22c55e;
+.world h3{
+  margin:0 0 8px;
+  font-size:25px;
+  color:#172554;
 }
 
-.wrong{
-animation:shake .25s 2;
+.world p{
+  color:#475569;
+  line-height:1.5;
+  margin:0 0 13px;
 }
 
-@keyframes shake{
-0%{transform:translateX(0)}
-25%{transform:translateX(-5px)}
-50%{transform:translateX(5px)}
-75%{transform:translateX(-5px)}
-100%{transform:translateX(0)}
+.stars{
+  color:#f59e0b;
+  font-size:25px;
+  letter-spacing:4px;
+  margin:10px 0;
 }
 
-/* WIN BOX */
-
-#winBox{
-display:none;
-margin-top:30px;
-background:white;
-padding:30px;
-border-radius:25px;
-box-shadow:0 8px 20px rgba(0,0,0,.18);
-max-width:500px;
-margin-left:auto;
-margin-right:auto;
+.play-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:130px;
+  border:none;
+  border-radius:999px;
+  padding:12px 18px;
+  color:white;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 12px 24px rgba(37,99,235,.25);
 }
 
-#winBox h2{
-font-size:42px;
-margin:10px;
-color:#db2777;
+.game-screen{
+  display:none;
+  margin-top:20px;
 }
 
-#stars{
-font-size:48px;
-margin:15px;
+.game-card{
+  background:rgba(255,255,255,.94);
+  border:1px solid #dbeafe;
+  border-radius:32px;
+  padding:20px;
+  box-shadow:0 18px 38px rgba(15,23,42,.13);
 }
 
-.backBtn{
-margin-top:20px;
-padding:16px 28px;
-border:none;
-border-radius:18px;
-background:#123c73;
-color:white;
-font-size:20px;
-font-weight:bold;
-cursor:pointer;
+.game-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:16px;
 }
 
+.game-head h2{
+  margin:0;
+  color:#172554;
+  font-size:30px;
+}
+
+.game-info{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.badge{
+  background:#eaf2ff;
+  color:#1d4ed8;
+  border:1px solid #bfd7ff;
+  border-radius:999px;
+  padding:9px 12px;
+  font-weight:900;
+}
+
+.board{
+  display:grid;
+  gap:12px;
+  justify-content:center;
+  margin:18px auto;
+}
+
+.memory-card{
+  width:95px;
+  height:95px;
+  border:none;
+  border-radius:20px;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:white;
+  font-size:42px;
+  cursor:pointer;
+  box-shadow:0 10px 20px rgba(15,23,42,.18);
+  transition:.18s;
+}
+
+.memory-card:hover{
+  transform:translateY(-3px);
+}
+
+.memory-card.open,
+.memory-card.done{
+  background:white;
+  color:#102033;
+  border:2px solid #dbeafe;
+}
+
+.memory-card.done{
+  background:#dcfce7;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-top:15px;
+}
+
+.actions button{
+  border:none;
+  border-radius:999px;
+  padding:13px 18px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.back-btn{background:#eaf2ff;color:#1d4ed8;border:1px solid #bfd7ff!important}
+.restart-btn{background:linear-gradient(135deg,#facc15,#f97316);color:#102033}
+
+.message{
+  text-align:center;
+  font-size:20px;
+  font-weight:900;
+  color:#16a34a;
+  min-height:30px;
+  margin-top:10px;
+}
+
+.footer{
+  text-align:center;
+  color:#64748b;
+  margin-top:30px;
+}
+
+@media(max-width:900px){
+  .world-grid{grid-template-columns:1fr 1fr}
+  .stats{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:620px){
+  .wrap{padding:12px 10px 50px}
+  .hero h1{font-size:34px}
+  .world-grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
+  .memory-card{width:72px;height:72px;font-size:32px;border-radius:16px}
+}
 </style>
 </head>
 
 <body>
+<div class="wrap">
 
-<div class="container">
+  <header class="topbar">
+    <div class="brand">🧠 Memory Adventure</div>
+    <nav class="nav">
+      <a href="spill.html">🎮 Tilbake til spill</a>
+      <a href="index.html">🏠 Forside</a>
+      <button onclick="resetProgress()">🔄 Nullstill stjerner</button>
+    </nav>
+  </header>
 
-<h1>🧠 Memory Arcade DELUXE</h1>
+  <section class="hero">
+    <h1>🗺️ Memory Adventure MAP</h1>
+    <p>Velg et område, finn like par og samle stjerner. Alle banene ligger nå inne på samme side, slik at du slipper 404-feil.</p>
+  </section>
 
-<div class="topbar">
+  <section class="stats">
+    <div class="stat"><strong id="totalStars">0</strong><span>stjerner</span></div>
+    <div class="stat"><strong id="totalWins">0</strong><span>baner klart</span></div>
+    <div class="stat"><strong>6</strong><span>områder</span></div>
+    <div class="stat"><strong>🐶🐱</strong><span>hund og katt</span></div>
+  </section>
 
-<select id="themeSelect">
+  <section id="mapScreen">
+    <div class="map-title">
+      <h2>Velg område</h2>
+      <p>Start med Hundeparken eller prøv en vanskeligere bane.</p>
+    </div>
 
-<option value="dogs">
-🐶 Hunde-memory
-</option>
+    <div class="world-grid" id="worldGrid"></div>
+  </section>
 
-<option value="cats">
-🐱 Katte-memory
-</option>
+  <section class="game-screen" id="gameScreen">
+    <div class="game-card">
+      <div class="game-head">
+        <h2 id="gameTitle">Memory</h2>
+        <div class="game-info">
+          <div class="badge">Trekk: <span id="moves">0</span></div>
+          <div class="badge">Par: <span id="pairs">0</span>/<span id="totalPairs">0</span></div>
+          <div class="badge">Bane: <span id="levelName">-</span></div>
+        </div>
+      </div>
 
-<option value="forest">
-🌲 Skog-memory
-</option>
+      <div class="board" id="board"></div>
+      <div class="message" id="message"></div>
 
-<option value="food">
-🦴 Godbit-memory
-</option>
+      <div class="actions">
+        <button class="back-btn" onclick="showMap()">⬅️ Til kartet</button>
+        <button class="restart-btn" onclick="restartLevel()">🔄 Spill banen på nytt</button>
+      </div>
+    </div>
+  </section>
 
-</select>
-
-<select id="difficultySelect">
-
-<option value="8">
-🙂 Lett
-</option>
-
-<option value="12">
-😎 Medium
-</option>
-
-<option value="16">
-🔥 Vanskelig
-</option>
-
-<option value="20">
-👑 Ekspert
-</option>
-
-</select>
-
-<button onclick="startGame()">
-
-🚀 Start spill
-
-</button>
-
-</div>
-
-<div class="stats">
-
-<div class="stat">
-⭐ Poeng:
-<span id="score">0</span>
-</div>
-
-<div class="stat">
-🔥 Combo:
-<span id="combo">0</span>
-</div>
-
-<div class="stat">
-⏱️ Tid:
-<span id="time">0</span>
-</div>
-
-<div class="stat">
-🏆 Highscore:
-<span id="highscore">0</span>
-</div>
-
-</div>
-
-<div id="gameBoard"></div>
-
-<div id="winBox">
-
-<h2>🎉 DU VANT!</h2>
-
-<div id="stars">
-⭐⭐⭐
-</div>
-
-<p id="finalScore"></p>
-
-<button onclick="startGame()">
-
-🔄 Spill igjen
-
-</button>
-
-</div>
-
-<br>
-
-<button class="backBtn"
-onclick="location.href='hundespill.html'">
-
-⬅️ Tilbake til spill
-
-</button>
+  <p class="footer">Hundenevåre.com – Memory Adventure 🐾</p>
 
 </div>
 
 <script>
+const worlds = [
+  {
+    id:"dogpark",
+    icon:"🐶",
+    title:"Hundeparken",
+    desc:"Lett memory med søte hunder.",
+    stars:"⭐⭐⭐",
+    pairs:4,
+    cols:4,
+    symbols:["🐶","🐕","🦴","🐾"]
+  },
+  {
+    id:"forest",
+    icon:"🌲",
+    title:"Den mørke skogen",
+    desc:"Dark Memory utfordring med flere par.",
+    stars:"⭐⭐⭐",
+    pairs:6,
+    cols:4,
+    symbols:["🌲","🦉","🦊","🌙","🍄","🐺"]
+  },
+  {
+    id:"kennel",
+    icon:"🏡",
+    title:"Kennelen",
+    desc:"Bonuskort og combo-memory.",
+    stars:"⭐⭐⭐",
+    pairs:6,
+    cols:4,
+    symbols:["🏡","🐶","🦴","🐕","🛏️","🥣"]
+  },
+  {
+    id:"bonus",
+    icon:"🎁",
+    title:"Bonusbanen",
+    desc:"Flere nivåer med bonuskort.",
+    stars:"⭐⭐⭐",
+    pairs:8,
+    cols:4,
+    symbols:["🎁","⭐","🏆","💎","🐶","🐱","🦴","🐾"]
+  },
+  {
+    id:"night",
+    icon:"🌙",
+    title:"Nattmemory",
+    desc:"Kortene skjules raskt. Prøv å huske plassene.",
+    stars:"⭐⭐⭐",
+    pairs:8,
+    cols:4,
+    symbols:["🌙","⭐","🦉","🌌","🐈‍⬛","🕯️","🌲","💫"]
+  },
+  {
+    id:"master",
+    icon:"🔥",
+    title:"Mesterbanen",
+    desc:"Ekspertbane med 10 par.",
+    stars:"⭐⭐⭐",
+    pairs:10,
+    cols:5,
+    symbols:["🔥","🏆","💎","⚡","⭐","🐶","🐱","🦴","🐾","🎯"]
+  }
+];
 
-const themes={
+let currentWorld = null;
+let cards = [];
+let first = null;
+let second = null;
+let lock = false;
+let moves = 0;
+let found = 0;
 
-dogs:["🐶","🐕","🦮","🐩","🐕‍🦺","🐾"],
-
-cats:["🐱","🐈","😺","😸","🐾","😻"],
-
-forest:["🌲","🌳","🍄","🦊","🐿️","🍁"],
-
-food:["🦴","🍖","🥩","🍗","🧀","🥓"]
-
-};
-
-let cards=[];
-let flipped=[];
-let matched=0;
-let score=0;
-let combo=0;
-let timer=0;
-let interval;
-
-function startGame(){
-
-clearInterval(interval);
-
-document.getElementById(
-"winBox"
-).style.display="none";
-
-score=0;
-combo=0;
-matched=0;
-timer=0;
-
-updateStats();
-
-const difficulty=
-parseInt(
-document.getElementById(
-"difficultySelect"
-).value
-);
-
-const theme=
-document.getElementById(
-"themeSelect"
-).value;
-
-let selected=
-themes[theme]
-.slice(0,difficulty/2);
-
-cards=[...selected,...selected];
-
-cards.sort(()=>Math.random()-0.5);
-
-const board=
-document.getElementById(
-"gameBoard"
-);
-
-board.innerHTML="";
-
-let columns=4;
-
-if(difficulty===16)
-columns=4;
-
-if(difficulty===20)
-columns=5;
-
-board.style.gridTemplateColumns=
-`repeat(${columns},110px)`;
-
-cards.forEach((emoji,index)=>{
-
-const card=
-document.createElement("div");
-
-card.className="card";
-
-card.dataset.emoji=emoji;
-
-card.innerHTML=`
-
-<div class="inner">
-
-<div class="front">
-❓
-</div>
-
-<div class="back">
-${emoji}
-</div>
-
-</div>
-
-`;
-
-card.onclick=
-()=>flipCard(card);
-
-board.appendChild(card);
-
-});
-
-interval=setInterval(()=>{
-
-timer++;
-
-document.getElementById(
-"time"
-).innerHTML=timer;
-
-},1000);
-
+function getProgress(){
+  return JSON.parse(localStorage.getItem("memoryAdventureProgress") || "{}");
 }
 
-function flipCard(card){
-
-if(
-flipped.length>=2 ||
-card.classList.contains(
-"flipped"
-)
-) return;
-
-card.classList.add(
-"flipped"
-);
-
-flipped.push(card);
-
-if(flipped.length===2){
-
-checkMatch();
-
-}
-
-}
-
-function checkMatch(){
-
-const [a,b]=flipped;
-
-if(
-a.dataset.emoji===
-b.dataset.emoji
-){
-
-a.classList.add(
-"correct"
-);
-
-b.classList.add(
-"correct"
-);
-
-matched+=2;
-
-combo++;
-
-score+=10+(combo*2);
-
-flipped=[];
-
-updateStats();
-
-if(
-matched===cards.length
-){
-
-winGame();
-
-}
-
-}else{
-
-combo=0;
-
-score=Math.max(
-0,
-score-2
-);
-
-a.classList.add(
-"wrong"
-);
-
-b.classList.add(
-"wrong"
-);
-
-updateStats();
-
-setTimeout(()=>{
-
-a.classList.remove(
-"flipped"
-);
-
-b.classList.remove(
-"flipped"
-);
-
-a.classList.remove(
-"wrong"
-);
-
-b.classList.remove(
-"wrong"
-);
-
-flipped=[];
-
-},900);
-
-}
-
+function saveProgress(id, stars){
+  const p = getProgress();
+  if(!p[id] || p[id] < stars) p[id] = stars;
+  localStorage.setItem("memoryAdventureProgress", JSON.stringify(p));
 }
 
 function updateStats(){
-
-document.getElementById(
-"score"
-).innerHTML=score;
-
-document.getElementById(
-"combo"
-).innerHTML=combo;
-
-document.getElementById(
-"time"
-).innerHTML=timer;
-
-let high=
-localStorage.getItem(
-"memoryHighscore"
-)||0;
-
-if(score>high){
-
-localStorage.setItem(
-"memoryHighscore",
-score
-);
-
-high=score;
-
+  const p = getProgress();
+  let total = 0;
+  let wins = 0;
+  Object.values(p).forEach(v => {
+    total += Number(v);
+    if(Number(v) > 0) wins++;
+  });
+  document.getElementById("totalStars").innerText = total;
+  document.getElementById("totalWins").innerText = wins;
 }
 
-document.getElementById(
-"highscore"
-).innerHTML=high;
+function renderWorlds(){
+  const p = getProgress();
+  const grid = document.getElementById("worldGrid");
+  grid.innerHTML = "";
 
+  worlds.forEach(w => {
+    const earned = p[w.id] || 0;
+    const stars = "⭐".repeat(earned) + "☆".repeat(3-earned);
+
+    const div = document.createElement("div");
+    div.className = "world";
+    div.onclick = () => startWorld(w.id);
+    div.innerHTML = `
+      <div class="world-icon">${w.icon}</div>
+      <h3>${w.title}</h3>
+      <p>${w.desc}</p>
+      <div class="stars">${stars}</div>
+      <button class="play-btn">➡️ Start</button>
+    `;
+    grid.appendChild(div);
+  });
+
+  updateStats();
 }
 
-function winGame(){
-
-clearInterval(interval);
-
-document.getElementById(
-"winBox"
-).style.display="block";
-
-document.getElementById(
-"finalScore"
-).innerHTML=
-`⭐ Poeng: ${score}<br>⏱️ Tid: ${timer}s`;
-
+function startWorld(id){
+  currentWorld = worlds.find(w => w.id === id);
+  document.getElementById("mapScreen").style.display = "none";
+  document.getElementById("gameScreen").style.display = "block";
+  document.getElementById("gameTitle").innerText = currentWorld.icon + " " + currentWorld.title;
+  document.getElementById("levelName").innerText = currentWorld.title;
+  setupGame();
+  window.scrollTo({top:0, behavior:"smooth"});
 }
 
-startGame();
+function setupGame(){
+  first = null;
+  second = null;
+  lock = false;
+  moves = 0;
+  found = 0;
 
+  const symbols = currentWorld.symbols.slice(0, currentWorld.pairs);
+  cards = [...symbols, ...symbols]
+    .map((symbol, index) => ({symbol, id:index, open:false, done:false}))
+    .sort(() => Math.random() - 0.5);
+
+  document.getElementById("moves").innerText = moves;
+  document.getElementById("pairs").innerText = found;
+  document.getElementById("totalPairs").innerText = currentWorld.pairs;
+  document.getElementById("message").innerText = "";
+
+  renderBoard();
+
+  if(currentWorld.id === "night"){
+    setTimeout(() => {
+      document.querySelectorAll(".memory-card").forEach(btn => {
+        if(!btn.classList.contains("done")) btn.innerText = "❓";
+      });
+    }, 1100);
+  }
+}
+
+function renderBoard(){
+  const board = document.getElementById("board");
+  board.innerHTML = "";
+  board.style.gridTemplateColumns = `repeat(${currentWorld.cols}, auto)`;
+
+  cards.forEach((card, index) => {
+    const btn = document.createElement("button");
+    btn.className = "memory-card";
+    if(card.open || card.done){
+      btn.classList.add(card.done ? "done" : "open");
+      btn.innerText = card.symbol;
+    }else{
+      btn.innerText = "❓";
+    }
+    btn.onclick = () => flipCard(index);
+    board.appendChild(btn);
+  });
+}
+
+function flipCard(index){
+  if(lock) return;
+  const card = cards[index];
+  if(card.open || card.done) return;
+
+  card.open = true;
+
+  if(!first){
+    first = index;
+    renderBoard();
+    return;
+  }
+
+  second = index;
+  moves++;
+  document.getElementById("moves").innerText = moves;
+  renderBoard();
+
+  const c1 = cards[first];
+  const c2 = cards[second];
+
+  if(c1.symbol === c2.symbol){
+    c1.done = true;
+    c2.done = true;
+    c1.open = false;
+    c2.open = false;
+    found++;
+    document.getElementById("pairs").innerText = found;
+    first = null;
+    second = null;
+
+    if(found === currentWorld.pairs){
+      finishGame();
+    }else{
+      setTimeout(renderBoard, 250);
+    }
+  }else{
+    lock = true;
+    setTimeout(() => {
+      c1.open = false;
+      c2.open = false;
+      first = null;
+      second = null;
+      lock = false;
+      renderBoard();
+    }, 800);
+  }
+}
+
+function finishGame(){
+  let stars = 1;
+  if(moves <= currentWorld.pairs + 2) stars = 3;
+  else if(moves <= currentWorld.pairs + 6) stars = 2;
+
+  saveProgress(currentWorld.id, stars);
+  document.getElementById("message").innerText =
+    `🎉 Du klarte ${currentWorld.title}! Du fikk ${"⭐".repeat(stars)} med ${moves} trekk.`;
+
+  updateStats();
+}
+
+function showMap(){
+  document.getElementById("gameScreen").style.display = "none";
+  document.getElementById("mapScreen").style.display = "block";
+  renderWorlds();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function restartLevel(){
+  if(currentWorld) setupGame();
+}
+
+function resetProgress(){
+  if(confirm("Vil du nullstille stjerner og progresjon?")){
+    localStorage.removeItem("memoryAdventureProgress");
+    renderWorlds();
+  }
+}
+
+renderWorlds();
 </script>
 
 </body>
