@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="no"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oppdrettere live 4.0</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;color:#123c73;background:radial-gradient(circle at 8% 6%,rgba(255,211,138,.55),transparent 28%),radial-gradient(circle at 92% 8%,rgba(126,200,255,.55),transparent 32%),linear-gradient(180deg,#dbeafe 0%,#eef6ff 45%,#fff7ed 100%);min-height:100vh}
+.wrap{max-width:1250px;margin:auto;padding:20px 14px 70px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:rgba(255,255,255,.9);border-radius:28px;padding:14px 18px;box-shadow:0 12px 28px rgba(0,45,110,.14);margin-bottom:22px}
+.logo{display:flex;gap:10px;align-items:center;font-size:24px;font-weight:900;color:#004cff}.logo-badge{width:48px;height:48px;border-radius:17px;background:linear-gradient(145deg,#1f8fff,#004cff);color:white;display:flex;align-items:center;justify-content:center}
+.nav{display:flex;gap:9px;flex-wrap:wrap}.nav a{text-decoration:none;background:#eaf2ff;color:#004cff;border-radius:999px;padding:10px 14px;font-weight:900}
+.hero{border-radius:38px;padding:38px 22px;text-align:center;color:white;background:linear-gradient(145deg,#1f8fff,#004cff 46%,#7c3aed);box-shadow:0 22px 52px rgba(0,45,110,.28);margin-bottom:22px}
+.hero h1{font-size:clamp(2.2rem,6vw,4.4rem);margin-bottom:12px}.hero p{max-width:850px;margin:auto;font-size:18px;line-height:1.6;font-weight:700;color:#eef6ff}
+.card{background:white;border-radius:30px;padding:22px;box-shadow:0 14px 28px rgba(0,0,0,.12);margin-top:18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}
+label{display:block;font-weight:900;margin-bottom:6px;color:#123c73}
+input,select,textarea{width:100%;padding:13px 14px;border:1px solid #cfe3ff;border-radius:15px;font-size:16px;font-family:Arial,sans-serif}
+textarea{min-height:120px}
+button,.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:none;border-radius:999px;padding:14px 18px;font-size:16px;font-weight:900;cursor:pointer;color:white;background:linear-gradient(145deg,#1f8fff,#004cff)}
+.green{background:linear-gradient(145deg,#22c55e,#16a34a)!important}.red{background:linear-gradient(145deg,#ef4444,#b91c1c)!important}.orange{background:linear-gradient(145deg,#f59e0b,#f97316)!important}
+.notice{background:#fff7ed;border:1px solid #fed7aa;border-radius:22px;padding:16px;color:#92400e;font-weight:800;line-height:1.55;margin-top:14px}
+.msg{text-align:center;margin-top:16px;font-size:19px;font-weight:900}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.nav a{flex:1 1 42%;text-align:center}.topbar{justify-content:center}}
+
+.filters{background:white;border-radius:28px;padding:18px;box-shadow:0 12px 25px rgba(0,0,0,.1);display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:12px;align-items:end}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:25px}
+.bcard{background:white;border-radius:30px;overflow:hidden;box-shadow:0 14px 28px rgba(0,0,0,.13)}
+.photo{height:220px;background:linear-gradient(145deg,#1f8fff,#004cff);display:flex;align-items:center;justify-content:center;font-size:80px;color:white;background-size:cover;background-position:center}
+.content{padding:20px}.content h2{color:#001d4a;margin-bottom:8px}.tag{display:inline-block;background:#eaf2ff;color:#004cff;border-radius:999px;padding:7px 10px;font-weight:900;font-size:13px;margin:3px}
+.verify{display:inline-block;background:#dcfce7;color:#166534;border-radius:999px;padding:8px 11px;font-weight:900;font-size:13px;margin:7px 0}
+.info{background:#f8fbff;border-radius:18px;padding:12px;line-height:1.6;font-weight:700;margin:12px 0}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.actions a{text-decoration:none;text-align:center;border-radius:999px;padding:12px 10px;color:white;font-weight:900;background:#2563eb}.actions a.green{background:#16a34a}
+@media(max-width:1000px){.cards{grid-template-columns:1fr 1fr}.filters{grid-template-columns:1fr 1fr}}@media(max-width:700px){.cards,.filters{grid-template-columns:1fr}.actions{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header class="topbar"><div class="logo"><div class="logo-badge">🐾</div><span>Hundene våre</span></div><nav class="nav"><a href="index.html">🏠 Forside</a><a href="registrer-oppdretter.html">➕ Registrer kennel</a><a href="admin-oppdrettere.html">🔐 Admin</a></nav></header>
+<section class="hero"><h1>🐶 Oppdrettere</h1><p>Godkjente og kvalitetssjekkede oppdrettere fra Hundenevåre.com.</p></section>
+<section class="filters"><div><label>Søk</label><input id="search" placeholder="Kennel, rase eller sted"></div><div><label>Rase</label><input id="breed"></div><div><label>Fylke</label><input id="county"></div><button onclick="loadBreeders()">🔎 Søk</button></section>
+<div id="msg" class="msg">Laster...</div><section class="cards" id="cards"></section></div>
+<script>
+
+const SUPABASE_URL = "https://kxudiviidwwwclbzgdyx.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const BUCKET = "breeder-images";
+
+function contactLink(b){ return b.email ? "mailto:"+b.email : (b.website || b.facebook || "#"); }
+async function loadBreeders(){
+  cards.innerHTML=""; msg.textContent="Laster...";
+  let q = supabase.from("breeders").select("*").eq("status","godkjent").order("created_at",{ascending:false});
+  if(breed.value.trim()) q=q.ilike("breed","%"+breed.value.trim()+"%");
+  if(county.value.trim()) q=q.ilike("county","%"+county.value.trim()+"%");
+  const {data,error}=await q;
+  if(error){msg.textContent="Feil: "+error.message;return;}
+  let list=data||[];
+  const s=search.value.trim().toLowerCase();
+  if(s) list=list.filter(b=>(b.kennel_name||"").toLowerCase().includes(s)||(b.breed||"").toLowerCase().includes(s)||(b.area||"").toLowerCase().includes(s)||(b.municipality||"").toLowerCase().includes(s));
+  if(!list.length){msg.textContent="Ingen godkjente oppdrettere funnet.";return;}
+  msg.textContent="";
+  list.forEach(b=>{
+    const div=document.createElement("article"); div.className="bcard";
+    const bg=b.cover_url ? `style="background-image:url('${b.cover_url}')"` : "";
+    div.innerHTML=`<div class="photo" ${bg}>${b.cover_url?"":"🐶"}</div><div class="content"><h2>${b.kennel_name}</h2>${b.verified?'<div class="verify">⭐ Verifisert profil hos Hundenevåre</div>':''}<div><span class="tag">${b.breed||"Rase"}</span><span class="tag">${b.county||b.area||"Norge"}</span><span class="tag">${b.puppies_available||"Info"}</span></div><p>${b.about||""}</p><div class="info">📍 ${b.municipality||""} ${b.area||""}<br>🐾 Planlagt kull: ${b.planned_litter||"Ikke oppgitt"}<br>🩺 Helse: ${b.health_tests||"Ikke oppgitt"}</div><div class="actions"><a href="oppdretter.html?id=${b.id}">Se profil</a><a class="green" href="${contactLink(b)}">Kontakt</a></div></div>`;
+    cards.appendChild(div);
+  });
+}
+loadBreeders();
+</script></body></html>
