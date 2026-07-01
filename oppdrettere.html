@@ -3,253 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oppdrettere 3.0 – Hundene våre</title>
-
+<title>Oppdretterprofil – Hundene våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  font-family:Arial,sans-serif;
-  color:#123c73;
-  min-height:100vh;
-  overflow-x:hidden;
-  background:
-    radial-gradient(circle at 10% 5%,rgba(255,211,138,.65),transparent 30%),
-    radial-gradient(circle at 90% 8%,rgba(126,200,255,.62),transparent 34%),
-    radial-gradient(circle at 50% 100%,rgba(244,114,182,.20),transparent 35%),
-    linear-gradient(180deg,#dbeafe 0%,#eef6ff 48%,#fff7ed 100%);
-}
-.paws{
-  position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.10;
-  background-image:radial-gradient(circle,#fff 18%,transparent 20%),radial-gradient(circle,#fff 18%,transparent 20%);
-  background-size:95px 95px;background-position:0 0,48px 48px;animation:pawDrift 13s linear infinite;
-}
-@keyframes pawDrift{from{transform:translateY(0)}to{transform:translateY(95px)}}
-.wrap{position:relative;z-index:2;max-width:1300px;margin:auto;padding:20px 14px 70px}
-.topbar{
-  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
-  background:rgba(255,255,255,.88);border:1px solid rgba(255,255,255,.85);
-  border-radius:30px;padding:14px 18px;box-shadow:0 14px 30px rgba(0,45,110,.14);margin-bottom:22px;
-  backdrop-filter:blur(10px);
-}
-.logo{display:flex;align-items:center;gap:10px;font-size:24px;font-weight:900;color:#004cff}
-.logo-badge{width:50px;height:50px;border-radius:18px;background:linear-gradient(145deg,#1f8fff,#004cff);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(0,76,255,.35)}
-.nav{display:flex;flex-wrap:wrap;gap:9px}
-.nav a{text-decoration:none;background:linear-gradient(145deg,#fff,#dff3ff);color:#004cff;border:1px solid #b8ddff;border-radius:999px;padding:10px 14px;font-weight:900}
-.hero{
-  position:relative;overflow:hidden;border-radius:46px;min-height:520px;
-  display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:center;
-  padding:50px 32px;color:#fff;background:
-    radial-gradient(circle at 18% 18%,rgba(255,255,255,.38),transparent 24%),
-    linear-gradient(145deg,#1f8fff,#004cff 45%,#7c3aed 100%);
-  box-shadow:0 25px 60px rgba(0,45,110,.30);
-}
-.hero:before{content:"";position:absolute;inset:18px;border:2px solid rgba(255,255,255,.18);border-radius:36px;pointer-events:none}
-.kicker{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.30);border-radius:999px;padding:10px 15px;font-weight:900;margin-bottom:18px}
-.hero h1{font-size:clamp(2.5rem,6vw,5.1rem);line-height:1.02;margin-bottom:16px;text-shadow:0 0 13px #fff,0 0 28px rgba(126,200,255,.75)}
-.hero p{color:#eef6ff;font-size:clamp(1rem,2.2vw,1.32rem);line-height:1.65;font-weight:700;max-width:780px}
-.hero-actions{margin-top:28px;display:flex;gap:14px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:999px;padding:15px 21px;font-size:17px;font-weight:900;color:#fff;background:linear-gradient(145deg,#ff8a3d,#f59e0b);box-shadow:0 0 20px rgba(255,138,61,.38);transition:.2s}
-.btn:hover{transform:translateY(-3px)}
-.btn.green{background:linear-gradient(145deg,#22c55e,#16a34a)}
-.btn.purple{background:linear-gradient(145deg,#c084fc,#7c3aed)}
-.hero-art{position:relative;height:365px}
-.orbit{position:absolute;inset:10px;border-radius:50%;border:2px dashed rgba(255,255,255,.28);animation:spin 18s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.circle{position:absolute;inset:35px;border-radius:50%;background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.90),transparent 18%),linear-gradient(135deg,#ffd38a,#ff8a3d);box-shadow:inset -18px -22px 45px rgba(15,23,42,.20),0 18px 45px rgba(0,0,0,.24)}
-.dog{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);font-size:175px;filter:drop-shadow(0 18px 18px rgba(0,0,0,.22));animation:floaty 4s ease-in-out infinite}
-@keyframes floaty{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-14px)}}
-.badge{position:absolute;right:0;bottom:25px;background:#fff;color:#004cff;border-radius:26px;padding:15px 19px;font-weight:900;box-shadow:0 13px 28px rgba(0,0,0,.20)}
-.mini{position:absolute;background:#fff;color:#123c73;border-radius:20px;padding:12px 14px;font-weight:900;box-shadow:0 12px 25px rgba(0,0,0,.16)}
-.mini.one{left:0;top:35px}.mini.two{right:5px;top:70px}.mini.three{left:10px;bottom:55px}
-
-.action-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:24px}
-.action-card{position:relative;overflow:hidden;background:#fff;border-radius:32px;padding:25px;text-decoration:none;color:#123c73;box-shadow:0 14px 28px rgba(0,0,0,.12);transition:.2s;text-align:center}
-.action-card:hover{transform:translateY(-7px);box-shadow:0 22px 42px rgba(0,0,0,.18)}
-.action-card .icon{font-size:60px;margin-bottom:12px}.action-card h3{font-size:23px;color:#001d4a;margin-bottom:8px}.action-card p{font-weight:700;color:#334155;line-height:1.45}
-
-.filter-box{margin-top:24px;background:#fff;border-radius:30px;padding:18px;box-shadow:0 14px 28px rgba(0,0,0,.11);display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr auto;gap:12px;align-items:end}
-label{display:block;font-weight:900;margin-bottom:6px;color:#123c73}
-input,select,textarea{width:100%;padding:13px 14px;border:1px solid #cfe3ff;border-radius:15px;font-size:16px;font-family:Arial,sans-serif}
-button{border:none;border-radius:999px;padding:14px 18px;font-size:16px;font-weight:900;cursor:pointer;color:#fff;background:linear-gradient(145deg,#1f8fff,#004cff)}
-.section{margin-top:40px}.section h2{text-align:center;font-size:clamp(2rem,5vw,3.1rem);margin-bottom:8px;color:#001d4a}.lead{text-align:center;color:#4a1a1a;font-size:19px;font-weight:900;margin-bottom:24px}
-
-.breed-row{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
-.breed-chip{background:#fff;border-radius:25px;padding:18px 12px;text-align:center;text-decoration:none;color:#123c73;box-shadow:0 10px 22px rgba(0,0,0,.10);font-weight:900;transition:.2s}
-.breed-chip:hover{transform:translateY(-5px)}.breed-chip span{display:block;font-size:43px;margin-bottom:8px}
-
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.breeder-card{background:#fff;border-radius:34px;overflow:hidden;box-shadow:0 15px 30px rgba(0,0,0,.13);transition:.2s}
-.breeder-card:hover{transform:translateY(-7px);box-shadow:0 22px 42px rgba(0,0,0,.19)}
-.image{height:230px;display:flex;align-items:center;justify-content:center;font-size:94px;color:#fff;background:linear-gradient(145deg,#1f8fff,#004cff)}
-.image.pink{background:linear-gradient(145deg,#f472b6,#7c3aed)}.image.gold{background:linear-gradient(145deg,#f59e0b,#ff8a3d)}
-.content{padding:21px}.content h3{font-size:26px;color:#001d4a;margin-bottom:8px}
-.verify{display:inline-flex;align-items:center;gap:6px;background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:999px;padding:8px 11px;font-size:13px;font-weight:900;margin:4px 0 10px}
-.tags{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.tag{background:#eaf2ff;color:#004cff;border:1px solid #b8ddff;border-radius:999px;padding:7px 10px;font-size:13px;font-weight:900}
-.content p{color:#334155;line-height:1.55;margin-bottom:12px}
-.info-list{background:#f8fbff;border-radius:18px;padding:12px;margin:12px 0;color:#123c73;line-height:1.65;font-weight:700}
-.card-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.card-actions a{text-decoration:none;text-align:center;border-radius:999px;padding:12px 10px;color:#fff;font-weight:900;background:linear-gradient(145deg,#1f8fff,#004cff)}.card-actions a.secondary{background:linear-gradient(145deg,#22c55e,#16a34a)}
-
-.profile-preview{background:#fff;border-radius:36px;overflow:hidden;box-shadow:0 15px 34px rgba(0,0,0,.14)}
-.profile-cover{min-height:230px;background:radial-gradient(circle at 20% 20%,rgba(255,255,255,.45),transparent 25%),linear-gradient(145deg,#1f8fff,#7c3aed);display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;padding:28px}
-.profile-cover h3{font-size:38px;margin-bottom:8px}.profile-cover p{font-size:19px;font-weight:900;color:#eef6ff}
-.profile-body{padding:22px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
-.profile-box{background:#f8fbff;border-radius:22px;padding:18px;line-height:1.55;font-weight:700}.profile-box h4{font-size:20px;color:#001d4a;margin-bottom:8px}
-
-.map-demo{background:#fff;border-radius:36px;padding:26px;box-shadow:0 15px 30px rgba(0,0,0,.12);display:grid;grid-template-columns:.9fr 1.1fr;gap:22px;align-items:center}
-.norway{min-height:370px;border-radius:30px;background:linear-gradient(180deg,#dbeafe,#f8fbff);display:flex;align-items:center;justify-content:center}
-.norway-shape{font-size:185px;filter:drop-shadow(0 18px 18px rgba(0,0,0,.12))}
-.region-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.region{background:#f8fbff;border:1px solid #dbeafe;border-radius:20px;padding:16px;font-weight:900}.region strong{display:block;color:#004cff;margin-bottom:6px}
-
-.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.price-card{background:#fff;border-radius:32px;padding:25px;box-shadow:0 14px 28px rgba(0,0,0,.13);text-align:center}.price-card.featured{outline:4px solid #f59e0b;transform:scale(1.02)}.price-card h3{color:#001d4a;font-size:26px;margin-bottom:10px}.price{font-size:34px;font-weight:900;color:#004cff;margin:12px 0}.price-card ul{text-align:left;margin:16px auto;max-width:270px;color:#334155;line-height:1.8;font-weight:700}
-
-.connect-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.connect-card{background:#fff;border-radius:24px;padding:18px;text-align:center;box-shadow:0 10px 22px rgba(0,0,0,.10)}.connect-card .icon{font-size:42px;margin-bottom:8px}.connect-card h3{font-size:17px;color:#001d4a;margin-bottom:6px}.connect-card p{font-size:14px;color:#334155;font-weight:700;line-height:1.4}
-
-.form-demo{margin-top:34px;background:#fff;border-radius:32px;padding:25px;box-shadow:0 15px 30px rgba(0,0,0,.13)}.form-demo h2{text-align:center;color:#001d4a;font-size:33px;margin-bottom:8px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}.form-grid .full{grid-column:1/-1}textarea{min-height:120px}.notice{background:#fff7ed;border:1px solid #fed7aa;border-radius:22px;padding:16px;color:#92400e;font-weight:800;line-height:1.55;margin-top:18px}
-.footer{text-align:center;margin-top:42px;color:#14346d;font-size:18px;font-weight:bold}
-
-@media(max-width:1050px){
-  .hero{grid-template-columns:1fr;text-align:center}.hero-actions{justify-content:center}
-  .action-grid,.grid,.breed-row,.connect-grid,.price-grid{grid-template-columns:1fr 1fr}
-  .filter-box{grid-template-columns:1fr 1fr}.map-demo{grid-template-columns:1fr}.profile-body{grid-template-columns:1fr}
-}
-@media(max-width:700px){
-  .topbar{justify-content:center}.nav a{flex:1 1 42%;text-align:center}
-  .action-grid,.grid,.breed-row,.connect-grid,.filter-box,.form-grid,.region-list,.price-grid{grid-template-columns:1fr}
-  .hero{padding:34px 16px}.hero-art{height:245px}.dog{font-size:124px}.mini{display:none}
-  .card-actions{grid-template-columns:1fr}
-}
+body{font-family:Arial,sans-serif;background:linear-gradient(180deg,#dbeafe,#fff7ed);color:#123c73;margin:0}
+.wrap{max-width:1050px;margin:auto;padding:22px 14px 70px}
+.hero{border-radius:34px;padding:34px;text-align:center;color:white;background:linear-gradient(145deg,#1f8fff,#004cff,#7c3aed);box-shadow:0 18px 40px rgba(0,0,0,.18)}
+.hero h1{font-size:44px;margin:0 0 10px}
+.card{background:white;border-radius:28px;padding:22px;box-shadow:0 14px 28px rgba(0,0,0,.12);margin-top:18px;line-height:1.7;font-weight:700}
+.verify{display:inline-block;background:#dcfce7;color:#166534;border-radius:999px;padding:8px 12px;font-weight:900;margin-top:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}.box{background:#f8fbff;border-radius:20px;padding:16px}
+a.btn{display:inline-block;text-decoration:none;border-radius:999px;padding:13px 18px;background:#2563eb;color:white;font-weight:900;margin:8px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.hero h1{font-size:32px}}
 </style>
 </head>
-
 <body>
-<div class="paws"></div>
 <div class="wrap">
-
-<header class="topbar">
-  <div class="logo"><div class="logo-badge">🐾</div><span>Hundene våre</span></div>
-  <nav class="nav">
-    <a href="index.html">🏠 Forside</a>
-    <a href="se-butikker.html">🛍️ Butikker</a>
-    <a href="kunnskap.html">📚 Kunnskap</a>
-    <a href="spill.html">🎮 Spill</a>
-    <a href="admin.html">🔐 Admin</a>
-  </nav>
-</header>
-
-<section class="hero">
-  <div>
-    <div class="kicker">⭐ Oppdretterportal 3.0</div>
-    <h1>🐶 Finn din neste beste venn</h1>
-    <p>
-      En moderne oppdretterportal med søk, områdevalg, rasefilter,
-      planlagte kull, ledige valper og verifiserte profiler hos Hundenevåre.com.
-    </p>
-    <div class="hero-actions">
-      <a class="btn" href="#registrer">➕ Registrer kennel</a>
-      <a class="btn green" href="#oppdrettere">🔎 Finn oppdretter</a>
-      <a class="btn purple" href="#profil">👀 Se profil-demo</a>
-    </div>
-  </div>
-  <div class="hero-art">
-    <div class="orbit"></div><div class="circle"></div><div class="dog">🐶</div>
-    <div class="mini one">🐾 Planlagte kull</div><div class="mini two">❤️ Ledige valper</div><div class="mini three">🗺️ Hele Norge</div>
-    <div class="badge">⭐ Verifisert profil</div>
-  </div>
-</section>
-
-<section class="action-grid">
-  <a class="action-card" href="#oppdrettere"><div class="icon">🔍</div><h3>Finn oppdretter</h3><p>Søk etter rase, område eller kennelnavn.</p></a>
-  <a class="action-card" href="#oppdrettere"><div class="icon">🐾</div><h3>Planlagte kull</h3><p>Vis bare oppdrettere med planlagte kull.</p></a>
-  <a class="action-card" href="#oppdrettere"><div class="icon">❤️</div><h3>Ledige valper</h3><p>Finn valpeliste eller ledige valper.</p></a>
-  <a class="action-card" href="#registrer"><div class="icon">➕</div><h3>Registrer kennel</h3><p>Send inn profil til godkjenning.</p></a>
-</section>
-
-<section class="filter-box">
-  <div><label>Søk</label><input type="text" placeholder="Kennelnavn, rase eller sted"></div>
-  <div><label>Rase</label><select><option>Alle raser</option><option>Bichon Frisé</option><option>Labrador Retriever</option><option>Golden Retriever</option><option>Border Collie</option><option>Norsk Buhund</option><option>Puddel</option><option>Schäferhund</option></select></div>
-  <div><label>Fylke/område</label><select><option>Hele Norge</option><option>Rogaland</option><option>Vestland</option><option>Oslo</option><option>Akershus</option><option>Innlandet</option><option>Trøndelag</option><option>Nord-Norge</option></select></div>
-  <div><label>Status</label><select><option>Alle</option><option>Planlagt kull</option><option>Ledige valper</option><option>Valpeliste åpen</option><option>Verifisert profil</option></select></div>
-  <button>🔎 Søk</button>
-</section>
-
-<section class="section">
-  <h2>🐕 Finn etter rase</h2>
-  <p class="lead">Store raseknapper gjør det enkelt for besøkende.</p>
-  <div class="breed-row">
-    <a class="breed-chip" href="#"><span>🐶</span>Bichon Frisé</a><a class="breed-chip" href="#"><span>🦮</span>Labrador</a><a class="breed-chip" href="#"><span>🐕</span>Golden</a><a class="breed-chip" href="#"><span>🐾</span>Border Collie</a><a class="breed-chip" href="#"><span>🐩</span>Puddel</a><a class="breed-chip" href="#"><span>🏔️</span>Norsk Buhund</a>
-  </div>
-</section>
-
-<section class="section" id="oppdrettere">
-  <h2>⭐ Demo-profiler</h2>
-  <p class="lead">Slik kan oppdrettere vises på siden.</p>
-  <div class="grid">
-    <article class="breeder-card"><div class="image">🐶</div><div class="content"><h3>Solstrand Kennel</h3><div class="verify">⭐ Verifisert profil hos Hundenevåre</div><div class="tags"><span class="tag">Bichon Frisé</span><span class="tag">Karmøy</span><span class="tag">Planlagt kull</span></div><p>Liten familieoppdretter med fokus på trygge, sosiale og friske hunder.</p><div class="info-list">📍 Haugalandet<br>🐾 Planlagt kull: Sommer 2026<br>🩺 Helse: Patella / øyelysing<br>📷 Bilder og tidligere kull</div><div class="card-actions"><a href="#">Se profil</a><a class="secondary" href="#">Kontakt</a></div></div></article>
-    <article class="breeder-card"><div class="image gold">🐕</div><div class="content"><h3>Fjordglimt Golden</h3><div class="verify">⭐ Verifisert profil hos Hundenevåre</div><div class="tags"><span class="tag">Golden Retriever</span><span class="tag">Bergen</span><span class="tag">Valpeliste åpen</span></div><p>Oppdrett med fokus på mentalitet, helse, aktivitet og gode hjem.</p><div class="info-list">📍 Vestland<br>🐾 Valpeliste: Åpen<br>🩺 Helse: HD / AD / øyne<br>🏆 Aktivitet og utstilling</div><div class="card-actions"><a href="#">Se profil</a><a class="secondary" href="#">Kontakt</a></div></div></article>
-    <article class="breeder-card"><div class="image pink">🐾</div><div class="content"><h3>Nordlys Buhund</h3><div class="verify">⭐ Verifisert profil hos Hundenevåre</div><div class="tags"><span class="tag">Norsk Buhund</span><span class="tag">Innlandet</span><span class="tag">Norsk rase</span></div><p>Bevaring av norsk rase med fokus på helse, lynne og rasekunnskap.</p><div class="info-list">📍 Innlandet<br>🐾 Neste kull: Ikke bestemt<br>🩺 Helse: Raseklubbens anbefalinger<br>📚 Rådgivning før kjøp</div><div class="card-actions"><a href="#">Se profil</a><a class="secondary" href="#">Kontakt</a></div></div></article>
-  </div>
-</section>
-
-<section class="section" id="profil">
-  <h2>👀 Profil-demo</h2>
-  <p class="lead">Slik kan en egen oppdretterprofil se ut senere.</p>
-  <div class="profile-preview">
-    <div class="profile-cover"><div><h3>🐶 Solstrand Kennel</h3><p>Bichon Frisé • Karmøy • Verifisert profil hos Hundenevåre</p></div></div>
-    <div class="profile-body">
-      <div class="profile-box"><h4>🐾 Planlagte kull</h4>Sommer 2026. Interesse kan meldes via kontaktknappen.</div>
-      <div class="profile-box"><h4>🩺 Helse</h4>Patella, øyelysing og raseklubbens anbefalinger.</div>
-      <div class="profile-box"><h4>📷 Galleri</h4>Logo, forsidebilde, valpebilder og tidligere kull.</div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="kart">
-  <h2>🗺️ Velg område</h2>
-  <p class="lead">Demo av områdevalg for hele Norge.</p>
-  <div class="map-demo"><div class="norway"><div class="norway-shape">🇳🇴</div></div><div class="region-list"><div class="region"><strong>Rogaland</strong>Haugalandet, Stavanger, Sandnes</div><div class="region"><strong>Vestland</strong>Bergen, Stord, Voss</div><div class="region"><strong>Østlandet</strong>Oslo, Akershus, Innlandet</div><div class="region"><strong>Trøndelag</strong>Trondheim og omegn</div><div class="region"><strong>Nord-Norge</strong>Nordland, Troms, Finnmark</div><div class="region"><strong>Sørlandet</strong>Agder og kystområder</div></div></div>
-</section>
-
-<section class="section">
-  <h2>💰 Inntektsmodell</h2>
-  <p class="lead">Kan justeres når systemet er testet.</p>
-  <div class="price-grid">
-    <div class="price-card"><h3>Basis</h3><div class="price">990 kr/år</div><ul><li>Kennelprofil</li><li>1 rase</li><li>5 bilder</li><li>Kontaktinfo</li><li>Planlagt kull</li></ul><a class="btn" href="#registrer">Velg Basis</a></div>
-    <div class="price-card featured"><h3>Premium</h3><div class="price">1.990 kr/år</div><ul><li>Alt i Basis</li><li>Flere bilder</li><li>Video/Reels</li><li>Avlshunder</li><li>Høyere synlighet</li></ul><a class="btn" href="#registrer">Velg Premium</a></div>
-    <div class="price-card"><h3>Gull</h3><div class="price">3.990 kr/år</div><ul><li>Alt i Premium</li><li>Egen miniside</li><li>Flere kull</li><li>Galleri</li><li>Ekstra profilering</li></ul><a class="btn" href="#registrer">Velg Gull</a></div>
-  </div>
-</section>
-
-<section class="section">
-  <h2>🔗 Koblet til resten av portalen</h2>
-  <p class="lead">Dette gjør Hundenevåre.com mer komplett.</p>
-  <div class="connect-grid">
-    <div class="connect-card"><div class="icon">📚</div><h3>Raseguide</h3><p>Les om rasen.</p></div><div class="connect-card"><div class="icon">🛒</div><h3>Utstyr</h3><p>Anbefalt utstyr.</p></div><div class="connect-card"><div class="icon">🏥</div><h3>Veterinær</h3><p>Finn veterinær.</p></div><div class="connect-card"><div class="icon">🎓</div><h3>Hundeklubb</h3><p>Kurs og klubb.</p></div><div class="connect-card"><div class="icon">🚶</div><h3>Turtips</h3><p>Turer for hund.</p></div>
-  </div>
-</section>
-
-<section class="form-demo" id="registrer">
-  <h2>➕ Registrer kennel</h2>
-  <p class="lead">Demo-skjema. Senere kobles dette til Supabase og Admin-godkjenning.</p>
-  <div class="form-grid">
-    <div><label>Kennelnavn</label><input type="text" placeholder="F.eks. Solstrand Kennel"></div>
-    <div><label>Navn på eier/kontaktperson</label><input type="text" placeholder="F.eks. Ola Nordmann"></div>
-    <div><label>Rase</label><input type="text" placeholder="F.eks. Bichon Frisé"></div>
-    <div><label>Sted / område</label><input type="text" placeholder="F.eks. Karmøy / Haugalandet"></div>
-    <div><label>Fylke</label><select><option>Velg fylke</option><option>Rogaland</option><option>Vestland</option><option>Agder</option><option>Oslo</option><option>Akershus</option><option>Innlandet</option><option>Trøndelag</option><option>Nordland</option><option>Troms</option><option>Finnmark</option></select></div>
-    <div><label>Kontakt</label><input type="text" placeholder="E-post, nettside eller Messenger"></div>
-    <div><label>Kennelnavn / registrering</label><input type="text" placeholder="Oppgis for kontroll før godkjenning"></div>
-    <div><label>Planlagt kull</label><input type="text" placeholder="F.eks. Sommer 2026"></div>
-    <div><label>Ledige valper</label><select><option>Ikke oppgitt</option><option>Ja</option><option>Nei</option><option>Valpeliste åpen</option></select></div>
-    <div><label>Helse / tester</label><input type="text" placeholder="F.eks. HD, AD, øyelysing, patella"></div>
-    <div class="full"><label>Om oppdretteren</label><textarea placeholder="Skriv kort om oppdrettet, rasen, helse, mål og planlagte kull"></textarea></div>
-    <div class="full"><div class="notice">Profilen settes til “venter på godkjenning”. Den blir ikke synlig før Hundenevåre.com har kontrollert og godkjent opplysningene.</div></div>
-    <div class="full"><button>Send inn til godkjenning</button></div>
-  </div>
-</section>
-
-<div class="footer">Hundenevåre.com – Oppdrettere 3.0 🐶</div>
+  <div class="hero"><h1 id="title">🐶 Oppdretterprofil</h1><p id="sub"></p><div id="verified"></div></div>
+  <div class="card" id="content">Laster profil...</div>
 </div>
+<script>
+
+const SUPABASE_URL = "SETT_INN_SUPABASE_URL_HER";
+const SUPABASE_ANON_KEY = "SETT_INN_SUPABASE_ANON_KEY_HER";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+
+const params = new URLSearchParams(location.search);
+const id = params.get("id");
+
+function contactLink(b){
+  if(b.email) return "mailto:" + b.email;
+  if(b.website) return b.website;
+  if(b.facebook) return b.facebook;
+  return "#";
+}
+
+async function loadProfile(){
+  if(!id){content.textContent="Mangler profil-ID.";return;}
+  const {data,error} = await supabase.from("breeders").select("*").eq("id",id).eq("status","godkjent").single();
+  if(error || !data){content.textContent="Fant ikke godkjent profil.";return;}
+  title.textContent = "🐶 " + data.kennel_name;
+  sub.textContent = (data.breed || "") + " • " + (data.municipality || data.area || data.county || "");
+  verified.innerHTML = data.verified ? '<div class="verify">⭐ Verifisert profil hos Hundenevåre</div>' : "";
+
+  content.innerHTML = `
+    <h2>Om kennelen</h2>
+    <p>${data.about || "Ingen beskrivelse ennå."}</p>
+    <div class="grid">
+      <div class="box"><h3>🐾 Planlagte kull</h3>${data.planned_litter || "Ikke oppgitt"}</div>
+      <div class="box"><h3>❤️ Ledige valper</h3>${data.puppies_available || "Ikke oppgitt"}</div>
+      <div class="box"><h3>🩺 Helse</h3>${data.health_tests || "Ikke oppgitt"}</div>
+    </div>
+    <p><strong>📍 Sted:</strong> ${data.municipality || ""} ${data.area || ""} ${data.county || ""}</p>
+    <p><strong>Kontakt:</strong></p>
+    <a class="btn" href="${contactLink(data)}">📩 Kontakt oppdretter</a>
+    <a class="btn" href="oppdrettere.html">⬅️ Tilbake</a>
+  `;
+}
+loadProfile();
+</script>
 </body>
 </html>
