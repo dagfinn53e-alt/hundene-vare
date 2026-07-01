@@ -6,139 +6,301 @@
 <title>Spill og Quiz – Hundene våre</title>
 
 <style>
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  color:#102033;
   min-height:100vh;
+  font-family:Arial,sans-serif;
+  color:#123c73;
+  text-align:center;
+  overflow-x:hidden;
   background:
-    radial-gradient(circle at 8% 6%,rgba(96,165,250,.45),transparent 28%),
-    radial-gradient(circle at 92% 8%,rgba(251,146,60,.42),transparent 30%),
-    radial-gradient(circle at 50% 100%,rgba(250,204,21,.34),transparent 34%),
-    linear-gradient(180deg,#dbeafe 0%,#fff7ed 48%,#f8fbff 100%);
+    radial-gradient(circle at top,#fff3c4 0%,#7ec8ff 32%,#dff3ff 68%,#fff7ed 100%);
 }
-.wrap{max-width:1180px;margin:auto;padding:18px 14px 70px}
+
+.paw-bg{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.12;
+  z-index:0;
+  background-image:
+    radial-gradient(circle,#ffffff 18%,transparent 20%),
+    radial-gradient(circle,#ffffff 18%,transparent 20%);
+  background-size:90px 90px;
+  background-position:0 0,45px 45px;
+  animation:pawDrift 12s linear infinite;
+}
+
+@keyframes pawDrift{
+  from{transform:translateY(0)}
+  to{transform:translateY(90px)}
+}
+
+.wrap{
+  position:relative;
+  z-index:2;
+  max-width:1250px;
+  margin:auto;
+  padding:20px 14px 60px;
+}
+
 .topbar{
-  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
-  background:rgba(255,255,255,.88);border:1px solid rgba(191,219,254,.85);
-  border-radius:30px;padding:14px 18px;margin-bottom:18px;
-  box-shadow:0 14px 35px rgba(15,23,42,.13);backdrop-filter:blur(12px);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  background:rgba(255,255,255,.82);
+  border:1px solid rgba(255,255,255,.75);
+  border-radius:28px;
+  padding:14px 18px;
+  box-shadow:0 12px 28px rgba(0,45,110,.14);
+  margin-bottom:22px;
+  backdrop-filter:blur(8px);
 }
-.brand{display:flex;align-items:center;gap:10px;font-size:25px;font-weight:900;color:#1d4ed8}
-.brand-badge{
-  width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,#2563eb,#7c3aed,#f97316);
-  display:flex;align-items:center;justify-content:center;color:white;box-shadow:0 10px 22px rgba(37,99,235,.28);
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:24px;
+  font-weight:900;
+  color:#004cff;
 }
-.nav{display:flex;flex-wrap:wrap;gap:8px}
+
+.logo-badge{
+  width:48px;
+  height:48px;
+  border-radius:17px;
+  background:linear-gradient(145deg,#1f8fff,#004cff);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 18px rgba(0,76,255,.35);
+}
+
+.nav{display:flex;flex-wrap:wrap;gap:9px}
+
 .nav a{
-  text-decoration:none;background:#eaf2ff;color:#1d4ed8;border:1px solid #bfd7ff;
-  border-radius:999px;padding:10px 14px;font-weight:900;transition:.18s;
+  text-decoration:none;
+  background:linear-gradient(145deg,#ffffff,#dff3ff);
+  color:#004cff;
+  border:1px solid #b8ddff;
+  border-radius:999px;
+  padding:10px 14px;
+  font-weight:900;
+  box-shadow:0 8px 16px rgba(0,76,255,.10);
 }
-.nav a:hover{transform:translateY(-2px);background:#dbeafe}
 
 .hero{
-  position:relative;overflow:hidden;min-height:420px;border-radius:42px;padding:42px 28px;
-  background:radial-gradient(circle at 20% 18%,rgba(255,255,255,.33),transparent 22%),
-    linear-gradient(135deg,#2563eb 0%,#7c3aed 48%,#f97316 100%);
-  color:white;box-shadow:0 24px 58px rgba(15,23,42,.25);
+  position:relative;
+  overflow:hidden;
+  border-radius:38px;
+  padding:44px 22px;
+  color:white;
+  background:
+    radial-gradient(circle at 22% 18%,rgba(255,255,255,.35),transparent 25%),
+    linear-gradient(145deg,#1f8fff,#004cff 45%,#7c3aed 100%);
+  box-shadow:0 20px 48px rgba(0,45,110,.26);
 }
-.hero:before{content:"";position:absolute;inset:18px;border:2px solid rgba(255,255,255,.16);border-radius:34px;pointer-events:none}
-.hero-content{position:relative;z-index:2;max-width:690px}
-.hero-kicker{
-  display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);
-  border:1px solid rgba(255,255,255,.32);border-radius:999px;padding:9px 14px;font-weight:900;margin-bottom:18px;
-}
-.hero h1{margin:0;font-size:58px;line-height:1.03;letter-spacing:-1.5px;text-shadow:0 4px 14px rgba(0,0,0,.24)}
-.hero p{font-size:20px;line-height:1.65;margin:18px 0 0;color:#eef6ff}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
-.hero-actions a{text-decoration:none;border-radius:999px;padding:14px 20px;font-weight:900;box-shadow:0 12px 28px rgba(0,0,0,.18);transition:.18s}
-.hero-actions a:hover{transform:translateY(-3px)}
-.primary-btn{background:linear-gradient(135deg,#facc15,#f97316);color:#102033}
-.secondary-btn{background:rgba(255,255,255,.17);border:1px solid rgba(255,255,255,.30);color:white}
 
-.hero-art{position:absolute;right:34px;bottom:18px;width:410px;height:330px;z-index:1}
-.planet{
-  position:absolute;right:28px;bottom:8px;width:310px;height:310px;border-radius:50%;
-  background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.88),transparent 18%),linear-gradient(135deg,#38bdf8,#2563eb 45%,#1e40af);
-  box-shadow:inset -22px -25px 55px rgba(15,23,42,.30),0 18px 45px rgba(15,23,42,.28);opacity:.95;
+.hero h1{
+  font-size:clamp(2.4rem,7vw,4.7rem);
+  margin-bottom:12px;
+  text-shadow:0 0 12px #ffffff,0 0 26px rgba(126,200,255,.75);
 }
-.pet{position:absolute;font-size:112px;filter:drop-shadow(0 15px 18px rgba(15,23,42,.25));animation:floaty 4s ease-in-out infinite}
-.pet.dog{right:190px;bottom:142px}
-.pet.cat{right:30px;bottom:112px;animation-delay:.8s}
-.gamepad{
-  position:absolute;right:126px;bottom:40px;width:188px;height:92px;border-radius:44px;background:rgba(255,255,255,.94);
-  box-shadow:0 18px 30px rgba(15,23,42,.25);
+
+.hero p{
+  max-width:830px;
+  margin:auto;
+  color:#eef6ff;
+  font-size:clamp(1rem,2.4vw,1.35rem);
+  line-height:1.6;
+  font-weight:700;
 }
-.gamepad:before{content:"✚";position:absolute;left:33px;top:25px;color:#2563eb;font-size:30px;font-weight:900}
-.gamepad:after{content:"● ●";position:absolute;right:31px;top:28px;color:#f97316;font-size:26px;letter-spacing:8px}
-.spark{position:absolute;font-size:28px;opacity:.8;animation:twinkle 2.6s ease-in-out infinite}
-.spark.s1{right:365px;top:48px}.spark.s2{right:70px;top:55px;animation-delay:.5s}.spark.s3{right:345px;bottom:64px;animation-delay:1s}
-@keyframes floaty{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
-@keyframes twinkle{0%,100%{transform:scale(1);opacity:.55}50%{transform:scale(1.35);opacity:1}}
+
+.hero-icons{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:wrap;
+  margin-top:26px;
+  font-size:54px;
+}
+
+.hero-icons span{
+  filter:drop-shadow(0 0 14px rgba(255,255,255,.7));
+  animation:floaty 3.5s ease-in-out infinite;
+}
+
+.hero-icons span:nth-child(2){animation-delay:.5s}
+.hero-icons span:nth-child(3){animation-delay:1s}
+.hero-icons span:nth-child(4){animation-delay:1.5s}
+
+@keyframes floaty{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
 
 .section{margin-top:34px}
-.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:17px}
-.section-title h2{margin:0;font-size:34px;color:#172554}
-.section-title p{margin:6px 0 0;color:#64748b;font-size:17px}
-.pill{background:#fff;border:1px solid #dbeafe;color:#1d4ed8;border-radius:999px;padding:10px 15px;font-weight:900;box-shadow:0 10px 24px rgba(15,23,42,.09)}
 
-.main-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.big-card{
-  position:relative;overflow:hidden;min-height:330px;border-radius:34px;padding:26px;text-decoration:none;color:white;
-  box-shadow:0 22px 48px rgba(15,23,42,.19);transition:.22s ease;
+.section h2{
+  font-size:clamp(2rem,5vw,3rem);
+  margin-bottom:9px;
+  color:#001d4a;
 }
-.big-card:hover{transform:translateY(-7px) scale(1.01);box-shadow:0 30px 62px rgba(15,23,42,.25)}
-.big-card h3{position:relative;margin:0 0 12px;font-size:32px}
-.big-card p{position:relative;line-height:1.6;margin:0;max-width:520px;font-size:17px}
-.big-card .bg-icon{position:absolute;right:20px;bottom:4px;font-size:150px;opacity:.18;transform:rotate(-8deg)}
-.big-card .play{position:absolute;left:24px;bottom:24px;background:rgba(255,255,255,.20);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:12px 18px;font-weight:900}
-.puzzle{background:linear-gradient(135deg,#2563eb,#38bdf8)}
-.memory{background:linear-gradient(135deg,#7c3aed,#ec4899,#f97316)}
 
-.quiz-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
-.quiz-card{
-  min-height:260px;background:rgba(255,255,255,.94);border:1px solid #dbeafe;border-radius:30px;padding:16px;text-decoration:none;color:#102033;
-  box-shadow:0 16px 34px rgba(30,64,175,.13);transition:.2s ease;display:flex;flex-direction:column;justify-content:space-between;
+.section p.lead{
+  color:#4a1a1a;
+  font-size:20px;
+  font-weight:900;
+  margin-bottom:24px;
 }
-.quiz-card:hover{transform:translateY(-6px);box-shadow:0 26px 54px rgba(30,64,175,.20)}
-.quiz-icon{
-  height:120px;border-radius:22px;background:linear-gradient(135deg,#eff6ff,#fff7ed);display:flex;align-items:center;justify-content:center;font-size:58px;
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,.55),0 10px 22px rgba(15,23,42,.10);
+
+.main-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:24px;
 }
-.quiz-card h3{font-size:20px;margin:13px 0 8px;color:#172554}
-.quiz-card p{font-size:14.5px;line-height:1.45;color:#475569;margin:0}
-.playbtn{display:flex;align-items:center;justify-content:center;margin-top:14px;min-height:46px;border-radius:999px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:white;font-weight:900;box-shadow:0 12px 23px rgba(37,99,235,.25)}
+
+.game-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:22px;
+}
+
+.big-card,
+.game-card{
+  position:relative;
+  overflow:hidden;
+  background:white;
+  border-radius:28px;
+  padding:24px 18px;
+  box-shadow:0 12px 25px rgba(0,0,0,.14);
+  text-decoration:none;
+  color:#23396b;
+  transition:transform .2s, box-shadow .2s;
+}
+
+.big-card:hover,
+.game-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 18px 34px rgba(0,0,0,.20);
+}
+
+.big-card{min-height:330px}
+
+.big-card.memory{
+  background:
+    radial-gradient(circle at top,#ffe27a 0%,#43206d 45%,#080313 100%);
+  color:white;
+}
+
+.big-card.puzzle{
+  background:
+    radial-gradient(circle at top,#ffd38a 0%,#1f8fff 42%,#004cff 100%);
+  color:white;
+}
+
+.big-icon{
+  font-size:92px;
+  margin-bottom:15px;
+  filter:drop-shadow(0 0 16px rgba(255,255,255,.45));
+}
+
+.big-card h3,
+.game-card h3{
+  font-size:clamp(1.5rem,3vw,2.2rem);
+  margin-bottom:13px;
+}
+
+.big-card p,
+.game-card p{
+  line-height:1.45;
+  font-size:17px;
+  font-weight:700;
+}
+
+.stars{
+  font-size:28px;
+  margin:18px 0;
+  color:#ffd166;
+  letter-spacing:4px;
+}
+
+.play-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:16px;
+  min-width:80px;
+  min-height:58px;
+  border-radius:999px;
+  padding:0 22px;
+  background:linear-gradient(145deg,#1f8fff,#004cff);
+  color:white;
+  font-size:20px;
+  font-weight:900;
+  box-shadow:0 0 18px rgba(0,76,255,.4);
+}
+
+.memory .play-button{background:linear-gradient(145deg,#ffb300,#8e4dff)}
+.puzzle .play-button{background:linear-gradient(145deg,#ff8a3d,#004cff)}
+
+.game-card{min-height:290px}
+
+.game-icon{
+  height:120px;
+  border-radius:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:58px;
+  margin-bottom:16px;
+  background:linear-gradient(145deg,#ffffff,#dff3ff);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.8),0 8px 18px rgba(0,76,255,.12);
+}
+
+.music .game-icon{background:linear-gradient(145deg,#fff1a8,#b678ff)}
+.dog .game-icon{background:linear-gradient(145deg,#fff1c2,#ffb45d)}
+.cat .game-icon{background:linear-gradient(145deg,#fdf2f8,#c084fc)}
 
 .hidden-games{display:none}
-.footer{text-align:center;color:#64748b;font-size:14px;margin-top:36px;padding:20px}
 
-@media(max-width:1000px){
-  .hero{min-height:auto}
-  .hero h1{font-size:45px}
-  .hero-art{position:relative;right:auto;bottom:auto;width:100%;height:250px;margin-top:18px}
-  .planet{right:50%;transform:translateX(50%);width:235px;height:235px}
-  .pet{font-size:82px}.pet.dog{right:52%;bottom:112px}.pet.cat{right:18%;bottom:92px}
-  .gamepad{right:50%;transform:translateX(50%);bottom:18px}
-  .quiz-grid{grid-template-columns:repeat(2,1fr)}
+.footer{
+  margin-top:40px;
+  color:#14346d;
+  font-size:18px;
+  font-weight:bold;
 }
-@media(max-width:680px){
-  .wrap{padding:12px 10px 50px}
-  .topbar{border-radius:22px}.brand{width:100%;justify-content:center;font-size:22px}.nav{width:100%}.nav a{flex:1 1 42%;text-align:center}
-  .hero{border-radius:30px;padding:30px 18px}.hero h1{font-size:36px}.hero p{font-size:16px}.hero-actions a{width:100%;text-align:center}
-  .main-grid,.quiz-grid{grid-template-columns:1fr}
-  .big-card{min-height:285px}
-  .section-title h2{font-size:28px}
+
+@media(max-width:1050px){
+  .game-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:760px){
+  .topbar{justify-content:center}
+  .nav a{flex:1 1 42%}
+  .main-grid,.game-grid{grid-template-columns:1fr}
+  .hero{padding:34px 16px}
+  .big-card,.game-card{min-height:auto}
 }
 </style>
 </head>
 
 <body>
+<div class="paw-bg"></div>
+
 <div class="wrap">
 
 <header class="topbar">
-  <div class="brand"><div class="brand-badge">🐾</div><span>Hundene våre</span></div>
+  <div class="logo">
+    <div class="logo-badge">🐾</div>
+    <span>Hundene våre</span>
+  </div>
+
   <nav class="nav">
     <a href="index.html">🏠 Forside</a>
     <a href="kunnskap.html">📚 Kunnskap</a>
@@ -147,113 +309,102 @@ body{
 </header>
 
 <section class="hero">
-  <div class="hero-content">
-    <div class="hero-kicker">🎮 Spill og Quiz</div>
-    <h1>Velg et spill og kos deg</h1>
-    <p>En ryddig spillportal med de viktigste spillene: puslespill, Memory, musikkquiz og rase-/landquiz.</p>
-    <div class="hero-actions">
-      <a class="primary-btn" href="#hovedspill">🧩 Start hovedspill</a>
-      <a class="secondary-btn" href="#quiz">🎯 Se quiz</a>
-    </div>
-  </div>
+  <h1>🎮 Spill og Quiz</h1>
+  <p>
+    Velkommen til spillverdenen på Hundene våre.
+    Her finner du puslespill, Memory Adventure, rasequiz, landquiz og musikkquiz.
+  </p>
 
-  <div class="hero-art">
-    <div class="planet"></div>
-    <div class="pet dog">🐶</div>
-    <div class="pet cat">🐱</div>
-    <div class="gamepad"></div>
-    <div class="spark s1">✨</div>
-    <div class="spark s2">⭐</div>
-    <div class="spark s3">💫</div>
+  <div class="hero-icons">
+    <span>🐶</span>
+    <span>🐱</span>
+    <span>🧩</span>
+    <span>🧠</span>
+    <span>🎵</span>
   </div>
 </section>
 
-<section class="section" id="hovedspill">
-  <div class="section-head">
-    <div class="section-title">
-      <h2>🧩 Hovedspill</h2>
-      <p>Her ligger spillene som skal være synlige nå.</p>
-    </div>
-    <div class="pill">Puslespill • Memory</div>
-  </div>
+<section class="section">
+  <h2>🌟 Hovedspill</h2>
+  <p class="lead">Store spillkort, slik som Memory Adventure-stilen.</p>
 
   <div class="main-grid">
+
     <a class="big-card puzzle" href="puslespill.html">
-      <div class="bg-icon">🧩</div>
-      <h3>🧩 Hunde- og Kattepuslespill</h3>
-      <p>Samlet inngang til puslespill for hund og katt. Her kan vi legge inn flere nivåer og bilder etter hvert.</p>
-      <span class="play">🧩 Spill puslespill</span>
+      <div class="big-icon">🧩</div>
+      <h3>Hunde- og Kattepuslespill</h3>
+      <p>
+        Velg hund eller katt og spill puslespill med flere nivåer.
+        Lett, middels, vanskelig og ekspert kan bygges videre her.
+      </p>
+      <div class="stars">⭐ ⭐ ⭐</div>
+      <span class="play-button">🧩 Spill puslespill</span>
     </a>
 
-    <a class="big-card memory" href="memory.html">
-      <div class="bg-icon">🧠</div>
-      <h3>🧠 Memory Adventure</h3>
-      <p>Memory med penere design og flere nivåer på hvert område: Hundeparken, skogen, kennelen, bonusbanen, nattmemory og mesterbanen.</p>
-      <span class="play">⭐ Spill Memory</span>
-    </a>
-  </div>
-</section>
-
-<section class="section" id="quiz">
-  <div class="section-head">
-    <div class="section-title">
-      <h2>🎯 Quiz</h2>
-      <p>De quizene som skal være synlige på spillsiden.</p>
-    </div>
-    <div class="pill">5 quiz</div>
-  </div>
-
-  <div class="quiz-grid">
-
-    <a class="quiz-card" href="musikkquiz.html">
-      <div>
-        <div class="quiz-icon">🎵</div>
-        <h3>Musikk Quiz</h3>
-        <p>60-, 70-, 80- og 90-tallet med country, pop, rock og soul.</p>
-      </div>
-      <span class="playbtn">▶️ Spill</span>
-    </a>
-
-    <a class="quiz-card" href="katterasequiz.html">
-      <div>
-        <div class="quiz-icon">🐈</div>
-        <h3>Katterase Quiz</h3>
-        <p>Se bildet eller spørsmålet og gjett riktig katterase.</p>
-      </div>
-      <span class="playbtn">▶️ Spill</span>
-    </a>
-
-    <a class="quiz-card" href="hunderasequiz.html">
-      <div>
-        <div class="quiz-icon">🐕</div>
-        <h3>Hunderase Quiz</h3>
-        <p>Se bildet eller spørsmålet og gjett riktig hunderase.</p>
-      </div>
-      <span class="playbtn">▶️ Spill</span>
-    </a>
-
-    <a class="quiz-card" href="hundelandquiz.html">
-      <div>
-        <div class="quiz-icon">🌍🐶</div>
-        <h3>Hundeland Quiz</h3>
-        <p>Hvilket land kommer hunderasene fra?</p>
-      </div>
-      <span class="playbtn">▶️ Spill</span>
-    </a>
-
-    <a class="quiz-card" href="kattelandquiz.html">
-      <div>
-        <div class="quiz-icon">🌍🐱</div>
-        <h3>Katteland Quiz</h3>
-        <p>Hvilket land forbindes katterasene med?</p>
-      </div>
-      <span class="playbtn">▶️ Spill</span>
+    <a class="big-card memory" href="memorymap.html">
+      <div class="big-icon">🗺️</div>
+      <h3>Memory Adventure MAP</h3>
+      <p>
+        Gå inn i Memory Adventure med Hundeparken, mørk skog, kennel,
+        bonusbane, nattmemory og mesterbane.
+      </p>
+      <div class="stars">⭐ ⭐ ⭐</div>
+      <span class="play-button">➡️ Åpne kart</span>
     </a>
 
   </div>
 </section>
 
-<!-- SKJULTE SPILL – kan hentes frem senere
+<section class="section">
+  <h2>🎯 Quiz</h2>
+  <p class="lead">Kun de quizene du ønsket synlige nå.</p>
+
+  <div class="game-grid">
+
+    <a class="game-card music" href="musikkquiz.html">
+      <div class="game-icon">🎵</div>
+      <h3>Musikk Quiz</h3>
+      <p>60-, 70-, 80- og 90-tallet med country, soul, pop og rock.</p>
+      <div class="stars">⭐ ⭐ ⭐</div>
+      <span class="play-button">▶️ Spill</span>
+    </a>
+
+    <a class="game-card dog" href="hunderasequiz.html">
+      <div class="game-icon">🐕</div>
+      <h3>Hunderase Quiz</h3>
+      <p>Gjett riktig hunderase og test hva du kan om hunder.</p>
+      <div class="stars">⭐ ⭐ ⭐</div>
+      <span class="play-button">▶️ Spill</span>
+    </a>
+
+    <a class="game-card cat" href="katterasequiz.html">
+      <div class="game-icon">🐈</div>
+      <h3>Katterase Quiz</h3>
+      <p>Gjett riktig katterase og lær mer om katter.</p>
+      <div class="stars">⭐ ⭐ ⭐</div>
+      <span class="play-button">▶️ Spill</span>
+    </a>
+
+    <a class="game-card dog" href="hundelandquiz.html">
+      <div class="game-icon">🌍🐶</div>
+      <h3>Hundeland Quiz</h3>
+      <p>Hvilket land kommer hunderasene fra?</p>
+      <div class="stars">⭐ ⭐ ⭐</div>
+      <span class="play-button">▶️ Spill</span>
+    </a>
+
+    <a class="game-card cat" href="kattelandquiz.html">
+      <div class="game-icon">🌍🐱</div>
+      <h3>Katteland Quiz</h3>
+      <p>Hvilket land forbindes katterasene med?</p>
+      <div class="stars">⭐ ⭐ ⭐</div>
+      <span class="play-button">▶️ Spill</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- SKJULTE SPILL – beholdes i tilfelle de skal tas frem senere
 <div class="hidden-games">
   <a href="hundechallenge.html">Hunde Challenge</a>
   <a href="hvahuskerdu_forstehjelp_hund.html">Førstehjelp Hund</a>
@@ -268,7 +419,9 @@ body{
 </div>
 -->
 
-<p class="footer">Hundenevåre.com – Spill, puslespill, Memory og quiz 🐾</p>
+<div class="footer">
+  Hundenevåre.com – Spill, Memory, puslespill og quiz 🐾
+</div>
 
 </div>
 </body>
