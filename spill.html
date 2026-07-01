@@ -161,7 +161,7 @@ body{
 
 .main-grid{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:24px;
 }
 
@@ -249,6 +249,23 @@ body{
 .memory .play-button{background:linear-gradient(145deg,#ffb300,#8e4dff)}
 .puzzle .play-button{background:linear-gradient(145deg,#ff8a3d,#004cff)}
 
+.big-card.dog-puzzle{
+  background:
+    radial-gradient(circle at top,#dbeafe 0%,#1f8fff 42%,#004cff 100%);
+  color:white;
+}
+
+.big-card.cat-puzzle{
+  background:
+    radial-gradient(circle at top,#fce7f3 0%,#db2777 42%,#7a284f 100%);
+  color:white;
+}
+
+.cat-puzzle .play-button{
+  background:linear-gradient(145deg,#db2777,#7a284f);
+}
+
+
 .game-card{min-height:290px}
 
 .game-icon{
@@ -277,6 +294,7 @@ body{
 }
 
 @media(max-width:1050px){
+  .main-grid{grid-template-columns:1fr}
   .game-grid{grid-template-columns:repeat(2,1fr)}
 }
 
@@ -330,15 +348,26 @@ body{
 
   <div class="main-grid">
 
-    <a class="big-card puzzle" href="puslespill.html">
-      <div class="big-icon">🧩</div>
-      <h3>Hunde- og Kattepuslespill</h3>
+    <a class="big-card puzzle dog-puzzle" href="hundepuslespill.html">
+      <div class="big-icon">🐶🧩</div>
+      <h3>Hundepuslespill 2.0</h3>
       <p>
-        Velg hund eller katt og spill puslespill med flere nivåer.
-        Lett, middels, vanskelig og ekspert kan bygges videre her.
+        Velg hunderase og nivå: Lett, Medium, Vanskelig eller Ekspert.
+        Spillet viser originalbildet ved siden av puslespillet.
       </p>
       <div class="stars">⭐ ⭐ ⭐</div>
-      <span class="play-button">🧩 Spill puslespill</span>
+      <span class="play-button">🐶 Spill hundepuslespill</span>
+    </a>
+
+    <a class="big-card puzzle cat-puzzle" href="kattepuslespill.html">
+      <div class="big-icon">🐱🧩</div>
+      <h3>Kattepuslespill 2.0</h3>
+      <p>
+        Velg katterase og nivå: Lett, Medium, Vanskelig eller Ekspert.
+        Samme puslespilloppsett, men med kattestil og kattebilder.
+      </p>
+      <div class="stars">⭐ ⭐ ⭐</div>
+      <span class="play-button">🐱 Spill kattepuslespill</span>
     </a>
 
     <a class="big-card memory" href="memorymap.html">
