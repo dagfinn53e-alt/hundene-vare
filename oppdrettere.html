@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oppdrettere – Hundene våre</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  color:#123c73;
+  background:
+    radial-gradient(circle at 8% 6%,rgba(255,211,138,.55),transparent 28%),
+    radial-gradient(circle at 92% 8%,rgba(126,200,255,.55),transparent 32%),
+    linear-gradient(180deg,#dbeafe 0%,#eef6ff 45%,#fff7ed 100%);
+  min-height:100vh;
+}
+
+.wrap{
+  max-width:1250px;
+  margin:auto;
+  padding:20px 14px 70px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  background:rgba(255,255,255,.86);
+  border:1px solid rgba(255,255,255,.8);
+  border-radius:28px;
+  padding:14px 18px;
+  box-shadow:0 12px 28px rgba(0,45,110,.14);
+  margin-bottom:22px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:24px;
+  font-weight:900;
+  color:#004cff;
+}
+
+.logo-badge{
+  width:48px;
+  height:48px;
+  border-radius:17px;
+  background:linear-gradient(145deg,#1f8fff,#004cff);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 18px rgba(0,76,255,.35);
+}
+
+.nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+}
+
+.nav a{
+  text-decoration:none;
+  background:linear-gradient(145deg,#ffffff,#dff3ff);
+  color:#004cff;
+  border:1px solid #b8ddff;
+  border-radius:999px;
+  padding:10px 14px;
+  font-weight:900;
+}
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  border-radius:40px;
+  min-height:430px;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:20px;
+  align-items:center;
+  padding:42px 28px;
+  color:white;
+  background:
+    radial-gradient(circle at 18% 18%,rgba(255,255,255,.34),transparent 24%),
+    linear-gradient(145deg,#1f8fff,#004cff 46%,#7c3aed 100%);
+  box-shadow:0 22px 52px rgba(0,45,110,.28);
+}
+
+.hero h1{
+  font-size:clamp(2.4rem,6vw,4.6rem);
+  line-height:1.05;
+  margin-bottom:16px;
+  text-shadow:0 0 12px #ffffff,0 0 26px rgba(126,200,255,.75);
+}
+
+.hero p{
+  color:#eef6ff;
+  font-size:clamp(1rem,2.2vw,1.3rem);
+  line-height:1.6;
+  font-weight:700;
+  max-width:760px;
+}
+
+.hero-actions{
+  margin-top:26px;
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  border-radius:999px;
+  padding:14px 20px;
+  font-size:17px;
+  font-weight:900;
+  color:white;
+  background:linear-gradient(145deg,#ff8a3d,#f59e0b);
+  box-shadow:0 0 18px rgba(255,138,61,.35);
+}
+
+.btn.blue{
+  background:linear-gradient(145deg,#22c55e,#16a34a);
+}
+
+.hero-art{
+  position:relative;
+  height:310px;
+}
+
+.circle{
+  position:absolute;
+  inset:18px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 28%,rgba(255,255,255,.88),transparent 18%),
+    linear-gradient(135deg,#ffd38a,#ff8a3d);
+  box-shadow:inset -18px -22px 45px rgba(15,23,42,.20),0 18px 45px rgba(0,0,0,.24);
+}
+
+.dog{
+  position:absolute;
+  left:50%;
+  top:48%;
+  transform:translate(-50%,-50%);
+  font-size:155px;
+  filter:drop-shadow(0 18px 18px rgba(0,0,0,.22));
+  animation:floaty 4s ease-in-out infinite;
+}
+
+.badge{
+  position:absolute;
+  right:12px;
+  bottom:26px;
+  background:white;
+  color:#004cff;
+  border-radius:24px;
+  padding:14px 18px;
+  font-weight:900;
+  box-shadow:0 12px 25px rgba(0,0,0,.18);
+}
+
+@keyframes floaty{
+  0%,100%{transform:translate(-50%,-50%) translateY(0)}
+  50%{transform:translate(-50%,-50%) translateY(-13px)}
+}
+
+.filter-box{
+  margin-top:22px;
+  background:white;
+  border-radius:28px;
+  padding:18px;
+  box-shadow:0 12px 25px rgba(0,0,0,.10);
+  display:grid;
+  grid-template-columns:1.2fr 1fr 1fr auto;
+  gap:12px;
+  align-items:end;
+}
+
+label{
+  display:block;
+  font-weight:900;
+  margin-bottom:6px;
+  color:#123c73;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:13px 14px;
+  border:1px solid #cfe3ff;
+  border-radius:15px;
+  font-size:16px;
+  font-family:Arial,sans-serif;
+}
+
+button{
+  border:none;
+  border-radius:999px;
+  padding:14px 18px;
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+  color:white;
+  background:linear-gradient(145deg,#1f8fff,#004cff);
+}
+
+.section{
+  margin-top:34px;
+}
+
+.section h2{
+  text-align:center;
+  font-size:clamp(2rem,5vw,3rem);
+  margin-bottom:8px;
+  color:#001d4a;
+}
+
+.lead{
+  text-align:center;
+  color:#4a1a1a;
+  font-size:19px;
+  font-weight:900;
+  margin-bottom:24px;
+}
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.quick-card{
+  background:white;
+  border-radius:28px;
+  padding:22px;
+  box-shadow:0 12px 25px rgba(0,0,0,.10);
+  text-align:center;
+}
+
+.quick-card .icon{
+  font-size:54px;
+  margin-bottom:12px;
+}
+
+.quick-card h3{
+  color:#001d4a;
+  font-size:22px;
+  margin-bottom:8px;
+}
+
+.quick-card p{
+  color:#334155;
+  line-height:1.5;
+  font-weight:700;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.breeder-card{
+  background:white;
+  border-radius:30px;
+  overflow:hidden;
+  box-shadow:0 14px 28px rgba(0,0,0,.13);
+  transition:.2s;
+}
+
+.breeder-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 38px rgba(0,0,0,.18);
+}
+
+.image{
+  height:210px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:86px;
+  color:white;
+  background:linear-gradient(145deg,#1f8fff,#004cff);
+}
+
+.image.pink{background:linear-gradient(145deg,#f472b6,#7c3aed)}
+.image.gold{background:linear-gradient(145deg,#f59e0b,#ff8a3d)}
+
+.content{
+  padding:20px;
+}
+
+.content h3{
+  font-size:25px;
+  color:#001d4a;
+  margin-bottom:8px;
+}
+
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin:12px 0;
+}
+
+.tag{
+  background:#eaf2ff;
+  color:#004cff;
+  border:1px solid #b8ddff;
+  border-radius:999px;
+  padding:7px 10px;
+  font-size:13px;
+  font-weight:900;
+}
+
+.verify{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:#dcfce7;
+  color:#166534;
+  border:1px solid #86efac;
+  border-radius:999px;
+  padding:8px 11px;
+  font-size:13px;
+  font-weight:900;
+  margin:4px 0 10px;
+}
+
+.content p{
+  color:#334155;
+  line-height:1.55;
+  margin-bottom:12px;
+}
+
+.info-list{
+  background:#f8fbff;
+  border-radius:18px;
+  padding:12px;
+  margin:12px 0;
+  color:#123c73;
+  line-height:1.65;
+  font-weight:700;
+}
+
+.card-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px;
+}
+
+.card-actions a{
+  text-decoration:none;
+  text-align:center;
+  border-radius:999px;
+  padding:12px 10px;
+  color:white;
+  font-weight:900;
+  background:linear-gradient(145deg,#1f8fff,#004cff);
+}
+
+.card-actions a.secondary{
+  background:linear-gradient(145deg,#22c55e,#16a34a);
+}
+
+.form-demo{
+  margin-top:34px;
+  background:white;
+  border-radius:30px;
+  padding:24px;
+  box-shadow:0 14px 28px rgba(0,0,0,.13);
+}
+
+.form-demo h2{
+  text-align:center;
+  color:#001d4a;
+  font-size:32px;
+  margin-bottom:8px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:18px;
+}
+
+.form-grid .full{
+  grid-column:1/-1;
+}
+
+textarea{
+  min-height:120px;
+}
+
+.price-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.price-card{
+  background:white;
+  border-radius:30px;
+  padding:24px;
+  box-shadow:0 14px 28px rgba(0,0,0,.13);
+  text-align:center;
+}
+
+.price-card.featured{
+  outline:4px solid #f59e0b;
+  transform:scale(1.02);
+}
+
+.price-card h3{
+  color:#001d4a;
+  font-size:26px;
+  margin-bottom:10px;
+}
+
+.price{
+  font-size:34px;
+  font-weight:900;
+  color:#004cff;
+  margin:12px 0;
+}
+
+.price-card ul{
+  text-align:left;
+  margin:16px auto;
+  max-width:260px;
+  color:#334155;
+  line-height:1.8;
+  font-weight:700;
+}
+
+.notice{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  border-radius:22px;
+  padding:16px;
+  color:#92400e;
+  font-weight:800;
+  line-height:1.55;
+  margin-top:18px;
+}
+
+.footer{
+  text-align:center;
+  margin-top:40px;
+  color:#14346d;
+  font-size:18px;
+  font-weight:bold;
+}
+
+@media(max-width:1000px){
+  .hero{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+  .hero-actions{
+    justify-content:center;
+  }
+  .grid,.quick-grid,.price-grid{
+    grid-template-columns:1fr 1fr;
+  }
+  .filter-box{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:700px){
+  .topbar{
+    justify-content:center;
+  }
+  .nav a{
+    flex:1 1 42%;
+    text-align:center;
+  }
+  .grid,.quick-grid,.price-grid,.filter-box,.form-grid{
+    grid-template-columns:1fr;
+  }
+  .hero{
+    padding:34px 16px;
+  }
+  .hero-art{
+    height:230px;
+  }
+  .dog{
+    font-size:118px;
+  }
+  .card-actions{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<header class="topbar">
+  <div class="logo">
+    <div class="logo-badge">🐾</div>
+    <span>Hundene våre</span>
+  </div>
+
+  <nav class="nav">
+    <a href="index.html">🏠 Forside</a>
+    <a href="se-butikker.html">🛍️ Butikker</a>
+    <a href="kunnskap.html">📚 Kunnskap</a>
+    <a href="spill.html">🎮 Spill</a>
+    <a href="admin.html">🔐 Admin</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
+    <h1>🐶 Finn din neste beste venn</h1>
+    <p>
+      Velkommen til Oppdrettere på Hundenevåre.com.
+      Her kan besøkende finne kvalitetssjekkede oppdrettere fra hele Norge.
+      Alle profiler må godkjennes før de blir synlige.
+    </p>
+
+    <div class="hero-actions">
+      <a class="btn" href="#registrer">➕ Registrer kennel</a>
+      <a class="btn blue" href="#oppdrettere">🔎 Finn oppdretter</a>
+    </div>
+  </div>
+
+  <div class="hero-art">
+    <div class="circle"></div>
+    <div class="dog">🐶</div>
+    <div class="badge">✅ Kontrollert av Hundenevåre</div>
+  </div>
+</section>
+
+<section class="filter-box">
+  <div>
+    <label>Søk oppdretter eller kennel</label>
+    <input type="text" placeholder="Søk etter kennelnavn, rase eller sted">
+  </div>
+
+  <div>
+    <label>Rase</label>
+    <select>
+      <option>Alle raser</option>
+      <option>Bichon Frisé</option>
+      <option>Labrador Retriever</option>
+      <option>Golden Retriever</option>
+      <option>Border Collie</option>
+      <option>Norsk Buhund</option>
+      <option>Puddel</option>
+      <option>Schäferhund</option>
+      <option>Chihuahua</option>
+      <option>Cocker Spaniel</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Område</label>
+    <select>
+      <option>Hele Norge</option>
+      <option>Haugalandet</option>
+      <option>Stavanger</option>
+      <option>Bergen</option>
+      <option>Stord</option>
+      <option>Oslo / Viken</option>
+      <option>Innlandet</option>
+      <option>Trøndelag</option>
+      <option>Nord-Norge</option>
+    </select>
+  </div>
+
+  <button>🔎 Søk</button>
+</section>
+
+<section class="section">
+  <h2>⭐ Slik fungerer det</h2>
+  <p class="lead">En trygg og ryddig oppdretterportal.</p>
+
+  <div class="quick-grid">
+    <div class="quick-card">
+      <div class="icon">📝</div>
+      <h3>Oppdretter registrerer</h3>
+      <p>Kennel fyller ut skjema med rase, sted, kontakt og informasjon.</p>
+    </div>
+
+    <div class="quick-card">
+      <div class="icon">🔎</div>
+      <h3>Du kontrollerer</h3>
+      <p>Profilen vises ikke før du har sett gjennom og godkjent den.</p>
+    </div>
+
+    <div class="quick-card">
+      <div class="icon">✅</div>
+      <h3>Kvalitetssjekket</h3>
+      <p>Godkjente profiler får merke: Kontrollert av Hundenevåre.</p>
+    </div>
+
+    <div class="quick-card">
+      <div class="icon">🐾</div>
+      <h3>Besøkende finner riktig</h3>
+      <p>Søk på rase, fylke, område, planlagte kull og ledige valper.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="oppdrettere">
+  <h2>🐾 Demo-profiler</h2>
+  <p class="lead">Eksempel på hvordan oppdrettere kan vises.</p>
+
+  <div class="grid">
+
+    <article class="breeder-card">
+      <div class="image">🐶</div>
+      <div class="content">
+        <h3>Solstrand Kennel</h3>
+        <div class="verify">✅ Kontrollert av Hundenevåre</div>
+        <div class="tags">
+          <span class="tag">Bichon Frisé</span>
+          <span class="tag">Haugalandet</span>
+          <span class="tag">Familiehund</span>
+        </div>
+        <p>Liten familieoppdretter med fokus på trygge, sosiale og friske hunder.</p>
+        <div class="info-list">
+          📍 Karmøy<br>
+          🐾 Planlagt kull: Sommer 2026<br>
+          🩺 Helse: Patella / øyelysing<br>
+          📷 Bilder og tidligere kull
+        </div>
+        <div class="card-actions">
+          <a href="#">Se profil</a>
+          <a class="secondary" href="#">Kontakt</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="breeder-card">
+      <div class="image gold">🐕</div>
+      <div class="content">
+        <h3>Fjordglimt Golden</h3>
+        <div class="verify">✅ Kontrollert av Hundenevåre</div>
+        <div class="tags">
+          <span class="tag">Golden Retriever</span>
+          <span class="tag">Vestland</span>
+          <span class="tag">Aktiv familiehund</span>
+        </div>
+        <p>Oppdrett med fokus på mentalitet, helse, aktivitet og gode hjem.</p>
+        <div class="info-list">
+          📍 Bergen omegn<br>
+          🐾 Valpeliste: Åpen<br>
+          🩺 Helse: HD / AD / øyne<br>
+          🏆 Aktivitet og utstilling
+        </div>
+        <div class="card-actions">
+          <a href="#">Se profil</a>
+          <a class="secondary" href="#">Kontakt</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="breeder-card">
+      <div class="image pink">🐾</div>
+      <div class="content">
+        <h3>Nordlys Buhund</h3>
+        <div class="verify">✅ Kontrollert av Hundenevåre</div>
+        <div class="tags">
+          <span class="tag">Norsk Buhund</span>
+          <span class="tag">Innlandet</span>
+          <span class="tag">Norsk rase</span>
+        </div>
+        <p>Bevaring av norsk rase med fokus på helse, lynne og rasekunnskap.</p>
+        <div class="info-list">
+          📍 Innlandet<br>
+          🐾 Neste kull: Ikke bestemt<br>
+          🩺 Helse: Raseklubbens anbefalinger<br>
+          📚 Rådgivning før kjøp
+        </div>
+        <div class="card-actions">
+          <a href="#">Se profil</a>
+          <a class="secondary" href="#">Kontakt</a>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="section">
+  <h2>💰 Forslag til priser</h2>
+  <p class="lead">Dette kan justeres når løsningen er testet.</p>
+
+  <div class="price-grid">
+    <div class="price-card">
+      <h3>Basis</h3>
+      <div class="price">990 kr/år</div>
+      <ul>
+        <li>Kennelprofil</li>
+        <li>1 rase</li>
+        <li>5 bilder</li>
+        <li>Kontaktinfo</li>
+        <li>Planlagt kull</li>
+      </ul>
+      <a class="btn" href="#registrer">Velg Basis</a>
+    </div>
+
+    <div class="price-card featured">
+      <h3>Premium</h3>
+      <div class="price">1.990 kr/år</div>
+      <ul>
+        <li>Alt i Basis</li>
+        <li>Flere bilder</li>
+        <li>Video/Reels</li>
+        <li>Avlshunder</li>
+        <li>Høyere synlighet</li>
+      </ul>
+      <a class="btn" href="#registrer">Velg Premium</a>
+    </div>
+
+    <div class="price-card">
+      <h3>Gull</h3>
+      <div class="price">3.990 kr/år</div>
+      <ul>
+        <li>Alt i Premium</li>
+        <li>Egen miniside</li>
+        <li>Flere kull</li>
+        <li>Galleri</li>
+        <li>Ekstra profilering</li>
+      </ul>
+      <a class="btn" href="#registrer">Velg Gull</a>
+    </div>
+  </div>
+
+  <div class="notice">
+    Viktig: Teksten kan endres før lansering. Vi bør unngå å bruke andre organisasjoners navn eller logo som merke på siden, med mindre du har tillatelse.
+  </div>
+</section>
+
+<section class="form-demo" id="registrer">
+  <h2>➕ Demo: Registrer oppdretter</h2>
+  <p class="lead">Dette er første versjon av skjemaet. Senere kobles det til Supabase og Admin-godkjenning.</p>
+
+  <div class="form-grid">
+    <div>
+      <label>Kennelnavn</label>
+      <input type="text" placeholder="F.eks. Solstrand Kennel">
+    </div>
+
+    <div>
+      <label>Navn på eier/kontaktperson</label>
+      <input type="text" placeholder="F.eks. Ola Nordmann">
+    </div>
+
+    <div>
+      <label>Rase</label>
+      <input type="text" placeholder="F.eks. Bichon Frisé">
+    </div>
+
+    <div>
+      <label>Sted / område</label>
+      <input type="text" placeholder="F.eks. Karmøy / Haugalandet">
+    </div>
+
+    <div>
+      <label>Fylke</label>
+      <select>
+        <option>Velg fylke</option>
+        <option>Rogaland</option>
+        <option>Vestland</option>
+        <option>Agder</option>
+        <option>Østfold</option>
+        <option>Akershus</option>
+        <option>Oslo</option>
+        <option>Innlandet</option>
+        <option>Trøndelag</option>
+        <option>Nordland</option>
+        <option>Troms</option>
+        <option>Finnmark</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Kontakt</label>
+      <input type="text" placeholder="E-post, nettside eller Messenger">
+    </div>
+
+    <div>
+      <label>Kennelnavn / registrering</label>
+      <input type="text" placeholder="Oppgis for kontroll før godkjenning">
+    </div>
+
+    <div>
+      <label>Planlagt kull</label>
+      <input type="text" placeholder="F.eks. Sommer 2026">
+    </div>
+
+    <div>
+      <label>Ledige valper</label>
+      <select>
+        <option>Ikke oppgitt</option>
+        <option>Ja</option>
+        <option>Nei</option>
+        <option>Valpeliste åpen</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Helse / tester</label>
+      <input type="text" placeholder="F.eks. HD, AD, øyelysing, patella">
+    </div>
+
+    <div class="full">
+      <label>Om oppdretteren</label>
+      <textarea placeholder="Skriv kort om oppdrettet, rasen, helse, mål og planlagte kull"></textarea>
+    </div>
+
+    <div class="full">
+      <div class="notice">
+        Ved innsending blir profilen satt til “venter på godkjenning”. Den blir ikke synlig før Hundenevåre.com har kontrollert og godkjent opplysningene.
+      </div>
+    </div>
+
+    <div class="full">
+      <button>Send inn til godkjenning</button>
+    </div>
+  </div>
+</section>
+
+<div class="footer">
+  Hundenevåre.com – Oppdrettere 1.0 🐶
+</div>
+
+</div>
+</body>
+</html>
