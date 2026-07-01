@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registrer oppdretter – Hundene våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:linear-gradient(180deg,#dbeafe,#fff7ed);color:#123c73;min-height:100vh}
+.wrap{max-width:1050px;margin:auto;padding:22px 14px 70px}
+.top{background:white;border-radius:30px;padding:22px;box-shadow:0 14px 28px rgba(0,0,0,.12);margin-bottom:20px;text-align:center}
+.top h1{font-size:42px;color:#001d4a;margin-bottom:10px}
+.top p{font-size:18px;line-height:1.5;font-weight:700;color:#334155}
+.nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.nav a{background:#eaf2ff;color:#004cff;text-decoration:none;border-radius:999px;padding:11px 15px;font-weight:900}
+form{background:white;border-radius:30px;padding:24px;box-shadow:0 14px 28px rgba(0,0,0,.12)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.full{grid-column:1/-1}
+label{display:block;font-weight:900;margin-bottom:6px;color:#123c73}
+input,select,textarea{width:100%;padding:13px 14px;border:1px solid #cfe3ff;border-radius:15px;font-size:16px;font-family:Arial,sans-serif}
+textarea{min-height:120px}
+button{border:none;border-radius:999px;padding:15px 22px;font-size:17px;font-weight:900;cursor:pointer;color:white;background:linear-gradient(145deg,#1f8fff,#004cff)}
+.notice{background:#fff7ed;border:1px solid #fed7aa;border-radius:22px;padding:16px;color:#92400e;font-weight:800;line-height:1.55}
+#msg{margin-top:16px;font-size:19px;font-weight:900;text-align:center}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.top h1{font-size:32px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>🐶 Registrer oppdretter</h1>
+    <p>Send inn kennelprofil til Hundenevåre.com. Profilen blir ikke synlig før den er kontrollert og godkjent.</p>
+    <div class="nav">
+      <a href="oppdrettere.html">⬅️ Til oppdrettere</a>
+      <a href="index.html">🏠 Forside</a>
+    </div>
+  </div>
+
+  <form id="breederForm">
+    <div class="grid">
+      <div><label>Kennelnavn *</label><input id="kennel_name" required></div>
+      <div><label>Navn på eier/kontaktperson</label><input id="owner_name"></div>
+      <div><label>Rase *</label><input id="breed" required></div>
+      <div><label>Område</label><input id="area" placeholder="F.eks. Haugalandet"></div>
+      <div><label>Kommune</label><input id="municipality" placeholder="F.eks. Karmøy"></div>
+      <div><label>Fylke</label><select id="county"><option>Velg fylke</option><option>Rogaland</option><option>Vestland</option><option>Agder</option><option>Oslo</option><option>Akershus</option><option>Innlandet</option><option>Trøndelag</option><option>Nordland</option><option>Troms</option><option>Finnmark</option></select></div>
+      <div><label>Telefon</label><input id="phone"></div>
+      <div><label>E-post</label><input id="email" type="email"></div>
+      <div><label>Facebook</label><input id="facebook"></div>
+      <div><label>Nettside</label><input id="website"></div>
+      <div><label>Kennelnavn / registrering *</label><input id="kennel_registration" required placeholder="Oppgis for kontroll"></div>
+      <div><label>Pakke</label><select id="package_type"><option value="basis">Basis</option><option value="premium">Premium</option><option value="gull">Gull</option></select></div>
+      <div><label>Planlagt kull</label><input id="planned_litter" placeholder="F.eks. Sommer 2026"></div>
+      <div><label>Ledige valper</label><select id="puppies_available"><option>Ikke oppgitt</option><option>Ja</option><option>Nei</option><option>Valpeliste åpen</option></select></div>
+      <div class="full"><label>Helse / tester</label><input id="health_tests" placeholder="F.eks. HD, AD, øyelysing, patella"></div>
+      <div class="full"><label>Om oppdretteren</label><textarea id="about" placeholder="Skriv kort om oppdrettet, rasen, helse, mål og planlagte kull"></textarea></div>
+      <div class="full"><label>Notat om registrering/kontroll</label><textarea id="registration_notes" placeholder="Evt. lenke eller info som gjør det lettere å kontrollere profilen"></textarea></div>
+      <div class="full notice">Ved innsending blir profilen satt til “venter på godkjenning”. Den vises ikke offentlig før Hundenevåre.com har kontrollert og godkjent opplysningene.</div>
+      <div class="full"><button type="submit">📩 Send inn til godkjenning</button></div>
+    </div>
+    <div id="msg"></div>
+  </form>
+</div>
+
+<script>
+
+const SUPABASE_URL = "SETT_INN_SUPABASE_URL_HER";
+const SUPABASE_ANON_KEY = "SETT_INN_SUPABASE_ANON_KEY_HER";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+
+document.getElementById("breederForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const msg = document.getElementById("msg");
+  msg.style.color = "#004cff";
+  msg.textContent = "Sender inn...";
+
+  const data = {
+    status: "venter",
+    verified: false,
+    kennel_name: kennel_name.value.trim(),
+    owner_name: owner_name.value.trim(),
+    breed: breed.value.trim(),
+    area: area.value.trim(),
+    municipality: municipality.value.trim(),
+    county: county.value,
+    phone: phone.value.trim(),
+    email: email.value.trim(),
+    facebook: facebook.value.trim(),
+    website: website.value.trim(),
+    kennel_registration: kennel_registration.value.trim(),
+    registration_notes: registration_notes.value.trim(),
+    about: about.value.trim(),
+    planned_litter: planned_litter.value.trim(),
+    puppies_available: puppies_available.value,
+    health_tests: health_tests.value.trim(),
+    package_type: package_type.value
+  };
+
+  const { error } = await supabase.from("breeders").insert([data]);
+
+  if(error){
+    msg.style.color = "crimson";
+    msg.textContent = "Feil: " + error.message;
+    return;
+  }
+
+  msg.style.color = "green";
+  msg.textContent = "✅ Takk! Oppdretterprofilen er sendt inn og venter på godkjenning.";
+  e.target.reset();
+});
+</script>
+</body>
+</html>
