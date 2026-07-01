@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Oppdrettere – Hundene våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{font-family:Arial,sans-serif;background:#eef6ff;color:#123c73;margin:0}
+.wrap{max-width:1200px;margin:auto;padding:22px 14px 70px}
+.top{background:white;border-radius:28px;padding:22px;box-shadow:0 12px 25px rgba(0,0,0,.1);margin-bottom:20px;text-align:center}
+h1{font-size:38px;color:#001d4a}
+.nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}.nav a{background:#eaf2ff;color:#004cff;text-decoration:none;border-radius:999px;padding:10px 14px;font-weight:900}
+.controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:18px}button{border:none;border-radius:999px;padding:12px 16px;font-weight:900;color:white;background:#2563eb;cursor:pointer}.green{background:#16a34a}.red{background:#dc2626}.orange{background:#f59e0b}
+.card{background:white;border-radius:24px;padding:18px;box-shadow:0 10px 22px rgba(0,0,0,.1);margin-bottom:14px}
+.card h2{color:#001d4a}.meta{line-height:1.7;font-weight:700}.status{display:inline-block;border-radius:999px;padding:7px 10px;background:#fff7ed;color:#92400e;font-weight:900;margin:8px 0}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+#msg{font-weight:900;text-align:center;margin:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top"><h1>🔐 Admin Oppdrettere</h1><p>Godkjenn, avvis og kontroller oppdrettere.</p><div class="nav"><a href="oppdrettere.html">🐶 Oppdrettere</a><a href="index.html">🏠 Forside</a></div></div>
+<div class="controls"><button onclick="loadAdmin('venter')" class="orange">🟡 Venter</button><button onclick="loadAdmin('godkjent')" class="green">✅ Godkjent</button><button onclick="loadAdmin('avvist')" class="red">❌ Avvist</button></div>
+<div id="msg">Laster...</div>
+<div id="list"></div>
+</div>
+<script>
+
+const SUPABASE_URL = "SETT_INN_SUPABASE_URL_HER";
+const SUPABASE_ANON_KEY = "SETT_INN_SUPABASE_ANON_KEY_HER";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+
+async function loadAdmin(status){
+  const msg=document.getElementById("msg");
+  const list=document.getElementById("list");
+  list.innerHTML="";
+  msg.textContent="Laster " + status + "...";
+
+  const {data,error} = await supabase.from("breeders").select("*").eq("status",status).order("created_at",{ascending:false});
+  if(error){msg.textContent="Feil: "+error.message;return;}
+  if(!data.length){msg.textContent="Ingen oppdrettere med status: "+status;return;}
+  msg.textContent="";
+
+  data.forEach(b=>{
+    const div=document.createElement("div");
+    div.className="card";
+    div.innerHTML=`
+      <h2>🐶 ${b.kennel_name}</h2>
+      <div class="status">${b.status}</div>
+      <div class="meta">
+        Rase: ${b.breed || ""}<br>
+        Eier: ${b.owner_name || ""}<br>
+        Sted: ${b.municipality || ""} / ${b.county || ""}<br>
+        Kontakt: ${b.email || ""} ${b.phone || ""}<br>
+        Kennel/registrering: ${b.kennel_registration || ""}<br>
+        Pakke: ${b.package_type || "basis"}<br>
+        Helse: ${b.health_tests || ""}<br>
+        Planlagt kull: ${b.planned_litter || ""}<br>
+        Om: ${b.about || ""}
+      </div>
+      <div class="actions">
+        <button class="green" onclick="approve('${b.id}')">✅ Godkjenn</button>
+        <button class="red" onclick="rejectBreeder('${b.id}')">❌ Avvis</button>
+        <button onclick="markWaiting('${b.id}')">🟡 Sett venter</button>
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+async function approve(id){
+  const {error} = await supabase.from("breeders").update({status:"godkjent", verified:true, approved_at:new Date().toISOString()}).eq("id",id);
+  if(error) alert(error.message); else loadAdmin("venter");
+}
+async function rejectBreeder(id){
+  const {error} = await supabase.from("breeders").update({status:"avvist", verified:false}).eq("id",id);
+  if(error) alert(error.message); else loadAdmin("venter");
+}
+async function markWaiting(id){
+  const {error} = await supabase.from("breeders").update({status:"venter", verified:false}).eq("id",id);
+  if(error) alert(error.message); else loadAdmin("venter");
+}
+loadAdmin("venter");
+</script>
+</body>
+</html>
