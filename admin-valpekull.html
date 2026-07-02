@@ -1,61 +1,186 @@
 <!DOCTYPE html>
-<html lang="no"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Valpekull</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trygg Admin Valpekull – Hundene våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;color:#123c73;min-height:100vh;background:radial-gradient(circle at 10% 5%,rgba(255,220,130,.42),transparent 30%),radial-gradient(circle at 92% 8%,rgba(126,200,255,.42),transparent 33%),linear-gradient(180deg,#dbeafe,#eef6ff 48%,#fff7ed)}
-.wrap{max-width:1180px;margin:auto;padding:14px 10px 60px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:white;border-radius:26px;padding:13px 15px;box-shadow:0 12px 28px rgba(0,45,110,.12);margin-bottom:15px}
+body{font-family:Arial,sans-serif;background:linear-gradient(180deg,#dbeafe,#fff7ed);color:#123c73;min-height:100vh}
+.wrap{max-width:1150px;margin:auto;padding:16px 10px 60px}
+.top{background:white;border-radius:24px;padding:14px;box-shadow:0 10px 22px #0002;margin-bottom:14px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
 .logo{font-size:23px;font-weight:900;color:#004cff}
 .nav{display:flex;gap:8px;flex-wrap:wrap}
-.nav a{background:#eaf2ff;color:#004cff;text-decoration:none;border:1px solid #b8ddff;border-radius:999px;padding:10px 13px;font-weight:900;font-size:14px}
-.hero{background:linear-gradient(135deg,#1f8fff,#004cff,#7c3aed);color:white;border-radius:34px;padding:36px 18px;text-align:center;box-shadow:0 20px 45px rgba(0,45,110,.24);margin-bottom:18px}
-.hero h1{font-size:clamp(2.2rem,7vw,4.5rem);line-height:1.05;margin-bottom:10px}
-.hero p{font-size:clamp(1rem,2.6vw,1.25rem);font-weight:700;color:#eef6ff;line-height:1.5}
-.card{background:white;border-radius:28px;padding:18px;box-shadow:0 12px 26px rgba(0,0,0,.10);margin-bottom:18px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}
-label{display:block;font-weight:900;margin-bottom:5px}
-input,select,textarea{width:100%;padding:13px 14px;border:1px solid #cfe3ff;border-radius:14px;font-size:16px;font-family:Arial,sans-serif}
-textarea{min-height:110px}
-button,.btn{border:none;border-radius:999px;padding:13px 18px;background:linear-gradient(135deg,#1f8fff,#004cff);color:white;font-size:16px;font-weight:900;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
-.green{background:linear-gradient(135deg,#22c55e,#16a34a)}.red{background:#dc2626}.orange{background:#f59e0b}.dark{background:#111827}
-.msg{text-align:center;font-size:18px;font-weight:900;margin-top:12px;white-space:pre-wrap}
-.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
-.litter{background:white;border-radius:34px;overflow:hidden;box-shadow:0 18px 42px rgba(15,23,42,.14);border:1px solid #dbeafe}
-.cover{min-height:260px;background:linear-gradient(135deg,#1f8fff,#004cff);display:flex;align-items:center;justify-content:center;overflow:hidden;color:white;font-size:90px}
-.cover img{width:100%;height:260px;object-fit:cover}
-.content{padding:22px}
-.content h2{font-size:30px;color:#001d4a;margin-bottom:8px}
-.badges{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-.badge{background:#eaf2ff;color:#004cff;border:1px solid #b8ddff;border-radius:999px;padding:8px 11px;font-size:13px;font-weight:900}
-.status-ledig{background:#dcfce7;color:#166534;border-color:#86efac}
-.status-reservert{background:#fef3c7;color:#92400e;border-color:#f59e0b}
-.status-solgt{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
-.info{background:#f8fbff;border:1px solid #e0edff;border-radius:18px;padding:12px;font-weight:800;line-height:1.45}
-.about{color:#334155;font-weight:700;line-height:1.6;margin:12px 0}
-.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}
-.gallery img{width:100%;height:90px;object-fit:cover;border-radius:14px;border:2px solid #eaf2ff}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.nav a{background:#eaf2ff;color:#004cff;text-decoration:none;border-radius:999px;padding:10px 13px;font-weight:900}
+.hero{background:linear-gradient(135deg,#1f8fff,#004cff,#7c3aed);color:white;border-radius:30px;padding:28px 15px;text-align:center;box-shadow:0 18px 40px #0003;margin-bottom:16px}
+.hero h1{font-size:clamp(2rem,7vw,4rem);margin-bottom:8px}
+.hero p{font-size:17px;line-height:1.5;font-weight:700}
+.card{background:white;border-radius:25px;padding:17px;box-shadow:0 12px 25px #0002;margin-bottom:15px}
+input{width:100%;padding:13px;border:1px solid #cfe3ff;border-radius:14px;font-size:16px;margin-top:8px}
+button{border:none;border-radius:999px;padding:13px 18px;background:#2563eb;color:white;font-weight:900;cursor:pointer;font-size:16px;margin:5px}
+.green{background:#16a34a}.red{background:#dc2626}.orange{background:#f59e0b}.black{background:#111827}
+.msg{font-weight:900;text-align:center;margin-top:12px;font-size:18px;white-space:pre-wrap}
+.info{background:#f8fbff;border-radius:16px;padding:11px;line-height:1.55;font-weight:700;margin:10px 0}
 .thumb{width:120px;height:80px;object-fit:cover;border-radius:12px;margin:6px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .hidden{display:none}
 .warning{background:#fff7ed;border:1px solid #fed7aa;color:#92400e;border-radius:18px;padding:13px;font-weight:800;margin-top:10px}
-@media(max-width:900px){.cards{grid-template-columns:1fr}.grid,.info-grid{grid-template-columns:1fr}.top{justify-content:center}.nav{justify-content:center}.nav a{flex:1 1 42%;text-align:center;font-size:12px}.gallery{grid-template-columns:repeat(2,1fr)}}
-</style></head>
-<body><div class="wrap">
-<div class="top"><div class="logo">🔐 Admin Valpekull</div><div class="nav"><a href="index.html">Forside</a><a href="valpekull.html">Valpekull</a><a href="registrer-valpekull.html">Registrer kull</a></div></div>
-<section class="hero"><h1>Godkjenn valpekull</h1><p>Godkjenn, avvis eller slett valpekull.</p></section>
-<div class="card" id="loginBox"><h2>🔑 Adgangskode</h2><input id="pin" type="password" placeholder="Skriv adgangskode"><button onclick="login()">Logg inn</button><div id="loginMsg" class="msg"></div></div>
-<div id="adminBox" class="hidden"><div class="card"><button class="orange" onclick="load('venter')">🟡 Venter</button><button class="green" onclick="load('godkjent')">✅ Godkjent</button><button class="red" onclick="load('avvist')">❌ Avvist</button><button class="dark" onclick="loadAll()">📋 Alle</button><div class="warning">Slett fjerner valpekullet helt fra databasen.</div><div id="msg" class="msg"></div></div><div id="list"></div></div>
+.counts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
+.count{background:#f8fbff;border-radius:16px;padding:12px;text-align:center;font-weight:900}
+.count b{display:block;font-size:28px;color:#004cff}
+@media(max-width:850px){.top{justify-content:center}.nav{justify-content:center}.nav a{flex:1 1 42%;text-align:center;font-size:12px}button{width:100%;margin:4px 0}.counts{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+  <div class="logo">🔐 Trygg Admin Valpekull</div>
+  <div class="nav">
+    <a href="index.html">Forside</a>
+    <a href="valpekull.html">Valpekull</a>
+    <a href="registrer-valpekull.html">Registrer kull</a>
+    <a href="oppdretterportal.html">Portal</a>
+  </div>
 </div>
+
+<section class="hero">
+  <h1>Godkjenn valpekull</h1>
+  <p>Denne versjonen har ikke slett-knapp. Den kan bare godkjenne eller skjule/avvise.</p>
+</section>
+
+<div class="card" id="loginBox">
+  <h2>🔑 Adgangskode</h2>
+  <input id="pin" type="password" placeholder="Skriv adgangskode">
+  <button onclick="login()">Logg inn</button>
+  <div id="loginMsg" class="msg"></div>
+</div>
+
+<div id="adminBox" class="hidden">
+  <div class="card">
+    <button class="orange" onclick="load('venter')">🟡 Venter</button>
+    <button class="green" onclick="load('godkjent')">✅ Godkjent</button>
+    <button class="red" onclick="load('avvist')">❌ Avvist</button>
+    <button class="black" onclick="loadAll()">📋 Alle</button>
+    <div class="warning">Trygg versjon: ingen valpekull kan slettes her. Avvis/skjul brukes i stedet.</div>
+    <div class="counts">
+      <div class="count"><b id="cVenter">0</b>Venter</div>
+      <div class="count"><b id="cGodkjent">0</b>Godkjent</div>
+      <div class="count"><b id="cAvvist">0</b>Avvist</div>
+      <div class="count"><b id="cAlle">0</b>Alle</div>
+    </div>
+    <div id="msg" class="msg"></div>
+  </div>
+  <div id="list"></div>
+</div>
+</div>
+
 <script>
 const ADMIN_KODE="hund2026";
 const client=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
-let current="venter";let allMode=false;
-function login(){if(pin.value.trim()===ADMIN_KODE){loginBox.classList.add("hidden");adminBox.classList.remove("hidden");load("venter")}else{loginMsg.style.color="crimson";loginMsg.textContent="Feil adgangskode."}}
-async function load(status){allMode=false;current=status;list.innerHTML="";msg.textContent="Laster...";const r=await client.from("puppy_litters").select("*").eq("status",status).order("created_at",{ascending:false});render(r,status)}
-async function loadAll(){allMode=true;list.innerHTML="";msg.textContent="Laster alle...";const r=await client.from("puppy_litters").select("*").order("created_at",{ascending:false});render(r,"alle")}
-function render(r,label){if(r.error){msg.textContent="Feil: "+r.error.message;return} if(!r.data.length){msg.textContent="Ingen valpekull: "+label;return} msg.textContent="Fant "+r.data.length; r.data.forEach(b=>{const imgs=(b.image_urls||[]).map(u=>'<img class="thumb" src="'+u+'">').join("");const div=document.createElement("div");div.className="card";div.innerHTML='<h2>🐶 '+(b.title||b.kennel_name||"Valpekull")+'</h2><div class="info">Status: '+b.status+'<br>Kennel: '+(b.kennel_name||"")+'<br>Rase: '+(b.breed||"")+'<br>Sted: '+(b.municipality||"")+' '+(b.area||"")+'<br>Født: '+(b.born_date||"")+'<br>Leveringsklar: '+(b.ready_date||"")+'<br>Ledige: '+(b.available_count||0)+'<br>Hanner: '+(b.males||0)+' / Tisper: '+(b.females||0)+'<br>Pris: '+(b.price||"")+'<br>Kontakt: '+(b.contact_name||"")+' / '+(b.email||"")+' / '+(b.phone||"")+'<br>Om: '+(b.about||"")+'</div><div>'+imgs+'</div><div class="actions"><button class="green" onclick="approve(\''+b.id+'\')">✅ Godkjenn</button><button class="red" onclick="rejectB(\''+b.id+'\')">❌ Avvis</button><button class="dark" onclick="deleteB(\''+b.id+'\')">🗑️ Slett</button></div>';list.appendChild(div)})}
-async function approve(id){const r=await client.from("puppy_litters").update({status:"godkjent"}).eq("id",id); if(r.error)alert(r.error.message); else refresh()}
-async function rejectB(id){const r=await client.from("puppy_litters").update({status:"avvist"}).eq("id",id); if(r.error)alert(r.error.message); else refresh()}
-async function deleteB(id){if(!confirm("Slette dette valpekullet?"))return; const r=await client.from("puppy_litters").delete().eq("id",id); if(r.error)alert(r.error.message); else refresh()}
-function refresh(){allMode?loadAll():load(current)}
-</script></body></html>
+let current="venter";
+let allMode=false;
+
+function login(){
+  if(pin.value.trim()===ADMIN_KODE){
+    loginBox.classList.add("hidden");
+    adminBox.classList.remove("hidden");
+    countAll();
+    load("venter");
+  }else{
+    loginMsg.style.color="crimson";
+    loginMsg.textContent="Feil adgangskode.";
+  }
+}
+
+async function countAll(){
+  const all=await client.from("puppy_litters").select("id,status");
+  if(all.error) return;
+  const rows=all.data||[];
+  cAlle.textContent=rows.length;
+  cVenter.textContent=rows.filter(x=>x.status==="venter").length;
+  cGodkjent.textContent=rows.filter(x=>x.status==="godkjent").length;
+  cAvvist.textContent=rows.filter(x=>x.status==="avvist").length;
+}
+
+async function load(status){
+  allMode=false;
+  current=status;
+  list.innerHTML="";
+  msg.textContent="Laster...";
+  const r=await client.from("puppy_litters").select("*").eq("status",status).order("created_at",{ascending:false});
+  render(r,status);
+}
+
+async function loadAll(){
+  allMode=true;
+  list.innerHTML="";
+  msg.textContent="Laster alle...";
+  const r=await client.from("puppy_litters").select("*").order("created_at",{ascending:false});
+  render(r,"alle");
+}
+
+function render(r,label){
+  countAll();
+  if(r.error){
+    msg.textContent="Feil: "+r.error.message;
+    return;
+  }
+  if(!r.data.length){
+    msg.textContent="Ingen valpekull: "+label;
+    return;
+  }
+  msg.textContent="Fant "+r.data.length+" valpekull.";
+  r.data.forEach(b=>{
+    const imgs=(b.image_urls||[]).map(u=>'<img class="thumb" src="'+u+'">').join("");
+    const div=document.createElement("div");
+    div.className="card";
+    div.innerHTML=
+      '<h2>🐶 '+(b.title||b.kennel_name||"Valpekull")+'</h2>'+
+      '<div class="info">'+
+      'ID: '+b.id+'<br>'+
+      'Status: '+(b.status||"")+'<br>'+
+      'Kennel: '+(b.kennel_name||"")+'<br>'+
+      'Rase: '+(b.breed||"")+'<br>'+
+      'Sted: '+(b.municipality||"")+' '+(b.area||"")+'<br>'+
+      'Født: '+(b.born_date||"")+'<br>'+
+      'Leveringsklar: '+(b.ready_date||"")+'<br>'+
+      'Ledige: '+(b.available_count||0)+'<br>'+
+      'Hanner: '+(b.males||0)+' / Tisper: '+(b.females||0)+'<br>'+
+      'Pris: '+(b.price||"")+'<br>'+
+      'Kontakt: '+(b.contact_name||"")+' / '+(b.email||"")+' / '+(b.phone||"")+'<br>'+
+      'Om: '+(b.about||"")+
+      '</div>'+
+      '<div>'+imgs+'</div>'+
+      '<div class="actions">'+
+      '<button class="green" onclick="approve(\''+b.id+'\')">✅ Godkjenn</button>'+
+      '<button class="red" onclick="rejectB(\''+b.id+'\')">❌ Skjul / avvis</button>'+
+      '<button class="orange" onclick="waiting(\''+b.id+'\')">🟡 Sett til venter</button>'+
+      '</div>';
+    list.appendChild(div);
+  });
+}
+
+async function approve(id){
+  const r=await client.from("puppy_litters").update({status:"godkjent"}).eq("id",id);
+  if(r.error)alert(r.error.message); else refresh();
+}
+
+async function rejectB(id){
+  const r=await client.from("puppy_litters").update({status:"avvist"}).eq("id",id);
+  if(r.error)alert(r.error.message); else refresh();
+}
+
+async function waiting(id){
+  const r=await client.from("puppy_litters").update({status:"venter"}).eq("id",id);
+  if(r.error)alert(r.error.message); else refresh();
+}
+
+function refresh(){
+  countAll();
+  allMode?loadAll():load(current);
+}
+</script>
+</body>
+</html>
