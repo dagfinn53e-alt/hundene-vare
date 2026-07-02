@@ -3,587 +3,286 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oppdretterportalen – Hundene våre</title>
+<title>Registrer oppdretter – Hundene våre</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html{
-  scroll-behavior:smooth;
-}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 
 body{
   font-family:Arial,sans-serif;
   color:#123c73;
   min-height:100vh;
   background:
-    radial-gradient(circle at 10% 6%,rgba(255,220,130,.72),transparent 28%),
-    radial-gradient(circle at 90% 8%,rgba(126,200,255,.62),transparent 33%),
-    radial-gradient(circle at 50% 100%,rgba(244,114,182,.18),transparent 35%),
+    radial-gradient(circle at 8% 6%,rgba(255,220,130,.55),transparent 28%),
+    radial-gradient(circle at 92% 8%,rgba(126,200,255,.45),transparent 33%),
     linear-gradient(180deg,#dbeafe 0%,#eef6ff 48%,#fff7ed 100%);
-  overflow-x:hidden;
-}
-
-.paws{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.10;
-  z-index:0;
-  background-image:
-    radial-gradient(circle,#fff 18%,transparent 20%),
-    radial-gradient(circle,#fff 18%,transparent 20%);
-  background-size:95px 95px;
-  background-position:0 0,48px 48px;
-  animation:pawDrift 14s linear infinite;
-}
-
-@keyframes pawDrift{
-  from{transform:translateY(0)}
-  to{transform:translateY(95px)}
 }
 
 .wrap{
-  position:relative;
-  z-index:1;
-  max-width:1250px;
+  max-width:1080px;
   margin:auto;
-  padding:20px 14px 70px;
+  padding:14px 10px 55px;
 }
 
 .topbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:12px;
+  gap:10px;
   flex-wrap:wrap;
-  background:rgba(255,255,255,.9);
-  border:1px solid rgba(255,255,255,.85);
-  border-radius:30px;
-  padding:14px 18px;
-  box-shadow:0 14px 30px rgba(0,45,110,.14);
-  margin-bottom:22px;
-  backdrop-filter:blur(10px);
+  background:rgba(255,255,255,.94);
+  border-radius:24px;
+  padding:12px 14px;
+  box-shadow:0 10px 24px rgba(0,45,110,.12);
+  margin-bottom:14px;
 }
 
 .logo{
   display:flex;
   align-items:center;
-  gap:10px;
-  font-size:24px;
+  gap:9px;
+  font-size:22px;
   font-weight:900;
   color:#004cff;
 }
 
 .logo-badge{
-  width:50px;
-  height:50px;
-  border-radius:18px;
+  width:44px;
+  height:44px;
+  border-radius:16px;
   background:linear-gradient(145deg,#1f8fff,#004cff);
   color:white;
   display:flex;
   align-items:center;
   justify-content:center;
-  box-shadow:0 0 18px rgba(0,76,255,.35);
 }
 
 .nav{
   display:flex;
   flex-wrap:wrap;
-  gap:9px;
+  gap:8px;
 }
 
 .nav a{
   text-decoration:none;
-  background:linear-gradient(145deg,#ffffff,#dff3ff);
+  background:#eaf2ff;
   color:#004cff;
   border:1px solid #b8ddff;
   border-radius:999px;
-  padding:10px 14px;
+  padding:9px 12px;
   font-weight:900;
+  font-size:14px;
 }
 
 .hero{
-  position:relative;
-  overflow:hidden;
-  border-radius:46px;
-  min-height:520px;
-  display:grid;
-  grid-template-columns:1.05fr .95fr;
-  gap:22px;
-  align-items:center;
-  padding:50px 32px;
+  border-radius:30px;
+  padding:28px 16px;
+  text-align:center;
   color:white;
   background:
-    radial-gradient(circle at 18% 18%,rgba(255,255,255,.38),transparent 24%),
-    linear-gradient(145deg,#1f8fff,#004cff 45%,#7c3aed 100%);
-  box-shadow:0 25px 60px rgba(0,45,110,.30);
-}
-
-.hero:before{
-  content:"";
-  position:absolute;
-  inset:18px;
-  border:2px solid rgba(255,255,255,.18);
-  border-radius:36px;
-  pointer-events:none;
-}
-
-.kicker{
-  display:inline-flex;
-  gap:8px;
-  align-items:center;
-  background:rgba(255,255,255,.18);
-  border:1px solid rgba(255,255,255,.30);
-  border-radius:999px;
-  padding:10px 15px;
-  font-weight:900;
-  margin-bottom:18px;
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.34),transparent 25%),
+    linear-gradient(145deg,#1f8fff,#004cff 48%,#7c3aed 100%);
+  box-shadow:0 16px 38px rgba(0,45,110,.24);
 }
 
 .hero h1{
-  font-size:clamp(2.5rem,6vw,5.1rem);
-  line-height:1.02;
-  margin-bottom:16px;
-  text-shadow:0 0 13px #fff,0 0 28px rgba(126,200,255,.75);
+  font-size:clamp(2rem,7vw,4rem);
+  line-height:1.05;
+  margin-bottom:10px;
+  text-shadow:0 0 10px rgba(255,255,255,.75);
 }
 
 .hero p{
-  color:#eef6ff;
-  font-size:clamp(1rem,2.2vw,1.32rem);
-  line-height:1.65;
+  max-width:760px;
+  margin:auto;
+  font-size:clamp(1rem,3.7vw,1.18rem);
+  line-height:1.5;
   font-weight:700;
-  max-width:780px;
+  color:#eef6ff;
 }
-
-.hero-actions{
-  margin-top:28px;
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-}
-
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  border-radius:999px;
-  padding:15px 21px;
-  font-size:17px;
-  font-weight:900;
-  color:white;
-  background:linear-gradient(145deg,#ff8a3d,#f59e0b);
-  box-shadow:0 0 20px rgba(255,138,61,.38);
-  transition:.2s;
-}
-
-.btn:hover{
-  transform:translateY(-3px);
-}
-
-.btn.green{
-  background:linear-gradient(145deg,#22c55e,#16a34a);
-}
-
-.btn.blue{
-  background:linear-gradient(145deg,#1f8fff,#004cff);
-}
-
-.hero-art{
-  position:relative;
-  height:365px;
-}
-
-.orbit{
-  position:absolute;
-  inset:10px;
-  border-radius:50%;
-  border:2px dashed rgba(255,255,255,.28);
-  animation:spin 18s linear infinite;
-}
-
-@keyframes spin{
-  to{transform:rotate(360deg)}
-}
-
-.circle{
-  position:absolute;
-  inset:35px;
-  border-radius:50%;
-  background:
-    radial-gradient(circle at 35% 28%,rgba(255,255,255,.90),transparent 18%),
-    linear-gradient(135deg,#ffd38a,#ff8a3d);
-  box-shadow:inset -18px -22px 45px rgba(15,23,42,.20),0 18px 45px rgba(0,0,0,.24);
-}
-
-.dog{
-  position:absolute;
-  left:50%;
-  top:48%;
-  transform:translate(-50%,-50%);
-  font-size:175px;
-  filter:drop-shadow(0 18px 18px rgba(0,0,0,.22));
-  animation:floaty 4s ease-in-out infinite;
-}
-
-@keyframes floaty{
-  0%,100%{transform:translate(-50%,-50%) translateY(0)}
-  50%{transform:translate(-50%,-50%) translateY(-14px)}
-}
-
-.badge{
-  position:absolute;
-  right:0;
-  bottom:25px;
-  background:white;
-  color:#004cff;
-  border-radius:26px;
-  padding:15px 19px;
-  font-weight:900;
-  box-shadow:0 13px 28px rgba(0,0,0,.20);
-}
-
-.mini{
-  position:absolute;
-  background:white;
-  color:#123c73;
-  border-radius:20px;
-  padding:12px 14px;
-  font-weight:900;
-  box-shadow:0 12px 25px rgba(0,0,0,.16);
-}
-
-.mini.one{left:0;top:35px}
-.mini.two{right:5px;top:70px}
-.mini.three{left:10px;bottom:55px}
 
 .offer{
-  margin-top:24px;
-  position:relative;
-  overflow:hidden;
-  border-radius:38px;
-  padding:30px 20px;
+  margin-top:14px;
+  border-radius:28px;
+  padding:18px 12px;
   text-align:center;
-  background:
-    radial-gradient(circle at top,#fff7c2 0%,#ffd166 34%,#f59e0b 100%);
+  background:linear-gradient(180deg,#fff7c2,#ffd166,#f59e0b);
   color:#4a2600;
-  box-shadow:0 18px 40px rgba(245,158,11,.32);
-  border:3px solid rgba(255,255,255,.65);
+  box-shadow:0 12px 28px rgba(245,158,11,.25);
+  border:2px solid rgba(255,255,255,.75);
 }
 
 .offer h2{
-  font-size:clamp(2rem,5vw,3.4rem);
+  font-size:clamp(1.7rem,6vw,3rem);
+  margin-bottom:6px;
+}
+
+.offer p{
+  font-size:clamp(1rem,3.6vw,1.2rem);
+  line-height:1.45;
+  font-weight:900;
+}
+
+.counter{
+  background:rgba(255,255,255,.78);
+  border-radius:22px;
+  padding:14px 10px;
+  margin:14px auto 0;
+  max-width:620px;
+}
+
+.paws{
+  font-size:clamp(1.8rem,8vw,3rem);
+  letter-spacing:3px;
   margin-bottom:8px;
 }
 
-.offer h3{
-  font-size:clamp(1.35rem,3vw,2.2rem);
-  margin-bottom:16px;
-}
-
-.free-counter{
-  background:rgba(255,255,255,.76);
-  border-radius:28px;
-  max-width:720px;
-  margin:18px auto 0;
-  padding:22px;
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,.6),0 10px 22px rgba(0,0,0,.12);
-}
-
-.paw-count{
-  font-size:44px;
-  letter-spacing:8px;
-  margin-bottom:12px;
-}
-
-.free-big{
-  font-size:clamp(2.1rem,6vw,4.4rem);
+.free-text{
+  font-size:clamp(1.6rem,7vw,3.4rem);
   font-weight:900;
   color:#166534;
   line-height:1;
 }
 
-.free-small{
-  font-size:20px;
-  font-weight:900;
-  margin-top:10px;
-}
-
-.section{
-  margin-top:38px;
-}
-
-.section h2{
-  text-align:center;
-  font-size:clamp(2rem,5vw,3.1rem);
-  margin-bottom:8px;
-  color:#001d4a;
-}
-
-.lead{
-  text-align:center;
-  color:#4a1a1a;
-  font-size:19px;
-  font-weight:900;
-  margin-bottom:24px;
-  line-height:1.5;
-}
-
 .info-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:18px;
+  gap:12px;
+  margin-top:16px;
 }
 
 .info-card{
   background:white;
-  border-radius:28px;
-  padding:24px;
+  border-radius:22px;
+  padding:16px 13px;
   text-align:center;
-  box-shadow:0 12px 25px rgba(0,0,0,.10);
-  transition:.2s;
-}
-
-.info-card:hover{
-  transform:translateY(-6px);
+  box-shadow:0 8px 20px rgba(0,0,0,.09);
 }
 
 .info-card .icon{
-  font-size:54px;
-  margin-bottom:12px;
+  font-size:38px;
+  margin-bottom:8px;
 }
 
 .info-card h3{
   color:#001d4a;
-  font-size:23px;
-  margin-bottom:8px;
+  margin-bottom:6px;
+  font-size:18px;
 }
 
 .info-card p{
   color:#334155;
-  line-height:1.55;
+  line-height:1.42;
   font-weight:700;
-}
-
-.price-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-}
-
-.price-card{
-  background:white;
-  border-radius:32px;
-  padding:25px;
-  box-shadow:0 14px 28px rgba(0,0,0,.13);
-  text-align:center;
-}
-
-.price-card.featured{
-  outline:4px solid #f59e0b;
-  transform:scale(1.02);
-}
-
-.price-card h3{
-  color:#001d4a;
-  font-size:26px;
-  margin-bottom:10px;
-}
-
-.price{
-  font-size:34px;
-  font-weight:900;
-  color:#004cff;
-  margin:12px 0;
-}
-
-.price-card ul{
-  text-align:left;
-  margin:16px auto;
-  max-width:270px;
-  color:#334155;
-  line-height:1.8;
-  font-weight:700;
-}
-
-.founder{
-  background:white;
-  border-radius:36px;
-  padding:30px;
-  box-shadow:0 15px 32px rgba(0,0,0,.12);
-  display:grid;
-  grid-template-columns:.8fr 1.2fr;
-  gap:22px;
-  align-items:center;
-}
-
-.founder-icon{
-  font-size:145px;
-  text-align:center;
-}
-
-.founder h2{
-  text-align:left;
-  margin-bottom:12px;
-}
-
-.founder p{
-  color:#334155;
-  font-size:19px;
-  line-height:1.65;
-  font-weight:700;
-}
-
-.notice{
-  background:#fff7ed;
-  border:1px solid #fed7aa;
-  border-radius:24px;
-  padding:18px;
-  color:#92400e;
-  font-weight:800;
-  line-height:1.6;
-  margin-top:18px;
+  font-size:14px;
 }
 
 .form-box{
+  margin-top:18px;
   background:white;
-  border-radius:36px;
-  padding:26px;
-  box-shadow:0 15px 32px rgba(0,0,0,.13);
+  border-radius:28px;
+  padding:18px 14px;
+  box-shadow:0 12px 28px rgba(0,0,0,.12);
 }
 
 .form-box h2{
   text-align:center;
   color:#001d4a;
-  font-size:34px;
+  font-size:clamp(1.7rem,6vw,2.5rem);
   margin-bottom:8px;
+}
+
+.lead{
+  text-align:center;
+  color:#4a1a1a;
+  font-size:15px;
+  font-weight:900;
+  line-height:1.45;
+  margin-bottom:16px;
 }
 
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:14px;
+  gap:12px;
 }
 
-.full{
-  grid-column:1/-1;
-}
+.full{grid-column:1/-1}
 
 label{
   display:block;
   font-weight:900;
-  margin-bottom:6px;
+  margin-bottom:5px;
   color:#123c73;
+  font-size:14px;
 }
 
 input,select,textarea{
   width:100%;
-  padding:13px 14px;
+  padding:12px 13px;
   border:1px solid #cfe3ff;
-  border-radius:15px;
+  border-radius:14px;
   font-size:16px;
   font-family:Arial,sans-serif;
+  background:#fff;
 }
 
-textarea{
-  min-height:125px;
+textarea{min-height:110px}
+
+.notice{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  border-radius:18px;
+  padding:13px;
+  color:#92400e;
+  font-weight:800;
+  line-height:1.45;
+  font-size:14px;
 }
 
 button{
   width:100%;
   border:none;
   border-radius:999px;
-  padding:16px 22px;
-  font-size:18px;
+  padding:15px 18px;
+  font-size:17px;
   font-weight:900;
   cursor:pointer;
   color:white;
   background:linear-gradient(145deg,#1f8fff,#004cff);
-  box-shadow:0 12px 25px rgba(0,76,255,.20);
+  box-shadow:0 10px 22px rgba(0,76,255,.18);
 }
 
 .footer{
   text-align:center;
-  margin-top:42px;
+  margin-top:28px;
   color:#14346d;
-  font-size:18px;
+  font-size:16px;
   font-weight:bold;
 }
 
-@media(max-width:1050px){
-  .hero{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-
-  .hero-actions{
-    justify-content:center;
-  }
-
-  .info-grid,.price-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .founder{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-
-  .founder h2{
-    text-align:center;
-  }
+@media(max-width:850px){
+  .info-grid{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr}
 }
 
-@media(max-width:720px){
-  .topbar{
-    justify-content:center;
-  }
-
-  .nav a{
-    flex:1 1 42%;
-    text-align:center;
-  }
-
-  .hero{
-    padding:34px 16px;
-  }
-
-  .hero-art{
-    height:245px;
-  }
-
-  .dog{
-    font-size:124px;
-  }
-
-  .mini{
-    display:none;
-  }
-
-  .info-grid,.price-grid,.grid{
-    grid-template-columns:1fr;
-  }
-
-  .price-card.featured{
-    transform:none;
-  }
-
-  .paw-count{
-    font-size:34px;
-    letter-spacing:3px;
-  }
+@media(max-width:650px){
+  .wrap{padding:9px 8px 45px}
+  .topbar{justify-content:center;border-radius:20px}
+  .logo{width:100%;justify-content:center;font-size:20px}
+  .nav{width:100%;justify-content:center}
+  .nav a{flex:1 1 42%;text-align:center;font-size:12px;padding:9px 7px}
+  .hero{border-radius:24px;padding:24px 12px}
+  .offer{border-radius:22px}
+  .form-box{border-radius:22px;padding:15px 11px}
+  .info-card{border-radius:18px}
+  input,select,textarea{font-size:15px;padding:11px 12px}
 }
 </style>
 </head>
 
 <body>
-<div class="paws"></div>
-
 <div class="wrap">
 
 <header class="topbar">
@@ -594,287 +293,172 @@ button{
 
   <nav class="nav">
     <a href="index.html">🏠 Forside</a>
-    <a href="oppdrettere.html">🐶 Oppdrettere</a>
-    <a href="kunnskap.html">📚 Kunnskap</a>
-    <a href="spill.html">🎮 Spill</a>
+    <a href="oppdretterportal.html">🐶 Portal</a>
+    <a href="oppdrettere.html">🔎 Oppdrettere</a>
+    <a href="kennel.html">🏡 Demo</a>
   </nav>
 </header>
 
 <section class="hero">
-  <div>
-    <div class="kicker">⭐ Ny oppdretterportal</div>
-    <h1>🐶 Registrer din kennel</h1>
-    <p>
-      Bli en av de første oppdretterne på Hundenevåre.com.
-      Vis frem kennel, rase, planlagte kull, kontaktinformasjon og hvorfor valpekjøpere bør velge deg.
-    </p>
+  <h1>🐶 Registrer din kennel</h1>
+  <p>
+    Bli med på Oppdretterportalen hos Hundenevåre.com.
+    Send inn informasjon om kennel, rase, kullplaner og kontakt.
+  </p>
+</section>
 
-    <div class="hero-actions">
-      <a class="btn" href="#registrer">🐶 Registrer kennel</a>
-      <a class="btn green" href="#tilbud">🎁 Se åpningstilbud</a>
-      <a class="btn blue" href="#fordeler">⭐ Fordeler</a>
-    </div>
-  </div>
-
-  <div class="hero-art">
-    <div class="orbit"></div>
-    <div class="circle"></div>
-    <div class="dog">🐶</div>
-    <div class="mini one">🐾 Planlagte kull</div>
-    <div class="mini two">❤️ Ledige valper</div>
-    <div class="mini three">🇳🇴 Hele Norge</div>
-    <div class="badge">🏅 Grunnleggerplass</div>
+<section class="offer">
+  <h2>🏅 Grunnleggerkampanje</h2>
+  <p>De 5 første godkjente oppdretterne får GRATIS Basis-profil i 12 måneder.</p>
+  <div class="counter">
+    <div class="paws" id="pawCount">🐾🐾🐾🐾🐾</div>
+    <div class="free-text" id="freeText">5 GRATIS PLASSER IGJEN</div>
   </div>
 </section>
 
-<section class="offer" id="tilbud">
-  <h2>🎉 Åpningstilbud 🎉</h2>
-  <h3>De 5 første oppdretterne får GRATIS Basis-profil i 12 måneder</h3>
-  <p style="font-weight:900;font-size:20px;">Verdi 299 kr</p>
-
-  <div class="free-counter">
-    <div class="paw-count" id="pawCount">🐾🐾🐾🐾🐾</div>
-    <div class="free-big" id="freeText">5 GRATIS PLASSER IGJEN</div>
-    <div class="free-small">Gjelder de første fem oppdretterne som blir godkjent</div>
+<section class="info-grid">
+  <div class="info-card">
+    <div class="icon">✅</div>
+    <h3>Kontrollert</h3>
+    <p>Alle profiler gjennomgås før publisering.</p>
+  </div>
+  <div class="info-card">
+    <div class="icon">🐾</div>
+    <h3>Synlig</h3>
+    <p>Valpekjøpere kan finne rase, sted og kullplaner.</p>
+  </div>
+  <div class="info-card">
+    <div class="icon">📩</div>
+    <h3>Direkte til deg</h3>
+    <p>Registreringen sendes direkte via Formspree.</p>
   </div>
 </section>
 
-<section class="section" id="fordeler">
-  <h2>⭐ Hvorfor registrere seg?</h2>
-  <p class="lead">Oppdrettere blir synlige for valpekjøpere som leter etter rase, område og seriøse profiler.</p>
+<section class="form-box">
+  <h2>📝 Send inn oppdretterinformasjon</h2>
+  <p class="lead">
+    Skjemaet sendes direkte til Hundenevåre.com. Bilder kan sendes som vedlegg etterpå.
+  </p>
 
-  <div class="info-grid">
-    <div class="info-card">
-      <div class="icon">🔎</div>
-      <h3>Bli funnet</h3>
-      <p>Valpekjøpere kan finne kennelen din etter rase, sted og planlagte kull.</p>
-    </div>
+  <form action="https://formspree.io/f/mnjrlegb" method="POST">
+    <input type="hidden" name="_subject" value="Ny oppdretterregistrering - Hundenevåre.com">
+    <input type="hidden" name="_language" value="no">
+    <input type="hidden" name="_next" value="https://www.xn--hundenevre-85a.com/takk.html">
 
-    <div class="info-card">
-      <div class="icon">🐾</div>
-      <h3>Vis planlagte kull</h3>
-      <p>Fortell når du planlegger kull og om du har åpen valpeliste.</p>
-    </div>
+    <div class="grid">
+      <div>
+        <label>Kennelnavn *</label>
+        <input name="Kennelnavn" required placeholder="F.eks. Solstrand Kennel">
+      </div>
 
-    <div class="info-card">
-      <div class="icon">📩</div>
-      <h3>Enkel kontakt</h3>
-      <p>Vis e-post, telefon, Facebook og nettside på en ryddig måte.</p>
-    </div>
+      <div>
+        <label>Kontaktperson *</label>
+        <input name="Kontaktperson" required placeholder="Navn">
+      </div>
 
-    <div class="info-card">
-      <div class="icon">✅</div>
-      <h3>Kontrollert profil</h3>
-      <p>Alle profiler blir gjennomgått før de publiseres på Hundenevåre.com.</p>
-    </div>
+      <div>
+        <label>Rase *</label>
+        <input name="Rase" required placeholder="F.eks. Bichon Frisé">
+      </div>
 
-    <div class="info-card">
-      <div class="icon">📱</div>
-      <h3>Mobilvennlig</h3>
-      <p>Siden er laget for å se fin ut både på mobil, nettbrett og PC.</p>
-    </div>
+      <div>
+        <label>Fylke / område *</label>
+        <input name="Fylke og område" required placeholder="F.eks. Rogaland / Haugalandet">
+      </div>
 
-    <div class="info-card">
-      <div class="icon">🏅</div>
-      <h3>Grunnleggermerke</h3>
-      <p>De første oppdretterne kan få et eget merke som viser at de var med fra starten.</p>
-    </div>
-  </div>
-</section>
+      <div>
+        <label>Kommune</label>
+        <input name="Kommune" placeholder="F.eks. Karmøy">
+      </div>
 
-<section class="section">
-  <h2>💰 Pakker</h2>
-  <p class="lead">De fem første godkjente oppdretterne får Basis gratis første året.</p>
+      <div>
+        <label>Pakke</label>
+        <select name="Pakke">
+          <option>Åpningstilbud – gratis Basis hvis plass igjen</option>
+          <option>Basis – 299 kr/år</option>
+          <option>Pluss – 599 kr/år</option>
+          <option>Premium – 999 kr/år</option>
+          <option>Usikker – ønsker informasjon</option>
+        </select>
+      </div>
 
-  <div class="price-grid">
-    <div class="price-card">
-      <h3>Basis</h3>
-      <div class="price">299 kr/år</div>
-      <ul>
-        <li>Kennelnavn</li>
-        <li>Rase og sted</li>
-        <li>Kontaktinformasjon</li>
-        <li>Kort beskrivelse</li>
-      </ul>
-    </div>
+      <div>
+        <label>Telefon</label>
+        <input name="Telefon" placeholder="Telefonnummer">
+      </div>
 
-    <div class="price-card featured">
-      <h3>Pluss</h3>
-      <div class="price">599 kr/år</div>
-      <ul>
-        <li>Alt i Basis</li>
-        <li>Planlagte kull</li>
-        <li>Ledige valper</li>
-        <li>Facebook/nettside</li>
-        <li>Flere bilder</li>
-      </ul>
-    </div>
+      <div>
+        <label>E-post *</label>
+        <input name="email" type="email" required placeholder="epost@example.com">
+      </div>
 
-    <div class="price-card">
-      <h3>Premium</h3>
-      <div class="price">999 kr/år</div>
-      <ul>
-        <li>Alt i Pluss</li>
-        <li>Fremhevet profil</li>
-        <li>Større presentasjon</li>
-        <li>Galleri</li>
-        <li>Ekstra synlighet</li>
-      </ul>
-    </div>
-  </div>
-</section>
+      <div>
+        <label>Facebook-side</label>
+        <input name="Facebook" placeholder="Lenke til Facebook">
+      </div>
 
-<section class="section">
-  <div class="founder">
-    <div class="founder-icon">🏅</div>
-    <div>
-      <h2>Grunnlegger av Oppdretterportalen</h2>
-      <p>
-        De første oppdretterne blir ikke bare oppført på siden.
-        De blir med på å forme Hundenevåre.com sin nye oppdretterportal fra starten av.
-      </p>
-      <p>
-        Målet er å bygge en ryddig, trygg og nyttig portal for hundeeiere og valpekjøpere i Norge.
-      </p>
-      <div class="notice">
-        Alle profiler kontrolleres før publisering. Vi kan be om dokumentasjon på kennelnavn eller annen informasjon før profilen godkjennes.
+      <div>
+        <label>Nettside</label>
+        <input name="Nettside" placeholder="Lenke til nettside">
+      </div>
+
+      <div>
+        <label>Kennelnavn / registrering</label>
+        <input name="Kennelnavn registrering kontroll" placeholder="Oppgis for kontroll">
+      </div>
+
+      <div>
+        <label>Planlagt kull</label>
+        <input name="Planlagt kull" placeholder="F.eks. Sommer 2026">
+      </div>
+
+      <div>
+        <label>Ledige valper</label>
+        <select name="Ledige valper">
+          <option>Ikke oppgitt</option>
+          <option>Ja</option>
+          <option>Nei</option>
+          <option>Valpeliste åpen</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Helse / tester</label>
+        <input name="Helse og tester" placeholder="F.eks. HD, AD, øyelysing, patella">
+      </div>
+
+      <div class="full">
+        <label>Om oppdretteren</label>
+        <textarea name="Om oppdretteren" placeholder="Skriv kort om oppdrettet, rasen, erfaring, helse og mål"></textarea>
+      </div>
+
+      <div class="full notice">
+        Profilen publiseres ikke før Hundenevåre.com har kontrollert og godkjent opplysningene.
+        De fem gratis plassene gjelder kun godkjente oppdrettere.
+      </div>
+
+      <div class="full">
+        <button type="submit">📨 Send registrering</button>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="section" id="registrer">
-  <div class="form-box">
-    <h2>📝 Send inn oppdretterinformasjon</h2>
-    <p class="lead">
-      Skjemaet åpner e-postprogrammet ditt med ferdig utfylt melding.
-      Bilder kan sendes som vedlegg etterpå.
-    </p>
-
-    <form id="breederForm">
-      <div class="grid">
-        <div>
-          <label>Kennelnavn *</label>
-          <input id="kennel" required placeholder="F.eks. Solstrand Kennel">
-        </div>
-
-        <div>
-          <label>Navn på kontaktperson *</label>
-          <input id="owner" required placeholder="Navn">
-        </div>
-
-        <div>
-          <label>Rase *</label>
-          <input id="breed" required placeholder="F.eks. Bichon Frisé">
-        </div>
-
-        <div>
-          <label>Fylke / område *</label>
-          <input id="area" required placeholder="F.eks. Rogaland / Haugalandet">
-        </div>
-
-        <div>
-          <label>Kommune</label>
-          <input id="municipality" placeholder="F.eks. Karmøy">
-        </div>
-
-        <div>
-          <label>Pakke</label>
-          <select id="package">
-            <option>Åpningstilbud – gratis Basis hvis plass igjen</option>
-            <option>Basis – 299 kr/år</option>
-            <option>Pluss – 599 kr/år</option>
-            <option>Premium – 999 kr/år</option>
-            <option>Usikker – ønsker informasjon</option>
-          </select>
-        </div>
-
-        <div>
-          <label>Telefon</label>
-          <input id="phone" placeholder="Telefonnummer">
-        </div>
-
-        <div>
-          <label>E-post *</label>
-          <input id="email" type="email" required placeholder="epost@example.com">
-        </div>
-
-        <div>
-          <label>Facebook-side</label>
-          <input id="facebook" placeholder="Lenke til Facebook">
-        </div>
-
-        <div>
-          <label>Nettside</label>
-          <input id="website" placeholder="Lenke til nettside">
-        </div>
-
-        <div>
-          <label>Kennelnavn / registrering</label>
-          <input id="registration" placeholder="Oppgis for kontroll">
-        </div>
-
-        <div>
-          <label>Planlagt kull</label>
-          <input id="litter" placeholder="F.eks. Sommer 2026">
-        </div>
-
-        <div>
-          <label>Ledige valper</label>
-          <select id="puppies">
-            <option>Ikke oppgitt</option>
-            <option>Ja</option>
-            <option>Nei</option>
-            <option>Valpeliste åpen</option>
-          </select>
-        </div>
-
-        <div>
-          <label>Helse / tester</label>
-          <input id="health" placeholder="F.eks. HD, AD, øyelysing, patella">
-        </div>
-
-        <div class="full">
-          <label>Om oppdretteren</label>
-          <textarea id="about" placeholder="Skriv kort om oppdrettet, rasen, erfaring, helse og mål"></textarea>
-        </div>
-
-        <div class="full notice">
-          Profilen publiseres ikke før Hundenevåre.com har kontrollert og godkjent opplysningene.
-          De fem gratis plassene gjelder kun godkjente oppdrettere.
-        </div>
-
-        <div class="full">
-          <button type="submit">📩 Lag e-post til Hundenevåre.com</button>
-        </div>
-      </div>
-    </form>
-  </div>
+  </form>
 </section>
 
 <div class="footer">
-  Hundenevåre.com – Oppdretterportalen 🐶
+  Hundenevåre.com – Oppdretterregistrering 🐶
 </div>
 
 </div>
 
 <script>
-/*
-  Her styrer du telleren selv.
-  Endre tallet under etter hvert som gratisplassene blir brukt:
-  5, 4, 3, 2, 1 eller 0
-*/
 const GRATIS_PLASSER_IGJEN = 5;
 
 function updateFreeCounter(){
+  const left = Math.max(0, Math.min(5, GRATIS_PLASSER_IGJEN));
   const pawCount = document.getElementById("pawCount");
   const freeText = document.getElementById("freeText");
 
-  const left = Math.max(0, Math.min(5, GRATIS_PLASSER_IGJEN));
-  const filled = "🐾".repeat(left);
-  const empty = "⬜".repeat(5 - left);
-
-  pawCount.textContent = filled + empty;
+  pawCount.textContent = "🐾".repeat(left) + "⬜".repeat(5-left);
 
   if(left === 0){
     freeText.textContent = "ALLE GRATIS PLASSENE ER TATT";
@@ -889,62 +473,6 @@ function updateFreeCounter(){
 }
 
 updateFreeCounter();
-
-document.getElementById("breederForm").addEventListener("submit", function(e){
-  e.preventDefault();
-
-  const to = "post@hundenevåre.com";
-  const subject = "Ny oppdretterregistrering - Hundenevåre.com";
-
-  const body =
-`Hei Hundenevåre.com
-
-Jeg ønsker å registrere oppdretterprofil.
-
-ÅPNINGSTILBUD
-Gratisplasser vist på siden: ${GRATIS_PLASSER_IGJEN}
-
-KENNEL
-Kennelnavn: ${kennel.value}
-Kontaktperson: ${owner.value}
-Rase: ${breed.value}
-Fylke / område: ${area.value}
-Kommune: ${municipality.value}
-
-PAKKE
-Valgt pakke: ${package.value}
-
-KONTAKT
-Telefon: ${phone.value}
-E-post: ${email.value}
-Facebook: ${facebook.value}
-Nettside: ${website.value}
-
-REGISTRERING / KONTROLL
-Kennelnavn / registrering: ${registration.value}
-
-KULL / VALPER
-Planlagt kull: ${litter.value}
-Ledige valper: ${puppies.value}
-
-HELSE
-Helse / tester: ${health.value}
-
-OM OPPDRETTEREN
-${about.value}
-
-Jeg forstår at profilen må kontrolleres og godkjennes før publisering.
-
-Vennlig hilsen
-${owner.value}`;
-
-  const mailto =
-    "mailto:" + encodeURIComponent(to) +
-    "?subject=" + encodeURIComponent(subject) +
-    "&body=" + encodeURIComponent(body);
-
-  window.location.href = mailto;
-});
 </script>
 
 </body>
