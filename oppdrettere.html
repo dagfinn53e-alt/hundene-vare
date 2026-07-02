@@ -9,38 +9,43 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,sans-serif;color:#123c73;min-height:100vh;background:radial-gradient(circle at 8% 6%,rgba(255,220,130,.45),transparent 28%),radial-gradient(circle at 92% 8%,rgba(126,200,255,.45),transparent 33%),linear-gradient(180deg,#dbeafe,#eef6ff 48%,#fff7ed)}
 .wrap{max-width:1180px;margin:auto;padding:14px 10px 60px}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:rgba(255,255,255,.95);border-radius:25px;padding:13px 15px;box-shadow:0 12px 28px rgba(0,45,110,.12);margin-bottom:15px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:rgba(255,255,255,.96);border-radius:26px;padding:13px 15px;box-shadow:0 12px 28px rgba(0,45,110,.12);margin-bottom:15px}
 .logo{font-size:23px;font-weight:900;color:#004cff}
 .nav{display:flex;gap:8px;flex-wrap:wrap}
 .nav a{text-decoration:none;background:#eaf2ff;color:#004cff;border:1px solid #b8ddff;border-radius:999px;padding:10px 13px;font-weight:900;font-size:14px}
-.hero{background:linear-gradient(135deg,#1f8fff,#004cff,#7c3aed);color:white;border-radius:34px;padding:36px 18px;text-align:center;box-shadow:0 20px 45px rgba(0,45,110,.24);margin-bottom:18px}
-.hero h1{font-size:clamp(2.3rem,7vw,4.5rem);line-height:1.05;margin-bottom:10px;text-shadow:0 0 12px rgba(255,255,255,.65)}
+.hero{background:linear-gradient(135deg,#1f8fff,#004cff,#7c3aed);color:white;border-radius:34px;padding:38px 18px;text-align:center;box-shadow:0 20px 45px rgba(0,45,110,.24);margin-bottom:18px}
+.hero h1{font-size:clamp(2.4rem,7vw,4.6rem);line-height:1.05;margin-bottom:10px;text-shadow:0 0 12px rgba(255,255,255,.65)}
 .hero p{font-size:clamp(1rem,2.6vw,1.25rem);font-weight:700;color:#eef6ff}
-.search-card{background:white;border-radius:26px;padding:18px;box-shadow:0 12px 26px rgba(0,0,0,.10);margin-bottom:18px}
+.search-card{background:white;border-radius:26px;padding:18px;box-shadow:0 12px 26px rgba(0,0,0,.10);margin-bottom:22px}
 .search-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:12px;align-items:end}
 label{display:block;font-weight:900;margin-bottom:5px;color:#123c73}
 input{width:100%;padding:13px 14px;border:1px solid #cfe3ff;border-radius:14px;font-size:16px}
 button{border:none;border-radius:999px;padding:14px 20px;background:linear-gradient(135deg,#1f8fff,#004cff);color:white;font-size:16px;font-weight:900;cursor:pointer}
 .msg{margin-top:12px;text-align:center;font-size:18px;font-weight:900;color:#123c73}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.bcard{background:white;border-radius:30px;overflow:hidden;box-shadow:0 16px 34px rgba(0,0,0,.14);transition:.2s}
-.bcard:hover{transform:translateY(-5px)}
-.photo{height:250px;background:linear-gradient(135deg,#1f8fff,#004cff);background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;color:white;font-size:85px}
-.content{padding:20px}
-.content h2{color:#001d4a;font-size:28px;margin-bottom:8px}
-.verify{display:inline-block;background:#fef3c7;color:#92400e;border:1px solid #f59e0b;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:900;margin:4px 0 10px}
-.tags{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}
-.tag{background:#eaf2ff;color:#004cff;border:1px solid #b8ddff;border-radius:999px;padding:7px 10px;font-size:13px;font-weight:900}
-.about{color:#334155;font-weight:700;line-height:1.55;margin:12px 0}
-.info{background:#f8fbff;border-radius:18px;padding:13px;line-height:1.65;font-weight:800;color:#123c73;margin:12px 0}
-.gallery{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.gallery img{width:82px;height:62px;object-fit:cover;border-radius:12px;border:2px solid #eaf2ff}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}
-.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:999px;padding:12px 16px;color:white;background:linear-gradient(135deg,#1f8fff,#004cff);font-weight:900;flex:1;min-width:120px}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
+.bcard{background:white;border-radius:34px;overflow:hidden;box-shadow:0 18px 42px rgba(15,23,42,.14);border:1px solid rgba(191,215,255,.75)}
+.cover{min-height:245px;background:linear-gradient(135deg,#1f8fff,#004cff);padding:22px;display:flex;align-items:center;justify-content:center}
+.logo-frame{width:100%;max-width:430px;height:205px;border-radius:28px;background:white;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 15px 34px rgba(0,0,0,.20)}
+.logo-frame img{width:100%;height:100%;object-fit:contain;padding:10px}
+.no-photo{font-size:95px;color:white}
+.content{padding:22px}
+.title-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.content h2{color:#001d4a;font-size:31px;line-height:1.1;margin-bottom:6px}
+.approved{display:inline-block;background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:900;white-space:nowrap}
+.founder{display:inline-block;background:#fef3c7;color:#92400e;border:1px solid #f59e0b;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:900;margin-top:7px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.tag{background:#eaf2ff;color:#004cff;border:1px solid #b8ddff;border-radius:999px;padding:8px 11px;font-size:13px;font-weight:900}
+.about{color:#334155;font-weight:700;line-height:1.6;margin:14px 0;font-size:16px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.info-box{background:#f8fbff;border:1px solid #e0edff;border-radius:18px;padding:12px;font-weight:800;color:#123c73;line-height:1.45}
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}
+.gallery img{width:100%;height:82px;object-fit:cover;border-radius:14px;border:2px solid #eaf2ff}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:999px;padding:13px 17px;color:white;background:linear-gradient(135deg,#1f8fff,#004cff);font-weight:900;flex:1;min-width:135px}
 .btn.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
-.empty{background:white;border-radius:26px;padding:24px;text-align:center;font-weight:900;color:#334155;box-shadow:0 12px 26px rgba(0,0,0,.10)}
-@media(max-width:1000px){.cards{grid-template-columns:1fr 1fr}.search-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:700px){.wrap{padding:9px 8px 45px}.topbar{justify-content:center;border-radius:22px}.logo{width:100%;text-align:center;font-size:20px}.nav{justify-content:center;width:100%}.nav a{flex:1 1 42%;text-align:center;font-size:12px;padding:9px 7px}.hero{border-radius:26px;padding:28px 13px}.search-grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.photo{height:230px}.content h2{font-size:25px}}
+.empty{grid-column:1/-1;background:white;border-radius:30px;padding:30px;text-align:center;font-weight:900;color:#334155;box-shadow:0 16px 34px rgba(15,23,42,.10)}
+@media(max-width:950px){.cards{grid-template-columns:1fr}.search-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.wrap{padding:9px 8px 50px}.topbar{justify-content:center;border-radius:22px;padding:11px}.logo{width:100%;text-align:center;font-size:20px}.nav{width:100%;justify-content:center}.nav a{flex:1 1 42%;text-align:center;font-size:12px;padding:9px 7px}.hero{border-radius:28px;padding:30px 14px}.search-grid{grid-template-columns:1fr}.cover{min-height:210px;padding:16px}.logo-frame{height:170px;border-radius:22px}.content{padding:17px}.content h2{font-size:26px}.info-grid{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}.gallery img{height:100px}}
 </style>
 </head>
 <body>
@@ -77,7 +82,12 @@ const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 function cleanText(v, fallback="Ikke oppgitt"){
   return v && String(v).trim() ? String(v).trim() : fallback;
 }
-
+function safeLink(v){
+  if(!v || !String(v).trim()) return "#";
+  let x=String(v).trim();
+  if(x.startsWith("http://") || x.startsWith("https://")) return x;
+  return "https://" + x;
+}
 async function load(){
   cards.innerHTML="";
   msg.textContent="Laster oppdrettere...";
@@ -88,38 +98,30 @@ async function load(){
   if(r.error){msg.textContent="Feil: "+r.error.message;return;}
   let list=r.data||[];
   const s=search.value.toLowerCase().trim();
-  if(s){
-    list=list.filter(b=>(b.kennel_name||"").toLowerCase().includes(s)||(b.breed||"").toLowerCase().includes(s)||(b.area||"").toLowerCase().includes(s)||(b.municipality||"").toLowerCase().includes(s));
-  }
-  if(!list.length){
-    msg.textContent="";
-    cards.innerHTML='<div class="empty">Ingen godkjente oppdrettere funnet ennå.</div>';
-    return;
-  }
+  if(s) list=list.filter(b=>(b.kennel_name||"").toLowerCase().includes(s)||(b.breed||"").toLowerCase().includes(s)||(b.area||"").toLowerCase().includes(s)||(b.municipality||"").toLowerCase().includes(s));
+  if(!list.length){msg.textContent="";cards.innerHTML='<div class="empty">Ingen godkjente oppdrettere funnet ennå.</div>';return;}
   msg.textContent="Fant "+list.length+" godkjent oppdretter(e).";
   list.forEach(b=>{
     const mainPhoto=b.logo_url||(b.image_urls&&b.image_urls.length?b.image_urls[0]:"");
-    const photoStyle=mainPhoto?'style="background-image:url(\''+mainPhoto+'\')"':"";
+    const imageHtml=mainPhoto?'<div class="logo-frame"><img src="'+mainPhoto+'" alt="Logo"></div>':'<div class="no-photo">🐶</div>';
     const gallery=(b.image_urls||[]).filter(Boolean).slice(0,4).map(u=>'<img src="'+u+'" alt="Bilde">').join("");
     const contactEmail=b.email?'mailto:'+b.email:'#';
-    const webLink=b.website||b.facebook||'#';
+    const webLink=safeLink(b.website||b.facebook);
     const div=document.createElement("article");
     div.className="bcard";
     div.innerHTML=
-      '<div class="photo" '+photoStyle+'>'+(mainPhoto?"":"🐶")+'</div>'+
+      '<div class="cover">'+imageHtml+'</div>'+
       '<div class="content">'+
-      '<h2>'+cleanText(b.kennel_name,"Oppdretter")+'</h2>'+
-      (b.founder?'<div class="verify">🏅 Grunnlegger av Oppdretterportalen</div>':'')+
-      '<div class="tags"><span class="tag">'+cleanText(b.breed,"Rase")+'</span><span class="tag">'+cleanText(b.area,"Norge")+'</span><span class="tag">'+cleanText(b.puppies_available,"Info")+'</span></div>'+
+      '<div class="title-row"><div><h2>'+cleanText(b.kennel_name,"Oppdretter")+'</h2>'+(b.founder?'<div class="founder">🏅 Grunnlegger av Oppdretterportalen</div>':'')+'</div><div class="approved">✅ Godkjent</div></div>'+
+      '<div class="tags"><span class="tag">🐾 '+cleanText(b.breed,"Rase")+'</span><span class="tag">📍 '+cleanText(b.area,"Norge")+'</span><span class="tag">❤️ '+cleanText(b.puppies_available,"Info")+'</span></div>'+
       '<p class="about">'+cleanText(b.about,"Denne oppdretteren er godkjent og publisert på Hundenevåre.com.")+'</p>'+
-      '<div class="info">📍 '+cleanText(b.municipality,"")+' '+cleanText(b.area,"")+'<br>🐾 Planlagt kull: '+cleanText(b.planned_litter)+'<br>🩺 Helse: '+cleanText(b.health_tests)+'<br>📦 Pakke: '+cleanText(b.package_type,"")+'</div>'+
+      '<div class="info-grid"><div class="info-box">📍 <b>Sted</b><br>'+cleanText(b.municipality,"")+' '+cleanText(b.area,"")+'</div><div class="info-box">🐾 <b>Planlagt kull</b><br>'+cleanText(b.planned_litter)+'</div><div class="info-box">🩺 <b>Helse</b><br>'+cleanText(b.health_tests)+'</div><div class="info-box">📦 <b>Pakke</b><br>'+cleanText(b.package_type,"")+'</div></div>'+
       (gallery?'<div class="gallery">'+gallery+'</div>':'')+
-      '<div class="actions"><a class="btn green" href="'+contactEmail+'">📩 Kontakt</a><a class="btn" href="'+webLink+'">🌐 Mer info</a></div>'+
+      '<div class="actions"><a class="btn green" href="'+contactEmail+'">📩 Kontakt</a><a class="btn" href="'+webLink+'" target="_blank">🌐 Mer info</a></div>'+
       '</div>';
     cards.appendChild(div);
   });
 }
-
 document.getElementById("search").addEventListener("input", load);
 document.getElementById("breed").addEventListener("input", load);
 document.getElementById("area").addEventListener("input", load);
