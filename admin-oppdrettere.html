@@ -1,52 +1,8 @@
-<!DOCTYPE html>
-<html lang="no"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Oppdrettere 4.0</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;color:#123c73;background:radial-gradient(circle at 8% 6%,rgba(255,211,138,.55),transparent 28%),radial-gradient(circle at 92% 8%,rgba(126,200,255,.55),transparent 32%),linear-gradient(180deg,#dbeafe 0%,#eef6ff 45%,#fff7ed 100%);min-height:100vh}
-.wrap{max-width:1250px;margin:auto;padding:20px 14px 70px}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:rgba(255,255,255,.9);border-radius:28px;padding:14px 18px;box-shadow:0 12px 28px rgba(0,45,110,.14);margin-bottom:22px}
-.logo{display:flex;gap:10px;align-items:center;font-size:24px;font-weight:900;color:#004cff}.logo-badge{width:48px;height:48px;border-radius:17px;background:linear-gradient(145deg,#1f8fff,#004cff);color:white;display:flex;align-items:center;justify-content:center}
-.nav{display:flex;gap:9px;flex-wrap:wrap}.nav a{text-decoration:none;background:#eaf2ff;color:#004cff;border-radius:999px;padding:10px 14px;font-weight:900}
-.hero{border-radius:38px;padding:38px 22px;text-align:center;color:white;background:linear-gradient(145deg,#1f8fff,#004cff 46%,#7c3aed);box-shadow:0 22px 52px rgba(0,45,110,.28);margin-bottom:22px}
-.hero h1{font-size:clamp(2.2rem,6vw,4.4rem);margin-bottom:12px}.hero p{max-width:850px;margin:auto;font-size:18px;line-height:1.6;font-weight:700;color:#eef6ff}
-.card{background:white;border-radius:30px;padding:22px;box-shadow:0 14px 28px rgba(0,0,0,.12);margin-top:18px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}
-label{display:block;font-weight:900;margin-bottom:6px;color:#123c73}
-input,select,textarea{width:100%;padding:13px 14px;border:1px solid #cfe3ff;border-radius:15px;font-size:16px;font-family:Arial,sans-serif}
-textarea{min-height:120px}
-button,.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:none;border-radius:999px;padding:14px 18px;font-size:16px;font-weight:900;cursor:pointer;color:white;background:linear-gradient(145deg,#1f8fff,#004cff)}
-.green{background:linear-gradient(145deg,#22c55e,#16a34a)!important}.red{background:linear-gradient(145deg,#ef4444,#b91c1c)!important}.orange{background:linear-gradient(145deg,#f59e0b,#f97316)!important}
-.notice{background:#fff7ed;border:1px solid #fed7aa;border-radius:22px;padding:16px;color:#92400e;font-weight:800;line-height:1.55;margin-top:14px}
-.msg{text-align:center;margin-top:16px;font-size:19px;font-weight:900}
-@media(max-width:760px){.grid{grid-template-columns:1fr}.nav a{flex:1 1 42%;text-align:center}.topbar{justify-content:center}}
-.admin-card{background:white;border-radius:24px;padding:18px;box-shadow:0 10px 22px rgba(0,0,0,.1);margin-bottom:14px}.admin-card h2{color:#001d4a}.meta{line-height:1.7;font-weight:700}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.thumb{width:140px;height:90px;object-fit:cover;border-radius:14px;margin:8px}</style></head>
-<body><div class="wrap"><header class="topbar"><div class="logo"><div class="logo-badge">🐾</div><span>Admin Oppdrettere</span></div><nav class="nav"><a href="oppdrettere.html">🐶 Oppdrettere</a><a href="index.html">🏠 Forside</a></nav></header>
-<section class="hero"><h1>🔐 Admin Oppdrettere 4.0</h1><p>Godkjenn, avvis og verifiser oppdretterprofiler.</p></section>
-<div class="card"><button class="orange" onclick="loadAdmin('venter')">🟡 Venter</button> <button class="green" onclick="loadAdmin('godkjent')">✅ Godkjent</button> <button class="red" onclick="loadAdmin('avvist')">❌ Avvist</button></div>
-<div id="msg" class="msg">Laster...</div><div id="list"></div></div>
-<script>
-
-const SUPABASE_URL = "https://kxudiviidwwwclbzgdyx.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH";
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-const BUCKET = "breeder-images";
-
-async function loadAdmin(status){
- list.innerHTML=""; msg.textContent="Laster "+status+"...";
- const {data,error}=await supabase.from("breeders").select("*").eq("status",status).order("created_at",{ascending:false});
- if(error){msg.textContent="Feil: "+error.message;return;}
- if(!data.length){msg.textContent="Ingen med status: "+status;return;}
- msg.textContent="";
- data.forEach(b=>{
-  const imgs=[b.logo_url,b.cover_url,...(b.image_urls||[])].filter(Boolean).map(u=>`<img class="thumb" src="${u}">`).join("");
-  const div=document.createElement("div"); div.className="admin-card";
-  div.innerHTML=`<h2>🐶 ${b.kennel_name}</h2><div class="meta">Status: ${b.status}<br>Rase: ${b.breed||""}<br>Eier: ${b.owner_name||""}<br>Sted: ${b.municipality||""} / ${b.county||""}<br>Kontakt: ${b.email||""} ${b.phone||""}<br>Kennel/registrering: ${b.kennel_registration||""}<br>Pakke: ${b.package_type||"basis"}<br>Planlagt kull: ${b.planned_litter||""}<br>Helse: ${b.health_tests||""}<br>Om: ${b.about||""}</div><div>${imgs}</div><div class="actions"><button class="green" onclick="approve('${b.id}')">✅ Godkjenn/verifiser</button><button class="red" onclick="rejectBreeder('${b.id}')">❌ Avvis</button><button class="orange" onclick="waiting('${b.id}')">🟡 Sett venter</button></div>`;
-  list.appendChild(div);
- });
-}
-async function approve(id){const {error}=await supabase.from("breeders").update({status:"godkjent",verified:true,approved_at:new Date().toISOString()}).eq("id",id); if(error)alert(error.message); else loadAdmin("venter");}
-async function rejectBreeder(id){const {error}=await supabase.from("breeders").update({status:"avvist",verified:false}).eq("id",id); if(error)alert(error.message); else loadAdmin("venter");}
-async function waiting(id){const {error}=await supabase.from("breeders").update({status:"venter",verified:false}).eq("id",id); if(error)alert(error.message); else loadAdmin("venter");}
-loadAdmin("venter");
+<!doctype html><html lang="no"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin oppdrettere</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:linear-gradient(180deg,#dbeafe,#fff7ed);color:#123c73}.wrap{max-width:1150px;margin:auto;padding:16px 10px 55px}.top{background:white;border-radius:24px;padding:14px;box-shadow:0 10px 22px #0002;margin-bottom:14px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.logo{font-size:23px;font-weight:900;color:#004cff}.nav{display:flex;gap:8px;flex-wrap:wrap}.nav a,.btn{background:#eaf2ff;color:#004cff;text-decoration:none;border-radius:999px;padding:10px 13px;font-weight:900}.hero{background:linear-gradient(135deg,#1f8fff,#004cff,#7c3aed);color:white;border-radius:30px;padding:28px 15px;text-align:center;box-shadow:0 18px 40px #0003;margin-bottom:16px}.hero h1{font-size:clamp(2rem,7vw,4rem);margin-bottom:8px}.hero p{font-size:17px;line-height:1.5;font-weight:700}.card{background:white;border-radius:25px;padding:17px;box-shadow:0 12px 25px #0002;margin-bottom:15px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}label{font-weight:900;display:block;margin-bottom:5px}input,select,textarea{width:100%;padding:12px;border:1px solid #cfe3ff;border-radius:14px;font-size:16px}textarea{min-height:105px}button{border:none;border-radius:999px;padding:13px 18px;background:#2563eb;color:white;font-weight:900;cursor:pointer;font-size:16px}.green{background:#16a34a}.red{background:#dc2626}.orange{background:#f59e0b}.msg{font-weight:900;text-align:center;margin-top:12px;font-size:18px;white-space:pre-wrap}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}.bcard{background:white;border-radius:25px;overflow:hidden;box-shadow:0 12px 25px #0002}.photo{height:190px;background:#2563eb;display:flex;align-items:center;justify-content:center;font-size:70px;color:white;background-size:cover;background-position:center}.content{padding:16px}.content h2{color:#001d4a;margin-bottom:8px}.tag{display:inline-block;background:#eaf2ff;color:#004cff;border-radius:999px;padding:6px 9px;font-weight:900;font-size:12px;margin:3px}.verify{display:inline-block;background:#dcfce7;color:#166534;border-radius:999px;padding:7px 10px;font-weight:900;font-size:13px;margin:5px 0}.info{background:#f8fbff;border-radius:16px;padding:11px;line-height:1.55;font-weight:700;margin:10px 0}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.thumb{width:120px;height:80px;object-fit:cover;border-radius:12px;margin:6px}@media(max-width:850px){.grid,.cards{grid-template-columns:1fr}.top{justify-content:center}.nav{justify-content:center}.nav a{flex:1 1 42%;text-align:center;font-size:12px}}</style></head><body><div class="wrap"><div class="top"><div class="logo">🔐 Admin oppdrettere</div><div class="nav"><a href="oppdrettere.html">Oppdrettere</a><a href="index.html">Forside</a></div></div><div class="hero"><h1>Godkjenn oppdrettere</h1><p>Se nye registreringer, godkjenn dem og gjør dem synlige.</p></div><div class="card"><button class="orange" onclick="load('venter')">🟡 Venter</button> <button class="green" onclick="load('godkjent')">✅ Godkjent</button> <button class="red" onclick="load('avvist')">❌ Avvist</button><div id="msg" class="msg"></div></div><div id="list"></div></div><script>
+const client=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");let current="venter";
+async function load(status){current=status;list.innerHTML="";msg.textContent="Laster...";const r=await client.from("breeders").select("*").eq("status",status).order("created_at",{ascending:false});if(r.error){msg.textContent="Feil: "+r.error.message;return;}if(!r.data.length){msg.textContent="Ingen med status: "+status;return;}msg.textContent="Fant "+r.data.length;r.data.forEach(b=>{const imgs=[b.logo_url,...(b.image_urls||[])].filter(Boolean).map(u=>'<img class="thumb" src="'+u+'">').join("");const div=document.createElement("div");div.className="card";div.innerHTML='<h2>🐶 '+(b.kennel_name||"")+'</h2><div class="info">Status: '+b.status+'<br>Rase: '+(b.breed||"")+'<br>Kontakt: '+(b.owner_name||"")+' / '+(b.email||"")+'<br>Sted: '+(b.area||"")+' '+(b.municipality||"")+'<br>Kennel/registrering: '+(b.kennel_registration||"")+'<br>Planlagt kull: '+(b.planned_litter||"")+'<br>Ledige valper: '+(b.puppies_available||"")+'<br>Helse: '+(b.health_tests||"")+'<br>Om: '+(b.about||"")+'</div><div>'+imgs+'</div><div class="actions"><button class="green" onclick="approve(\''+b.id+'\')">✅ Godkjenn</button><button class="red" onclick="rejectB(\''+b.id+'\')">❌ Avvis</button><button class="orange" onclick="founder(\''+b.id+'\')">🏅 Grunnlegger</button></div>';list.appendChild(div);});}
+async function approve(id){const r=await client.from("breeders").update({status:"godkjent",verified:true}).eq("id",id);if(r.error)alert(r.error.message);else load(current);}
+async function rejectB(id){const r=await client.from("breeders").update({status:"avvist",verified:false}).eq("id",id);if(r.error)alert(r.error.message);else load(current);}
+async function founder(id){const r=await client.from("breeders").update({founder:true}).eq("id",id);if(r.error)alert(r.error.message);else load(current);}
+load("venter");
 </script></body></html>
