@@ -27,13 +27,13 @@ button,.btn{display:inline-flex;align-items:center;justify-content:center;text-d
 .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}.gallery img{width:100%;height:170px;object-fit:cover;border-radius:18px;box-shadow:0 8px 18px rgba(0,0,0,.12)}
 @media(max-width:800px){.profile-grid,.gallery{grid-template-columns:1fr}}
 </style></head><body><div class="wrap">
-<header class="topbar"><div class="logo"><div class="logo-badge">🐾</div><span>Hundene våre</span></div><nav class="nav"><a href="oppdrettere-live.html">⬅️ Oppdrettere</a><a href="index.html">🏠 Forside</a></nav></header>
+<header class="topbar"><div class="logo"><div class="logo-badge">🐾</div><span>Hundene våre</span></div><nav class="nav"><a href="oppdrettere.html">⬅️ Oppdrettere</a><a href="index.html">🏠 Forside</a></nav></header>
 <section class="cover" id="cover"><div><h1 id="title">🐶 Oppdretterprofil</h1><p id="sub"></p><div id="ver"></div></div></section>
 <section class="card" id="content">Laster profil...</section>
 </div><script>
 
-const SUPABASE_URL = "SETT_INN_SUPABASE_URL_HER";
-const SUPABASE_ANON_KEY = "SETT_INN_SUPABASE_ANON_KEY_HER";
+const SUPABASE_URL = "https://kxudiviidwwwclbzgdyx.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const BUCKET = "breeder-images";
 
