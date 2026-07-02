@@ -3,289 +3,544 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐾 Kennel-simulator</title>
+<title>Kennelprofil – Hundene våre</title>
 
 <style>
-body{margin:0;font-family:Arial,sans-serif;background:#eef6ff;color:#123c73;text-align:center}
-.box{max-width:950px;margin:20px auto;background:white;padding:25px;border-radius:25px;box-shadow:0 10px 25px rgba(0,0,0,.12)}
-input,select{width:100%;padding:14px;margin:10px 0;border-radius:14px;border:1px solid #ccc;font-size:18px}
-button{display:block;width:100%;margin:10px 0;padding:15px;border:none;border-radius:16px;background:#2563eb;color:white;font-size:18px;font-weight:bold;cursor:pointer}
-button:hover{background:#1d4ed8}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:20px 0}
-.stat,#dogList,#shop,#log{background:#f8fafc;padding:15px;border-radius:18px;margin-top:15px}
-.stat{font-weight:bold}
-#dogList,#shop,#log{text-align:left;line-height:1.5}
-.hidden{display:none}
-.back{display:inline-block;margin-top:20px;color:#2563eb;font-weight:bold;text-decoration:none}
-.shopbtn{background:#f97316}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+body{
+  font-family:Arial,sans-serif;
+  color:#123c73;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 8% 6%,rgba(255,220,130,.72),transparent 28%),
+    radial-gradient(circle at 92% 8%,rgba(126,200,255,.62),transparent 33%),
+    linear-gradient(180deg,#dbeafe 0%,#eef6ff 48%,#fff7ed 100%);
+}
+
+.wrap{
+  max-width:1250px;
+  margin:auto;
+  padding:20px 14px 70px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  background:rgba(255,255,255,.92);
+  border-radius:30px;
+  padding:14px 18px;
+  box-shadow:0 14px 30px rgba(0,45,110,.14);
+  margin-bottom:22px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:24px;
+  font-weight:900;
+  color:#004cff;
+}
+
+.logo-badge{
+  width:50px;
+  height:50px;
+  border-radius:18px;
+  background:linear-gradient(145deg,#1f8fff,#004cff);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+}
+
+.nav a{
+  text-decoration:none;
+  background:linear-gradient(145deg,#ffffff,#dff3ff);
+  color:#004cff;
+  border:1px solid #b8ddff;
+  border-radius:999px;
+  padding:10px 14px;
+  font-weight:900;
+}
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  border-radius:46px;
+  min-height:520px;
+  color:white;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:24px;
+  align-items:center;
+  padding:48px 32px;
+  background:
+    radial-gradient(circle at 18% 18%,rgba(255,255,255,.38),transparent 24%),
+    linear-gradient(145deg,#1f8fff,#004cff 45%,#7c3aed 100%);
+  box-shadow:0 25px 60px rgba(0,45,110,.30);
+}
+
+.hero h1{
+  font-size:clamp(2.5rem,6vw,5rem);
+  line-height:1.02;
+  margin-bottom:12px;
+  text-shadow:0 0 13px #fff,0 0 28px rgba(126,200,255,.75);
+}
+
+.hero p{
+  color:#eef6ff;
+  font-size:clamp(1rem,2.2vw,1.3rem);
+  line-height:1.65;
+  font-weight:700;
+}
+
+.badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:18px 0;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.32);
+  border-radius:999px;
+  padding:10px 14px;
+  font-weight:900;
+}
+
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:24px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  border-radius:999px;
+  padding:15px 21px;
+  font-size:17px;
+  font-weight:900;
+  color:white;
+  background:linear-gradient(145deg,#ff8a3d,#f59e0b);
+  box-shadow:0 0 20px rgba(255,138,61,.38);
+}
+
+.btn.green{background:linear-gradient(145deg,#22c55e,#16a34a)}
+.btn.blue{background:linear-gradient(145deg,#1f8fff,#004cff)}
+
+.hero-photo{
+  min-height:360px;
+  border-radius:38px;
+  background:
+    radial-gradient(circle at 35% 25%,rgba(255,255,255,.72),transparent 22%),
+    linear-gradient(145deg,#ffd38a,#ff8a3d);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:150px;
+  box-shadow:inset -18px -22px 45px rgba(15,23,42,.20),0 18px 45px rgba(0,0,0,.24);
+}
+
+.section{margin-top:38px}
+
+.section h2{
+  text-align:center;
+  font-size:clamp(2rem,5vw,3.1rem);
+  margin-bottom:8px;
+  color:#001d4a;
+}
+
+.lead{
+  text-align:center;
+  color:#4a1a1a;
+  font-size:19px;
+  font-weight:900;
+  margin-bottom:24px;
+  line-height:1.5;
+}
+
+.profile-grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:22px;
+}
+
+.card{
+  background:white;
+  border-radius:32px;
+  padding:24px;
+  box-shadow:0 14px 28px rgba(0,0,0,.12);
+}
+
+.card h3{
+  color:#001d4a;
+  font-size:27px;
+  margin-bottom:12px;
+}
+
+.card p{
+  color:#334155;
+  line-height:1.65;
+  font-weight:700;
+  margin-bottom:12px;
+}
+
+.info-list{
+  background:#f8fbff;
+  border-radius:22px;
+  padding:16px;
+  line-height:1.8;
+  font-weight:800;
+  color:#123c73;
+}
+
+.check-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.check-card{
+  background:white;
+  border-radius:26px;
+  padding:20px;
+  box-shadow:0 12px 25px rgba(0,0,0,.10);
+  font-weight:900;
+  color:#123c73;
+  line-height:1.5;
+}
+
+.check-card span{
+  display:block;
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+.litter-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.litter-card{
+  background:white;
+  border-radius:30px;
+  padding:24px;
+  box-shadow:0 14px 28px rgba(0,0,0,.12);
+}
+
+.litter-card h3{
+  color:#001d4a;
+  font-size:25px;
+  margin-bottom:12px;
+}
+
+.litter-card p{
+  color:#334155;
+  font-weight:700;
+  line-height:1.6;
+}
+
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+
+.gallery-item{
+  height:170px;
+  border-radius:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:64px;
+  color:white;
+  background:linear-gradient(145deg,#1f8fff,#004cff);
+  box-shadow:0 12px 25px rgba(0,0,0,.13);
+}
+
+.gallery-item:nth-child(2){background:linear-gradient(145deg,#f59e0b,#ff8a3d)}
+.gallery-item:nth-child(3){background:linear-gradient(145deg,#f472b6,#7c3aed)}
+.gallery-item:nth-child(4){background:linear-gradient(145deg,#22c55e,#16a34a)}
+
+.contact-box{
+  background:
+    radial-gradient(circle at top,#ffffff 0%,#dbeafe 42%,#bfdbfe 100%);
+  border-radius:38px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 15px 32px rgba(0,0,0,.13);
+}
+
+.contact-box h2{
+  color:#001d4a;
+  font-size:clamp(2rem,5vw,3rem);
+  margin-bottom:10px;
+}
+
+.contact-box p{
+  color:#334155;
+  font-size:19px;
+  line-height:1.6;
+  font-weight:800;
+  max-width:760px;
+  margin:0 auto 22px;
+}
+
+.footer{
+  text-align:center;
+  margin-top:42px;
+  color:#14346d;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.note{
+  margin-top:18px;
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#92400e;
+  border-radius:22px;
+  padding:16px;
+  font-weight:800;
+  line-height:1.55;
+}
+
+@media(max-width:1050px){
+  .hero,.profile-grid{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+
+  .hero-actions,.badges{
+    justify-content:center;
+  }
+
+  .check-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .gallery{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:720px){
+  .topbar{
+    justify-content:center;
+  }
+
+  .nav a{
+    flex:1 1 42%;
+    text-align:center;
+  }
+
+  .hero{
+    padding:34px 16px;
+  }
+
+  .hero-photo{
+    min-height:250px;
+    font-size:110px;
+  }
+
+  .check-grid,.litter-grid,.gallery{
+    grid-template-columns:1fr;
+  }
+}
 </style>
 </head>
 
 <body>
-<div class="box">
-<h1>🐾 Kennel-simulator</h1>
+<div class="wrap">
 
-<div id="setup">
-<h2>Start din kennel</h2>
-<input type="text" id="kennelName" placeholder="Kennelnavn">
-<select id="starterBreed">
-<option>Golden Retriever</option>
-<option>Bichon Frise</option>
-<option>Dobermann</option>
-<option>Pomeranian</option>
-<option>Boxer</option>
-<option>Newfoundland</option>
-</select>
-<input type="text" id="starterDogName" placeholder="Navn på første hund">
-<button onclick="startGame()">🚀 Start Kennel</button>
-</div>
+<header class="topbar">
+  <div class="logo">
+    <div class="logo-badge">🐾</div>
+    <span>Hundene våre</span>
+  </div>
 
-<div id="game" class="hidden">
-<h2 id="kennelTitle"></h2>
+  <nav class="nav">
+    <a href="index.html">🏠 Forside</a>
+    <a href="oppdrettere.html">🐶 Oppdrettere</a>
+    <a href="registrer-oppdretter.html">➕ Registrer kennel</a>
+    <a href="kunnskap.html">📚 Kunnskap</a>
+  </nav>
+</header>
 
-<div class="stats">
-<div class="stat">📅 Dag: <span id="day">1</span></div>
-<div class="stat">💰 Penger: <span id="money">1000</span> kr</div>
-<div class="stat">🐶 Hunder: <span id="dogs">1</span></div>
-<div class="stat">⭐ Rykte: <span id="reputation">10</span></div>
-<div class="stat">❤️ Hundelykke: <span id="happiness">70</span></div>
-<div class="stat">🏠 Nivå: <span id="level">1</span></div>
-</div>
+<section class="hero">
+  <div>
+    <div class="badges">
+      <span class="badge">🏅 Grunnlegger av Oppdretterportalen</span>
+      <span class="badge">✅ Kontrollert profil</span>
+      <span class="badge">🐾 Planlagte kull</span>
+    </div>
 
-<h3>🐾 Kennelhunder</h3>
-<div id="dogList"></div>
+    <h1>Solstrand Kennel</h1>
+    <p>
+      Dette er en demo av hvordan en kennelprofil kan se ut på Hundenevåre.com.
+      Her kan oppdretteren presentere kennel, rase, helse, planlagte kull,
+      ledige valper, bilder og kontaktinformasjon.
+    </p>
 
-<h3>Velg dagens arbeid</h3>
-<button onclick="action('train')">🐕 Tren hundene</button>
-<button onclick="action('care')">🛁 Stell og kos</button>
-<button onclick="action('customer')">👥 Ta imot kunde</button>
-<button onclick="action('show')">🏆 Hundeshow</button>
-<button onclick="action('upgrade')">🏠 Oppgrader kennel</button>
-<button onclick="buyDog()">🐶 Kjøp ny hund</button>
+    <div class="hero-actions">
+      <a class="btn" href="#kontakt">📩 Kontakt kennel</a>
+      <a class="btn green" href="#kull">🐾 Se kullplaner</a>
+      <a class="btn blue" href="oppdrettere.html">⬅️ Til oppdrettere</a>
+    </div>
+  </div>
 
-<h3>🛒 Kennelbutikk</h3>
-<div id="shop"></div>
+  <div class="hero-photo">🐶</div>
+</section>
 
-<button onclick="resetGame()">🔄 Start nytt spill</button>
+<section class="section">
+  <h2>🐶 Om kennelen</h2>
+  <p class="lead">En ryddig presentasjon av oppdretteren.</p>
 
-<div id="log">Velkommen til kennelen 🐾</div>
-</div>
+  <div class="profile-grid">
+    <div class="card">
+      <h3>Solstrand Kennel</h3>
+      <p>
+        Solstrand Kennel er en liten familieoppdretter med fokus på trygge,
+        sosiale og friske hunder. Oppdrettet legger vekt på godt lynne,
+        god helse og tett oppfølging av valpekjøpere.
+      </p>
+      <p>
+        Dette er eksempeltekst. Når en ekte oppdretter er klar, bytter du bare
+        ut teksten med opplysningene de sender deg.
+      </p>
+    </div>
 
-<a class="back" href="hundespill.html">← Tilbake til spill</a>
-</div>
-
-<script>
-let kennelName="";
-let dogsData=[];
-let day=1,money=1000,reputation=10,happiness=70,level=1;
-let items=[];
-
-const breeds=["Golden Retriever","Bichon Frise","Dobermann","Pomeranian","Boxer","Newfoundland","Puddel","Boston Terrier"];
-const shopItems=[
-{name:"🛏️ Hundeseng",price:400,effect:"lykke"},
-{name:"🎾 Leker",price:300,effect:"lykke"},
-{name:"🪮 Børste",price:350,effect:"show"},
-{name:"🥩 Premium hundemat",price:500,effect:"helse"},
-{name:"🏃 Treningsutstyr",price:700,effect:"trening"}
-];
-
-function startGame(){
-  kennelName=document.getElementById("kennelName").value;
-  const breed=document.getElementById("starterBreed").value;
-  const dogName=document.getElementById("starterDogName").value;
-
-  if(kennelName.trim()===""||dogName.trim()===""){
-    alert("Fyll ut alle feltene 🙂");
-    return;
-  }
-
-  dogsData.push({name:dogName,breed:breed});
-  document.getElementById("setup").classList.add("hidden");
-  document.getElementById("game").classList.remove("hidden");
-  update();
-  saveGame();
-}
-
-function update(){
-  document.getElementById("kennelTitle").innerHTML="🏠 "+kennelName;
-  document.getElementById("day").innerHTML=day;
-  document.getElementById("money").innerHTML=money;
-  document.getElementById("dogs").innerHTML=dogsData.length;
-  document.getElementById("reputation").innerHTML=reputation;
-  document.getElementById("happiness").innerHTML=happiness;
-  document.getElementById("level").innerHTML=level;
-
-  document.getElementById("dogList").innerHTML=dogsData.map(d=>"🐶 <b>"+d.name+"</b> - "+d.breed).join("<br><br>");
-
-  document.getElementById("shop").innerHTML=shopItems.map(item=>{
-    const owned=items.includes(item.name);
-    return `
-      <div style="margin-bottom:12px;">
-        <b>${item.name}</b> - ${item.price} kr
-        <button class="shopbtn" onclick="buyItem('${item.name}',${item.price})" ${owned?"disabled":""}>
-          ${owned?"✅ Kjøpt":"Kjøp"}
-        </button>
+    <div class="card">
+      <h3>📌 Kort info</h3>
+      <div class="info-list">
+        🐾 Rase: Bichon Frisé<br>
+        📍 Sted: Karmøy / Haugalandet<br>
+        🏅 Status: Grunnlegger<br>
+        ❤️ Valpeliste: Åpen<br>
+        📅 Neste kull: Sommer 2026<br>
+        ✅ Profil: Kontrollert av Hundenevåre.com
       </div>
-    `;
-  }).join("");
-}
+    </div>
+  </div>
+</section>
 
-function log(text){document.getElementById("log").innerHTML=text;}
+<section class="section">
+  <h2>✅ Dette tilbyr kennelen</h2>
+  <p class="lead">En rask oversikt for valpekjøpere.</p>
 
-function saveGame(){
-  localStorage.setItem("kennelSave",JSON.stringify({
-    kennelName,dogsData,day,money,reputation,happiness,level,items
-  }));
-}
+  <div class="check-grid">
+    <div class="check-card"><span>🩺</span>Helseundersøkte foreldredyr</div>
+    <div class="check-card"><span>📄</span>Kontrakt ved salg</div>
+    <div class="check-card"><span>🎁</span>Valpepakke følger med</div>
+    <div class="check-card"><span>☎️</span>Oppfølging etter levering</div>
+    <div class="check-card"><span>🐾</span>Råd om stell og trening</div>
+    <div class="check-card"><span>🏡</span>Valper vokser opp i hjemmemiljø</div>
+  </div>
+</section>
 
-function loadGame(){
-  const save=localStorage.getItem("kennelSave");
-  if(save){
-    const d=JSON.parse(save);
-    kennelName=d.kennelName; dogsData=d.dogsData||[]; day=d.day; money=d.money;
-    reputation=d.reputation; happiness=d.happiness; level=d.level; items=d.items||[];
-    document.getElementById("setup").classList.add("hidden");
-    document.getElementById("game").classList.remove("hidden");
-    log("💾 Lagret kennel lastet!");
-  }
-}
+<section class="section" id="kull">
+  <h2>🐾 Kull og valper</h2>
+  <p class="lead">Her kan oppdretteren vise planlagte kull og ledige valper.</p>
 
-function resetGame(){
-  localStorage.removeItem("kennelSave");
-  location.reload();
-}
+  <div class="litter-grid">
+    <div class="litter-card">
+      <h3>📅 Planlagt kull</h3>
+      <p>
+        Neste kull er planlagt sommeren 2026.
+        Interesserte kan ta kontakt for informasjon om valpeliste.
+      </p>
+      <div class="note">
+        Dette er eksempeltekst som kan byttes ut når ekte informasjon kommer inn.
+      </div>
+    </div>
 
-function nextDay(){
-  day++;
-  happiness-=3;
-  if(happiness<0)happiness=0;
+    <div class="litter-card">
+      <h3>❤️ Ledige valper</h3>
+      <p>
+        Valpeliste er åpen. Ingen valper er annonsert ledige akkurat nå.
+      </p>
+      <div class="note">
+        Her kan du skrive “Ledige valper”, “Valpeliste åpen” eller “Ingen ledige valper”.
+      </div>
+    </div>
+  </div>
+</section>
 
-  if(day%7===0){
-    money-=dogsData.length*80;
-    log("📅 Ny uke! Du betalte drift.");
-  }
+<section class="section">
+  <h2>🩺 Helse og oppfølging</h2>
+  <p class="lead">En egen seksjon som skaper trygghet.</p>
 
-  randomEvent();
-  saveGame();
-  update();
-}
+  <div class="card">
+    <p>
+      Kennelen følger anbefalte helsekontroller for rasen.
+      Her kan man skrive om patella, øyelysing, HD/AD, DNA-tester,
+      raseklubbens anbefalinger og annet som er relevant.
+    </p>
+    <div class="info-list">
+      🩺 Helse: Patella / øyelysing<br>
+      📚 Rasekunnskap: Ja<br>
+      ☎️ Oppfølging: Ja<br>
+      🏡 Fokus: Familiehund og godt lynne
+    </div>
+  </div>
+</section>
 
-function randomEvent(){
-  const events=[
-    "⭐ Kennelen fikk gode anmeldelser.",
-    "🐕 Hundene lærte nye triks.",
-    "📞 Nye kunder tok kontakt.",
-    "🏆 En hund gjorde det bra.",
-    "❤️ Hundene virker glade i dag."
-  ];
+<section class="section">
+  <h2>📷 Galleri</h2>
+  <p class="lead">Her kan du senere legge inn ekte bilder fra oppdretteren.</p>
 
-  if(Math.random()<0.35){
-    const e=events[Math.floor(Math.random()*events.length)];
-    log(document.getElementById("log").innerHTML+"<br><br>🎲 "+e);
-    reputation+=1;
-  }
-}
+  <div class="gallery">
+    <div class="gallery-item">🐶</div>
+    <div class="gallery-item">🐾</div>
+    <div class="gallery-item">🏡</div>
+    <div class="gallery-item">❤️</div>
+  </div>
+</section>
 
-function has(effect){
-  return items.some(i=>{
-    const item=shopItems.find(s=>s.name===i);
-    return item && item.effect===effect;
-  });
-}
+<section class="section" id="kontakt">
+  <div class="contact-box">
+    <h2>📩 Kontakt Solstrand Kennel</h2>
+    <p>
+      Interessert i rasen eller planlagte kull?
+      Ta kontakt direkte med oppdretteren.
+    </p>
 
-function action(type){
-  if(type==="train"){
-    reputation+=has("trening")?6:3;
-    happiness-=4;
-    log("🐕 Du trente hundene.");
-  }
+    <div class="hero-actions" style="justify-content:center;">
+      <a class="btn green" href="mailto:post@hundenevåre.com">📧 Send e-post</a>
+      <a class="btn blue" href="#">🌐 Nettside</a>
+      <a class="btn" href="#">👍 Facebook</a>
+    </div>
 
-  if(type==="care"){
-    happiness+=has("lykke")?16:10;
-    if(happiness>100)happiness=100;
-    reputation+=1;
-    log("🛁 Hundene fikk stell og kos.");
-  }
+    <div class="note">
+      Dette er en demo. Når ekte oppdretter legges inn, bytter du kontaktlenkene til oppdretterens egne.
+    </div>
+  </div>
+</section>
 
-  if(type==="customer"){
-    let earned=150+(level*50)+(reputation*3);
-    money+=earned;
-    happiness-=5;
-    reputation+=2;
-    log("👥 Kunde besøkte kennelen. +"+earned+" kr.");
-  }
+<div class="footer">
+  Hundenevåre.com – Kennelprofil 🐶
+</div>
 
-  if(type==="show"){
-    let chance=reputation+happiness+(has("show")?25:0);
-    if(chance>100){
-      money+=600;
-      reputation+=8;
-      log("🏆 Du vant hundeshow!");
-    }else{
-      reputation+=2;
-      money-=100;
-      log("🙂 Du fikk erfaring fra show.");
-    }
-  }
-
-  if(type==="upgrade"){
-    let cost=level*700;
-    if(money>=cost){
-      money-=cost; level++; reputation+=5;
-      log("🏠 Kennelen ble oppgradert!");
-    }else{
-      log("❌ Du trenger "+cost+" kr.");
-      update(); return;
-    }
-  }
-
-  nextDay();
-}
-
-function buyDog(){
-  let cost=900+(dogsData.length*200);
-  if(money<cost){
-    log("❌ Du trenger "+cost+" kr for ny hund.");
-    return;
-  }
-
-  const breed=breeds[Math.floor(Math.random()*breeds.length)];
-  const names=["Bella","Max","Luna","Charlie","Milo","Rocky","Leo","Molly"];
-  const name=names[Math.floor(Math.random()*names.length)];
-
-  dogsData.push({name:name,breed:breed});
-  money-=cost; happiness+=5; reputation+=3;
-  log("🐶 Du kjøpte "+name+" ("+breed+")!");
-  nextDay();
-}
-
-function buyItem(name,price){
-  if(items.includes(name)){
-    log("✅ Dette utstyret har du allerede.");
-    return;
-  }
-
-  if(money<price){
-    log("❌ Du har ikke nok penger til "+name+".");
-    return;
-  }
-
-  money-=price;
-  items.push(name);
-
-  if(name.includes("Hundeseng")||name.includes("Leker")) happiness+=8;
-  if(name.includes("Premium")) happiness+=6;
-  if(happiness>100)happiness=100;
-
-  reputation+=2;
-  log("🛒 Du kjøpte "+name+"!");
-  saveGame();
-  update();
-}
-
-loadGame();
-update();
-</script>
-
+</div>
 </body>
 </html>
