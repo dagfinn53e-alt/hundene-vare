@@ -70,6 +70,7 @@ button{
 .green{background:#16a34a}
 .red{background:#dc2626}
 .orange{background:#f59e0b}
+.black{background:#111827}
 .msg{font-weight:900;text-align:center;margin-top:12px;font-size:18px;white-space:pre-wrap}
 .info{
   background:#f8fbff;
@@ -82,10 +83,20 @@ button{
 .thumb{width:120px;height:80px;object-fit:cover;border-radius:12px;margin:6px}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .hidden{display:none}
+.warning{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#92400e;
+  border-radius:18px;
+  padding:13px;
+  font-weight:800;
+  margin-top:10px;
+}
 @media(max-width:850px){
   .top{justify-content:center}
   .nav{justify-content:center}
   .nav a{flex:1 1 42%;text-align:center;font-size:12px}
+  button{width:100%;margin:4px 0}
 }
 </style>
 </head>
@@ -97,6 +108,7 @@ button{
   <div class="logo">🔐 Admin Oppdrettere</div>
   <div class="nav">
     <a href="index.html">Forside</a>
+    <a href="oppdretterportal.html">Portal</a>
     <a href="oppdrettere.html">Oppdrettere</a>
     <a href="registrer-oppdretter.html">Registrer</a>
   </div>
@@ -104,7 +116,7 @@ button{
 
 <div class="hero">
   <h1>Godkjenn oppdrettere</h1>
-  <p>Logg inn med enkel adgangskode og godkjenn nye registreringer.</p>
+  <p>Godkjenn, avvis, marker grunnlegger eller slett testprofiler.</p>
 </div>
 
 <div class="card" id="loginBox">
@@ -119,6 +131,8 @@ button{
     <button class="orange" onclick="load('venter')">🟡 Venter</button>
     <button class="green" onclick="load('godkjent')">✅ Godkjent</button>
     <button class="red" onclick="load('avvist')">❌ Avvist</button>
+    <button class="black" onclick="loadAll()">📋 Alle</button>
+    <div class="warning">🗑️ Slett-knappen fjerner oppdretteren helt fra databasen. Bruk den bare på test eller feilregistreringer.</div>
     <div id="msg" class="msg"></div>
   </div>
 
@@ -131,6 +145,7 @@ button{
 const ADMIN_KODE = "hund2026";
 const client = window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
 let current = "venter";
+let allMode = false;
 
 function login(){
   const val = document.getElementById("pin").value.trim();
@@ -145,6 +160,7 @@ function login(){
 }
 
 async function load(status){
+  allMode = false;
   current = status;
   list.innerHTML = "";
   msg.textContent = "Laster...";
@@ -155,13 +171,30 @@ async function load(status){
     .eq("status", status)
     .order("created_at", {ascending:false});
 
+  renderResult(r, "status: " + status);
+}
+
+async function loadAll(){
+  allMode = true;
+  list.innerHTML = "";
+  msg.textContent = "Laster alle...";
+
+  const r = await client
+    .from("breeders")
+    .select("*")
+    .order("created_at", {ascending:false});
+
+  renderResult(r, "alle oppdrettere");
+}
+
+function renderResult(r, label){
   if(r.error){
     msg.textContent = "Feil: " + r.error.message;
     return;
   }
 
   if(!r.data.length){
-    msg.textContent = "Ingen oppdrettere med status: " + status;
+    msg.textContent = "Ingen oppdrettere med " + label;
     return;
   }
 
@@ -189,6 +222,7 @@ async function load(status){
       'Planlagt kull: '+(b.planned_litter||"")+'<br>' +
       'Ledige valper: '+(b.puppies_available||"")+'<br>' +
       'Helse: '+(b.health_tests||"")+'<br>' +
+      'Grunnlegger: '+(b.founder ? "Ja" : "Nei")+'<br>' +
       'Om: '+(b.about||"") +
       '</div>' +
       '<div>'+imgs+'</div>' +
@@ -196,6 +230,7 @@ async function load(status){
       '<button class="green" onclick="approve(\''+b.id+'\')">✅ Godkjenn</button>' +
       '<button class="red" onclick="rejectB(\''+b.id+'\')">❌ Avvis</button>' +
       '<button class="orange" onclick="founder(\''+b.id+'\')">🏅 Sett Grunnlegger</button>' +
+      '<button class="black" onclick="deleteB(\''+b.id+'\', \''+(b.kennel_name||"Oppdretter").replaceAll("\\","").replaceAll("'","")+'\')">🗑️ Slett</button>' +
       '</div>';
 
     list.appendChild(div);
@@ -205,20 +240,38 @@ async function load(status){
 async function approve(id){
   const r = await client.from("breeders").update({status:"godkjent",verified:true}).eq("id",id);
   if(r.error) alert(r.error.message);
-  else load(current);
+  else refresh();
 }
 
 async function rejectB(id){
   const r = await client.from("breeders").update({status:"avvist",verified:false}).eq("id",id);
   if(r.error) alert(r.error.message);
-  else load(current);
+  else refresh();
 }
 
 async function founder(id){
   const r = await client.from("breeders").update({founder:true}).eq("id",id);
   if(r.error) alert(r.error.message);
+  else refresh();
+}
+
+async function deleteB(id, name){
+  const ok = confirm("Er du sikker på at du vil slette: " + name + "?\n\nDette kan ikke angres.");
+  if(!ok) return;
+
+  const r = await client.from("breeders").delete().eq("id",id);
+  if(r.error) alert("Kunne ikke slette: " + r.error.message);
+  else {
+    alert("Slettet.");
+    refresh();
+  }
+}
+
+function refresh(){
+  if(allMode) loadAll();
   else load(current);
 }
 </script>
+
 </body>
 </html>
