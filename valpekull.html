@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valpekull Premium 3.0 – Hundene våre</title>
+<title>Valpekull Premium 3.1 – Hundene våre</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -87,7 +87,7 @@ button{border:none;border-radius:999px;padding:14px 20px;background:linear-gradi
 <div class="wrap">
 
 <div class="top">
-  <div class="logo">🐾 Valpekull Premium</div>
+  <div class="logo">🐾 Valpekull Premium 3.1</div>
   <div class="nav">
     <a href="index.html">🏠 Forside</a>
     <a href="oppdretterportal.html">🐶 Portal</a>
@@ -133,7 +133,38 @@ button{border:none;border-radius:999px;padding:14px 20px;background:linear-gradi
 <script>
 const client=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
 
-function t(v,f="Ikke oppgitt"){return v&&String(v).trim()?String(v).trim():f}
+const cardsEl = document.getElementById("cards");
+const msgEl = document.getElementById("msg");
+const searchEl = document.getElementById("search");
+const breedEl = document.getElementById("breed");
+const areaEl = document.getElementById("area");
+const totalCountEl = document.getElementById("totalCount");
+const availableCountEl = document.getElementById("availableCount");
+const breedCountEl = document.getElementById("breedCount");
+const kennelCountEl = document.getElementById("kennelCount");
+
+function t(v,f="Ikke oppgitt"){
+  return v !== null && v !== undefined && String(v).trim() ? String(v).trim() : f;
+}
+
+function getImages(v){
+  if(Array.isArray(v)) return v.filter(Boolean);
+  if(!v) return [];
+  if(typeof v === "string"){
+    try{
+      const parsed = JSON.parse(v);
+      if(Array.isArray(parsed)) return parsed.filter(Boolean);
+    }catch(e){}
+    return v.split(",").map(x=>x.trim()).filter(Boolean);
+  }
+  return [];
+}
+
+function isApproved(x){
+  const s = String(x.status || "").trim().toLowerCase();
+  return s === "godkjent" || s === "approved" || s === "publisert";
+}
+
 function statusClass(s){
   s=(s||"").toLowerCase();
   if(s.includes("solgt")) return "statusSolgt";
@@ -141,34 +172,67 @@ function statusClass(s){
   if(s.includes("planlagt")) return "statusPlanlagt";
   return "statusLedig";
 }
-function openImg(u){modalImg.src=u;modal.style.display="flex"}
+
+function openImg(u){
+  document.getElementById("modalImg").src=u;
+  document.getElementById("modal").style.display="flex";
+}
 
 async function load(){
-  cards.innerHTML="";
-  msg.textContent="Laster valpekull...";
-  let q=client.from("puppy_litters").select("*").eq("status","godkjent").order("created_at",{ascending:false});
-  if(breed.value.trim()) q=q.ilike("breed","%"+breed.value.trim()+"%");
-  if(area.value.trim()) q=q.ilike("area","%"+area.value.trim()+"%");
+  cardsEl.innerHTML="";
+  msgEl.textContent="Laster valpekull...";
+
+  let q=client.from("puppy_litters").select("*").order("created_at",{ascending:false});
   const r=await q;
-  if(r.error){msg.textContent="Feil: "+r.error.message;return}
-  let data=r.data||[];
-  const s=search.value.toLowerCase().trim();
-  if(s){
+
+  if(r.error){
+    msgEl.textContent="Feil fra Supabase: "+r.error.message;
+    return;
+  }
+
+  let data=(r.data||[]).filter(isApproved);
+
+  const breedVal = breedEl.value.toLowerCase().trim();
+  const areaVal = areaEl.value.toLowerCase().trim();
+  const searchVal = searchEl.value.toLowerCase().trim();
+
+  if(breedVal){
+    data=data.filter(x=>String(x.breed||"").toLowerCase().includes(breedVal));
+  }
+
+  if(areaVal){
     data=data.filter(x=>
-      (x.kennel_name||"").toLowerCase().includes(s)||
-      (x.breed||"").toLowerCase().includes(s)||
-      (x.area||"").toLowerCase().includes(s)||
-      (x.municipality||"").toLowerCase().includes(s)
+      String(x.area||"").toLowerCase().includes(areaVal) ||
+      String(x.municipality||"").toLowerCase().includes(areaVal)
     );
   }
+
+  if(searchVal){
+    data=data.filter(x=>
+      String(x.kennel_name||"").toLowerCase().includes(searchVal) ||
+      String(x.breed||"").toLowerCase().includes(searchVal) ||
+      String(x.area||"").toLowerCase().includes(searchVal) ||
+      String(x.municipality||"").toLowerCase().includes(searchVal) ||
+      String(x.title||"").toLowerCase().includes(searchVal)
+    );
+  }
+
   updateStats(data);
-  if(!data.length){msg.textContent="";cards.innerHTML='<div class="empty">Ingen godkjente valpekull funnet.</div>';return}
-  msg.textContent="Fant "+data.length+" valpekull.";
+
+  if(!data.length){
+    msgEl.textContent="";
+    cardsEl.innerHTML='<div class="empty">Ingen godkjente valpekull funnet akkurat nå.</div>';
+    return;
+  }
+
+  msgEl.textContent="Fant "+data.length+" valpekull.";
+
   data.forEach(x=>{
-    const images=(x.image_urls||[]).filter(Boolean);
+    const images=getImages(x.image_urls);
     const main=images[0]||"";
     const gallery=images.slice(1,5).map(u=>'<img src="'+u+'" onclick="openImg(\''+u+'\')">').join("");
     const kennelLink=x.breeder_id ? 'kennel.html?id='+x.breeder_id : 'kennel.html';
+
     const el=document.createElement("article");
     el.className="litter";
     el.innerHTML =
@@ -194,20 +258,21 @@ async function load(){
         (gallery?'<div class="gallery">'+gallery+'</div>':'')+
         '<div class="actions"><a class="btn green" href="'+(x.email?'mailto:'+x.email:'#')+'">📩 Kontakt</a><a class="btn orange" href="'+kennelLink+'">🏡 Se kennel</a></div>'+
       '</div>';
-    cards.appendChild(el);
+
+    cardsEl.appendChild(el);
   });
 }
 
 function updateStats(data){
-  totalCount.textContent=data.length;
-  availableCount.textContent=data.reduce((sum,x)=>sum+Number(x.available_count||0),0);
-  breedCount.textContent=new Set(data.map(x=>x.breed).filter(Boolean)).size;
-  kennelCount.textContent=new Set(data.map(x=>x.breeder_id||x.kennel_name).filter(Boolean)).size;
+  totalCountEl.textContent=data.length;
+  availableCountEl.textContent=data.reduce((sum,x)=>sum+Number(x.available_count||0),0);
+  breedCountEl.textContent=new Set(data.map(x=>x.breed).filter(Boolean)).size;
+  kennelCountEl.textContent=new Set(data.map(x=>x.breeder_id||x.kennel_name).filter(Boolean)).size;
 }
 
-search.addEventListener("input",load);
-breed.addEventListener("input",load);
-area.addEventListener("input",load);
+searchEl.addEventListener("input",load);
+breedEl.addEventListener("input",load);
+areaEl.addEventListener("input",load);
 load();
 </script>
 </body>
