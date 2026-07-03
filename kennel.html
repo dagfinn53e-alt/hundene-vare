@@ -3,34 +3,122 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kennel Premium – Hundene våre</title>
+<title>Kennelside 5.0 Premium – Hundene våre</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;color:#123c73;min-height:100vh;background:linear-gradient(180deg,#dbeafe,#eef6ff,#fff7ed)}.wrap{max-width:1240px;margin:auto;padding:14px 10px 70px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:white;border-radius:28px;padding:13px 16px;box-shadow:0 14px 34px #0002;margin-bottom:16px}.logo{font-size:23px;font-weight:900;color:#004cff}.nav{display:flex;gap:8px;flex-wrap:wrap}.nav a{background:#eaf2ff;color:#004cff;text-decoration:none;border:1px solid #b8ddff;border-radius:999px;padding:10px 13px;font-weight:900;font-size:14px}.hero{display:grid;grid-template-columns:.9fr 1.1fr;gap:26px;align-items:center;background:linear-gradient(135deg,#081f62,#004cff,#7c3aed);color:white;border-radius:44px;padding:34px;box-shadow:0 28px 70px rgba(0,45,110,.32)}.logoBox{background:white;border-radius:36px;height:340px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 22px 48px #0004}.logoBox img{width:100%;height:100%;object-fit:contain;padding:16px}.noLogo{font-size:130px;color:#004cff}.badge{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);border-radius:999px;padding:9px 13px;font-weight:900;font-size:13px;margin:4px}.gold{background:linear-gradient(135deg,#fff7c2,#ffd166);color:#6b3a00;border-color:#f59e0b}.hero h1{font-size:clamp(2.7rem,7vw,5.4rem);line-height:1.02;margin:12px 0;text-shadow:0 0 14px #fff8}.hero p{font-size:18px;line-height:1.65;font-weight:700;color:#eef6ff}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:999px;padding:13px 18px;color:white;background:#004cff;font-weight:900;min-width:135px}.green{background:#16a34a}.orange{background:#f97316}.dark{background:#111827}.section{margin-top:24px}.section h2{text-align:center;color:#001d4a;font-size:clamp(2rem,5vw,3.1rem);margin-bottom:12px}.card{background:white;border-radius:32px;padding:22px;box-shadow:0 16px 34px #0002;border:1px solid #dbeafe}.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.infoGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.info{background:#f8fbff;border:1px solid #e0edff;border-radius:18px;padding:13px;font-weight:800;line-height:1.45}.gallery{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}.gallery img{width:100%;height:190px;object-fit:cover;border-radius:20px;border:3px solid #eaf2ff;cursor:pointer}.gallery img:first-child{grid-row:span 2;height:392px}.litters{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.litter{background:white;border-radius:32px;overflow:hidden;box-shadow:0 16px 34px #0002;border:1px solid #dbeafe}.cover{height:235px;background:#004cff;display:flex;align-items:center;justify-content:center;color:white;font-size:82px;overflow:hidden}.cover img{width:100%;height:100%;object-fit:cover}.content{padding:20px}.tag{display:inline-block;background:#eaf2ff;color:#004cff;border:1px solid #b8ddff;border-radius:999px;padding:7px 10px;font-size:13px;font-weight:900;margin:3px}.msg{text-align:center;font-size:18px;font-weight:900;margin-top:20px}.modal{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;z-index:999;padding:20px}.modal img{max-width:95vw;max-height:90vh;border-radius:18px}@media(max-width:900px){.hero,.grid{grid-template-columns:1fr;text-align:center}.litters{grid-template-columns:1fr}.infoGrid{grid-template-columns:1fr}.actions{justify-content:center}}@media(max-width:700px){.wrap{padding:9px 8px 50px}.top{justify-content:center}.logo{width:100%;text-align:center;font-size:20px}.nav{width:100%;justify-content:center}.nav a{flex:1 1 42%;text-align:center;font-size:12px;padding:9px 7px}.hero{border-radius:28px;padding:18px}.logoBox{height:220px}.gallery{grid-template-columns:1fr 1fr}.gallery img,.gallery img:first-child{height:130px;grid-row:auto}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;color:#123c73;min-height:100vh;background:radial-gradient(circle at 8% 5%,rgba(255,220,130,.55),transparent 30%),radial-gradient(circle at 93% 6%,rgba(126,200,255,.48),transparent 34%),linear-gradient(180deg,#dbeafe,#eef6ff 48%,#fff7ed)}
+.wrap{max-width:1240px;margin:auto;padding:14px 10px 70px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:#fff;border:1px solid #bfd7ff;border-radius:28px;padding:13px 16px;box-shadow:0 14px 34px #0002;margin-bottom:16px}
+.logo{font-size:23px;font-weight:900;color:#004cff}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{background:#eaf2ff;color:#004cff;text-decoration:none;border:1px solid #b8ddff;border-radius:999px;padding:10px 13px;font-weight:900;font-size:14px}
+.hero{display:grid;grid-template-columns:.88fr 1.12fr;gap:28px;align-items:center;background:radial-gradient(circle at 18% 18%,rgba(255,255,255,.34),transparent 26%),radial-gradient(circle at 88% 12%,rgba(255,214,120,.32),transparent 24%),linear-gradient(135deg,#061b55,#004cff 45%,#7c3aed);color:white;border-radius:46px;padding:38px;box-shadow:0 28px 70px rgba(0,45,110,.32);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;inset:18px;border:2px solid rgba(255,255,255,.18);border-radius:36px;pointer-events:none}
+.logoBox{position:relative;z-index:1;background:white;border-radius:38px;height:365px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 22px 48px #0004}
+.logoBox img{width:100%;height:100%;object-fit:contain;padding:16px}
+.noLogo{font-size:135px;color:#004cff}
+.heroText{position:relative;z-index:1}
+.badges{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:16px}
+.badge{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);border-radius:999px;padding:9px 13px;font-weight:900;font-size:13px}
+.gold{background:linear-gradient(135deg,#fff7c2,#ffd166);color:#6b3a00;border-color:#f59e0b}
+.hero h1{font-size:clamp(2.7rem,7vw,5.4rem);line-height:1.02;margin-bottom:12px;text-shadow:0 0 14px #fff8}
+.hero p{font-size:18px;line-height:1.65;font-weight:700;color:#eef6ff;max-width:760px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:999px;padding:14px 19px;color:white;background:linear-gradient(135deg,#1f8fff,#004cff);font-weight:900;min-width:135px;border:none;cursor:pointer}
+.green{background:linear-gradient(135deg,#22c55e,#16a34a)}.orange{background:linear-gradient(135deg,#ff8a3d,#f59e0b)}.dark{background:#111827}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+.quickCard{background:#fff;border-radius:22px;padding:16px;text-align:center;box-shadow:0 12px 26px #0002;font-weight:900}
+.quickCard b{display:block;color:#004cff;font-size:22px;margin-bottom:4px}
+.section{margin-top:24px}
+.section h2{text-align:center;color:#001d4a;font-size:clamp(2rem,5vw,3.15rem);margin-bottom:12px}
+.grid{display:grid;grid-template-columns:1.08fr .92fr;gap:18px}
+.card{background:#fff;border-radius:32px;padding:24px;box-shadow:0 16px 34px #0002;border:1px solid #dbeafe}
+.card h3{color:#001d4a;font-size:26px;margin-bottom:10px}
+.card p{color:#334155;font-weight:700;line-height:1.65;font-size:16px}
+.infoGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.info{background:#f8fbff;border:1px solid #e0edff;border-radius:18px;padding:13px;font-weight:800;line-height:1.45}
+.qualityGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.quality{background:white;border-radius:24px;padding:18px;text-align:center;box-shadow:0 12px 26px #0002;font-weight:900}
+.quality span{display:block;font-size:42px;margin-bottom:8px}
+.litters{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.litter{background:#fff;border-radius:32px;overflow:hidden;box-shadow:0 16px 34px #0002;border:1px solid #dbeafe}
+.cover{height:245px;background:linear-gradient(135deg,#1f8fff,#004cff);display:flex;align-items:center;justify-content:center;color:white;font-size:82px;overflow:hidden}
+.cover img{width:100%;height:100%;object-fit:cover}
+.content{padding:20px}
+.content h3{font-size:26px;color:#001d4a;margin-bottom:8px}
+.tag{display:inline-block;background:#eaf2ff;color:#004cff;border:1px solid #b8ddff;border-radius:999px;padding:7px 10px;font-size:13px;font-weight:900;margin:3px}
+.statusLedig{background:#dcfce7;color:#166534;border-color:#86efac}.statusRes{background:#fef3c7;color:#92400e;border-color:#f59e0b}.statusSolgt{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
+.gallery{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
+.gallery img{width:100%;height:190px;object-fit:cover;border-radius:20px;border:3px solid #eaf2ff;cursor:pointer;box-shadow:0 10px 22px #0002}
+.gallery img:first-child{grid-row:span 2;height:392px}
+.contactBox{background:linear-gradient(135deg,#051849,#0b5cff);color:white;border-radius:34px;padding:26px;box-shadow:0 18px 42px #0003}
+.contactBox h2{color:white}
+.contactBox .info{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22);color:white}
+.msg{text-align:center;font-size:18px;font-weight:900;margin-top:20px;color:#334155}
+.footer{text-align:center;font-weight:900;color:#14346d;margin-top:35px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.84);display:none;align-items:center;justify-content:center;z-index:999;padding:20px}
+.modal img{max-width:95vw;max-height:90vh;border-radius:18px}
+@media(max-width:950px){.hero,.grid{grid-template-columns:1fr;text-align:center}.actions,.badges{justify-content:center}.litters{grid-template-columns:1fr}.quick,.qualityGrid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.wrap{padding:9px 8px 50px}.top{justify-content:center}.logo{width:100%;text-align:center;font-size:20px}.nav{width:100%;justify-content:center}.nav a{flex:1 1 42%;text-align:center;font-size:12px;padding:9px 7px}.hero{border-radius:28px;padding:18px;min-height:0}.logoBox{height:230px;border-radius:26px}.quick,.qualityGrid,.infoGrid{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr}.gallery img,.gallery img:first-child{height:135px;grid-row:auto}.card{padding:17px}}
 </style>
 </head>
 <body>
-<div class="wrap"><div class="top"><div class="logo">🏆 Kennel Premium</div><div class="nav"><a href="index.html">Forside</a><a href="oppdrettere.html">Oppdrettere</a><a href="valpekull.html">Valpekull</a></div></div><div id="app"><div class="msg">Laster kennel...</div></div></div><div class="modal" id="modal" onclick="this.style.display='none'"><img id="modalImg"></div>
+<div class="wrap">
+<div class="top">
+  <div class="logo">🏆 Kennel Premium 5.0</div>
+  <div class="nav">
+    <a href="index.html">🏠 Forside</a>
+    <a href="oppdretterportal.html">🐶 Portal</a>
+    <a href="oppdrettere.html">🔎 Oppdrettere</a>
+    <a href="valpekull.html">🐾 Valpekull</a>
+  </div>
+</div>
+<div id="app"><div class="msg">Laster kennelprofil...</div></div>
+<div class="footer">Hundenevåre.com – Kennel Premium 🐶</div>
+</div>
+<div class="modal" id="modal" onclick="this.style.display='none'"><img id="modalImg"></div>
 <script>
 const client=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
 const id=new URLSearchParams(location.search).get("id");
+function first(){for(const v of arguments){if(v!==null&&v!==undefined&&String(v).trim())return String(v).trim();}return "";}
 function t(v,f="Ikke oppgitt"){return v&&String(v).trim()?String(v).trim():f}
 function link(v){if(!v||!String(v).trim())return "#";let x=String(v).trim();return x.startsWith("http")?x:"https://"+x}
-function imgOpen(u){modalImg.src=u;modal.style.display="flex"}
+function openImg(u){modalImg.src=u;modal.style.display="flex"}
+function statusClass(s){s=(s||"").toLowerCase();if(s.includes("solgt"))return"statusSolgt";if(s.includes("reservert"))return"statusRes";return"statusLedig"}
 async function load(){
  let r;
  if(id) r=await client.from("breeders").select("*").eq("id",id).maybeSingle();
- if(!id || r.error || !r.data) r=await client.from("breeders").select("*").eq("status","godkjent").order("created_at",{ascending:false}).limit(1).single();
+ if(!id||r.error||!r.data) r=await client.from("breeders").select("*").eq("status","godkjent").order("created_at",{ascending:false}).limit(1).single();
  if(r.error||!r.data){app.innerHTML='<div class="card">Ingen kennel funnet.</div>';return}
  const b=r.data;
- const name=t(b.kennel_name,"Kennel"), breed=t(b.breed,"Rase"), area=t(b.area,""), mun=t(b.municipality,""), about=t(b.about,"Godkjent kennelprofil på Hundenevåre.com.");
- const logo=b.logo_url||((b.image_urls||[])[0]||"");
+ const name=t(first(b.kennel_name,b.name,b.owner_name),"Kennel");
+ const breed=t(first(b.breed,b.rase),"Rase");
+ const area=t(first(b.area,b.fylke),"");
+ const mun=t(first(b.municipality,b.kommune,b.city,b.sted),"");
+ const place=t((mun+" "+area).trim(),"Norge");
+ const about=t(first(b.about,b.description,b.om,b.presentation),"Godkjent kennelprofil på Hundenevåre.com.");
+ const email=first(b.email,b.epost,b.mail);
+ const phone=first(b.phone,b.telefon,b.mobile);
+ const website=first(b.website,b.nettside,b.facebook,b.facebook_url);
+ const logo=first(b.logo_url,b.logo,b.image_url,(b.image_urls&&b.image_urls[0])||"");
  const logoHtml=logo?'<img src="'+logo+'">':'<div class="noLogo">🐶</div>';
  const imgs=(b.image_urls||[]).filter(Boolean);
- const gallery=imgs.map(u=>'<img src="'+u+'" onclick="imgOpen(\''+u+'\')">').join("");
+ const gallery=imgs.map(u=>'<img src="'+u+'" onclick="openImg(\''+u+'\')">').join("");
  const lit=await client.from("puppy_litters").select("*").eq("status","godkjent").eq("breeder_id",b.id).order("created_at",{ascending:false});
- const litters=(lit.data||[]).map(x=>{let m=(x.image_urls||[])[0]||"";return '<article class="litter"><div class="cover">'+(m?'<img src="'+m+'">':'🐶')+'</div><div class="content"><h3>'+t(x.title,x.breed)+'</h3><span class="tag">'+t(x.litter_status,"Ledig")+'</span><span class="tag">💚 Ledige: '+t(x.available_count,0)+'</span><span class="tag">🎒 '+t(x.ready_date)+'</span><p style="margin-top:10px;color:#334155;font-weight:700;line-height:1.5">'+t(x.about,"")+'</p><div class="actions"><a class="btn green" href="'+(x.email?'mailto:'+x.email:(b.email?'mailto:'+b.email:'#'))+'">Kontakt</a></div></div></article>'}).join("");
- app.innerHTML='<section class="hero"><div class="logoBox">'+logoHtml+'</div><div><div><span class="badge gold">🏆 Premium</span><span class="badge">✅ Godkjent</span>'+(b.founder?'<span class="badge gold">🏅 Grunnlegger</span>':'')+'</div><h1>'+name+'</h1><p>'+about+'</p><div class="actions"><a class="btn green" href="'+(b.email?'mailto:'+b.email:'#')+'">📩 Kontakt</a><a class="btn orange" href="'+link(b.website||b.facebook)+'" target="_blank">🌐 Nettside/Facebook</a></div></div></section><section class="section grid"><div class="card"><h3>Om kennelen</h3><p>'+about+'</p></div><div class="card"><h3>Kort info</h3><div class="infoGrid"><div class="info">🐾 <b>Rase</b><br>'+breed+'</div><div class="info">📍 <b>Sted</b><br>'+t((mun+" "+area).trim())+'</div><div class="info">☎️ <b>Telefon</b><br>'+t(b.phone)+'</div><div class="info">📧 <b>E-post</b><br>'+t(b.email)+'</div></div></div></section><section class="section"><h2>🐾 Aktive valpekull</h2><div class="litters">'+(litters||'<div class="card">Ingen aktive valpekull publisert akkurat nå.</div>')+'</div></section><section class="section"><h2>📷 Galleri</h2><div class="card">'+(gallery?'<div class="gallery">'+gallery+'</div>':'Ingen bilder lagt inn ennå.')+'</div></section>';
+ const litters=(lit.data||[]).map(x=>{
+   const main=(x.image_urls||[])[0]||"";
+   return '<article class="litter"><div class="cover">'+(main?'<img src="'+main+'">':'🐶')+'</div><div class="content"><h3>'+t(x.title,x.breed)+'</h3><span class="tag '+statusClass(x.litter_status)+'">'+t(x.litter_status,"Ledig")+'</span><span class="tag">🐾 '+t(x.breed)+'</span><span class="tag">💚 Ledige: '+t(x.available_count,0)+'</span><span class="tag">🎒 '+t(x.ready_date)+'</span><div class="infoGrid"><div class="info">📅 <b>Født</b><br>'+t(x.born_date)+'</div><div class="info">💰 <b>Pris</b><br>'+t(x.price)+'</div><div class="info">👦 <b>Hanner</b><br>'+t(x.males,0)+'</div><div class="info">👧 <b>Tisper</b><br>'+t(x.females,0)+'</div></div><p style="margin-top:12px;color:#334155;font-weight:700;line-height:1.55">'+t(x.about,"")+'</p><div class="actions"><a class="btn green" href="'+(x.email?'mailto:'+x.email:(email?'mailto:'+email:'#'))+'">📩 Kontakt om kullet</a></div></div></article>';
+ }).join("");
+ app.innerHTML='<section class="hero"><div class="logoBox">'+logoHtml+'</div><div class="heroText"><div class="badges"><span class="badge gold">🏆 Hundenevåre Kennel Premium</span><span class="badge">✅ Godkjent oppdretter</span>'+(b.founder?'<span class="badge gold">🏅 Grunnlegger</span>':'')+'<span class="badge">🐾 '+breed+'</span></div><h1>'+name+'</h1><p>'+about+'</p><div class="actions"><a class="btn green" href="'+(email?'mailto:'+email:'#')+'">📩 Kontakt</a><a class="btn orange" href="'+link(website)+'" target="_blank">🌐 Nettside/Facebook</a><a class="btn dark" href="#valpekull">🐾 Valpekull</a></div></div></section>'+
+ '<section class="quick"><div class="quickCard"><b>'+breed+'</b>Rase</div><div class="quickCard"><b>'+place+'</b>Sted</div><div class="quickCard"><b>'+t(first(b.puppies_available,b.ledige_valper),"Info")+'</b>Valper</div><div class="quickCard"><b>'+(b.founder?'Grunnlegger':'Godkjent')+'</b>Status</div></section>'+
+ '<section class="section grid"><div class="card"><h3>🐶 Om kennelen</h3><p>'+about+'</p></div><div class="card"><h3>📌 Kort info</h3><div class="infoGrid"><div class="info">🐾 <b>Rase</b><br>'+breed+'</div><div class="info">📍 <b>Sted</b><br>'+place+'</div><div class="info">☎️ <b>Telefon</b><br>'+t(phone)+'</div><div class="info">📧 <b>E-post</b><br>'+t(email)+'</div></div></div></section>'+
+ '<section class="section"><h2>⭐ Kvalitetsprofil</h2><div class="qualityGrid"><div class="quality"><span>✅</span>Godkjent profil</div><div class="quality"><span>🩺</span>Helseinformasjon</div><div class="quality"><span>📸</span>Bilder/galleri</div><div class="quality"><span>📩</span>Direkte kontakt</div></div></section>'+
+ '<section class="section" id="valpekull"><h2>🐾 Aktive valpekull</h2><div class="litters">'+(litters||'<div class="card"><h3>Ingen aktive valpekull</h3><p>Denne kennelen har ingen godkjente valpekull publisert akkurat nå.</p></div>')+'</div></section>'+
+ '<section class="section"><h2>📷 Galleri</h2><div class="card">'+(gallery?'<div class="gallery">'+gallery+'</div>':'<p>Ingen bilder lagt inn ennå.</p>')+'</div></section>'+
+ '<section class="section"><div class="contactBox"><h2>📩 Kontakt kennelen</h2><div class="infoGrid"><div class="info">👤 <b>Kontaktperson</b><br>'+t(first(b.owner_name,b.contact_name))+'</div><div class="info">☎️ <b>Telefon</b><br>'+t(phone)+'</div><div class="info">📧 <b>E-post</b><br>'+t(email)+'</div><div class="info">🌐 <b>Nettside/Facebook</b><br>'+t(website)+'</div></div><div class="actions"><a class="btn green" href="'+(email?'mailto:'+email:'#')+'">📩 Send e-post</a><a class="btn orange" target="_blank" href="'+link(website)+'">🌐 Besøk side</a></div></div></section>';
 }
 load();
-</script></body></html>
+</script>
+</body>
+</html>
