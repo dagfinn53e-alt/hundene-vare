@@ -3,64 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valpekull – Hundene våre</title>
+<title>Valpekull Premium 3.0 – Hundene våre</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;color:#123c73;min-height:100vh;background:linear-gradient(180deg,#dbeafe,#eef6ff,#fff7ed)}
-.wrap{max-width:1180px;margin:auto;padding:14px 10px 60px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:white;border-radius:26px;padding:13px 15px;box-shadow:0 12px 28px #0002;margin-bottom:15px}
-.logo{font-size:23px;font-weight:900;color:#004cff}
+body{
+  font-family:Arial,sans-serif;
+  color:#123c73;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 8% 6%,rgba(255,220,130,.55),transparent 28%),
+    radial-gradient(circle at 92% 8%,rgba(126,200,255,.50),transparent 33%),
+    linear-gradient(180deg,#dbeafe,#eef6ff 48%,#fff7ed);
+}
+.wrap{max-width:1240px;margin:auto;padding:16px 10px 70px}
+.top{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+  background:white;border:1px solid #bfd7ff;border-radius:28px;padding:14px 16px;
+  box-shadow:0 14px 34px rgba(15,23,42,.10);margin-bottom:16px;
+}
+.logo{font-size:24px;font-weight:900;color:#004cff}
 .nav{display:flex;gap:8px;flex-wrap:wrap}
 .nav a{background:#eaf2ff;color:#004cff;text-decoration:none;border:1px solid #b8ddff;border-radius:999px;padding:10px 13px;font-weight:900;font-size:14px}
-.hero{background:linear-gradient(135deg,#1f8fff,#004cff,#7c3aed);color:white;border-radius:34px;padding:36px 18px;text-align:center;box-shadow:0 20px 45px #0003;margin-bottom:18px}
-.hero h1{font-size:clamp(2.3rem,7vw,4.5rem);margin-bottom:10px}
-.hero p{font-size:17px;line-height:1.5;font-weight:700;color:#eef6ff}
-.search{background:white;border-radius:26px;padding:18px;box-shadow:0 12px 26px #0002;margin-bottom:22px}
-.grid{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:12px;align-items:end}
+.hero{
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.35),transparent 25%),
+    radial-gradient(circle at 88% 12%,rgba(255,214,120,.30),transparent 25%),
+    linear-gradient(135deg,#061b55,#004cff 45%,#7c3aed);
+  color:white;border-radius:46px;padding:46px 22px;text-align:center;
+  box-shadow:0 28px 70px rgba(0,45,110,.32);margin-bottom:18px;
+}
+.hero h1{font-size:clamp(2.6rem,7vw,5.1rem);line-height:1.05;margin-bottom:12px;text-shadow:0 0 14px rgba(255,255,255,.65)}
+.hero p{font-size:clamp(1rem,2.5vw,1.25rem);font-weight:700;line-height:1.55;color:#eef6ff;max-width:900px;margin:auto}
+.badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.badge{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);border-radius:999px;padding:9px 13px;font-weight:900;font-size:13px}
+.gold{background:linear-gradient(135deg,#fff7c2,#ffd166);color:#6b3a00;border-color:#f59e0b}
+.search{
+  background:white;border-radius:30px;padding:20px;box-shadow:0 16px 34px rgba(15,23,42,.12);
+  border:1px solid #dbeafe;margin-bottom:22px;
+}
+.searchGrid{display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:12px;align-items:end}
 label{display:block;font-weight:900;margin-bottom:5px}
-input{width:100%;padding:13px 14px;border:1px solid #cfe3ff;border-radius:14px;font-size:16px}
-button{border:none;border-radius:999px;padding:14px 20px;background:#004cff;color:white;font-size:16px;font-weight:900;cursor:pointer}
+input,select{width:100%;padding:13px 14px;border:1px solid #cfe3ff;border-radius:14px;font-size:16px}
+button{border:none;border-radius:999px;padding:14px 20px;background:linear-gradient(135deg,#1f8fff,#004cff);color:white;font-size:16px;font-weight:900;cursor:pointer}
 .msg{text-align:center;font-size:18px;font-weight:900;margin-top:12px}
-.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
-.card{background:white;border-radius:32px;overflow:hidden;box-shadow:0 16px 34px #0002;border:1px solid #dbeafe}
-.cover{height:250px;background:#004cff;display:flex;align-items:center;justify-content:center;color:white;font-size:85px;overflow:hidden}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat{background:white;border-radius:24px;padding:18px;text-align:center;box-shadow:0 14px 30px rgba(15,23,42,.10);border:1px solid #dbeafe;font-weight:900}
+.stat b{display:block;color:#004cff;font-size:38px;margin-bottom:4px}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.litter{
+  background:white;border-radius:36px;overflow:hidden;box-shadow:0 20px 45px rgba(15,23,42,.14);
+  border:1px solid #dbeafe;
+}
+.cover{height:310px;background:linear-gradient(135deg,#1f8fff,#004cff);display:flex;align-items:center;justify-content:center;color:white;font-size:96px;overflow:hidden}
 .cover img{width:100%;height:100%;object-fit:cover}
-.content{padding:20px}
-.content h2{font-size:28px;color:#001d4a;margin-bottom:8px}
-.tag{display:inline-block;background:#eaf2ff;color:#004cff;border:1px solid #b8ddff;border-radius:999px;padding:7px 10px;font-size:13px;font-weight:900;margin:3px}
-.infoGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.info{background:#f8fbff;border:1px solid #e0edff;border-radius:18px;padding:12px;font-weight:800;line-height:1.45}
-.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:999px;padding:12px 16px;color:white;background:#16a34a;font-weight:900;margin-top:14px}
-@media(max-width:850px){.cards,.grid{grid-template-columns:1fr}.top{justify-content:center}.nav{justify-content:center}.nav a{flex:1 1 42%;text-align:center;font-size:12px}}
+.content{padding:24px}
+.content h2{font-size:clamp(1.6rem,4vw,2.3rem);color:#001d4a;margin-bottom:8px;line-height:1.1}
+.tagRow{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+.tag{display:inline-block;background:#eaf2ff;color:#004cff;border:1px solid #b8ddff;border-radius:999px;padding:8px 11px;font-size:13px;font-weight:900}
+.statusLedig{background:#dcfce7;color:#166534;border-color:#86efac}
+.statusReservert{background:#fef3c7;color:#92400e;border-color:#f59e0b}
+.statusSolgt{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
+.statusPlanlagt{background:#ede9fe;color:#5b21b6;border-color:#c4b5fd}
+.about{color:#334155;font-weight:700;line-height:1.6;margin:12px 0;font-size:16px}
+.infoGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.info{background:#f8fbff;border:1px solid #e0edff;border-radius:18px;padding:12px;font-weight:800;line-height:1.45;text-align:center}
+.info b{color:#001d4a}
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.gallery img{width:100%;height:85px;object-fit:cover;border-radius:14px;border:2px solid #eaf2ff;cursor:pointer}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:999px;padding:13px 18px;color:white;background:linear-gradient(135deg,#1f8fff,#004cff);font-weight:900;min-width:140px;flex:1}
+.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
+.orange{background:linear-gradient(135deg,#ff8a3d,#f59e0b)}
+.empty{background:white;border-radius:30px;padding:28px;text-align:center;font-weight:900;color:#334155;box-shadow:0 16px 34px rgba(15,23,42,.12)}
+.footer{text-align:center;font-weight:900;color:#14346d;margin-top:34px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.84);display:none;align-items:center;justify-content:center;z-index:999;padding:20px}
+.modal img{max-width:95vw;max-height:90vh;border-radius:18px}
+@media(max-width:1000px){.cards{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.searchGrid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.wrap{padding:9px 8px 50px}.top{justify-content:center}.logo{width:100%;text-align:center;font-size:20px}.nav{width:100%;justify-content:center}.nav a{flex:1 1 42%;text-align:center;font-size:12px;padding:9px 7px}.hero{border-radius:28px;padding:32px 14px}.searchGrid,.stats,.infoGrid{grid-template-columns:1fr}.cover{height:230px}.gallery{grid-template-columns:repeat(2,1fr)}.gallery img{height:110px}.content{padding:18px}}
 </style>
 </head>
 <body>
 <div class="wrap">
+
 <div class="top">
-  <div class="logo">🐾 Valpekull</div>
+  <div class="logo">🐾 Valpekull Premium</div>
   <div class="nav">
-    <a href="index.html">Forside</a>
-    <a href="oppdretterportal.html">Portal</a>
-    <a href="registrer-valpekull.html">Registrer kull</a>
-    <a href="admin-valpekull.html">Admin</a>
+    <a href="index.html">🏠 Forside</a>
+    <a href="oppdretterportal.html">🐶 Portal</a>
+    <a href="registrer-valpekull.html">➕ Registrer kull</a>
+    <a href="admin-valpekull.html">🔐 Admin</a>
   </div>
 </div>
-<section class="hero"><h1>Valpekull</h1><p>Godkjente valpekull og planlagte kull fra oppdrettere på Hundenevåre.com.</p></section>
+
+<section class="hero">
+  <div class="badges">
+    <span class="badge gold">🏆 Premium valpekull</span>
+    <span class="badge">✅ Godkjente kull</span>
+    <span class="badge">🏡 Koblet til kennel</span>
+  </div>
+  <h1>Valpekull</h1>
+  <p>Godkjente valpekull og planlagte kull fra oppdrettere på Hundenevåre.com.</p>
+</section>
+
+<section class="stats">
+  <div class="stat"><b id="totalCount">0</b>Valpekull</div>
+  <div class="stat"><b id="availableCount">0</b>Ledige valper</div>
+  <div class="stat"><b id="breedCount">0</b>Raser</div>
+  <div class="stat"><b id="kennelCount">0</b>Kenneler</div>
+</section>
+
 <section class="search">
-  <div class="grid">
+  <div class="searchGrid">
     <div><label>Søk</label><input id="search" placeholder="Kennel, rase eller sted"></div>
-    <div><label>Rase</label><input id="breed"></div>
-    <div><label>Område</label><input id="area"></div>
-    <button onclick="load()">Søk</button>
+    <div><label>Rase</label><input id="breed" placeholder="F.eks. Puddel"></div>
+    <div><label>Område</label><input id="area" placeholder="F.eks. Rogaland"></div>
+    <button onclick="load()">🔎 Søk</button>
   </div>
   <div id="msg" class="msg">Laster...</div>
 </section>
+
 <section class="cards" id="cards"></section>
+
+<div class="footer">Hundenevåre.com – Valpekull Premium 🐶</div>
 </div>
+
+<div class="modal" id="modal" onclick="this.style.display='none'"><img id="modalImg"></div>
+
 <script>
 const client=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
+
 function t(v,f="Ikke oppgitt"){return v&&String(v).trim()?String(v).trim():f}
+function statusClass(s){
+  s=(s||"").toLowerCase();
+  if(s.includes("solgt")) return "statusSolgt";
+  if(s.includes("reservert")) return "statusReservert";
+  if(s.includes("planlagt")) return "statusPlanlagt";
+  return "statusLedig";
+}
+function openImg(u){modalImg.src=u;modal.style.display="flex"}
+
 async function load(){
   cards.innerHTML="";
   msg.textContent="Laster valpekull...";
@@ -71,19 +153,62 @@ async function load(){
   if(r.error){msg.textContent="Feil: "+r.error.message;return}
   let data=r.data||[];
   const s=search.value.toLowerCase().trim();
-  if(s)data=data.filter(x=>(x.kennel_name||"").toLowerCase().includes(s)||(x.breed||"").toLowerCase().includes(s)||(x.area||"").toLowerCase().includes(s)||(x.municipality||"").toLowerCase().includes(s));
-  if(!data.length){msg.textContent="Ingen godkjente valpekull funnet.";return}
+  if(s){
+    data=data.filter(x=>
+      (x.kennel_name||"").toLowerCase().includes(s)||
+      (x.breed||"").toLowerCase().includes(s)||
+      (x.area||"").toLowerCase().includes(s)||
+      (x.municipality||"").toLowerCase().includes(s)
+    );
+  }
+  updateStats(data);
+  if(!data.length){msg.textContent="";cards.innerHTML='<div class="empty">Ingen godkjente valpekull funnet.</div>';return}
   msg.textContent="Fant "+data.length+" valpekull.";
   data.forEach(x=>{
-    const main=(x.image_urls||[])[0]||"";
+    const images=(x.image_urls||[]).filter(Boolean);
+    const main=images[0]||"";
+    const gallery=images.slice(1,5).map(u=>'<img src="'+u+'" onclick="openImg(\''+u+'\')">').join("");
     const kennelLink=x.breeder_id ? 'kennel.html?id='+x.breeder_id : 'kennel.html';
     const el=document.createElement("article");
-    el.className="card";
-    el.innerHTML='<div class="cover">'+(main?'<img src="'+main+'">':'🐶')+'</div><div class="content"><h2>'+t(x.title,x.kennel_name)+'</h2><span class="tag">🐾 '+t(x.breed)+'</span><span class="tag">📍 '+t(x.municipality,"")+' '+t(x.area,"")+'</span><span class="tag">💚 Ledige: '+t(x.available_count,0)+'</span><p style="margin-top:12px;color:#334155;font-weight:700;line-height:1.5">'+t(x.about,"")+'</p><div class="infoGrid"><div class="info">🏡 <b>Kennel</b><br>'+t(x.kennel_name)+'</div><div class="info">🎒 <b>Leveringsklar</b><br>'+t(x.ready_date)+'</div><div class="info">👦 <b>Hanner</b><br>'+t(x.males,0)+'</div><div class="info">👧 <b>Tisper</b><br>'+t(x.females,0)+'</div></div><a class="btn" href="'+kennelLink+'">🏡 Se kennel</a></div>';
+    el.className="litter";
+    el.innerHTML =
+      '<div class="cover">'+(main?'<img src="'+main+'" onclick="openImg(\''+main+'\')">':'🐶')+'</div>'+
+      '<div class="content">'+
+        '<h2>'+t(x.title,x.kennel_name)+'</h2>'+
+        '<div class="tagRow">'+
+          '<span class="tag '+statusClass(x.litter_status)+'">'+t(x.litter_status,"Ledig")+'</span>'+
+          '<span class="tag">🐾 '+t(x.breed)+'</span>'+
+          '<span class="tag">📍 '+t(x.municipality,"")+' '+t(x.area,"")+'</span>'+
+        '</div>'+
+        '<p class="about">'+t(x.about,"Dette valpekullet er godkjent og publisert på Hundenevåre.com.")+'</p>'+
+        '<div class="infoGrid">'+
+          '<div class="info">🏡 <b>Kennel</b><br>'+t(x.kennel_name)+'</div>'+
+          '<div class="info">💚 <b>Ledige</b><br>'+t(x.available_count,0)+'</div>'+
+          '<div class="info">📅 <b>Født</b><br>'+t(x.born_date)+'</div>'+
+          '<div class="info">🎒 <b>Leveringsklar</b><br>'+t(x.ready_date)+'</div>'+
+          '<div class="info">👦 <b>Hanner</b><br>'+t(x.males,0)+'</div>'+
+          '<div class="info">👧 <b>Tisper</b><br>'+t(x.females,0)+'</div>'+
+          '<div class="info">🟡 <b>Reserverte</b><br>'+t(x.reserved_count,0)+'</div>'+
+          '<div class="info">💰 <b>Pris</b><br>'+t(x.price)+'</div>'+
+        '</div>'+
+        (gallery?'<div class="gallery">'+gallery+'</div>':'')+
+        '<div class="actions"><a class="btn green" href="'+(x.email?'mailto:'+x.email:'#')+'">📩 Kontakt</a><a class="btn orange" href="'+kennelLink+'">🏡 Se kennel</a></div>'+
+      '</div>';
     cards.appendChild(el);
   });
 }
-search.addEventListener("input",load);breed.addEventListener("input",load);area.addEventListener("input",load);load();
+
+function updateStats(data){
+  totalCount.textContent=data.length;
+  availableCount.textContent=data.reduce((sum,x)=>sum+Number(x.available_count||0),0);
+  breedCount.textContent=new Set(data.map(x=>x.breed).filter(Boolean)).size;
+  kennelCount.textContent=new Set(data.map(x=>x.breeder_id||x.kennel_name).filter(Boolean)).size;
+}
+
+search.addEventListener("input",load);
+breed.addEventListener("input",load);
+area.addEventListener("input",load);
+load();
 </script>
 </body>
 </html>
