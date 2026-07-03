@@ -4,226 +4,149 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Oppdretterportalen – Hundene våre</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
 body{
   font-family:Arial,sans-serif;
   color:#123c73;
   min-height:100vh;
-  background:radial-gradient(circle at 8% 6%,rgba(255,220,130,.62),transparent 28%),
-             radial-gradient(circle at 92% 8%,rgba(126,200,255,.55),transparent 33%),
-             linear-gradient(180deg,#dbeafe 0%,#eef6ff 48%,#fff7ed 100%);
+  background:
+    radial-gradient(circle at 8% 6%,rgba(255,220,130,.55),transparent 28%),
+    radial-gradient(circle at 92% 8%,rgba(126,200,255,.50),transparent 33%),
+    linear-gradient(180deg,#dbeafe,#eef6ff 48%,#fff7ed);
 }
-.wrap{max-width:1220px;margin:auto;padding:16px 10px 60px}
-.topbar{
-  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
-  background:rgba(255,255,255,.94);border-radius:26px;padding:13px 15px;
-  box-shadow:0 12px 28px rgba(0,45,110,.13);margin-bottom:16px;
+.wrap{max-width:1220px;margin:auto;padding:16px 10px 65px}
+.top{
+  background:white;
+  border-radius:28px;
+  padding:14px 16px;
+  box-shadow:0 14px 34px rgba(15,23,42,.10);
+  margin-bottom:16px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
 }
-.logo{display:flex;align-items:center;gap:9px;font-size:23px;font-weight:900;color:#004cff}
-.logo-badge{width:46px;height:46px;border-radius:16px;background:linear-gradient(145deg,#1f8fff,#004cff);color:white;display:flex;align-items:center;justify-content:center}
-.nav{display:flex;flex-wrap:wrap;gap:8px}
+.logo{font-size:24px;font-weight:900;color:#004cff}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
 .nav a{
-  text-decoration:none;background:#eaf2ff;color:#004cff;border:1px solid #b8ddff;
-  border-radius:999px;padding:9px 12px;font-weight:900;font-size:14px;
+  background:#eaf2ff;
+  color:#004cff;
+  text-decoration:none;
+  border:1px solid #b8ddff;
+  border-radius:999px;
+  padding:10px 13px;
+  font-weight:900;
+  font-size:14px;
 }
-.nav a.admin{background:#fff7ed;color:#b45309;border-color:#fed7aa}
 .hero{
-  display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:center;
-  border-radius:38px;padding:42px 24px;color:white;
-  background:radial-gradient(circle at 20% 20%,rgba(255,255,255,.34),transparent 25%),
-             linear-gradient(145deg,#1f8fff,#004cff 48%,#7c3aed 100%);
-  box-shadow:0 20px 50px rgba(0,45,110,.25);
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.35),transparent 25%),
+    linear-gradient(135deg,#1f8fff,#004cff,#7c3aed);
+  color:white;
+  border-radius:40px;
+  padding:42px 22px;
+  text-align:center;
+  box-shadow:0 24px 58px rgba(0,45,110,.26);
+  margin-bottom:18px;
 }
-.kicker{display:inline-flex;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.30);border-radius:999px;padding:9px 13px;font-weight:900;margin-bottom:14px}
-.hero h1{font-size:clamp(2.3rem,7vw,4.8rem);line-height:1.03;margin-bottom:12px;text-shadow:0 0 12px rgba(255,255,255,.7)}
-.hero p{font-size:clamp(1rem,2.4vw,1.25rem);line-height:1.55;font-weight:700;color:#eef6ff}
-.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:none;
-  border-radius:999px;padding:14px 19px;font-size:16px;font-weight:900;color:white;
-  background:linear-gradient(145deg,#1f8fff,#004cff);cursor:pointer;
-}
-.btn.green{background:linear-gradient(145deg,#22c55e,#16a34a)}
-.btn.orange{background:linear-gradient(145deg,#ff8a3d,#f59e0b)}
-.btn.dark{background:linear-gradient(145deg,#334155,#0f172a)}
-.art{min-height:300px;border-radius:34px;background:radial-gradient(circle at 35% 25%,rgba(255,255,255,.75),transparent 22%),linear-gradient(145deg,#ffd38a,#ff8a3d);display:flex;align-items:center;justify-content:center;font-size:140px;box-shadow:inset -18px -22px 45px rgba(15,23,42,.18),0 18px 42px rgba(0,0,0,.20)}
+.hero h1{font-size:clamp(2.5rem,7vw,5rem);line-height:1.05;margin-bottom:12px}
+.hero p{font-size:clamp(1rem,2.5vw,1.25rem);font-weight:700;line-height:1.55;color:#eef6ff;max-width:850px;margin:auto}
 .offer{
-  margin-top:18px;border-radius:30px;padding:23px 14px;text-align:center;
   background:linear-gradient(180deg,#fff7c2,#ffd166,#f59e0b);
-  color:#4a2600;box-shadow:0 14px 34px rgba(245,158,11,.27);border:2px solid rgba(255,255,255,.75)
+  color:#4a2600;
+  border-radius:30px;
+  padding:22px 14px;
+  text-align:center;
+  box-shadow:0 14px 34px rgba(245,158,11,.25);
+  margin-bottom:20px;
 }
-.offer h2{font-size:clamp(1.9rem,6vw,3.2rem);margin-bottom:8px}
-.offer h3{font-size:clamp(1.15rem,3.5vw,2rem);line-height:1.35}
-.counter{background:rgba(255,255,255,.78);border-radius:24px;padding:16px 10px;margin:16px auto 0;max-width:650px}
-.paws{font-size:clamp(1.8rem,7vw,3rem);letter-spacing:4px;margin-bottom:8px}
-.free-text{font-size:clamp(1.7rem,7vw,3.7rem);font-weight:900;color:#166534;line-height:1}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
-.stat{background:white;border-radius:22px;padding:17px;text-align:center;box-shadow:0 10px 22px rgba(0,0,0,.10)}
-.stat b{display:block;font-size:36px;color:#004cff;margin-bottom:4px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-top:22px}
-.card{background:white;border-radius:26px;padding:22px;text-align:center;box-shadow:0 12px 26px rgba(0,0,0,.12)}
-.card .icon{font-size:55px;margin-bottom:10px}
-.card h3{font-size:21px;color:#004cff;margin-bottom:8px}
-.card p{font-weight:700;color:#334155;line-height:1.45;margin-bottom:15px}
-.section{margin-top:22px;background:white;border-radius:28px;padding:24px;box-shadow:0 12px 26px rgba(0,0,0,.12)}
-.section h2{text-align:center;color:#001d4a;font-size:clamp(1.7rem,5vw,2.7rem);margin-bottom:10px}
-.section p{text-align:center;color:#334155;font-size:17px;font-weight:800;line-height:1.55}
-.footer{text-align:center;margin-top:32px;color:#14346d;font-size:17px;font-weight:bold}
-@media(max-width:1050px){
-  .hero{grid-template-columns:1fr;text-align:center}
-  .actions{justify-content:center}
-  .grid,.stats{grid-template-columns:1fr 1fr}
+.offer h2{font-size:clamp(1.8rem,5vw,3.1rem);margin-bottom:8px}
+.offer p{font-size:18px;font-weight:900;line-height:1.45}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
 }
+.card{
+  background:white;
+  border-radius:30px;
+  padding:24px;
+  text-align:center;
+  box-shadow:0 16px 34px rgba(15,23,42,.12);
+  border:1px solid #dbeafe;
+}
+.icon{font-size:58px;margin-bottom:12px}
+.card h3{font-size:23px;color:#004cff;margin-bottom:8px}
+.card p{font-weight:700;color:#334155;line-height:1.5;margin-bottom:18px}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  border-radius:999px;
+  padding:13px 18px;
+  color:white;
+  background:linear-gradient(135deg,#1f8fff,#004cff);
+  font-weight:900;
+  min-width:150px;
+}
+.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
+.orange{background:linear-gradient(135deg,#ff8a3d,#f59e0b)}
+.dark{background:#111827}
+.purple{background:linear-gradient(135deg,#7c3aed,#db2777)}
+.footer{text-align:center;font-weight:900;color:#14346d;margin-top:34px}
+@media(max-width:950px){.grid{grid-template-columns:1fr 1fr}}
 @media(max-width:700px){
-  .wrap{padding:9px 8px 45px}
-  .topbar{justify-content:center;border-radius:22px}
-  .logo{width:100%;justify-content:center;font-size:20px}
+  .wrap{padding:9px 8px 50px}
+  .top{justify-content:center}
+  .logo{width:100%;text-align:center;font-size:20px}
   .nav{width:100%;justify-content:center}
   .nav a{flex:1 1 42%;text-align:center;font-size:12px;padding:9px 7px}
-  .hero{border-radius:26px;padding:28px 13px}
-  .art{min-height:210px;font-size:105px}
-  .grid,.stats{grid-template-columns:1fr}
-  .card{padding:18px}
+  .hero{border-radius:28px;padding:30px 14px}
+  .grid{grid-template-columns:1fr}
+  .card{padding:20px}
 }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<header class="topbar">
-  <div class="logo"><div class="logo-badge">🐾</div><span>Hundene våre</span></div>
-  <nav class="nav">
+<div class="top">
+  <div class="logo">🐶 Oppdretterportalen</div>
+  <div class="nav">
     <a href="index.html">🏠 Forside</a>
     <a href="oppdrettere.html">🔎 Oppdrettere</a>
-    <a href="registrer-oppdretter.html">➕ Registrer</a>
-    <a href="kennel.html">🏡 Demo</a>
-    <a class="admin" href="admin-oppdrettere.html">🔐 Admin</a>
-  </nav>
-</header>
+    <a href="valpekull.html">🐾 Valpekull</a>
+    <a href="admin-oppdrettere.html">🔐 Admin</a>
+  </div>
+</div>
 
 <section class="hero">
-  <div>
-    <div class="kicker">🐶 Oppdretterportalen</div>
-    <h1>Finn og registrer oppdrettere</h1>
-    <p>
-      Oppdretterportalen på Hundenevåre.com samler registrering, oversikt og godkjenning på ett sted.
-      Oppdrettere kan registrere kennel med logo og bilder, og du godkjenner før profilen blir synlig.
-    </p>
-    <div class="actions">
-      <a class="btn green" href="registrer-oppdretter.html">➕ Registrer kennel</a>
-      <a class="btn" href="oppdrettere.html">🔎 Finn oppdretter</a>
-      <a class="btn orange" href="admin-oppdrettere.html">🔐 Admin Oppdrettere</a>
-      <a class="btn dark" href="kennel.html">🏡 Se demo-profil</a>
-    </div>
-  </div>
-  <div class="art">🐶</div>
+  <h1>Oppdretterplattformen</h1>
+  <p>
+    Her administrerer vi oppdrettere, kennelprofiler og valpekull.
+    Oppdrettere kan registrere kennel og legge inn valpekull, og du godkjenner alt før det blir synlig.
+  </p>
 </section>
 
 <section class="offer">
   <h2>🏅 Grunnleggerkampanje</h2>
-  <h3>De 5 første godkjente oppdretterne får GRATIS Basis-profil i 12 måneder.</h3>
-  <div class="counter">
-    <div class="paws" id="pawCount">🐾🐾🐾🐾🐾</div>
-    <div class="free-text" id="freeText">5 GRATIS PLASSER IGJEN</div>
-    <p style="font-weight:900;margin-top:10px;">Tallet oppdateres automatisk etter godkjente grunnleggere.</p>
-  </div>
-</section>
-
-<section class="stats">
-  <div class="stat"><b id="approvedCount">0</b>Godkjente</div>
-  <div class="stat"><b id="waitingCount">0</b>Venter</div>
-  <div class="stat"><b id="founderCount">0</b>Grunnleggere</div>
-  <div class="stat"><b id="freeCount">5</b>Gratis igjen</div>
+  <p>De 5 første godkjente oppdretterne får gratis Basis-profil i 12 måneder.</p>
 </section>
 
 <section class="grid">
-  <div class="card">
-    <div class="icon">🔎</div>
-    <h3>Finn oppdretter</h3>
-    <p>Se godkjente oppdrettere etter rase, sted og kontaktinfo.</p>
-    <a class="btn" href="oppdrettere.html">Åpne</a>
-  </div>
-
-  <div class="card">
-    <div class="icon">➕</div>
-    <h3>Registrer kennel</h3>
-    <p>Oppdretter sender inn profil med logo og flere bilder.</p>
-    <a class="btn green" href="registrer-oppdretter.html">Registrer</a>
-  </div>
-
-  <div class="card">
-    <div class="icon">🔐</div>
-    <h3>Admin</h3>
-    <p>Godkjenn, avvis og marker grunnleggere.</p>
-    <a class="btn orange" href="admin-oppdrettere.html">Åpne Admin</a>
-  </div>
-
-  <div class="card">
-    <div class="icon">🏡</div>
-    <h3>Kennelprofil</h3>
-    <p>Se eksempel på hvordan en kennelprofil kan presenteres.</p>
-    <a class="btn dark" href="kennel.html">Se demo</a>
-  </div>
+  <div class="card"><div class="icon">🔎</div><h3>Finn oppdrettere</h3><p>Se alle godkjente oppdrettere og åpne deres kennelprofiler.</p><a class="btn" href="oppdrettere.html">Åpne</a></div>
+  <div class="card"><div class="icon">➕</div><h3>Registrer kennel</h3><p>Ny oppdretter registrerer kennel, logo, bilder og kontaktinformasjon.</p><a class="btn green" href="registrer-oppdretter.html">Registrer</a></div>
+  <div class="card"><div class="icon">🏡</div><h3>Kennelprofil</h3><p>Se kennelprofilen med logo, galleri, kontakt og aktive valpekull.</p><a class="btn dark" href="kennel.html">Se demo/profil</a></div>
+  <div class="card"><div class="icon">🐾</div><h3>Valpekull</h3><p>Se alle godkjente valpekull og planlagte kull.</p><a class="btn purple" href="valpekull.html">Se valpekull</a></div>
+  <div class="card"><div class="icon">➕</div><h3>Registrer valpekull</h3><p>Legg inn nytt valpekull og velg riktig kennel fra listen.</p><a class="btn green" href="registrer-valpekull.html">Registrer kull</a></div>
+  <div class="card"><div class="icon">🔐</div><h3>Admin Oppdrettere</h3><p>Godkjenn, avvis eller skjul oppdrettere.</p><a class="btn orange" href="admin-oppdrettere.html">Åpne Admin</a></div>
+  <div class="card"><div class="icon">🔐</div><h3>Admin Valpekull</h3><p>Godkjenn eller skjul valpekull før de blir synlige.</p><a class="btn orange" href="admin-valpekull.html">Åpne Admin</a></div>
 </section>
 
-<section class="section">
-  <h2>✅ Slik fungerer det</h2>
-  <p>
-    1. Oppdretteren registrerer seg. 2. Bilder og info lagres i Supabase.
-    3. Du åpner Admin og godkjenner. 4. Oppdretteren vises automatisk på portalen.
-  </p>
-</section>
-
-<div class="footer">Hundenevåre.com – Oppdretterportalen 🐶</div>
-
+<div class="footer">Hundenevåre.com – Oppdretterplattform 🐶</div>
 </div>
-
-<script>
-const SUPABASE_URL = "https://kxudiviidwwwclbzgdyx.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH";
-const GRATIS_TOTALT = 5;
-
-async function loadStats(){
-  try{
-    if(!window.supabase) return;
-    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    const approved = await client.from("breeders").select("id", {count:"exact", head:true}).eq("status","godkjent");
-    const waiting = await client.from("breeders").select("id", {count:"exact", head:true}).eq("status","venter");
-    const founders = await client.from("breeders").select("id", {count:"exact", head:true}).eq("founder",true).eq("status","godkjent");
-
-    const approvedCount = approved.count || 0;
-    const waitingCount = waiting.count || 0;
-    const founderCount = founders.count || 0;
-    const freeLeft = Math.max(0, GRATIS_TOTALT - founderCount);
-
-    document.getElementById("approvedCount").textContent = approvedCount;
-    document.getElementById("waitingCount").textContent = waitingCount;
-    document.getElementById("founderCount").textContent = founderCount;
-    document.getElementById("freeCount").textContent = freeLeft;
-
-    document.getElementById("pawCount").textContent = "🐾".repeat(freeLeft) + "⬜".repeat(GRATIS_TOTALT-freeLeft);
-
-    const freeText = document.getElementById("freeText");
-    if(freeLeft === 0){
-      freeText.textContent = "ALLE GRATIS PLASSENE ER TATT";
-      freeText.style.color = "#92400e";
-    }else if(freeLeft === 1){
-      freeText.textContent = "KUN 1 GRATIS PLASS IGJEN!";
-      freeText.style.color = "#b91c1c";
-    }else{
-      freeText.textContent = freeLeft + " GRATIS PLASSER IGJEN";
-      freeText.style.color = "#166534";
-    }
-  }catch(e){
-    console.log(e);
-  }
-}
-loadStats();
-</script>
-
 </body>
 </html>
