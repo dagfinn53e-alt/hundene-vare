@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="no">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hundeleksikon Premium – Hundene våre</title>
+<title>Rase Premium 2.0 – Hundene våre</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{
@@ -19,7 +20,7 @@ body{
 .top{
   display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
   background:white;border:1px solid #bfd7ff;border-radius:28px;padding:14px 16px;
-  box-shadow:0 14px 34px rgba(15,23,42,.10);margin-bottom:16px;
+  box-shadow:0 14px 34px rgba(15,23,42,.10);margin-bottom:16px
 }
 .logo{font-size:24px;font-weight:900;color:#004cff}
 .nav{display:flex;gap:8px;flex-wrap:wrap}
@@ -56,7 +57,6 @@ body{
 }
 .card h2{font-size:30px;color:#001d4a;margin-bottom:10px}
 .card p,.card li{color:#334155;font-weight:700;line-height:1.65;font-size:16px}
-.card ul{padding-left:20px}
 .quick{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .quick div{background:#f8fbff;border:1px solid #e0edff;border-radius:18px;padding:13px;font-weight:900;text-align:center}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
@@ -79,7 +79,7 @@ body{
 <body>
 <div class="wrap">
 <div class="top">
-  <div class="logo">📚 Hundeleksikon Premium</div>
+  <div class="logo">📚 Rase Premium 2.0</div>
   <div class="nav">
     <a href="index.html">🏠 Forside</a>
     <a href="hundevelger.html">🐶 Hundevelgeren</a>
@@ -94,32 +94,32 @@ body{
     <span class="badge">🐶 Raseguide</span>
     <span class="badge">🩺 Helse og pelsstell</span>
   </div>
-  <h1 id="title">Laster rase...</h1>
-  <p id="intro"></p>
+  <h1 id="raseTitle">Laster rase...</h1>
+  <p id="raseIntro">Henter informasjon.</p>
 </section>
 
 <section class="stats">
-  <div class="stat"><b id="size"></b>Størrelse</div>
-  <div class="stat"><b id="weight"></b>Vekt</div>
-  <div class="stat"><b id="life"></b>Levealder</div>
-  <div class="stat"><b id="grooming"></b>Pelsstell</div>
+  <div class="stat"><b id="raseSize">-</b>Størrelse</div>
+  <div class="stat"><b id="raseWeight">-</b>Vekt</div>
+  <div class="stat"><b id="raseLife">-</b>Levealder</div>
+  <div class="stat"><b id="raseGrooming">-</b>Pelsstell</div>
 </section>
 
 <div class="grid">
   <div>
     <section class="card">
       <h2>🐶 Om rasen</h2>
-      <p id="about"></p>
+      <p id="raseAbout"></p>
     </section>
 
     <section class="card">
       <h2>❤️ Gemytt og familie</h2>
-      <p id="temperament"></p>
+      <p id="raseTemperament"></p>
     </section>
 
     <section class="card">
       <h2>🩺 Helse</h2>
-      <p id="health"></p>
+      <p id="raseHealth"></p>
     </section>
   </div>
 
@@ -127,16 +127,16 @@ body{
     <section class="card">
       <h2>📌 Kort fakta</h2>
       <div class="quick">
-        <div id="origin"></div>
-        <div id="activity"></div>
-        <div id="home"></div>
-        <div id="experience"></div>
+        <div id="raseOrigin"></div>
+        <div id="raseActivity"></div>
+        <div id="raseHome"></div>
+        <div id="raseExperience"></div>
       </div>
     </section>
 
     <section class="card">
       <h2>✂️ Pelsstell</h2>
-      <p id="coat"></p>
+      <p id="raseCoat"></p>
       <div class="actions">
         <a class="btn orange" href="pelsstell.html">✂️ Les pelsstell</a>
       </div>
@@ -145,17 +145,18 @@ body{
     <section class="card">
       <h2>🏆 Videre</h2>
       <p>Se om det finnes oppdrettere eller valpekull for denne rasen på Hundenevåre.com.</p>
-      <div class="actions" id="links"></div>
+      <div class="actions" id="raseLinks"></div>
     </section>
   </div>
 </div>
 
-<div class="footer">Hundenevåre.com – Hundeleksikon Premium 🐶</div>
+<div class="footer">Hundenevåre.com – Rase Premium 🐶</div>
 </div>
 
 <script>
-const DATA={
-  "Bichon Frisé":{
+const RASER = {
+  "bichon frisé": {
+    name:"Bichon Frisé",
     intro:"En liten, glad og sosial selskapshund som ofte passer godt for familier og førstegangseiere.",
     size:"Liten", weight:"5–8 kg", life:"12–15 år", grooming:"Høyt",
     origin:"🌍 Frankrike/Belgia", activity:"🚶 Moderat aktivitet", home:"🏡 Leilighet/hus", experience:"✅ Passer mange",
@@ -164,7 +165,8 @@ const DATA={
     health:"Som mange små raser bør man være oppmerksom på tenner, hud, øyne og knær. Seriøse oppdrettere bør kunne fortelle om helse, oppfølging og eventuelle tester.",
     coat:"Pelsen krever jevnlig børsting og gjerne klipp hos hundefrisør. Dette er en rase der pelsstell må regnes som en fast del av hverdagen."
   },
-  "Havaneser":{
+  "havaneser": {
+    name:"Havaneser",
     intro:"En glad, sosial og familievennlig liten hund med mye personlighet.",
     size:"Liten", weight:"4–7 kg", life:"13–15 år", grooming:"Høyt",
     origin:"🌍 Cuba", activity:"🚶 Moderat aktivitet", home:"🏡 Leilighet/hus", experience:"✅ Passer mange",
@@ -173,16 +175,48 @@ const DATA={
     health:"Oppdretter bør kunne informere om helse, øyne, knær og generell oppfølging.",
     coat:"Pelsen er vakker, men krever jevnlig stell, børsting og vedlikehold."
   },
-  "Golden Retriever":{
+  "coton de tulear": {
+    name:"Coton de Tulear",
+    intro:"En liten, vennlig og familieorientert selskapshund.",
+    size:"Liten", weight:"4–7 kg", life:"14–16 år", grooming:"Høyt",
+    origin:"🌍 Madagaskar", activity:"🚶 Moderat aktivitet", home:"🏡 Leilighet/hus", experience:"✅ Passer mange",
+    about:"Coton de Tulear er en liten hund med myk pels og et sosialt, glad uttrykk.",
+    temperament:"Rasen er ofte vennlig, leken og knyttet til familien.",
+    health:"Oppdretter bør kunne fortelle om helse, øyne, knær og generell oppfølging.",
+    coat:"Pelsen krever jevnlig børsting og stell for å unngå floker."
+  },
+  "cavalier king charles spaniel": {
+    name:"Cavalier King Charles Spaniel",
+    intro:"En mild og kjærlig familiehund som ofte passer godt i rolige hjem.",
+    size:"Liten", weight:"5–8 kg", life:"9–14 år", grooming:"Middels",
+    origin:"🌍 Storbritannia", activity:"🚶 Lav/moderat", home:"🏡 Leilighet/hus", experience:"✅ Passer mange",
+    about:"Cavalier King Charles Spaniel er en mild og sosial hund som ofte trives tett på familien.",
+    temperament:"Rasen er gjerne kjærlig, tilpasningsdyktig og glad i mennesker.",
+    health:"Det er viktig å snakke med oppdretter om hjerte, øyne og generell helseoppfølging.",
+    coat:"Pelsen bør børstes jevnlig, spesielt ører, faner og hale."
+  },
+  "puddel": {
+    name:"Puddel",
+    intro:"En intelligent, lærevillig og allsidig hund som finnes i flere størrelser.",
+    size:"Flere størrelser", weight:"Varierer", life:"12–15 år", grooming:"Høyt",
+    origin:"🌍 Europa", activity:"🚶 Moderat/høy", home:"🏡 Mange hjem", experience:"✅ Lærevillig",
+    about:"Puddel er en klok og aktiv hund som ofte lærer raskt og trives med mental stimulering.",
+    temperament:"Rasen er ofte sosial, oppmerksom og treningsvillig.",
+    health:"Helse varierer med størrelse. Seriøse oppdrettere informerer om relevante tester.",
+    coat:"Pelsen krever regelmessig klipp og stell."
+  },
+  "golden retriever": {
+    name:"Golden Retriever",
     intro:"En populær, vennlig og aktiv familiehund.",
     size:"Stor", weight:"25–34 kg", life:"10–12 år", grooming:"Middels",
-    origin:"🌍 Storbritannia", activity:"🏃 Høy aktivitet", home:"🏡 Hus/aktivt hjem", experience:"✅ Passer aktive familier",
+    origin:"🌍 Storbritannia", activity:"🏃 Høy aktivitet", home:"🏡 Aktivt hjem", experience:"✅ Passer aktive familier",
     about:"Golden Retriever er kjent som en vennlig, samarbeidsvillig og sosial hund.",
     temperament:"Rasen er ofte tålmodig, lærevillig og glad i mennesker, men trenger mosjon og mental aktivisering.",
     health:"Viktige tema er hofter, albuer, øyne og generell avlshelse. Seriøse oppdrettere dokumenterer helsearbeid.",
     coat:"Pelsen bør børstes jevnlig, særlig i røyteperioder."
   },
-  "Labrador Retriever":{
+  "labrador retriever": {
+    name:"Labrador Retriever",
     intro:"En robust, vennlig og aktiv familie- og brukshund.",
     size:"Stor", weight:"25–36 kg", life:"10–12 år", grooming:"Lavt/middels",
     origin:"🌍 Storbritannia", activity:"🏃 Høy aktivitet", home:"🏡 Aktivt hjem", experience:"✅ Passer aktive eiere",
@@ -191,40 +225,81 @@ const DATA={
     health:"Hofter, albuer, øyne og vektkontroll er viktige tema.",
     coat:"Kort pels, men jevnlig børsting er nyttig."
   },
-  "Puddel":{
-    intro:"En intelligent, lærevillig og allsidig hund som finnes i flere størrelser.",
-    size:"Flere størrelser", weight:"Varierer", life:"12–15 år", grooming:"Høyt",
-    origin:"🌍 Europa", activity:"🚶 Moderat/høy", home:"🏡 Mange hjem", experience:"✅ Lærevillig",
-    about:"Puddel er en klok og aktiv hund som ofte lærer raskt og trives med mental stimulering.",
-    temperament:"Rasen er ofte sosial, oppmerksom og treningsvillig.",
-    health:"Helse varierer med størrelse. Seriøse oppdrettere informerer om relevante tester.",
-    coat:"Pelsen krever regelmessig klipp og stell."
+  "engelsk springer spaniel": {
+    name:"Engelsk Springer Spaniel",
+    intro:"En aktiv og glad hund for tur, trening og familie.",
+    size:"Mellomstor", weight:"18–25 kg", life:"12–14 år", grooming:"Middels",
+    origin:"🌍 Storbritannia", activity:"🏃 Høy aktivitet", home:"🏡 Aktivt hjem", experience:"✅ Aktiv familie",
+    about:"Engelsk Springer Spaniel er en livlig og sosial hund som trives med aktivitet.",
+    temperament:"Rasen er ofte glad, energisk og kontaktsøkende.",
+    health:"Oppdretter bør kunne informere om hofter, øyne og generell helse.",
+    coat:"Pelsen trenger jevnlig børsting og stell av ører og faner."
+  },
+  "berner sennenhund": {
+    name:"Berner Sennenhund",
+    intro:"En stor, rolig og familievennlig hund som trenger plass og god oppfølging.",
+    size:"Stor", weight:"35–55 kg", life:"7–10 år", grooming:"Middels",
+    origin:"🌍 Sveits", activity:"🚶 Moderat aktivitet", home:"🏡 Hus/plass", experience:"✅ Trygg oppfølging",
+    about:"Berner Sennenhund er en stor og vennlig hund med rolig uttrykk og sterk tilknytning til familien.",
+    temperament:"Rasen er ofte mild, sosial og lojal, men størrelsen krever ansvarlig håndtering.",
+    health:"Det er viktig med god informasjon om hofter, albuer og generell avlshelse.",
+    coat:"Pelsen røyter og bør børstes jevnlig."
+  },
+  "border collie": {
+    name:"Border Collie",
+    intro:"En ekstremt lærevillig og aktiv hund som passer best for svært aktive eiere.",
+    size:"Mellomstor", weight:"14–22 kg", life:"12–15 år", grooming:"Middels",
+    origin:"🌍 Storbritannia", activity:"⚡ Svært høy", home:"🏡 Aktivt hjem", experience:"🏆 Erfarne/aktive",
+    about:"Border Collie er kjent som en av de mest arbeidsvillige og intelligente hunderasene.",
+    temperament:"Rasen trenger mye mental og fysisk stimulering. Den passer ikke som passiv familiehund.",
+    health:"Oppdretter bør kunne informere om øyne, hofter og relevante tester.",
+    coat:"Pelsen trenger jevnlig børsting, spesielt i røyteperioder."
   }
 };
 
-function norm(s){return decodeURIComponent(s||"").replace(/\+/g," ").trim();}
-const params=new URLSearchParams(location.search);
-let name=norm(params.get("rase")) || "Bichon Frisé";
-let d=DATA[name] || DATA["Bichon Frisé"];
+function normalizeName(s){
+  return decodeURIComponent(String(s || ""))
+    .replace(/\+/g," ")
+    .normalize("NFC")
+    .trim()
+    .toLowerCase();
+}
 
-document.title=name+" – Hundeleksikon Premium";
-title.textContent=name;
-intro.textContent=d.intro;
-size.textContent=d.size;
-weight.textContent=d.weight;
-life.textContent=d.life;
-grooming.textContent=d.grooming;
-origin.textContent=d.origin;
-activity.textContent=d.activity;
-home.textContent=d.home;
-experience.textContent=d.experience;
-about.textContent=d.about;
-temperament.textContent=d.temperament;
-health.textContent=d.health;
-coat.textContent=d.coat;
+function setText(id, value){
+  const el=document.getElementById(id);
+  if(el) el.textContent=value || "";
+}
 
-const r=encodeURIComponent(name);
-links.innerHTML='<a class="btn green" href="oppdrettere.html?rase='+r+'">🏆 Se oppdrettere</a><a class="btn" href="valpekull.html?rase='+r+'">🐾 Se valpekull</a><a class="btn orange" href="hundevelger.html">🐶 Ta testen</a>';
+function loadRase(){
+  const params=new URLSearchParams(window.location.search);
+  const raw=params.get("rase") || "Bichon Frisé";
+  const key=normalizeName(raw);
+  const d=RASER[key] || RASER["bichon frisé"];
+
+  document.title=d.name+" – Rase Premium";
+  setText("raseTitle",d.name);
+  setText("raseIntro",d.intro);
+  setText("raseSize",d.size);
+  setText("raseWeight",d.weight);
+  setText("raseLife",d.life);
+  setText("raseGrooming",d.grooming);
+  setText("raseOrigin",d.origin);
+  setText("raseActivity",d.activity);
+  setText("raseHome",d.home);
+  setText("raseExperience",d.experience);
+  setText("raseAbout",d.about);
+  setText("raseTemperament",d.temperament);
+  setText("raseHealth",d.health);
+  setText("raseCoat",d.coat);
+
+  const enc=encodeURIComponent(d.name);
+  document.getElementById("raseLinks").innerHTML=
+    '<a class="btn green" href="oppdrettere.html?rase='+enc+'">🏆 Se oppdrettere</a>'+
+    '<a class="btn" href="valpekull.html?rase='+enc+'">🐾 Se valpekull</a>'+
+    '<a class="btn orange" href="hundevelger.html">🐶 Ta testen</a>';
+}
+
+document.addEventListener("DOMContentLoaded",loadRase);
 </script>
 </body>
 </html>
