@@ -27,6 +27,82 @@ body{font-family:Arial,sans-serif;color:var(--dark);background:radial-gradient(c
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
 .hero-actions .btn{padding:14px 20px;font-size:16px}
 
+
+.hundevelger-section{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:18px;
+  align-items:center;
+  background:linear-gradient(135deg,#ffffff,#eaf2ff,#fff7ed);
+  border:1px solid #bfd7ff;
+  border-radius:34px;
+  padding:26px;
+  margin-bottom:16px;
+  box-shadow:0 18px 42px rgba(15,23,42,.11);
+}
+.hundevelger-section h2{
+  font-size:clamp(2rem,5vw,3.4rem);
+  color:#0f172a;
+  margin-bottom:10px;
+}
+.hundevelger-section p{
+  color:#334155;
+  font-size:17px;
+  line-height:1.55;
+  font-weight:700;
+  margin-bottom:16px;
+}
+.hunde-points{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-bottom:16px;
+}
+.hunde-point{
+  background:white;
+  border:1px solid #dbeafe;
+  border-radius:18px;
+  padding:11px;
+  font-weight:900;
+  color:#0b4fd4;
+  box-shadow:0 8px 18px rgba(30,64,175,.07);
+}
+.hunde-card{
+  background:linear-gradient(135deg,#051849,#0b5cff);
+  color:white;
+  border-radius:30px;
+  padding:24px;
+  text-align:center;
+  box-shadow:0 18px 42px rgba(15,23,42,.18);
+}
+.hunde-card .dog{
+  font-size:74px;
+  margin-bottom:8px;
+}
+.hunde-card h3{
+  font-size:27px;
+  margin-bottom:8px;
+}
+.hunde-card p{
+  color:#eaf2ff;
+  font-size:15px;
+}
+@media(max-width:760px){
+  .hundevelger-section{
+    grid-template-columns:1fr;
+    padding:18px;
+    border-radius:26px;
+    text-align:center;
+  }
+  .hunde-points{
+    grid-template-columns:1fr;
+  }
+  .hunde-card{
+    padding:18px;
+    border-radius:24px;
+  }
+}
+
 .free-strip{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;background:linear-gradient(135deg,#fff7ed,#fef3c7,#fff);border:2px dashed var(--orange);border-radius:28px;padding:18px;margin-bottom:16px;box-shadow:0 14px 34px rgba(15,23,42,.08)}
 .free-icon{font-size:38px;width:66px;height:66px;border-radius:22px;background:white;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 22px rgba(15,23,42,.08)}
 .free-strip h2{font-size:28px;color:#9a3412;margin-bottom:5px}
@@ -116,9 +192,29 @@ body{font-family:Arial,sans-serif;color:var(--dark);background:radial-gradient(c
 <div class="hero-actions">
 <a class="btn primary" href="butikker-ny.html">🏪 Finn butikker og tjenester</a>
 <a class="btn orange" href="butikk-profil-skjema.html">🎉 Registrer bedrift GRATIS</a>
-<a class="btn white" href="hvilken-hunderase-passer-meg-5-0.html">❤️ Finn hunden som passer deg</a>
+<a class="btn white" href="hundevelger.html">🐶 Hundevelgeren Premium</a>
 </div>
 </section>
+
+<section class="hundevelger-section">
+  <div>
+    <h2>🐶 Usikker på hvilken hund som passer deg?</h2>
+    <p>Ta den nye Hundevelgeren Premium. Svar på noen enkle spørsmål og få forslag til hunderaser som passer din hverdag, familie og erfaring.</p>
+    <div class="hunde-points">
+      <div class="hunde-point">⏱️ Tar ca. 2 minutter</div>
+      <div class="hunde-point">🎯 Personlig match</div>
+      <div class="hunde-point">📚 Les om rasen</div>
+      <div class="hunde-point">🏆 Finn oppdrettere</div>
+    </div>
+    <a class="btn primary" href="hundevelger.html">🐾 Start Hundevelgeren</a>
+  </div>
+  <div class="hunde-card">
+    <div class="dog">🐶</div>
+    <h3>Finn riktig hund</h3>
+    <p>Fra test til raseinfo, helse, pelsstell, oppdrettere og valpekull.</p>
+  </div>
+</section>
+
 <section class="free-strip">
 <div class="free-icon">🎉</div>
 <div>
@@ -135,7 +231,7 @@ body{font-family:Arial,sans-serif;color:var(--dark);background:radial-gradient(c
 <a class="launch-card" href="kunnskap.html"><div class="launch-icon">📚</div><h3>Kunnskap</h3><p>Hund, katt og helse</p></a>
 <a class="launch-card" href="spill.html"><div class="launch-icon">🎮</div><h3>Spill</h3><p>Quiz og læring</p></a>
 <a class="launch-card" href="arrangementer.html"><div class="launch-icon">📅</div><h3>Arrangementer</h3><p>Kurs og utstillinger</p></a>
-<a class="launch-card" href="hvilken-hunderase-passer-meg-5-0.html"><div class="launch-icon">❤️</div><h3>Finn hund</h3><p>Ta rasetesten</p></a>
+<a class="launch-card" href="hundevelger.html"><div class="launch-icon">🐶</div><h3>Hundevelgeren</h3><p>Finn hunderasen som passer deg</p></a>
 <a class="launch-card free" href="butikk-profil-skjema.html"><div class="launch-icon">⭐</div><h3>Gratis profil</h3><p>Registrer bedrift</p></a>
 <a class="launch-card" href="oppdretterportal.html"><div class="launch-icon">🐶</div><h3>Oppdrettere</h3><p>Finn kennel og valper</p></a></div>
 </section>
@@ -151,7 +247,7 @@ body{font-family:Arial,sans-serif;color:var(--dark);background:radial-gradient(c
 <a class="btn white" href="butikker-ny.html">Åpne butikkportalen</a>
 </div>
 <div class="side-stack">
-<div class="side-card"><h3>🐶 Hundesenter</h3><p>Raser, sammenligning, utstyr og testen «Finn hunden som passer deg».</p></div>
+<div class="side-card"><h3>🐶 Hundesenter</h3><p>Raser, helse, pelsstell, utstyr og den nye Hundevelgeren Premium.</p></div>
 <div class="side-card"><h3>🎮 Spill og quiz</h3><p>Lær om hund og katt på en morsom måte.</p></div>
 </div>
 </div>
