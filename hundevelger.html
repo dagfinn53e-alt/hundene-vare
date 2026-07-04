@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hundevelgeren – Hundene våre</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;color:#123c73;min-height:100vh;background:radial-gradient(circle at 8% 6%,rgba(255,220,130,.55),transparent 28%),radial-gradient(circle at 92% 8%,rgba(126,200,255,.50),transparent 33%),linear-gradient(180deg,#dbeafe,#eef6ff 48%,#fff7ed)}
+.wrap{max-width:1220px;margin:auto;padding:16px 10px 70px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:white;border:1px solid #bfd7ff;border-radius:28px;padding:14px 16px;box-shadow:0 14px 34px rgba(15,23,42,.10);margin-bottom:16px}
+.logo{font-size:24px;font-weight:900;color:#004cff}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{background:#eaf2ff;color:#004cff;text-decoration:none;border:1px solid #b8ddff;border-radius:999px;padding:10px 13px;font-weight:900;font-size:14px}
+.hero{background:radial-gradient(circle at 20% 20%,rgba(255,255,255,.35),transparent 25%),radial-gradient(circle at 88% 12%,rgba(255,214,120,.30),transparent 25%),linear-gradient(135deg,#061b55,#004cff 45%,#7c3aed);color:white;border-radius:46px;padding:46px 22px;text-align:center;box-shadow:0 28px 70px rgba(0,45,110,.32);margin-bottom:20px}
+.badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.badge{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);border-radius:999px;padding:9px 13px;font-weight:900;font-size:13px}
+.gold{background:linear-gradient(135deg,#fff7c2,#ffd166);color:#6b3a00;border-color:#f59e0b}
+.hero h1{font-size:clamp(2.6rem,7vw,5.2rem);line-height:1.05;margin-bottom:12px;text-shadow:0 0 14px rgba(255,255,255,.65)}
+.hero p{font-size:clamp(1rem,2.5vw,1.25rem);font-weight:700;line-height:1.55;color:#eef6ff;max-width:900px;margin:auto}
+.panel{background:white;border-radius:34px;padding:24px;box-shadow:0 18px 42px rgba(15,23,42,.12);border:1px solid #dbeafe;margin-bottom:22px}
+.panel h2{text-align:center;color:#001d4a;font-size:clamp(2rem,5vw,3.1rem);margin-bottom:12px}
+.panel p{color:#334155;font-weight:700;line-height:1.6;text-align:center}
+.progress{height:14px;background:#eaf2ff;border-radius:999px;overflow:hidden;margin:16px 0 22px;border:1px solid #bfd7ff}
+.bar{height:100%;width:0;background:linear-gradient(135deg,#22c55e,#004cff);transition:.25s}
+.question{display:none}.question.active{display:block}
+.question h3{font-size:clamp(1.6rem,4vw,2.4rem);color:#001d4a;text-align:center;margin-bottom:18px}
+.options{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.option{background:linear-gradient(180deg,#ffffff,#f8fbff);border:2px solid #dbeafe;border-radius:24px;padding:20px;cursor:pointer;font-weight:900;color:#123c73;box-shadow:0 10px 22px rgba(30,64,175,.08);transition:.18s;text-align:center;font-size:17px}
+.option:hover,.option.selected{border-color:#004cff;transform:translateY(-3px);box-shadow:0 16px 30px rgba(30,64,175,.15);background:#eaf2ff}
+.option span{display:block;font-size:42px;margin-bottom:8px}
+.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+button,.btn{border:none;border-radius:999px;padding:14px 20px;color:white;background:linear-gradient(135deg,#1f8fff,#004cff);font-size:16px;font-weight:900;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;min-width:160px}
+.green{background:linear-gradient(135deg,#22c55e,#16a34a)}.orange{background:linear-gradient(135deg,#ff8a3d,#f59e0b)}.dark{background:#111827}
+.results{display:none}
+.resultGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+.result{background:white;border-radius:30px;padding:22px;box-shadow:0 16px 34px rgba(15,23,42,.12);border:1px solid #dbeafe;text-align:center}
+.result .emoji{font-size:56px;margin-bottom:8px}
+.result h3{font-size:25px;color:#004cff;margin-bottom:8px}
+.score{display:inline-block;background:linear-gradient(135deg,#fff7c2,#ffd166);color:#6b3a00;border:1px solid #f59e0b;border-radius:999px;padding:8px 12px;font-weight:900;margin-bottom:10px}
+.result p{color:#334155;font-weight:700;line-height:1.5}
+.warn{background:#fff7ed;border:1px solid #fed7aa;color:#92400e;border-radius:24px;padding:18px;font-weight:800;line-height:1.55;margin-top:18px;text-align:center}
+.footer{text-align:center;font-weight:900;color:#14346d;margin-top:34px}
+@media(max-width:950px){.resultGrid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.wrap{padding:9px 8px 50px}.top{justify-content:center}.logo{width:100%;text-align:center;font-size:20px}.nav{width:100%;justify-content:center}.nav a{flex:1 1 42%;text-align:center;font-size:12px;padding:9px 7px}.hero{border-radius:28px;padding:32px 14px}.panel{padding:18px;border-radius:26px}.options,.resultGrid{grid-template-columns:1fr}button,.btn{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top"><div class="logo">🐾 Hundevelgeren</div><div class="nav"><a href="index.html">🏠 Forside</a><a href="kunnskap.html">📚 Kunnskap</a><a href="hunderaser.html">🐶 Hunderaser</a><a href="oppdretterportal.html">🏆 Oppdrettere</a></div></div>
+<section class="hero"><div class="badges"><span class="badge gold">🏆 Hundenevåre guide</span><span class="badge">🐶 Finn riktig hund</span><span class="badge">⏱️ Tar ca. 2 minutter</span></div><h1>Hvilken hund passer for meg?</h1><p>Svar på noen enkle spørsmål, så får du forslag til hunderaser som kan passe din hverdag, familie og erfaring.</p></section>
+
+<section class="panel" id="quizPanel">
+<h2>🐶 Hundevelgeren Premium</h2><p>Dette er en enkel veileder. Les alltid mer om rasen og snakk med seriøse oppdrettere før du bestemmer deg.</p>
+<div class="progress"><div class="bar" id="bar"></div></div>
+
+<div class="question active" data-key="home"><h3>🏠 Hvordan bor du?</h3><div class="options"><div class="option" data-value="apartment"><span>🏢</span>Leilighet</div><div class="option" data-value="house"><span>🏡</span>Hus / rekkehus</div><div class="option" data-value="farm"><span>🌲</span>Stor plass / gård</div><div class="option" data-value="any"><span>✅</span>Ikke viktig</div></div></div>
+<div class="question" data-key="family"><h3>👨‍👩‍👧 Hvem bor i hjemmet?</h3><div class="options"><div class="option" data-value="alone"><span>👤</span>Bor alene</div><div class="option" data-value="couple"><span>👥</span>Par</div><div class="option" data-value="children"><span>👨‍👩‍👧</span>Familie med barn</div><div class="option" data-value="senior"><span>☕</span>Roligere voksenliv</div></div></div>
+<div class="question" data-key="activity"><h3>🚶 Hvor aktiv ønsker du å være?</h3><div class="options"><div class="option" data-value="low"><span>🛋️</span>Rolige turer</div><div class="option" data-value="medium"><span>🚶</span>Vanlige dagsturer</div><div class="option" data-value="high"><span>🏃</span>Mye aktivitet</div><div class="option" data-value="sport"><span>🏆</span>Trening / sport</div></div></div>
+<div class="question" data-key="size"><h3>🐕 Hvilken størrelse ønsker du?</h3><div class="options"><div class="option" data-value="small"><span>🐶</span>Liten hund</div><div class="option" data-value="medium"><span>🐕</span>Mellomstor hund</div><div class="option" data-value="large"><span>🐕‍🦺</span>Stor hund</div><div class="option" data-value="any"><span>✅</span>Ikke viktig</div></div></div>
+<div class="question" data-key="grooming"><h3>✂️ Hvor mye pelsstell passer for deg?</h3><div class="options"><div class="option" data-value="low"><span>🧽</span>Lite</div><div class="option" data-value="medium"><span>🪮</span>Noe</div><div class="option" data-value="high"><span>✂️</span>Mye er greit</div><div class="option" data-value="any"><span>💙</span>Spiller ingen rolle</div></div></div>
+<div class="question" data-key="alone"><h3>⏰ Hvor lenge må hunden være alene?</h3><div class="options"><div class="option" data-value="little"><span>🏠</span>Sjelden alene</div><div class="option" data-value="medium"><span>⏱️</span>2–4 timer</div><div class="option" data-value="long"><span>⌛</span>4–6 timer</div><div class="option" data-value="verylong"><span>⚠️</span>Over 6 timer</div></div></div>
+<div class="question" data-key="goal"><h3>❤️ Hva ønsker du mest?</h3><div class="options"><div class="option" data-value="family"><span>👨‍👩‍👧</span>Familiehund</div><div class="option" data-value="companion"><span>❤️</span>Selskapshund</div><div class="option" data-value="hiking"><span>🥾</span>Turkamerat</div><div class="option" data-value="training"><span>🎓</span>Trening / aktivitet</div></div></div>
+<div class="controls"><button class="dark" id="prevBtn" onclick="prevStep()">Tilbake</button><button class="green" id="nextBtn" onclick="nextStep()">Neste</button></div>
+</section>
+
+<section class="panel results" id="results"><h2>🎯 Dine beste matcher</h2><p>Her er noen raser som kan passe basert på svarene dine.</p><div class="resultGrid" id="resultGrid"></div><div class="warn">Husk: Dette er en veiledning, ikke en fasit. Les mer om rasen, møt voksne hunder og snakk med oppdrettere før du bestemmer deg.</div><div class="controls"><a class="btn green" href="oppdrettere.html">🔎 Se oppdrettere</a><a class="btn orange" href="valpekull.html">🐾 Se valpekull</a><a class="btn" href="hunderaser.html">🐶 Les om raser</a><button class="dark" onclick="restart()">Ta testen på nytt</button></div></section>
+<div class="footer">Hundenevåre.com – Hundevelgeren 🐶</div>
+</div>
+<script>
+let step=0;const answers={};const questions=[...document.querySelectorAll(".question")];
+const breeds=[
+{name:"Bichon Frisé",emoji:"🤍",size:"small",activity:"medium",grooming:"high",family:true,apartment:true,senior:true,text:"Glad, sosial og familievennlig liten hund. Krever en del pelsstell."},
+{name:"Havaneser",emoji:"🐶",size:"small",activity:"medium",grooming:"high",family:true,apartment:true,senior:true,text:"Sosial, munter og trivelig selskapshund. Passer godt i mange hjem."},
+{name:"Coton de Tulear",emoji:"☁️",size:"small",activity:"medium",grooming:"high",family:true,apartment:true,senior:true,text:"Liten, vennlig og familieorientert hund med pels som trenger stell."},
+{name:"Cavalier King Charles Spaniel",emoji:"❤️",size:"small",activity:"low",grooming:"medium",family:true,apartment:true,senior:true,text:"Mild og kjærlig familiehund. Passer godt for rolige hjem."},
+{name:"Labrador Retriever",emoji:"🦮",size:"large",activity:"high",grooming:"low",family:true,apartment:false,senior:false,text:"Vennlig, aktiv og robust familiehund. Trenger mosjon og trening."},
+{name:"Golden Retriever",emoji:"🌟",size:"large",activity:"high",grooming:"medium",family:true,apartment:false,senior:false,text:"Snill og populær familiehund. Trives med aktivitet og mennesker."},
+{name:"Engelsk Springer Spaniel",emoji:"🐕",size:"medium",activity:"high",grooming:"medium",family:true,apartment:false,senior:false,text:"Aktiv og glad hund for tur, trening og familie."},
+{name:"Puddel",emoji:"✂️",size:"medium",activity:"medium",grooming:"high",family:true,apartment:true,senior:true,text:"Intelligent, lærevillig og populær familiehund. Krever pelsstell."},
+{name:"Berner Sennenhund",emoji:"🐻",size:"large",activity:"medium",grooming:"medium",family:true,apartment:false,senior:false,text:"Stor, rolig og familievennlig hund. Trenger plass og god oppfølging."},
+{name:"Border Collie",emoji:"⚡",size:"medium",activity:"sport",grooming:"medium",family:false,apartment:false,senior:false,text:"Ekstremt lærevillig og aktiv. Passer best for svært aktive eiere."}
+];
+document.querySelectorAll(".option").forEach(o=>{o.addEventListener("click",()=>{const q=o.closest(".question");q.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));o.classList.add("selected");answers[q.dataset.key]=o.dataset.value;});});
+function showStep(){questions.forEach((q,i)=>q.classList.toggle("active",i===step));bar.style.width=((step+1)/questions.length*100)+"%";prevBtn.style.display=step===0?"none":"inline-flex";nextBtn.textContent=step===questions.length-1?"Se resultat":"Neste";}
+function nextStep(){const key=questions[step].dataset.key;if(!answers[key]){alert("Velg et alternativ først.");return;}if(step<questions.length-1){step++;showStep();}else showResults();}
+function prevStep(){if(step>0){step--;showStep();}}
+function scoreBreed(b){let score=50;if(answers.size==="any"||answers.size===b.size)score+=12;if(answers.activity===b.activity)score+=14;if(answers.activity==="medium"&&b.activity==="low")score+=7;if(answers.activity==="low"&&b.activity==="medium")score+=4;if(answers.grooming==="any"||answers.grooming===b.grooming)score+=10;if(answers.home==="apartment"&&b.apartment)score+=10;if(answers.home==="apartment"&&!b.apartment)score-=12;if(answers.family==="children"&&b.family)score+=12;if(answers.family==="senior"&&b.senior)score+=10;if(answers.alone==="verylong")score-=8;if(answers.goal==="family"&&b.family)score+=10;if(answers.goal==="companion"&&(b.size==="small"||b.senior))score+=10;if(answers.goal==="hiking"&&(b.activity==="medium"||b.activity==="high"))score+=10;if(answers.goal==="training"&&(b.activity==="high"||b.activity==="sport"))score+=12;return Math.max(35,Math.min(99,score));}
+function showResults(){quizPanel.style.display="none";results.style.display="block";const sorted=breeds.map(b=>({...b,score:scoreBreed(b)})).sort((a,b)=>b.score-a.score).slice(0,5);resultGrid.innerHTML="";sorted.forEach((b,i)=>{const el=document.createElement("div");el.className="result";el.innerHTML='<div class="emoji">'+b.emoji+'</div><div class="score">'+(i===0?"🥇 ":i===1?"🥈 ":i===2?"🥉 ":"⭐ ")+b.score+' % match</div><h3>'+b.name+'</h3><p>'+b.text+'</p><div class="controls"><a class="btn green" href="oppdrettere.html">Se oppdrettere</a><a class="btn" href="hunderaser.html">Les om rasen</a></div>';resultGrid.appendChild(el);});window.scrollTo({top:0,behavior:"smooth"});}
+function restart(){step=0;for(const k in answers)delete answers[k];document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));quizPanel.style.display="block";results.style.display="none";showStep();}
+showStep();
+</script>
+</body>
+</html>
