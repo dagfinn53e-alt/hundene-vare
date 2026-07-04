@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hundevelgeren – Hundene våre</title>
+<title>Hundevelgeren Premium – Hundene våre</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,sans-serif;color:#123c73;min-height:100vh;background:radial-gradient(circle at 8% 6%,rgba(255,220,130,.55),transparent 28%),radial-gradient(circle at 92% 8%,rgba(126,200,255,.50),transparent 33%),linear-gradient(180deg,#dbeafe,#eef6ff 48%,#fff7ed)}
@@ -39,6 +39,7 @@ button,.btn{border:none;border-radius:999px;padding:14px 20px;color:white;backgr
 .result h3{font-size:25px;color:#004cff;margin-bottom:8px}
 .score{display:inline-block;background:linear-gradient(135deg,#fff7c2,#ffd166);color:#6b3a00;border:1px solid #f59e0b;border-radius:999px;padding:8px 12px;font-weight:900;margin-bottom:10px}
 .result p{color:#334155;font-weight:700;line-height:1.5}
+.resultLinks{display:grid;grid-template-columns:1fr;gap:8px;margin-top:14px}.resultLinks .btn{width:100%;min-width:0;padding:12px 14px;font-size:14px}
 .warn{background:#fff7ed;border:1px solid #fed7aa;color:#92400e;border-radius:24px;padding:18px;font-weight:800;line-height:1.55;margin-top:18px;text-align:center}
 .footer{text-align:center;font-weight:900;color:#14346d;margin-top:34px}
 @media(max-width:950px){.resultGrid{grid-template-columns:1fr 1fr}}
@@ -86,7 +87,8 @@ function showStep(){questions.forEach((q,i)=>q.classList.toggle("active",i===ste
 function nextStep(){const key=questions[step].dataset.key;if(!answers[key]){alert("Velg et alternativ først.");return;}if(step<questions.length-1){step++;showStep();}else showResults();}
 function prevStep(){if(step>0){step--;showStep();}}
 function scoreBreed(b){let score=50;if(answers.size==="any"||answers.size===b.size)score+=12;if(answers.activity===b.activity)score+=14;if(answers.activity==="medium"&&b.activity==="low")score+=7;if(answers.activity==="low"&&b.activity==="medium")score+=4;if(answers.grooming==="any"||answers.grooming===b.grooming)score+=10;if(answers.home==="apartment"&&b.apartment)score+=10;if(answers.home==="apartment"&&!b.apartment)score-=12;if(answers.family==="children"&&b.family)score+=12;if(answers.family==="senior"&&b.senior)score+=10;if(answers.alone==="verylong")score-=8;if(answers.goal==="family"&&b.family)score+=10;if(answers.goal==="companion"&&(b.size==="small"||b.senior))score+=10;if(answers.goal==="hiking"&&(b.activity==="medium"||b.activity==="high"))score+=10;if(answers.goal==="training"&&(b.activity==="high"||b.activity==="sport"))score+=12;return Math.max(35,Math.min(99,score));}
-function showResults(){quizPanel.style.display="none";results.style.display="block";const sorted=breeds.map(b=>({...b,score:scoreBreed(b)})).sort((a,b)=>b.score-a.score).slice(0,5);resultGrid.innerHTML="";sorted.forEach((b,i)=>{const el=document.createElement("div");el.className="result";el.innerHTML='<div class="emoji">'+b.emoji+'</div><div class="score">'+(i===0?"🥇 ":i===1?"🥈 ":i===2?"🥉 ":"⭐ ")+b.score+' % match</div><h3>'+b.name+'</h3><p>'+b.text+'</p><div class="controls"><a class="btn green" href="oppdrettere.html">Se oppdrettere</a><a class="btn" href="hunderaser.html">Les om rasen</a></div>';resultGrid.appendChild(el);});window.scrollTo({top:0,behavior:"smooth"});}
+function showResults(){quizPanel.style.display="none";results.style.display="block";const sorted=breeds.map(b=>({...b,score:scoreBreed(b)})).sort((a,b)=>b.score-a.score).slice(0,5);resultGrid.innerHTML="";sorted.forEach((b,i)=>{const el=document.createElement("div");el.className="result";const rase=encodeURIComponent(b.name);
+el.innerHTML='<div class="emoji">'+b.emoji+'</div><div class="score">'+(i===0?"🥇 ":i===1?"🥈 ":i===2?"🥉 ":"⭐ ")+b.score+' % match</div><h3>'+b.name+'</h3><p>'+b.text+'</p><div class="resultLinks"><a class="btn" href="hunderaser.html?rase='+rase+'">📚 Les om rasen</a><a class="btn green" href="oppdrettere.html?rase='+rase+'">🏆 Se oppdrettere</a><a class="btn orange" href="valpekull.html?rase='+rase+'">🐾 Se valpekull</a></div>';resultGrid.appendChild(el);});window.scrollTo({top:0,behavior:"smooth"});}
 function restart(){step=0;for(const k in answers)delete answers[k];document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));quizPanel.style.display="block";results.style.display="none";showStep();}
 showStep();
 </script>
