@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valpekull Premium 5.0 – Hundene våre</title>
+<title>Valpegalleri Premium 1.0 – Hundene våre</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -135,12 +135,21 @@ button{
   .content{padding:20px}
   .btn{width:100%}
 }
+
+.thumbRow{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:12px}
+.thumbRow img{width:100%;height:72px;object-fit:cover;border-radius:14px;border:2px solid #dbeafe;cursor:pointer;opacity:.88}
+.thumbRow img:hover{opacity:1;border-color:#004cff}
+.photoCount{display:inline-block;margin-top:10px;background:#fff7ed;color:#92400e;border:1px solid #fed7aa;border-radius:999px;padding:7px 10px;font-weight:900;font-size:13px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.84);display:none;align-items:center;justify-content:center;z-index:999;padding:20px}
+.modal img{max-width:95vw;max-height:90vh;border-radius:18px}
+@media(max-width:700px){.thumbRow{grid-template-columns:repeat(3,1fr)}.thumbRow img{height:90px}}
+
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="top">
-  <div class="logo">🐾 Valpekull Premium 5.0</div>
+  <div class="logo">🐾 Valpegalleri Premium 1.0</div>
   <div class="nav">
     <a href="index.html">🏠 Forside</a>
     <a href="oppdretterportal.html">🐶 Portal</a>
@@ -155,7 +164,7 @@ button{
     <span class="badge">🏡 Koblet til kennel</span>
   </div>
   <h1>Valpekull</h1>
-  <p>Godkjente valpekull og planlagte kull fra oppdrettere på Hundenevåre.com.</p>
+  <p>Godkjente valpekull med større bildegalleri fra oppdrettere på Hundenevåre.com.</p>
 </section>
 <section class="search">
   <div class="grid">
@@ -169,9 +178,35 @@ button{
 <section class="cards" id="cards"></section>
 <div class="footer">Hundenevåre.com – Valpekull Premium 🐶</div>
 </div>
+<div class="modal" id="galleryModal" onclick="this.style.display='none'"><img id="galleryModalImg"></div>
 <script>
 const client=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
+
 function t(v,f="Ikke oppgitt"){return v&&String(v).trim()?String(v).trim():f}
+
+function getImages(v){
+  if(Array.isArray(v)) return v.filter(Boolean);
+  if(!v) return [];
+  if(typeof v==="string"){
+    try{
+      const parsed=JSON.parse(v);
+      if(Array.isArray(parsed)) return parsed.filter(Boolean);
+    }catch(e){}
+    return v.split(",").map(x=>x.trim()).filter(Boolean);
+  }
+  return [];
+}
+
+function openGalleryImage(url){
+  document.getElementById("galleryModalImg").src=url;
+  document.getElementById("galleryModal").style.display="flex";
+}
+
+function setMainImage(cardId,url){
+  const img=document.getElementById("main-"+cardId);
+  if(img) img.src=url;
+}
+
 async function load(){
   cards.innerHTML="";
   msg.textContent="Laster valpekull...";
@@ -185,12 +220,32 @@ async function load(){
   if(s)data=data.filter(x=>(x.kennel_name||"").toLowerCase().includes(s)||(x.breed||"").toLowerCase().includes(s)||(x.area||"").toLowerCase().includes(s)||(x.municipality||"").toLowerCase().includes(s));
   if(!data.length){msg.textContent="Ingen godkjente valpekull funnet.";return}
   msg.textContent="Fant "+data.length+" valpekull.";
-  data.forEach(x=>{
-    const main=(x.image_urls||[])[0]||"";
+  data.forEach((x,i)=>{
+    const images=getImages(x.image_urls);
+    const main=images[0]||"";
     const kennelLink=x.breeder_id ? 'kennel.html?id='+x.breeder_id : 'kennel.html';
+    const cardId="kull"+i;
+    const thumbs=images.map((u,n)=>'<img src="'+u+'" onclick="setMainImage(\''+cardId+'\',\''+u+'\')" title="Bilde '+(n+1)+'">').join("");
     const el=document.createElement("article");
     el.className="card";
-    el.innerHTML='<div class="cover">'+(main?'<img src="'+main+'">':'🐶')+'</div><div class="content"><h2>'+t(x.title,x.kennel_name)+'</h2><span class="tag">🐾 '+t(x.breed)+'</span><span class="tag">📍 '+t(x.municipality,"")+' '+t(x.area,"")+'</span><span class="tag">💚 Ledige: '+t(x.available_count,0)+'</span><p style="margin-top:12px;color:#334155;font-weight:700;line-height:1.5">'+t(x.about,"")+'</p><div class="infoGrid"><div class="info">🏡 <b>Kennel</b><br>'+t(x.kennel_name)+'</div><div class="info">🎒 <b>Leveringsklar</b><br>'+t(x.ready_date)+'</div><div class="info">👦 <b>Hanner</b><br>'+t(x.males,0)+'</div><div class="info">👧 <b>Tisper</b><br>'+t(x.females,0)+'</div></div><a class="btn" href="'+kennelLink+'">🏡 Se kennel</a></div>';
+    el.innerHTML=
+      '<div class="cover">'+(main?'<img id="main-'+cardId+'" src="'+main+'" onclick="openGalleryImage(this.src)">':'🐶')+'</div>'+
+      '<div class="content">'+
+        '<h2>'+t(x.title,x.kennel_name)+'</h2>'+
+        '<span class="tag">🐾 '+t(x.breed)+'</span>'+
+        '<span class="tag">📍 '+t(x.municipality,"")+' '+t(x.area,"")+'</span>'+
+        '<span class="tag">💚 Ledige: '+t(x.available_count,0)+'</span>'+
+        (images.length?'<div class="photoCount">📷 '+images.length+' bilde(r) i galleriet</div>':'')+
+        (thumbs?'<div class="thumbRow">'+thumbs+'</div>':'')+
+        '<p style="margin-top:12px;color:#334155;font-weight:700;line-height:1.5">'+t(x.about,"")+'</p>'+
+        '<div class="infoGrid">'+
+          '<div class="info">🏡 <b>Kennel</b><br>'+t(x.kennel_name)+'</div>'+
+          '<div class="info">🎒 <b>Leveringsklar</b><br>'+t(x.ready_date)+'</div>'+
+          '<div class="info">👦 <b>Hanner</b><br>'+t(x.males,0)+'</div>'+
+          '<div class="info">👧 <b>Tisper</b><br>'+t(x.females,0)+'</div>'+
+        '</div>'+
+        '<a class="btn" href="'+kennelLink+'">🏡 Se kennel</a>'+
+      '</div>';
     cards.appendChild(el);
   });
 }
