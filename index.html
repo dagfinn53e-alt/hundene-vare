@@ -19,13 +19,13 @@ body{font-family:Arial,sans-serif;color:var(--dark);min-height:100vh;background:
 .btn.orange{background:linear-gradient(135deg,var(--orange),var(--pink));color:white;border:none}
 .btn.green{background:linear-gradient(135deg,#22c55e,#16a34a);color:white;border:none}
 .btn.white{background:white;color:#0b4fd4;border:none}
-.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:center;border-radius:42px;margin-bottom:18px;padding:44px;color:white;overflow:hidden;background:radial-gradient(circle at 20% 18%,rgba(255,255,255,.30),transparent 25%),radial-gradient(circle at 90% 12%,rgba(255,214,120,.22),transparent 25%),linear-gradient(135deg,#061b55,#0b5cff 46%,#7c3aed);box-shadow:0 30px 70px rgba(15,23,42,.25)}
+.hero{display:block;text-align:center;border-radius:38px;margin-bottom:16px;padding:34px 28px;color:white;overflow:hidden;background:radial-gradient(circle at 20% 18%,rgba(255,255,255,.30),transparent 25%),radial-gradient(circle at 90% 12%,rgba(255,214,120,.22),transparent 25%),linear-gradient(135deg,#061b55,#0b5cff 46%,#7c3aed);box-shadow:0 30px 70px rgba(15,23,42,.25)}
 .badge{display:inline-flex;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);padding:10px 14px;border-radius:999px;font-weight:900;margin-bottom:14px}
-.hero h1{font-size:clamp(2.7rem,7vw,5.2rem);line-height:1.02;margin-bottom:12px;text-shadow:0 8px 22px rgba(0,0,0,.25)}
-.hero p{font-size:19px;line-height:1.55;max-width:850px;margin-bottom:20px;color:#eef6ff;font-weight:700}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.hero h1{font-size:clamp(2.5rem,6vw,4.4rem);line-height:1.02;margin-bottom:10px;text-shadow:0 8px 22px rgba(0,0,0,.25)}
+.hero p{font-size:17px;line-height:1.5;max-width:860px;margin:0 auto 18px;color:#eef6ff;font-weight:700}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 .hero-actions .btn{padding:14px 20px;font-size:16px}
-.hero-card{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.25);border-radius:34px;padding:24px;text-align:center;box-shadow:0 18px 42px rgba(0,0,0,.18)}
+.hero-card{display:none}
 .hero-card .dog{font-size:88px;margin-bottom:8px}
 .hero-card h2{font-size:30px;margin-bottom:8px}
 .hero-card p{font-size:15px;margin:0 auto 16px;color:#eaf2ff}
@@ -112,22 +112,14 @@ body{font-family:Arial,sans-serif;color:var(--dark);min-height:100vh;background:
 </header>
 
 <section class="hero">
-  <div>
-    <div class="badge">🏆 Premium hundeportal</div>
-    <h1>🐶 Velkommen til Hundenevåre.com</h1>
-    <p style="font-size:22px;font-weight:900;margin-bottom:12px">Norges mest komplette hundeportal</p>
-    <p>Utforsk <b>Hundevelgeren</b>, lær om hunderaser, finn seriøse <b>oppdrettere</b>, se <b>valpekull</b>, oppdag <b>butikker og tjenester</b>, les kunnskapsartikler og spill morsomme quizer – alt samlet på ett sted.</p>
-    <div class="hero-actions">
-      <a class="btn primary" href="hundevelger.html">🐾 Start Hundevelgeren</a>
-      <a class="btn orange" href="oppdretterportal.html">🏆 Oppdretterplattform</a>
-      <a class="btn white" href="butikker-ny.html">🏪 Butikker og tjenester</a>
-    </div>
-  </div>
-  <div class="hero-card">
-    <div class="dog">🐶</div>
-    <h2>Nyhet: Hundevelgeren</h2>
-    <p>Svar på noen spørsmål og få forslag til hunderaser som passer deg og din hverdag.</p>
-    <a class="btn green" href="hundevelger.html">Ta testen nå</a>
+  <div class="badge">🏆 Norges hundeportal</div>
+  <h1>Hundene våre</h1>
+  <p style="font-size:20px;font-weight:900;margin-bottom:10px">Hunderaser • Oppdrettere • Valpekull • Butikker • Tjenester • Kunnskap</p>
+  <p>Alt du trenger for deg og hunden – samlet på ett sted. Start med Hundevelgeren, finn oppdrettere og valpekull, eller oppdag butikker og tjenester nær deg.</p>
+  <div class="hero-actions">
+    <a class="btn primary" href="hundevelger.html">🐶 Start Hundevelgeren</a>
+    <a class="btn orange" href="oppdretterportal.html">🏆 Finn oppdrettere</a>
+    <a class="btn white" href="butikker-ny.html">🏪 Butikker og tjenester</a>
   </div>
 </section>
 
@@ -199,5 +191,15 @@ body{font-family:Arial,sans-serif;color:var(--dark);min-height:100vh;background:
 
 <p class="footer-note">Hundenevåre.com – Forside Premium 4.0 ❤️</p>
 </div>
+
+<style>
+@media(max-width:760px){
+  .hero{padding:22px 16px!important;border-radius:24px!important}
+  .hero h1{font-size:34px!important}
+  .hero p{font-size:14px!important;line-height:1.38!important}
+  .hero p[style]{font-size:15px!important}
+}
+</style>
+
 </body>
 </html>
