@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Samarbeidspartnere - Hundene våre</title>
+<title>Bli samarbeidspartner – Hundene våre</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -57,19 +57,19 @@ body{margin:0;font-family:Arial,sans-serif;color:#102033;background:linear-gradi
 </div>
 
 <section class="hero">
-  <h1>❤️ Samarbeidspartnere</h1>
-  <p>Her samler vi gode dyrevenner, frivillige grupper, organisasjoner, Facebook-grupper og aktører som ønsker å bidra til bedre dyrevelferd, mer kunnskap og mer synlighet for hund og katt i Norge.</p>
-  <a class="mainbtn" href="butikk-profil-skjema.html">📝 Registrer samarbeidspartner</a>
+  <h1>🤝 Bli samarbeidspartner</h1>
+  <p>Her samler vi samarbeidspartnere, sponsorer, Facebook-sider, bedrifter og aktører som ønsker synlighet og samarbeid gjennom Hundenevåre.com.</p>
+  <a class="mainbtn" href="butikk-profil-skjema.html">📝 Registrer deg som samarbeidspartner</a>
 </section>
 
 <section class="card ad">
   <h2>🐾 Vil du bli samarbeidspartner?</h2>
-  <p>Bruk registreringsskjemaet og velg <b>Samarbeidspartner</b> under Type. Etter godkjenning vises dere automatisk på denne siden.</p>
+  <p>Bruk registreringsskjemaet og velg <b>Samarbeidspartner</b>, <b>Sponsor</b>, <b>Facebook-side</b> eller tilsvarende under Type. Etter godkjenning vises dere på denne siden.</p>
 </section>
 
 <section class="card">
   <h2 class="section-title">Våre samarbeidspartnere</h2>
-  <p class="sub">Her vises godkjente samarbeidspartnere fra appen. Nye forespørsler må godkjennes i Admin før de blir synlige.</p>
+  <p class="sub">Her vises godkjente samarbeidspartnere, sponsorer og Facebook-sider. Nye forespørsler må godkjennes i Admin før de blir synlige.</p>
   <div id="status" class="status">Laster samarbeidspartnere ...</div>
   <div id="partnerGrid" class="partner-grid"></div>
 </section>
@@ -81,11 +81,12 @@ body{margin:0;font-family:Arial,sans-serif;color:#102033;background:linear-gradi
     ✅ Navn og kort beskrivelse<br>
     ✅ Lenke til Facebook eller nettside<br>
     ✅ Synlighet blant hunde- og katteeiere<br>
+    ✅ Plass for sponsorer og Facebook-sider<br>
     ✅ Manuell godkjenning for trygg og seriøs side
   </div>
 </section>
 
-<p class="footer-note">Hundenevåre.com – kunnskap, fellesskap og samarbeid for hunder og katter.</p>
+<p class="footer-note">Hundenevåre.com – samarbeid, sponsorer og synlighet for hunde- og katteaktører.</p>
 
 </div>
 
@@ -112,7 +113,7 @@ function getImage(b){
 }
 
 function getName(b){
-  return b.name || b.title || b.bizName || "Uten navn";
+  return b.name || b.title || b.bizName || b.company || "Uten navn";
 }
 
 function getRegion(b){
@@ -125,6 +126,21 @@ function getDescription(b){
 
 function getWebsite(b){
   return b.website || b.url || b.facebook || b.bizWebsite || "";
+}
+
+function getType(b){
+  return b.type || b.category || b.bizType || "Samarbeidspartner";
+}
+
+function isVisiblePartner(b){
+  const t = String(getType(b)).toLowerCase();
+  return (
+    t.includes("samarbeid") ||
+    t.includes("partner") ||
+    t.includes("sponsor") ||
+    t.includes("facebook") ||
+    t.includes("kampanje")
+  );
 }
 
 function normalizeUrl(url){
@@ -141,7 +157,6 @@ async function loadPartners(){
       .from("businesses")
       .select("*")
       .eq("approved", true)
-      .eq("type", "Samarbeidspartner")
       .order("created_at", { ascending:false });
 
     if(error){
@@ -150,7 +165,7 @@ async function loadPartners(){
       return;
     }
 
-    const partners = data || [];
+    const partners = (data || []).filter(isVisiblePartner);
 
     statusEl.textContent = partners.length + " samarbeidspartner(e) funnet";
 
@@ -165,6 +180,7 @@ async function loadPartners(){
       const region = safeText(getRegion(p));
       const img = getImage(p);
       const website = normalizeUrl(getWebsite(p));
+      const type = safeText(getType(p));
 
       return `
         <div class="partner-card">
@@ -176,7 +192,7 @@ async function loadPartners(){
               <h3>${name}</h3>
               <div class="chips">
                 ${region ? `<span class="chip">📍 ${region}</span>` : ""}
-                <span class="chip">❤️ Samarbeidspartner</span>
+                <span class="chip">🤝 ${type}</span>
               </div>
               ${desc ? `<p>${desc}</p>` : `<p>Ingen beskrivelse lagt inn ennå.</p>`}
               ${website ? `<a class="openbtn" href="${website}" target="_blank">❤️ Besøk side / gruppe</a>` : ""}
