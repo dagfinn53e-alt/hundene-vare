@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Samarbeidspartnere – Hundene våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,sans-serif;
+  color:#123c73;
+  min-height:100vh;
+  background:linear-gradient(180deg,#dbeafe,#eef6ff,#fff7ed);
+}
+.wrap{max-width:1180px;margin:auto;padding:16px 10px 70px}
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  background:white;
+  border:1px solid #bfd7ff;
+  border-radius:28px;
+  padding:14px 16px;
+  box-shadow:0 14px 34px rgba(15,23,42,.10);
+  margin-bottom:16px;
+}
+.logo{font-size:23px;font-weight:900;color:#004cff}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{
+  background:#eaf2ff;
+  color:#004cff;
+  text-decoration:none;
+  border:1px solid #b8ddff;
+  border-radius:999px;
+  padding:10px 13px;
+  font-weight:900;
+  font-size:14px;
+}
+.hero{
+  background:linear-gradient(135deg,#061b55,#004cff,#7c3aed);
+  color:white;
+  border-radius:34px;
+  padding:34px 18px;
+  text-align:center;
+  box-shadow:0 24px 56px rgba(0,45,110,.28);
+  margin-bottom:18px;
+}
+.hero h1{font-size:clamp(2.2rem,6vw,4.2rem);margin-bottom:10px}
+.hero p{font-weight:700;color:#eef6ff;line-height:1.5;font-size:17px}
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:16px;
+}
+button{
+  border:none;
+  border-radius:999px;
+  padding:14px 18px;
+  color:white;
+  background:linear-gradient(135deg,#1f8fff,#004cff);
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+}
+.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
+.red{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+.orange{background:linear-gradient(135deg,#ff8a3d,#f59e0b)}
+.dark{background:#111827}
+.msg{text-align:center;font-size:18px;font-weight:900;margin:16px 0;color:#334155}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{
+  background:white;
+  border:1px solid #dbeafe;
+  border-radius:28px;
+  padding:18px;
+  box-shadow:0 14px 30px rgba(15,23,42,.10);
+}
+.card h2{font-size:25px;color:#001d4a;margin-bottom:8px}
+.meta{line-height:1.7;color:#334155;font-weight:700}
+.chip{
+  display:inline-block;
+  background:#eaf2ff;
+  color:#004cff;
+  border:1px solid #b8ddff;
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:13px;
+  font-weight:900;
+  margin:4px 4px 8px 0;
+}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.actions button,.actions a{
+  flex:1;
+  min-width:140px;
+  text-align:center;
+  text-decoration:none;
+  border-radius:999px;
+  padding:12px 14px;
+  color:white;
+  font-weight:900;
+}
+.actions a{background:#111827}
+.thumb{
+  width:100%;
+  max-height:210px;
+  object-fit:cover;
+  border-radius:20px;
+  border:1px solid #dbeafe;
+  margin:10px 0;
+}
+.empty{
+  grid-column:1/-1;
+  background:white;
+  border:2px dashed #93c5fd;
+  border-radius:28px;
+  padding:28px;
+  text-align:center;
+  color:#64748b;
+  font-weight:900;
+}
+@media(max-width:800px){
+  .grid,.tabs{grid-template-columns:1fr}
+  .top{justify-content:center}
+  .logo{width:100%;text-align:center}
+  .nav{justify-content:center;width:100%}
+  .nav a{flex:1 1 42%;text-align:center;font-size:12px}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<div class="top">
+  <div class="logo">🔐 Admin Samarbeidspartnere</div>
+  <div class="nav">
+    <a href="index.html">🏠 Forside</a>
+    <a href="samarbeidspartnere.html">🤝 Samarbeidspartnere</a>
+    <a href="butikk-profil-skjema.html">📝 Registrering</a>
+    <a href="admin.html">🔧 Admin</a>
+  </div>
+</div>
+
+<section class="hero">
+  <h1>Admin Samarbeidspartnere</h1>
+  <p>Godkjenn eller avvis samarbeidspartnere, sponsorer og Facebook-sider som er sendt inn via skjema.</p>
+</section>
+
+<div class="tabs">
+  <button class="orange" onclick="loadItems('venter')">🟡 Venter</button>
+  <button class="green" onclick="loadItems('godkjent')">✅ Godkjente</button>
+  <button class="red" onclick="loadItems('avvist')">❌ Avviste</button>
+</div>
+
+<div id="msg" class="msg">Laster...</div>
+<div id="list" class="grid"></div>
+
+</div>
+
+<script>
+const supabaseClient = window.supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+let currentStatus = "venter";
+
+function safe(value){
+  return String(value || "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function getName(b){return b.name || b.title || b.bizName || b.company || "Uten navn";}
+function getType(b){return b.type || b.category || b.bizType || "Ukjent type";}
+function getDesc(b){return b.text || b.description || b.bizText || "";}
+function getRegion(b){return b.region || b.area || b.city || b.place || "";}
+function getImage(b){return b.logo_url || b.image_url || b.logo || b.image || b.main_image || b.photo || b.mainImage || "";}
+function getWebsite(b){return b.website || b.url || b.facebook || b.bizWebsite || "";}
+function normalizeUrl(url){
+  if(!url)return "";
+  return String(url).startsWith("http") ? String(url) : "https://" + String(url);
+}
+
+function isPartnerType(b){
+  const t = String(getType(b)).toLowerCase();
+  return (
+    t.includes("samarbeid") ||
+    t.includes("partner") ||
+    t.includes("sponsor") ||
+    t.includes("facebook") ||
+    t.includes("kampanje")
+  );
+}
+
+async function loadItems(status){
+  currentStatus=status;
+  msg.textContent="Laster " + status + "...";
+  list.innerHTML="";
+
+  let query = supabaseClient.from("businesses").select("*").order("created_at",{ascending:false});
+
+  if(status === "godkjent"){
+    query = query.eq("approved", true);
+  } else if(status === "avvist"){
+    query = query.eq("approved", false).eq("status", "avvist");
+  } else {
+    query = query.eq("approved", false);
+  }
+
+  const {data,error}=await query;
+
+  if(error){
+    msg.textContent="Feil: " + error.message;
+    return;
+  }
+
+  const items=(data||[]).filter(isPartnerType).filter(x=>{
+    if(status==="venter"){
+      return String(x.status || "venter").toLowerCase() !== "avvist";
+    }
+    return true;
+  });
+
+  if(!items.length){
+    msg.textContent="";
+    list.innerHTML='<div class="empty">Ingen samarbeidspartnere med status: '+status+'</div>';
+    return;
+  }
+
+  msg.textContent=items.length+" funnet";
+  list.innerHTML=items.map(b=>{
+    const img=getImage(b);
+    const url=normalizeUrl(getWebsite(b));
+    return `
+      <div class="card">
+        <h2>${safe(getName(b))}</h2>
+        <span class="chip">🤝 ${safe(getType(b))}</span>
+        ${getRegion(b)?`<span class="chip">📍 ${safe(getRegion(b))}</span>`:""}
+        ${img?`<img class="thumb" src="${img}" alt="">`:""}
+        <div class="meta">
+          <b>Beskrivelse:</b><br>${safe(getDesc(b)) || "Ingen beskrivelse"}<br><br>
+          <b>Nettside/Facebook:</b><br>${url ? safe(url) : "Ikke oppgitt"}<br>
+          <b>Status:</b> ${safe(b.status || (b.approved ? "godkjent" : "venter"))}<br>
+          <b>Approved:</b> ${b.approved ? "true" : "false"}
+        </div>
+        <div class="actions">
+          ${url?`<a href="${url}" target="_blank">🌐 Åpne side</a>`:""}
+          <button class="green" onclick="approveItem('${b.id}')">✅ Godkjenn</button>
+          <button class="red" onclick="rejectItem('${b.id}')">❌ Avvis</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+async function approveItem(id){
+  if(!confirm("Godkjenne denne samarbeidspartneren?"))return;
+  const {error}=await supabaseClient.from("businesses").update({
+    approved:true,
+    status:"godkjent"
+  }).eq("id",id);
+  if(error){alert("Feil: "+error.message);return;}
+  loadItems(currentStatus);
+}
+
+async function rejectItem(id){
+  if(!confirm("Avvise denne samarbeidspartneren?"))return;
+  const {error}=await supabaseClient.from("businesses").update({
+    approved:false,
+    status:"avvist"
+  }).eq("id",id);
+  if(error){alert("Feil: "+error.message);return;}
+  loadItems(currentStatus);
+}
+
+loadItems("venter");
+</script>
+
+</body>
+</html>
