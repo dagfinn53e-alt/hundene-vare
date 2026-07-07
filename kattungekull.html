@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kattungekull – Hundene våre</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,sans-serif;
+  color:#3b1f4f;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 8% 6%,rgba(255,210,238,.55),transparent 30%),
+    radial-gradient(circle at 92% 8%,rgba(190,225,255,.55),transparent 34%),
+    linear-gradient(180deg,#fdf2f8,#eef6ff 48%,#fff7ed);
+}
+.wrap{max-width:1220px;margin:auto;padding:16px 10px 70px}
+.top{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+  background:white;border:1px solid #fbcfe8;border-radius:28px;padding:14px 16px;
+  box-shadow:0 14px 34px rgba(15,23,42,.10);margin-bottom:16px
+}
+.logo{font-size:24px;font-weight:900;color:#be185d}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{
+  background:#fdf2f8;color:#be185d;text-decoration:none;border:1px solid #fbcfe8;
+  border-radius:999px;padding:10px 13px;font-weight:900;font-size:14px
+}
+.hero{
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.35),transparent 25%),
+    radial-gradient(circle at 88% 12%,rgba(255,214,230,.35),transparent 25%),
+    linear-gradient(135deg,#4a044e,#be185d 48%,#7c3aed);
+  color:white;border-radius:46px;padding:46px 22px;text-align:center;
+  box-shadow:0 28px 70px rgba(76,29,149,.28);margin-bottom:20px
+}
+.badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.badge{
+  background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);
+  border-radius:999px;padding:9px 13px;font-weight:900;font-size:13px
+}
+.gold{background:linear-gradient(135deg,#fff7c2,#ffd166);color:#6b3a00;border-color:#f59e0b}
+.hero h1{font-size:clamp(2.7rem,7vw,5.2rem);line-height:1.05;margin-bottom:12px;text-shadow:0 0 14px rgba(255,255,255,.45)}
+.hero p{font-size:clamp(1rem,2.5vw,1.25rem);font-weight:700;line-height:1.55;color:#fff1f7;max-width:900px;margin:auto}
+.notice{
+  background:#fff7ed;border:1px solid #fed7aa;color:#92400e;
+  border-radius:24px;padding:16px;text-align:center;font-weight:900;
+  margin-bottom:18px;box-shadow:0 10px 22px rgba(15,23,42,.08)
+}
+.filters{
+  background:white;border:1px solid #fbcfe8;border-radius:28px;padding:16px;margin-bottom:18px;
+  box-shadow:0 12px 28px rgba(15,23,42,.08);
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px
+}
+.filters input,.filters select{
+  width:100%;border:1px solid #fbcfe8;border-radius:999px;padding:13px 15px;
+  font-weight:800;color:#3b1f4f;background:#fff
+}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.litter{
+  background:white;border:1px solid #fbcfe8;border-radius:32px;overflow:hidden;
+  box-shadow:0 16px 34px rgba(15,23,42,.10)
+}
+.cover{
+  height:260px;background:linear-gradient(135deg,#be185d,#7c3aed);
+  display:flex;align-items:center;justify-content:center;color:white;font-size:86px
+}
+.cover img{width:100%;height:100%;object-fit:cover}
+.content{padding:22px}
+.content h2{font-size:28px;color:#9d174d;margin-bottom:8px}
+.content p{color:#475569;font-weight:700;line-height:1.55;margin-bottom:12px}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.tag{
+  display:inline-flex;background:#fdf2f8;color:#be185d;border:1px solid #fbcfe8;
+  border-radius:999px;padding:7px 10px;font-size:13px;font-weight:900
+}
+.statusLedig{background:#dcfce7;color:#166534;border-color:#86efac}
+.statusRes{background:#fef3c7;color:#92400e;border-color:#f59e0b}
+.infoGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.info{background:#fdf2f8;border:1px solid #fbcfe8;border-radius:18px;padding:12px;font-weight:900;color:#831843}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{
+  flex:1;min-width:150px;display:inline-flex;align-items:center;justify-content:center;
+  text-decoration:none;color:white;border-radius:999px;padding:13px 16px;font-weight:900;
+  background:linear-gradient(135deg,#be185d,#7c3aed)
+}
+.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
+.dark{background:#111827}
+.empty{
+  grid-column:1/-1;background:white;border:2px dashed #f9a8d4;border-radius:28px;
+  padding:28px;text-align:center;color:#831843;font-weight:900
+}
+.footer{text-align:center;font-weight:900;color:#831843;margin-top:34px}
+@media(max-width:900px){
+  .grid,.filters{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  .wrap{padding:9px 8px 50px}
+  .top{justify-content:center}
+  .logo{width:100%;text-align:center;font-size:20px}
+  .nav{width:100%;justify-content:center}
+  .nav a{flex:1 1 42%;text-align:center;font-size:12px;padding:9px 7px}
+  .hero{border-radius:28px;padding:32px 14px}
+  .cover{height:210px}
+  .content{padding:17px}
+  .content h2{font-size:23px}
+  .infoGrid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<div class="top">
+  <div class="logo">🐾 Kattungekull</div>
+  <div class="nav">
+    <a href="katt-oppdretterportal.html">🐱 Portal</a>
+    <a href="katt-oppdrettere.html">🔎 Oppdrettere</a>
+    <a href="katt-registrering.html">📝 Registrering</a>
+    <a href="index.html">🏠 Forside</a>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="badges">
+    <span class="badge gold">🏆 Skjult testside</span>
+    <span class="badge">🐾 Kattungekull</span>
+    <span class="badge">🐱 Katteoppdrettere</span>
+  </div>
+  <h1>Kattungekull</h1>
+  <p>Her skal godkjente kattungekull vises når katteplattformen kobles til databasen.</p>
+</section>
+
+<div class="notice">
+  Dette er foreløpig en skjult testside. Den vises ikke på forsiden før hele katteplattformen er ferdig.
+</div>
+
+<section class="filters">
+  <input id="search" placeholder="Søk rase eller oppdretter" oninput="render()">
+  <select id="breed" onchange="render()">
+    <option value="">Alle raser</option>
+    <option value="Maine Coon">Maine Coon</option>
+    <option value="Norsk Skogkatt">Norsk Skogkatt</option>
+    <option value="Ragdoll">Ragdoll</option>
+    <option value="Britisk Korthår">Britisk Korthår</option>
+    <option value="Sibirsk katt">Sibirsk katt</option>
+  </select>
+  <select id="status" onchange="render()">
+    <option value="">Alle statuser</option>
+    <option value="Ledige kattunger">Ledige kattunger</option>
+    <option value="Noen reserverte">Noen reserverte</option>
+    <option value="Planlagt kull">Planlagt kull</option>
+  </select>
+</section>
+
+<section class="grid" id="list"></section>
+
+<div class="footer">Hundenevåre.com – Kattungekull Premium 🐱</div>
+</div>
+
+<script>
+const DATA=[
+  {
+    title:"Maine Coon-kull forventes",
+    breeder:"Katteri Eksempel",
+    breed:"Maine Coon",
+    status:"Planlagt kull",
+    born:"Forventet senere",
+    ready:"Ikke oppgitt",
+    kittens:"Kommer",
+    place:"Rogaland",
+    text:"Dette er et eksempelkort. Når databasen er klar vil ekte kattungekull vises her.",
+    image:""
+  },
+  {
+    title:"Norsk Skogkatt-kull",
+    breeder:"Skogpus Eksempel",
+    breed:"Norsk Skogkatt",
+    status:"Ledige kattunger",
+    born:"Ikke oppgitt",
+    ready:"Ikke oppgitt",
+    kittens:"3",
+    place:"Vestland",
+    text:"Eksempel på hvordan et aktivt kattungekull kan presenteres på plattformen.",
+    image:""
+  }
+];
+
+function cls(s){
+  if((s||"").toLowerCase().includes("ledig")) return "statusLedig";
+  if((s||"").toLowerCase().includes("reservert")) return "statusRes";
+  return "";
+}
+
+function render(){
+  const q=document.getElementById("search").value.toLowerCase().trim();
+  const b=document.getElementById("breed").value;
+  const st=document.getElementById("status").value;
+
+  let rows=DATA.filter(x=>{
+    const text=(x.title+" "+x.breeder+" "+x.breed+" "+x.place).toLowerCase();
+    return (!q || text.includes(q)) && (!b || x.breed===b) && (!st || x.status===st);
+  });
+
+  const list=document.getElementById("list");
+  if(!rows.length){
+    list.innerHTML='<div class="empty">Ingen kattungekull funnet i denne testen.</div>';
+    return;
+  }
+
+  list.innerHTML=rows.map(x=>`
+    <article class="litter">
+      <div class="cover">${x.image?'<img src="'+x.image+'">':'🐱'}</div>
+      <div class="content">
+        <h2>${x.title}</h2>
+        <div class="tags">
+          <span class="tag ${cls(x.status)}">${x.status}</span>
+          <span class="tag">🐱 ${x.breed}</span>
+          <span class="tag">🏆 ${x.breeder}</span>
+          <span class="tag">📍 ${x.place}</span>
+        </div>
+        <p>${x.text}</p>
+        <div class="infoGrid">
+          <div class="info">📅 Født<br>${x.born}</div>
+          <div class="info">🎒 Levering<br>${x.ready}</div>
+          <div class="info">🐾 Kattunger<br>${x.kittens}</div>
+          <div class="info">📍 Sted<br>${x.place}</div>
+        </div>
+        <div class="actions">
+          <a class="btn green" href="katt-oppdretter-profil.html">Se oppdretter</a>
+          <a class="btn dark" href="katt-oppdretterportal.html">Til portal</a>
+        </div>
+      </div>
+    </article>
+  `).join("");
+}
+
+render();
+</script>
+</body>
+</html>
