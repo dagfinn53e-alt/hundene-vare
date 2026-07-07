@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Katt Admin – Hundene våre</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,sans-serif;
+  color:#3b1f4f;
+  min-height:100vh;
+  background:radial-gradient(circle at 8% 6%,rgba(255,210,238,.55),transparent 30%),
+             radial-gradient(circle at 92% 8%,rgba(190,225,255,.55),transparent 34%),
+             linear-gradient(180deg,#fdf2f8,#eef6ff 48%,#fff7ed);
+}
+.wrap{max-width:1220px;margin:auto;padding:16px 10px 70px}
+.top{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+  background:white;border:1px solid #fbcfe8;border-radius:28px;padding:14px 16px;
+  box-shadow:0 14px 34px rgba(15,23,42,.10);margin-bottom:16px
+}
+.logo{font-size:24px;font-weight:900;color:#be185d}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{
+  background:#fdf2f8;color:#be185d;text-decoration:none;border:1px solid #fbcfe8;
+  border-radius:999px;padding:10px 13px;font-weight:900;font-size:14px
+}
+.hero{
+  background:radial-gradient(circle at 20% 20%,rgba(255,255,255,.35),transparent 25%),
+             radial-gradient(circle at 88% 12%,rgba(255,214,230,.35),transparent 25%),
+             linear-gradient(135deg,#4a044e,#be185d 48%,#7c3aed);
+  color:white;border-radius:42px;padding:42px 20px;text-align:center;
+  box-shadow:0 28px 70px rgba(76,29,149,.28);margin-bottom:18px
+}
+.hero h1{font-size:clamp(2.5rem,7vw,4.8rem);line-height:1.05;margin-bottom:12px}
+.hero p{font-size:18px;font-weight:700;line-height:1.55;color:#fff1f7;max-width:800px;margin:auto}
+.notice{
+  background:#fff7ed;border:1px solid #fed7aa;color:#92400e;
+  border-radius:24px;padding:16px;text-align:center;font-weight:900;
+  margin-bottom:18px;box-shadow:0 10px 22px rgba(15,23,42,.08)
+}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.stat{
+  background:white;border:1px solid #fbcfe8;border-radius:24px;padding:18px;text-align:center;
+  box-shadow:0 12px 28px rgba(15,23,42,.08);font-weight:900
+}
+.stat b{display:block;font-size:30px;color:#be185d;margin-bottom:4px}
+.controls{
+  background:white;border:1px solid #fbcfe8;border-radius:26px;padding:14px;margin-bottom:18px;
+  display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;
+  box-shadow:0 12px 28px rgba(15,23,42,.08)
+}
+input,select{
+  border:1px solid #fbcfe8;border-radius:999px;padding:13px 15px;font-weight:800;color:#3b1f4f;background:white
+}
+button,.btn{
+  border:none;border-radius:999px;padding:12px 16px;color:white;font-weight:900;
+  background:linear-gradient(135deg,#be185d,#7c3aed);cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;justify-content:center;text-align:center
+}
+.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
+.red{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+.orange{background:linear-gradient(135deg,#f97316,#db2777)}
+.dark{background:#111827}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.tabs button{flex:1;min-width:160px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{
+  background:white;border:1px solid #fbcfe8;border-radius:30px;padding:20px;
+  box-shadow:0 16px 34px rgba(15,23,42,.10)
+}
+.card h2{font-size:25px;color:#9d174d;margin-bottom:7px}
+.meta{color:#475569;font-weight:700;line-height:1.6;font-size:15px}
+.chip{
+  display:inline-block;background:#fdf2f8;color:#be185d;border:1px solid #fbcfe8;
+  border-radius:999px;padding:6px 10px;font-size:12px;font-weight:900;margin:4px 4px 10px 0
+}
+.wait{background:#fef3c7;color:#92400e;border-color:#f59e0b}
+.ok{background:#dcfce7;color:#166534;border-color:#86efac}
+.no{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.actions button,.actions a{flex:1;min-width:130px}
+.empty{
+  grid-column:1/-1;background:white;border:2px dashed #f9a8d4;border-radius:28px;
+  padding:28px;text-align:center;color:#831843;font-weight:900
+}
+.footer{text-align:center;font-weight:900;color:#831843;margin-top:34px}
+@media(max-width:900px){
+  .stats,.controls,.grid{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  .wrap{padding:9px 8px 50px}
+  .top{justify-content:center}.logo{width:100%;text-align:center;font-size:20px}
+  .nav{width:100%;justify-content:center}.nav a{flex:1 1 42%;text-align:center;font-size:12px;padding:9px 7px}
+  .hero{border-radius:28px;padding:32px 14px}
+  .tabs{display:grid;grid-template-columns:1fr}
+  button,.btn,input,select{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+  <div class="logo">🔐 Katt Admin</div>
+  <div class="nav">
+    <a href="katt-oppdretterportal.html">🐱 Portal</a>
+    <a href="katt-registrering.html">📝 Registrering</a>
+    <a href="kattungekull.html">🐾 Kull</a>
+    <a href="index.html">🏠 Forside</a>
+  </div>
+</div>
+
+<section class="hero">
+  <h1>Katt Admin</h1>
+  <p>Kontrollpanel for katteoppdrettere og kattungekull. Dette er en skjult test-admin som virker lokalt før vi kobler den til databasen.</p>
+</section>
+
+<div class="notice">
+  Testversjon: Knappene fungerer på denne siden, men lagrer foreløpig bare i nettleseren. Når databasen er klar kobler vi dette til Supabase.
+</div>
+
+<section class="stats">
+  <div class="stat"><b id="statBreeders">0</b>Oppdrettere</div>
+  <div class="stat"><b id="statLitters">0</b>Kull</div>
+  <div class="stat"><b id="statWaiting">0</b>Venter</div>
+  <div class="stat"><b id="statPremium">0</b>Premium</div>
+</section>
+
+<section class="controls">
+  <input id="search" placeholder="Søk navn, rase eller sted" oninput="render()">
+  <select id="filterStatus" onchange="render()">
+    <option value="">Alle statuser</option>
+    <option value="venter">Venter</option>
+    <option value="godkjent">Godkjent</option>
+    <option value="avvist">Avvist</option>
+  </select>
+  <select id="filterType" onchange="render()">
+    <option value="">Alt innhold</option>
+    <option value="oppdretter">Oppdrettere</option>
+    <option value="kull">Kattungekull</option>
+  </select>
+  <button onclick="resetDemo()">🔄 Nullstill test</button>
+</section>
+
+<div class="tabs">
+  <button onclick="setType('')">📋 Alt</button>
+  <button class="orange" onclick="setType('oppdretter')">🐱 Oppdrettere</button>
+  <button class="dark" onclick="setType('kull')">🐾 Kattungekull</button>
+</div>
+
+<section class="grid" id="list"></section>
+
+<div class="footer">Hundenevåre.com – Katt Admin Premium 🐱</div>
+</div>
+
+<script>
+const DEFAULT_DATA=[
+  {id:1,type:"oppdretter",name:"Katteri Eksempel",breed:"Maine Coon",place:"Rogaland",email:"post@eksempel.no",status:"venter",premium:true,text:"Testregistrering for katteoppdretter."},
+  {id:2,type:"oppdretter",name:"Skogpus Eksempel",breed:"Norsk Skogkatt",place:"Vestland",email:"kontakt@skogpus.no",status:"godkjent",premium:false,text:"Godkjent eksempeloppdretter."},
+  {id:3,type:"kull",name:"Maine Coon-kull forventes",breed:"Maine Coon",place:"Rogaland",email:"post@eksempel.no",status:"venter",premium:false,text:"Planlagt kattungekull."},
+  {id:4,type:"kull",name:"Norsk Skogkatt-kull",breed:"Norsk Skogkatt",place:"Vestland",email:"kontakt@skogpus.no",status:"godkjent",premium:false,text:"Eksempel på godkjent kattungekull."}
+];
+
+let rows=JSON.parse(localStorage.getItem("kattAdminRows") || "null") || DEFAULT_DATA.map(x=>({...x}));
+
+function save(){localStorage.setItem("kattAdminRows",JSON.stringify(rows))}
+function esc(v){return String(v||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+function setType(t){document.getElementById("filterType").value=t;render()}
+function resetDemo(){if(confirm("Nullstille testdata?")){rows=DEFAULT_DATA.map(x=>({...x}));save();render()}}
+
+function updateStats(){
+  document.getElementById("statBreeders").textContent=rows.filter(x=>x.type==="oppdretter").length;
+  document.getElementById("statLitters").textContent=rows.filter(x=>x.type==="kull").length;
+  document.getElementById("statWaiting").textContent=rows.filter(x=>x.status==="venter").length;
+  document.getElementById("statPremium").textContent=rows.filter(x=>x.premium).length;
+}
+
+function statusClass(s){
+  if(s==="godkjent")return"ok";
+  if(s==="avvist")return"no";
+  return"wait";
+}
+
+function render(){
+  updateStats();
+  const q=document.getElementById("search").value.toLowerCase().trim();
+  const st=document.getElementById("filterStatus").value;
+  const tp=document.getElementById("filterType").value;
+  let data=rows.filter(x=>{
+    const text=(x.name+" "+x.breed+" "+x.place+" "+x.email).toLowerCase();
+    return (!q||text.includes(q)) && (!st||x.status===st) && (!tp||x.type===tp);
+  });
+
+  const list=document.getElementById("list");
+  if(!data.length){
+    list.innerHTML='<div class="empty">Ingen funnet.</div>';
+    return;
+  }
+
+  list.innerHTML=data.map(x=>`
+    <article class="card">
+      <h2>${esc(x.name)}</h2>
+      <span class="chip">${x.type==="oppdretter"?"🐱 Oppdretter":"🐾 Kull"}</span>
+      <span class="chip ${statusClass(x.status)}">${x.status==="godkjent"?"✅":x.status==="avvist"?"❌":"🟡"} ${esc(x.status)}</span>
+      ${x.premium?'<span class="chip ok">⭐ Premium</span>':''}
+      <div class="meta">
+        <b>Rase:</b> ${esc(x.breed)}<br>
+        <b>Sted:</b> ${esc(x.place)}<br>
+        <b>E-post:</b> ${esc(x.email)}<br><br>
+        ${esc(x.text)}
+      </div>
+      <div class="actions">
+        <button class="green" onclick="setStatus(${x.id},'godkjent')">✅ Godkjenn</button>
+        <button class="red" onclick="setStatus(${x.id},'avvist')">❌ Avvis</button>
+        <button class="orange" onclick="togglePremium(${x.id})">⭐ Premium</button>
+        <button class="dark" onclick="removeRow(${x.id})">🗑️ Slett</button>
+      </div>
+    </article>
+  `).join("");
+}
+
+function setStatus(id,status){
+  rows=rows.map(x=>x.id===id?{...x,status}:x);
+  save();render();
+}
+function togglePremium(id){
+  rows=rows.map(x=>x.id===id?{...x,premium:!x.premium}:x);
+  save();render();
+}
+function removeRow(id){
+  if(!confirm("Slette denne fra test-admin?"))return;
+  rows=rows.filter(x=>x.id!==id);
+  save();render();
+}
+
+render();
+</script>
+</body>
+</html>
