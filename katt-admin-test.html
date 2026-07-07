@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Katt Admin Test – Hundene våre</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pink:#be185d;
+  --purple:#7c3aed;
+  --dark:#3b1f4f;
+  --muted:#64748b;
+  --line:#fbcfe8;
+  --soft:#fdf2f8;
+}
+body{
+  font-family:Arial,sans-serif;
+  color:var(--dark);
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 8% 6%,rgba(255,210,238,.55),transparent 30%),
+    radial-gradient(circle at 92% 8%,rgba(190,225,255,.55),transparent 34%),
+    linear-gradient(180deg,#fdf2f8,#eef6ff 48%,#fff7ed);
+}
+.wrap{max-width:1260px;margin:auto;padding:16px 10px 70px}
+.top{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+  background:white;border:1px solid var(--line);border-radius:28px;padding:14px 16px;
+  box-shadow:0 14px 34px rgba(15,23,42,.10);margin-bottom:16px
+}
+.logo{font-size:24px;font-weight:900;color:var(--pink)}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{
+  background:var(--soft);color:var(--pink);text-decoration:none;border:1px solid var(--line);
+  border-radius:999px;padding:10px 13px;font-weight:900;font-size:14px
+}
+.hero{
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.35),transparent 25%),
+    radial-gradient(circle at 88% 12%,rgba(255,214,230,.35),transparent 25%),
+    linear-gradient(135deg,#4a044e,var(--pink) 48%,var(--purple));
+  color:white;border-radius:42px;padding:40px 18px;text-align:center;
+  box-shadow:0 28px 70px rgba(76,29,149,.28);margin-bottom:16px
+}
+.hero h1{font-size:clamp(2.4rem,7vw,4.7rem);line-height:1.05;margin-bottom:10px}
+.hero p{font-size:17px;font-weight:700;line-height:1.55;color:#fff1f7;max-width:860px;margin:auto}
+.notice{
+  background:#fff7ed;border:1px solid #fed7aa;color:#92400e;
+  border-radius:22px;padding:14px;text-align:center;font-weight:900;
+  margin-bottom:16px;box-shadow:0 10px 22px rgba(15,23,42,.08)
+}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+.stat{
+  background:white;border:1px solid var(--line);border-radius:22px;padding:16px;text-align:center;
+  box-shadow:0 12px 28px rgba(15,23,42,.08);font-weight:900
+}
+.stat b{display:block;font-size:28px;color:var(--pink);margin-bottom:4px}
+.toolbar{
+  background:white;border:1px solid var(--line);border-radius:26px;padding:14px;margin-bottom:14px;
+  display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr auto;gap:10px;
+  box-shadow:0 12px 28px rgba(15,23,42,.08)
+}
+input,select,textarea{
+  width:100%;border:1px solid var(--line);border-radius:18px;padding:13px 14px;
+  font-size:15px;font-weight:800;color:var(--dark);background:white
+}
+textarea{min-height:110px;resize:vertical;font-weight:700;line-height:1.5}
+button,.btn{
+  border:none;border-radius:999px;padding:12px 16px;color:white;font-weight:900;
+  background:linear-gradient(135deg,var(--pink),var(--purple));cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;justify-content:center;text-align:center;font-size:14px
+}
+.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
+.red{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+.orange{background:linear-gradient(135deg,#f97316,#db2777)}
+.darkbtn{background:#111827}
+.blue{background:linear-gradient(135deg,#0b5cff,#2563eb)}
+.gray{background:#64748b}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{flex:1;min-width:145px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.card{
+  background:white;border:1px solid var(--line);border-radius:28px;padding:18px;
+  box-shadow:0 16px 34px rgba(15,23,42,.10)
+}
+.card h2{font-size:24px;color:#9d174d;margin-bottom:7px}
+.meta{color:#475569;font-weight:700;line-height:1.6;font-size:15px}
+.chip{
+  display:inline-block;background:var(--soft);color:var(--pink);border:1px solid var(--line);
+  border-radius:999px;padding:6px 10px;font-size:12px;font-weight:900;margin:4px 4px 10px 0
+}
+.wait{background:#fef3c7;color:#92400e;border-color:#f59e0b}
+.ok{background:#dcfce7;color:#166534;border-color:#86efac}
+.no{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
+.actions{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px}
+.actions button{min-height:42px;padding:10px 12px}
+.empty{
+  grid-column:1/-1;background:white;border:2px dashed #f9a8d4;border-radius:28px;
+  padding:28px;text-align:center;color:#831843;font-weight:900
+}
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translateX(-50%);
+  background:#111827;color:white;border-radius:999px;padding:13px 18px;
+  font-weight:900;box-shadow:0 18px 40px rgba(0,0,0,.28);display:none;z-index:9999
+}
+.modal{
+  position:fixed;inset:0;background:rgba(15,23,42,.72);
+  display:none;align-items:center;justify-content:center;z-index:9998;padding:14px
+}
+.modal.open{display:flex}
+.modalBox{
+  background:white;border-radius:28px;padding:20px;width:min(720px,96vw);
+  box-shadow:0 28px 70px rgba(0,0,0,.35);border:1px solid var(--line)
+}
+.modalBox h2{color:#9d174d;margin-bottom:12px}
+.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.full{grid-column:1/-1}
+.modalActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.modalActions button{flex:1}
+.footer{text-align:center;font-weight:900;color:#831843;margin-top:30px}
+.small{font-size:12px;color:#64748b;margin-top:6px;font-weight:700}
+@media(max-width:1000px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .toolbar{grid-template-columns:1fr 1fr}
+  .toolbar button{grid-column:1/-1}
+  .actions{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  .wrap{padding:9px 8px 50px}
+  .top{justify-content:center}.logo{width:100%;text-align:center;font-size:20px}
+  .nav{width:100%;justify-content:center}.nav a{flex:1 1 42%;text-align:center;font-size:12px;padding:9px 7px}
+  .hero{border-radius:28px;padding:30px 14px}
+  .stats,.toolbar,.grid,.formGrid{grid-template-columns:1fr}
+  .tabs{display:grid;grid-template-columns:1fr}
+  .actions{grid-template-columns:1fr}
+  button,.btn,input,select{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+  <div class="logo">🔐 Katt Admin Test 2.0</div>
+  <div class="nav">
+    <a href="katt-oppdretterportal.html">🐱 Portal</a>
+    <a href="katt-registrering.html">📝 Registrering</a>
+    <a href="kattungekull.html">🐾 Kull</a>
+    <a href="katt-admin.html">🔐 Katt Admin</a>
+  </div>
+</div>
+
+<section class="hero">
+  <h1>Katt Admin Test</h1>
+  <p>Premium kontrollsenter for katteoppdrettere og kattungekull. Denne testversjonen lagrer lokalt i nettleseren og er klar for Supabase-kobling senere.</p>
+</section>
+
+<div class="notice">Testmodus: Alle knapper skal virke her. Når alt er godkjent, kan vi bruke denne som grunnlag for ekte database-admin.</div>
+
+<section class="stats">
+  <div class="stat"><b id="sTotal">0</b>Totalt</div>
+  <div class="stat"><b id="sBreeders">0</b>Oppdrettere</div>
+  <div class="stat"><b id="sLitters">0</b>Kull</div>
+  <div class="stat"><b id="sWaiting">0</b>Venter</div>
+  <div class="stat"><b id="sPremium">0</b>Premium</div>
+</section>
+
+<section class="toolbar">
+  <input id="search" placeholder="Søk navn, rase, sted eller e-post" oninput="render()">
+  <select id="filterType" onchange="render()">
+    <option value="">Alt innhold</option>
+    <option value="oppdretter">Oppdrettere</option>
+    <option value="kull">Kattungekull</option>
+  </select>
+  <select id="filterStatus" onchange="render()">
+    <option value="">Alle statuser</option>
+    <option value="venter">Venter</option>
+    <option value="godkjent">Godkjent</option>
+    <option value="avvist">Avvist</option>
+  </select>
+  <select id="filterPremium" onchange="render()">
+    <option value="">Alle</option>
+    <option value="premium">Premium</option>
+    <option value="ikke">Ikke premium</option>
+  </select>
+  <button onclick="resetDemo()">🔄 Nullstill</button>
+</section>
+
+<div class="tabs">
+  <button onclick="quickType('')">📋 Alt</button>
+  <button class="orange" onclick="quickType('oppdretter')">🐱 Oppdrettere</button>
+  <button class="darkbtn" onclick="quickType('kull')">🐾 Kattungekull</button>
+  <button class="green" onclick="quickStatus('godkjent')">✅ Godkjente</button>
+  <button class="blue" onclick="quickStatus('venter')">🟡 Venter</button>
+</div>
+
+<section class="grid" id="list"></section>
+
+<div class="footer">Hundenevåre.com – Katt Admin Test Premium 🐱</div>
+</div>
+
+<div class="modal" id="editModal">
+  <div class="modalBox">
+    <h2>✏️ Rediger</h2>
+    <div class="formGrid">
+      <div><label>Navn</label><input id="editName"></div>
+      <div><label>Type</label><select id="editType"><option value="oppdretter">Oppdretter</option><option value="kull">Kull</option></select></div>
+      <div><label>Rase</label><input id="editBreed"></div>
+      <div><label>Sted</label><input id="editPlace"></div>
+      <div><label>E-post</label><input id="editEmail"></div>
+      <div><label>Status</label><select id="editStatus"><option value="venter">Venter</option><option value="godkjent">Godkjent</option><option value="avvist">Avvist</option></select></div>
+      <div class="full"><label>Tekst</label><textarea id="editText"></textarea></div>
+    </div>
+    <div class="modalActions">
+      <button class="green" onclick="saveEdit()">💾 Lagre</button>
+      <button class="darkbtn" onclick="closeEdit()">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const DEFAULT_ROWS = [
+  {id:101,type:"oppdretter",name:"Katteri Eksempel",breed:"Maine Coon",place:"Rogaland",email:"post@eksempel.no",status:"venter",premium:true,text:"Testregistrering for katteoppdretter. Skal kunne godkjennes, avvises, redigeres og slettes."},
+  {id:102,type:"oppdretter",name:"Skogpus Eksempel",breed:"Norsk Skogkatt",place:"Vestland",email:"kontakt@skogpus.no",status:"godkjent",premium:false,text:"Godkjent eksempeloppdretter for test av visning og premium."},
+  {id:103,type:"oppdretter",name:"Ragdollstua",breed:"Ragdoll",place:"Trøndelag",email:"hei@ragdoll.no",status:"avvist",premium:false,text:"Eksempel på avvist registrering."},
+  {id:201,type:"kull",name:"Maine Coon-kull forventes",breed:"Maine Coon",place:"Rogaland",email:"post@eksempel.no",status:"venter",premium:false,text:"Planlagt kattungekull som venter godkjenning."},
+  {id:202,type:"kull",name:"Norsk Skogkatt-kull",breed:"Norsk Skogkatt",place:"Vestland",email:"kontakt@skogpus.no",status:"godkjent",premium:false,text:"Eksempel på godkjent kattungekull."},
+  {id:203,type:"kull",name:"Britisk Korthår-kull",breed:"Britisk Korthår",place:"Oslo",email:"britisk@example.no",status:"venter",premium:true,text:"Premium eksempel-kull."}
+];
+
+let rows = [];
+let editId = null;
+
+function loadRows(){
+  try{
+    const saved = localStorage.getItem("kattAdminTestRows");
+    rows = saved ? JSON.parse(saved) : DEFAULT_ROWS.map(x => ({...x}));
+  }catch(e){
+    rows = DEFAULT_ROWS.map(x => ({...x}));
+  }
+}
+function saveRows(){
+  localStorage.setItem("kattAdminTestRows", JSON.stringify(rows));
+}
+function esc(v){
+  return String(v || "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+}
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;
+  t.style.display="block";
+  setTimeout(()=>{t.style.display="none"},1800);
+}
+function statusClass(s){
+  if(s==="godkjent") return "ok";
+  if(s==="avvist") return "no";
+  return "wait";
+}
+function typeLabel(t){
+  return t==="oppdretter" ? "🐱 Oppdretter" : "🐾 Kull";
+}
+function updateStats(){
+  sTotal.textContent = rows.length;
+  sBreeders.textContent = rows.filter(x=>x.type==="oppdretter").length;
+  sLitters.textContent = rows.filter(x=>x.type==="kull").length;
+  sWaiting.textContent = rows.filter(x=>x.status==="venter").length;
+  sPremium.textContent = rows.filter(x=>x.premium).length;
+}
+function filteredRows(){
+  const q=search.value.toLowerCase().trim();
+  const tp=filterType.value;
+  const st=filterStatus.value;
+  const pr=filterPremium.value;
+
+  return rows.filter(x=>{
+    const text=(x.name+" "+x.breed+" "+x.place+" "+x.email+" "+x.text).toLowerCase();
+    return (!q || text.includes(q)) &&
+           (!tp || x.type===tp) &&
+           (!st || x.status===st) &&
+           (!pr || (pr==="premium" ? x.premium : !x.premium));
+  });
+}
+function render(){
+  updateStats();
+  const data=filteredRows();
+  const el=document.getElementById("list");
+
+  if(!data.length){
+    el.innerHTML='<div class="empty">Ingen treff. Prøv et annet filter eller nullstill testdata.</div>';
+    return;
+  }
+
+  el.innerHTML=data.map(x=>`
+    <article class="card">
+      <h2>${esc(x.name)}</h2>
+      <span class="chip">${typeLabel(x.type)}</span>
+      <span class="chip ${statusClass(x.status)}">${x.status==="godkjent"?"✅":x.status==="avvist"?"❌":"🟡"} ${esc(x.status)}</span>
+      ${x.premium ? '<span class="chip ok">⭐ Premium</span>' : '<span class="chip">Standard</span>'}
+      <div class="meta">
+        <b>Rase:</b> ${esc(x.breed)}<br>
+        <b>Sted:</b> ${esc(x.place)}<br>
+        <b>E-post:</b> ${esc(x.email)}<br><br>
+        ${esc(x.text)}
+        <div class="small">ID: ${esc(x.id)}</div>
+      </div>
+      <div class="actions">
+        <button class="green" onclick="approveItem(${x.id})">✅ Godkjenn</button>
+        <button class="red" onclick="rejectItem(${x.id})">❌ Avvis</button>
+        <button class="orange" onclick="togglePremium(${x.id})">⭐ Premium</button>
+        <button class="blue" onclick="openEdit(${x.id})">✏️ Rediger</button>
+        <button class="darkbtn" onclick="deleteItem(${x.id})">🗑️ Slett</button>
+      </div>
+    </article>
+  `).join("");
+}
+function approveItem(id){
+  rows = rows.map(x => x.id===id ? {...x,status:"godkjent"} : x);
+  saveRows(); render(); showToast("Godkjent ✅");
+}
+function rejectItem(id){
+  rows = rows.map(x => x.id===id ? {...x,status:"avvist"} : x);
+  saveRows(); render(); showToast("Avvist ❌");
+}
+function togglePremium(id){
+  rows = rows.map(x => x.id===id ? {...x,premium:!x.premium} : x);
+  saveRows(); render(); showToast("Premium endret ⭐");
+}
+function deleteItem(id){
+  const item = rows.find(x => x.id===id);
+  if(!item){ showToast("Fant ikke elementet"); return; }
+  const ok = window.confirm("Slette: " + item.name + "?");
+  if(!ok) return;
+  rows = rows.filter(x => x.id !== id);
+  saveRows();
+  render();
+  showToast("Slettet 🗑️");
+}
+function openEdit(id){
+  const x=rows.find(r=>r.id===id);
+  if(!x) return;
+  editId=id;
+  editName.value=x.name;
+  editType.value=x.type;
+  editBreed.value=x.breed;
+  editPlace.value=x.place;
+  editEmail.value=x.email;
+  editStatus.value=x.status;
+  editText.value=x.text;
+  editModal.classList.add("open");
+}
+function closeEdit(){
+  editId=null;
+  editModal.classList.remove("open");
+}
+function saveEdit(){
+  rows=rows.map(x=>{
+    if(x.id!==editId) return x;
+    return {
+      ...x,
+      name:editName.value.trim() || x.name,
+      type:editType.value,
+      breed:editBreed.value.trim(),
+      place:editPlace.value.trim(),
+      email:editEmail.value.trim(),
+      status:editStatus.value,
+      text:editText.value.trim()
+    };
+  });
+  saveRows();
+  closeEdit();
+  render();
+  showToast("Endringer lagret 💾");
+}
+function quickType(t){
+  filterType.value=t;
+  render();
+}
+function quickStatus(s){
+  filterStatus.value=s;
+  render();
+}
+function resetDemo(){
+  if(!window.confirm("Nullstille alle testdata?")) return;
+  rows=DEFAULT_ROWS.map(x=>({...x}));
+  saveRows();
+  search.value="";
+  filterType.value="";
+  filterStatus.value="";
+  filterPremium.value="";
+  render();
+  showToast("Testdata nullstilt 🔄");
+}
+editModal.addEventListener("click", function(e){
+  if(e.target===editModal) closeEdit();
+});
+
+loadRows();
+render();
+</script>
+</body>
+</html>
