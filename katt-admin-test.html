@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Katt Admin Test – Hundene våre</title>
+<title>Katt Admin Test 2.1 – Hundene våre</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -142,7 +142,7 @@ button,.btn{
 <div class="wrap">
 
 <div class="top">
-  <div class="logo">🔐 Katt Admin Test 2.0</div>
+  <div class="logo">🔐 Katt Admin Test 2.1</div>
   <div class="nav">
     <a href="katt-oppdretterportal.html">🐱 Portal</a>
     <a href="katt-registrering.html">📝 Registrering</a>
@@ -313,7 +313,7 @@ function render(){
         <button class="red" onclick="rejectItem(${x.id})">❌ Avvis</button>
         <button class="orange" onclick="togglePremium(${x.id})">⭐ Premium</button>
         <button class="blue" onclick="openEdit(${x.id})">✏️ Rediger</button>
-        <button class="darkbtn" onclick="deleteItem(${x.id})">🗑️ Slett</button>
+        <button class="darkbtn" onclick="slettKort(\'${x.id}\')">🗑️ Slett</button>
       </div>
     </article>
   `).join("");
@@ -330,15 +330,17 @@ function togglePremium(id){
   rows = rows.map(x => x.id===id ? {...x,premium:!x.premium} : x);
   saveRows(); render(); showToast("Premium endret ⭐");
 }
-function deleteItem(id){
-  const item = rows.find(x => x.id===id);
-  if(!item){ showToast("Fant ikke elementet"); return; }
-  const ok = window.confirm("Slette: " + item.name + "?");
-  if(!ok) return;
-  rows = rows.filter(x => x.id !== id);
+function slettKort(id){
+  const before = rows.length;
+  rows = rows.filter(x => String(x.id) !== String(id));
   saveRows();
   render();
-  showToast("Slettet 🗑️");
+
+  if(rows.length < before){
+    showToast("Slettet 🗑️");
+  }else{
+    showToast("Fant ikke kortet");
+  }
 }
 function openEdit(id){
   const x=rows.find(r=>r.id===id);
