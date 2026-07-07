@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kattungekull – Hundene våre</title>
+<title>Registrer katteoppdrett 1.1 – Hundene våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{
@@ -15,7 +16,7 @@ body{
     radial-gradient(circle at 92% 8%,rgba(190,225,255,.55),transparent 34%),
     linear-gradient(180deg,#fdf2f8,#eef6ff 48%,#fff7ed);
 }
-.wrap{max-width:1220px;margin:auto;padding:16px 10px 70px}
+.wrap{max-width:980px;margin:auto;padding:16px 10px 70px}
 .top{
   display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
   background:white;border:1px solid #fbcfe8;border-radius:28px;padding:14px 16px;
@@ -32,69 +33,47 @@ body{
     radial-gradient(circle at 20% 20%,rgba(255,255,255,.35),transparent 25%),
     radial-gradient(circle at 88% 12%,rgba(255,214,230,.35),transparent 25%),
     linear-gradient(135deg,#4a044e,#be185d 48%,#7c3aed);
-  color:white;border-radius:46px;padding:46px 22px;text-align:center;
+  color:white;border-radius:42px;padding:42px 20px;text-align:center;
   box-shadow:0 28px 70px rgba(76,29,149,.28);margin-bottom:20px
 }
-.badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.badge{
-  background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);
-  border-radius:999px;padding:9px 13px;font-weight:900;font-size:13px
-}
-.gold{background:linear-gradient(135deg,#fff7c2,#ffd166);color:#6b3a00;border-color:#f59e0b}
-.hero h1{font-size:clamp(2.7rem,7vw,5.2rem);line-height:1.05;margin-bottom:12px;text-shadow:0 0 14px rgba(255,255,255,.45)}
-.hero p{font-size:clamp(1rem,2.5vw,1.25rem);font-weight:700;line-height:1.55;color:#fff1f7;max-width:900px;margin:auto}
+.hero h1{font-size:clamp(2.5rem,7vw,4.8rem);line-height:1.05;margin-bottom:12px}
+.hero p{font-size:18px;font-weight:700;line-height:1.55;color:#fff1f7;max-width:760px;margin:auto}
 .notice{
   background:#fff7ed;border:1px solid #fed7aa;color:#92400e;
   border-radius:24px;padding:16px;text-align:center;font-weight:900;
   margin-bottom:18px;box-shadow:0 10px 22px rgba(15,23,42,.08)
 }
-.filters{
-  background:white;border:1px solid #fbcfe8;border-radius:28px;padding:16px;margin-bottom:18px;
-  box-shadow:0 12px 28px rgba(15,23,42,.08);
-  display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px
+.card{
+  background:white;border:1px solid #fbcfe8;border-radius:32px;padding:24px;
+  box-shadow:0 16px 34px rgba(15,23,42,.10);margin-bottom:18px
 }
-.filters input,.filters select{
-  width:100%;border:1px solid #fbcfe8;border-radius:999px;padding:13px 15px;
-  font-weight:800;color:#3b1f4f;background:#fff
+.card h2{font-size:30px;color:#831843;margin-bottom:10px;text-align:center}
+.card p{color:#475569;font-weight:700;line-height:1.55;text-align:center;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{font-weight:900;color:#831843;margin-top:8px;display:block}
+input,select,textarea{
+  width:100%;border:1px solid #fbcfe8;border-radius:18px;padding:14px 15px;
+  font-size:15px;color:#3b1f4f;background:#fff;margin-top:6px;margin-bottom:10px
 }
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.litter{
-  background:white;border:1px solid #fbcfe8;border-radius:32px;overflow:hidden;
-  box-shadow:0 16px 34px rgba(15,23,42,.10)
-}
-.cover{
-  height:260px;background:linear-gradient(135deg,#be185d,#7c3aed);
-  display:flex;align-items:center;justify-content:center;color:white;font-size:86px
-}
-.cover img{width:100%;height:100%;object-fit:cover}
-.content{padding:22px}
-.content h2{font-size:28px;color:#9d174d;margin-bottom:8px}
-.content p{color:#475569;font-weight:700;line-height:1.55;margin-bottom:12px}
-.tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
-.tag{
-  display:inline-flex;background:#fdf2f8;color:#be185d;border:1px solid #fbcfe8;
-  border-radius:999px;padding:7px 10px;font-size:13px;font-weight:900
-}
-.statusLedig{background:#dcfce7;color:#166534;border-color:#86efac}
-.statusRes{background:#fef3c7;color:#92400e;border-color:#f59e0b}
-.infoGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.info{background:#fdf2f8;border:1px solid #fbcfe8;border-radius:18px;padding:12px;font-weight:900;color:#831843}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-.btn{
-  flex:1;min-width:150px;display:inline-flex;align-items:center;justify-content:center;
-  text-decoration:none;color:white;border-radius:999px;padding:13px 16px;font-weight:900;
+textarea{min-height:120px;resize:vertical}
+.full{grid-column:1/-1}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+button,.btn{
+  flex:1;min-width:180px;border:none;border-radius:999px;padding:14px 18px;
+  color:white;font-weight:900;font-size:16px;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;justify-content:center;text-align:center;
   background:linear-gradient(135deg,#be185d,#7c3aed)
 }
-.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
 .dark{background:#111827}
-.empty{
-  grid-column:1/-1;background:white;border:2px dashed #f9a8d4;border-radius:28px;
-  padding:28px;text-align:center;color:#831843;font-weight:900
+.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
+.status{
+  margin-top:14px;text-align:center;font-weight:900;color:#831843;min-height:24px
+}
+.infoBox{
+  background:#fdf2f8;border:1px solid #fbcfe8;border-radius:22px;padding:16px;
+  color:#831843;font-weight:800;line-height:1.6
 }
 .footer{text-align:center;font-weight:900;color:#831843;margin-top:34px}
-@media(max-width:900px){
-  .grid,.filters{grid-template-columns:1fr}
-}
 @media(max-width:700px){
   .wrap{padding:9px 8px 50px}
   .top{justify-content:center}
@@ -102,142 +81,166 @@ body{
   .nav{width:100%;justify-content:center}
   .nav a{flex:1 1 42%;text-align:center;font-size:12px;padding:9px 7px}
   .hero{border-radius:28px;padding:32px 14px}
-  .cover{height:210px}
-  .content{padding:17px}
-  .content h2{font-size:23px}
-  .infoGrid{grid-template-columns:1fr}
+  .card{padding:17px;border-radius:24px}
+  .grid{grid-template-columns:1fr}
+  .full{grid-column:auto}
+  button,.btn{width:100%;min-width:0}
 }
 </style>
 </head>
-
 <body>
 <div class="wrap">
 
 <div class="top">
-  <div class="logo">🐾 Kattungekull</div>
+  <div class="logo">📝 Registrer katteoppdrett</div>
   <div class="nav">
     <a href="katt-oppdretterportal.html">🐱 Portal</a>
-    <a href="katt-oppdrettere.html">🔎 Oppdrettere</a>
-    <a href="katt-registrering.html">📝 Registrering</a>
+    <a href="kattungekull.html">🐾 Kull</a>
+    <a href="katt-oppdretter-profil.html">🏆 Profil</a>
     <a href="index.html">🏠 Forside</a>
   </div>
 </div>
 
 <section class="hero">
-  <div class="badges">
-    <span class="badge gold">🏆 Skjult testside</span>
-    <span class="badge">🐾 Kattungekull</span>
-    <span class="badge">🐱 Katteoppdrettere</span>
-  </div>
-  <h1>Kattungekull</h1>
-  <p>Her skal godkjente kattungekull vises når katteplattformen kobles til databasen.</p>
+  <h1>Registrer katteoppdrett 1.1</h1>
+  <p>Skjult testskjema for katteoppdrettere. Innsendingene kan senere kobles til egen katt-admin og godkjennes før publisering.</p>
 </section>
 
 <div class="notice">
-  Dette er foreløpig en skjult testside. Den vises ikke på forsiden før hele katteplattformen er ferdig.
+  Dette er en testside i bakgrunnen. Den er ikke koblet til forsiden før katteplattformen er ferdig.
 </div>
 
-<section class="filters">
-  <input id="search" placeholder="Søk rase eller oppdretter" oninput="render()">
-  <select id="breed" onchange="render()">
-    <option value="">Alle raser</option>
-    <option value="Maine Coon">Maine Coon</option>
-    <option value="Norsk Skogkatt">Norsk Skogkatt</option>
-    <option value="Ragdoll">Ragdoll</option>
-    <option value="Britisk Korthår">Britisk Korthår</option>
-    <option value="Sibirsk katt">Sibirsk katt</option>
-  </select>
-  <select id="status" onchange="render()">
-    <option value="">Alle statuser</option>
-    <option value="Ledige kattunger">Ledige kattunger</option>
-    <option value="Noen reserverte">Noen reserverte</option>
-    <option value="Planlagt kull">Planlagt kull</option>
-  </select>
+<section class="card">
+  <h2>🐱 Oppdretterinformasjon</h2>
+  <p>Fyll inn informasjonen som senere skal brukes til katteoppdretterprofilen.</p>
+
+  <form id="form">
+    <div class="grid">
+      <div>
+        <label>Navn på oppdrett / katteri</label>
+        <input id="name" required placeholder="F.eks. Katteri Eksempel">
+      </div>
+      <div>
+        <label>Kontaktperson</label>
+        <input id="contact" placeholder="Navn på kontaktperson">
+      </div>
+
+      <div>
+        <label>E-post</label>
+        <input id="email" type="email" required placeholder="epost@eksempel.no">
+      </div>
+      <div>
+        <label>Telefon</label>
+        <input id="phone" placeholder="Telefonnummer">
+      </div>
+
+      <div>
+        <label>Rase</label>
+        <select id="breed">
+          <option value="">Velg rase</option>
+          <option>Maine Coon</option>
+          <option>Norsk Skogkatt</option>
+          <option>Ragdoll</option>
+          <option>Britisk Korthår</option>
+          <option>Sibirsk katt</option>
+          <option>Perser</option>
+          <option>Birma</option>
+          <option>Bengal</option>
+          <option>Annet / flere raser</option>
+        </select>
+      </div>
+      <div>
+        <label>Fylke / område</label>
+        <input id="area" placeholder="F.eks. Rogaland">
+      </div>
+
+      <div>
+        <label>Kommune / sted</label>
+        <input id="place" placeholder="F.eks. Karmøy">
+      </div>
+      <div>
+        <label>Nettside / Facebook</label>
+        <input id="website" placeholder="https://...">
+      </div>
+
+      <div class="full">
+        <label>Om oppdrettet</label>
+        <textarea id="about" placeholder="Fortell kort om oppdrettet, erfaring, mål og miljøet kattungene vokser opp i."></textarea>
+      </div>
+
+      <div class="full">
+        <label>Helse, tester og oppfølging</label>
+        <textarea id="health" placeholder="Skriv om helseoppfølging, veterinærkontroll, vaksiner, ID-merking, stamtavle, tester osv."></textarea>
+      </div>
+
+      <div class="full">
+        <label>Bilder / logo</label>
+        <input id="image" placeholder="Lim inn bilde- eller logolenke foreløpig">
+      </div>
+    </div>
+
+    <div class="infoBox">
+      Dette skjemaet lagrer nå til test-admin i nettleseren. Neste steg senere blir å koble samme flyt til Supabase.
+    </div>
+
+    <div class="btnrow">
+      <button type="submit" class="green">📩 Send inn testregistrering</button>
+      <a class="btn dark" href="katt-oppdretterportal.html">Til portal</a>
+    </div>
+
+    <div id="status" class="status"></div>
+  </form>
 </section>
 
-<section class="grid" id="list"></section>
-
-<div class="footer">Hundenevåre.com – Kattungekull Premium 🐱</div>
+<div class="footer">Hundenevåre.com – Katteoppdretterregistrering 🐱</div>
 </div>
 
 <script>
-const DATA=[
-  {
-    title:"Maine Coon-kull forventes",
-    breeder:"Katteri Eksempel",
-    breed:"Maine Coon",
-    status:"Planlagt kull",
-    born:"Forventet senere",
-    ready:"Ikke oppgitt",
-    kittens:"Kommer",
-    place:"Rogaland",
-    text:"Dette er et eksempelkort. Når databasen er klar vil ekte kattungekull vises her.",
-    image:""
-  },
-  {
-    title:"Norsk Skogkatt-kull",
-    breeder:"Skogpus Eksempel",
-    breed:"Norsk Skogkatt",
-    status:"Ledige kattunger",
-    born:"Ikke oppgitt",
-    ready:"Ikke oppgitt",
-    kittens:"3",
-    place:"Vestland",
-    text:"Eksempel på hvordan et aktivt kattungekull kan presenteres på plattformen.",
-    image:""
-  }
-];
+document.getElementById("form").addEventListener("submit", function(e){
+  e.preventDefault();
 
-function cls(s){
-  if((s||"").toLowerCase().includes("ledig")) return "statusLedig";
-  if((s||"").toLowerCase().includes("reservert")) return "statusRes";
-  return "";
-}
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
 
-function render(){
-  const q=document.getElementById("search").value.toLowerCase().trim();
-  const b=document.getElementById("breed").value;
-  const st=document.getElementById("status").value;
-
-  let rows=DATA.filter(x=>{
-    const text=(x.title+" "+x.breeder+" "+x.breed+" "+x.place).toLowerCase();
-    return (!q || text.includes(q)) && (!b || x.breed===b) && (!st || x.status===st);
-  });
-
-  const list=document.getElementById("list");
-  if(!rows.length){
-    list.innerHTML='<div class="empty">Ingen kattungekull funnet i denne testen.</div>';
+  if(!name || !email){
+    alert("Navn på oppdrett og e-post må fylles ut.");
     return;
   }
 
-  list.innerHTML=rows.map(x=>`
-    <article class="litter">
-      <div class="cover">${x.image?'<img src="'+x.image+'">':'🐱'}</div>
-      <div class="content">
-        <h2>${x.title}</h2>
-        <div class="tags">
-          <span class="tag ${cls(x.status)}">${x.status}</span>
-          <span class="tag">🐱 ${x.breed}</span>
-          <span class="tag">🏆 ${x.breeder}</span>
-          <span class="tag">📍 ${x.place}</span>
-        </div>
-        <p>${x.text}</p>
-        <div class="infoGrid">
-          <div class="info">📅 Født<br>${x.born}</div>
-          <div class="info">🎒 Levering<br>${x.ready}</div>
-          <div class="info">🐾 Kattunger<br>${x.kittens}</div>
-          <div class="info">📍 Sted<br>${x.place}</div>
-        </div>
-        <div class="actions">
-          <a class="btn green" href="katt-oppdretter-profil.html">Se oppdretter</a>
-          <a class="btn dark" href="katt-oppdretterportal.html">Til portal</a>
-        </div>
-      </div>
-    </article>
-  `).join("");
-}
+  let rows = [];
+  try{
+    rows = JSON.parse(localStorage.getItem("kattAdminTestRows") || "[]");
+  }catch(err){
+    rows = [];
+  }
 
-render();
+  const ny = {
+    id: Date.now(),
+    type: "oppdretter",
+    name: name,
+    breed: document.getElementById("breed").value || "Ikke oppgitt",
+    place: document.getElementById("place").value || document.getElementById("area").value || "Ikke oppgitt",
+    email: email,
+    status: "venter",
+    premium: false,
+    text:
+      "Kontaktperson: " + (document.getElementById("contact").value || "Ikke oppgitt") + "\n" +
+      "Telefon: " + (document.getElementById("phone").value || "Ikke oppgitt") + "\n" +
+      "Nettside/Facebook: " + (document.getElementById("website").value || "Ikke oppgitt") + "\n\n" +
+      "Om oppdrettet:\n" + (document.getElementById("about").value || "Ikke oppgitt") + "\n\n" +
+      "Helse:\n" + (document.getElementById("health").value || "Ikke oppgitt")
+  };
+
+  rows.unshift(ny);
+  localStorage.setItem("kattAdminTestRows", JSON.stringify(rows));
+
+  document.getElementById("status").innerHTML =
+    "✅ Registreringen er lagret i test-admin. Åpne <b>katt-admin-test.html</b> og godkjenn den.";
+
+  alert("Registreringen er lagret i Katt Admin Test.");
+
+  document.getElementById("form").reset();
+});
 </script>
 </body>
 </html>
