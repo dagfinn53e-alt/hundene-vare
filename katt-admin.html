@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Katt Admin – Hundene våre</title>
+<title>Katt Admin 1.1 – Hundene våre</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{
@@ -113,7 +113,7 @@ button,.btn{
 </div>
 
 <section class="hero">
-  <h1>Katt Admin</h1>
+  <h1>Katt Admin 1.1</h1>
   <p>Kontrollpanel for katteoppdrettere og kattungekull. Dette er en skjult test-admin som virker lokalt før vi kobler den til databasen.</p>
 </section>
 
@@ -215,7 +215,7 @@ function render(){
         <button class="green" onclick="setStatus(${x.id},'godkjent')">✅ Godkjenn</button>
         <button class="red" onclick="setStatus(${x.id},'avvist')">❌ Avvis</button>
         <button class="orange" onclick="togglePremium(${x.id})">⭐ Premium</button>
-        <button class="dark" onclick="removeRow(${x.id})">🗑️ Slett</button>
+        <button class="dark" onclick="deleteItem(${x.id})">🗑️ Slett</button>
       </div>
     </article>
   `).join("");
@@ -229,10 +229,15 @@ function togglePremium(id){
   rows=rows.map(x=>x.id===id?{...x,premium:!x.premium}:x);
   save();render();
 }
-function removeRow(id){
-  if(!confirm("Slette denne fra test-admin?"))return;
-  rows=rows.filter(x=>x.id!==id);
-  save();render();
+function deleteItem(id){
+  const item = rows.find(x => x.id === id);
+  const name = item ? item.name : "denne";
+  const ok = window.confirm("Vil du slette " + name + " fra test-admin?");
+  if(!ok) return;
+
+  rows = rows.filter(x => Number(x.id) !== Number(id));
+  save();
+  render();
 }
 
 render();
