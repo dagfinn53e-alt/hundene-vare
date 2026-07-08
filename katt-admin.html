@@ -40,19 +40,205 @@ button,.btn{border:none;border-radius:999px;padding:12px 14px;color:#fff;font-we
 </div>
 <div id="imgModal" class="modal" onclick="this.classList.remove('open')"><img id="bigImg"></div>
 <script>
-const supabaseClient=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
-let rows=[];
-function esc(v){return String(v||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
-function st(x){if(x.approved||x.status==="godkjent")return"godkjent";if(x.status==="avvist")return"avvist";return"venter"}
-function cls(s){return s==="godkjent"?"ok":s==="avvist"?"no":"wait"}
-function openImage(url){if(!url)return;bigImg.src=url;imgModal.classList.add("open")}
-async function loadData(){status.textContent="Laster fra Supabase...";const {data,error}=await supabaseClient.from("cat_breeders").select("*").order("created_at",{ascending:false});if(error){status.textContent="Feil: "+error.message;return}rows=data||[];status.textContent=rows.length+" registreringer funnet";render()}
-function updateStats(){sTotal.textContent=rows.length;sWaiting.textContent=rows.filter(x=>st(x)==="venter").length;sApproved.textContent=rows.filter(x=>st(x)==="godkjent").length;sPremium.textContent=rows.filter(x=>x.premium).length}
-function render(){updateStats();const q=search.value.toLowerCase().trim(),sf=statusFilter.value,pf=premiumFilter.value;const data=rows.filter(x=>{const s=st(x),text=(x.name+" "+x.breed+" "+x.place+" "+x.area+" "+x.email+" "+x.about+" "+x.health).toLowerCase();return(!q||text.includes(q))&&(!sf||s===sf)&&(!pf||(pf==="premium"?x.premium:!x.premium))});if(!data.length){list.innerHTML='<div class="empty">Ingen treff.</div>';return}list.innerHTML=data.map(x=>{const s=st(x),img=x.image_url||"";return `<article class="card"><div class="cover" onclick="openImage('${esc(img)}')">${img?`<img src="${esc(img)}">`:"🐱"}</div><div class="content"><h2>${esc(x.name)}</h2><span class="chip ${cls(s)}">${s==="godkjent"?"✅":s==="avvist"?"❌":"🟡"} ${esc(s)}</span>${x.premium?'<span class="chip ok">⭐ Premium</span>':'<span class="chip">Standard</span>'}<span class="chip">🐱 ${esc(x.breed||"Rase ikke oppgitt")}</span><span class="chip">📍 ${esc(x.place||x.area||"Sted ikke oppgitt")}</span><div class="meta"><b>E-post:</b> ${esc(x.email||"Ikke oppgitt")}<br><b>Telefon:</b> ${esc(x.phone||"Ikke oppgitt")}<br><b>Kontakt:</b> ${esc(x.contact_name||"Ikke oppgitt")}<br><b>Nettside:</b> ${esc(x.website||"Ikke oppgitt")}<br><br><b>Om:</b><br>${esc(x.about||"Ikke oppgitt")}<br><br><b>Helse:</b><br>${esc(x.health||"Ikke oppgitt")}</div><div class="actions"><button class="green" onclick="approveItem('${x.id}')">Godkjenn</button><button class="red" onclick="rejectItem('${x.id}')">Avvis</button><button class="orange" onclick="togglePremium('${x.id}',${x.premium?'false':'true'})">Premium</button><a class="btn blue" href="katt-oppdretter-profil.html?id=${encodeURIComponent(x.id)}">Profil</a><button class="dark" onclick="deleteItem('${x.id}')">Slett</button></div></div></article>`}).join("")}
-async function approveItem(id){const {error}=await supabaseClient.from("cat_breeders").update({approved:true,status:"godkjent"}).eq("id",id);if(error){alert("Feil: "+error.message);return}await loadData()}
-async function rejectItem(id){const {error}=await supabaseClient.from("cat_breeders").update({approved:false,status:"avvist"}).eq("id",id);if(error){alert("Feil: "+error.message);return}await loadData()}
-async function togglePremium(id,value){const {error}=await supabaseClient.from("cat_breeders").update({premium:value}).eq("id",id);if(error){alert("Feil: "+error.message);return}await loadData()}
-async function deleteItem(id){if(!confirm("Slette denne oppdretteren?"))return;const {error}=await supabaseClient.from("cat_breeders").delete().eq("id",id);if(error){alert("Feil: "+error.message);return}await loadData()}
-loadData();
+const supabaseClient = window.supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+let rows = [];
+
+const elStatus = document.getElementById("status");
+const elList = document.getElementById("list");
+const elSearch = document.getElementById("search");
+const elStatusFilter = document.getElementById("statusFilter");
+const elPremiumFilter = document.getElementById("premiumFilter");
+const elTotal = document.getElementById("sTotal");
+const elWaiting = document.getElementById("sWaiting");
+const elApproved = document.getElementById("sApproved");
+const elPremium = document.getElementById("sPremium");
+const elImgModal = document.getElementById("imgModal");
+const elBigImg = document.getElementById("bigImg");
+
+function esc(v){
+  return String(v || "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function breederStatus(x){
+  if(x.approved === true || x.status === "godkjent") return "godkjent";
+  if(x.status === "avvist") return "avvist";
+  return "venter";
+}
+
+function statusClass(s){
+  if(s === "godkjent") return "ok";
+  if(s === "avvist") return "no";
+  return "wait";
+}
+
+function openImage(url){
+  if(!url) return;
+  elBigImg.src = url;
+  elImgModal.classList.add("open");
+}
+
+async function loadData(){
+  elStatus.textContent = "Laster fra Supabase...";
+
+  const { data, error } = await supabaseClient
+    .from("cat_breeders")
+    .select("*")
+    .order("created_at", { ascending:false });
+
+  if(error){
+    elStatus.textContent = "Feil: " + error.message;
+    elList.innerHTML = '<div class="empty">Kunne ikke laste data fra Supabase.</div>';
+    return;
+  }
+
+  rows = data || [];
+  elStatus.textContent = rows.length + " registreringer funnet";
+  render();
+}
+
+function updateStats(){
+  elTotal.textContent = rows.length;
+  elWaiting.textContent = rows.filter(x => breederStatus(x) === "venter").length;
+  elApproved.textContent = rows.filter(x => breederStatus(x) === "godkjent").length;
+  elPremium.textContent = rows.filter(x => x.premium === true).length;
+}
+
+function render(){
+  updateStats();
+
+  const q = (elSearch.value || "").toLowerCase().trim();
+  const sf = elStatusFilter.value;
+  const pf = elPremiumFilter.value;
+
+  const data = rows.filter(x => {
+    const s = breederStatus(x);
+    const text = [
+      x.name, x.breed, x.place, x.area, x.email, x.about, x.health, x.contact_name, x.phone
+    ].join(" ").toLowerCase();
+
+    return (!q || text.includes(q)) &&
+           (!sf || s === sf) &&
+           (!pf || (pf === "premium" ? x.premium === true : x.premium !== true));
+  });
+
+  if(!data.length){
+    elList.innerHTML = '<div class="empty">Ingen treff.</div>';
+    return;
+  }
+
+  elList.innerHTML = data.map(x => {
+    const s = breederStatus(x);
+    const img = x.image_url || "";
+    const premiumToggleValue = x.premium === true ? "false" : "true";
+
+    return `
+      <article class="card">
+        <div class="cover" onclick="openImage('${esc(img)}')">
+          ${img ? `<img src="${esc(img)}" alt="">` : "🐱"}
+        </div>
+        <div class="content">
+          <h2>${esc(x.name)}</h2>
+
+          <span class="chip ${statusClass(s)}">
+            ${s === "godkjent" ? "✅" : s === "avvist" ? "❌" : "🟡"} ${esc(s)}
+          </span>
+          ${x.premium === true ? '<span class="chip ok">⭐ Premium</span>' : '<span class="chip">Standard</span>'}
+          <span class="chip">🐱 ${esc(x.breed || "Rase ikke oppgitt")}</span>
+          <span class="chip">📍 ${esc(x.place || x.area || "Sted ikke oppgitt")}</span>
+
+          <div class="meta">
+<b>E-post:</b> ${esc(x.email || "Ikke oppgitt")}
+<b>Telefon:</b> ${esc(x.phone || "Ikke oppgitt")}
+<b>Kontakt:</b> ${esc(x.contact_name || "Ikke oppgitt")}
+<b>Nettside:</b> ${esc(x.website || "Ikke oppgitt")}
+
+<b>Om:</b>
+${esc(x.about || "Ikke oppgitt")}
+
+<b>Helse:</b>
+${esc(x.health || "Ikke oppgitt")}
+          </div>
+
+          <div class="actions">
+            <button class="green" onclick="approveItem('${esc(x.id)}')">Godkjenn</button>
+            <button class="red" onclick="rejectItem('${esc(x.id)}')">Avvis</button>
+            <button class="orange" onclick="togglePremium('${esc(x.id)}', ${premiumToggleValue})">Premium</button>
+            <a class="btn blue" href="katt-oppdretter-profil.html?id=${encodeURIComponent(x.id)}">Profil</a>
+            <button class="dark" onclick="deleteItem('${esc(x.id)}')">Slett</button>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+async function approveItem(id){
+  const { error } = await supabaseClient
+    .from("cat_breeders")
+    .update({ approved:true, status:"godkjent" })
+    .eq("id", id);
+
+  if(error){
+    alert("Feil ved godkjenning: " + error.message);
+    return;
+  }
+
+  await loadData();
+}
+
+async function rejectItem(id){
+  const { error } = await supabaseClient
+    .from("cat_breeders")
+    .update({ approved:false, status:"avvist" })
+    .eq("id", id);
+
+  if(error){
+    alert("Feil ved avvisning: " + error.message);
+    return;
+  }
+
+  await loadData();
+}
+
+async function togglePremium(id, value){
+  const { error } = await supabaseClient
+    .from("cat_breeders")
+    .update({ premium:value })
+    .eq("id", id);
+
+  if(error){
+    alert("Feil ved Premium: " + error.message);
+    return;
+  }
+
+  await loadData();
+}
+
+async function deleteItem(id){
+  if(!confirm("Slette denne oppdretteren?")) return;
+
+  const { error } = await supabaseClient
+    .from("cat_breeders")
+    .delete()
+    .eq("id", id);
+
+  if(error){
+    alert("Feil ved sletting: " + error.message);
+    return;
+  }
+
+  await loadData();
+}
+
+window.addEventListener("DOMContentLoaded", loadData);
 </script>
 </body></html>
