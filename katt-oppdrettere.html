@@ -1,52 +1,11 @@
-<!DOCTYPE html>
-<html lang="no">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Katteoppdrettere – Hundene våre</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:linear-gradient(180deg,#fdf2f8,#eef6ff,#fff7ed);color:#3b1f4f}
-.wrap{max-width:1150px;margin:auto;padding:14px 10px 60px}
-.top,.box{background:#fff;border:1px solid #fbcfe8;border-radius:26px;padding:16px;margin-bottom:14px;box-shadow:0 12px 28px rgba(15,23,42,.08)}
-.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
-.logo{font-size:24px;font-weight:900;color:#be185d}.nav{display:flex;gap:8px;flex-wrap:wrap}
-.nav a{background:#fdf2f8;color:#be185d;text-decoration:none;border:1px solid #fbcfe8;border-radius:999px;padding:10px 13px;font-weight:900}
-.hero{background:linear-gradient(135deg,#4a044e,#be185d,#7c3aed);color:#fff;border-radius:34px;padding:36px 18px;text-align:center;margin-bottom:14px}
-.hero h1{font-size:clamp(2.2rem,7vw,4.4rem)}.hero p{font-weight:800;line-height:1.5;max-width:800px;margin:10px auto 0}
-.controls{display:grid;grid-template-columns:1fr auto;gap:10px}
-input,button{border-radius:999px;padding:13px 16px;font-weight:900;border:1px solid #fbcfe8;font-size:15px}
-button{background:linear-gradient(135deg,#be185d,#7c3aed);color:#fff;border:none;cursor:pointer}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.card{background:#fff;border:1px solid #fbcfe8;border-radius:28px;overflow:hidden;box-shadow:0 14px 30px rgba(15,23,42,.10)}
-.cover{height:150px;background:linear-gradient(135deg,#be185d,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:68px;color:#fff}
-.content{padding:18px}.content h2{color:#9d174d;font-size:26px;margin-bottom:8px}.content p{font-weight:700;color:#475569;line-height:1.55;white-space:pre-wrap}
-.chip{display:inline-block;background:#fdf2f8;color:#be185d;border:1px solid #fbcfe8;border-radius:999px;padding:7px 10px;font-size:13px;font-weight:900;margin:4px 4px 10px 0}
-.premium{background:#dcfce7;color:#166534;border-color:#86efac}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.btn{border-radius:999px;padding:12px;text-align:center;text-decoration:none;color:#fff;font-weight:900;background:#111827}.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
-.empty{grid-column:1/-1;background:#fff;border:2px dashed #f9a8d4;border-radius:24px;padding:25px;text-align:center;font-weight:900;color:#831843;line-height:1.6}
-@media(max-width:760px){.grid,.controls,.actions{grid-template-columns:1fr}.top{justify-content:center}.logo{width:100%;text-align:center}.nav a{flex:1 1 42%;text-align:center;font-size:12px}}
-</style>
-</head>
-<body>
-<div class="wrap">
-<div class="top"><div class="logo">🐱 Katteoppdrettere</div><div class="nav"><a href="katt-oppdretterportal.html">Portal</a><a href="katt-admin-test.html">Admin Test</a><a href="katt-registrering.html">Registrering</a></div></div>
-<section class="hero"><h1>Katteoppdrettere</h1><p>Godkjente katteoppdrettere vises her. Se profil-knappen sender nå riktig ID.</p></section>
-<section class="box"><div class="controls"><input id="search" placeholder="Søk navn, rase, sted eller e-post" oninput="render()"><button onclick="loadRows()">🔄 Oppdater</button></div></section>
-<section class="grid" id="list"></section>
-</div>
+<!DOCTYPE html><html lang="no"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Katteoppdrettere</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(#fdf2f8,#eef6ff,#fff7ed);color:#3b1f4f}.wrap{max-width:1150px;margin:auto;padding:14px 10px 60px}.top,.box{background:white;border:1px solid #fbcfe8;border-radius:26px;padding:16px;margin-bottom:14px;box-shadow:0 12px 28px #0001}.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}.logo{font-size:24px;font-weight:900;color:#be185d}.nav{display:flex;gap:8px;flex-wrap:wrap}.nav a{background:#fdf2f8;color:#be185d;text-decoration:none;border:1px solid #fbcfe8;border-radius:999px;padding:10px 13px;font-weight:900}.hero{background:linear-gradient(135deg,#4a044e,#be185d,#7c3aed);color:white;border-radius:34px;padding:34px 18px;text-align:center;margin-bottom:14px}.hero h1{font-size:clamp(2.2rem,7vw,4.4rem)}.hero p{font-weight:800}.controls{display:grid;grid-template-columns:1fr auto;gap:10px}input,button{border-radius:999px;padding:13px 16px;font-weight:900;border:1px solid #fbcfe8}button{background:linear-gradient(135deg,#be185d,#7c3aed);color:white;border:0}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.card{background:white;border:1px solid #fbcfe8;border-radius:28px;overflow:hidden;box-shadow:0 14px 30px #0001}.cover{height:170px;background:linear-gradient(135deg,#be185d,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:68px;color:white}.cover img{width:100%;height:100%;object-fit:cover}.content{padding:18px}.content h2{color:#9d174d;font-size:26px;margin:0 0 8px}.content p{font-weight:700;color:#475569;line-height:1.55;white-space:pre-wrap}.chip{display:inline-block;background:#fdf2f8;color:#be185d;border:1px solid #fbcfe8;border-radius:999px;padding:7px 10px;font-size:13px;font-weight:900;margin:4px 4px 10px 0}.premium{background:#dcfce7;color:#166534;border-color:#86efac}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.btn{border-radius:999px;padding:12px;text-align:center;text-decoration:none;color:white;font-weight:900;background:#111827}.green{background:linear-gradient(135deg,#22c55e,#16a34a)}.empty{grid-column:1/-1;background:white;border:2px dashed #f9a8d4;border-radius:24px;padding:25px;text-align:center;font-weight:900;color:#831843;line-height:1.6}.status{text-align:center;font-weight:900;color:#831843;margin-bottom:12px}@media(max-width:760px){.grid,.controls,.actions{grid-template-columns:1fr}.top{justify-content:center}.logo{width:100%;text-align:center}.nav a{flex:1 1 42%;text-align:center;font-size:12px}}
+</style></head><body><div class="wrap"><div class="top"><div class="logo">🐱 Katteoppdrettere</div><div class="nav"><a href="katt-oppdretterportal.html">Portal</a><a href="katt-admin.html">Admin</a><a href="katt-registrering.html">Registrering</a></div></div><section class="hero"><h1>Katteoppdrettere</h1><p>Godkjente katteoppdrettere fra Supabase vises her.</p></section><section class="box"><div class="controls"><input id="search" placeholder="Søk navn, rase, sted eller e-post" oninput="render()"><button onclick="loadRows()">🔄 Oppdater</button></div></section><div id="status" class="status">Laster...</div><section class="grid" id="list"></section></div>
 <script>
-const FALLBACK=[{id:101,type:"oppdretter",name:"Katteri Eksempel",breed:"Maine Coon",place:"Rogaland",email:"post@eksempel.no",status:"godkjent",premium:true,text:"Godkjent eksempeloppdretter. Denne vises hvis ingen testdata finnes."}];
-let rows=[];
+const supabaseClient=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");let rows=[];
 function esc(v){return String(v||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
-function loadRows(){try{const s=localStorage.getItem("kattAdminTestRows");rows=s?JSON.parse(s):FALLBACK}catch(e){rows=FALLBACK}render()}
-function openProfile(id){ window.location.assign("katt-oppdretter-profil.html?id="+encodeURIComponent(String(id))); }
 function cut(t){t=String(t||"Ingen beskrivelse.");return t.length>220?t.slice(0,220)+"...":t}
-function render(){
- const q=search.value.toLowerCase().trim();
- const data=rows.filter(x=>x.type==="oppdretter"&&x.status==="godkjent"&&(!q||(x.name+" "+x.breed+" "+x.place+" "+x.email+" "+x.text).toLowerCase().includes(q)));
- if(!data.length){list.innerHTML='<div class="empty">Ingen godkjente oppdrettere funnet.<br>Gå til katt-admin-test.html, godkjenn en oppdretter, og trykk Oppdater her.</div>';return}
- list.innerHTML=data.map(x=>`<article class="card"><div class="cover">🐱</div><div class="content"><h2>${esc(x.name)}</h2><span class="chip">🐱 ${esc(x.breed||"Rase ikke oppgitt")}</span><span class="chip">📍 ${esc(x.place||"Sted ikke oppgitt")}</span><span class="chip">✅ Godkjent</span>${x.premium?'<span class="chip premium">⭐ Premium</span>':''}<p>${esc(cut(x.text))}</p><p><b>E-post:</b> ${esc(x.email||"Ikke oppgitt")}</p><div class="actions"><a class="btn green" href="katt-oppdretter-profil.html?id=${encodeURIComponent(String(x.id))}">🏆 Se profil</a><a class="btn" href="kattungekull.html">🐾 Kattungekull</a></div></div></article>`).join("");
-}
+async function loadRows(){status.textContent="Laster fra Supabase...";const r=await supabaseClient.from("cat_breeders").select("*").eq("approved",true).order("created_at",{ascending:false});if(r.error){status.textContent="Feil: "+r.error.message;list.innerHTML='<div class="empty">Kunne ikke hente oppdrettere.</div>';return}rows=r.data||[];status.textContent=rows.length+" godkjente oppdrettere funnet";render()}
+function render(){const q=search.value.toLowerCase().trim();const data=rows.filter(x=>(!q||(x.name+" "+x.breed+" "+x.place+" "+x.area+" "+x.email+" "+x.about).toLowerCase().includes(q)));if(!data.length){list.innerHTML='<div class="empty">Ingen godkjente oppdrettere funnet ennå.</div>';return}list.innerHTML=data.map(x=>`<article class="card"><div class="cover">${x.image_url?`<img src="${esc(x.image_url)}" alt="">`:"🐱"}</div><div class="content"><h2>${esc(x.name)}</h2><span class="chip">🐱 ${esc(x.breed||"Rase ikke oppgitt")}</span><span class="chip">📍 ${esc(x.place||x.area||"Sted ikke oppgitt")}</span><span class="chip">✅ Godkjent</span>${x.premium?'<span class="chip premium">⭐ Premium</span>':''}<p>${esc(cut(x.about||x.health))}</p><p><b>E-post:</b> ${esc(x.email||"Ikke oppgitt")}</p><div class="actions"><a class="btn green" href="katt-oppdretter-profil.html?id=${encodeURIComponent(x.id)}">🏆 Se profil</a><a class="btn" href="kattungekull.html">🐾 Kattungekull</a></div></div></article>`).join("")}
 loadRows();
-</script>
-</body></html>
+</script></body></html>
