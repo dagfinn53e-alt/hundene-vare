@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Registrer kattungekull – Hundene våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;color:#3b1f4f;min-height:100vh;background:linear-gradient(180deg,#fdf2f8,#eef6ff,#fff7ed)}
+.wrap{max-width:980px;margin:auto;padding:16px 10px 70px}
+.top,.card{background:white;border:1px solid #fbcfe8;border-radius:28px;padding:18px;box-shadow:0 14px 34px rgba(15,23,42,.10);margin-bottom:16px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.logo{font-size:24px;font-weight:900;color:#be185d}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{background:#fdf2f8;color:#be185d;text-decoration:none;border:1px solid #fbcfe8;border-radius:999px;padding:10px 13px;font-weight:900;font-size:14px}
+.hero{background:linear-gradient(135deg,#4a044e,#be185d,#7c3aed);color:white;border-radius:38px;padding:34px 18px;text-align:center;margin-bottom:16px}
+.hero h1{font-size:clamp(2.2rem,7vw,4.4rem)}
+.hero p{font-size:17px;font-weight:800;line-height:1.5;max-width:780px;margin:10px auto 0;color:#fff1f7}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{font-weight:900;color:#831843;display:block;margin:6px 0}
+input,select,textarea{width:100%;border:1px solid #fbcfe8;border-radius:18px;padding:14px 15px;font-size:15px;color:#3b1f4f;background:#fff;margin-bottom:8px}
+textarea{min-height:120px;resize:vertical;line-height:1.5}
+.full{grid-column:1/-1}
+.uploadBox{background:#fdf2f8;border:1px dashed #f9a8d4;border-radius:22px;padding:16px;text-align:center}
+.preview{display:none;max-width:260px;max-height:190px;border-radius:18px;border:1px solid #fbcfe8;margin:8px auto 12px;object-fit:cover}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+button,.btn{flex:1;min-width:180px;border:none;border-radius:999px;padding:14px 18px;color:white;font-weight:900;font-size:16px;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#be185d,#7c3aed)}
+.green{background:linear-gradient(135deg,#22c55e,#16a34a)}.dark{background:#111827}
+.status{background:#fff7ed;border:1px solid #fed7aa;color:#92400e;border-radius:20px;padding:14px;font-weight:900;text-align:center;margin-top:14px;line-height:1.5;white-space:pre-wrap}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.top{justify-content:center}.logo{width:100%;text-align:center}.nav{width:100%;justify-content:center}.nav a{flex:1 1 42%;text-align:center;font-size:12px}button,.btn{width:100%;min-width:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <div class="logo">🐾 Registrer kattungekull</div>
+  <div class="nav">
+    <a href="katt-oppdretterportal.html">🐱 Portal</a>
+    <a href="kattungekull.html">🐾 Kull</a>
+    <a href="katt-admin.html">🔐 Admin</a>
+  </div>
+</div>
+
+<section class="hero">
+  <h1>Registrer kattungekull</h1>
+  <p>Legg inn kattungekull og send til godkjenning. Kullet kobles til en godkjent katteoppdretter.</p>
+</section>
+
+<section class="card">
+<form id="form">
+  <div class="grid">
+    <div class="full">
+      <label>Velg oppdretter *</label>
+      <select id="breeder_id" required>
+        <option value="">Laster oppdrettere...</option>
+      </select>
+    </div>
+
+    <div><label>Tittel på kull *</label><input id="title" required placeholder="F.eks. Ragdoll-kull leveringsklare i juli"></div>
+    <div><label>Rase</label><input id="breed" placeholder="Fylles gjerne automatisk"></div>
+
+    <div><label>Sted</label><input id="place"></div>
+    <div><label>E-post</label><input id="email" type="email"></div>
+
+    <div><label>Født dato</label><input id="born_date" placeholder="F.eks. 12.05.2026"></div>
+    <div><label>Leveringsklar</label><input id="ready_date" placeholder="F.eks. uke 31"></div>
+
+    <div><label>Antall kattunger</label><input id="kittens_count" placeholder="F.eks. 4"></div>
+    <div><label>Status</label><select id="status_select"><option value="venter">Send til godkjenning</option><option value="planlagt">Planlagt kull</option></select></div>
+
+    <div class="full"><label>Beskrivelse</label><textarea id="description" placeholder="Fortell kort om kullet, foreldre, temperament, levering og kontakt."></textarea></div>
+
+    <div class="full uploadBox">
+      <label>Bilde av kattunge/kull</label>
+      <input id="image_file" type="file" accept="image/*">
+      <img id="preview" class="preview" alt="Forhåndsvisning">
+    </div>
+  </div>
+
+  <div class="btnrow">
+    <button type="submit" class="green">📩 Send kattungekull til godkjenning</button>
+    <a class="btn dark" href="katt-oppdretterportal.html">Til portal</a>
+  </div>
+  <div id="status" class="status">Laster godkjente oppdrettere...</div>
+</form>
+</section>
+</div>
+
+<script>
+const supabaseClient = window.supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+let breeders = [];
+const breederSelect = document.getElementById("breeder_id");
+const fileInput = document.getElementById("image_file");
+const preview = document.getElementById("preview");
+const statusBox = document.getElementById("status");
+
+function setStatus(t){ statusBox.textContent = t; }
+
+function esc(v){
+  return String(v || "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function cleanFileName(name){
+  return String(name || "image").toLowerCase()
+    .replace(/æ/g,"ae").replace(/ø/g,"o").replace(/å/g,"a")
+    .replace(/[^a-z0-9.]+/g,"-").replace(/-+/g,"-");
+}
+
+fileInput.addEventListener("change", function(){
+  const file = fileInput.files && fileInput.files[0];
+  if(!file){ preview.style.display="none"; preview.src=""; return; }
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = "block";
+});
+
+breederSelect.addEventListener("change", function(){
+  const b = breeders.find(x => String(x.id) === String(breederSelect.value));
+  if(!b) return;
+  document.getElementById("breed").value = b.breed || "";
+  document.getElementById("place").value = b.place || b.area || "";
+  document.getElementById("email").value = b.email || "";
+});
+
+async function loadBreeders(){
+  setStatus("Henter godkjente oppdrettere...");
+  const {data,error} = await supabaseClient
+    .from("cat_breeders")
+    .select("id,name,breed,place,area,email")
+    .eq("approved", true)
+    .order("name", {ascending:true});
+
+  if(error){
+    setStatus("Feil ved henting av oppdrettere: " + error.message);
+    breederSelect.innerHTML = '<option value="">Kunne ikke hente oppdrettere</option>';
+    return;
+  }
+
+  breeders = data || [];
+
+  if(!breeders.length){
+    breederSelect.innerHTML = '<option value="">Ingen godkjente oppdrettere funnet</option>';
+    setStatus("Ingen godkjente oppdrettere funnet. Godkjenn en oppdretter i katt-admin først.");
+    return;
+  }
+
+  breederSelect.innerHTML = '<option value="">Velg oppdretter</option>' +
+    breeders.map(b => '<option value="'+esc(b.id)+'">'+esc(b.name)+' – '+esc(b.breed || "rase ikke oppgitt")+'</option>').join("");
+
+  setStatus(breeders.length + " godkjente oppdrettere funnet.");
+}
+
+async function uploadImage(){
+  const file = fileInput.files && fileInput.files[0];
+  if(!file) return "";
+
+  const path = "litters/" + Date.now() + "-" + cleanFileName(file.name || "kattunge.jpg");
+
+  const {error} = await supabaseClient.storage
+    .from("cat-breeders")
+    .upload(path, file, {cacheControl:"3600", upsert:false});
+
+  if(error) throw new Error("Bildeopplasting feilet: " + error.message);
+
+  const {data} = supabaseClient.storage.from("cat-breeders").getPublicUrl(path);
+  return data.publicUrl || "";
+}
+
+document.getElementById("form").addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  try{
+    const breeder = breeders.find(x => String(x.id) === String(breederSelect.value));
+    const title = document.getElementById("title").value.trim();
+
+    if(!breeder){
+      setStatus("Velg en godkjent oppdretter.");
+      return;
+    }
+
+    if(!title){
+      setStatus("Tittel på kull må fylles ut.");
+      return;
+    }
+
+    let imageUrl = "";
+    if(fileInput.files && fileInput.files[0]){
+      setStatus("Laster opp bilde...");
+      imageUrl = await uploadImage();
+    }
+
+    setStatus("Lagrer kattungekull i Supabase...");
+
+    const row = {
+      breeder_id: breeder.id,
+      breeder_name: breeder.name,
+      email: document.getElementById("email").value.trim() || breeder.email || "",
+      title: title,
+      breed: document.getElementById("breed").value.trim() || breeder.breed || "",
+      place: document.getElementById("place").value.trim() || breeder.place || breeder.area || "",
+      born_date: document.getElementById("born_date").value.trim(),
+      ready_date: document.getElementById("ready_date").value.trim(),
+      kittens_count: document.getElementById("kittens_count").value.trim(),
+      description: document.getElementById("description").value.trim(),
+      image_url: imageUrl,
+      status: document.getElementById("status_select").value || "venter",
+      approved: false,
+      premium: false
+    };
+
+    const {data,error} = await supabaseClient
+      .from("cat_litters")
+      .insert(row)
+      .select();
+
+    if(error) throw new Error("Registrering feilet: " + error.message);
+
+    if(!data || !data.length){
+      throw new Error("Supabase returnerte ingen lagret rad. Sjekk RLS insert/select for cat_litters.");
+    }
+
+    setStatus("✅ Kattungekull er sendt til godkjenning. ID: " + data[0].id);
+    alert("Kattungekull er sendt til godkjenning.");
+    document.getElementById("form").reset();
+    preview.style.display="none";
+    preview.src="";
+    await loadBreeders();
+  }catch(err){
+    setStatus("❌ " + err.message);
+    alert("Feil: " + err.message);
+  }
+});
+
+loadBreeders();
+</script>
+</body>
+</html>
