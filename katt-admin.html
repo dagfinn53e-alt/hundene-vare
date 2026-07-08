@@ -59,6 +59,10 @@ const elPremium = document.getElementById("sPremium");
 const elImgModal = document.getElementById("imgModal");
 const elBigImg = document.getElementById("bigImg");
 
+function msg(text){
+  elStatus.textContent = text;
+}
+
 function esc(v){
   return String(v || "")
     .replaceAll("&","&amp;")
@@ -87,7 +91,7 @@ function openImage(url){
 }
 
 async function loadData(){
-  elStatus.textContent = "Laster fra Supabase...";
+  msg("Laster fra Supabase...");
 
   const { data, error } = await supabaseClient
     .from("cat_breeders")
@@ -95,13 +99,14 @@ async function loadData(){
     .order("created_at", { ascending:false });
 
   if(error){
-    elStatus.textContent = "Feil: " + error.message;
+    msg("Feil ved lasting: " + error.message);
     elList.innerHTML = '<div class="empty">Kunne ikke laste data fra Supabase.</div>';
+    alert("Feil ved lasting: " + error.message);
     return;
   }
 
   rows = data || [];
-  elStatus.textContent = rows.length + " registreringer funnet";
+  msg(rows.length + " registreringer funnet");
   render();
 }
 
@@ -156,6 +161,7 @@ function render(){
           <span class="chip">📍 ${esc(x.place || x.area || "Sted ikke oppgitt")}</span>
 
           <div class="meta">
+<b>ID:</b> ${esc(x.id)}
 <b>E-post:</b> ${esc(x.email || "Ikke oppgitt")}
 <b>Telefon:</b> ${esc(x.phone || "Ikke oppgitt")}
 <b>Kontakt:</b> ${esc(x.contact_name || "Ikke oppgitt")}
@@ -182,60 +188,80 @@ ${esc(x.health || "Ikke oppgitt")}
 }
 
 async function approveItem(id){
-  const { error } = await supabaseClient
+  msg("Godkjenner...");
+  const { data, error } = await supabaseClient
     .from("cat_breeders")
     .update({ approved:true, status:"godkjent" })
-    .eq("id", id);
+    .eq("id", id)
+    .select();
 
   if(error){
+    msg("Feil ved godkjenning: " + error.message);
     alert("Feil ved godkjenning: " + error.message);
     return;
   }
 
+  msg("✅ Godkjent. Antall oppdatert: " + (data ? data.length : 0));
+  alert("Godkjent ✅");
   await loadData();
 }
 
 async function rejectItem(id){
-  const { error } = await supabaseClient
+  msg("Avviser...");
+  const { data, error } = await supabaseClient
     .from("cat_breeders")
     .update({ approved:false, status:"avvist" })
-    .eq("id", id);
+    .eq("id", id)
+    .select();
 
   if(error){
+    msg("Feil ved avvisning: " + error.message);
     alert("Feil ved avvisning: " + error.message);
     return;
   }
 
+  msg("❌ Avvist. Antall oppdatert: " + (data ? data.length : 0));
+  alert("Avvist ❌");
   await loadData();
 }
 
 async function togglePremium(id, value){
-  const { error } = await supabaseClient
+  msg("Endrer Premium...");
+  const { data, error } = await supabaseClient
     .from("cat_breeders")
     .update({ premium:value })
-    .eq("id", id);
+    .eq("id", id)
+    .select();
 
   if(error){
+    msg("Feil ved Premium: " + error.message);
     alert("Feil ved Premium: " + error.message);
     return;
   }
 
+  msg("⭐ Premium endret. Antall oppdatert: " + (data ? data.length : 0));
+  alert("Premium endret ⭐");
   await loadData();
 }
 
 async function deleteItem(id){
   if(!confirm("Slette denne oppdretteren?")) return;
 
-  const { error } = await supabaseClient
+  msg("Sletter...");
+  const { data, error } = await supabaseClient
     .from("cat_breeders")
     .delete()
-    .eq("id", id);
+    .eq("id", id)
+    .select();
 
   if(error){
+    msg("Feil ved sletting: " + error.message);
     alert("Feil ved sletting: " + error.message);
     return;
   }
 
+  msg("🗑️ Slettet. Antall slettet: " + (data ? data.length : 0));
+  alert("Slettet 🗑️");
   await loadData();
 }
 
