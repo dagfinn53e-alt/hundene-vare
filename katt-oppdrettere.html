@@ -39,13 +39,13 @@ const FALLBACK=[{id:101,type:"oppdretter",name:"Katteri Eksempel",breed:"Maine C
 let rows=[];
 function esc(v){return String(v||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
 function loadRows(){try{const s=localStorage.getItem("kattAdminTestRows");rows=s?JSON.parse(s):FALLBACK}catch(e){rows=FALLBACK}render()}
-function openProfile(id){location.href="katt-oppdretter-profil.html?id="+encodeURIComponent(String(id))}
+function openProfile(id){ window.location.assign("katt-oppdretter-profil.html?id="+encodeURIComponent(String(id))); }
 function cut(t){t=String(t||"Ingen beskrivelse.");return t.length>220?t.slice(0,220)+"...":t}
 function render(){
  const q=search.value.toLowerCase().trim();
  const data=rows.filter(x=>x.type==="oppdretter"&&x.status==="godkjent"&&(!q||(x.name+" "+x.breed+" "+x.place+" "+x.email+" "+x.text).toLowerCase().includes(q)));
  if(!data.length){list.innerHTML='<div class="empty">Ingen godkjente oppdrettere funnet.<br>Gå til katt-admin-test.html, godkjenn en oppdretter, og trykk Oppdater her.</div>';return}
- list.innerHTML=data.map(x=>`<article class="card"><div class="cover">🐱</div><div class="content"><h2>${esc(x.name)}</h2><span class="chip">🐱 ${esc(x.breed||"Rase ikke oppgitt")}</span><span class="chip">📍 ${esc(x.place||"Sted ikke oppgitt")}</span><span class="chip">✅ Godkjent</span>${x.premium?'<span class="chip premium">⭐ Premium</span>':''}<p>${esc(cut(x.text))}</p><p><b>E-post:</b> ${esc(x.email||"Ikke oppgitt")}</p><div class="actions"><button class="green" onclick="openProfile('${esc(x.id)}')">🏆 Se profil</button><a class="btn" href="kattungekull.html">🐾 Kattungekull</a></div></div></article>`).join("");
+ list.innerHTML=data.map(x=>`<article class="card"><div class="cover">🐱</div><div class="content"><h2>${esc(x.name)}</h2><span class="chip">🐱 ${esc(x.breed||"Rase ikke oppgitt")}</span><span class="chip">📍 ${esc(x.place||"Sted ikke oppgitt")}</span><span class="chip">✅ Godkjent</span>${x.premium?'<span class="chip premium">⭐ Premium</span>':''}<p>${esc(cut(x.text))}</p><p><b>E-post:</b> ${esc(x.email||"Ikke oppgitt")}</p><div class="actions"><a class="btn green" href="katt-oppdretter-profil.html?id=${encodeURIComponent(String(x.id))}">🏆 Se profil</a><a class="btn" href="kattungekull.html">🐾 Kattungekull</a></div></div></article>`).join("");
 }
 loadRows();
 </script>
