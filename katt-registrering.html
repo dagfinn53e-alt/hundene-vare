@@ -3,89 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Registrer katteoppdrett 1.1 – Hundene våre</title>
+<title>Registrer katteoppdrett – Hundene våre</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:Arial,sans-serif;
-  color:#3b1f4f;
-  min-height:100vh;
-  background:
-    radial-gradient(circle at 8% 6%,rgba(255,210,238,.55),transparent 30%),
-    radial-gradient(circle at 92% 8%,rgba(190,225,255,.55),transparent 34%),
-    linear-gradient(180deg,#fdf2f8,#eef6ff 48%,#fff7ed);
-}
+body{font-family:Arial,sans-serif;color:#3b1f4f;min-height:100vh;background:radial-gradient(circle at 8% 6%,rgba(255,210,238,.55),transparent 30%),radial-gradient(circle at 92% 8%,rgba(190,225,255,.55),transparent 34%),linear-gradient(180deg,#fdf2f8,#eef6ff 48%,#fff7ed)}
 .wrap{max-width:980px;margin:auto;padding:16px 10px 70px}
-.top{
-  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
-  background:white;border:1px solid #fbcfe8;border-radius:28px;padding:14px 16px;
-  box-shadow:0 14px 34px rgba(15,23,42,.10);margin-bottom:16px
-}
+.top,.card{background:white;border:1px solid #fbcfe8;border-radius:28px;padding:18px;box-shadow:0 14px 34px rgba(15,23,42,.10);margin-bottom:16px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .logo{font-size:24px;font-weight:900;color:#be185d}
 .nav{display:flex;gap:8px;flex-wrap:wrap}
-.nav a{
-  background:#fdf2f8;color:#be185d;text-decoration:none;border:1px solid #fbcfe8;
-  border-radius:999px;padding:10px 13px;font-weight:900;font-size:14px
-}
-.hero{
-  background:
-    radial-gradient(circle at 20% 20%,rgba(255,255,255,.35),transparent 25%),
-    radial-gradient(circle at 88% 12%,rgba(255,214,230,.35),transparent 25%),
-    linear-gradient(135deg,#4a044e,#be185d 48%,#7c3aed);
-  color:white;border-radius:42px;padding:42px 20px;text-align:center;
-  box-shadow:0 28px 70px rgba(76,29,149,.28);margin-bottom:20px
-}
-.hero h1{font-size:clamp(2.5rem,7vw,4.8rem);line-height:1.05;margin-bottom:12px}
-.hero p{font-size:18px;font-weight:700;line-height:1.55;color:#fff1f7;max-width:760px;margin:auto}
-.notice{
-  background:#fff7ed;border:1px solid #fed7aa;color:#92400e;
-  border-radius:24px;padding:16px;text-align:center;font-weight:900;
-  margin-bottom:18px;box-shadow:0 10px 22px rgba(15,23,42,.08)
-}
-.card{
-  background:white;border:1px solid #fbcfe8;border-radius:32px;padding:24px;
-  box-shadow:0 16px 34px rgba(15,23,42,.10);margin-bottom:18px
-}
-.card h2{font-size:30px;color:#831843;margin-bottom:10px;text-align:center}
-.card p{color:#475569;font-weight:700;line-height:1.55;text-align:center;margin-bottom:18px}
+.nav a{background:#fdf2f8;color:#be185d;text-decoration:none;border:1px solid #fbcfe8;border-radius:999px;padding:10px 13px;font-weight:900;font-size:14px}
+.hero{background:linear-gradient(135deg,#4a044e,#be185d 48%,#7c3aed);color:white;border-radius:38px;padding:38px 18px;text-align:center;box-shadow:0 24px 56px rgba(76,29,149,.25);margin-bottom:16px}
+.hero h1{font-size:clamp(2.3rem,7vw,4.5rem);margin-bottom:10px}
+.hero p{font-size:17px;font-weight:800;line-height:1.5;max-width:780px;margin:auto;color:#fff1f7}
+.card h2{text-align:center;color:#831843;font-size:30px;margin-bottom:10px}
+.card p{text-align:center;color:#475569;font-weight:700;line-height:1.55;margin-bottom:16px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-label{font-weight:900;color:#831843;margin-top:8px;display:block}
-input,select,textarea{
-  width:100%;border:1px solid #fbcfe8;border-radius:18px;padding:14px 15px;
-  font-size:15px;color:#3b1f4f;background:#fff;margin-top:6px;margin-bottom:10px
-}
-textarea{min-height:120px;resize:vertical}
+label{font-weight:900;color:#831843;display:block;margin:6px 0}
+input,select,textarea{width:100%;border:1px solid #fbcfe8;border-radius:18px;padding:14px 15px;font-size:15px;color:#3b1f4f;background:#fff;margin-bottom:8px}
+textarea{min-height:120px;resize:vertical;line-height:1.5}
 .full{grid-column:1/-1}
 .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-button,.btn{
-  flex:1;min-width:180px;border:none;border-radius:999px;padding:14px 18px;
-  color:white;font-weight:900;font-size:16px;cursor:pointer;text-decoration:none;
-  display:inline-flex;align-items:center;justify-content:center;text-align:center;
-  background:linear-gradient(135deg,#be185d,#7c3aed)
-}
-.dark{background:#111827}
-.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
-.status{
-  margin-top:14px;text-align:center;font-weight:900;color:#831843;min-height:24px
-}
-.infoBox{
-  background:#fdf2f8;border:1px solid #fbcfe8;border-radius:22px;padding:16px;
-  color:#831843;font-weight:800;line-height:1.6
-}
-.footer{text-align:center;font-weight:900;color:#831843;margin-top:34px}
-@media(max-width:700px){
-  .wrap{padding:9px 8px 50px}
-  .top{justify-content:center}
-  .logo{width:100%;text-align:center;font-size:20px}
-  .nav{width:100%;justify-content:center}
-  .nav a{flex:1 1 42%;text-align:center;font-size:12px;padding:9px 7px}
-  .hero{border-radius:28px;padding:32px 14px}
-  .card{padding:17px;border-radius:24px}
-  .grid{grid-template-columns:1fr}
-  .full{grid-column:auto}
-  button,.btn{width:100%;min-width:0}
-}
+button,.btn{flex:1;min-width:180px;border:none;border-radius:999px;padding:14px 18px;color:white;font-weight:900;font-size:16px;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#be185d,#7c3aed)}
+.green{background:linear-gradient(135deg,#22c55e,#16a34a)}.dark{background:#111827}
+.status{text-align:center;font-weight:900;color:#831843;min-height:24px;margin-top:14px}
+.note{background:#fff7ed;border:1px solid #fed7aa;color:#92400e;border-radius:20px;padding:14px;font-weight:900;text-align:center;margin-bottom:16px}
+@media(max-width:700px){.wrap{padding:9px 8px 50px}.top{justify-content:center}.logo{width:100%;text-align:center;font-size:20px}.nav{width:100%;justify-content:center}.nav a{flex:1 1 42%;text-align:center;font-size:12px;padding:9px 7px}.hero{border-radius:28px;padding:30px 14px}.card{padding:16px;border-radius:24px}.grid{grid-template-columns:1fr}.full{grid-column:auto}button,.btn{width:100%;min-width:0}}
 </style>
 </head>
 <body>
@@ -95,150 +39,100 @@ button,.btn{
   <div class="logo">📝 Registrer katteoppdrett</div>
   <div class="nav">
     <a href="katt-oppdretterportal.html">🐱 Portal</a>
-    <a href="kattungekull.html">🐾 Kull</a>
-    <a href="katt-oppdretter-profil.html">🏆 Profil</a>
+    <a href="katt-admin.html">🔐 Admin</a>
+    <a href="katt-oppdrettere.html">🔎 Oppdrettere</a>
     <a href="index.html">🏠 Forside</a>
   </div>
 </div>
 
 <section class="hero">
-  <h1>Registrer katteoppdrett 1.1</h1>
-  <p>Skjult testskjema for katteoppdrettere. Innsendingene kan senere kobles til egen katt-admin og godkjennes før publisering.</p>
+  <h1>Registrer katteoppdrett</h1>
+  <p>Dette skjemaet lagrer nå direkte i Supabase. Etter innsending skal oppdrettet dukke opp i Katt Admin som venter på godkjenning.</p>
 </section>
 
-<div class="notice">
-  Dette er en testside i bakgrunnen. Den er ikke koblet til forsiden før katteplattformen er ferdig.
-</div>
+<div class="note">Ekte versjon: registrering lagres i tabellen <b>cat_breeders</b>.</div>
 
 <section class="card">
   <h2>🐱 Oppdretterinformasjon</h2>
-  <p>Fyll inn informasjonen som senere skal brukes til katteoppdretterprofilen.</p>
+  <p>Fyll inn informasjonen som skal brukes til katteoppdretterprofilen.</p>
 
   <form id="form">
     <div class="grid">
-      <div>
-        <label>Navn på oppdrett / katteri</label>
-        <input id="name" required placeholder="F.eks. Katteri Eksempel">
-      </div>
-      <div>
-        <label>Kontaktperson</label>
-        <input id="contact" placeholder="Navn på kontaktperson">
-      </div>
-
-      <div>
-        <label>E-post</label>
-        <input id="email" type="email" required placeholder="epost@eksempel.no">
-      </div>
-      <div>
-        <label>Telefon</label>
-        <input id="phone" placeholder="Telefonnummer">
-      </div>
+      <div><label>Navn på oppdrett / katteri *</label><input id="name" required></div>
+      <div><label>Kontaktperson</label><input id="contact_name"></div>
+      <div><label>E-post *</label><input id="email" type="email" required></div>
+      <div><label>Telefon</label><input id="phone"></div>
 
       <div>
         <label>Rase</label>
         <select id="breed">
           <option value="">Velg rase</option>
-          <option>Maine Coon</option>
-          <option>Norsk Skogkatt</option>
-          <option>Ragdoll</option>
-          <option>Britisk Korthår</option>
-          <option>Sibirsk katt</option>
-          <option>Perser</option>
-          <option>Birma</option>
-          <option>Bengal</option>
-          <option>Annet / flere raser</option>
+          <option>Maine Coon</option><option>Norsk Skogkatt</option><option>Ragdoll</option>
+          <option>Britisk Korthår</option><option>Sibirsk katt</option><option>Perser</option>
+          <option>Birma</option><option>Bengal</option><option>Annet / flere raser</option>
         </select>
       </div>
-      <div>
-        <label>Fylke / område</label>
-        <input id="area" placeholder="F.eks. Rogaland">
-      </div>
+      <div><label>Fylke / område</label><input id="area"></div>
+      <div><label>Kommune / sted</label><input id="place"></div>
+      <div><label>Nettside / Facebook</label><input id="website"></div>
 
-      <div>
-        <label>Kommune / sted</label>
-        <input id="place" placeholder="F.eks. Karmøy">
-      </div>
-      <div>
-        <label>Nettside / Facebook</label>
-        <input id="website" placeholder="https://...">
-      </div>
-
-      <div class="full">
-        <label>Om oppdrettet</label>
-        <textarea id="about" placeholder="Fortell kort om oppdrettet, erfaring, mål og miljøet kattungene vokser opp i."></textarea>
-      </div>
-
-      <div class="full">
-        <label>Helse, tester og oppfølging</label>
-        <textarea id="health" placeholder="Skriv om helseoppfølging, veterinærkontroll, vaksiner, ID-merking, stamtavle, tester osv."></textarea>
-      </div>
-
-      <div class="full">
-        <label>Bilder / logo</label>
-        <input id="image" placeholder="Lim inn bilde- eller logolenke foreløpig">
-      </div>
-    </div>
-
-    <div class="infoBox">
-      Dette skjemaet lagrer nå til test-admin i nettleseren. Neste steg senere blir å koble samme flyt til Supabase.
+      <div class="full"><label>Om oppdrettet</label><textarea id="about"></textarea></div>
+      <div class="full"><label>Helse, tester og oppfølging</label><textarea id="health"></textarea></div>
+      <div class="full"><label>Bilde/logo-lenke</label><input id="image_url"></div>
     </div>
 
     <div class="btnrow">
-      <button type="submit" class="green">📩 Send inn testregistrering</button>
+      <button type="submit" class="green">📩 Send til godkjenning</button>
       <a class="btn dark" href="katt-oppdretterportal.html">Til portal</a>
     </div>
-
     <div id="status" class="status"></div>
   </form>
 </section>
-
-<div class="footer">Hundenevåre.com – Katteoppdretterregistrering 🐱</div>
 </div>
 
 <script>
-document.getElementById("form").addEventListener("submit", function(e){
+const supabaseClient = window.supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+document.getElementById("form").addEventListener("submit", async function(e){
   e.preventDefault();
+  const statusBox=document.getElementById("status");
+  statusBox.textContent="Sender inn...";
 
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
+  const row={
+    name: document.getElementById("name").value.trim(),
+    contact_name: document.getElementById("contact_name").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    breed: document.getElementById("breed").value,
+    area: document.getElementById("area").value.trim(),
+    place: document.getElementById("place").value.trim(),
+    website: document.getElementById("website").value.trim(),
+    about: document.getElementById("about").value.trim(),
+    health: document.getElementById("health").value.trim(),
+    image_url: document.getElementById("image_url").value.trim(),
+    status: "venter",
+    approved: false,
+    premium: false
+  };
 
-  if(!name || !email){
-    alert("Navn på oppdrett og e-post må fylles ut.");
+  if(!row.name || !row.email){
+    statusBox.textContent="Navn og e-post må fylles ut.";
     return;
   }
 
-  let rows = [];
-  try{
-    rows = JSON.parse(localStorage.getItem("kattAdminTestRows") || "[]");
-  }catch(err){
-    rows = [];
+  const {error}=await supabaseClient.from("cat_breeders").insert([row]);
+
+  if(error){
+    statusBox.textContent="Feil: " + error.message;
+    alert("Feil ved innsending: " + error.message);
+    return;
   }
 
-  const ny = {
-    id: Date.now(),
-    type: "oppdretter",
-    name: name,
-    breed: document.getElementById("breed").value || "Ikke oppgitt",
-    place: document.getElementById("place").value || document.getElementById("area").value || "Ikke oppgitt",
-    email: email,
-    status: "venter",
-    premium: false,
-    text:
-      "Kontaktperson: " + (document.getElementById("contact").value || "Ikke oppgitt") + "\n" +
-      "Telefon: " + (document.getElementById("phone").value || "Ikke oppgitt") + "\n" +
-      "Nettside/Facebook: " + (document.getElementById("website").value || "Ikke oppgitt") + "\n\n" +
-      "Om oppdrettet:\n" + (document.getElementById("about").value || "Ikke oppgitt") + "\n\n" +
-      "Helse:\n" + (document.getElementById("health").value || "Ikke oppgitt")
-  };
-
-  rows.unshift(ny);
-  localStorage.setItem("kattAdminTestRows", JSON.stringify(rows));
-
-  document.getElementById("status").innerHTML =
-    "✅ Registreringen er lagret i test-admin. Åpne <b>katt-admin-test.html</b> og godkjenn den.";
-
-  alert("Registreringen er lagret i Katt Admin Test.");
-
+  statusBox.textContent="✅ Registreringen er sendt til godkjenning.";
+  alert("Registreringen er sendt til godkjenning.");
   document.getElementById("form").reset();
 });
 </script>
