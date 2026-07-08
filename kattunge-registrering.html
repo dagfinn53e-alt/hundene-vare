@@ -58,7 +58,7 @@ button,.btn{flex:1;min-width:180px;border:none;border-radius:999px;padding:14px 
     </div>
 
     <div><label>Tittel på kull *</label><input id="title" required placeholder="F.eks. Ragdoll-kull leveringsklare i juli"></div>
-    <div><label>Rase</label><input id="breed" placeholder="Fylles gjerne automatisk"></div>
+    <div><label>Rase</label><input id="breed"></div>
 
     <div><label>Sted</label><input id="place"></div>
     <div><label>E-post</label><input id="email" type="email"></div>
@@ -103,10 +103,8 @@ function setStatus(t){ statusBox.textContent = t; }
 
 function esc(v){
   return String(v || "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;")
+    .replaceAll(">","&gt;").replaceAll('"',"&quot;")
     .replaceAll("'","&#039;");
 }
 
@@ -182,15 +180,8 @@ document.getElementById("form").addEventListener("submit", async function(e){
     const breeder = breeders.find(x => String(x.id) === String(breederSelect.value));
     const title = document.getElementById("title").value.trim();
 
-    if(!breeder){
-      setStatus("Velg en godkjent oppdretter.");
-      return;
-    }
-
-    if(!title){
-      setStatus("Tittel på kull må fylles ut.");
-      return;
-    }
+    if(!breeder){ setStatus("Velg en godkjent oppdretter."); return; }
+    if(!title){ setStatus("Tittel på kull må fylles ut."); return; }
 
     let imageUrl = "";
     if(fileInput.files && fileInput.files[0]){
