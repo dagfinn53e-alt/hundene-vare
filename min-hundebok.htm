@@ -134,7 +134,7 @@ function nextPage(){showPage(currentPage+1)}function prevPage(){showPage(current
 function goToPage(i){showPage(i)}
 function renderContents(){$("contents").innerHTML=sheets().map((s,i)=>`<button onclick="goToPage(${i})">${i+1}. ${s.dataset.title}</button>`).join("")}
 function renderBooks(){$("books").innerHTML=state.dogs.map((d,i)=>`<div class="spine ${d.id===state.activeDogId?"active":""}" style="background:linear-gradient(#0b5cff,#172033)" onclick="switchDog('${d.id}')"><div class="icon">🐶</div><b>${d.profile.name}</b><small>${d.profile.breed||"Min Hundebok"}</small></div>`).join("")+`<div class="spine" style="background:linear-gradient(#64748b,#334155)" onclick="createDog()"><div class="icon">➕</div><b>Ny hund</b><small>Opprett bok</small></div>`}
-function switchDog(id){state.activeDogId=id;save();$("cover").classList.remove("open");$("controls").style.display="none";renderAll()}
+function switchDog(id){state.activeDogId=id;save();document.getElementById("cover").classList.remove("open");document.getElementById("controls").style.display="none";renderAll()}
 function createDog(){const d=newDog();state.dogs.push(d);state.activeDogId=d.id;save();renderAll()}
 function saveProfile(){const d=dog();d.profile={name:$("dogName").value.trim()||"Ny hund",breed:$("dogBreed").value.trim(),birth:$("dogBirth").value,owner:$("ownerName").value.trim(),about:$("dogAbout").value.trim()};save();renderAll();toast("Profil lagret")}
 function addGoal(){const t=$("newGoal").value.trim();if(!t)return;dog().goals.push({text:t,done:false});$("newGoal").value="";save();renderGoals()}
