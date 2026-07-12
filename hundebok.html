@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok 4.0 – Hundene våre</title>
+<title>Hundebok 4.1 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -93,6 +93,15 @@ textarea{min-height:90px;resize:vertical}
 .btn.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
 .card{background:#fffaf0;border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:10px}
 .card b.big{display:block;font-size:30px;color:var(--blue)}
+.dashboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quick-memory{
+  background:linear-gradient(135deg,#fff7ed,#fef3c7);
+  border:1px solid #fed7aa;border-radius:18px;padding:14px;margin-top:12px
+}
+.quick-memory h3{margin:0 0 8px;color:#92400e}
+.quick-memory textarea{min-height:85px}
+.small-status{font-weight:900;color:#166534;margin-top:8px}
+@media(max-width:560px){.dashboard-grid{grid-template-columns:1fr}}
 .contents{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .contents button{border:1px solid var(--line);background:#fffaf0;border-radius:15px;padding:13px;text-align:left;font-weight:900;color:#163d77;cursor:pointer}
 .list{display:grid;gap:8px}
@@ -130,7 +139,7 @@ textarea{min-height:90px;resize:vertical}
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok 4.0</div>
+  <div class="brand">📖 Hundebok 4.1</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -145,7 +154,7 @@ textarea{min-height:90px;resize:vertical}
 <div class="book-shell">
 <section class="cover" id="cover">
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok 4.0</h1>
+  <h1>Hundebok 4.1</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p>Trening, helse, turer, bilder, minner og hele hundens historie samlet i én bok.</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -156,12 +165,30 @@ textarea{min-height:90px;resize:vertical}
 <div class="side">
   <h2>👋 Velkommen</h2>
   <div class="card"><span>Aktiv hund</span><b class="big" id="welcomeName">Ny hund</b></div>
+
+  <div class="dashboard-grid">
+    <div class="card"><span>Alder</span><b id="dogAge">Ikke oppgitt</b></div>
+    <div class="card"><span>Neste bursdag</span><b id="nextBirthday">Ikke oppgitt</b></div>
+  </div>
+
   <div class="card"><span>Dagens oppgave</span><p id="dailyTask"></p></div>
   <div class="card"><span>Dagens tips</span><p id="dailyTip"></p></div>
+
+  <div class="quick-memory">
+    <h3>❤️ I dag skjedde det</h3>
+    <input id="quickMemoryTitle" placeholder="F.eks. Første tur i snø">
+    <textarea id="quickMemoryText" placeholder="Skriv et kort minne..."></textarea>
+    <button class="btn green" onclick="saveQuickMemory()">Lagre minnet</button>
+    <div id="quickMemoryStatus" class="small-status"></div>
+  </div>
 </div>
 <div class="side">
   <h2>📖 Innhold</h2>
   <div class="contents" id="contents"></div>
+  <div class="card" style="margin-top:14px">
+    <span>Siste minne</span>
+    <b id="latestMemory">Ingen minner ennå</b>
+  </div>
 </div>
 </div>
 </section>
@@ -460,7 +487,67 @@ function saveHealth(){dog().health={weight:$("weight").value,vet:$("vet").value,
 function renderHealth(){const h=dog().health;$("weight").value=h.weight||"";$("vet").value=h.vet||"";$("vaccine").value=h.vaccine||"";$("insurance").value=h.insurance||"";$("healthNotes").value=h.notes||"";$("weightPreview").textContent=h.weight||"Ikke oppgitt";$("vaccinePreview").textContent=h.vaccine||"Ikke oppgitt";$("vetPreview").textContent=h.vet||"Ikke oppgitt"}
 function saveWalk(){const place=$("walkPlace").value.trim();if(!place){toast("Skriv et sted");return}dog().walks.unshift({date:$("walkDate").value,place,distance:$("walkDistance").value,type:$("walkType").value,note:$("walkNote").value});save();renderWalks();renderStats();toast("Tur lagret")}
 function renderWalks(){$("walkHistory").innerHTML=dog().walks.length?dog().walks.map(w=>`<div class="history-item"><h3>${esc(w.place)}</h3><p>${esc(w.date||"")} · ${esc(w.type)} · ${esc(w.distance||"")}</p><p>${esc(w.note||"")}</p></div>`).join(""):'<div class="card">Ingen turer lagret.</div>'}
-function saveMemory(){const t=$("memoryTitle").value.trim();if(!t)return;dog().memories.unshift({title:t,text:$("memoryText").value,date:new Date().toISOString().slice(0,10)});save();renderMemories();renderStats();toast("Minne lagret")}
+
+function calculateDogAge(){
+  const birth=dog().profile.birth;
+  const ageEl=$("dogAge");
+  const birthdayEl=$("nextBirthday");
+
+  if(!birth){
+    ageEl.textContent="Ikke oppgitt";
+    birthdayEl.textContent="Ikke oppgitt";
+    return;
+  }
+
+  const today=new Date();
+  const born=new Date(birth+"T12:00:00");
+  let years=today.getFullYear()-born.getFullYear();
+  const birthdayThisYear=new Date(today.getFullYear(),born.getMonth(),born.getDate());
+
+  if(today < birthdayThisYear) years--;
+
+  ageEl.textContent=years < 1 ? "Under 1 år" : years+" år";
+
+  let next=new Date(today.getFullYear(),born.getMonth(),born.getDate());
+  if(next < new Date(today.getFullYear(),today.getMonth(),today.getDate())){
+    next=new Date(today.getFullYear()+1,born.getMonth(),born.getDate());
+  }
+  const days=Math.ceil((next-new Date(today.getFullYear(),today.getMonth(),today.getDate()))/86400000);
+  birthdayEl.textContent=days===0 ? "I dag 🎉" : "Om "+days+" dager";
+}
+
+function saveQuickMemory(){
+  const title=$("quickMemoryTitle").value.trim();
+  const text=$("quickMemoryText").value.trim();
+
+  if(!title){
+    toast("Skriv en tittel");
+    return;
+  }
+
+  dog().memories.unshift({
+    title,
+    text,
+    date:new Date().toISOString().slice(0,10)
+  });
+
+  $("quickMemoryTitle").value="";
+  $("quickMemoryText").value="";
+  $("quickMemoryStatus").textContent="✅ Minnet er lagret";
+
+  save();
+  renderMemories();
+  renderLatestMemory();
+  renderStats();
+  toast("Minne lagret");
+}
+
+function renderLatestMemory(){
+  const memory=dog().memories[0];
+  $("latestMemory").textContent=memory ? memory.title : "Ingen minner ennå";
+}
+
+function saveMemory(){const t=$("memoryTitle").value.trim();if(!t)return;dog().memories.unshift({title:t,text:$("memoryText").value,date:new Date().toISOString().slice(0,10)});save();renderMemories();renderLatestMemory();renderStats();toast("Minne lagret")}
 function renderMemories(){$("memoryList").innerHTML=dog().memories.length?dog().memories.map(m=>`<div class="history-item"><h3>${esc(m.title)}</h3><p>${esc(m.date)}</p><p>${esc(m.text)}</p></div>`).join(""):'<div class="card">Ingen minner lagret.</div>'}
 function saveTimeline(){const t=$("timelineTitle").value.trim();if(!t)return;dog().timeline.push({date:$("timelineDate").value,title:t,text:$("timelineText").value});dog().timeline.sort((a,b)=>(a.date||"").localeCompare(b.date||""));save();renderTimeline();toast("Livshendelse lagret")}
 function renderTimeline(){$("timelineList").innerHTML=dog().timeline.length?dog().timeline.map(t=>`<div class="history-item"><h3>🐾 ${esc(t.title)}</h3><p>${esc(t.date||"")}</p><p>${esc(t.text||"")}</p></div>`).join(""):'<div class="card">Ingen livshendelser lagret.</div>'}
@@ -499,7 +586,7 @@ function renderAll(){
   }else{
     $("profilePhoto").style.display="none";$("coverPhoto").textContent="🐶"
   }
-  renderGoals();renderCommands();renderSessions();renderHealth();renderWalks();renderGallery();renderMemories();renderTimeline();renderStats()
+  renderGoals();renderCommands();renderSessions();renderHealth();renderWalks();renderGallery();renderMemories();renderLatestMemory();renderTimeline();renderStats();calculateDogAge()
 }
 function compress(file,max=900,q=.75){
   return new Promise((res,rej)=>{
