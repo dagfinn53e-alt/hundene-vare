@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="no">
 <head>
@@ -14,12 +15,17 @@ body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(#eff6ff,#f
 .dogbar select{width:100%;padding:11px 13px;border:1px solid #bfd7ff;border-radius:999px;font-weight:900}
 .book{position:relative;min-height:760px}
 .cover,.page{position:absolute;inset:0;border-radius:28px;box-shadow:0 25px 65px #0003}
-.cover{z-index:10;background:linear-gradient(135deg,#061b55,#0b5cff,#7c3aed);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;transition:.7s}
+.cover{z-index:10;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:38px 46px;transition:.7s;overflow:hidden;background:radial-gradient(circle at 18% 16%,rgba(255,255,255,.16),transparent 24%),radial-gradient(circle at 84% 12%,rgba(255,214,120,.16),transparent 20%),linear-gradient(135deg,#071a3d 0%,#0f3f7d 42%,#4b2d87 100%);border:10px solid #0b244e;box-shadow:inset 0 0 0 2px rgba(255,255,255,.12),inset 18px 0 30px rgba(0,0,0,.22),0 28px 70px rgba(15,23,42,.35)}
+.cover:before{content:"";position:absolute;inset:22px;border:2px solid rgba(255,220,150,.55);border-radius:20px;pointer-events:none}
+.cover:after{content:"🐾   🐾   🐾";position:absolute;bottom:32px;left:0;right:0;font-size:24px;letter-spacing:18px;opacity:.20}
 .cover.open{transform:rotateY(-95deg);opacity:0;pointer-events:none}
-.cover .dog{font-size:90px}
-.cover h1{font-size:clamp(2.5rem,7vw,5rem);margin:10px 0}
-.cover p{max-width:720px;font-size:18px;line-height:1.5;font-weight:700}
-.cover button{margin-top:18px;background:#fff;color:#0b4fd4;border:0;border-radius:999px;padding:14px 22px;font-weight:900;font-size:17px}
+.cover .dog{width:126px;height:126px;display:flex;align-items:center;justify-content:center;border-radius:38px;font-size:78px;margin-bottom:16px;background:rgba(255,255,255,.12);border:2px solid rgba(255,220,150,.65);box-shadow:0 16px 34px rgba(0,0,0,.22)}
+.cover .cover-kicker{font-size:14px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#ffe8b0;margin-bottom:10px}
+.cover h1{font-family:Georgia,serif;font-size:clamp(2.6rem,7vw,5.4rem);line-height:1.02;margin:0 0 12px;text-shadow:0 8px 24px rgba(0,0,0,.30)}
+.cover .cover-name{min-width:260px;max-width:560px;padding:11px 18px;margin:2px auto 14px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);color:#fff7df;font-size:18px;font-weight:900}
+.cover p{max-width:720px;font-size:17px;line-height:1.55;font-weight:700;color:#edf5ff;margin:0 auto}
+.cover button{margin-top:22px;background:linear-gradient(135deg,#fff7df,#f7d98c);color:#163d77;border:0;border-radius:999px;padding:15px 26px;font-weight:900;font-size:17px;box-shadow:0 12px 28px rgba(0,0,0,.20)}
+.cover .cover-footer{position:absolute;top:24px;right:34px;font-size:12px;font-weight:900;letter-spacing:1px;color:#ffe8b0}
 .page{display:none;background:#fffdf7;border:1px solid #eadfca;padding:24px}
 .page.active{display:block}
 .pagegrid{display:grid;grid-template-columns:1fr 1fr;gap:28px;min-height:640px}
@@ -76,9 +82,12 @@ textarea{min-height:90px}
 
 <div class="book">
 <section class="cover" id="cover">
+  <div class="cover-footer">Hundenevåre.com</div>
+  <div class="cover-kicker">Min personlige bok</div>
   <div class="dog">🐶</div>
-  <h1>Min treningsdagbok</h1>
-  <p>Flere hunder, treningshistorikk, mål, medaljer og utvikling samlet i én digital bok.</p>
+  <h1>Treningsdagbok</h1>
+  <div class="cover-name" id="coverName">For min hund</div>
+  <p>Planlegg treningen, følg utviklingen og ta vare på alle de små øyeblikkene underveis.</p>
   <button onclick="openBook()">📖 Åpne boken</button>
 </section>
 
@@ -519,6 +528,7 @@ function renderAll(){
   $("dogAbout").value=dog.dog.about||"";
   $("notes").value=dog.notes||"";
   $("namePreview").textContent=dog.dog.name||"Ikke fylt inn";
+  $("coverName").textContent=dog.dog.name ? "Til " + dog.dog.name : "For min hund";
   $("notesSaved").textContent="";
 
   if(dog.photo){
