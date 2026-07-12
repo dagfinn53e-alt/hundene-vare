@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Treningsdagbok – Hundene våre</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(#eff6ff,#fff7ed);color:#172033}.wrap{max-width:1050px;margin:auto;padding:14px}.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#fff;border:1px solid #dbeafe;border-radius:22px;padding:12px 14px;margin-bottom:14px}.top a,.top button,.btn{border:0;border-radius:999px;padding:11px 15px;font-weight:900;text-decoration:none;cursor:pointer;background:#eaf2ff;color:#0b4fd4}.book{position:relative;min-height:700px}.cover,.page{position:absolute;inset:0;border-radius:28px;box-shadow:0 25px 65px #0003}.cover{z-index:10;background:linear-gradient(135deg,#061b55,#0b5cff,#7c3aed);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;transition:.7s}.cover.open{transform:rotateY(-95deg);opacity:0;pointer-events:none}.cover .dog{font-size:90px}.cover h1{font-size:clamp(2.5rem,7vw,5rem);margin:10px 0}.cover p{max-width:700px;font-size:18px;line-height:1.5;font-weight:700}.cover button{margin-top:18px;background:#fff;color:#0b4fd4;border:0;border-radius:999px;padding:14px 22px;font-weight:900;font-size:17px}.page{display:none;background:#fffdf7;border:1px solid #eadfca;padding:24px}.page.active{display:block}.pagegrid{display:grid;grid-template-columns:1fr 1fr;gap:28px;min-height:590px}.side{padding:8px 12px}.side h2{font-size:30px;color:#163d77;margin:0 0 8px}.lead{color:#64748b;font-weight:700}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}label{display:block;font-weight:900;color:#6b4f35;margin:5px 0}input,select,textarea{width:100%;padding:11px 12px;border:1px solid #d9ccb7;border-radius:13px;background:#fffefb;margin-bottom:8px}textarea{min-height:90px}.save{background:linear-gradient(135deg,#0b5cff,#2563eb);color:#fff;border:0;border-radius:999px;padding:11px 15px;font-weight:900;cursor:pointer}.photo{border:2px dashed #d9ccb7;border-radius:18px;padding:14px;text-align:center}.photo img{display:none;max-width:100%;max-height:230px;border-radius:16px;margin:10px auto}.list{display:grid;gap:8px}.row{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;background:#fffaf0;border:1px solid #eadfca;border-radius:14px;padding:9px}.row input{margin:0}.row button{border:0;background:#fee2e2;color:#991b1b;border-radius:9px;padding:7px}.add{display:flex;gap:8px;margin-top:9px}.add input{margin:0}.rating{display:grid;grid-template-columns:1fr 1fr;gap:8px}.rating button{padding:12px;border:1px solid #d9ccb7;border-radius:14px;background:#fffaf0;font-weight:900}.rating button.active{background:#dcfce7;color:#166534}.card{background:#fffaf0;border:1px solid #eadfca;border-radius:17px;padding:14px;margin-bottom:10px}.card b{display:block;font-size:30px;color:#0b5cff}.bar{height:13px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin-top:7px}.bar span{display:block;height:100%;background:linear-gradient(90deg,#22c55e,#0b5cff);width:0}.controls{position:absolute;left:0;right:0;bottom:-55px;display:none;justify-content:space-between;align-items:center}.controls button{border:0;border-radius:999px;padding:11px 17px;background:#111827;color:#fff;font-weight:900}.controls .next{background:#0b5cff}.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);display:none;background:#111827;color:#fff;border-radius:999px;padding:12px 16px;font-weight:900}
+@media(max-width:800px){.book{min-height:980px}.pagegrid{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.full{grid-column:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top"><strong>📖 Treningsdagbok</strong><div><a href="index.html">🏠 Forside</a> <button onclick="resetBook()">🗑️ Nullstill</button></div></div>
+<div class="book">
+<section class="cover" id="cover"><div class="dog">🐶</div><h1>Min treningsdagbok</h1><p>Planlegg trening, lag mål, noter økter og følg utviklingen til hunden din.</p><button onclick="openBook()">📖 Åpne boken</button></section>
+
+<section class="page active">
+<div class="pagegrid">
+<div class="side"><h2>🐶 Min hund</h2><p class="lead">Fyll inn opplysningene.</p><div class="grid">
+<div><label>Navn</label><input id="dogName"></div><div><label>Rase</label><input id="dogBreed"></div>
+<div><label>Fødselsdato</label><input id="dogBirth" type="date"></div><div><label>Eier</label><input id="ownerName"></div>
+<div class="full"><label>Om hunden</label><textarea id="dogAbout"></textarea></div></div><button class="save" onclick="saveAll()">💾 Lagre</button></div>
+<div class="side"><h2>📷 Bilde</h2><div class="photo"><input id="dogPhotoInput" type="file" accept="image/*"><img id="dogPhoto"></div><div class="card" style="margin-top:14px"><span>Hundens navn</span><b id="namePreview">Ikke fylt inn</b></div></div>
+</div></section>
+
+<section class="page"><div class="pagegrid">
+<div class="side"><h2>🎯 Mine mål</h2><div id="goalList" class="list"></div><div class="add"><input id="newGoal" placeholder="Nytt mål"><button class="save" onclick="addGoal()">Legg til</button></div></div>
+<div class="side"><h2>🗣️ Kommandoer</h2><div id="commandList" class="list"></div><div class="add"><input id="newCommand" placeholder="Ny kommando"><button class="save" onclick="addCommand()">Legg til</button></div></div>
+</div></section>
+
+<section class="page"><div class="pagegrid">
+<div class="side"><h2>📅 Dagens trening</h2><div class="grid">
+<div><label>Dato</label><input id="sessionDate" type="date"></div><div><label>Varighet</label><input id="sessionDuration"></div>
+<div class="full"><label>Hva trente vi på?</label><textarea id="sessionWhat"></textarea></div>
+<div><label>Sted</label><input id="sessionWhere"></div><div><label>Belønning</label><input id="sessionReward"></div>
+<div class="full"><label>Hva gikk bra?</label><textarea id="sessionGood"></textarea></div>
+<div class="full"><label>Hva kan forbedres?</label><textarea id="sessionImprove"></textarea></div></div></div>
+<div class="side"><h2>⭐ Resultat</h2><div class="rating">
+<button data-r="4" onclick="setRating(4)">😀 Kjempebra</button><button data-r="3" onclick="setRating(3)">🙂 Bra</button>
+<button data-r="2" onclick="setRating(2)">😐 Litt vanskelig</button><button data-r="1" onclick="setRating(1)">☹️ Må øves mer</button></div>
+<button class="save" style="margin-top:14px" onclick="saveSession()">💾 Lagre treningsøkt</button><div class="card" style="margin-top:14px"><span>Siste økt</span><b id="lastSession">Ingen</b></div></div>
+</div></section>
+
+<section class="page"><div class="pagegrid">
+<div class="side"><h2>🏆 Min utvikling</h2><div class="card"><span>Antall økter</span><b id="sessionCount">0</b></div><div class="card"><span>Fullførte mål</span><b id="completedGoals">0</b></div><div class="card"><span>Fremgang</span><b id="progressPercent">0 %</b><div class="bar"><span id="progressBar"></span></div></div></div>
+<div class="side"><h2>📝 Notater</h2><textarea id="notes" style="min-height:390px"></textarea><button class="save" onclick="saveAll()">💾 Lagre notater</button></div>
+</div></section>
+
+<div class="controls" id="controls"><button onclick="prevPage()">⬅️ Forrige</button><strong id="pageCount">Side 1 av 4</strong><button class="next" onclick="nextPage()">Neste ➡️</button></div>
+</div></div><div class="toast" id="toast"></div>
+
+<script>
+const KEY="treningsdagbok_v1";let page=0,rating=0;
+let state={dog:{},goals:[{text:"Gå pent i bånd",done:false},{text:"Innkalling",done:false},{text:"Bli",done:false}],commands:[{text:"Sitt",done:false},{text:"Ligg",done:false},{text:"Kom",done:false}],sessions:[],notes:"",photo:""};
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",1600)}
+function openBook(){cover.classList.add("open");controls.style.display="flex";showPage(0)}
+function showPage(i){const p=[...document.querySelectorAll(".page")];page=Math.max(0,Math.min(i,p.length-1));p.forEach((x,n)=>x.classList.toggle("active",n===page));pageCount.textContent=`Side ${page+1} av ${p.length}`}
+function nextPage(){showPage(page+1)}function prevPage(){showPage(page-1)}
+function esc(v){return String(v||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
+function renderGoals(){goalList.innerHTML=state.goals.map((g,i)=>`<div class="row"><input type="checkbox" ${g.done?"checked":""} onchange="state.goals[${i}].done=this.checked;saveState();updateProgress()"><input value="${esc(g.text)}" onchange="state.goals[${i}].text=this.value;saveState()"><button onclick="state.goals.splice(${i},1);renderGoals();saveState();updateProgress()">✕</button></div>`).join("")}
+function renderCommands(){commandList.innerHTML=state.commands.map((g,i)=>`<div class="row"><input type="checkbox" ${g.done?"checked":""} onchange="state.commands[${i}].done=this.checked;saveState()"><input value="${esc(g.text)}" onchange="state.commands[${i}].text=this.value;saveState()"><button onclick="state.commands.splice(${i},1);renderCommands();saveState()">✕</button></div>`).join("")}
+function addGoal(){const t=newGoal.value.trim();if(!t)return;state.goals.push({text:t,done:false});newGoal.value="";renderGoals();saveState()}
+function addCommand(){const t=newCommand.value.trim();if(!t)return;state.commands.push({text:t,done:false});newCommand.value="";renderCommands();saveState()}
+function setRating(n){rating=n;document.querySelectorAll("[data-r]").forEach(b=>b.classList.toggle("active",Number(b.dataset.r)===n))}
+function saveSession(){if(!sessionWhat.value.trim()){toast("Skriv hva dere trente på");return}state.sessions.unshift({date:sessionDate.value,duration:sessionDuration.value,what:sessionWhat.value,where:sessionWhere.value,reward:sessionReward.value,good:sessionGood.value,improve:sessionImprove.value,rating});saveState();renderLast();updateProgress();toast("Økten er lagret")}
+function renderLast(){lastSession.textContent=state.sessions[0]?.what||"Ingen"}
+function saveAll(){state.dog={name:dogName.value,breed:dogBreed.value,birth:dogBirth.value,owner:ownerName.value,about:dogAbout.value};state.notes=notes.value;namePreview.textContent=state.dog.name||"Ikke fylt inn";saveState();toast("Boken er lagret")}
+function updateProgress(){const done=state.goals.filter(x=>x.done).length,pct=Math.round(done/Math.max(state.goals.length,1)*100);sessionCount.textContent=state.sessions.length;completedGoals.textContent=done;progressPercent.textContent=pct+" %";progressBar.style.width=pct+"%"}
+function saveState(){localStorage.setItem(KEY,JSON.stringify(state))}
+function loadState(){try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s)state={...state,...s}}catch(e){}dogName.value=state.dog.name||"";dogBreed.value=state.dog.breed||"";dogBirth.value=state.dog.birth||"";ownerName.value=state.dog.owner||"";dogAbout.value=state.dog.about||"";notes.value=state.notes||"";namePreview.textContent=state.dog.name||"Ikke fylt inn";if(state.photo){dogPhoto.src=state.photo;dogPhoto.style.display="block"}renderGoals();renderCommands();renderLast();updateProgress()}
+dogPhotoInput.addEventListener("change",function(){const f=this.files&&this.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{state.photo=e.target.result;dogPhoto.src=state.photo;dogPhoto.style.display="block";saveState();toast("Bilde lagret")};r.readAsDataURL(f)})
+function resetBook(){if(confirm("Vil du nullstille hele treningsdagboken?")){localStorage.removeItem(KEY);location.reload()}}
+loadState();
+</script>
+</body></html>
