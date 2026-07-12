@@ -73,7 +73,23 @@ body{
 .cover p{max-width:720px;line-height:1.5;font-weight:700;color:#eef6ff}
 .cover button{margin-top:18px;border:0;border-radius:999px;padding:14px 24px;background:linear-gradient(135deg,#fff7df,#f7d98c);color:#163d77;font-weight:900;font-size:17px}
 .page{display:none;background:linear-gradient(90deg,#0000000d,transparent 4%,transparent 96%,#0000000a),var(--paper);border:1px solid var(--line);padding:24px}
-.page.active{display:block}
+.page.active{display:block;animation:pageTurn .42s ease}
+@keyframes pageTurn{
+  from{opacity:0;transform:rotateY(-7deg) translateX(18px)}
+  to{opacity:1;transform:none}
+}
+.contents-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.contents-link{
+  border:1px solid var(--line);background:#fffaf0;border-radius:16px;padding:14px;
+  font-weight:900;color:#163d77;cursor:pointer;text-align:left
+}
+.quick-memory{
+  background:linear-gradient(135deg,#fff7ed,#fef3c7);
+  border:1px solid #fed7aa;border-radius:20px;padding:16px;margin-top:14px
+}
+.quick-memory h3{margin:0 0 8px;color:#92400e}
+.quick-memory button{margin-top:8px}
+
 .pagegrid{display:grid;grid-template-columns:1fr 1fr;gap:28px;min-height:700px}
 .side{padding:8px 12px}
 .side h2{font-size:30px;color:#163d77;margin:0 0 8px}
@@ -171,6 +187,42 @@ textarea{min-height:90px;resize:vertical}
   <div class="photo"><input id="profilePhotoInput" type="file" accept="image/*"><img id="profilePhoto"></div>
   <div class="card" style="margin-top:14px"><span>Aktiv bok</span><b class="big" id="activeDogName">Ikke fylt inn</b></div>
   <div class="card"><span>Antall minner</span><b class="big" id="memoryCount">0</b></div>
+</div>
+</div>
+</section>
+
+<section class="page">
+<div class="pagegrid">
+<div class="side">
+  <h2>📖 Innhold</h2>
+  <p class="lead">Gå direkte til ønsket kapittel.</p>
+  <div class="contents-grid">
+    <button class="contents-link" onclick="showPage(0)">🐶 Min hund</button>
+    <button class="contents-link" onclick="showPage(2)">🌞 I dag</button>
+    <button class="contents-link" onclick="showPage(3)">🎯 Mål og kommandoer</button>
+    <button class="contents-link" onclick="showPage(4)">📅 Trening</button>
+    <button class="contents-link" onclick="showPage(5)">❤️ Helse</button>
+    <button class="contents-link" onclick="showPage(6)">🌲 Turdagbok</button>
+    <button class="contents-link" onclick="showPage(7)">📸 Bilder og minner</button>
+    <button class="contents-link" onclick="showPage(8)">🕰️ Livslinje</button>
+    <button class="contents-link" onclick="showPage(9)">🏅 Historikk og medaljer</button>
+    <button class="contents-link" onclick="showPage(10)">🏆 Oversikt og notater</button>
+  </div>
+</div>
+<div class="side">
+  <h2>❤️ I dag skjedde det</h2>
+  <div class="quick-memory">
+    <h3>Lagre et lite minne raskt</h3>
+    <label>Tittel</label>
+    <input id="quickMemoryTitle" placeholder="F.eks. Første tur i snø">
+    <label>Hva skjedde?</label>
+    <textarea id="quickMemoryText" placeholder="Skriv et kort minne..."></textarea>
+    <button class="save" onclick="saveQuickMemory()">❤️ Lagre minnet</button>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <span>Siste minne</span>
+    <b id="latestMemory">Ingen minner ennå</b>
+  </div>
 </div>
 </div>
 </section>
@@ -353,7 +405,7 @@ textarea{min-height:90px;resize:vertical}
 
 <div class="controls" id="controls">
   <button onclick="prevPage()">⬅️ Forrige</button>
-  <strong id="pageCount">Side 1</strong>
+  <strong id="pageCount">Side 1 av 11</strong>
   <button class="next" onclick="nextPage()">Neste ➡️</button>
 </div>
 </div>
@@ -434,7 +486,45 @@ function saveSession(){
   saveState();renderSessions();renderStats();renderToday();toast("Treningsøkt lagret")
 }
 function saveWalk(){const place=$("walkPlace").value.trim();if(!place){toast("Skriv hvor dere gikk");return}dog().walks.unshift({id:Date.now(),date:$("walkDate").value,type:$("walkType").value,place,distance:$("walkDistance").value.trim(),note:$("walkNote").value.trim()});saveState();renderWalks();renderStats();toast("Tur lagret")}
-function saveMemory(){const title=$("memoryTitle").value.trim();if(!title){toast("Skriv en tittel");return}dog().memories.unshift({id:Date.now(),date:$("memoryDate").value,title,text:$("memoryText").value.trim()});saveState();renderMemories();renderStats();toast("Minne lagret")}
+function saveMemory(){
+  const title=$("memoryTitle").value.trim();
+  if(!title){toast("Skriv en tittel");return}
+  dog().memories.unshift({
+    id:Date.now(),
+    date:$("memoryDate").value || new Date().toISOString().slice(0,10),
+    title,
+    text:$("memoryText").value.trim()
+  });
+  saveState();
+  renderMemories();
+  renderStats();
+  renderLatestMemory();
+  toast("Minne lagret");
+}
+
+function saveQuickMemory(){
+  const title=$("quickMemoryTitle").value.trim();
+  const text=$("quickMemoryText").value.trim();
+  if(!title){toast("Skriv en tittel");return}
+  dog().memories.unshift({
+    id:Date.now(),
+    date:new Date().toISOString().slice(0,10),
+    title,
+    text
+  });
+  $("quickMemoryTitle").value="";
+  $("quickMemoryText").value="";
+  saveState();
+  renderMemories();
+  renderStats();
+  renderLatestMemory();
+  toast("Minne lagret");
+}
+
+function renderLatestMemory(){
+  const m=dog().memories[0];
+  $("latestMemory").textContent=m ? m.title : "Ingen minner ennå";
+}
 function saveTimeline(){const title=$("timelineTitle").value.trim();if(!title){toast("Skriv en hendelse");return}dog().timeline.push({id:Date.now(),date:$("timelineDate").value,title,text:$("timelineText").value.trim()});dog().timeline.sort((a,b)=>(a.date||"").localeCompare(b.date||""));saveState();renderTimeline();toast("Livshendelse lagt til")}
 function completeDailyTask(){dog().dailyDone=new Date().toISOString().slice(0,10);saveState();toast("Dagens oppgave fullført")}
 function completeWeekly(){dog().weeklyDone=new Date().toISOString().slice(0,7);saveState();toast("Ukens utfordring fullført")}
@@ -471,7 +561,7 @@ function renderAll(){
   $("dogName").value=d.profile.name||"";$("dogBreed").value=d.profile.breed||"";$("dogBirth").value=d.profile.birth||"";$("ownerName").value=d.profile.owner||"";$("dogAbout").value=d.profile.about||"";$("favoriteToy").value=d.profile.toy||"";$("favoriteFood").value=d.profile.food||"";
   $("notes").value=d.notes||"";$("activeDogName").textContent=d.profile.name||"Ikke fylt inn";$("coverName").textContent=d.profile.name?"Til "+d.profile.name:"For min hund";
   if(d.photo){$("profilePhoto").src=d.photo;$("profilePhoto").style.display="block";$("coverPhoto").innerHTML=`<img src="${d.photo}">`}else{$("profilePhoto").style.display="none";$("coverPhoto").textContent="🐶"}
-  renderGoals();renderCommands();renderToday();renderSessions();renderHealth();renderWalks();renderMemories();renderTimeline();renderGallery();renderStats();
+  renderGoals();renderCommands();renderToday();renderSessions();renderHealth();renderWalks();renderMemories();renderLatestMemory();renderTimeline();renderGallery();renderStats();
 }
 function compress(file,max=900,q=.76){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const s=Math.min(1,max/i.width),c=document.createElement("canvas");c.width=Math.round(i.width*s);c.height=Math.round(i.height*s);c.getContext("2d").drawImage(i,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",q))};i.onerror=()=>rej();i.src=r.result};r.onerror=()=>rej();r.readAsDataURL(file)})}
 $("profilePhotoInput").addEventListener("change",async function(){const f=this.files[0];if(!f)return;dog().photo=await compress(f);saveState();renderAll();toast("Profilbilde lagret")});
