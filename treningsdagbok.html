@@ -44,7 +44,7 @@
 
 <section class="page"><div class="pagegrid">
 <div class="side"><h2>🏆 Min utvikling</h2><div class="card"><span>Antall økter</span><b id="sessionCount">0</b></div><div class="card"><span>Fullførte mål</span><b id="completedGoals">0</b></div><div class="card"><span>Fremgang</span><b id="progressPercent">0 %</b><div class="bar"><span id="progressBar"></span></div></div></div>
-<div class="side"><h2>📝 Notater</h2><textarea id="notes" style="min-height:390px"></textarea><button class="save" onclick="saveAll()">💾 Lagre notater</button></div>
+<div class="side"><h2>📝 Notater</h2><textarea id="notes" style="min-height:390px;position:relative;z-index:5;pointer-events:auto" placeholder="Skriv notater her..."></textarea><button class="save" onclick="saveNotes()">💾 Lagre notater</button><div id="notesSaved" style="margin-top:10px;font-weight:900;color:#166534"></div></div>
 </div></section>
 
 <div class="controls" id="controls"><button onclick="prevPage()">⬅️ Forrige</button><strong id="pageCount">Side 1 av 4</strong><button class="next" onclick="nextPage()">Neste ➡️</button></div>
@@ -65,12 +65,61 @@ function addCommand(){const t=newCommand.value.trim();if(!t)return;state.command
 function setRating(n){rating=n;document.querySelectorAll("[data-r]").forEach(b=>b.classList.toggle("active",Number(b.dataset.r)===n))}
 function saveSession(){if(!sessionWhat.value.trim()){toast("Skriv hva dere trente på");return}state.sessions.unshift({date:sessionDate.value,duration:sessionDuration.value,what:sessionWhat.value,where:sessionWhere.value,reward:sessionReward.value,good:sessionGood.value,improve:sessionImprove.value,rating});saveState();renderLast();updateProgress();toast("Økten er lagret")}
 function renderLast(){lastSession.textContent=state.sessions[0]?.what||"Ingen"}
-function saveAll(){state.dog={name:dogName.value,breed:dogBreed.value,birth:dogBirth.value,owner:ownerName.value,about:dogAbout.value};state.notes=notes.value;namePreview.textContent=state.dog.name||"Ikke fylt inn";saveState();toast("Boken er lagret")}
+function saveAll(){
+  state.dog={
+    name:document.getElementById("dogName").value,
+    breed:document.getElementById("dogBreed").value,
+    birth:document.getElementById("dogBirth").value,
+    owner:document.getElementById("ownerName").value,
+    about:document.getElementById("dogAbout").value
+  };
+  state.notes=document.getElementById("notes").value;
+  document.getElementById("namePreview").textContent=state.dog.name||"Ikke fylt inn";
+  saveState();
+  toast("Boken er lagret");
+}
+
+function saveNotes(){
+  state.notes=document.getElementById("notes").value;
+  saveState();
+  document.getElementById("notesSaved").textContent="✅ Notatene er lagret";
+  toast("Notatene er lagret");
+}
 function updateProgress(){const done=state.goals.filter(x=>x.done).length,pct=Math.round(done/Math.max(state.goals.length,1)*100);sessionCount.textContent=state.sessions.length;completedGoals.textContent=done;progressPercent.textContent=pct+" %";progressBar.style.width=pct+"%"}
 function saveState(){localStorage.setItem(KEY,JSON.stringify(state))}
-function loadState(){try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s)state={...state,...s}}catch(e){}dogName.value=state.dog.name||"";dogBreed.value=state.dog.breed||"";dogBirth.value=state.dog.birth||"";ownerName.value=state.dog.owner||"";dogAbout.value=state.dog.about||"";notes.value=state.notes||"";namePreview.textContent=state.dog.name||"Ikke fylt inn";if(state.photo){dogPhoto.src=state.photo;dogPhoto.style.display="block"}renderGoals();renderCommands();renderLast();updateProgress()}
+function loadState(){
+  try{
+    const s=JSON.parse(localStorage.getItem(KEY)||"null");
+    if(s) state={...state,...s};
+  }catch(e){}
+  document.getElementById("dogName").value=state.dog.name||"";
+  document.getElementById("dogBreed").value=state.dog.breed||"";
+  document.getElementById("dogBirth").value=state.dog.birth||"";
+  document.getElementById("ownerName").value=state.dog.owner||"";
+  document.getElementById("dogAbout").value=state.dog.about||"";
+  document.getElementById("notes").value=state.notes||"";
+  document.getElementById("namePreview").textContent=state.dog.name||"Ikke fylt inn";
+  if(state.photo){
+    document.getElementById("dogPhoto").src=state.photo;
+    document.getElementById("dogPhoto").style.display="block";
+  }
+  renderGoals();
+  renderCommands();
+  renderLast();
+  updateProgress();
+}
 dogPhotoInput.addEventListener("change",function(){const f=this.files&&this.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{state.photo=e.target.result;dogPhoto.src=state.photo;dogPhoto.style.display="block";saveState();toast("Bilde lagret")};r.readAsDataURL(f)})
 function resetBook(){if(confirm("Vil du nullstille hele treningsdagboken?")){localStorage.removeItem(KEY);location.reload()}}
 loadState();
+
+document.getElementById("notes").addEventListener("input", function(){
+  state.notes=this.value;
+  saveState();
+  document.getElementById("notesSaved").textContent="Lagrer automatisk...";
+  clearTimeout(window.notesTimer);
+  window.notesTimer=setTimeout(function(){
+    document.getElementById("notesSaved").textContent="✅ Lagret automatisk";
+  },600);
+});
 </script>
 </body></html>
