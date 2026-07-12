@@ -3,572 +3,158 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Min Hundebok – Hundene våre</title>
+<title>Min Hundebok 3.0 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
-:root{
-  --blue:#0b5cff;--blue2:#2563eb;--dark:#0f172a;--muted:#64748b;
-  --paper:#fffdf7;--line:#eadfca;--gold:#e3bd68;--brown:#6b4f35;
-}
-body{
-  margin:0;font-family:Arial,sans-serif;color:var(--dark);
-  background:
-    radial-gradient(circle at 10% 5%,rgba(96,165,250,.24),transparent 30%),
-    radial-gradient(circle at 92% 8%,rgba(249,115,22,.16),transparent 30%),
-    linear-gradient(180deg,#eff6ff,#fff7ed 52%,#f8fafc);
-}
-.wrap{max-width:1220px;margin:auto;padding:14px 10px 70px}
-.topbar{
-  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
-  background:#ffffffef;border:1px solid #dbeafe;border-radius:24px;padding:12px 14px;
-  box-shadow:0 12px 28px rgba(15,23,42,.10);margin-bottom:14px
-}
-.brand{font-size:23px;font-weight:900;color:#0757d8}
-.topbar a,.topbar button,.smallbtn{
-  border:0;border-radius:999px;padding:10px 14px;font-weight:900;text-decoration:none;
-  cursor:pointer;background:#eaf2ff;color:#0b4fd4
-}
-.bookshelf{
-  background:linear-gradient(180deg,#5a3825,#3b2418);
-  border:10px solid #2f1d14;border-radius:24px;padding:18px;
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,.08),0 18px 42px rgba(15,23,42,.20);
-  margin-bottom:16px
-}
-.shelf-title{color:#ffe9ba;font-weight:900;font-size:20px;margin-bottom:12px}
-.books{display:flex;gap:12px;overflow-x:auto;padding:8px 4px 14px}
-.book-spine{
-  min-width:150px;height:210px;border-radius:10px 10px 4px 4px;padding:16px 10px;
-  color:white;text-align:center;display:flex;flex-direction:column;justify-content:space-between;
-  cursor:pointer;box-shadow:inset 8px 0 14px rgba(0,0,0,.22),0 12px 18px rgba(0,0,0,.25);
-  border:2px solid rgba(255,255,255,.18)
-}
-.book-spine.active{outline:4px solid #f7d98c;transform:translateY(-5px)}
-.book-spine .emoji{font-size:46px}.book-spine b{font-family:Georgia,serif;font-size:20px}.book-spine small{color:#fef3c7}
-.book-spine.add{background:linear-gradient(180deg,#64748b,#334155)}
-.book-shell{position:relative;min-height:840px}
-.cover,.page{
-  position:absolute;inset:0;border-radius:30px;box-shadow:0 26px 70px rgba(15,23,42,.28)
-}
-.cover{
-  z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-  padding:38px 46px;color:#fff;overflow:hidden;transition:.75s;
-  background:
-    radial-gradient(circle at 18% 16%,rgba(255,255,255,.16),transparent 24%),
-    radial-gradient(circle at 84% 12%,rgba(255,214,120,.16),transparent 20%),
-    linear-gradient(135deg,#071a3d,#0f3f7d 45%,#4b2d87);
-  border:10px solid #0b244e;
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,.12),inset 18px 0 30px rgba(0,0,0,.22),0 28px 70px rgba(15,23,42,.35)
-}
-.cover:before{content:"";position:absolute;inset:22px;border:2px solid rgba(255,220,150,.55);border-radius:20px}
-.cover:after{content:"🐾   🐾   🐾";position:absolute;bottom:30px;left:0;right:0;font-size:24px;letter-spacing:18px;opacity:.18}
+:root{--blue:#0b5cff;--blue2:#2563eb;--dark:#0f172a;--paper:#fffdf7;--line:#eadfca;--gold:#e3bd68}
+body{margin:0;font-family:Arial,sans-serif;color:var(--dark);background:linear-gradient(#eff6ff,#fff7ed)}
+.wrap{max-width:1180px;margin:auto;padding:14px}
+.topbar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#fff;border:1px solid #dbeafe;border-radius:22px;padding:12px 14px;margin-bottom:14px}
+.topbar a,.topbar button{border:0;border-radius:999px;padding:10px 14px;font-weight:900;text-decoration:none;background:#eaf2ff;color:#0b4fd4;cursor:pointer}
+.bookshelf{background:linear-gradient(#5a3825,#3b2418);border:9px solid #2f1d14;border-radius:24px;padding:16px;margin-bottom:16px}
+.books{display:flex;gap:12px;overflow-x:auto;padding:8px}
+.spine{min-width:145px;height:195px;border-radius:10px 10px 4px 4px;padding:14px 10px;color:#fff;text-align:center;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;border:2px solid #ffffff22;box-shadow:inset 8px 0 14px #0003,0 10px 16px #0004}
+.spine.active{outline:4px solid #f7d98c;transform:translateY(-4px)}
+.spine .icon{font-size:44px}.spine b{font-family:Georgia,serif;font-size:19px}
+.book{position:relative;min-height:820px;perspective:1800px}
+.cover,.sheet{position:absolute;inset:0;border-radius:28px;box-shadow:0 26px 70px #0003}
+.cover{z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:35px;background:linear-gradient(135deg,#071a3d,#0f3f7d,#4b2d87);border:10px solid #0b244e;transition:.7s;overflow:hidden}
 .cover.open{transform:rotateY(-100deg);opacity:0;pointer-events:none}
-.cover-badge{font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#ffe8b0}
-.cover-photo{
-  width:150px;height:150px;border-radius:42px;background:#ffffff20;border:2px solid #f5d58c;
-  display:flex;align-items:center;justify-content:center;font-size:78px;margin:16px 0;overflow:hidden
-}
-.cover-photo img{width:100%;height:100%;object-fit:cover}
-.cover h1{font-family:Georgia,serif;font-size:clamp(2.7rem,7vw,5.5rem);margin:0 0 10px}
-.cover-name{padding:10px 18px;border-radius:999px;background:#ffffff18;border:1px solid #ffffff33;font-weight:900;font-size:19px}
-.cover p{max-width:720px;line-height:1.5;font-weight:700;color:#eef6ff}
-.cover button{margin-top:18px;border:0;border-radius:999px;padding:14px 24px;background:linear-gradient(135deg,#fff7df,#f7d98c);color:#163d77;font-weight:900;font-size:17px}
-.page{display:none;background:linear-gradient(90deg,#0000000d,transparent 4%,transparent 96%,#0000000a),var(--paper);border:1px solid var(--line);padding:24px}
-.page.active{display:block;animation:pageTurn .42s ease}
-@keyframes pageTurn{
-  from{opacity:0;transform:rotateY(-7deg) translateX(18px)}
-  to{opacity:1;transform:none}
-}
-.contents-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.contents-link{
-  border:1px solid var(--line);background:#fffaf0;border-radius:16px;padding:14px;
-  font-weight:900;color:#163d77;cursor:pointer;text-align:left
-}
-.quick-memory{
-  background:linear-gradient(135deg,#fff7ed,#fef3c7);
-  border:1px solid #fed7aa;border-radius:20px;padding:16px;margin-top:14px
-}
-.quick-memory h3{margin:0 0 8px;color:#92400e}
-.quick-memory button{margin-top:8px}
-
-.pagegrid{display:grid;grid-template-columns:1fr 1fr;gap:28px;min-height:700px}
-.side{padding:8px 12px}
-.side h2{font-size:30px;color:#163d77;margin:0 0 8px}
-.lead{color:var(--muted);font-weight:700;line-height:1.5}
+.cover:before{content:"";position:absolute;inset:22px;border:2px solid #f5d58c88;border-radius:18px}
+.cover .photo{width:145px;height:145px;border-radius:40px;border:2px solid #f5d58c;background:#ffffff22;display:flex;align-items:center;justify-content:center;font-size:76px;overflow:hidden}
+.cover .photo img{width:100%;height:100%;object-fit:cover}
+.cover h1{font-family:Georgia,serif;font-size:clamp(2.8rem,7vw,5.4rem);margin:14px 0 8px}
+.cover .name{padding:10px 18px;border-radius:999px;background:#ffffff18;border:1px solid #ffffff33;font-weight:900}
+.cover button{margin-top:20px;border:0;border-radius:999px;padding:14px 24px;background:linear-gradient(135deg,#fff7df,#f7d98c);color:#163d77;font-weight:900;font-size:17px}
+.sheet{display:none;background:linear-gradient(90deg,#0000000d,transparent 5%,transparent 95%,#0000000a),var(--paper);border:1px solid var(--line);padding:24px;transform-origin:left center}
+.sheet.active{display:block;animation:turn .38s ease}
+@keyframes turn{from{opacity:0;transform:rotateY(-8deg) translateX(16px)}to{opacity:1;transform:none}}
+.pagegrid{display:grid;grid-template-columns:1fr 1fr;gap:28px;min-height:680px}
+.side{padding:8px 12px}.side h2{font-size:30px;color:#163d77;margin:0 0 8px}.lead{color:#64748b;font-weight:700}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}
-label{display:block;font-weight:900;color:var(--brown);margin:5px 0}
-input,select,textarea{
-  width:100%;padding:11px 12px;border:1px solid #d9ccb7;border-radius:13px;background:#fffefb;margin-bottom:8px
-}
-textarea{min-height:90px;resize:vertical}
-.save,.action{
-  background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border:0;border-radius:999px;
-  padding:11px 15px;font-weight:900;cursor:pointer
-}
-.action.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
-.action.red{background:linear-gradient(135deg,#ef4444,#b91c1c)}
-.card{background:#fffaf0;border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:10px}
+label{display:block;font-weight:900;color:#6b4f35;margin:5px 0}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid #d9ccb7;border-radius:13px;background:#fffefb;margin-bottom:8px}
+textarea{min-height:90px}
+.btn{border:0;border-radius:999px;padding:11px 15px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;font-weight:900;cursor:pointer}
+.card{background:#fffaf0;border:1px solid var(--line);border-radius:17px;padding:14px;margin-bottom:10px}
 .card b.big{display:block;font-size:30px;color:var(--blue)}
-.photo{border:2px dashed #d9ccb7;border-radius:18px;padding:14px;text-align:center}
-.photo img{display:none;max-width:100%;max-height:240px;border-radius:16px;margin:10px auto}
-.list{display:grid;gap:8px}
-.row{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;background:#fffaf0;border:1px solid var(--line);border-radius:14px;padding:9px}
+.contents{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.contents button{border:1px solid var(--line);background:#fffaf0;border-radius:15px;padding:13px;text-align:left;font-weight:900;color:#163d77;cursor:pointer}
+.list{display:grid;gap:8px}.row{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;background:#fffaf0;border:1px solid var(--line);border-radius:14px;padding:9px}
 .row input{margin:0}.row button{border:0;background:#fee2e2;color:#991b1b;border-radius:9px;padding:7px}
-.add{display:flex;gap:8px;margin-top:9px}.add input{margin:0}
-.rating{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.rating button{padding:12px;border:1px solid #d9ccb7;border-radius:14px;background:#fffaf0;font-weight:900}
-.rating button.active{background:#dcfce7;color:#166534}
-.history,.timeline{display:grid;gap:10px;max-height:520px;overflow:auto}
-.history-item,.timeline-item{background:#fffaf0;border:1px solid var(--line);border-radius:16px;padding:12px}
-.history-item h3,.timeline-item h3{margin:0 0 6px;color:#163d77}
-.medals{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.medal{background:#fffaf0;border:1px solid var(--line);border-radius:18px;padding:14px;text-align:center}
-.medal .icon{font-size:42px}.medal.locked{opacity:.38;filter:grayscale(1)}
-.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.gallery-item{position:relative;aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:#e2e8f0}
-.gallery-item img{width:100%;height:100%;object-fit:cover}.gallery-item button{position:absolute;right:6px;top:6px;border:0;border-radius:50%;background:#000a;color:white;width:28px;height:28px}
-.challenge{
-  background:linear-gradient(135deg,#fff7ed,#fef3c7);border:1px solid #fed7aa;border-radius:18px;padding:16px;margin-bottom:12px
-}
-.challenge h3{color:#92400e;margin:0 0 6px}
-.controls{position:absolute;left:0;right:0;bottom:-55px;display:none;justify-content:space-between;align-items:center}
-.controls button{border:0;border-radius:999px;padding:11px 17px;background:#111827;color:#fff;font-weight:900}
-.controls .next{background:var(--blue)}
-.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);display:none;background:#111827;color:#fff;border-radius:999px;padding:12px 16px;font-weight:900;z-index:9999}
-@media(max-width:850px){
-  .book-shell{min-height:1320px}.pagegrid{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.full{grid-column:auto}
-}
-@media(max-width:560px){
-  .topbar{justify-content:center}.brand{width:100%;text-align:center}
-  .book-shell{min-height:1420px}.cover{padding:26px 20px}.cover-photo{width:120px;height:120px}
-  .gallery{grid-template-columns:repeat(2,1fr)}
-}
+.add{display:flex;gap:8px}.add input{margin:0}
+.history{display:grid;gap:10px;max-height:500px;overflow:auto}.history-item{background:#fffaf0;border:1px solid var(--line);border-radius:15px;padding:12px}
+.history-item h3{margin:0 0 5px;color:#163d77}
+.rating{display:grid;grid-template-columns:1fr 1fr;gap:8px}.rating button{padding:12px;border:1px solid #d9ccb7;border-radius:14px;background:#fffaf0;font-weight:900}.rating button.active{background:#dcfce7;color:#166534}
+.controls{position:absolute;left:0;right:0;bottom:-58px;display:none;justify-content:space-between;align-items:center}
+.controls button{border:0;border-radius:999px;padding:11px 17px;background:#111827;color:white;font-weight:900;cursor:pointer}.controls .next{background:var(--blue)}
+.bookmark{position:absolute;right:32px;top:0;background:#dc2626;color:#fff;padding:12px 10px 20px;border-radius:0 0 8px 8px;font-weight:900;z-index:5}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);display:none;background:#111827;color:#fff;border-radius:999px;padding:12px 16px;font-weight:900;z-index:999}
+@media(max-width:820px){.book{min-height:1180px}.pagegrid{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.full{grid-column:auto}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<div class="topbar">
-  <div class="brand">📖 Min Hundebok</div>
-  <div><a href="index.html">🏠 Forside</a> <button onclick="resetAll()">🗑️ Nullstill alt</button></div>
-</div>
+<div class="topbar"><strong>📖 Min Hundebok 3.0</strong><div><a href="index.html">🏠 Forside</a> <button onclick="resetAll()">🗑️ Nullstill</button></div></div>
 
-<section class="bookshelf">
-  <div class="shelf-title">📚 Mine hundebøker</div>
-  <div class="books" id="books"></div>
-</section>
+<section class="bookshelf"><div style="color:#ffe9ba;font-weight:900;margin-bottom:8px">📚 Mine hundebøker</div><div class="books" id="books"></div></section>
 
-<div class="book-shell">
-<section class="cover" id="cover">
-  <div class="cover-badge">Min personlige hundebok</div>
-  <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Min Hundebok</h1>
-  <div class="cover-name" id="coverName">For min hund</div>
-  <p>Trening, helse, turer, minner, bilder og hele hundens liv samlet i én bok.</p>
-  <button onclick="openBook()">📖 Åpne boken</button>
-</section>
+<div class="book">
+<section class="cover" id="cover"><div class="photo" id="coverPhoto">🐶</div><h1>Min Hundebok</h1><div class="name" id="coverName">For min hund</div><p>Trening, helse, turer og minner samlet i én bok.</p><button onclick="openBook()">📖 Åpne boken</button></section>
 
-<section class="page active">
-<div class="pagegrid">
-<div class="side">
-  <h2>🐶 Min hund</h2>
-  <p class="lead">Grunnopplysninger og personlighet.</p>
-  <div class="grid">
-    <div><label>Navn</label><input id="dogName"></div>
-    <div><label>Rase</label><input id="dogBreed"></div>
-    <div><label>Fødselsdato</label><input id="dogBirth" type="date"></div>
-    <div><label>Eier</label><input id="ownerName"></div>
-    <div><label>Favorittleke</label><input id="favoriteToy"></div>
-    <div><label>Favorittmat</label><input id="favoriteFood"></div>
-    <div class="full"><label>Om hunden</label><textarea id="dogAbout"></textarea></div>
-  </div>
-  <button class="save" onclick="saveProfile()">💾 Lagre profil</button>
-</div>
-<div class="side">
-  <h2>📷 Profilbilde</h2>
-  <div class="photo"><input id="profilePhotoInput" type="file" accept="image/*"><img id="profilePhoto"></div>
-  <div class="card" style="margin-top:14px"><span>Aktiv bok</span><b class="big" id="activeDogName">Ikke fylt inn</b></div>
-  <div class="card"><span>Antall minner</span><b class="big" id="memoryCount">0</b></div>
-</div>
-</div>
-</section>
+<section class="sheet" data-title="Velkommen">
+<div class="bookmark">1</div><div class="pagegrid">
+<div class="side"><h2>👋 Velkommen</h2><div class="card"><span>Aktiv hund</span><b class="big" id="welcomeName">Ny hund</b></div><div class="card"><span>Dagens oppgave</span><p id="dailyTask"></p></div><div class="card"><span>Dagens tips</span><p id="dailyTip"></p></div></div>
+<div class="side"><h2>📖 Innhold</h2><div class="contents" id="contents"></div></div>
+</div></section>
 
-<section class="page">
-<div class="pagegrid">
-<div class="side">
-  <h2>📖 Innhold</h2>
-  <p class="lead">Gå direkte til ønsket kapittel.</p>
-  <div class="contents-grid">
-    <button class="contents-link" onclick="showPage(0)">🐶 Min hund</button>
-    <button class="contents-link" onclick="showPage(2)">🌞 I dag</button>
-    <button class="contents-link" onclick="showPage(3)">🎯 Mål og kommandoer</button>
-    <button class="contents-link" onclick="showPage(4)">📅 Trening</button>
-    <button class="contents-link" onclick="showPage(5)">❤️ Helse</button>
-    <button class="contents-link" onclick="showPage(6)">🌲 Turdagbok</button>
-    <button class="contents-link" onclick="showPage(7)">📸 Bilder og minner</button>
-    <button class="contents-link" onclick="showPage(8)">🕰️ Livslinje</button>
-    <button class="contents-link" onclick="showPage(9)">🏅 Historikk og medaljer</button>
-    <button class="contents-link" onclick="showPage(10)">🏆 Oversikt og notater</button>
-  </div>
-</div>
-<div class="side">
-  <h2>❤️ I dag skjedde det</h2>
-  <div class="quick-memory">
-    <h3>Lagre et lite minne raskt</h3>
-    <label>Tittel</label>
-    <input id="quickMemoryTitle" placeholder="F.eks. Første tur i snø">
-    <label>Hva skjedde?</label>
-    <textarea id="quickMemoryText" placeholder="Skriv et kort minne..."></textarea>
-    <button class="save" onclick="saveQuickMemory()">❤️ Lagre minnet</button>
-  </div>
-  <div class="card" style="margin-top:14px">
-    <span>Siste minne</span>
-    <b id="latestMemory">Ingen minner ennå</b>
-  </div>
-</div>
-</div>
-</section>
+<section class="sheet" data-title="Min hund">
+<div class="bookmark">2</div><div class="pagegrid">
+<div class="side"><h2>🐶 Min hund</h2><div class="grid"><div><label>Navn</label><input id="dogName"></div><div><label>Rase</label><input id="dogBreed"></div><div><label>Fødselsdato</label><input id="dogBirth" type="date"></div><div><label>Eier</label><input id="ownerName"></div><div class="full"><label>Om hunden</label><textarea id="dogAbout"></textarea></div></div><button class="btn" onclick="saveProfile()">💾 Lagre profil</button></div>
+<div class="side"><h2>📷 Profilbilde</h2><input id="photoInput" type="file" accept="image/*"><div class="card"><img id="profilePhoto" style="display:none;max-width:100%;border-radius:16px"></div></div>
+</div></section>
 
-<section class="page">
-<div class="pagegrid">
-<div class="side">
-  <h2>🌞 I dag</h2>
-  <div class="challenge"><h3>Dagens treningsoppgave</h3><p id="dailyTask"></p><button class="action green" onclick="completeDailyTask()">✅ Fullfør</button></div>
-  <div class="challenge"><h3>Ukens utfordring</h3><p id="weeklyChallenge"></p><button class="action green" onclick="completeWeekly()">🏆 Fullfør utfordring</button></div>
-</div>
-<div class="side">
-  <h2>💡 Dagens tips</h2>
-  <div class="card"><p id="dailyTip"></p></div>
-  <div class="card"><span>Treningsstreak</span><b class="big" id="streakCount">0 dager</b></div>
-  <div class="card"><span>Neste medalje</span><b id="nextMedal">Første økt</b></div>
-</div>
-</div>
-</section>
+<section class="sheet" data-title="Mål og kommandoer">
+<div class="bookmark">3</div><div class="pagegrid">
+<div class="side"><h2>🎯 Mål</h2><div id="goalList" class="list"></div><div class="add"><input id="newGoal" placeholder="Nytt mål"><button class="btn" onclick="addGoal()">Legg til</button></div></div>
+<div class="side"><h2>🗣️ Kommandoer</h2><div id="commandList" class="list"></div><div class="add"><input id="newCommand" placeholder="Ny kommando"><button class="btn" onclick="addCommand()">Legg til</button></div></div>
+</div></section>
 
-<section class="page">
-<div class="pagegrid">
-<div class="side">
-  <h2>🎯 Mål</h2>
-  <div id="goalList" class="list"></div>
-  <div class="add"><input id="newGoal" placeholder="Nytt mål"><button class="save" onclick="addGoal()">Legg til</button></div>
-</div>
-<div class="side">
-  <h2>🗣️ Kommandoer</h2>
-  <div id="commandList" class="list"></div>
-  <div class="add"><input id="newCommand" placeholder="Ny kommando"><button class="save" onclick="addCommand()">Legg til</button></div>
-</div>
-</div>
-</section>
+<section class="sheet" data-title="Trening">
+<div class="bookmark">4</div><div class="pagegrid">
+<div class="side"><h2>📅 Treningsøkt</h2><div class="grid"><div><label>Dato</label><input id="sessionDate" type="date"></div><div><label>Varighet</label><input id="sessionDuration"></div><div class="full"><label>Hva trente vi på?</label><textarea id="sessionWhat"></textarea></div><div><label>Sted</label><input id="sessionWhere"></div><div><label>Belønning</label><input id="sessionReward"></div></div></div>
+<div class="side"><h2>⭐ Resultat</h2><div class="rating"><button data-r="4" onclick="setRating(4)">😀 Kjempebra</button><button data-r="3" onclick="setRating(3)">🙂 Bra</button><button data-r="2" onclick="setRating(2)">😐 Litt vanskelig</button><button data-r="1" onclick="setRating(1)">☹️ Må øves mer</button></div><button class="btn" style="margin-top:12px" onclick="saveSession()">💾 Lagre økt</button></div>
+</div></section>
 
-<section class="page">
-<div class="pagegrid">
-<div class="side">
-  <h2>📅 Treningsøkt</h2>
-  <div class="grid">
-    <div><label>Dato</label><input id="sessionDate" type="date"></div>
-    <div><label>Varighet</label><input id="sessionDuration"></div>
-    <div class="full"><label>Hva trente vi på?</label><textarea id="sessionWhat"></textarea></div>
-    <div><label>Sted</label><input id="sessionWhere"></div>
-    <div><label>Belønning</label><input id="sessionReward"></div>
-    <div class="full"><label>Hva gikk bra?</label><textarea id="sessionGood"></textarea></div>
-    <div class="full"><label>Hva kan forbedres?</label><textarea id="sessionImprove"></textarea></div>
-  </div>
-</div>
-<div class="side">
-  <h2>⭐ Resultat</h2>
-  <div class="rating">
-    <button data-r="4" onclick="setRating(4)">😀 Kjempebra</button>
-    <button data-r="3" onclick="setRating(3)">🙂 Bra</button>
-    <button data-r="2" onclick="setRating(2)">😐 Litt vanskelig</button>
-    <button data-r="1" onclick="setRating(1)">☹️ Må øves mer</button>
-  </div>
-  <button class="save" style="margin-top:14px" onclick="saveSession()">💾 Lagre treningsøkt</button>
-  <div class="card" style="margin-top:14px"><span>Siste økt</span><b id="lastSession">Ingen</b></div>
-</div>
-</div>
-</section>
+<section class="sheet" data-title="Historikk">
+<div class="bookmark">5</div><div class="pagegrid">
+<div class="side"><h2>📚 Treningshistorikk</h2><div id="historyList" class="history"></div></div>
+<div class="side"><h2>🏆 Oversikt</h2><div class="card"><span>Antall økter</span><b class="big" id="sessionCount">0</b></div><div class="card"><span>Fullførte mål</span><b class="big" id="goalCount">0</b></div></div>
+</div></section>
 
-<section class="page">
-<div class="pagegrid">
-<div class="side">
-  <h2>❤️ Helse</h2>
-  <div class="grid">
-    <div><label>Vekt</label><input id="healthWeight" placeholder="F.eks. 6,2 kg"></div>
-    <div><label>Veterinær</label><input id="healthVet"></div>
-    <div><label>Neste vaksine</label><input id="healthVaccine" type="date"></div>
-    <div><label>Forsikring</label><input id="healthInsurance"></div>
-    <div class="full"><label>Medisiner / behandling</label><textarea id="healthMedicine"></textarea></div>
-    <div class="full"><label>Helsenotater</label><textarea id="healthNotes"></textarea></div>
-  </div>
-  <button class="save" onclick="saveHealth()">💾 Lagre helse</button>
-</div>
-<div class="side">
-  <h2>🩺 Helseoversikt</h2>
-  <div class="card"><span>Vekt</span><b class="big" id="weightPreview">Ikke oppgitt</b></div>
-  <div class="card"><span>Neste vaksine</span><b id="vaccinePreview">Ikke oppgitt</b></div>
-  <div class="card"><span>Veterinær</span><b id="vetPreview">Ikke oppgitt</b></div>
-</div>
-</div>
-</section>
+<section class="sheet" data-title="Helse">
+<div class="bookmark">6</div><div class="pagegrid">
+<div class="side"><h2>❤️ Helse</h2><div class="grid"><div><label>Vekt</label><input id="weight"></div><div><label>Veterinær</label><input id="vet"></div><div><label>Neste vaksine</label><input id="vaccine" type="date"></div><div><label>Forsikring</label><input id="insurance"></div><div class="full"><label>Notater</label><textarea id="healthNotes"></textarea></div></div><button class="btn" onclick="saveHealth()">💾 Lagre helse</button></div>
+<div class="side"><h2>🩺 Helseoversikt</h2><div class="card"><span>Vekt</span><b class="big" id="weightPreview">Ikke oppgitt</b></div><div class="card"><span>Neste vaksine</span><b id="vaccinePreview">Ikke oppgitt</b></div></div>
+</div></section>
 
-<section class="page">
-<div class="pagegrid">
-<div class="side">
-  <h2>🌲 Turdagbok</h2>
-  <div class="grid">
-    <div><label>Dato</label><input id="walkDate" type="date"></div>
-    <div><label>Sted</label><input id="walkPlace"></div>
-    <div><label>Lengde</label><input id="walkDistance" placeholder="F.eks. 4 km"></div>
-    <div><label>Type tur</label><select id="walkType"><option>Skogstur</option><option>Strandtur</option><option>Fjelltur</option><option>Bytur</option><option>Treningstur</option></select></div>
-    <div class="full"><label>Notat</label><textarea id="walkNote"></textarea></div>
-  </div>
-  <button class="save" onclick="saveWalk()">🌲 Lagre tur</button>
-</div>
-<div class="side">
-  <h2>🥾 Siste turer</h2>
-  <div id="walkHistory" class="history"></div>
-</div>
-</div>
-</section>
+<section class="sheet" data-title="Minner">
+<div class="bookmark">7</div><div class="pagegrid">
+<div class="side"><h2>❤️ I dag skjedde det</h2><label>Tittel</label><input id="memoryTitle"><label>Historie</label><textarea id="memoryText"></textarea><button class="btn" onclick="saveMemory()">❤️ Lagre minne</button></div>
+<div class="side"><h2>📖 Minner</h2><div id="memoryList" class="history"></div></div>
+</div></section>
 
-<section class="page">
-<div class="pagegrid">
-<div class="side">
-  <h2>📸 Fotoalbum</h2>
-  <div class="photo"><input id="galleryInput" type="file" accept="image/*" multiple></div>
-  <div id="gallery" class="gallery"></div>
-</div>
-<div class="side">
-  <h2>❤️ Minner</h2>
-  <div class="grid">
-    <div><label>Dato</label><input id="memoryDate" type="date"></div>
-    <div><label>Tittel</label><input id="memoryTitle"></div>
-    <div class="full"><label>Historie</label><textarea id="memoryText"></textarea></div>
-  </div>
-  <button class="save" onclick="saveMemory()">❤️ Lagre minne</button>
-  <div id="memoryHistory" class="history" style="margin-top:12px"></div>
-</div>
-</div>
-</section>
+<section class="sheet" data-title="Notater">
+<div class="bookmark">8</div><div class="pagegrid">
+<div class="side"><h2>📝 Frie notater</h2><textarea id="notes" style="min-height:500px"></textarea><button class="btn" onclick="saveNotes()">💾 Lagre notater</button></div>
+<div class="side"><h2>📌 Bokmerke</h2><div class="card"><p>Du kan hoppe direkte til alle kapitler fra innholdsfortegnelsen.</p></div></div>
+</div></section>
 
-<section class="page">
-<div class="pagegrid">
-<div class="side">
-  <h2>🕰️ Livslinje</h2>
-  <div class="grid">
-    <div><label>Dato</label><input id="timelineDate" type="date"></div>
-    <div><label>Hendelse</label><input id="timelineTitle" placeholder="F.eks. Første dag hjemme"></div>
-    <div class="full"><label>Beskrivelse</label><textarea id="timelineText"></textarea></div>
-  </div>
-  <button class="save" onclick="saveTimeline()">➕ Legg til livshendelse</button>
-</div>
-<div class="side">
-  <h2>📖 Hundens historie</h2>
-  <div id="timelineList" class="timeline"></div>
-</div>
-</div>
-</section>
-
-<section class="page">
-<div class="pagegrid">
-<div class="side">
-  <h2>📚 Treningshistorikk</h2>
-  <div id="historyList" class="history"></div>
-</div>
-<div class="side">
-  <h2>🏅 Medaljer</h2>
-  <div class="medals">
-    <div id="medal1" class="medal locked"><div class="icon">🥉</div><b>Første økt</b><p>1 treningsøkt</p></div>
-    <div id="medal5" class="medal locked"><div class="icon">🥈</div><b>God rutine</b><p>5 økter</p></div>
-    <div id="medal10" class="medal locked"><div class="icon">🥇</div><b>Treningsmester</b><p>10 økter</p></div>
-    <div id="medalGoal" class="medal locked"><div class="icon">🏆</div><b>Målmester</b><p>Fullfør alle mål</p></div>
-  </div>
-</div>
-</div>
-</section>
-
-<section class="page">
-<div class="pagegrid">
-<div class="side">
-  <h2>🏆 Oversikt</h2>
-  <div class="card"><span>Antall treningsøkter</span><b class="big" id="sessionCount">0</b></div>
-  <div class="card"><span>Fullførte mål</span><b class="big" id="completedGoals">0</b></div>
-  <div class="card"><span>Turer</span><b class="big" id="walkCount">0</b></div>
-  <div class="card"><span>Bilder</span><b class="big" id="photoCount">0</b></div>
-</div>
-<div class="side">
-  <h2>📝 Frie notater</h2>
-  <textarea id="notes" style="min-height:420px" placeholder="Skriv notater her..."></textarea>
-  <button class="save" onclick="saveNotes()">💾 Lagre notater</button>
-  <div id="notesSaved" style="margin-top:10px;font-weight:900;color:#166534"></div>
-</div>
-</div>
-</section>
-
-<div class="controls" id="controls">
-  <button onclick="prevPage()">⬅️ Forrige</button>
-  <strong id="pageCount">Side 1 av 11</strong>
-  <button class="next" onclick="nextPage()">Neste ➡️</button>
-</div>
-</div>
+<div class="controls" id="controls"><button onclick="prevPage()">⬅️ Forrige</button><strong id="pageCount">Side 1</strong><button class="next" onclick="nextPage()">Neste ➡️</button></div>
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
-const KEY="min_hundebok_v1";
-let currentPage=0,currentRating=0;
-let appState={activeDogId:null,dogs:[]};
+const KEY="min_hundebok_v3";
 const $=id=>document.getElementById(id);
+let currentPage=0,rating=0,state={activeDogId:null,dogs:[]};
 
-const tasks=["Tren 3 korte innkallinger med god belønning.","Øv på ro i 5 minutter.","Gå en kort tur med fokus på slakt bånd.","Tren på øyekontakt i rolige omgivelser.","Øv på sitt og bli i 10 sekunder."];
-const challenges=["Tre treningsøkter denne uken.","Besøk et nytt tursted.","Fullfør ett av målene deres.","Ta et nytt bilde til hundeboken.","Tren på en ny kommando."];
-const tips=["Korte økter gir ofte bedre læring enn lange.","Avslutt mens hunden fortsatt synes det er gøy.","Belønn raskt når hunden gjør riktig.","Øk vanskelighetsgraden litt om gangen.","Tren først i rolige omgivelser."];
+const tasks=["Tren tre korte innkallinger.","Øv på ro i fem minutter.","Gå en tur med fokus på slakt bånd.","Tren øyekontakt.","Øv på sitt og bli."];
+const tips=["Korte økter gir ofte best læring.","Belønn raskt når hunden gjør riktig.","Avslutt mens hunden fortsatt synes det er gøy.","Øk vanskeligheten litt om gangen."];
 
-function blankDog(name="Ny hund"){
-  return {
-    id:(crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random()),
-    profile:{name,breed:"",birth:"",owner:"",about:"",toy:"",food:""},
-    goals:[{text:"Gå pent i bånd",done:false},{text:"Innkalling",done:false},{text:"Bli",done:false}],
-    commands:[{text:"Sitt",done:false},{text:"Ligg",done:false},{text:"Kom",done:false}],
-    sessions:[],walks:[],memories:[],timeline:[],gallery:[],notes:"",
-    health:{weight:"",vet:"",vaccine:"",insurance:"",medicine:"",notes:""},
-    photo:"",streak:0,lastTrainDate:"",dailyDone:"",weeklyDone:""
-  }
-}
-function dog(){return appState.dogs.find(d=>d.id===appState.activeDogId)}
-function toast(m){const t=$("toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",1700)}
-function esc(v){return String(v||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
-function saveState(){try{localStorage.setItem(KEY,JSON.stringify(appState))}catch(e){toast("Lagringen er full. Slett noen bilder.")}}
+function newDog(){return{id:crypto.randomUUID?crypto.randomUUID():Date.now()+"",profile:{name:"Ny hund",breed:"",birth:"",owner:"",about:""},photo:"",goals:[{text:"Innkalling",done:false},{text:"Gå pent i bånd",done:false}],commands:[{text:"Sitt",done:false},{text:"Kom",done:false}],sessions:[],health:{weight:"",vet:"",vaccine:"",insurance:"",notes:""},memories:[],notes:""}}
+function dog(){return state.dogs.find(d=>d.id===state.activeDogId)}
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function toast(m){const t=$("toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",1500)}
+function init(){try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s)state=s}catch(e){}if(!state.dogs.length){const d=newDog();state.dogs=[d];state.activeDogId=d.id}if(!dog())state.activeDogId=state.dogs[0].id;renderAll()}
 function openBook(){$("cover").classList.add("open");$("controls").style.display="flex";showPage(0)}
-function showPage(i){const pages=[...document.querySelectorAll(".page")];currentPage=Math.max(0,Math.min(i,pages.length-1));pages.forEach((p,n)=>p.classList.toggle("active",n===currentPage));$("pageCount").textContent=`Side ${currentPage+1} av ${pages.length}`}
-function nextPage(){saveForms();showPage(currentPage+1)}function prevPage(){saveForms();showPage(currentPage-1)}
-function loadState(){
-  try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&Array.isArray(s.dogs))appState=s}catch(e){}
-  if(!appState.dogs.length){const d=blankDog();appState.dogs=[d];appState.activeDogId=d.id}
-  if(!appState.activeDogId||!dog())appState.activeDogId=appState.dogs[0].id;
-  saveState();renderAll()
-}
-function renderBooks(){
-  $("books").innerHTML=appState.dogs.map((d,i)=>`
-    <div class="book-spine ${d.id===appState.activeDogId?"active":""}" style="background:linear-gradient(180deg,${["#0b5cff","#7c3aed","#be185d","#0f766e","#9a3412"][i%5]},#172033)" onclick="switchDog('${d.id}')">
-      <div class="emoji">🐶</div><b>${esc(d.profile.name||"Ny hund")}</b><small>${esc(d.profile.breed||"Min Hundebok")}</small>
-    </div>`).join("")+
-    `<div class="book-spine add" onclick="createDog()"><div class="emoji">➕</div><b>Ny hund</b><small>Opprett bok</small></div>`;
-}
-function switchDog(id){saveForms();appState.activeDogId=id;saveState();$("cover").classList.remove("open");$("controls").style.display="none";renderAll();toast("Byttet hundebok")}
-function createDog(){saveForms();const d=blankDog();appState.dogs.push(d);appState.activeDogId=d.id;saveState();renderAll();toast("Ny hundebok opprettet")}
-function saveForms(){
-  const d=dog();if(!d)return;
-  d.profile={name:$("dogName").value.trim(),breed:$("dogBreed").value.trim(),birth:$("dogBirth").value,owner:$("ownerName").value.trim(),about:$("dogAbout").value.trim(),toy:$("favoriteToy").value.trim(),food:$("favoriteFood").value.trim()};
-  d.notes=$("notes").value;
-}
-function saveProfile(){saveForms();saveState();renderAll();toast("Profil lagret")}
-function saveHealth(){
-  dog().health={weight:$("healthWeight").value.trim(),vet:$("healthVet").value.trim(),vaccine:$("healthVaccine").value,insurance:$("healthInsurance").value.trim(),medicine:$("healthMedicine").value.trim(),notes:$("healthNotes").value.trim()};
-  saveState();renderHealth();toast("Helse lagret")
-}
-function saveNotes(){dog().notes=$("notes").value;saveState();$("notesSaved").textContent="✅ Notater lagret";toast("Notater lagret")}
-function addGoal(){const t=$("newGoal").value.trim();if(!t)return;dog().goals.push({text:t,done:false});$("newGoal").value="";saveState();renderGoals();renderStats()}
-function addCommand(){const t=$("newCommand").value.trim();if(!t)return;dog().commands.push({text:t,done:false});$("newCommand").value="";saveState();renderCommands()}
-function renderGoals(){$("goalList").innerHTML=dog().goals.map((g,i)=>`<div class="row"><input type="checkbox" ${g.done?"checked":""} onchange="dog().goals[${i}].done=this.checked;saveState();renderStats()"><input value="${esc(g.text)}" onchange="dog().goals[${i}].text=this.value;saveState()"><button onclick="dog().goals.splice(${i},1);saveState();renderGoals();renderStats()">✕</button></div>`).join("")}
-function renderCommands(){$("commandList").innerHTML=dog().commands.map((g,i)=>`<div class="row"><input type="checkbox" ${g.done?"checked":""} onchange="dog().commands[${i}].done=this.checked;saveState()"><input value="${esc(g.text)}" onchange="dog().commands[${i}].text=this.value;saveState()"><button onclick="dog().commands.splice(${i},1);saveState();renderCommands()">✕</button></div>`).join("")}
-function setRating(n){currentRating=n;document.querySelectorAll("[data-r]").forEach(b=>b.classList.toggle("active",Number(b.dataset.r)===n))}
-function saveSession(){
-  const what=$("sessionWhat").value.trim();if(!what){toast("Skriv hva dere trente på");return}
-  const today=$("sessionDate").value||new Date().toISOString().slice(0,10);
-  const d=dog();
-  if(d.lastTrainDate){
-    const a=new Date(d.lastTrainDate),b=new Date(today);const diff=Math.round((b-a)/86400000);
-    d.streak=diff===1?d.streak+1:diff===0?d.streak:1;
-  }else d.streak=1;
-  d.lastTrainDate=today;
-  d.sessions.unshift({id:Date.now(),date:today,duration:$("sessionDuration").value.trim(),what,where:$("sessionWhere").value.trim(),reward:$("sessionReward").value.trim(),good:$("sessionGood").value.trim(),improve:$("sessionImprove").value.trim(),rating:currentRating});
-  ["sessionWhat","sessionDuration","sessionWhere","sessionReward","sessionGood","sessionImprove"].forEach(id=>$(id).value="");
-  currentRating=0;document.querySelectorAll("[data-r]").forEach(b=>b.classList.remove("active"));
-  saveState();renderSessions();renderStats();renderToday();toast("Treningsøkt lagret")
-}
-function saveWalk(){const place=$("walkPlace").value.trim();if(!place){toast("Skriv hvor dere gikk");return}dog().walks.unshift({id:Date.now(),date:$("walkDate").value,type:$("walkType").value,place,distance:$("walkDistance").value.trim(),note:$("walkNote").value.trim()});saveState();renderWalks();renderStats();toast("Tur lagret")}
-function saveMemory(){
-  const title=$("memoryTitle").value.trim();
-  if(!title){toast("Skriv en tittel");return}
-  dog().memories.unshift({
-    id:Date.now(),
-    date:$("memoryDate").value || new Date().toISOString().slice(0,10),
-    title,
-    text:$("memoryText").value.trim()
-  });
-  saveState();
-  renderMemories();
-  renderStats();
-  renderLatestMemory();
-  toast("Minne lagret");
-}
-
-function saveQuickMemory(){
-  const title=$("quickMemoryTitle").value.trim();
-  const text=$("quickMemoryText").value.trim();
-  if(!title){toast("Skriv en tittel");return}
-  dog().memories.unshift({
-    id:Date.now(),
-    date:new Date().toISOString().slice(0,10),
-    title,
-    text
-  });
-  $("quickMemoryTitle").value="";
-  $("quickMemoryText").value="";
-  saveState();
-  renderMemories();
-  renderStats();
-  renderLatestMemory();
-  toast("Minne lagret");
-}
-
-function renderLatestMemory(){
-  const m=dog().memories[0];
-  $("latestMemory").textContent=m ? m.title : "Ingen minner ennå";
-}
-function saveTimeline(){const title=$("timelineTitle").value.trim();if(!title){toast("Skriv en hendelse");return}dog().timeline.push({id:Date.now(),date:$("timelineDate").value,title,text:$("timelineText").value.trim()});dog().timeline.sort((a,b)=>(a.date||"").localeCompare(b.date||""));saveState();renderTimeline();toast("Livshendelse lagt til")}
-function completeDailyTask(){dog().dailyDone=new Date().toISOString().slice(0,10);saveState();toast("Dagens oppgave fullført")}
-function completeWeekly(){dog().weeklyDone=new Date().toISOString().slice(0,7);saveState();toast("Ukens utfordring fullført")}
-function renderToday(){
-  const n=new Date().getDate();
-  $("dailyTask").textContent=tasks[n%tasks.length];
-  $("weeklyChallenge").textContent=challenges[Math.floor(n/7)%challenges.length];
-  $("dailyTip").textContent=tips[n%tips.length];
-  $("streakCount").textContent=dog().streak+" dager";
-  $("nextMedal").textContent=dog().sessions.length<1?"Første økt":dog().sessions.length<5?"5 økter":dog().sessions.length<10?"10 økter":"Målmester";
-}
-function renderSessions(){
-  $("lastSession").textContent=dog().sessions[0]?.what||"Ingen";
-  $("historyList").innerHTML=dog().sessions.length?dog().sessions.map(s=>`<div class="history-item"><h3>${esc(s.what)}</h3><p><b>${esc(s.date||"Uten dato")}</b> · ${esc(s.duration||"")}</p><p>${esc(s.where||"")}</p><p>${"⭐".repeat(s.rating||0)}</p></div>`).join(""):'<div class="card">Ingen økter lagret.</div>';
-}
-function renderWalks(){$("walkHistory").innerHTML=dog().walks.length?dog().walks.map(w=>`<div class="history-item"><h3>${esc(w.place)}</h3><p>${esc(w.date||"")} · ${esc(w.type)} · ${esc(w.distance)}</p><p>${esc(w.note)}</p></div>`).join(""):'<div class="card">Ingen turer lagret.</div>'}
-function renderMemories(){$("memoryHistory").innerHTML=dog().memories.length?dog().memories.map(m=>`<div class="history-item"><h3>${esc(m.title)}</h3><p>${esc(m.date||"")}</p><p>${esc(m.text)}</p></div>`).join(""):'<div class="card">Ingen minner lagret.</div>'}
-function renderTimeline(){$("timelineList").innerHTML=dog().timeline.length?dog().timeline.map(t=>`<div class="timeline-item"><h3>🐾 ${esc(t.title)}</h3><p><b>${esc(t.date||"")}</b></p><p>${esc(t.text)}</p></div>`).join(""):'<div class="card">Ingen livshendelser ennå.</div>'}
-function renderGallery(){
-  $("gallery").innerHTML=dog().gallery.map((img,i)=>`<div class="gallery-item"><img src="${img}"><button onclick="dog().gallery.splice(${i},1);saveState();renderGallery();renderStats()">×</button></div>`).join("");
-}
-function renderHealth(){
-  const h=dog().health;$("healthWeight").value=h.weight||"";$("healthVet").value=h.vet||"";$("healthVaccine").value=h.vaccine||"";$("healthInsurance").value=h.insurance||"";$("healthMedicine").value=h.medicine||"";$("healthNotes").value=h.notes||"";
-  $("weightPreview").textContent=h.weight||"Ikke oppgitt";$("vaccinePreview").textContent=h.vaccine||"Ikke oppgitt";$("vetPreview").textContent=h.vet||"Ikke oppgitt";
-}
-function renderStats(){
-  const d=dog(),done=d.goals.filter(g=>g.done).length;
-  $("sessionCount").textContent=d.sessions.length;$("completedGoals").textContent=done;$("walkCount").textContent=d.walks.length;$("photoCount").textContent=d.gallery.length;
-  $("memoryCount").textContent=d.memories.length+d.timeline.length;
-  $("medal1").classList.toggle("locked",d.sessions.length<1);$("medal5").classList.toggle("locked",d.sessions.length<5);$("medal10").classList.toggle("locked",d.sessions.length<10);$("medalGoal").classList.toggle("locked",!d.goals.length||done<d.goals.length);
-}
-function renderAll(){
-  const d=dog();renderBooks();
-  $("dogName").value=d.profile.name||"";$("dogBreed").value=d.profile.breed||"";$("dogBirth").value=d.profile.birth||"";$("ownerName").value=d.profile.owner||"";$("dogAbout").value=d.profile.about||"";$("favoriteToy").value=d.profile.toy||"";$("favoriteFood").value=d.profile.food||"";
-  $("notes").value=d.notes||"";$("activeDogName").textContent=d.profile.name||"Ikke fylt inn";$("coverName").textContent=d.profile.name?"Til "+d.profile.name:"For min hund";
-  if(d.photo){$("profilePhoto").src=d.photo;$("profilePhoto").style.display="block";$("coverPhoto").innerHTML=`<img src="${d.photo}">`}else{$("profilePhoto").style.display="none";$("coverPhoto").textContent="🐶"}
-  renderGoals();renderCommands();renderToday();renderSessions();renderHealth();renderWalks();renderMemories();renderLatestMemory();renderTimeline();renderGallery();renderStats();
-}
-function compress(file,max=900,q=.76){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const s=Math.min(1,max/i.width),c=document.createElement("canvas");c.width=Math.round(i.width*s);c.height=Math.round(i.height*s);c.getContext("2d").drawImage(i,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",q))};i.onerror=()=>rej();i.src=r.result};r.onerror=()=>rej();r.readAsDataURL(file)})}
-$("profilePhotoInput").addEventListener("change",async function(){const f=this.files[0];if(!f)return;dog().photo=await compress(f);saveState();renderAll();toast("Profilbilde lagret")});
-$("galleryInput").addEventListener("change",async function(){for(const f of [...this.files]){dog().gallery.push(await compress(f,700,.72))}saveState();renderGallery();renderStats();toast("Bilder lagt til")});
-$("notes").addEventListener("input",function(){dog().notes=this.value;saveState();$("notesSaved").textContent="Lagrer automatisk...";clearTimeout(window.nt);window.nt=setTimeout(()=>$("notesSaved").textContent="✅ Lagret automatisk",500)});
-function resetAll(){if(confirm("Vil du slette alle hundebøkene?")){localStorage.removeItem(KEY);location.reload()}}
-loadState();
+function sheets(){return [...document.querySelectorAll(".sheet")]}
+function showPage(i){const p=sheets();currentPage=Math.max(0,Math.min(i,p.length-1));p.forEach((x,n)=>x.classList.toggle("active",n===currentPage));$("pageCount").textContent=`Side ${currentPage+1} av ${p.length}`}
+function nextPage(){showPage(currentPage+1)}function prevPage(){showPage(currentPage-1)}
+function goToPage(i){showPage(i)}
+function renderContents(){$("contents").innerHTML=sheets().map((s,i)=>`<button onclick="goToPage(${i})">${i+1}. ${s.dataset.title}</button>`).join("")}
+function renderBooks(){$("books").innerHTML=state.dogs.map((d,i)=>`<div class="spine ${d.id===state.activeDogId?"active":""}" style="background:linear-gradient(#0b5cff,#172033)" onclick="switchDog('${d.id}')"><div class="icon">🐶</div><b>${d.profile.name}</b><small>${d.profile.breed||"Min Hundebok"}</small></div>`).join("")+`<div class="spine" style="background:linear-gradient(#64748b,#334155)" onclick="createDog()"><div class="icon">➕</div><b>Ny hund</b><small>Opprett bok</small></div>`}
+function switchDog(id){state.activeDogId=id;save();$("cover").classList.remove("open");$("controls").style.display="none";renderAll()}
+function createDog(){const d=newDog();state.dogs.push(d);state.activeDogId=d.id;save();renderAll()}
+function saveProfile(){const d=dog();d.profile={name:$("dogName").value.trim()||"Ny hund",breed:$("dogBreed").value.trim(),birth:$("dogBirth").value,owner:$("ownerName").value.trim(),about:$("dogAbout").value.trim()};save();renderAll();toast("Profil lagret")}
+function addGoal(){const t=$("newGoal").value.trim();if(!t)return;dog().goals.push({text:t,done:false});$("newGoal").value="";save();renderGoals()}
+function addCommand(){const t=$("newCommand").value.trim();if(!t)return;dog().commands.push({text:t,done:false});$("newCommand").value="";save();renderCommands()}
+function renderGoals(){$("goalList").innerHTML=dog().goals.map((g,i)=>`<div class="row"><input type="checkbox" ${g.done?"checked":""} onchange="dog().goals[${i}].done=this.checked;save();renderStats()"><input value="${g.text}" onchange="dog().goals[${i}].text=this.value;save()"><button onclick="dog().goals.splice(${i},1);save();renderGoals();renderStats()">✕</button></div>`).join("")}
+function renderCommands(){$("commandList").innerHTML=dog().commands.map((g,i)=>`<div class="row"><input type="checkbox" ${g.done?"checked":""}><input value="${g.text}" onchange="dog().commands[${i}].text=this.value;save()"><button onclick="dog().commands.splice(${i},1);save();renderCommands()">✕</button></div>`).join("")}
+function setRating(n){rating=n;document.querySelectorAll("[data-r]").forEach(b=>b.classList.toggle("active",+b.dataset.r===n))}
+function saveSession(){const what=$("sessionWhat").value.trim();if(!what){toast("Skriv hva dere trente på");return}dog().sessions.unshift({date:$("sessionDate").value,what,duration:$("sessionDuration").value,where:$("sessionWhere").value,reward:$("sessionReward").value,rating});save();renderSessions();renderStats();toast("Økt lagret")}
+function renderSessions(){$("historyList").innerHTML=dog().sessions.length?dog().sessions.map(s=>`<div class="history-item"><h3>${s.what}</h3><p>${s.date||"Uten dato"} · ${s.duration||""}</p><p>${s.where||""}</p><p>${"⭐".repeat(s.rating||0)}</p></div>`).join(""):'<div class="card">Ingen økter lagret.</div>'}
+function saveHealth(){dog().health={weight:$("weight").value,vet:$("vet").value,vaccine:$("vaccine").value,insurance:$("insurance").value,notes:$("healthNotes").value};save();renderHealth();toast("Helse lagret")}
+function renderHealth(){const h=dog().health;$("weight").value=h.weight||"";$("vet").value=h.vet||"";$("vaccine").value=h.vaccine||"";$("insurance").value=h.insurance||"";$("healthNotes").value=h.notes||"";$("weightPreview").textContent=h.weight||"Ikke oppgitt";$("vaccinePreview").textContent=h.vaccine||"Ikke oppgitt"}
+function saveMemory(){const t=$("memoryTitle").value.trim();if(!t)return;dog().memories.unshift({title:t,text:$("memoryText").value,date:new Date().toISOString().slice(0,10)});save();renderMemories();toast("Minne lagret")}
+function renderMemories(){$("memoryList").innerHTML=dog().memories.length?dog().memories.map(m=>`<div class="history-item"><h3>${m.title}</h3><p>${m.date}</p><p>${m.text}</p></div>`).join(""):'<div class="card">Ingen minner lagret.</div>'}
+function saveNotes(){dog().notes=$("notes").value;save();toast("Notater lagret")}
+function renderStats(){$("sessionCount").textContent=dog().sessions.length;$("goalCount").textContent=dog().goals.filter(g=>g.done).length}
+function renderAll(){const d=dog();renderBooks();renderContents();$("dogName").value=d.profile.name||"";$("dogBreed").value=d.profile.breed||"";$("dogBirth").value=d.profile.birth||"";$("ownerName").value=d.profile.owner||"";$("dogAbout").value=d.profile.about||"";$("welcomeName").textContent=d.profile.name||"Ny hund";$("coverName").textContent="Til "+(d.profile.name||"min hund");$("dailyTask").textContent=tasks[new Date().getDate()%tasks.length];$("dailyTip").textContent=tips[new Date().getDate()%tips.length];$("notes").value=d.notes||"";if(d.photo){$("profilePhoto").src=d.photo;$("profilePhoto").style.display="block";$("coverPhoto").innerHTML=`<img src="${d.photo}">`}else{$("profilePhoto").style.display="none";$("coverPhoto").textContent="🐶"}renderGoals();renderCommands();renderSessions();renderHealth();renderMemories();renderStats()}
+function compress(file){return new Promise(res=>{const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const s=Math.min(1,900/i.width),c=document.createElement("canvas");c.width=i.width*s;c.height=i.height*s;c.getContext("2d").drawImage(i,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",.75))};i.src=r.result};r.readAsDataURL(file)})}
+$("photoInput").addEventListener("change",async function(){if(!this.files[0])return;dog().photo=await compress(this.files[0]);save();renderAll();toast("Bilde lagret")})
+function resetAll(){if(confirm("Slette alle hundebøker?")){localStorage.removeItem(KEY);location.reload()}}
+init();
 </script>
 </body>
 </html>
