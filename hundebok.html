@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok 6.1 – Hundene våre</title>
+<title>Hundebok 7.0 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -166,13 +166,243 @@ textarea{min-height:90px;resize:vertical}
   .book-shell{min-height:1420px}.cover{padding:26px 20px}.cover-photo{width:120px;height:120px}
   .gallery{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ===== HUNDEBOK 7.0 PREMIUM DESIGN ===== */
+body{
+  background:
+    radial-gradient(circle at 12% 8%,rgba(123,92,255,.20),transparent 28%),
+    radial-gradient(circle at 88% 6%,rgba(249,115,22,.14),transparent 26%),
+    linear-gradient(180deg,#edf4ff 0%,#fff9f2 45%,#f8fafc 100%);
+}
+.wrap{max-width:1260px}
+.topbar{
+  border-radius:28px;
+  border:1px solid rgba(191,215,255,.85);
+  backdrop-filter:blur(10px);
+  box-shadow:0 18px 45px rgba(15,23,42,.12);
+}
+.brand{
+  font-family:Georgia,serif;
+  letter-spacing:.3px;
+  font-size:27px;
+}
+.bookshelf{
+  position:relative;
+  padding:26px 24px 34px;
+  border:14px solid #25150e;
+  border-radius:30px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.05),transparent 16%),
+    repeating-linear-gradient(90deg,#5a3825 0 90px,#4a2d1f 90px 180px),
+    linear-gradient(180deg,#68442f,#3d261b);
+  box-shadow:
+    inset 0 6px 12px rgba(255,255,255,.07),
+    inset 0 -18px 22px rgba(0,0,0,.25),
+    0 24px 60px rgba(15,23,42,.24);
+}
+.bookshelf:after{
+  content:"";
+  position:absolute;
+  left:18px;right:18px;bottom:14px;
+  height:16px;border-radius:8px;
+  background:linear-gradient(180deg,#7a4b32,#3a2115);
+  box-shadow:0 5px 8px rgba(0,0,0,.35);
+}
+.shelf-title{
+  font-family:Georgia,serif;
+  font-size:24px;
+  color:#ffe8b0;
+  text-shadow:0 3px 9px rgba(0,0,0,.45);
+}
+.books{align-items:flex-end;gap:16px;padding-bottom:18px}
+.book-spine{
+  min-width:165px;
+  height:235px;
+  border-radius:13px 13px 5px 5px;
+  position:relative;
+  overflow:hidden;
+  border:2px solid rgba(255,235,190,.26);
+  box-shadow:
+    inset 12px 0 18px rgba(0,0,0,.28),
+    inset -4px 0 8px rgba(255,255,255,.08),
+    0 16px 24px rgba(0,0,0,.34);
+  transition:.22s ease;
+}
+.book-spine:before{
+  content:"";
+  position:absolute;
+  top:18px;left:10px;right:10px;height:2px;
+  background:rgba(245,213,140,.55);
+  box-shadow:0 168px 0 rgba(245,213,140,.55);
+}
+.book-spine:hover{transform:translateY(-10px) rotate(-1deg)}
+.book-spine.active{
+  outline:4px solid #f7d98c;
+  box-shadow:
+    inset 12px 0 18px rgba(0,0,0,.28),
+    0 20px 34px rgba(0,0,0,.40),
+    0 0 0 7px rgba(247,217,140,.16);
+}
+.book-spine b{
+  font-size:23px;
+  color:#fff3cf;
+  text-shadow:0 3px 8px rgba(0,0,0,.38);
+}
+.book-spine small{
+  font-size:13px;
+  color:#fff1c7;
+  font-weight:800;
+}
+.book-shell{min-height:900px}
+.cover{
+  border:14px solid #140b07;
+  background:
+    radial-gradient(circle at 20% 12%,rgba(255,255,255,.10),transparent 18%),
+    radial-gradient(circle at 80% 10%,rgba(227,189,104,.13),transparent 18%),
+    repeating-linear-gradient(45deg,rgba(255,255,255,.015) 0 2px,transparent 2px 5px),
+    linear-gradient(135deg,#28170d,#5c3520 48%,#24130b);
+  box-shadow:
+    inset 0 0 0 3px rgba(227,189,104,.52),
+    inset 24px 0 42px rgba(0,0,0,.38),
+    0 34px 80px rgba(15,23,42,.40);
+}
+.cover:before{
+  inset:28px;
+  border:2px solid rgba(227,189,104,.80);
+  box-shadow:
+    inset 0 0 0 7px rgba(227,189,104,.05),
+    inset 0 0 36px rgba(227,189,104,.10);
+}
+.cover h1{
+  font-size:clamp(3.2rem,7vw,6.2rem);
+  color:#fff0be;
+  letter-spacing:1.5px;
+  text-shadow:
+    0 2px 0 #80611d,
+    0 5px 0 #4e3610,
+    0 14px 28px rgba(0,0,0,.45);
+}
+.cover-photo{
+  width:175px;height:175px;
+  border-radius:50%;
+  border:5px solid #e3bd68;
+  box-shadow:
+    0 0 0 8px rgba(227,189,104,.15),
+    0 20px 38px rgba(0,0,0,.35);
+}
+.cover-name{
+  font-family:Georgia,serif;
+  min-width:320px;
+  font-size:22px;
+  border:1px solid rgba(227,189,104,.78);
+  background:rgba(0,0,0,.24);
+  box-shadow:inset 0 0 18px rgba(227,189,104,.08);
+}
+.cover button{
+  min-width:220px;
+  padding:16px 28px;
+  font-size:18px;
+  background:linear-gradient(135deg,#fff6d9,#e7bd63);
+  box-shadow:0 15px 30px rgba(0,0,0,.28);
+  transition:.2s ease;
+}
+.cover button:hover{transform:translateY(-3px) scale(1.02)}
+.page{
+  border:1px solid #d7c5a9;
+  background:
+    linear-gradient(90deg,rgba(81,54,30,.07),transparent 5%,transparent 95%,rgba(81,54,30,.05)),
+    repeating-linear-gradient(0deg,rgba(107,79,53,.025) 0 1px,transparent 1px 5px),
+    #fffdf7;
+  box-shadow:
+    0 30px 70px rgba(15,23,42,.24),
+    inset 0 0 35px rgba(107,79,53,.04);
+}
+.page:before{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;left:50%;
+  width:2px;
+  background:linear-gradient(180deg,transparent,#d7c5a9 12%,#d7c5a9 88%,transparent);
+  box-shadow:0 0 14px rgba(107,79,53,.18);
+}
+.pagegrid{position:relative;z-index:2}
+.side{
+  background:rgba(255,255,255,.30);
+  border-radius:22px;
+  padding:18px;
+}
+.side h2{
+  font-family:Georgia,serif;
+  font-size:33px;
+  color:#203f72;
+  border-bottom:2px solid rgba(227,189,104,.55);
+  padding-bottom:8px;
+  margin-bottom:14px;
+}
+.card,.dashboard-card,.daily-memory{
+  border-radius:22px;
+  border:1px solid rgba(215,197,169,.95);
+  box-shadow:0 12px 25px rgba(84,61,37,.08);
+}
+.premium-welcome{
+  padding:24px;
+  border-radius:28px;
+  background:
+    radial-gradient(circle at 90% 20%,rgba(255,255,255,.18),transparent 25%),
+    linear-gradient(135deg,#061b55,#0b5cff 50%,#6d28d9);
+}
+.premium-welcome h2{
+  font-family:Georgia,serif;
+  font-size:34px;
+}
+.dashboard-photo{
+  border-radius:28px;
+  border:4px solid #fff;
+  box-shadow:0 18px 36px rgba(15,23,42,.16);
+}
+.dashboard-card h3{
+  font-family:Georgia,serif;
+  font-size:21px;
+}
+.continue-card{
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 14px 28px rgba(15,23,42,.18);
+}
+input,select,textarea{
+  border:1px solid #ccb997;
+  border-radius:16px;
+  background:rgba(255,254,251,.96);
+  box-shadow:inset 0 1px 2px rgba(107,79,53,.05);
+}
+input:focus,select:focus,textarea:focus{
+  outline:3px solid rgba(11,92,255,.14);
+  border-color:#8db4ff;
+}
+.btn{
+  padding:12px 18px;
+  box-shadow:0 10px 20px rgba(11,92,255,.18);
+}
+.controls{
+  bottom:-66px;
+  padding:0 8px;
+}
+.controls button{
+  padding:13px 20px;
+  box-shadow:0 10px 22px rgba(15,23,42,.18);
+}
+@media(max-width:850px){
+  .page:before{display:none}
+  .side{padding:12px}
+  .book-shell{min-height:1450px}
+}
+
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok 6.1</div>
+  <div class="brand">📖 Hundebok 7.0</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -188,7 +418,7 @@ textarea{min-height:90px;resize:vertical}
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok 6.1</h1>
+  <h1>Hundebok 7.0</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -243,7 +473,12 @@ textarea{min-height:90px;resize:vertical}
 <section class="page" data-title="Min hund">
 <div class="pagegrid">
 <div class="side">
-  <h2>🐶 Min hund</h2>
+  <h2>🐶 Hundens profil</h2>
+  <div class="card" style="text-align:center;padding:20px">
+    <div style="font-size:13px;text-transform:uppercase;letter-spacing:2px;color:#8a6a43;font-weight:900">Min beste venn</div>
+    <div style="font-family:Georgia,serif;font-size:38px;color:#163d77;margin:8px 0" id="profileDisplayName">Ny hund</div>
+    <div style="font-weight:900;color:#64748b" id="profileDisplayBreed">Rase ikke oppgitt</div>
+  </div>
   <div class="grid">
     <div><label>Navn</label><input id="dogName"></div>
     <div><label>Rase</label><input id="dogBreed"></div>
@@ -256,9 +491,16 @@ textarea{min-height:90px;resize:vertical}
   <button class="btn" onclick="saveProfile()">💾 Lagre profil</button>
 </div>
 <div class="side">
-  <h2>📷 Profilbilde</h2>
-  <input id="profilePhotoInput" type="file" accept="image/*">
-  <div class="card"><img id="profilePhoto" style="display:none;max-width:100%;border-radius:16px"></div>
+  <h2>📷 Portrett</h2>
+  <div class="dashboard-photo" style="aspect-ratio:4/5" id="profilePortrait">🐶</div>
+  <div style="margin-top:14px">
+    <input id="profilePhotoInput" type="file" accept="image/*">
+    <img id="profilePhoto" style="display:none">
+  </div>
+  <div class="dashboard-grid-2" style="margin-top:14px">
+    <div class="card"><span>Alder</span><b id="profileAge">Ikke oppgitt</b></div>
+    <div class="card"><span>Eier</span><b id="profileOwner">Ikke oppgitt</b></div>
+  </div>
 </div>
 </div>
 </section>
@@ -748,6 +990,35 @@ function renderStats(){
   $("medal10").classList.toggle("locked",d.sessions.length<10);
   $("medalGoal").classList.toggle("locked",!d.goals.length||done<d.goals.length)
 }
+
+function renderPremiumProfile(){
+  const d=dog();
+  if($("profileDisplayName")) $("profileDisplayName").textContent=d.profile.name||"Ny hund";
+  if($("profileDisplayBreed")) $("profileDisplayBreed").textContent=d.profile.breed||"Rase ikke oppgitt";
+  if($("profileOwner")) $("profileOwner").textContent=d.profile.owner||"Ikke oppgitt";
+
+  if($("profilePortrait")){
+    if(d.photo){
+      $("profilePortrait").innerHTML='<img src="'+d.photo+'" alt="Profilbilde">';
+    }else{
+      $("profilePortrait").textContent="🐶";
+    }
+  }
+
+  if($("profileAge")){
+    if(!d.profile.birth){
+      $("profileAge").textContent="Ikke oppgitt";
+    }else{
+      const born=new Date(d.profile.birth+"T12:00:00");
+      const now=new Date();
+      let years=now.getFullYear()-born.getFullYear();
+      const birthday=new Date(now.getFullYear(),born.getMonth(),born.getDate());
+      if(now<birthday) years--;
+      $("profileAge").textContent=years<1?"Under 1 år":years+" år";
+    }
+  }
+}
+
 function renderAll(){
   const d=dog();
   renderBooks();renderContents();
@@ -764,12 +1035,12 @@ function renderAll(){
   $("dailyTip").textContent=tips[new Date().getDate()%tips.length];
   $("notes").value=d.notes||"";
   if(d.photo){
-    $("profilePhoto").src=d.photo;$("profilePhoto").style.display="block";
+    $("profilePhoto").src=d.photo;$("profilePhoto").style.display="none";
     $("coverPhoto").innerHTML=`<img src="${d.photo}">`
   }else{
     $("profilePhoto").style.display="none";$("coverPhoto").textContent="🐶"
   }
-  renderGoals();renderCommands();renderSessions();renderHealth();renderWalks();renderGallery();renderMemories();renderLatestMemory();renderTimeline();renderStats();calculateDogAge();renderDashboard()
+  renderGoals();renderCommands();renderSessions();renderHealth();renderWalks();renderGallery();renderMemories();renderLatestMemory();renderTimeline();renderStats();calculateDogAge();renderDashboard();renderPremiumProfile()
 }
 function compress(file,max=900,q=.75){
   return new Promise((res,rej)=>{
