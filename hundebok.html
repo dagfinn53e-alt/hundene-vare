@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok 6.0 – Hundene våre</title>
+<title>Hundebok 6.1 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -102,6 +102,16 @@ textarea{min-height:90px;resize:vertical}
   box-shadow:0 10px 22px rgba(15,23,42,.06)
 }
 .dashboard-card h3{margin:0 0 7px;color:#163d77}
+.premium-welcome{background:linear-gradient(135deg,#061b55,#0b5cff 55%,#7c3aed);color:white;border-radius:24px;padding:20px;margin-bottom:14px;box-shadow:0 16px 34px rgba(15,23,42,.18)}
+.premium-welcome h2{color:white;margin:0 0 6px}
+.premium-welcome p{margin:0;color:#eaf2ff;font-weight:800}
+.dashboard-photo{aspect-ratio:16/10;border-radius:20px;overflow:hidden;background:linear-gradient(135deg,#dbeafe,#f5d0fe);display:flex;align-items:center;justify-content:center;font-size:64px;border:1px solid #c7d2fe}
+.dashboard-photo img{width:100%;height:100%;object-fit:cover}
+.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.quick-actions button{border:0;border-radius:16px;padding:12px;background:#fff;color:#0b4fd4;font-weight:900;cursor:pointer;box-shadow:0 8px 18px rgba(15,23,42,.08)}
+.continue-card{background:linear-gradient(135deg,#111827,#334155);color:white;border-radius:20px;padding:16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.continue-card button{border:0;border-radius:999px;padding:11px 15px;background:#fff;color:#111827;font-weight:900;cursor:pointer}
+@media(max-width:560px){.quick-actions{grid-template-columns:1fr}}
 .dashboard-card p{margin:0;color:#475569;font-weight:700;line-height:1.5}
 .dashboard-card.highlight{background:linear-gradient(135deg,#eaf2ff,#fff)}
 .dashboard-card.warm{background:linear-gradient(135deg,#fff7ed,#fef3c7);border-color:#fed7aa}
@@ -162,7 +172,7 @@ textarea{min-height:90px;resize:vertical}
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok 6.0</div>
+  <div class="brand">📖 Hundebok 6.1</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -178,62 +188,53 @@ textarea{min-height:90px;resize:vertical}
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok 6.0</h1>
+  <h1>Hundebok 6.1</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
 </section>
 
-<section class="page" data-title="I dag">
+<section class="page" data-title="Dashboard Premium">
 <div class="pagegrid">
 <div class="side">
-  <h2>👋 I dag med <span id="welcomeNameInline">hunden din</span></h2>
-  <p class="lead">Alt det viktigste samlet på én side.</p>
-
+  <div class="premium-welcome">
+    <h2 id="timeGreeting">God dag</h2>
+    <p id="welcomeSentence">Hunden din venter på deg.</p>
+  </div>
   <div class="dashboard-stack">
     <div class="dashboard-card highlight">
       <h3>🌞 Dagens oppgave</h3>
       <p id="dailyTask"></p>
       <button class="btn green" style="margin-top:10px" onclick="completeDailyTask()">✅ Fullfør dagens oppgave</button>
     </div>
-
     <div class="dashboard-grid-2">
-      <div class="dashboard-card">
-        <h3>📅 Siste aktivitet</h3>
-        <p id="lastActivityText">Ingen aktivitet registrert ennå.</p>
-      </div>
-      <div class="dashboard-card">
-        <h3>🏆 Neste milepæl</h3>
-        <p id="nextMilestoneText">Første treningsøkt</p>
-        <div class="progress-line"><span id="milestoneBar"></span></div>
-      </div>
+      <div class="dashboard-card"><h3>📅 Siste aktivitet</h3><p id="lastActivityText">Ingen aktivitet registrert ennå.</p></div>
+      <div class="dashboard-card"><h3>🏆 Neste medalje</h3><p id="nextMilestoneText">Første treningsøkt</p><div class="progress-line"><span id="milestoneBar"></span></div></div>
     </div>
-
-    <div class="dashboard-card good">
-      <h3>🩺 Neste helsepunkt</h3>
-      <p id="nextHealthText">Ingen vaksine registrert.</p>
-    </div>
+    <div class="dashboard-card good"><h3>🩺 Neste vaksine</h3><p id="nextHealthText">Ingen vaksine registrert.</p></div>
+    <div class="continue-card"><div><strong>📖 Fortsett der du slapp</strong><div id="continuePageText" style="margin-top:4px;color:#cbd5e1">Side 1</div></div><button onclick="continueReading()">Fortsett</button></div>
   </div>
 </div>
-
 <div class="side">
-  <h2>❤️ Et minne om dagen</h2>
-  <div class="daily-memory">
-    <h3>Hva var det fineste hunden gjorde i dag?</h3>
+  <h2>🐶 I dag med <span id="welcomeNameInline">hunden din</span></h2>
+  <div class="dashboard-photo" id="dashboardPhoto">🐶</div>
+  <div class="dashboard-grid-2" style="margin-top:12px">
+    <div class="card"><span>Treningsøkter</span><b class="big" id="welcomeSessions">0</b></div>
+    <div class="card"><span>Minner</span><b class="big" id="welcomeMemories">0</b></div>
+  </div>
+  <div class="dashboard-card warm"><h3>❤️ Siste minne</h3><p id="dashboardLatestMemory">Ingen minner ennå.</p></div>
+  <div class="daily-memory" style="margin-top:12px">
+    <h3>Hva var det fineste i dag?</h3>
     <input id="dailyMemoryTitle" placeholder="Kort tittel">
     <textarea id="dailyMemoryText" placeholder="Skriv noen få ord om dagen..."></textarea>
     <button class="btn" onclick="saveDailyMemory()">❤️ Lagre dagens minne</button>
     <div id="dailyMemoryStatus" style="margin-top:9px;font-weight:900;color:#166534"></div>
   </div>
-
-  <div class="dashboard-card warm" style="margin-top:12px">
-    <h3>💡 Dagens tips</h3>
-    <p id="dailyTip"></p>
-  </div>
-
-  <div class="dashboard-grid-2" style="margin-top:12px">
-    <div class="card"><span>Treningsøkter</span><b class="big" id="welcomeSessions">0</b></div>
-    <div class="card"><span>Minner</span><b class="big" id="welcomeMemories">0</b></div>
+  <div class="quick-actions">
+    <button onclick="showPage(3)">🎓 Ny trening</button>
+    <button onclick="showPage(6)">🌲 Ny tur</button>
+    <button onclick="showPage(7)">📸 Legg til bilde</button>
+    <button onclick="showPage(8)">🕰️ Livshendelse</button>
   </div>
 </div>
 </div>
@@ -452,12 +453,12 @@ function newDog(){
     goals:[{text:"Innkalling",done:false},{text:"Gå pent i bånd",done:false}],
     commands:[{text:"Sitt",done:false},{text:"Kom",done:false}],
     sessions:[],
-    health:{weight:"",vet:"",vaccine:"",insurance:"",notes:"",dailyDone:""},
+    health:{weight:"",vet:"",vaccine:"",insurance:"",notes:"",dailyDone:"",lastPage:0},
     walks:[],
     gallery:[],
     memories:[],
     timeline:[],
-    notes:"",dailyDone:""
+    notes:"",dailyDone:"",lastPage:0
   }
 }
 function dog(){return state.dogs.find(d=>d.id===state.activeDogId)}
@@ -483,7 +484,15 @@ function openBook(){
   showPage(0);
 }
 function pages(){return [...document.querySelectorAll(".page")]}
-function showPage(i){const p=pages();currentPage=Math.max(0,Math.min(i,p.length-1));p.forEach((x,n)=>x.classList.toggle("active",n===currentPage));$("pageCount").textContent=`Side ${currentPage+1} av ${p.length}`}
+function showPage(i){
+  const p=pages();
+  currentPage=Math.max(0,Math.min(i,p.length-1));
+  p.forEach((x,n)=>x.classList.toggle("active",n===currentPage));
+  $("pageCount").textContent=`Side ${currentPage+1} av ${p.length}`;
+  dog().lastPage=currentPage;
+  save();
+  renderContinueReading();
+}
 function nextPage(){showPage(currentPage+1)}
 function prevPage(){showPage(currentPage-1)}
 function renderContents(){$("contents").innerHTML=pages().map((p,i)=>`<button onclick="showPage(${i})">${i+1}. ${p.dataset.title}</button>`).join("")}
@@ -626,8 +635,36 @@ function saveDailyMemory(){
   toast("Dagens minne er lagret");
 }
 
+function renderGreeting(){
+  const hour=new Date().getHours();
+  let greeting="God dag";
+  let sentence="Kanskje det passer med en liten aktivitet i dag?";
+  if(hour<10){greeting="🌅 God morgen";sentence=(dog().profile.name||"Hunden din")+" er klar for en ny dag."}
+  else if(hour<17){greeting="☀️ God ettermiddag";sentence="Kanskje det passer med en liten treningsøkt?"}
+  else{greeting="🌙 God kveld";sentence="Ta vare på dagens beste minne før dagen er over."}
+  $("timeGreeting").textContent=greeting+(dog().profile.owner ? ", "+dog().profile.owner : "");
+  $("welcomeSentence").textContent=sentence;
+}
+function renderDashboardPhoto(){
+  const box=$("dashboardPhoto");
+  if(dog().gallery.length){box.innerHTML='<img src="'+dog().gallery[0]+'" alt="Siste bilde">'}
+  else if(dog().photo){box.innerHTML='<img src="'+dog().photo+'" alt="Profilbilde">'}
+  else{box.textContent="🐶"}
+}
+function renderDashboardLatestMemory(){
+  const memory=dog().memories[0];
+  $("dashboardLatestMemory").textContent=memory ? memory.title+(memory.text ? " – "+memory.text : "") : "Ingen minner ennå.";
+}
+function renderContinueReading(){
+  $("continuePageText").textContent="Side "+((dog().lastPage||0)+1);
+}
+function continueReading(){showPage(dog().lastPage||0)}
 function renderDashboard(){
   const d=dog();
+  renderGreeting();
+  renderDashboardPhoto();
+  renderDashboardLatestMemory();
+  renderContinueReading();
 
   $("welcomeNameInline").textContent=d.profile.name||"hunden din";
   $("welcomeSessions").textContent=d.sessions.length;
@@ -751,7 +788,7 @@ function compress(file,max=900,q=.75){
   })
 }
 $("profilePhotoInput").addEventListener("change",async function(){if(!this.files[0])return;dog().photo=await compress(this.files[0]);save();renderAll();toast("Profilbilde lagret")})
-$("galleryInput").addEventListener("change",async function(){for(const f of [...this.files])dog().gallery.push(await compress(f,700,.72));save();renderGallery();renderStats();toast("Bilder lagt til")})
+$("galleryInput").addEventListener("change",async function(){for(const f of [...this.files])dog().gallery.push(await compress(f,700,.72));save();renderGallery();renderStats();renderDashboardPhoto();toast("Bilder lagt til")})
 function resetAll(){if(confirm("Slette alle hundebøker?")){localStorage.removeItem(KEY);location.reload()}}
 document.addEventListener("DOMContentLoaded",function(){
   const button=document.getElementById("openBookBtn");
