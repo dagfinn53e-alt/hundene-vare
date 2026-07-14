@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok 4.1 – Hundene våre</title>
+<title>Hundebok 5.0 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -51,15 +51,15 @@ body{
 }
 .cover{
   z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-  padding:38px 46px;color:#fff;overflow:hidden;transition:.75s;
+  padding:38px 46px;color:#fff;overflow:hidden;transition:.8s;
   background:
     radial-gradient(circle at 18% 16%,rgba(255,255,255,.16),transparent 24%),
     radial-gradient(circle at 84% 12%,rgba(255,214,120,.16),transparent 20%),
-    linear-gradient(135deg,#071a3d,#0f3f7d 45%,#4b2d87);
-  border:10px solid #0b244e;
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,.12),inset 18px 0 30px rgba(0,0,0,.22),0 28px 70px rgba(15,23,42,.35)
+    linear-gradient(135deg,#20130b 0%,#4b2e1b 42%,#20130b 100%);
+  border:12px solid #120b07;
+  box-shadow:inset 0 0 0 3px rgba(227,189,104,.42),inset 20px 0 36px rgba(0,0,0,.35),0 30px 75px rgba(15,23,42,.38)
 }
-.cover:before{content:"";position:absolute;inset:22px;border:2px solid rgba(255,220,150,.55);border-radius:20px;pointer-events:none}
+.cover:before{content:"";position:absolute;inset:22px;border:2px solid rgba(227,189,104,.75);border-radius:20px;pointer-events:none}
 .cover:after{pointer-events:none;content:"🐾   🐾   🐾";position:absolute;bottom:30px;left:0;right:0;font-size:24px;letter-spacing:18px;opacity:.18}
 .cover.open{transform:rotateY(-100deg);opacity:0;pointer-events:none}
 .cover-photo{
@@ -67,8 +67,8 @@ body{
   display:flex;align-items:center;justify-content:center;font-size:78px;margin:16px 0;overflow:hidden
 }
 .cover-photo img{width:100%;height:100%;object-fit:cover}
-.cover h1{font-family:Georgia,serif;font-size:clamp(2.7rem,7vw,5.5rem);margin:0 0 10px}
-.cover-name{padding:10px 18px;border-radius:999px;background:#ffffff18;border:1px solid #ffffff33;font-weight:900;font-size:19px}
+.cover h1{font-family:Georgia,serif;font-size:clamp(2.9rem,7vw,5.8rem);margin:0 0 10px;color:#fff4d6;text-shadow:0 3px 0 #7a5b22,0 10px 24px rgba(0,0,0,.45);letter-spacing:1px}
+.cover-name{padding:10px 18px;border-radius:999px;background:rgba(0,0,0,.20);border:1px solid rgba(227,189,104,.65);font-weight:900;font-size:20px;color:#ffe9b2}
 .cover p{max-width:720px;line-height:1.5;font-weight:700;color:#eef6ff}
 .cover button{margin-top:18px;border:0;border-radius:999px;padding:14px 24px;background:linear-gradient(135deg,#fff7df,#f7d98c);color:#163d77;font-weight:900;font-size:17px}
 .page{
@@ -139,7 +139,7 @@ textarea{min-height:90px;resize:vertical}
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok 4.1</div>
+  <div class="brand">📖 Hundebok 5.0</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -153,10 +153,11 @@ textarea{min-height:90px;resize:vertical}
 
 <div class="book-shell">
 <section class="cover" id="cover">
+  <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok 4.1</h1>
+  <h1>Hundebok 5.0</h1>
   <div class="cover-name" id="coverName">For min hund</div>
-  <p>Trening, helse, turer, bilder, minner og hele hundens historie samlet i én bok.</p>
+  <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
 </section>
 
@@ -575,7 +576,7 @@ function renderAll(){
   $("dogAbout").value=d.profile.about||"";
   $("favoriteToy").value=d.profile.toy||"";
   $("favoriteFood").value=d.profile.food||"";
-  $("welcomeName").textContent=d.profile.name||"Ny hund";
+  $("welcomeName").textContent=d.profile.name||"Ny hund";$("welcomeSessions").textContent=d.sessions.length;$("welcomeMemories").textContent=d.memories.length+d.timeline.length;
   $("coverName").textContent="Til "+(d.profile.name||"min hund");
   $("dailyTask").textContent=tasks[new Date().getDate()%tasks.length];
   $("dailyTip").textContent=tips[new Date().getDate()%tips.length];
