@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok 5.0 – Hundene våre</title>
+<title>Hundebok 6.0 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -93,6 +93,29 @@ textarea{min-height:90px;resize:vertical}
 .btn.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
 .card{background:#fffaf0;border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:10px}
 .card b.big{display:block;font-size:30px;color:var(--blue)}
+.dashboard-stack{display:grid;gap:12px}
+.dashboard-card{
+  background:linear-gradient(135deg,#ffffff,#fffaf0);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:16px;
+  box-shadow:0 10px 22px rgba(15,23,42,.06)
+}
+.dashboard-card h3{margin:0 0 7px;color:#163d77}
+.dashboard-card p{margin:0;color:#475569;font-weight:700;line-height:1.5}
+.dashboard-card.highlight{background:linear-gradient(135deg,#eaf2ff,#fff)}
+.dashboard-card.warm{background:linear-gradient(135deg,#fff7ed,#fef3c7);border-color:#fed7aa}
+.dashboard-card.good{background:linear-gradient(135deg,#ecfdf5,#dcfce7);border-color:#86efac}
+.progress-line{height:14px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:10px}
+.progress-line span{display:block;height:100%;background:linear-gradient(90deg,#22c55e,#0b5cff);width:0}
+.daily-memory{
+  background:linear-gradient(135deg,#fff1f2,#fdf2f8);
+  border:1px solid #fbcfe8;border-radius:20px;padding:16px
+}
+.daily-memory h3{margin:0 0 8px;color:#9d174d}
+.daily-memory textarea{min-height:100px}
+.dashboard-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:560px){.dashboard-grid-2{grid-template-columns:1fr}}
 .dashboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .quick-memory{
   background:linear-gradient(135deg,#fff7ed,#fef3c7);
@@ -139,7 +162,7 @@ textarea{min-height:90px;resize:vertical}
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok 5.0</div>
+  <div class="brand">📖 Hundebok 6.0</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -155,40 +178,62 @@ textarea{min-height:90px;resize:vertical}
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok 5.0</h1>
+  <h1>Hundebok 6.0</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
 </section>
 
-<section class="page" data-title="Velkommen">
+<section class="page" data-title="I dag">
 <div class="pagegrid">
 <div class="side">
-  <h2>👋 Velkommen</h2>
-  <div class="card"><span>Aktiv hund</span><b class="big" id="welcomeName">Ny hund</b></div>
+  <h2>👋 I dag med <span id="welcomeNameInline">hunden din</span></h2>
+  <p class="lead">Alt det viktigste samlet på én side.</p>
 
-  <div class="dashboard-grid">
-    <div class="card"><span>Alder</span><b id="dogAge">Ikke oppgitt</b></div>
-    <div class="card"><span>Neste bursdag</span><b id="nextBirthday">Ikke oppgitt</b></div>
-  </div>
+  <div class="dashboard-stack">
+    <div class="dashboard-card highlight">
+      <h3>🌞 Dagens oppgave</h3>
+      <p id="dailyTask"></p>
+      <button class="btn green" style="margin-top:10px" onclick="completeDailyTask()">✅ Fullfør dagens oppgave</button>
+    </div>
 
-  <div class="card"><span>Dagens oppgave</span><p id="dailyTask"></p></div>
-  <div class="card"><span>Dagens tips</span><p id="dailyTip"></p></div>
+    <div class="dashboard-grid-2">
+      <div class="dashboard-card">
+        <h3>📅 Siste aktivitet</h3>
+        <p id="lastActivityText">Ingen aktivitet registrert ennå.</p>
+      </div>
+      <div class="dashboard-card">
+        <h3>🏆 Neste milepæl</h3>
+        <p id="nextMilestoneText">Første treningsøkt</p>
+        <div class="progress-line"><span id="milestoneBar"></span></div>
+      </div>
+    </div>
 
-  <div class="quick-memory">
-    <h3>❤️ I dag skjedde det</h3>
-    <input id="quickMemoryTitle" placeholder="F.eks. Første tur i snø">
-    <textarea id="quickMemoryText" placeholder="Skriv et kort minne..."></textarea>
-    <button class="btn green" onclick="saveQuickMemory()">Lagre minnet</button>
-    <div id="quickMemoryStatus" class="small-status"></div>
+    <div class="dashboard-card good">
+      <h3>🩺 Neste helsepunkt</h3>
+      <p id="nextHealthText">Ingen vaksine registrert.</p>
+    </div>
   </div>
 </div>
+
 <div class="side">
-  <h2>📖 Innhold</h2>
-  <div class="contents" id="contents"></div>
-  <div class="card" style="margin-top:14px">
-    <span>Siste minne</span>
-    <b id="latestMemory">Ingen minner ennå</b>
+  <h2>❤️ Et minne om dagen</h2>
+  <div class="daily-memory">
+    <h3>Hva var det fineste hunden gjorde i dag?</h3>
+    <input id="dailyMemoryTitle" placeholder="Kort tittel">
+    <textarea id="dailyMemoryText" placeholder="Skriv noen få ord om dagen..."></textarea>
+    <button class="btn" onclick="saveDailyMemory()">❤️ Lagre dagens minne</button>
+    <div id="dailyMemoryStatus" style="margin-top:9px;font-weight:900;color:#166534"></div>
+  </div>
+
+  <div class="dashboard-card warm" style="margin-top:12px">
+    <h3>💡 Dagens tips</h3>
+    <p id="dailyTip"></p>
+  </div>
+
+  <div class="dashboard-grid-2" style="margin-top:12px">
+    <div class="card"><span>Treningsøkter</span><b class="big" id="welcomeSessions">0</b></div>
+    <div class="card"><span>Minner</span><b class="big" id="welcomeMemories">0</b></div>
   </div>
 </div>
 </div>
@@ -407,12 +452,12 @@ function newDog(){
     goals:[{text:"Innkalling",done:false},{text:"Gå pent i bånd",done:false}],
     commands:[{text:"Sitt",done:false},{text:"Kom",done:false}],
     sessions:[],
-    health:{weight:"",vet:"",vaccine:"",insurance:"",notes:""},
+    health:{weight:"",vet:"",vaccine:"",insurance:"",notes:"",dailyDone:""},
     walks:[],
     gallery:[],
     memories:[],
     timeline:[],
-    notes:""
+    notes:"",dailyDone:""
   }
 }
 function dog(){return state.dogs.find(d=>d.id===state.activeDogId)}
@@ -548,6 +593,106 @@ function renderLatestMemory(){
   $("latestMemory").textContent=memory ? memory.title : "Ingen minner ennå";
 }
 
+
+function completeDailyTask(){
+  dog().dailyDone=new Date().toISOString().slice(0,10);
+  save();
+  toast("Dagens oppgave er fullført");
+}
+
+function saveDailyMemory(){
+  const title=$("dailyMemoryTitle").value.trim();
+  const text=$("dailyMemoryText").value.trim();
+
+  if(!title){
+    toast("Skriv en tittel");
+    return;
+  }
+
+  dog().memories.unshift({
+    title,
+    text,
+    date:new Date().toISOString().slice(0,10)
+  });
+
+  $("dailyMemoryTitle").value="";
+  $("dailyMemoryText").value="";
+  $("dailyMemoryStatus").textContent="✅ Dagens minne er lagret";
+
+  save();
+  renderMemories();
+  renderDashboard();
+  renderStats();
+  toast("Dagens minne er lagret");
+}
+
+function renderDashboard(){
+  const d=dog();
+
+  $("welcomeNameInline").textContent=d.profile.name||"hunden din";
+  $("welcomeSessions").textContent=d.sessions.length;
+  $("welcomeMemories").textContent=d.memories.length+d.timeline.length;
+
+  let lastText="Ingen aktivitet registrert ennå.";
+  const candidates=[];
+
+  if(d.sessions.length){
+    candidates.push({
+      date:d.sessions[0].date||"",
+      text:"Trening: "+d.sessions[0].what
+    });
+  }
+  if(d.walks.length){
+    candidates.push({
+      date:d.walks[0].date||"",
+      text:"Tur: "+d.walks[0].place
+    });
+  }
+  if(d.memories.length){
+    candidates.push({
+      date:d.memories[0].date||"",
+      text:"Minne: "+d.memories[0].title
+    });
+  }
+
+  candidates.sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+  if(candidates.length) lastText=candidates[0].text;
+  $("lastActivityText").textContent=lastText;
+
+  const count=d.sessions.length;
+  let milestone="Første treningsøkt";
+  let percent=0;
+
+  if(count>=10){
+    milestone="Målmester";
+    const done=d.goals.filter(g=>g.done).length;
+    percent=d.goals.length?Math.round(done/d.goals.length*100):0;
+  }else if(count>=5){
+    milestone="10 treningsøkter";
+    percent=Math.min(100,Math.round((count-5)/5*100));
+  }else if(count>=1){
+    milestone="5 treningsøkter";
+    percent=Math.min(100,Math.round(count/5*100));
+  }
+
+  $("nextMilestoneText").textContent=milestone;
+  $("milestoneBar").style.width=percent+"%";
+
+  const vaccine=d.health.vaccine;
+  if(vaccine){
+    const today=new Date();
+    const v=new Date(vaccine+"T12:00:00");
+    const days=Math.ceil((v-today)/86400000);
+    $("nextHealthText").textContent=days<0
+      ? "Vaksinedatoen er passert."
+      : days===0
+      ? "Vaksine i dag."
+      : "Neste vaksine om "+days+" dager.";
+  }else{
+    $("nextHealthText").textContent="Ingen vaksine registrert.";
+  }
+}
+
 function saveMemory(){const t=$("memoryTitle").value.trim();if(!t)return;dog().memories.unshift({title:t,text:$("memoryText").value,date:new Date().toISOString().slice(0,10)});save();renderMemories();renderLatestMemory();renderStats();toast("Minne lagret")}
 function renderMemories(){$("memoryList").innerHTML=dog().memories.length?dog().memories.map(m=>`<div class="history-item"><h3>${esc(m.title)}</h3><p>${esc(m.date)}</p><p>${esc(m.text)}</p></div>`).join(""):'<div class="card">Ingen minner lagret.</div>'}
 function saveTimeline(){const t=$("timelineTitle").value.trim();if(!t)return;dog().timeline.push({date:$("timelineDate").value,title:t,text:$("timelineText").value});dog().timeline.sort((a,b)=>(a.date||"").localeCompare(b.date||""));save();renderTimeline();toast("Livshendelse lagret")}
@@ -576,7 +721,7 @@ function renderAll(){
   $("dogAbout").value=d.profile.about||"";
   $("favoriteToy").value=d.profile.toy||"";
   $("favoriteFood").value=d.profile.food||"";
-  $("welcomeName").textContent=d.profile.name||"Ny hund";$("welcomeSessions").textContent=d.sessions.length;$("welcomeMemories").textContent=d.memories.length+d.timeline.length;
+  if($("welcomeName")) $("welcomeName").textContent=d.profile.name||"Ny hund";$("welcomeSessions").textContent=d.sessions.length;$("welcomeMemories").textContent=d.memories.length+d.timeline.length;
   $("coverName").textContent="Til "+(d.profile.name||"min hund");
   $("dailyTask").textContent=tasks[new Date().getDate()%tasks.length];
   $("dailyTip").textContent=tips[new Date().getDate()%tips.length];
@@ -587,7 +732,7 @@ function renderAll(){
   }else{
     $("profilePhoto").style.display="none";$("coverPhoto").textContent="🐶"
   }
-  renderGoals();renderCommands();renderSessions();renderHealth();renderWalks();renderGallery();renderMemories();renderLatestMemory();renderTimeline();renderStats();calculateDogAge()
+  renderGoals();renderCommands();renderSessions();renderHealth();renderWalks();renderGallery();renderMemories();renderLatestMemory();renderTimeline();renderStats();calculateDogAge();renderDashboard()
 }
 function compress(file,max=900,q=.75){
   return new Promise((res,rej)=>{
