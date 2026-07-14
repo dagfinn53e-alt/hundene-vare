@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok 7.0 – Hundene våre</title>
+<title>Hundebok Premium 1.0 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -396,29 +396,54 @@ input:focus,select:focus,textarea:focus{
   .book-shell{min-height:1450px}
 }
 
+
+.library-stage{position:relative;padding:34px 28px 42px;margin-bottom:18px;border-radius:34px;background:radial-gradient(circle at 50% -10%,rgba(255,224,160,.18),transparent 34%),linear-gradient(180deg,#26150d 0%,#4a2b1b 46%,#2b180f 100%);border:14px solid #1a0e08;box-shadow:inset 0 0 0 3px rgba(227,189,104,.12),inset 0 -25px 38px rgba(0,0,0,.34),0 28px 70px rgba(15,23,42,.30);overflow:hidden}
+.library-stage:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.018) 0 3px,transparent 3px 8px),linear-gradient(180deg,rgba(255,255,255,.03),transparent 15%);pointer-events:none}
+.library-header{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.library-title{font-family:Georgia,serif;color:#ffe8b0;font-size:28px;text-shadow:0 4px 12px rgba(0,0,0,.55)}
+.library-sub{color:#e9d6b7;font-weight:800;font-size:14px}
+.library-shelf{position:relative;z-index:2;display:flex;gap:18px;align-items:flex-end;overflow-x:auto;padding:16px 8px 38px}
+.library-shelf:after{content:"";position:absolute;left:0;right:0;bottom:10px;height:20px;border-radius:9px;background:linear-gradient(180deg,#8a5638,#4a2a1b);box-shadow:0 7px 10px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.08)}
+.premium-book{--book:#214b8f;min-width:175px;height:250px;position:relative;border-radius:13px 13px 5px 5px;color:#fff4d2;padding:22px 14px 18px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center;cursor:pointer;border:2px solid rgba(255,232,176,.38);background:linear-gradient(90deg,rgba(0,0,0,.30),transparent 16%,transparent 84%,rgba(255,255,255,.06)),repeating-linear-gradient(0deg,rgba(255,255,255,.016) 0 2px,transparent 2px 5px),linear-gradient(180deg,var(--book),#18253a);box-shadow:inset 14px 0 18px rgba(0,0,0,.28),inset -5px 0 10px rgba(255,255,255,.06),0 18px 28px rgba(0,0,0,.38);transition:.28s;transform-origin:bottom center}
+.premium-book:before,.premium-book:after{content:"";position:absolute;left:12px;right:12px;height:2px;background:linear-gradient(90deg,transparent,#e3bd68,transparent);opacity:.75}
+.premium-book:before{top:28px}.premium-book:after{bottom:28px}
+.premium-book:hover{transform:translateY(-16px) rotate(-1.2deg) scale(1.02);box-shadow:inset 14px 0 18px rgba(0,0,0,.28),0 26px 38px rgba(0,0,0,.48),0 0 0 5px rgba(227,189,104,.12)}
+.premium-book.active{transform:translateY(-20px);outline:4px solid #f7d98c;box-shadow:inset 14px 0 18px rgba(0,0,0,.28),0 28px 42px rgba(0,0,0,.50),0 0 0 8px rgba(247,217,140,.15)}
+.premium-book .crest{width:74px;height:74px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:38px;border:3px double #e3bd68;background:rgba(0,0,0,.18);box-shadow:inset 0 0 16px rgba(227,189,104,.10);overflow:hidden}
+.premium-book .book-name{font-family:Georgia,serif;font-size:24px;line-height:1.05;color:#fff0be;text-shadow:0 3px 8px rgba(0,0,0,.45)}
+.premium-book .book-breed{font-size:12px;font-weight:900;color:#fbe7bb}
+.premium-book .book-badges{display:flex;gap:5px;justify-content:center;min-height:22px}
+.premium-book .badge-dot{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.24);border:1px solid rgba(227,189,104,.55);font-size:12px}
+.premium-book.add{--book:#505966;border-style:dashed}
+.premium-book.opening{animation:bookPull 520ms ease forwards}
+@keyframes bookPull{0%{transform:translateY(-14px) scale(1)}50%{transform:translateY(-28px) scale(1.06)}100%{transform:translateY(-10px) scale(.97);opacity:.25}}
+.library-note{position:relative;z-index:2;margin-top:2px;color:#dbc6a6;font-size:12px;font-weight:800;text-align:center}
+@media(max-width:600px){.library-stage{padding:22px 14px 34px;border-width:10px}.library-title{font-size:22px}.premium-book{min-width:140px;height:215px;padding:18px 10px}.premium-book .crest{width:58px;height:58px;font-size:30px}.premium-book .book-name{font-size:19px}}
+
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok 7.0</div>
+  <div class="brand">📖 Hundebok Premium 1.0</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
   </div>
 </div>
 
-<section class="bookshelf">
-  <div class="shelf-title">📚 Mine hundebøker</div>
-  <div class="books" id="books"></div>
+<section class="library-stage">
+<div class="library-header"><div><div class="library-title">📚 Mitt private hundebibliotek</div><div class="library-sub">Hver hund får sin egen skinninnbundne bok</div></div><button class="btn" onclick="createDog()">➕ Opprett ny hundebok</button></div>
+<div class="library-shelf" id="books"></div>
+<div class="library-note">Trykk på en bok for å trekke den ut av hyllen og åpne den.</div>
 </section>
 
 <div class="book-shell">
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok 7.0</h1>
+  <h1>Hundebok Premium 1.0</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -739,12 +764,28 @@ function nextPage(){showPage(currentPage+1)}
 function prevPage(){showPage(currentPage-1)}
 function renderContents(){$("contents").innerHTML=pages().map((p,i)=>`<button onclick="showPage(${i})">${i+1}. ${p.dataset.title}</button>`).join("")}
 function renderBooks(){
-  const colors=["#0b5cff","#7c3aed","#be185d","#0f766e","#9a3412"];
-  $("books").innerHTML=state.dogs.map((d,i)=>`
-    <div class="book-spine ${d.id===state.activeDogId?"active":""}" style="background:linear-gradient(180deg,${colors[i%colors.length]},#172033)" onclick="switchDog('${d.id}')">
-      <div class="emoji">🐶</div><b>${esc(d.profile.name||"Ny hund")}</b><small>${esc(d.profile.breed||"Hundebok")}</small>
-    </div>`).join("")+
-    `<div class="book-spine add" onclick="createDog()"><div class="emoji">➕</div><b>Ny hund</b><small>Opprett bok</small></div>`
+  const colors=["#204c91","#7a2f6f","#1f6b59","#91401f","#5a3f8f","#8a6a1f"];
+  const shelf=$("books");
+  shelf.innerHTML=state.dogs.map((d,i)=>{
+    const sessions=d.sessions?.length||0;
+    const memories=(d.memories?.length||0)+(d.timeline?.length||0);
+    const medals=[sessions>=1?"🥉":"",sessions>=5?"🥈":"",sessions>=10?"🥇":"",memories>=10?"❤️":""].filter(Boolean);
+    return `<div class="premium-book ${d.id===state.activeDogId?"active":""}" style="--book:${colors[i%colors.length]}" onclick="selectPremiumBook(this,'${d.id}')">
+      <div class="crest">${d.photo?`<img src="${d.photo}" alt="">`:"🐶"}</div>
+      <div><div class="book-name">${esc(d.profile.name||"Ny hund")}</div><div class="book-breed">${esc(d.profile.breed||"Min Hundebok")}</div></div>
+      <div class="book-badges">${medals.length?medals.map(x=>`<span class="badge-dot">${x}</span>`).join(""):'<span class="badge-dot">🐾</span>'}</div>
+    </div>`;
+  }).join("")+`<div class="premium-book add" onclick="createDog()"><div class="crest">➕</div><div><div class="book-name">Ny hund</div><div class="book-breed">Opprett en ny bok</div></div><div class="book-badges"><span class="badge-dot">📖</span></div></div>`;
+}
+function selectPremiumBook(element,id){
+  document.querySelectorAll(".premium-book").forEach(book=>book.classList.remove("opening"));
+  element.classList.add("opening");
+  setTimeout(()=>{
+    switchDog(id);
+    document.getElementById("cover").classList.remove("open");
+    document.getElementById("controls").style.display="none";
+    window.scrollTo({top:document.querySelector(".book-shell").offsetTop-20,behavior:"smooth"});
+  },420);
 }
 function switchDog(id){state.activeDogId=id;save();$("cover").classList.remove("open");$("controls").style.display="none";renderAll()}
 function createDog(){const d=newDog();state.dogs.push(d);state.activeDogId=d.id;save();renderAll()}
