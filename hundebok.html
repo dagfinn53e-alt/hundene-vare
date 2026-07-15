@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok Premium 1.1 – Hundene våre</title>
+<title>Hundebok Premium 1.2 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -59,8 +59,8 @@ body{
   border:12px solid #120b07;
   box-shadow:inset 0 0 0 3px rgba(227,189,104,.42),inset 20px 0 36px rgba(0,0,0,.35),0 30px 75px rgba(15,23,42,.38)
 }
-.cover:before{content:"";position:absolute;inset:22px;border:2px solid rgba(227,189,104,.75);border-radius:20px;pointer-events:none}
-.cover:after{pointer-events:none;content:"🐾   🐾   🐾";position:absolute;bottom:30px;left:0;right:0;font-size:24px;letter-spacing:18px;opacity:.18}
+.cover:before{pointer-events:none;content:"";position:absolute;inset:22px;border:2px solid rgba(227,189,104,.75);border-radius:20px;pointer-events:none}
+.cover:after{pointer-events:none;pointer-events:none;content:"🐾   🐾   🐾";position:absolute;bottom:30px;left:0;right:0;font-size:24px;letter-spacing:18px;opacity:.18}
 .cover.open{transform:rotateY(-100deg);opacity:0;pointer-events:none}
 .cover-photo{
   width:150px;height:150px;border-radius:42px;background:#ffffff20;border:2px solid #f5d58c;
@@ -266,7 +266,7 @@ body{
     inset 24px 0 42px rgba(0,0,0,.38),
     0 34px 80px rgba(15,23,42,.40);
 }
-.cover:before{
+.cover:before{pointer-events:none;
   inset:28px;
   border:2px solid rgba(227,189,104,.80);
   box-shadow:
@@ -454,7 +454,7 @@ input:focus,select:focus,textarea:focus{
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok Premium 1.1</div>
+  <div class="brand">📖 Hundebok Premium 1.2</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -471,7 +471,7 @@ input:focus,select:focus,textarea:focus{
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok Premium 1.1</h1>
+  <h1>Hundebok Premium 1.2</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -740,10 +740,17 @@ function init(){
 function openBook(){
   const coverEl=document.getElementById("cover");
   const controlsEl=document.getElementById("controls");
+
   if(!coverEl || !controlsEl){
     alert("Fant ikke bok-elementene.");
     return;
   }
+
+  coverEl.style.pointerEvents="none";
+  coverEl.classList.add("open");
+  controlsEl.style.display="flex";
+  showPage(0);
+}
   coverEl.style.pointerEvents="none";
   coverEl.classList.add("open");
   controlsEl.style.display="flex";
@@ -1141,6 +1148,17 @@ document.addEventListener("DOMContentLoaded",function(){
     button.addEventListener("click",openBook);
   }
 });
+
+document.addEventListener("DOMContentLoaded",function(){
+  const openButton=document.getElementById("openBookBtn");
+  if(openButton){
+    openButton.addEventListener("click",function(event){
+      event.preventDefault();
+      openBook();
+    });
+  }
+});
+
 init();
 </script>
 </body>
