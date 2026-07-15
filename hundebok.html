@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok Premium 2.2 – Hundene våre</title>
+<title>Hundebok Premium 2.3 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -468,13 +468,81 @@ input:focus,select:focus,textarea:focus{
 .life-empty{background:#fffaf0;border:1px dashed #d9ccb7;border-radius:18px;padding:20px;text-align:center;color:#64748b;font-weight:800}
 @media(max-width:850px){.book-tabs{position:static;margin-bottom:12px}.book-shell{min-height:1500px}}
 
+
+/* ===== PREMIUM 2.3 – HUNDESKOLEN ===== */
+.school-hero{
+  background:
+    radial-gradient(circle at 88% 18%,rgba(255,255,255,.18),transparent 24%),
+    linear-gradient(135deg,#064e3b,#059669 55%,#0b5cff);
+  color:white;border-radius:26px;padding:22px;margin-bottom:14px;
+  box-shadow:0 16px 34px rgba(15,23,42,.16)
+}
+.school-hero h2{color:white;border:0;margin:0 0 6px;padding:0}
+.school-hero p{margin:0;color:#ecfeff;font-weight:800;line-height:1.5}
+.school-progress{
+  height:16px;background:rgba(255,255,255,.24);border-radius:999px;overflow:hidden;margin-top:14px
+}
+.school-progress span{
+  display:block;height:100%;width:0;background:linear-gradient(90deg,#fde68a,#fff);
+  border-radius:999px;transition:width .35s ease
+}
+.school-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px
+}
+.school-stat{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);
+  border-radius:16px;padding:10px;text-align:center
+}
+.school-stat b{display:block;font-size:24px}
+.lesson-list{display:grid;gap:10px}
+.lesson-card{
+  background:linear-gradient(135deg,#fff,#f8fbff);
+  border:1px solid #dbeafe;border-radius:20px;padding:14px;
+  box-shadow:0 10px 22px rgba(30,64,175,.07)
+}
+.lesson-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.lesson-card h3{margin:0 0 5px;color:#163d77;font-family:Georgia,serif}
+.lesson-card p{margin:0;color:#64748b;font-weight:700;line-height:1.45}
+.lesson-card .lesson-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.lesson-card button{
+  border:0;border-radius:999px;padding:9px 12px;font-weight:900;cursor:pointer
+}
+.lesson-card .start{background:#eaf2ff;color:#0b4fd4}
+.lesson-card .done{background:#dcfce7;color:#166534}
+.lesson-card.completed{border-color:#86efac;background:linear-gradient(135deg,#ecfdf5,#f0fdf4)}
+.lesson-card.completed .status{color:#166534}
+.lesson-card .status{font-weight:900;color:#b45309;white-space:nowrap}
+.school-task{
+  background:linear-gradient(135deg,#fff7ed,#fef3c7);
+  border:1px solid #fed7aa;border-radius:22px;padding:16px;margin-bottom:12px
+}
+.school-task h3{margin:0 0 7px;color:#92400e}
+.school-task p{margin:0;color:#5b4632;font-weight:700;line-height:1.5}
+.school-log{
+  background:#fff;border:1px solid #eadfca;border-radius:22px;padding:16px
+}
+.school-history{display:grid;gap:8px;max-height:330px;overflow:auto;margin-top:12px}
+.school-history-item{
+  background:#fffaf0;border:1px solid #eadfca;border-radius:16px;padding:11px
+}
+.school-history-item h4{margin:0 0 4px;color:#163d77}
+.school-history-item p{margin:0;color:#64748b;font-size:13px;font-weight:700}
+.school-badge{
+  display:inline-flex;align-items:center;gap:6px;background:#fff7ed;border:1px solid #fed7aa;
+  color:#9a3412;border-radius:999px;padding:7px 10px;font-weight:900
+}
+@media(max-width:600px){
+  .school-stats{grid-template-columns:1fr}
+  .lesson-top{flex-direction:column}
+}
+
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok Premium 2.2</div>
+  <div class="brand">📖 Hundebok Premium 2.3</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -491,7 +559,7 @@ input:focus,select:focus,textarea:focus{
 <div class="book-tabs" id="bookTabs">
 <button data-page="0" onclick="openTab(0)">🐶 Profil</button>
 <button data-page="1" onclick="openTab(1)">✏️ Rediger profil</button>
-<button data-page="2" onclick="openTab(2)">🎯 Mål</button>
+<button data-page="2" onclick="openTab(2)">🎓 Hundeskolen</button>
 <button data-page="3" onclick="openTab(3)">🎓 Trening</button>
 <button data-page="4" onclick="openTab(4)">📚 Historikk</button>
 <button data-page="5" onclick="openTab(5)">🏥 Helse</button>
@@ -503,7 +571,7 @@ input:focus,select:focus,textarea:focus{
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok Premium 2.2</h1>
+  <h1>Hundebok Premium 2.3</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -561,17 +629,62 @@ input:focus,select:focus,textarea:focus{
 </div>
 </section>
 
-<section class="page" data-title="Mål og kommandoer">
+<section class="page" data-title="Hundeskolen Premium">
 <div class="pagegrid">
 <div class="side">
-  <h2>🎯 Mål</h2>
-  <div id="goalList" class="list"></div>
-  <div class="add"><input id="newGoal" placeholder="Nytt mål"><button class="btn" onclick="addGoal()">Legg til</button></div>
+  <div class="school-hero">
+    <h2>🎓 Hundeskolen Premium</h2>
+    <p id="schoolIntro">En personlig studieplan for hunden din.</p>
+    <div class="school-progress"><span id="schoolProgressBar"></span></div>
+    <div class="school-stats">
+      <div class="school-stat"><b id="schoolCompleted">0</b><span>Fullført</span></div>
+      <div class="school-stat"><b id="schoolPoints">0</b><span>Poeng</span></div>
+      <div class="school-stat"><b id="schoolLevel">Bronse</b><span>Nivå</span></div>
+    </div>
+  </div>
+
+  <div class="school-task">
+    <h3>🌞 Dagens øvelse</h3>
+    <p id="schoolTodayTask">Tren kontakt i rolige omgivelser i 3–5 minutter.</p>
+    <button class="btn green" style="margin-top:10px" onclick="completeSchoolDailyTask()">✅ Fullfør dagens øvelse</button>
+  </div>
+
+  <h2>📚 Studieplan</h2>
+  <div id="lessonList" class="lesson-list"></div>
 </div>
+
 <div class="side">
-  <h2>🗣️ Kommandoer</h2>
-  <div id="commandList" class="list"></div>
-  <div class="add"><input id="newCommand" placeholder="Ny kommando"><button class="btn" onclick="addCommand()">Legg til</button></div>
+  <h2>📝 Treningslogg</h2>
+  <div class="school-log">
+    <label>Dato</label>
+    <input id="schoolLogDate" type="date">
+
+    <label>Øvelse</label>
+    <input id="schoolLogExercise" placeholder="F.eks. Innkalling">
+
+    <label>Hva gikk bra?</label>
+    <textarea id="schoolLogGood"></textarea>
+
+    <label>Hva skal forbedres?</label>
+    <textarea id="schoolLogImprove"></textarea>
+
+    <label>Vurdering</label>
+    <select id="schoolLogRating">
+      <option value="5">⭐⭐⭐⭐⭐ Kjempebra</option>
+      <option value="4">⭐⭐⭐⭐ Bra</option>
+      <option value="3">⭐⭐⭐ Greit</option>
+      <option value="2">⭐⭐ Må øves mer</option>
+      <option value="1">⭐ Vanskelig</option>
+    </select>
+
+    <button class="btn" onclick="saveSchoolLog()">💾 Lagre i Hundeskolen</button>
+  </div>
+
+  <div style="margin-top:14px">
+    <span class="school-badge" id="schoolNextBadge">🏅 Neste merke: 3 leksjoner</span>
+  </div>
+
+  <div id="schoolHistory" class="school-history"></div>
 </div>
 </div>
 </section>
@@ -762,16 +875,42 @@ function newDog(){
     gallery:[],
     memories:[],
     timeline:[],
+    school:{
+      lessons:[],
+      logs:[],
+      points:0,
+      dailyDone:""
+    },
     notes:"",dailyDone:"",lastPage:0
   }
 }
 function dog(){return state.dogs.find(d=>d.id===state.activeDogId)}
+function ensureDogShape(item){
+  if(!item.profile) item.profile={name:"Ny hund",breed:"",birth:"",owner:"",about:"",toy:"",food:""};
+  if(!Array.isArray(item.goals)) item.goals=[];
+  if(!Array.isArray(item.commands)) item.commands=[];
+  if(!Array.isArray(item.sessions)) item.sessions=[];
+  if(!Array.isArray(item.walks)) item.walks=[];
+  if(!Array.isArray(item.gallery)) item.gallery=[];
+  if(!Array.isArray(item.memories)) item.memories=[];
+  if(!Array.isArray(item.timeline)) item.timeline=[];
+  if(!item.health) item.health={weight:"",vet:"",vaccine:"",insurance:"",notes:""};
+  if(!item.school) item.school={lessons:[],logs:[],points:0,dailyDone:""};
+  if(!Array.isArray(item.school.lessons)) item.school.lessons=[];
+  if(!Array.isArray(item.school.logs)) item.school.logs=[];
+  if(typeof item.school.points!=="number") item.school.points=0;
+  if(typeof item.school.dailyDone!=="string") item.school.dailyDone="";
+  if(typeof item.notes!=="string") item.notes="";
+  if(typeof item.lastPage!=="number") item.lastPage=0;
+}
+
 function toast(m){const t=$("toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",1500)}
 function esc(v){return String(v||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){toast("Lagringen er full. Slett noen bilder.")}}
 function init(){
   try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&Array.isArray(s.dogs))state=s}catch(e){}
   if(!state.dogs.length){const d=newDog();state.dogs=[d];state.activeDogId=d.id}
+  state.dogs.forEach(ensureDogShape);
   if(!dog())state.activeDogId=state.dogs[0].id;
   save();renderAll()
 }
@@ -1111,6 +1250,182 @@ function renderDashboard(){
   }else{
     $("nextHealthText").textContent="Ingen vaksine registrert.";
   }
+}
+
+
+const SCHOOL_LESSONS=[
+  {id:"contact",title:"Kontakt",icon:"👀",description:"Hunden lærer å søke blikkontakt og holde fokus.",points:10},
+  {id:"sit",title:"Sitt",icon:"🐶",description:"Bygg en trygg og tydelig sitt-kommando.",points:10},
+  {id:"stay",title:"Bli",icon:"✋",description:"Tren varighet, avstand og forstyrrelser gradvis.",points:15},
+  {id:"recall",title:"Innkalling",icon:"📣",description:"Skap en sterk og positiv innkalling.",points:20},
+  {id:"leash",title:"Gå pent i bånd",icon:"🚶",description:"Belønn rolig gange og kontakt ved fører.",points:20},
+  {id:"calm",title:"Ro-trening",icon:"🧘",description:"Lær hunden å finne ro i ulike miljøer.",points:15},
+  {id:"handling",title:"Håndtering",icon:"🩺",description:"Gjør stell og undersøkelse tryggere.",points:15},
+  {id:"advanced",title:"Valgfri spesialøvelse",icon:"🏆",description:"Velg rally, agility, nosework eller utstilling.",points:25}
+];
+
+const SCHOOL_DAILY_TASKS=[
+  "Tren kontakt i rolige omgivelser i 3–5 minutter.",
+  "Ta tre korte innkallinger med ekstra god belønning.",
+  "Øv på sitt og bli i fem korte repetisjoner.",
+  "Gå en kort tur med fokus på slakt bånd.",
+  "Tren ro på teppet i fem minutter.",
+  "Øv på trygg håndtering av poter og ører."
+];
+
+function schoolLessonState(id){
+  return dog().school.lessons.find(item=>item.id===id);
+}
+
+function startLesson(id){
+  const lesson=SCHOOL_LESSONS.find(item=>item.id===id);
+  if(!lesson)return;
+  if($("schoolLogExercise")) $("schoolLogExercise").value=lesson.title;
+  toast("Leksjonen "+lesson.title+" er valgt");
+  const log=$("schoolLogExercise");
+  if(log) log.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+function completeLesson(id){
+  const lesson=SCHOOL_LESSONS.find(item=>item.id===id);
+  if(!lesson)return;
+
+  let stateItem=schoolLessonState(id);
+  if(!stateItem){
+    stateItem={id,completed:false,completedDate:""};
+    dog().school.lessons.push(stateItem);
+  }
+
+  if(stateItem.completed){
+    toast("Leksjonen er allerede fullført");
+    return;
+  }
+
+  stateItem.completed=true;
+  stateItem.completedDate=new Date().toISOString().slice(0,10);
+  dog().school.points+=lesson.points;
+
+  dog().timeline.push({
+    id:Date.now(),
+    date:stateItem.completedDate,
+    title:"Fullførte leksjonen "+lesson.title,
+    place:"Hundeskolen",
+    text:"Leksjonen ble fullført i Hundeskolen Premium.",
+    image:""
+  });
+
+  save();
+  renderSchool();
+  renderLifeTimeline();
+  renderBooks();
+  toast("🎉 Leksjonen er fullført");
+}
+
+function completeSchoolDailyTask(){
+  const today=new Date().toISOString().slice(0,10);
+  if(dog().school.dailyDone===today){
+    toast("Dagens øvelse er allerede fullført");
+    return;
+  }
+
+  dog().school.dailyDone=today;
+  dog().school.points+=5;
+  save();
+  renderSchool();
+  toast("Dagens øvelse er fullført – 5 poeng");
+}
+
+function saveSchoolLog(){
+  const exercise=$("schoolLogExercise").value.trim();
+  if(!exercise){
+    toast("Skriv hvilken øvelse dere trente på");
+    return;
+  }
+
+  const entry={
+    id:Date.now(),
+    date:$("schoolLogDate").value||new Date().toISOString().slice(0,10),
+    exercise,
+    good:$("schoolLogGood").value.trim(),
+    improve:$("schoolLogImprove").value.trim(),
+    rating:Number($("schoolLogRating").value||3)
+  };
+
+  dog().school.logs.unshift(entry);
+  dog().school.points+=2;
+
+  dog().sessions.unshift({
+    date:entry.date,
+    what:entry.exercise,
+    duration:"",
+    where:"Hundeskolen",
+    reward:"",
+    rating:Math.min(4,Math.max(1,entry.rating))
+  });
+
+  ["schoolLogDate","schoolLogExercise","schoolLogGood","schoolLogImprove"].forEach(id=>$(id).value="");
+  $("schoolLogRating").value="5";
+
+  save();
+  renderSchool();
+  renderSessions();
+  renderStats();
+  renderBooks();
+  toast("Treningsloggen er lagret");
+}
+
+function renderSchool(){
+  if(!$("lessonList"))return;
+
+  const completedCount=SCHOOL_LESSONS.filter(lesson=>schoolLessonState(lesson.id)?.completed).length;
+  const total=SCHOOL_LESSONS.length;
+  const percent=Math.round(completedCount/total*100);
+  const points=dog().school.points||0;
+
+  $("schoolIntro").textContent="Studieplan for "+(dog().profile.name||"hunden din")+".";
+  $("schoolCompleted").textContent=completedCount+" / "+total;
+  $("schoolPoints").textContent=points;
+  $("schoolProgressBar").style.width=percent+"%";
+
+  let level="Bronse";
+  if(points>=120)level="Elite";
+  else if(points>=80)level="Gull";
+  else if(points>=40)level="Sølv";
+  $("schoolLevel").textContent=level;
+
+  const todayIndex=new Date().getDate()%SCHOOL_DAILY_TASKS.length;
+  $("schoolTodayTask").textContent=SCHOOL_DAILY_TASKS[todayIndex];
+
+  let nextBadge="🏅 Neste merke: 3 leksjoner";
+  if(completedCount>=6)nextBadge="💎 Elite nærmer seg";
+  else if(completedCount>=3)nextBadge="🥇 Neste merke: 6 leksjoner";
+  $("schoolNextBadge").textContent=nextBadge;
+
+  $("lessonList").innerHTML=SCHOOL_LESSONS.map(lesson=>{
+    const stateItem=schoolLessonState(lesson.id);
+    const completed=Boolean(stateItem?.completed);
+    return `<article class="lesson-card ${completed?"completed":""}">
+      <div class="lesson-top">
+        <div>
+          <h3>${lesson.icon} ${esc(lesson.title)}</h3>
+          <p>${esc(lesson.description)}</p>
+        </div>
+        <div class="status">${completed?"✅ Fullført":"+"+lesson.points+" poeng"}</div>
+      </div>
+      <div class="lesson-actions">
+        <button class="start" onclick="startLesson('${lesson.id}')">▶️ Start øvelse</button>
+        <button class="done" onclick="completeLesson('${lesson.id}')">${completed?"✅ Fullført":"🏁 Marker fullført"}</button>
+      </div>
+    </article>`;
+  }).join("");
+
+  $("schoolHistory").innerHTML=dog().school.logs.length
+    ? dog().school.logs.map(entry=>`<div class="school-history-item">
+        <h4>${esc(entry.exercise)} ${"⭐".repeat(entry.rating||0)}</h4>
+        <p>${esc(entry.date||"")} ${entry.good?"· Gikk bra: "+esc(entry.good):""}</p>
+        ${entry.improve?`<p>Øv videre på: ${esc(entry.improve)}</p>`:""}
+      </div>`).join("")
+    : '<div class="life-empty">Ingen treningslogger i Hundeskolen ennå.</div>';
 }
 
 function saveMemory(){const t=$("memoryTitle").value.trim();if(!t)return;dog().memories.unshift({title:t,text:$("memoryText").value,date:new Date().toISOString().slice(0,10)});save();renderMemories();renderLatestMemory();renderStats();toast("Minne lagret")}
