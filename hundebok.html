@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok Premium 1.2 – Hundene våre</title>
+<title>Hundebok Premium 1.4 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -454,7 +454,7 @@ input:focus,select:focus,textarea:focus{
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok Premium 1.2</div>
+  <div class="brand">📖 Hundebok Premium 1.4</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -471,7 +471,7 @@ input:focus,select:focus,textarea:focus{
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok Premium 1.2</h1>
+  <h1>Hundebok Premium 1.4</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -746,11 +746,6 @@ function openBook(){
     return;
   }
 
-  coverEl.style.pointerEvents="none";
-  coverEl.classList.add("open");
-  controlsEl.style.display="flex";
-  showPage(0);
-}
   coverEl.style.pointerEvents="none";
   coverEl.classList.add("open");
   controlsEl.style.display="flex";
@@ -1038,7 +1033,7 @@ function renderStats(){
   $("medalGoal").classList.toggle("locked",!d.goals.length||done<d.goals.length)
 }
 
-function renderPremiumProfile();renderIdentityPage(){
+function renderPremiumProfile(){
   const d=dog();
   if($("profileDisplayName")) $("profileDisplayName").textContent=d.profile.name||"Ny hund";
   if($("profileDisplayBreed")) $("profileDisplayBreed").textContent=d.profile.breed||"Rase ikke oppgitt";
@@ -1109,7 +1104,7 @@ function renderAll(){
   }else{
     $("profilePhoto").style.display="none";$("coverPhoto").textContent="🐶"
   }
-  renderGoals();renderCommands();renderSessions();renderHealth();renderWalks();renderGallery();renderMemories();renderLatestMemory();renderTimeline();renderStats();calculateDogAge();renderDashboard();renderPremiumProfile()
+  renderGoals();renderCommands();renderSessions();renderHealth();renderWalks();renderGallery();renderMemories();renderTimeline();renderStats();renderPremiumProfile();renderIdentityPage();if($("latestMemory"))renderLatestMemory();if($("dogAge"))calculateDogAge();if($("timeGreeting"))renderDashboard()
 }
 function compress(file,max=900,q=.75){
   return new Promise((res,rej)=>{
@@ -1142,13 +1137,6 @@ $("identityPhotoInput").addEventListener("change",async function(){
 $("profilePhotoInput").addEventListener("change",async function(){if(!this.files[0])return;dog().photo=await compress(this.files[0]);save();renderAll();toast("Profilbilde lagret")})
 $("galleryInput").addEventListener("change",async function(){for(const f of [...this.files])dog().gallery.push(await compress(f,700,.72));save();renderGallery();renderStats();renderDashboardPhoto();toast("Bilder lagt til")})
 function resetAll(){if(confirm("Slette alle hundebøker?")){localStorage.removeItem(KEY);location.reload()}}
-document.addEventListener("DOMContentLoaded",function(){
-  const button=document.getElementById("openBookBtn");
-  if(button){
-    button.addEventListener("click",openBook);
-  }
-});
-
 document.addEventListener("DOMContentLoaded",function(){
   const openButton=document.getElementById("openBookBtn");
   if(openButton){
