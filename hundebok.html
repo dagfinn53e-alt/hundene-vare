@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok Premium 1.5 – Hundene våre</title>
+<title>Hundebok Premium 2.0 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -454,7 +454,7 @@ input:focus,select:focus,textarea:focus{
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok Premium 1.5</div>
+  <div class="brand">📖 Hundebok Premium 2.0</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -471,7 +471,7 @@ input:focus,select:focus,textarea:focus{
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok Premium 1.5</h1>
+  <h1>Hundebok Premium 2.0</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -763,7 +763,7 @@ function showPage(i){
 }
 function nextPage(){showPage(currentPage+1)}
 function prevPage(){showPage(currentPage-1)}
-function renderContents(){$("contents").innerHTML=pages().map((p,i)=>`<button onclick="showPage(${i})">${i+1}. ${p.dataset.title}</button>`).join("")}
+function renderContents(){const el=$("contents");if(!el)return;el.innerHTML=pages().map((p,i)=>`<button onclick="showPage(${i})">${i+1}. ${p.dataset.title}</button>`).join("")}
 function renderBooks(){
   const colors=["#204c91","#7a2f6f","#1f6b59","#91401f","#5a3f8f","#8a6a1f"];
   const shelf=$("books");
@@ -1157,7 +1157,7 @@ $("identityPhotoInput").addEventListener("change",async function(){
     save();
     renderAll();
     toast("Profilbildet er lagret");
-  }catch(e){toast("Kunne ikke laste opp bildet")}
+  }catch(e){console.error(e);toast("Kunne ikke laste opp bildet: "+(e&&e.message?e.message:"ukjent feil"))}
 });
 
 $("profilePhotoInput").addEventListener("change",async function(){
@@ -1168,10 +1168,11 @@ $("profilePhotoInput").addEventListener("change",async function(){
     renderAll();
     toast("✅ Profilbildet er lagret");
   }catch(e){
-    toast("Kunne ikke behandle bildet");
+    console.error(e);
+    toast("Kunne ikke behandle bildet: "+(e&&e.message?e.message:"ukjent feil"));
   }
 })
-$("galleryInput").addEventListener("change",async function(){for(const f of [...this.files])dog().gallery.push(await compress(f,700,.72));save();renderGallery();renderStats();renderDashboardPhoto();toast("Bilder lagt til")})
+$("galleryInput").addEventListener("change",async function(){try{for(const f of [...this.files])dog().gallery.push(await compress(f,700,.72));save();renderGallery();renderStats();if($("dashboardPhoto"))renderDashboardPhoto();toast("Bilder lagt til")}catch(e){console.error(e);toast("Kunne ikke behandle bildene")}})
 function resetAll(){if(confirm("Slette alle hundebøker?")){localStorage.removeItem(KEY);location.reload()}}
 document.addEventListener("DOMContentLoaded",function(){
   const openButton=document.getElementById("openBookBtn");
