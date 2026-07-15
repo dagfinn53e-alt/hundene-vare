@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok Premium 2.3 Stable – Hundene våre</title>
+<title>Hundebok Premium 2.3.1 Stable – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -536,13 +536,129 @@ input:focus,select:focus,textarea:focus{
   .lesson-top{flex-direction:column}
 }
 
+
+/* ===== 2.3.1 – DIPLOMER ===== */
+.diploma-section{
+  margin-top:18px;
+}
+.diploma-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.diploma-card{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg,#fffdf7,#fff7ed);
+  border:4px double #e3bd68;
+  border-radius:22px;
+  padding:18px;
+  text-align:center;
+  box-shadow:0 14px 28px rgba(84,61,37,.10);
+}
+.diploma-card:before{
+  content:"";
+  position:absolute;
+  inset:9px;
+  border:1px solid rgba(227,189,104,.5);
+  border-radius:14px;
+  pointer-events:none;
+}
+.diploma-card.locked{
+  opacity:.42;
+  filter:grayscale(1);
+}
+.diploma-card .seal{
+  font-size:44px;
+  margin-bottom:8px;
+}
+.diploma-card h3{
+  margin:0 0 6px;
+  font-family:Georgia,serif;
+  color:#6b4f35;
+}
+.diploma-card p{
+  margin:0;
+  color:#64748b;
+  font-weight:700;
+}
+.diploma-card button{
+  margin-top:12px;
+  border:0;
+  border-radius:999px;
+  padding:9px 13px;
+  background:#0b5cff;
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+}
+.diploma-modal{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(15,23,42,.72);
+}
+.diploma-sheet{
+  width:min(760px,100%);
+  background:#fffdf7;
+  border:10px double #e3bd68;
+  border-radius:24px;
+  padding:38px;
+  text-align:center;
+  box-shadow:0 30px 80px rgba(0,0,0,.4);
+}
+.diploma-sheet h1{
+  margin:0 0 10px;
+  font-family:Georgia,serif;
+  font-size:48px;
+  color:#6b4f35;
+}
+.diploma-sheet h2{
+  font-family:Georgia,serif;
+  color:#163d77;
+}
+.diploma-sheet p{
+  color:#475569;
+  font-weight:700;
+  font-size:18px;
+}
+.diploma-actions{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:22px;
+}
+.diploma-actions button{
+  border:0;
+  border-radius:999px;
+  padding:11px 16px;
+  font-weight:900;
+  cursor:pointer;
+}
+.diploma-actions .print{
+  background:#0b5cff;
+  color:#fff;
+}
+.diploma-actions .close{
+  background:#e5e7eb;
+  color:#111827;
+}
+@media(max-width:700px){
+  .diploma-grid{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok Premium 2.3 Stable</div>
+  <div class="brand">📖 Hundebok Premium 2.3.1 Stable</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -571,7 +687,7 @@ input:focus,select:focus,textarea:focus{
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok Premium 2.3 Stable</h1>
+  <h1>Hundebok Premium 2.3.1 Stable</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -685,6 +801,11 @@ input:focus,select:focus,textarea:focus{
   </div>
 
   <div id="schoolHistory" class="school-history"></div>
+  <div class="diploma-section">
+    <h2>🏆 Diplomer</h2>
+    <div id="diplomaGrid" class="diploma-grid"></div>
+  </div>
+
 </div>
 </div>
 </section>
@@ -837,6 +958,24 @@ input:focus,select:focus,textarea:focus{
   <button class="next" onclick="nextPage()">Neste ➡️</button>
 </div>
 </div>
+</div>
+
+
+<div class="diploma-modal" id="diplomaModal">
+  <div class="diploma-sheet" id="diplomaSheet">
+    <div style="font-size:54px">🏆</div>
+    <h1>Diplom</h1>
+    <p>Dette diplomet bekrefter at</p>
+    <h2 id="diplomaDogName">Hunden</h2>
+    <p>har fullført</p>
+    <h2 id="diplomaCourseName">Kurset</h2>
+    <p>med eier <strong id="diplomaOwnerName">Eier</strong></p>
+    <p id="diplomaDateText"></p>
+    <div class="diploma-actions">
+      <button class="print" onclick="printDiploma()">🖨️ Skriv ut</button>
+      <button class="close" onclick="closeDiploma()">Lukk</button>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -1264,6 +1403,71 @@ const SCHOOL_LESSONS=[
   {id:"advanced",title:"Valgfri spesialøvelse",icon:"🏆",description:"Velg rally, agility, nosework eller utstilling.",points:25}
 ];
 
+
+const DIPLOMA_COURSES=[
+  {id:"kontakt",title:"Kontakt og samarbeid",lessons:["contact","calm"]},
+  {id:"hverdagslydighet",title:"Hverdagslydighet",lessons:["sit","stay","recall"]},
+  {id:"band",title:"Gå pent i bånd",lessons:["leash","contact"]},
+  {id:"handtering",title:"Trygg håndtering",lessons:["handling","calm"]},
+  {id:"spesial",title:"Spesialøvelse",lessons:["advanced"]}
+];
+
+function diplomaCourseProgress(course){
+  const done=course.lessons.filter(id=>schoolLessonState(id)?.completed).length;
+  return {done,total:course.lessons.length};
+}
+
+function openDiploma(courseId){
+  const course=DIPLOMA_COURSES.find(item=>item.id===courseId);
+  if(!course)return;
+
+  const progress=diplomaCourseProgress(course);
+  if(progress.done<progress.total){
+    toast("Fullfør alle leksjonene først");
+    return;
+  }
+
+  $("diplomaDogName").textContent=dog().profile.name||"Hunden";
+  $("diplomaCourseName").textContent=course.title;
+  $("diplomaOwnerName").textContent=dog().profile.owner||"Eier";
+  $("diplomaDateText").textContent="Fullført "+new Date().toLocaleDateString("no-NO");
+  $("diplomaModal").style.display="flex";
+}
+
+function closeDiploma(){
+  $("diplomaModal").style.display="none";
+}
+
+function printDiploma(){
+  const content=$("diplomaSheet").outerHTML;
+  const win=window.open("","_blank");
+  if(!win){
+    toast("Nettleseren blokkerte utskriftsvinduet");
+    return;
+  }
+  win.document.write("<!doctype html><html><head><meta charset='utf-8'><title>Diplom</title><style>body{font-family:Arial;padding:40px;background:#fff}.diploma-sheet{max-width:760px;margin:auto;background:#fffdf7;border:10px double #e3bd68;border-radius:24px;padding:40px;text-align:center}.diploma-sheet h1{font-family:Georgia,serif;font-size:48px;color:#6b4f35}.diploma-sheet h2{font-family:Georgia,serif;color:#163d77}.diploma-actions{display:none}</style></head><body>"+content+"</body></html>");
+  win.document.close();
+  win.focus();
+  win.print();
+}
+
+function renderDiplomas(){
+  const grid=$("diplomaGrid");
+  if(!grid)return;
+
+  grid.innerHTML=DIPLOMA_COURSES.map(course=>{
+    const progress=diplomaCourseProgress(course);
+    const completed=progress.done===progress.total;
+
+    return `<article class="diploma-card ${completed?"":"locked"}">
+      <div class="seal">${completed?"🏆":"🔒"}</div>
+      <h3>${esc(course.title)}</h3>
+      <p>${completed?"Diplomet er klart":progress.done+" av "+progress.total+" leksjoner fullført"}</p>
+      ${completed?`<button onclick="openDiploma('${course.id}')">Åpne diplom</button>`:""}
+    </article>`;
+  }).join("");
+}
+
 const SCHOOL_DAILY_TASKS=[
   "Tren kontakt i rolige omgivelser i 3–5 minutter.",
   "Ta tre korte innkallinger med ekstra god belønning.",
@@ -1426,6 +1630,7 @@ function renderSchool(){
         ${entry.improve?`<p>Øv videre på: ${esc(entry.improve)}</p>`:""}
       </div>`).join("")
     : '<div class="life-empty">Ingen treningslogger i Hundeskolen ennå.</div>';
+  renderDiplomas();
 }
 
 function saveMemory(){const t=$("memoryTitle").value.trim();if(!t)return;dog().memories.unshift({title:t,text:$("memoryText").value,date:new Date().toISOString().slice(0,10)});save();renderMemories();renderLatestMemory();renderStats();toast("Minne lagret")}
