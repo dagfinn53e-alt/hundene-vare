@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok Premium 2.0 – Hundene våre</title>
+<title>Hundebok Premium 2.1 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -454,7 +454,7 @@ input:focus,select:focus,textarea:focus{
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok Premium 2.0</div>
+  <div class="brand">📖 Hundebok Premium 2.1</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -471,7 +471,7 @@ input:focus,select:focus,textarea:focus{
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok Premium 2.0</h1>
+  <h1>Hundebok Premium 2.1</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -781,15 +781,65 @@ function renderBooks(){
 function selectPremiumBook(element,id){
   document.querySelectorAll(".premium-book").forEach(book=>book.classList.remove("opening"));
   element.classList.add("opening");
+
   setTimeout(()=>{
     switchDog(id);
-    document.getElementById("cover").classList.remove("open");
-    document.getElementById("controls").style.display="none";
-    window.scrollTo({top:document.querySelector(".book-shell").offsetTop-20,behavior:"smooth"});
+
+    const shell=document.querySelector(".book-shell");
+    if(shell){
+      window.scrollTo({
+        top:shell.offsetTop-20,
+        behavior:"smooth"
+      });
+    }
   },420);
 }
-function switchDog(id){state.activeDogId=id;save();$("cover").classList.remove("open");$("controls").style.display="none";renderAll()}
-function createDog(){const d=newDog();state.dogs.push(d);state.activeDogId=d.id;save();renderAll()}
+
+function switchDog(id){
+  const exists=state.dogs.some(item=>item.id===id);
+  if(!exists){
+    toast("Fant ikke hundeboken");
+    return;
+  }
+
+  state.activeDogId=id;
+  save();
+  renderAll();
+
+  const coverEl=document.getElementById("cover");
+  const controlsEl=document.getElementById("controls");
+
+  if(coverEl){
+    coverEl.classList.add("open");
+    coverEl.style.pointerEvents="none";
+  }
+
+  if(controlsEl){
+    controlsEl.style.display="flex";
+  }
+
+  showPage(0);
+  toast("Åpnet "+(dog().profile.name||"hundeboken"));
+}
+function createDog(){
+  const d=newDog();
+  state.dogs.push(d);
+  state.activeDogId=d.id;
+  save();
+  renderAll();
+
+  const coverEl=document.getElementById("cover");
+  const controlsEl=document.getElementById("controls");
+  if(coverEl){
+    coverEl.classList.add("open");
+    coverEl.style.pointerEvents="none";
+  }
+  if(controlsEl){
+    controlsEl.style.display="flex";
+  }
+  showPage(0);
+  toast("Ny hundebok opprettet");
+}
 function saveProfile(){
   const d=dog();
   d.profile={
