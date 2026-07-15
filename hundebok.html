@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok Premium 2.3.3 Stable – Hundene våre</title>
+<title>Hundebok Premium 2.3.4 Stable – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -658,7 +658,7 @@ input:focus,select:focus,textarea:focus{
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok Premium 2.3.3 Stable</div>
+  <div class="brand">📖 Hundebok Premium 2.3.4 Stable</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -687,7 +687,7 @@ input:focus,select:focus,textarea:focus{
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok Premium 2.3.3 Stable</h1>
+  <h1>Hundebok Premium 2.3.4 Stable</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -1168,12 +1168,51 @@ function save(){
     toast("Lagringen er full. Slett noen bilder fra fotoalbumet.");
   }
 }
-function init(){
-  try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&Array.isArray(s.dogs))state=s}catch(e){}
-  if(!state.dogs.length){const d=newDog();state.dogs=[d];state.activeDogId=d.id}
+async function init(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(KEY)||"null");
+    if(saved&&Array.isArray(saved.dogs)) state=saved;
+  }catch(error){
+    console.error("Kunne ikke lese hundedata",error);
+  }
+
+  if(!state.dogs.length){
+    const newItem=newDog();
+    state.dogs=[newItem];
+    state.activeDogId=newItem.id;
+  }
+
   state.dogs.forEach(ensureDogShape);
-  if(!dog())state.activeDogId=state.dogs[0].id;
-  save();renderAll()
+
+  if(!dog()){
+    state.activeDogId=state.dogs[0].id;
+  }
+
+  /*
+    Viktig rekkefølge:
+    1. Flytt eventuelle gamle bilder til IndexedDB.
+    2. Les bildene tilbake.
+    3. Lagre tekstdata uten store bildefiler.
+    4. Tegn siden én gang.
+  */
+  for(const item of state.dogs){
+    try{
+      let storedPhoto=await readProfilePhoto(item.id);
+
+      if(!storedPhoto && item.photo && item.photo.startsWith("data:image/")){
+        await storeProfilePhoto(item.id,item.photo);
+        storedPhoto=item.photo;
+      }
+
+      item.photo=storedPhoto||"";
+    }catch(error){
+      console.error("Kunne ikke hente profilbildet",error);
+      /* Behold gammelt bilde i minnet dersom flytting feiler. */
+    }
+  }
+
+  save();
+  renderAll();
 }
 function openBook(){
   const coverEl=document.getElementById("cover");
@@ -2114,9 +2153,9 @@ document.addEventListener("DOMContentLoaded",function(){
   }
 });
 
-init();
-restoreProfilePhotos().catch(error=>{
-  console.error(error);
+init().catch(error=>{
+  console.error("Oppstart av Hundebok feilet",error);
+  toast("Hundebok kunne ikke starte riktig");
 });
 </script>
 </body>
