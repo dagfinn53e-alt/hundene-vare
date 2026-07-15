@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok Premium 2.3.4 Stable – Hundene våre</title>
+<title>Hundebok Premium 2.3.5 Stable – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -658,7 +658,7 @@ input:focus,select:focus,textarea:focus{
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok Premium 2.3.4 Stable</div>
+  <div class="brand">📖 Hundebok Premium 2.3.5 Stable</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -687,7 +687,7 @@ input:focus,select:focus,textarea:focus{
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok Premium 2.3.4 Stable</h1>
+  <h1>Hundebok Premium 2.3.5 Stable</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -1032,7 +1032,7 @@ async function storeProfilePhoto(dogId,dataUrl){
 
   return new Promise((resolve,reject)=>{
     const transaction=database.transaction(PHOTO_STORE,"readwrite");
-    transaction.objectStore(PHOTO_STORE).put(dataUrl,dogId);
+    transaction.objectStore(PHOTO_STORE).put(dataUrl,String(dogId));
 
     transaction.oncomplete=()=>{
       database.close();
@@ -1052,7 +1052,7 @@ async function readProfilePhoto(dogId){
 
   return new Promise((resolve,reject)=>{
     const transaction=database.transaction(PHOTO_STORE,"readonly");
-    const request=transaction.objectStore(PHOTO_STORE).get(dogId);
+    const request=transaction.objectStore(PHOTO_STORE).get(String(dogId));
 
     request.onsuccess=()=>{
       database.close();
@@ -1072,7 +1072,7 @@ async function deleteProfilePhoto(dogId){
 
   return new Promise((resolve,reject)=>{
     const transaction=database.transaction(PHOTO_STORE,"readwrite");
-    transaction.objectStore(PHOTO_STORE).delete(dogId);
+    transaction.objectStore(PHOTO_STORE).delete(String(dogId));
 
     transaction.oncomplete=()=>{
       database.close();
@@ -1085,6 +1085,17 @@ async function deleteProfilePhoto(dogId){
       reject(error);
     };
   });
+}
+
+
+async function removeAmbiguousLegacyPhoto(){
+  try{
+    await deleteProfilePhoto("undefined");
+    await deleteProfilePhoto("null");
+    await deleteProfilePhoto("");
+  }catch(error){
+    console.warn("Kunne ikke rydde gamle felles bildefiler",error);
+  }
 }
 
 async function restoreProfilePhotos(){
@@ -1116,9 +1127,53 @@ function stateWithoutProfileImages(){
 }
 
 
+
+function makeDogId(){
+  if(window.crypto && typeof window.crypto.randomUUID==="function"){
+    return window.crypto.randomUUID();
+  }
+  return "dog-"+Date.now()+"-"+Math.random().toString(36).slice(2);
+}
+
+function ensureUniqueDogIds(){
+  const used=new Set();
+  const oldActiveId=state.activeDogId;
+  let activeReplacement=null;
+
+  state.dogs.forEach((item,index)=>{
+    const originalId=(item.id===undefined || item.id===null) ? "" : String(item.id);
+    let nextId=originalId;
+
+    if(!nextId || used.has(nextId)){
+      nextId=makeDogId();
+
+      /*
+        Dersom den aktive hunden fikk ny ID, må activeDogId følge med.
+      */
+      if(originalId===String(oldActiveId||"") && activeReplacement===null){
+        activeReplacement=nextId;
+      }
+
+      item.id=nextId;
+    }else{
+      item.id=nextId;
+    }
+
+    used.add(item.id);
+  });
+
+  if(activeReplacement){
+    state.activeDogId=activeReplacement;
+  }
+
+  if(!state.dogs.some(item=>item.id===state.activeDogId) && state.dogs.length){
+    state.activeDogId=state.dogs[0].id;
+  }
+}
+
 function newDog(){
   return{
-    id:crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random(),
+    id:makeDogId(),
     profile:{name:"Ny hund",breed:"",birth:"",owner:"",about:"",toy:"",food:""},
     photo:"",
     goals:[{text:"Innkalling",done:false},{text:"Gå pent i bånd",done:false}],
@@ -1140,6 +1195,8 @@ function newDog(){
 }
 function dog(){return state.dogs.find(d=>d.id===state.activeDogId)}
 function ensureDogShape(item){
+  if(!item.id) item.id=makeDogId();
+  item.id=String(item.id);
   if(!item.profile) item.profile={name:"Ny hund",breed:"",birth:"",owner:"",about:"",toy:"",food:""};
   if(!Array.isArray(item.goals)) item.goals=[];
   if(!Array.isArray(item.commands)) item.commands=[];
@@ -1183,10 +1240,16 @@ async function init(){
   }
 
   state.dogs.forEach(ensureDogShape);
+  ensureUniqueDogIds();
+  const idSnapshot=state.dogs.map(item=>item.id).join("|");
+  const previousIdSnapshot=localStorage.getItem("hundebok_dog_ids");
+  localStorage.setItem("hundebok_dog_ids",idSnapshot);
 
   if(!dog()){
     state.activeDogId=state.dogs[0].id;
   }
+
+  await removeAmbiguousLegacyPhoto();
 
   /*
     Viktig rekkefølge:
