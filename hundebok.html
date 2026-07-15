@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok Premium 1.0 – Hundene våre</title>
+<title>Hundebok Premium 1.1 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -420,13 +420,41 @@ input:focus,select:focus,textarea:focus{
 .library-note{position:relative;z-index:2;margin-top:2px;color:#dbc6a6;font-size:12px;font-weight:800;text-align:center}
 @media(max-width:600px){.library-stage{padding:22px 14px 34px;border-width:10px}.library-title{font-size:22px}.premium-book{min-width:140px;height:215px;padding:18px 10px}.premium-book .crest{width:58px;height:58px;font-size:30px}.premium-book .book-name{font-size:19px}}
 
+
+.identity-hero{background:linear-gradient(135deg,#061b55,#0b5cff 55%,#6d28d9);color:#fff;border-radius:28px;padding:24px;margin-bottom:14px;box-shadow:0 18px 38px rgba(15,23,42,.18)}
+.identity-hero h2{color:#fff;border:none;margin:0 0 6px;padding:0;font-size:36px}
+.identity-hero p{margin:0;color:#eaf2ff;font-weight:800;line-height:1.5}
+.identity-layout{display:grid;grid-template-columns:minmax(230px,.9fr) 1.1fr;gap:18px}
+.identity-photo-card{background:linear-gradient(180deg,#fff,#fffaf0);border:1px solid var(--line);border-radius:26px;padding:16px;box-shadow:0 14px 30px rgba(15,23,42,.10)}
+.identity-photo{aspect-ratio:4/5;border-radius:22px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#dbeafe,#f5d0fe);border:4px solid #fff;box-shadow:0 16px 32px rgba(15,23,42,.16);font-size:78px}
+.identity-photo img{width:100%;height:100%;object-fit:cover}
+.identity-upload{display:block;margin-top:12px;border-radius:999px;padding:12px 16px;background:linear-gradient(135deg,#0b5cff,#2563eb);color:#fff;font-weight:900;text-align:center;cursor:pointer}
+.identity-upload input{display:none}
+.identity-info{display:grid;gap:11px}
+.identity-name{background:linear-gradient(135deg,#fffdf7,#fff7ed);border:1px solid #eadfca;border-radius:24px;padding:18px;box-shadow:0 12px 28px rgba(84,61,37,.08)}
+.identity-name h1{font-family:Georgia,serif;font-size:42px;color:#163d77;margin:0 0 5px}
+.identity-name .breed{font-size:18px;font-weight:900;color:#64748b}
+.identity-details{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.identity-detail{background:#fff;border:1px solid #eadfca;border-radius:18px;padding:13px}
+.identity-detail span{display:block;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#8a6a43;font-weight:900;margin-bottom:5px}
+.identity-detail b{font-size:17px}
+.identity-story{background:linear-gradient(135deg,#fff7ed,#fef3c7);border:1px solid #fed7aa;border-radius:20px;padding:15px}
+.identity-story h3{margin:0 0 6px;color:#92400e}
+.identity-story p{margin:0;line-height:1.55;color:#5b4632;font-weight:700}
+.identity-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.identity-actions button{border:0;border-radius:16px;padding:12px;font-weight:900;cursor:pointer}
+.identity-actions .edit{background:#eaf2ff;color:#0b4fd4}
+.identity-actions .history{background:#fff1f2;color:#be123c}
+@media(max-width:800px){.identity-layout{grid-template-columns:1fr}.identity-photo{max-height:430px}}
+@media(max-width:560px){.identity-details,.identity-actions{grid-template-columns:1fr}.identity-name h1{font-size:34px}}
+
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok Premium 1.0</div>
+  <div class="brand">📖 Hundebok Premium 1.1</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -443,57 +471,28 @@ input:focus,select:focus,textarea:focus{
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok Premium 1.0</h1>
+  <h1>Hundebok Premium 1.1</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
 </section>
 
-<section class="page" data-title="Dashboard Premium">
-<div class="pagegrid">
-<div class="side">
-  <div class="premium-welcome">
-    <h2 id="timeGreeting">God dag</h2>
-    <p id="welcomeSentence">Hunden din venter på deg.</p>
-  </div>
-  <div class="dashboard-stack">
-    <div class="dashboard-card highlight">
-      <h3>🌞 Dagens oppgave</h3>
-      <p id="dailyTask"></p>
-      <button class="btn green" style="margin-top:10px" onclick="completeDailyTask()">✅ Fullfør dagens oppgave</button>
-    </div>
-    <div class="dashboard-grid-2">
-      <div class="dashboard-card"><h3>📅 Siste aktivitet</h3><p id="lastActivityText">Ingen aktivitet registrert ennå.</p></div>
-      <div class="dashboard-card"><h3>🏆 Neste medalje</h3><p id="nextMilestoneText">Første treningsøkt</p><div class="progress-line"><span id="milestoneBar"></span></div></div>
-    </div>
-    <div class="dashboard-card good"><h3>🩺 Neste vaksine</h3><p id="nextHealthText">Ingen vaksine registrert.</p></div>
-    <div class="continue-card"><div><strong>📖 Fortsett der du slapp</strong><div id="continuePageText" style="margin-top:4px;color:#cbd5e1">Side 1</div></div><button onclick="continueReading()">Fortsett</button></div>
-  </div>
+<section class="page" data-title="Min hund – forsiden">
+<div class="pagegrid"><div class="side" style="grid-column:1/-1">
+<div class="identity-hero"><h2 id="identityGreeting">🐶 Dette er hunden din</h2><p id="identityGreetingText">En personlig forside med alt det viktigste samlet på ett sted.</p></div>
+<div class="identity-layout">
+<div class="identity-photo-card"><div class="identity-photo" id="identityPhoto">🐶</div><label class="identity-upload">📷 Last opp / bytt profilbilde<input id="identityPhotoInput" type="file" accept="image/*"></label></div>
+<div class="identity-info">
+<div class="identity-name"><h1 id="identityName">Ny hund</h1><div class="breed" id="identityBreed">Rase ikke oppgitt</div></div>
+<div class="identity-details">
+<div class="identity-detail"><span>Alder</span><b id="identityAge">Ikke oppgitt</b></div>
+<div class="identity-detail"><span>Eier</span><b id="identityOwner">Ikke oppgitt</b></div>
+<div class="identity-detail"><span>Favorittleke</span><b id="identityToy">Ikke oppgitt</b></div>
+<div class="identity-detail"><span>Favorittmat</span><b id="identityFood">Ikke oppgitt</b></div>
 </div>
-<div class="side">
-  <h2>🐶 I dag med <span id="welcomeNameInline">hunden din</span></h2>
-  <div class="dashboard-photo" id="dashboardPhoto">🐶</div>
-  <div class="dashboard-grid-2" style="margin-top:12px">
-    <div class="card"><span>Treningsøkter</span><b class="big" id="welcomeSessions">0</b></div>
-    <div class="card"><span>Minner</span><b class="big" id="welcomeMemories">0</b></div>
-  </div>
-  <div class="dashboard-card warm"><h3>❤️ Siste minne</h3><p id="dashboardLatestMemory">Ingen minner ennå.</p></div>
-  <div class="daily-memory" style="margin-top:12px">
-    <h3>Hva var det fineste i dag?</h3>
-    <input id="dailyMemoryTitle" placeholder="Kort tittel">
-    <textarea id="dailyMemoryText" placeholder="Skriv noen få ord om dagen..."></textarea>
-    <button class="btn" onclick="saveDailyMemory()">❤️ Lagre dagens minne</button>
-    <div id="dailyMemoryStatus" style="margin-top:9px;font-weight:900;color:#166534"></div>
-  </div>
-  <div class="quick-actions">
-    <button onclick="showPage(3)">🎓 Ny trening</button>
-    <button onclick="showPage(6)">🌲 Ny tur</button>
-    <button onclick="showPage(7)">📸 Legg til bilde</button>
-    <button onclick="showPage(8)">🕰️ Livshendelse</button>
-  </div>
-</div>
-</div>
-</section>
+<div class="identity-story"><h3>❤️ Om hunden</h3><p id="identityAbout">Ingen personlig tekst er lagt inn ennå.</p></div>
+<div class="identity-actions"><button class="edit" onclick="showPage(1)">✏️ Rediger profil</button><button class="history" onclick="showPage(8)">📖 Åpne livslinjen</button></div>
+</div></div></div></div></section>
 
 <section class="page" data-title="Min hund">
 <div class="pagegrid">
@@ -1032,7 +1031,7 @@ function renderStats(){
   $("medalGoal").classList.toggle("locked",!d.goals.length||done<d.goals.length)
 }
 
-function renderPremiumProfile(){
+function renderPremiumProfile();renderIdentityPage(){
   const d=dog();
   if($("profileDisplayName")) $("profileDisplayName").textContent=d.profile.name||"Ny hund";
   if($("profileDisplayBreed")) $("profileDisplayBreed").textContent=d.profile.breed||"Rase ikke oppgitt";
@@ -1057,6 +1056,28 @@ function renderPremiumProfile(){
       if(now<birthday) years--;
       $("profileAge").textContent=years<1?"Under 1 år":years+" år";
     }
+  }
+}
+
+
+function renderIdentityPage(){
+  const d=dog(), p=d.profile||{};
+  const name=p.name||"Ny hund";
+  $("identityName").textContent=name;
+  $("identityBreed").textContent=p.breed||"Rase ikke oppgitt";
+  $("identityOwner").textContent=p.owner||"Ikke oppgitt";
+  $("identityToy").textContent=p.toy||"Ikke oppgitt";
+  $("identityFood").textContent=p.food||"Ikke oppgitt";
+  $("identityAbout").textContent=p.about||"Ingen personlig tekst er lagt inn ennå.";
+  $("identityGreeting").textContent="🐶 Dette er "+name;
+  $("identityGreetingText").textContent=name+" sin personlige hundebok.";
+  $("identityPhoto").innerHTML=d.photo?'<img src="'+d.photo+'" alt="Profilbilde">':"🐶";
+  if(!p.birth){$("identityAge").textContent="Ikke oppgitt"}
+  else{
+    const born=new Date(p.birth+"T12:00:00"), now=new Date();
+    let years=now.getFullYear()-born.getFullYear();
+    if(now<new Date(now.getFullYear(),born.getMonth(),born.getDate())) years--;
+    $("identityAge").textContent=years<1?"Under 1 år":years+" år";
   }
 }
 
@@ -1099,6 +1120,18 @@ function compress(file,max=900,q=.75){
     r.onerror=rej;r.readAsDataURL(file)
   })
 }
+
+$("identityPhotoInput").addEventListener("change",async function(){
+  const file=this.files && this.files[0];
+  if(!file)return;
+  try{
+    dog().photo=await compress(file);
+    save();
+    renderAll();
+    toast("Profilbildet er lagret");
+  }catch(e){toast("Kunne ikke laste opp bildet")}
+});
+
 $("profilePhotoInput").addEventListener("change",async function(){if(!this.files[0])return;dog().photo=await compress(this.files[0]);save();renderAll();toast("Profilbilde lagret")})
 $("galleryInput").addEventListener("change",async function(){for(const f of [...this.files])dog().gallery.push(await compress(f,700,.72));save();renderGallery();renderStats();renderDashboardPhoto();toast("Bilder lagt til")})
 function resetAll(){if(confirm("Slette alle hundebøker?")){localStorage.removeItem(KEY);location.reload()}}
