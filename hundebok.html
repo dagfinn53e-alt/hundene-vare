@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok Premium 2.3.2 Stable – Hundene våre</title>
+<title>Hundebok Premium 2.3.3 Stable – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -658,7 +658,7 @@ input:focus,select:focus,textarea:focus{
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok Premium 2.3.2 Stable</div>
+  <div class="brand">📖 Hundebok Premium 2.3.3 Stable</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -687,7 +687,7 @@ input:focus,select:focus,textarea:focus{
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok Premium 2.3.2 Stable</h1>
+  <h1>Hundebok Premium 2.3.3 Stable</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -1001,6 +1001,121 @@ const tips=[
   "Øk vanskeligheten litt om gangen."
 ];
 
+
+const PHOTO_DB_NAME="hundebok_premium_images";
+const PHOTO_DB_VERSION=1;
+const PHOTO_STORE="profile_photos";
+
+function openPhotoDatabase(){
+  return new Promise((resolve,reject)=>{
+    if(!("indexedDB" in window)){
+      reject(new Error("Nettleseren støtter ikke lokal bildelagring"));
+      return;
+    }
+
+    const request=indexedDB.open(PHOTO_DB_NAME,PHOTO_DB_VERSION);
+
+    request.onupgradeneeded=()=>{
+      const database=request.result;
+      if(!database.objectStoreNames.contains(PHOTO_STORE)){
+        database.createObjectStore(PHOTO_STORE);
+      }
+    };
+
+    request.onsuccess=()=>resolve(request.result);
+    request.onerror=()=>reject(request.error||new Error("Kunne ikke åpne bildelagringen"));
+  });
+}
+
+async function storeProfilePhoto(dogId,dataUrl){
+  const database=await openPhotoDatabase();
+
+  return new Promise((resolve,reject)=>{
+    const transaction=database.transaction(PHOTO_STORE,"readwrite");
+    transaction.objectStore(PHOTO_STORE).put(dataUrl,dogId);
+
+    transaction.oncomplete=()=>{
+      database.close();
+      resolve();
+    };
+
+    transaction.onerror=()=>{
+      const error=transaction.error||new Error("Kunne ikke lagre bildet");
+      database.close();
+      reject(error);
+    };
+  });
+}
+
+async function readProfilePhoto(dogId){
+  const database=await openPhotoDatabase();
+
+  return new Promise((resolve,reject)=>{
+    const transaction=database.transaction(PHOTO_STORE,"readonly");
+    const request=transaction.objectStore(PHOTO_STORE).get(dogId);
+
+    request.onsuccess=()=>{
+      database.close();
+      resolve(request.result||"");
+    };
+
+    request.onerror=()=>{
+      const error=request.error||new Error("Kunne ikke lese bildet");
+      database.close();
+      reject(error);
+    };
+  });
+}
+
+async function deleteProfilePhoto(dogId){
+  const database=await openPhotoDatabase();
+
+  return new Promise((resolve,reject)=>{
+    const transaction=database.transaction(PHOTO_STORE,"readwrite");
+    transaction.objectStore(PHOTO_STORE).delete(dogId);
+
+    transaction.oncomplete=()=>{
+      database.close();
+      resolve();
+    };
+
+    transaction.onerror=()=>{
+      const error=transaction.error||new Error("Kunne ikke slette bildet");
+      database.close();
+      reject(error);
+    };
+  });
+}
+
+async function restoreProfilePhotos(){
+  for(const item of state.dogs){
+    try{
+      let storedPhoto=await readProfilePhoto(item.id);
+
+      /* Flytt gamle profilbilder fra localStorage til IndexedDB automatisk. */
+      if(!storedPhoto && item.photo && item.photo.startsWith("data:image/")){
+        await storeProfilePhoto(item.id,item.photo);
+        storedPhoto=item.photo;
+      }
+
+      item.photo=storedPhoto||"";
+    }catch(error){
+      console.error("Kunne ikke gjenopprette profilbildet",error);
+    }
+  }
+
+  renderAll();
+}
+
+function stateWithoutProfileImages(){
+  const clean=JSON.parse(JSON.stringify(state));
+  clean.dogs.forEach(item=>{
+    item.photo="";
+  });
+  return clean;
+}
+
+
 function newDog(){
   return{
     id:crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random(),
@@ -1045,7 +1160,14 @@ function ensureDogShape(item){
 
 function toast(m){const t=$("toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",1500)}
 function esc(v){return String(v||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){toast("Lagringen er full. Slett noen bilder.")}}
+function save(){
+  try{
+    localStorage.setItem(KEY,JSON.stringify(stateWithoutProfileImages()));
+  }catch(error){
+    console.error(error);
+    toast("Lagringen er full. Slett noen bilder fra fotoalbumet.");
+  }
+}
 function init(){
   try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&Array.isArray(s.dogs))state=s}catch(e){}
   if(!state.dogs.length){const d=newDog();state.dogs=[d];state.activeDogId=d.id}
@@ -1122,7 +1244,7 @@ function selectPremiumBook(element,id){
   },420);
 }
 
-function switchDog(id){
+async function switchDog(id){
   const exists=state.dogs.some(item=>item.id===id);
   if(!exists){
     toast("Fant ikke hundeboken");
@@ -1130,6 +1252,14 @@ function switchDog(id){
   }
 
   state.activeDogId=id;
+
+  try{
+    dog().photo=await readProfilePhoto(id);
+  }catch(error){
+    console.error(error);
+    dog().photo="";
+  }
+
   save();
   renderAll();
 
@@ -1906,20 +2036,18 @@ $("identityPhotoInput").addEventListener("change",async function(){
   const file=this.files&&this.files[0];
   if(!file)return;
 
-  let imageData;
   try{
-    imageData=await compress(file,800,.70);
+    const imageData=await compress(file,700,.68);
+    await storeProfilePhoto(dog().id,imageData);
+    dog().photo=imageData;
+    save();
+    refreshPhotoViews();
+    toast("✅ Profilbildet er lagret");
   }catch(error){
     console.error(error);
-    toast(error.message||"Kunne ikke behandle bildet");
-    this.value="";
-    return;
+    toast(error.message||"Kunne ikke lagre bildet");
   }
 
-  dog().photo=imageData;
-  save();
-  refreshPhotoViews();
-  toast("✅ Profilbildet er lagret");
   this.value="";
 });
 
@@ -1927,20 +2055,18 @@ $("profilePhotoInput").addEventListener("change",async function(){
   const file=this.files&&this.files[0];
   if(!file)return;
 
-  let imageData;
   try{
-    imageData=await compress(file,800,.70);
+    const imageData=await compress(file,700,.68);
+    await storeProfilePhoto(dog().id,imageData);
+    dog().photo=imageData;
+    save();
+    refreshPhotoViews();
+    toast("✅ Profilbildet er lagret");
   }catch(error){
     console.error(error);
-    toast(error.message||"Kunne ikke behandle bildet");
-    this.value="";
-    return;
+    toast(error.message||"Kunne ikke lagre bildet");
   }
 
-  dog().photo=imageData;
-  save();
-  refreshPhotoViews();
-  toast("✅ Profilbildet er lagret");
   this.value="";
 })
 $("galleryInput").addEventListener("change",async function(){
@@ -1989,6 +2115,9 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 
 init();
+restoreProfilePhotos().catch(error=>{
+  console.error(error);
+});
 </script>
 </body>
 </html>
