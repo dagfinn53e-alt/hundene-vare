@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok Premium 2.3.1 Stable – Hundene våre</title>
+<title>Hundebok Premium 2.3.2 Stable – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -658,7 +658,7 @@ input:focus,select:focus,textarea:focus{
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok Premium 2.3.1 Stable</div>
+  <div class="brand">📖 Hundebok Premium 2.3.2 Stable</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -687,7 +687,7 @@ input:focus,select:focus,textarea:focus{
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok Premium 2.3.1 Stable</h1>
+  <h1>Hundebok Premium 2.3.2 Stable</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -1798,22 +1798,97 @@ function renderAll(){
   if($("latestMemory")) renderLatestMemory();
   if($("dogAge")) calculateDogAge();
   if($("timeGreeting")) renderDashboard();
+  if($("lessonList")){
+    try{renderSchool()}catch(error){console.error("renderSchool",error)}
+  }
 }
 function compress(file,max=900,q=.75){
-  return new Promise((res,rej)=>{
-    const r=new FileReader();
-    r.onload=()=>{
-      const i=new Image();
-      i.onload=()=>{
-        const s=Math.min(1,max/i.width),c=document.createElement("canvas");
-        c.width=Math.round(i.width*s);c.height=Math.round(i.height*s);
-        c.getContext("2d").drawImage(i,0,0,c.width,c.height);
-        res(c.toDataURL("image/jpeg",q))
+  return new Promise((resolve,reject)=>{
+    if(!file){
+      reject(new Error("Ingen bildefil valgt"));
+      return;
+    }
+
+    if(file.type && !file.type.startsWith("image/")){
+      reject(new Error("Filen er ikke et bilde"));
+      return;
+    }
+
+    const reader=new FileReader();
+
+    reader.onerror=()=>reject(new Error("Kunne ikke lese bildefilen"));
+
+    reader.onload=()=>{
+      const image=new Image();
+
+      image.onerror=()=>reject(
+        new Error("Bildet kunne ikke åpnes. Prøv JPG eller PNG.")
+      );
+
+      image.onload=()=>{
+        try{
+          const width=image.naturalWidth||image.width;
+          const height=image.naturalHeight||image.height;
+
+          if(!width||!height){
+            reject(new Error("Bildet mangler gyldig størrelse"));
+            return;
+          }
+
+          const scale=Math.min(1,max/width,max/height);
+          const canvas=document.createElement("canvas");
+          canvas.width=Math.max(1,Math.round(width*scale));
+          canvas.height=Math.max(1,Math.round(height*scale));
+
+          const context=canvas.getContext("2d");
+          if(!context){
+            reject(new Error("Nettleseren kunne ikke behandle bildet"));
+            return;
+          }
+
+          context.drawImage(image,0,0,canvas.width,canvas.height);
+          resolve(canvas.toDataURL("image/jpeg",q));
+        }catch(error){
+          reject(error);
+        }
       };
-      i.onerror=rej;i.src=r.result
+
+      image.src=reader.result;
     };
-    r.onerror=rej;r.readAsDataURL(file)
-  })
+
+    reader.readAsDataURL(file);
+  });
+}
+
+function savePhotoSafely(dataUrl){
+  const previousPhoto=dog().photo||"";
+  dog().photo=dataUrl;
+
+  try{
+    save();
+    return true;
+  }catch(error){
+    dog().photo=previousPhoto;
+    console.error(error);
+    toast("Bildet er for stort for lagringen");
+    return false;
+  }
+}
+
+function refreshPhotoViews(){
+  try{renderBooks()}catch(error){console.error("renderBooks",error)}
+  try{renderIdentityPage()}catch(error){console.error("renderIdentityPage",error)}
+  try{renderPremiumProfile()}catch(error){console.error("renderPremiumProfile",error)}
+
+  try{
+    if($("coverPhoto")){
+      $("coverPhoto").innerHTML=dog().photo
+        ? '<img src="'+dog().photo+'" alt="Profilbilde">'
+        : "🐶";
+    }
+  }catch(error){
+    console.error("coverPhoto",error);
+  }
 }
 
 $("lifeImageInput").addEventListener("change",async function(){
@@ -1828,29 +1903,80 @@ $("lifeImageInput").addEventListener("change",async function(){
 });
 
 $("identityPhotoInput").addEventListener("change",async function(){
-  const file=this.files && this.files[0];
+  const file=this.files&&this.files[0];
   if(!file)return;
+
+  let imageData;
   try{
-    dog().photo=await compress(file);
-    save();
-    renderAll();
-    toast("Profilbildet er lagret");
-  }catch(e){console.error(e);toast("Kunne ikke laste opp bildet: "+(e&&e.message?e.message:"ukjent feil"))}
+    imageData=await compress(file,800,.70);
+  }catch(error){
+    console.error(error);
+    toast(error.message||"Kunne ikke behandle bildet");
+    this.value="";
+    return;
+  }
+
+  dog().photo=imageData;
+  save();
+  refreshPhotoViews();
+  toast("✅ Profilbildet er lagret");
+  this.value="";
 });
 
 $("profilePhotoInput").addEventListener("change",async function(){
-  if(!this.files[0]) return;
+  const file=this.files&&this.files[0];
+  if(!file)return;
+
+  let imageData;
   try{
-    dog().photo=await compress(this.files[0]);
-    save();
-    renderAll();
-    toast("✅ Profilbildet er lagret");
-  }catch(e){
-    console.error(e);
-    toast("Kunne ikke behandle bildet: "+(e&&e.message?e.message:"ukjent feil"));
+    imageData=await compress(file,800,.70);
+  }catch(error){
+    console.error(error);
+    toast(error.message||"Kunne ikke behandle bildet");
+    this.value="";
+    return;
   }
+
+  dog().photo=imageData;
+  save();
+  refreshPhotoViews();
+  toast("✅ Profilbildet er lagret");
+  this.value="";
 })
-$("galleryInput").addEventListener("change",async function(){try{for(const f of [...this.files])dog().gallery.push(await compress(f,700,.72));save();renderGallery();renderStats();if($("dashboardPhoto"))renderDashboardPhoto();toast("Bilder lagt til")}catch(e){console.error(e);toast("Kunne ikke behandle bildene")}})
+$("galleryInput").addEventListener("change",async function(){
+  const files=[...(this.files||[])];
+  if(!files.length)return;
+
+  let added=0;
+  let failed=0;
+
+  for(const file of files){
+    try{
+      const imageData=await compress(file,650,.65);
+      dog().gallery.push(imageData);
+      added++;
+    }catch(error){
+      console.error(error);
+      failed++;
+    }
+  }
+
+  if(added){
+    save();
+    try{renderGallery()}catch(error){console.error(error)}
+    try{renderStats()}catch(error){console.error(error)}
+  }
+
+  if(added&&failed){
+    toast(added+" bilde(r) lagt til, "+failed+" kunne ikke behandles");
+  }else if(added){
+    toast("✅ "+added+" bilde(r) lagt til");
+  }else{
+    toast("Ingen bilder kunne behandles. Prøv JPG eller PNG.");
+  }
+
+  this.value="";
+})
 function resetAll(){if(confirm("Slette alle hundebøker?")){localStorage.removeItem(KEY);location.reload()}}
 document.addEventListener("DOMContentLoaded",function(){
   const openButton=document.getElementById("openBookBtn");
