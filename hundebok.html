@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok Premium 1.4 – Hundene våre</title>
+<title>Hundebok Premium 1.5 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -454,7 +454,7 @@ input:focus,select:focus,textarea:focus{
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok Premium 1.4</div>
+  <div class="brand">📖 Hundebok Premium 1.5</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -471,7 +471,7 @@ input:focus,select:focus,textarea:focus{
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok Premium 1.4</h1>
+  <h1>Hundebok Premium 1.5</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -801,7 +801,7 @@ function saveProfile(){
     toy:$("favoriteToy").value.trim(),
     food:$("favoriteFood").value.trim()
   };
-  save();renderAll();toast("Profil lagret")
+  save();renderAll();toast("✅ Profilen er lagret")
 }
 function addGoal(){const t=$("newGoal").value.trim();if(!t)return;dog().goals.push({text:t,done:false});$("newGoal").value="";save();renderGoals();renderStats()}
 function addCommand(){const t=$("newCommand").value.trim();if(!t)return;dog().commands.push({text:t,done:false});$("newCommand").value="";save();renderCommands()}
@@ -1085,26 +1085,52 @@ function renderIdentityPage(){
 
 function renderAll(){
   const d=dog();
-  renderBooks();renderContents();
-  $("dogName").value=d.profile.name||"";
-  $("dogBreed").value=d.profile.breed||"";
-  $("dogBirth").value=d.profile.birth||"";
-  $("ownerName").value=d.profile.owner||"";
-  $("dogAbout").value=d.profile.about||"";
-  $("favoriteToy").value=d.profile.toy||"";
-  $("favoriteFood").value=d.profile.food||"";
-  if($("welcomeName")) $("welcomeName").textContent=d.profile.name||"Ny hund";$("welcomeSessions").textContent=d.sessions.length;$("welcomeMemories").textContent=d.memories.length+d.timeline.length;
-  $("coverName").textContent="Til "+(d.profile.name||"min hund");
-  $("dailyTask").textContent=tasks[new Date().getDate()%tasks.length];
-  $("dailyTip").textContent=tips[new Date().getDate()%tips.length];
-  $("notes").value=d.notes||"";
+  if(!d) return;
+
+  renderBooks();
+  renderContents();
+
+  if($("dogName")) $("dogName").value=d.profile.name||"";
+  if($("dogBreed")) $("dogBreed").value=d.profile.breed||"";
+  if($("dogBirth")) $("dogBirth").value=d.profile.birth||"";
+  if($("ownerName")) $("ownerName").value=d.profile.owner||"";
+  if($("dogAbout")) $("dogAbout").value=d.profile.about||"";
+  if($("favoriteToy")) $("favoriteToy").value=d.profile.toy||"";
+  if($("favoriteFood")) $("favoriteFood").value=d.profile.food||"";
+
+  if($("welcomeName")) $("welcomeName").textContent=d.profile.name||"Ny hund";
+  if($("welcomeSessions")) $("welcomeSessions").textContent=d.sessions.length;
+  if($("welcomeMemories")) $("welcomeMemories").textContent=d.memories.length+d.timeline.length;
+  if($("coverName")) $("coverName").textContent="Til "+(d.profile.name||"min hund");
+  if($("dailyTask")) $("dailyTask").textContent=tasks[new Date().getDate()%tasks.length];
+  if($("dailyTip")) $("dailyTip").textContent=tips[new Date().getDate()%tips.length];
+  if($("notes")) $("notes").value=d.notes||"";
+
   if(d.photo){
-    $("profilePhoto").src=d.photo;$("profilePhoto").style.display="none";
-    $("coverPhoto").innerHTML=`<img src="${d.photo}">`
+    if($("profilePhoto")){
+      $("profilePhoto").src=d.photo;
+      $("profilePhoto").style.display="none";
+    }
+    if($("coverPhoto")) $("coverPhoto").innerHTML=`<img src="${d.photo}">`;
   }else{
-    $("profilePhoto").style.display="none";$("coverPhoto").textContent="🐶"
+    if($("profilePhoto")) $("profilePhoto").style.display="none";
+    if($("coverPhoto")) $("coverPhoto").textContent="🐶";
   }
-  renderGoals();renderCommands();renderSessions();renderHealth();renderWalks();renderGallery();renderMemories();renderTimeline();renderStats();renderPremiumProfile();renderIdentityPage();if($("latestMemory"))renderLatestMemory();if($("dogAge"))calculateDogAge();if($("timeGreeting"))renderDashboard()
+
+  renderGoals();
+  renderCommands();
+  renderSessions();
+  renderHealth();
+  renderWalks();
+  renderGallery();
+  renderMemories();
+  renderTimeline();
+  renderStats();
+  renderPremiumProfile();
+  renderIdentityPage();
+  if($("latestMemory")) renderLatestMemory();
+  if($("dogAge")) calculateDogAge();
+  if($("timeGreeting")) renderDashboard();
 }
 function compress(file,max=900,q=.75){
   return new Promise((res,rej)=>{
@@ -1134,7 +1160,17 @@ $("identityPhotoInput").addEventListener("change",async function(){
   }catch(e){toast("Kunne ikke laste opp bildet")}
 });
 
-$("profilePhotoInput").addEventListener("change",async function(){if(!this.files[0])return;dog().photo=await compress(this.files[0]);save();renderAll();toast("Profilbilde lagret")})
+$("profilePhotoInput").addEventListener("change",async function(){
+  if(!this.files[0]) return;
+  try{
+    dog().photo=await compress(this.files[0]);
+    save();
+    renderAll();
+    toast("✅ Profilbildet er lagret");
+  }catch(e){
+    toast("Kunne ikke behandle bildet");
+  }
+})
 $("galleryInput").addEventListener("change",async function(){for(const f of [...this.files])dog().gallery.push(await compress(f,700,.72));save();renderGallery();renderStats();renderDashboardPhoto();toast("Bilder lagt til")})
 function resetAll(){if(confirm("Slette alle hundebøker?")){localStorage.removeItem(KEY);location.reload()}}
 document.addEventListener("DOMContentLoaded",function(){
