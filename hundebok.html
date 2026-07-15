@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok Premium 2.1 – Hundene våre</title>
+<title>Hundebok Premium 2.2 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -448,13 +448,33 @@ input:focus,select:focus,textarea:focus{
 @media(max-width:800px){.identity-layout{grid-template-columns:1fr}.identity-photo{max-height:430px}}
 @media(max-width:560px){.identity-details,.identity-actions{grid-template-columns:1fr}.identity-name h1{font-size:34px}}
 
+
+.book-tabs{position:absolute;top:-54px;left:18px;right:18px;z-index:15;display:flex;gap:8px;overflow-x:auto;padding:6px;border-radius:18px;background:rgba(255,255,255,.96);border:1px solid #dbeafe;box-shadow:0 12px 28px rgba(15,23,42,.12)}
+.book-tabs button{flex:0 0 auto;border:1px solid #dbeafe;border-radius:999px;padding:10px 14px;background:#f8fbff;color:#0b4fd4;font-weight:900;cursor:pointer;white-space:nowrap}
+.book-tabs button.active{background:linear-gradient(135deg,#0b5cff,#2563eb);color:#fff;border-color:transparent}
+.life-form{background:linear-gradient(135deg,#fffaf0,#fff7ed);border:1px solid #eadfca;border-radius:24px;padding:16px}
+.life-preview{margin-top:10px;display:none;border-radius:18px;overflow:hidden;border:1px solid #eadfca;background:#fff}
+.life-preview img{width:100%;max-height:260px;object-fit:cover;display:block}
+.life-timeline{position:relative;display:grid;gap:18px;padding-left:28px;max-height:610px;overflow:auto}
+.life-timeline:before{content:"";position:absolute;left:10px;top:0;bottom:0;width:3px;border-radius:999px;background:linear-gradient(#0b5cff,#7c3aed,#f97316)}
+.life-event{position:relative;background:linear-gradient(135deg,#fff,#fffaf0);border:1px solid #eadfca;border-radius:22px;padding:15px}
+.life-event:before{content:"";position:absolute;left:-25px;top:22px;width:15px;height:15px;border-radius:50%;background:#0b5cff;border:4px solid #fffdf7;box-shadow:0 0 0 2px #0b5cff}
+.life-event img{width:100%;max-height:260px;object-fit:cover;border-radius:16px;margin-bottom:10px}
+.life-event h3{margin:0 0 6px;color:#163d77;font-family:Georgia,serif;font-size:23px}
+.life-event .meta{color:#8a6a43;font-weight:900;font-size:13px;margin-bottom:8px}
+.life-event p{margin:0;line-height:1.55;color:#475569;font-weight:700}
+.life-event .actions{display:flex;justify-content:flex-end;margin-top:10px}
+.life-event .actions button{border:0;border-radius:999px;padding:8px 11px;background:#fee2e2;color:#991b1b;font-weight:900;cursor:pointer}
+.life-empty{background:#fffaf0;border:1px dashed #d9ccb7;border-radius:18px;padding:20px;text-align:center;color:#64748b;font-weight:800}
+@media(max-width:850px){.book-tabs{position:static;margin-bottom:12px}.book-shell{min-height:1500px}}
+
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok Premium 2.1</div>
+  <div class="brand">📖 Hundebok Premium 2.2</div>
   <div>
     <a href="index.html">🏠 Forside</a>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
@@ -468,10 +488,22 @@ input:focus,select:focus,textarea:focus{
 </section>
 
 <div class="book-shell">
+<div class="book-tabs" id="bookTabs">
+<button data-page="0" onclick="openTab(0)">🐶 Profil</button>
+<button data-page="1" onclick="openTab(1)">✏️ Rediger profil</button>
+<button data-page="2" onclick="openTab(2)">🎯 Mål</button>
+<button data-page="3" onclick="openTab(3)">🎓 Trening</button>
+<button data-page="4" onclick="openTab(4)">📚 Historikk</button>
+<button data-page="5" onclick="openTab(5)">🏥 Helse</button>
+<button data-page="6" onclick="openTab(6)">🌲 Turer</button>
+<button data-page="7" onclick="openTab(7)">📸 Bilder</button>
+<button data-page="8" onclick="openTab(8)">❤️ Hundens liv</button>
+<button data-page="9" onclick="openTab(9)">📝 Notater</button>
+</div>
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok Premium 2.1</h1>
+  <h1>Hundebok Premium 2.2</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -648,18 +680,24 @@ input:focus,select:focus,textarea:focus{
 </div>
 </section>
 
-<section class="page" data-title="Livslinje">
+<section class="page" data-title="Hundens liv">
 <div class="pagegrid">
 <div class="side">
-  <h2>🕰️ Ny livshendelse</h2>
-  <label>Dato</label><input id="timelineDate" type="date">
-  <label>Hendelse</label><input id="timelineTitle">
-  <label>Beskrivelse</label><textarea id="timelineText"></textarea>
-  <button class="btn" onclick="saveTimeline()">➕ Legg til</button>
+<h2>❤️ Legg til livshendelse</h2>
+<p class="lead">Bygg historien om hunden – én hendelse om gangen.</p>
+<div class="life-form">
+<label>Dato</label><input id="lifeDate" type="date">
+<label>Tittel</label><input id="lifeTitle" placeholder="F.eks. Første dag hjemme">
+<label>Sted</label><input id="lifePlace" placeholder="Valgfritt">
+<label>Historie</label><textarea id="lifeText" placeholder="Skriv hva som skjedde..."></textarea>
+<label>Bilde</label><input id="lifeImageInput" type="file" accept="image/*">
+<div class="life-preview" id="lifeImagePreview"></div>
+<button class="btn" onclick="saveLifeEvent()">❤️ Lagre hendelsen</button>
+</div>
 </div>
 <div class="side">
-  <h2>📖 Hundens historie</h2>
-  <div id="timelineList" class="history"></div>
+<h2>📖 Historien om <span id="lifeDogName">hunden din</span></h2>
+<div id="lifeTimeline" class="life-timeline"></div>
 </div>
 </div>
 </section>
@@ -752,6 +790,17 @@ function openBook(){
   showPage(0);
 }
 function pages(){return [...document.querySelectorAll(".page")]}
+function openTab(index){
+  const coverEl=$("cover"), controlsEl=$("controls");
+  if(coverEl){coverEl.classList.add("open");coverEl.style.pointerEvents="none"}
+  if(controlsEl) controlsEl.style.display="flex";
+  showPage(index);
+}
+function renderTabs(){
+  document.querySelectorAll("#bookTabs button").forEach(button=>{
+    button.classList.toggle("active",Number(button.dataset.page)===currentPage);
+  });
+}
 function showPage(i){
   const p=pages();
   currentPage=Math.max(0,Math.min(i,p.length-1));
@@ -1066,8 +1115,56 @@ function renderDashboard(){
 
 function saveMemory(){const t=$("memoryTitle").value.trim();if(!t)return;dog().memories.unshift({title:t,text:$("memoryText").value,date:new Date().toISOString().slice(0,10)});save();renderMemories();renderLatestMemory();renderStats();toast("Minne lagret")}
 function renderMemories(){$("memoryList").innerHTML=dog().memories.length?dog().memories.map(m=>`<div class="history-item"><h3>${esc(m.title)}</h3><p>${esc(m.date)}</p><p>${esc(m.text)}</p></div>`).join(""):'<div class="card">Ingen minner lagret.</div>'}
-function saveTimeline(){const t=$("timelineTitle").value.trim();if(!t)return;dog().timeline.push({date:$("timelineDate").value,title:t,text:$("timelineText").value});dog().timeline.sort((a,b)=>(a.date||"").localeCompare(b.date||""));save();renderTimeline();toast("Livshendelse lagret")}
-function renderTimeline(){$("timelineList").innerHTML=dog().timeline.length?dog().timeline.map(t=>`<div class="history-item"><h3>🐾 ${esc(t.title)}</h3><p>${esc(t.date||"")}</p><p>${esc(t.text||"")}</p></div>`).join(""):'<div class="card">Ingen livshendelser lagret.</div>'}
+let pendingLifeImage="";
+
+function saveLifeEvent(){
+  const title=$("lifeTitle").value.trim();
+  if(!title){toast("Skriv en tittel");return}
+  dog().timeline.push({
+    id:Date.now(),
+    date:$("lifeDate").value||new Date().toISOString().slice(0,10),
+    title,
+    place:$("lifePlace").value.trim(),
+    text:$("lifeText").value.trim(),
+    image:pendingLifeImage
+  });
+  dog().timeline.sort((a,b)=>(a.date||"").localeCompare(b.date||""));
+  ["lifeDate","lifeTitle","lifePlace","lifeText"].forEach(id=>$(id).value="");
+  $("lifeImageInput").value="";
+  $("lifeImagePreview").style.display="none";
+  $("lifeImagePreview").innerHTML="";
+  pendingLifeImage="";
+  save();
+  renderLifeTimeline();
+  renderStats();
+  renderBooks();
+  toast("Livshendelsen er lagret");
+}
+function deleteLifeEvent(index){
+  if(!confirm("Vil du slette denne hendelsen?"))return;
+  dog().timeline.splice(index,1);
+  save();renderLifeTimeline();renderStats();renderBooks();toast("Hendelsen er slettet");
+}
+function renderLifeTimeline(){
+  if($("lifeDogName")) $("lifeDogName").textContent=dog().profile.name||"hunden din";
+  const list=$("lifeTimeline");
+  if(!list)return;
+  if(!dog().timeline.length){
+    list.innerHTML='<div class="life-empty">Ingen livshendelser ennå.<br>Legg inn den første på venstre side.</div>';
+    return;
+  }
+  list.innerHTML=dog().timeline.map((event,index)=>`
+    <article class="life-event">
+      ${event.image?`<img src="${event.image}" alt="${esc(event.title)}">`:""}
+      <h3>${esc(event.title)}</h3>
+      <div class="meta">📅 ${esc(event.date||"Uten dato")}${event.place?` &nbsp; 📍 ${esc(event.place)}`:""}</div>
+      <p>${esc(event.text||"")}</p>
+      <div class="actions"><button onclick="deleteLifeEvent(${index})">🗑️ Slett</button></div>
+    </article>`).join("");
+}
+function saveTimeline(){saveLifeEvent()}
+function renderTimeline(){renderLifeTimeline()}
+
 function saveNotes(){dog().notes=$("notes").value;save();toast("Notater lagret")}
 function renderGallery(){$("gallery").innerHTML=dog().gallery.map((img,i)=>`<div class="gallery-item"><img src="${img}"><button onclick="dog().gallery.splice(${i},1);save();renderGallery();renderStats()">×</button></div>`).join("")}
 function renderStats(){
@@ -1198,6 +1295,17 @@ function compress(file,max=900,q=.75){
     r.onerror=rej;r.readAsDataURL(file)
   })
 }
+
+$("lifeImageInput").addEventListener("change",async function(){
+  const file=this.files&&this.files[0];
+  if(!file){pendingLifeImage="";$("lifeImagePreview").style.display="none";$("lifeImagePreview").innerHTML="";return}
+  try{
+    pendingLifeImage=await compress(file,900,.76);
+    $("lifeImagePreview").innerHTML='<img src="'+pendingLifeImage+'" alt="Forhåndsvisning">';
+    $("lifeImagePreview").style.display="block";
+    toast("Bildet er klart");
+  }catch(error){pendingLifeImage="";toast("Kunne ikke behandle bildet")}
+});
 
 $("identityPhotoInput").addEventListener("change",async function(){
   const file=this.files && this.files[0];
