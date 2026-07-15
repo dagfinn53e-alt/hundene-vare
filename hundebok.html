@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundebok Premium 2.4 – Hundene våre</title>
+<title>Hundebok Premium 2.4.1 – Hundene våre</title>
 <style>
 *{box-sizing:border-box}
 :root{
-  --blue:#0b5cff;--blue2:#2563eb;--dark:#0f172a;--muted:#64748b;
+  --blue:#0b5cff;--blue2:#2563eb;--dark:#0f172a;--muted:#64748b;+
   --paper:#fffdf7;--line:#eadfca;--gold:#e3bd68;--brown:#6b4f35;
 }
 body{
@@ -607,9 +607,10 @@ input:focus,select:focus,textarea:focus{
 <div class="wrap">
 
 <div class="topbar">
-  <div class="brand">📖 Hundebok Premium 2.4</div>
+  <div class="brand">📖 Hundebok Premium 2.4.1</div>
   <div>
     <a href="index.html">🏠 Forside</a>
+    <button onclick="restoreBestProfiles()">🛟 Hent hundene tilbake</button>
     <button onclick="resetAll()">🗑️ Nullstill alt</button>
   </div>
 </div>
@@ -636,7 +637,7 @@ input:focus,select:focus,textarea:focus{
 <section class="cover" id="cover">
   <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:13px;letter-spacing:4px;text-transform:uppercase;font-weight:900;color:#f5d58c">Hundenevåre.com</div>
   <div class="cover-photo" id="coverPhoto">🐶</div>
-  <h1>Hundebok Premium 2.4</h1>
+  <h1>Hundebok Premium 2.4.1</h1>
   <div class="cover-name" id="coverName">For min hund</div>
   <p id="coverQuote">«Min beste venn – samlet i én bok»</p>
   <button id="openBookBtn" type="button">📖 Åpne boken</button>
@@ -980,9 +981,52 @@ function newDog(){
     notes:"",dailyDone:"",lastPage:0
   }
 }
-function dog(){return state.dogs.find(d=>d.id===state.activeDogId)}
+
+function dog(){
+  return state.dogs.find(item=>item.id===state.activeDogId);
+}
+
+const STORAGE_KEYS=[
+  "hundebok_v1",
+  "hundebok_v1_backup",
+  "hundebok_last_good",
+  "min_hundebok_v3",
+  "min_hundebok_v1",
+  "hundebok_before_reset"
+];
+
+function defaultProfile(){
+  return {name:"Ny hund",breed:"",birth:"",owner:"",about:"",toy:"",food:""};
+}
+
 function ensureDogShape(item){
-  if(!item.profile) item.profile={name:"Ny hund",breed:"",birth:"",owner:"",about:"",toy:"",food:""};
+  if(!item || typeof item!=="object") return;
+
+  if(!item.id){
+    item.id=(crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random());
+  }
+
+  const legacyProfile={
+    name:item.name||"",
+    breed:item.breed||"",
+    birth:item.birth||item.birthDate||"",
+    owner:item.owner||"",
+    about:item.about||item.description||"",
+    toy:item.toy||item.favoriteToy||"",
+    food:item.food||item.favoriteFood||""
+  };
+
+  item.profile={
+    ...defaultProfile(),
+    ...legacyProfile,
+    ...(item.profile&&typeof item.profile==="object"?item.profile:{})
+  };
+
+  if(!item.profile.name || !String(item.profile.name).trim()){
+    item.profile.name="Ny hund";
+  }
+
+  if(typeof item.photo!=="string") item.photo="";
   if(!Array.isArray(item.goals)) item.goals=[];
   if(!Array.isArray(item.commands)) item.commands=[];
   if(!Array.isArray(item.sessions)) item.sessions=[];
@@ -990,28 +1034,178 @@ function ensureDogShape(item){
   if(!Array.isArray(item.gallery)) item.gallery=[];
   if(!Array.isArray(item.memories)) item.memories=[];
   if(!Array.isArray(item.timeline)) item.timeline=[];
-  if(!item.health) item.health={weight:"",vet:"",vaccine:"",insurance:"",notes:""};
-  if(!item.school) item.school={lessons:[],logs:[],points:0,dailyDone:""};
+
+  item.health={
+    weight:"",
+    vet:"",
+    vaccine:"",
+    insurance:"",
+    notes:"",
+    ...(item.health&&typeof item.health==="object"?item.health:{})
+  };
+
+  item.school={
+    lessons:[],
+    logs:[],
+    points:0,
+    dailyDone:"",
+    weeklyGoals:[],
+    weekKey:"",
+    ...(item.school&&typeof item.school==="object"?item.school:{})
+  };
+
   if(!Array.isArray(item.school.lessons)) item.school.lessons=[];
   if(!Array.isArray(item.school.logs)) item.school.logs=[];
+  if(!Array.isArray(item.school.weeklyGoals)) item.school.weeklyGoals=[];
   if(typeof item.school.points!=="number") item.school.points=0;
   if(typeof item.school.dailyDone!=="string") item.school.dailyDone="";
-  if(!Array.isArray(item.school.weeklyGoals)) item.school.weeklyGoals=[];
   if(typeof item.school.weekKey!=="string") item.school.weekKey="";
   if(typeof item.notes!=="string") item.notes="";
+  if(typeof item.dailyDone!=="string") item.dailyDone="";
   if(typeof item.lastPage!=="number") item.lastPage=0;
 }
 
-function toast(m){const t=$("toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",1500)}
-function esc(v){return String(v||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){toast("Lagringen er full. Slett noen bilder.")}}
-function init(){
-  try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&Array.isArray(s.dogs))state=s}catch(e){}
-  if(!state.dogs.length){const d=newDog();state.dogs=[d];state.activeDogId=d.id}
-  state.dogs.forEach(ensureDogShape);
-  if(!dog())state.activeDogId=state.dogs[0].id;
-  save();renderAll()
+function normalizeState(candidate){
+  if(!candidate || typeof candidate!=="object") return null;
+
+  let dogs=[];
+  let activeDogId=candidate.activeDogId||null;
+
+  if(Array.isArray(candidate.dogs)){
+    dogs=candidate.dogs;
+  }else if(Array.isArray(candidate)){
+    dogs=candidate;
+  }else if(candidate.profile || candidate.name){
+    dogs=[candidate];
+  }
+
+  dogs=dogs.filter(item=>item&&typeof item==="object");
+  dogs.forEach(ensureDogShape);
+
+  if(!dogs.length) return null;
+  if(!activeDogId || !dogs.some(item=>item.id===activeDogId)){
+    activeDogId=dogs[0].id;
+  }
+
+  return {activeDogId,dogs};
 }
+
+function stateScore(candidate){
+  const normalized=normalizeState(candidate);
+  if(!normalized) return -1;
+
+  let score=normalized.dogs.length*100;
+  normalized.dogs.forEach(item=>{
+    const p=item.profile||{};
+    const meaningfulName=p.name && p.name!=="Ny hund";
+    if(meaningfulName) score+=1000;
+    if(p.breed) score+=80;
+    if(p.owner) score+=60;
+    if(p.birth) score+=40;
+    if(p.about) score+=25;
+    if(item.photo) score+=300;
+    score+=(item.sessions?.length||0)*4;
+    score+=(item.timeline?.length||0)*4;
+    score+=(item.memories?.length||0)*3;
+    score+=(item.gallery?.length||0)*3;
+  });
+  return score;
+}
+
+function readStoredCandidate(key){
+  try{
+    const raw=localStorage.getItem(key);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(error){
+    console.warn("Kunne ikke lese",key,error);
+    return null;
+  }
+}
+
+function findBestStoredState(){
+  const candidates=[];
+
+  STORAGE_KEYS.forEach(key=>{
+    const value=readStoredCandidate(key);
+    if(value) candidates.push({key,value,score:stateScore(value)});
+  });
+
+  candidates.sort((a,b)=>b.score-a.score);
+  return candidates.length && candidates[0].score>=0 ? candidates[0] : null;
+}
+
+function safeSnapshot(){
+  try{
+    const normalized=normalizeState(state);
+    if(!normalized) return;
+
+    const currentScore=stateScore(normalized);
+    const backup=readStoredCandidate("hundebok_last_good");
+    const backupScore=stateScore(backup);
+
+    if(currentScore>=backupScore){
+      localStorage.setItem("hundebok_last_good",JSON.stringify(normalized));
+    }
+  }catch(error){
+    console.warn("Sikkerhetskopi feilet",error);
+  }
+}
+
+function save(){
+  try{
+    state.dogs.forEach(ensureDogShape);
+    safeSnapshot();
+    localStorage.setItem(KEY,JSON.stringify(state));
+    localStorage.setItem("hundebok_v1_backup",JSON.stringify(state));
+  }catch(error){
+    console.error(error);
+    toast("Lagringen er full. Slett noen bilder.");
+  }
+}
+
+function restoreBestProfiles(){
+  const best=findBestStoredState();
+  if(!best){
+    toast("Fant ingen eldre hundedata");
+    return;
+  }
+
+  const recovered=normalizeState(best.value);
+  if(!recovered){
+    toast("Kunne ikke gjenopprette hundedata");
+    return;
+  }
+
+  state=recovered;
+  save();
+  renderAll();
+  toast("✅ Hundedata er gjenopprettet");
+}
+
+function init(){
+  const best=findBestStoredState();
+
+  if(best){
+    const recovered=normalizeState(best.value);
+    if(recovered) state=recovered;
+  }
+
+  if(!state.dogs.length){
+    const d=newDog();
+    state={activeDogId:d.id,dogs:[d]};
+  }
+
+  state.dogs.forEach(ensureDogShape);
+
+  if(!dog()){
+    state.activeDogId=state.dogs[0].id;
+  }
+
+  save();
+  renderAll();
+}
+
 function openBook(){
   const coverEl=document.getElementById("cover");
   const controlsEl=document.getElementById("controls");
@@ -1813,6 +2007,8 @@ function renderAll(){
   if($("latestMemory")) renderLatestMemory();
   if($("dogAge")) calculateDogAge();
   if($("timeGreeting")) renderDashboard();
+  if($("bookTabs")) renderTabs();
+  if($("lessonList")) renderSchool();
 }
 function compress(file,max=900,q=.75){
   return new Promise((res,rej)=>{
@@ -1866,7 +2062,14 @@ $("profilePhotoInput").addEventListener("change",async function(){
   }
 })
 $("galleryInput").addEventListener("change",async function(){try{for(const f of [...this.files])dog().gallery.push(await compress(f,700,.72));save();renderGallery();renderStats();if($("dashboardPhoto"))renderDashboardPhoto();toast("Bilder lagt til")}catch(e){console.error(e);toast("Kunne ikke behandle bildene")}})
-function resetAll(){if(confirm("Slette alle hundebøker?")){localStorage.removeItem(KEY);location.reload()}}
+function resetAll(){
+  if(!confirm("Dette sletter alle hundebøker fra denne nettleseren. Vil du fortsette?")) return;
+  try{
+    localStorage.setItem("hundebok_before_reset",JSON.stringify(state));
+  }catch(error){}
+  localStorage.removeItem(KEY);
+  location.reload();
+}
 document.addEventListener("DOMContentLoaded",function(){
   const openButton=document.getElementById("openBookBtn");
   if(openButton){
