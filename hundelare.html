@@ -1,53 +1,270 @@
-<!DOCTYPE html>
-<html lang="no">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#143d2f">
-<title>Hundelære Premium | Hundene Våre Akademiet</title>
-<style>
-:root{--bg:#f5f2ea;--white:#fff;--green:#143d2f;--green2:#1f5b46;--gold:#d8ad55;--soft:#eef5f0;--text:#24302b;--muted:#68746e;--line:#dfe7e1;--shadow:0 18px 45px rgba(20,61,47,.13)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:linear-gradient(180deg,#faf7ef,var(--bg),#eef4ef);min-height:100vh}a{color:inherit}.top{position:sticky;top:0;z-index:50;background:rgba(20,61,47,.96);color:#fff}.topin{max-width:1250px;margin:auto;min-height:68px;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-weight:900}.logo{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),#f6d98f);font-size:24px}.brand small{display:block;opacity:.7;font-size:11px;margin-top:2px}.nav{display:flex;gap:8px;flex-wrap:wrap}.nav a{padding:9px 12px;border-radius:999px;text-decoration:none;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);font-weight:800;font-size:13px}.hero,.section{max-width:1250px;margin:auto;padding:28px 18px}.heroCard{min-height:380px;padding:42px;border-radius:32px;background:linear-gradient(125deg,#0d3024,#22644d);color:#fff;box-shadow:var(--shadow);display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center;overflow:hidden;position:relative}.heroCard:after{content:'🐾';position:absolute;right:-20px;bottom:-55px;font-size:250px;opacity:.06}.eyebrow{display:inline-block;background:rgba(216,173,85,.17);border:1px solid rgba(255,225,154,.35);color:#ffe8ad;padding:8px 12px;border-radius:999px;font-size:12px;font-weight:900;text-transform:uppercase}.hero h1{font-size:clamp(40px,7vw,72px);line-height:.98;letter-spacing:-2px;margin:17px 0 14px}.hero p{font-size:18px;line-height:1.65;color:rgba(255,255,255,.82);max-width:700px}.buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.btn{border:0;border-radius:14px;padding:13px 17px;font-weight:900;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}.gold{background:linear-gradient(135deg,var(--gold),#efd584);color:#17382c}.light{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff}.green{background:var(--green);color:#fff}.soft{background:var(--soft);color:var(--green)}.dash{position:relative;z-index:2;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.17);border-radius:25px;padding:22px}.progress{height:14px;border-radius:999px;background:rgba(255,255,255,.16);overflow:hidden}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),#fff0b9);transition:.3s}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:15px}.stat{text-align:center;padding:13px 8px;border-radius:16px;background:rgba(255,255,255,.08)}.stat strong{display:block;font-size:21px}.stat small{opacity:.7}.head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:18px}.head h2{margin:0;color:var(--green);font-size:clamp(29px,4vw,42px)}.head p{margin:6px 0 0;color:var(--muted);line-height:1.55}.pill{display:inline-block;padding:7px 10px;border-radius:999px;background:#edf4ef;color:var(--green);font-size:12px;font-weight:900}.courses{display:grid;grid-template-columns:repeat(5,1fr);gap:15px}.course{position:relative;min-height:235px;padding:19px;border-radius:21px;background:#fff;border:1px solid rgba(20,61,47,.1);box-shadow:0 11px 28px rgba(20,61,47,.08);display:flex;flex-direction:column;transition:.2s}.course:hover{transform:translateY(-4px)}.course.active{border:2px solid #9fc2af;background:linear-gradient(145deg,#fff,#f2f9f5)}.course.locked{opacity:.74}.icon{width:56px;height:56px;border-radius:17px;background:#f3e5bd;display:grid;place-items:center;font-size:30px;margin-bottom:15px}.course h3{margin:0 0 8px;color:var(--green)}.course p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}.meta{margin-top:auto;padding-top:16px;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:800;color:var(--muted)}.cover{position:absolute;inset:0;border:0;background:transparent;cursor:pointer}.layout{display:grid;grid-template-columns:310px 1fr;gap:20px;align-items:start}.side{position:sticky;top:84px;background:#fff;border:1px solid var(--line);border-radius:21px;padding:17px;box-shadow:0 10px 28px rgba(20,61,47,.08);max-height:calc(100vh - 105px);overflow:auto}.side h3{margin:0 0 7px;color:var(--green)}.side p{color:var(--muted);font-size:13px;line-height:1.5}.lessonNav{display:grid;gap:8px}.lessonNav button{width:100%;border:1px solid var(--line);background:#fff;border-radius:13px;padding:10px;display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:9px;text-align:left;cursor:pointer}.lessonNav button.current{background:var(--green);color:#fff;border-color:var(--green)}.lessonNav button.done{border-color:#b6d4c3;background:#f4faf6}.num{width:32px;height:32px;border-radius:10px;background:#edf4ef;color:var(--green);display:grid;place-items:center;font-weight:900}.current .num{background:rgba(255,255,255,.15);color:#fff}.ltitle{font-size:13px;font-weight:900}.panel{background:#fff;border:1px solid var(--line);border-radius:27px;overflow:hidden;box-shadow:var(--shadow)}.lessonHero{padding:31px;background:linear-gradient(125deg,var(--green),var(--green2));color:#fff}.kicker{font-size:12px;text-transform:uppercase;color:#f6d98f;font-weight:900;letter-spacing:.7px}.lessonHero h2{font-size:clamp(30px,5vw,50px);margin:8px 0}.lessonHero p{margin:0;color:rgba(255,255,255,.8);line-height:1.6}.points{display:inline-block;margin-top:15px;padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.1);font-weight:900}.content{padding:25px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.box{padding:19px;border:1px solid var(--line);border-radius:18px;background:#f8fbf9}.box.wide{grid-column:1/-1}.box h3{margin:0 0 9px;color:var(--green);font-size:17px}.box p,.box li{line-height:1.65;color:#45524c}.box p{margin:0}.box ul{margin:8px 0 0;padding-left:20px}.tip{background:#fffaf0;border-color:#ead8aa}.mistake{background:#fff6f4;border-color:#efd0cc}.task{background:#eff8f2;border-color:#bfd9c9}.step{display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:start;margin-top:10px}.step span{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#fff;font-weight:900}.actions{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px;margin-top:22px}.actionGroup{display:flex;gap:9px;flex-wrap:wrap}.complete{display:none;margin-top:16px;padding:15px;border-radius:16px;background:#eff8f2;border:1px solid #bfd9c9;color:var(--green);font-weight:900}.complete.show{display:block}.diploma{display:none;margin-top:28px;padding:31px;text-align:center;border:7px double var(--gold);border-radius:26px;background:radial-gradient(circle at top,#fffdf7,#f4ecd6);box-shadow:var(--shadow)}.diploma.show{display:block}.seal{width:86px;height:86px;margin:auto;border-radius:50%;display:grid;place-items:center;background:var(--gold);font-size:42px}.diploma h2{font-family:Georgia,serif;color:var(--green);font-size:40px;margin:8px}.name{width:min(100%,420px);border:0;border-bottom:2px solid var(--green);background:transparent;text-align:center;font-weight:900;font-size:20px;padding:9px;outline:0}.hidden{display:none!important}.toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,110px);background:var(--green);color:#fff;padding:13px 17px;border-radius:13px;font-weight:900;box-shadow:var(--shadow);transition:.3s;z-index:100}.toast.show{transform:translate(-50%,0)}footer{margin-top:36px;background:var(--green);color:rgba(255,255,255,.75);text-align:center;padding:32px 18px}@media(max-width:1050px){.courses{grid-template-columns:repeat(3,1fr)}.heroCard{grid-template-columns:1fr}.layout{grid-template-columns:270px 1fr}}@media(max-width:800px){.courses{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.side{position:relative;top:auto;max-height:none}.lessonNav{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.box.wide{grid-column:auto}}@media(max-width:560px){.topin{padding:8px 11px}.brand{font-size:13px}.brand small{font-size:9px}.nav a{font-size:11px;padding:7px 9px}.hero,.section{padding-left:11px;padding-right:11px}.heroCard{padding:23px;border-radius:23px}.stats{grid-template-columns:1fr}.courses{grid-template-columns:1fr}.course{min-height:195px}.lessonNav{grid-template-columns:1fr}.content{padding:17px}.actions,.actionGroup{display:grid;width:100%}.btn{width:100%}.head{align-items:start;flex-direction:column}}@media print{body *{visibility:hidden}.diploma,.diploma *{visibility:visible}.diploma{display:block!important;position:absolute;inset:0;width:100%;box-shadow:none}}
-</style>
-</head>
-<body>
-<header class="top"><div class="topin"><a class="brand" href="index.html"><span class="logo">🐶</span><span>Hundene Våre Akademiet<small>Hundelære Premium</small></span></a><nav class="nav"><a href="index.html">🏠 Forsiden</a><a href="hundebok.html">📘 Hundebok</a><a href="hundeskolen.html">🎓 Hundeskolen</a></nav></div></header>
-<main>
-<section class="hero"><div class="heroCard"><div><span class="eyebrow">🏛️ Hundene Våre Akademiet</span><h1>Hundelære Premium</h1><p>Et komplett digitalt læringsunivers for hundeeiere. Lær i eget tempo, gjør praktiske øvelser og bygg et trygt samarbeid med hunden din.</p><div class="buttons"><button class="btn gold" onclick="openCourse()">🐶 Start valpekurset</button><a class="btn light" href="#courses">📚 Se alle kurs</a></div></div><aside class="dash"><h3>Din fremdrift</h3><div class="progress"><span id="bar"></span></div><div class="stats"><div class="stat"><strong id="doneCount">0</strong><small>Leksjoner</small></div><div class="stat"><strong id="pointCount">0</strong><small>Poeng</small></div><div class="stat"><strong id="percent">0%</strong><small>Fullført</small></div></div></aside></div></section>
-<section class="section" id="courses"><div class="head"><div><h2>Velg et kurs</h2><p>Valpekurset er klart. De andre kursene åpnes etter hvert som Akademiet bygges videre.</p></div><span class="pill">⭐ Premium læring</span></div><div class="courses">
-<article class="course active"><div class="icon">🐶</div><h3>Valpen</h3><p>Trygg start, gode rutiner, miljøtrening, kontakt og viktige ferdigheter.</p><div class="meta"><span>10 leksjoner</span><span class="pill">Åpent</span></div><button class="cover" onclick="openCourse()" aria-label="Åpne valpekurset"></button></article>
-<article class="course locked"><div class="icon">👀</div><h3>Kontakt</h3><p>Bygg oppmerksomhet, samarbeid og frivillig kontakt.</p><div class="meta"><span>8 leksjoner</span><span>🔒 Snart</span></div></article>
-<article class="course locked"><div class="icon">📣</div><h3>Innkalling</h3><p>Fra enkle øvelser til trygg innkalling med forstyrrelser.</p><div class="meta"><span>10 leksjoner</span><span>🔒 Snart</span></div></article>
-<article class="course locked"><div class="icon">🚶</div><h3>Gå pent i bånd</h3><p>Lær hunden å følge deg rolig uten trekking.</p><div class="meta"><span>9 leksjoner</span><span>🔒 Snart</span></div></article>
-<article class="course locked"><div class="icon">🐕</div><h3>Hundemøter</h3><p>Rolige passeringer og gode opplevelser rundt andre hunder.</p><div class="meta"><span>8 leksjoner</span><span>🔒 Snart</span></div></article>
-<article class="course locked"><div class="icon">🧠</div><h3>Mental aktivisering</h3><p>Søk, problemløsing og oppgaver som gir en fornøyd hund.</p><div class="meta"><span>8 leksjoner</span><span>🔒 Snart</span></div></article>
-<article class="course locked"><div class="icon">🏠</div><h3>Hjemme alene</h3><p>Trinnvis og trygg trening som forebygger uro.</p><div class="meta"><span>7 leksjoner</span><span>🔒 Snart</span></div></article>
-<article class="course locked"><div class="icon">❤️</div><h3>Helse</h3><p>Lær å følge med på hundens kropp og trivsel.</p><div class="meta"><span>10 leksjoner</span><span>🔒 Snart</span></div></article>
-<article class="course locked"><div class="icon">🥩</div><h3>Ernæring</h3><p>Forstå fôr, hold, godbiter og hundens behov.</p><div class="meta"><span>8 leksjoner</span><span>🔒 Snart</span></div></article>
-<article class="course locked"><div class="icon">🏆</div><h3>Konkurranse</h3><p>Grunnarbeid for utstilling, lydighet og krevende miljø.</p><div class="meta"><span>10 leksjoner</span><span>🔒 Snart</span></div></article>
-</div></section>
-<section class="section hidden" id="course"><div class="head"><div><h2>🐶 Valpekurset</h2><p>Ti leksjoner som gir valpen en trygg og god start.</p></div><button class="btn soft" onclick="resetCourse()">Nullstill kurset</button></div><div class="layout"><aside class="side"><h3>Kursinnhold</h3><p>Trykk på en leksjon. Fremdriften lagres automatisk på denne enheten.</p><div class="lessonNav" id="lessonNav"></div></aside><div><article class="panel"><header class="lessonHero"><div class="kicker" id="kicker"></div><h2 id="title"></h2><p id="intro"></p><div class="points">⭐ <span id="lessonPoints"></span> poeng</div></header><div class="content"><div class="grid"><section class="box"><h3>🎯 Målet</h3><p id="goal"></p></section><section class="box tip"><h3>💡 Instruktørens tips</h3><p id="tip"></p></section><section class="box wide"><h3>📖 Dette skal du lære</h3><div id="theory"></div></section><section class="box mistake"><h3>⚠️ Vanlige feil</h3><ul id="mistakes"></ul></section><section class="box task"><h3>✅ Dagens oppgave</h3><p id="task"></p></section><section class="box wide"><h3>🐾 Praktisk øvelse</h3><div id="steps"></div></section></div><div class="complete" id="complete">🎉 Denne leksjonen er fullført og poengene er registrert.</div><div class="actions"><div class="actionGroup"><button class="btn soft" id="prev" onclick="change(-1)">← Forrige</button><a class="btn soft" id="school" href="hundeskolen.html">🎓 Start treningsprogram</a></div><div class="actionGroup"><button class="btn green" id="completeBtn" onclick="finish()">✓ Marker som fullført</button><button class="btn gold" id="next" onclick="change(1)">Neste leksjon →</button></div></div></div></article><section class="diploma" id="diploma"><div class="seal">🏆</div><h2>Kursbevis</h2><p>Dette bekrefter at</p><input class="name" placeholder="Skriv navnet ditt her"><p>har fullført <strong>Valpekurset</strong> i Hundelære Premium.</p><p><strong>Totalt: 100 poeng</strong></p><button class="btn gold" onclick="window.print()">🖨️ Skriv ut kursbevis</button></section></div></div></section>
-</main><footer><strong>Hundene Våre Akademiet</strong><br>Kunnskap, trygghet og et bedre liv sammen med hunden.</footer><div class="toast" id="toast"></div>
-<script>
-const lessons=[
-{title:'Den første tiden hjemme',intro:'De første dagene handler om ro, trygghet og gode forventninger.',goal:'Valpen skal oppleve det nye hjemmet som et trygt sted og få tid til å knytte seg til familien.',theory:'<p>En valp møter en helt ny verden når den flytter fra mor og kullsøsken. Hold de første dagene rolige, la valpen sove mye og introduser nye ting gradvis.</p><p>Lag en fast soveplass der valpen får være i fred.</p>',mistakes:['For mange besøk de første dagene','For lite søvn og for mye aktivitet','Å forvente lydighet med én gang'],task:'Lag en rolig hvileplass og gi valpen minst tre uforstyrrede hvileperioder i dag.',tip:'En trygg valp lærer raskere. Ro er en viktig del av treningen.',steps:['Vis valpen hvor vann, seng og utgangsdør er.','Sett deg rolig og la valpen oppsøke deg.','Belønn frivillig kontakt med rolig stemme eller godbit.','Avslutt før valpen blir sliten.'],points:10},
-{title:'Navn og kontakt',intro:'Navnet skal bli et positivt signal som får valpen til å se mot deg.',goal:'Valpen skal reagere positivt på navnet sitt og søke blikkontakt.',theory:'<p>Si navnet én gang i vennlig tone. Når valpen ser mot deg, sier du «bra» og gir en belønning. Navnet skal ikke brukes i irritasjon.</p>',mistakes:['Å gjenta navnet mange ganger','Å bruke navnet strengt','Å trene for lenge'],task:'Gjør fem korte navneøvelser med tre repetisjoner i hver.',tip:'Stopp mens valpen fortsatt synes øvelsen er morsom.',steps:['Ha tre små godbiter klare.','Si navnet én gang.','Si «bra» når valpen ser på deg.','Gi godbiten og ta en pause.'],points:10},
-{title:'Renslighet og gode rutiner',intro:'Renslighet læres gjennom forebygging, faste turer ut og riktig timing.',goal:'Du skal kjenne valpens signaler og redusere uhell inne.',theory:'<p>Ta valpen ut etter søvn, lek, mat og drikke. Gå til samme sted og vær rolig. Ros vennlig når valpen er ferdig. Uhell vaskes bort uten kjeft.</p>',mistakes:['Å vente for lenge mellom luftingene','Å straffe valpen for uhell','Å leke før valpen har gjort fra seg'],task:'Skriv ned tidspunkt for søvn, mat, lek og lufting én hel dag.',tip:'Et enkelt skjema gjør det lettere å se valpens rytme.',steps:['Ta valpen ut med en gang den våkner.','Stå rolig på samme område.','Ros idet valpen er ferdig.','Gå deretter en liten hyggelig tur.'],points:10},
-{title:'Biting og tyggebehov',intro:'Valpebiting er normalt. Lær valpen hva den kan bite på.',goal:'Valpen skal lettere velge leker og tyggeting fremfor hender og klær.',theory:'<p>Valper undersøker verden med munnen. Ha lovlige tyggealternativer tilgjengelig. Dersom leken blir for hard, avslutter du rolig et øyeblikk.</p>',mistakes:['Å rope eller bli fysisk hard','Å bruke hendene som leketøy','Å fortsette når valpen er overtrøtt'],task:'Finn frem tre trygge tyggeleker og legg dem der valpen leker.',tip:'Mye biting betyr ofte at valpen trenger søvn, ikke mer aktivitet.',steps:['Start lek med en passende leke.','Beveg leken bort fra kroppen.','Ros når valpen velger leken.','Stopp noen sekunder dersom bitingen blir hard.'],points:10},
-{title:'Miljøtrening',intro:'God miljøtrening betyr små, positive opplevelser.',goal:'Valpen skal bli tryggere på nye underlag, lyder og steder.',theory:'<p>La valpen observere på trygg avstand. Belønn ro og nysgjerrighet. Den skal få trekke seg unna dersom noe blir vanskelig.</p>',mistakes:['Å gå for nær det valpen er usikker på','Å holde valpen fast','For mange nye opplevelser samme dag'],task:'La valpen oppleve ett nytt underlag og én ny rolig lyd.',tip:'En valp som får velge avstand, bygger ekte trygghet.',steps:['Velg et rolig sted.','La valpen se og lukte uten krav.','Belønn rolig undersøkelse og kontakt.','Gå hjem før valpen blir sliten.'],points:10},
-{title:'Håndtering og stell',intro:'Positiv håndtering gjør kloklipp, pelsstell og veterinærbesøk enklere.',goal:'Valpen skal akseptere korte berøringer av poter, ører, munn og kropp.',theory:'<p>Berør ett område i ett sekund, belønn og slipp. Øk gradvis. Valpen skal ikke presses gjennom ubehag.</p>',mistakes:['For lange økter','Å klippe alle klør på én gang','Å holde valpen hardt fast'],task:'Gjennomfør to håndteringsøkter på under ett minutt.',tip:'Én vellykket klo er bedre enn fire klør med kamp.',steps:['Berør skulderen og gi en godbit.','Flytt hånden rolig mot poten.','Hold poten ett sekund og belønn.','Avslutt med lek eller rolig kos.'],points:10},
-{title:'Ro og avkobling',intro:'Valpen må lære at ikke alt rundt den betyr aktivitet.',goal:'Valpen skal klare korte perioder med ro på en fast plass.',theory:'<p>Belønn når valpen frivillig legger seg. Gi gjerne en trygg tyggeting. Start i rolige omgivelser.</p>',mistakes:['Å bare gi oppmerksomhet når valpen maser','Å forvente lang ro med én gang','Å trene når valpen allerede er overtrøtt'],task:'Belønn fem frivillige rolige øyeblikk i løpet av dagen.',tip:'Legg godbiten rolig mellom potene for å holde energien nede.',steps:['Sett deg i en stol med valpen i nærheten.','Vent til valpen setter eller legger seg.','Legg rolig en godbit mellom potene.','Gjenta med god tid mellom belønningene.'],points:10},
-{title:'Alene i korte øyeblikk',intro:'Alenetrening begynner med sekunder og trygghet.',goal:'Valpen skal oppleve korte avstander fra deg uten uro.',theory:'<p>Start mens valpen er rolig. Gå ett skritt unna og kom tilbake før valpen blir urolig. Øk bare når det går lett.</p>',mistakes:['Å gå ut av huset for tidlig','Å vente til valpen piper','For store hopp i varighet'],task:'Gjør fem repetisjoner der du er ute av syne i ett til fem sekunder.',tip:'Kom tilbake mens valpen fortsatt er rolig.',steps:['Gi valpen en trygg tyggeting.','Gå rolig to skritt unna.','Kom tilbake etter ett til to sekunder.','Øk gradvis når valpen er trygg.'],points:10},
-{title:'Innkallingens første steg',intro:'En god innkalling starter inne og med svært gode belønninger.',goal:'Valpen skal synes det er fantastisk å komme til deg.',theory:'<p>Bruk et fast innkallingsord og si det bare når du tror valpen vil lykkes. Belønn alltid godt.</p>',mistakes:['Å kalle når valpen er for opptatt','Å gjenta signalet','Å koble valpen og gå hjem hver gang'],task:'Gjør ti vellykkede innkallinger innendørs i løpet av dagen.',tip:'Løp gjerne noen skritt bakover. Bevegelse gjør deg mer spennende.',steps:['Sett deg noen meter fra valpen.','Si innkallingsordet lyst én gang.','Beveg deg bakover og ros.','Belønn med flere små godbiter.'],points:10},
-{title:'Den gode hverdagen',intro:'Siste leksjon samler trygghet, kontakt, rutiner og ro.',goal:'Lag en enkel ukeplan som balanserer aktivitet, søvn og trening.',theory:'<p>Valpens utvikling går i bølger. Hold øktene korte og se hele hunden, ikke bare prestasjonen.</p>',mistakes:['For høye forventninger','For lite hvile','Å sammenligne valpen med andre'],task:'Lag en ukeplan med korte økter, rolige turer, miljøtrening og nok søvn.',tip:'Målet er ikke en perfekt valp, men et trygt samarbeid som varer hele livet.',steps:['Velg tre ferdigheter dere skal vedlikeholde.','Planlegg én ny miljøopplevelse.','Legg inn faste perioder for søvn og ro.','Feir fremgangen og fortsett i Hundeskolen.'],points:10}
-];
-const KEY='hundelare_valpekurs_v1';let current=0;let completed=(()=>{try{const x=JSON.parse(localStorage.getItem(KEY));return Array.isArray(x)?x:[]}catch(e){return[]}})();
-function save(){localStorage.setItem(KEY,JSON.stringify(completed))}function openCourse(){document.getElementById('course').classList.remove('hidden');render();update();setTimeout(()=>document.getElementById('course').scrollIntoView({behavior:'smooth'}),70)}
-function nav(){document.getElementById('lessonNav').innerHTML=lessons.map((l,i)=>`<button class="${i===current?'current':''} ${completed.includes(i)?'done':''}" onclick="go(${i})"><span class="num">${i+1}</span><span class="ltitle">${l.title}</span><span>${completed.includes(i)?'✓':'›'}</span></button>`).join('')}
-function render(){const l=lessons[current];kicker.textContent=`Leksjon ${current+1} av ${lessons.length}`;title.textContent=l.title;intro.textContent=l.intro;lessonPoints.textContent=l.points;goal.textContent=l.goal;tip.textContent=l.tip;theory.innerHTML=l.theory;mistakes.innerHTML=l.mistakes.map(x=>`<li>${x}</li>`).join('');task.textContent=l.task;steps.innerHTML=l.steps.map((x,i)=>`<div class="step"><span>${i+1}</span><p>${x}</p></div>`).join('');const d=completed.includes(current);complete.classList.toggle('show',d);completeBtn.textContent=d?'✓ Fullført':'✓ Marker som fullført';completeBtn.disabled=d;completeBtn.style.opacity=d?'.6':'1';prev.disabled=current===0;prev.style.opacity=current===0?'.45':'1';next.textContent=current===lessons.length-1?'Se kursbevis 🏆':'Neste leksjon →';school.href=`hundeskolen.html?kurs=valpen&leksjon=${current+1}`;nav()}
-function go(i){current=i;render();document.querySelector('.panel').scrollIntoView({behavior:'smooth'})}function change(n){if(n===1&&current===lessons.length-1){diploma.scrollIntoView({behavior:'smooth'});return}const x=current+n;if(x>=0&&x<lessons.length){current=x;render();document.querySelector('.panel').scrollIntoView({behavior:'smooth'})}}
-function finish(){if(!completed.includes(current)){completed.push(current);completed.sort((a,b)=>a-b);save();update();render();toastMsg(`Leksjon fullført! +${lessons[current].points} poeng`)}}
-function update(){const c=completed.length,p=Math.round(c/lessons.length*100);doneCount.textContent=c;pointCount.textContent=c*10;percent.textContent=p+'%';bar.style.width=p+'%';diploma.classList.toggle('show',c===lessons.length)}function resetCourse(){if(confirm('Vil du nullstille all fremdrift i Valpekurset?')){completed=[];current=0;save();update();render();toastMsg('Kurset er nullstilt')}}function toastMsg(m){toast.textContent=m;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2200)}update();
-</script>
-</body>
-</html>
+<section class="lesson">
+
+<h1>🐶 Leksjon 4 – Lek og belønning</h1>
+
+<h2>🎯 Mål</h2>
+
+<p>
+Etter denne leksjonen skal du forstå hvorfor lek og belønning er noe av det
+viktigste verktøyet du har når du trener en hund.
+</p>
+
+<hr>
+
+<h2>📖 Hvorfor belønning virker</h2>
+
+<p>
+Alle hunder gjentar det som lønner seg.
+</p>
+
+<p>
+Når hunden får noe den liker etter en ønsket handling,
+øker sannsynligheten for at den gjør det samme igjen.
+</p>
+
+<p>
+Belønning handler derfor ikke om å "skjemme bort" hunden.
+Det handler om å lære hunden hva som er riktig.
+</p>
+
+<p>
+En belønning kan være:
+</p>
+
+<ul>
+
+<li>🍖 Godbiter</li>
+
+<li>⚽ Lek</li>
+
+<li>❤️ Ros</li>
+
+<li>🐕 Frihet til å løpe</li>
+
+<li>👋 Kos</li>
+
+</ul>
+
+<p>
+Det viktigste er at hunden liker belønningen.
+</p>
+
+<hr>
+
+<h2>🐾 Hva motiverer hunden?</h2>
+
+<p>
+Alle hunder er forskjellige.
+</p>
+
+<p>
+Noen elsker mat.
+Andre elsker ball.
+Noen blir lykkelige av ros.
+</p>
+
+<p>
+Finn ut hva akkurat din hund setter mest pris på.
+</p>
+
+<hr>
+
+<h2>💡 Belønn med riktig timing</h2>
+
+<p>
+Belønningen må komme med en gang hunden gjør det riktige.
+</p>
+
+<p>
+Venter du for lenge,
+kan hunden tro at den får belønning for noe helt annet.
+</p>
+
+<p>
+Prøv derfor å belønne innen ett til to sekunder.
+</p>
+
+<hr>
+
+<h2>🐶 Eksempel</h2>
+
+<p>
+
+Du sier:
+
+<strong>"Sitt"</strong>
+
+</p>
+
+<p>
+
+Hunden setter seg.
+
+</p>
+
+<p>
+
+Da sier du:
+
+<strong>"Bra!"</strong>
+
+og gir belønningen med én gang.
+
+</p>
+
+<hr>
+
+<h2>⚽ Lek som belønning</h2>
+
+<p>
+
+Mange hunder synes en kort lek er mer verdifull enn godbiter.
+
+</p>
+
+<p>
+
+30 sekunder med drakamp eller balllek kan være den perfekte belønningen.
+
+</p>
+
+<p>
+
+Husk å avslutte leken mens hunden fortsatt synes den er morsom.
+
+</p>
+
+<hr>
+
+<h2>🍖 Godbiter</h2>
+
+<p>
+
+Bruk små biter.
+
+</p>
+
+<p>
+
+Hunden skal rekke å spise dem på ett sekund.
+
+</p>
+
+<p>
+
+Store godbiter gjør treningen treg.
+
+</p>
+
+<hr>
+
+<h2>❤️ Ros</h2>
+
+<p>
+
+Ros skal være ekte.
+
+</p>
+
+<p>
+
+Bruk en lys og vennlig stemme.
+
+</p>
+
+<p>
+
+Mange hunder blir veldig motiverte av en glad eier.
+
+</p>
+
+<hr>
+
+<h2>⚠️ Vanlige feil</h2>
+
+<ul>
+
+<li>❌ Belønner for sent</li>
+
+<li>❌ Gir samme belønning hele tiden</li>
+
+<li>❌ Trener for lenge</li>
+
+<li>❌ Bruker godbiter som bestikkelse</li>
+
+<li>❌ Slutter å belønne for tidlig</li>
+
+</ul>
+
+<hr>
+
+<h2>🐾 Praktisk øvelse</h2>
+
+<ol>
+
+<li>Be hunden sitte.</li>
+
+<li>Belønn med en gang.</li>
+
+<li>Vent noen sekunder.</li>
+
+<li>Gjenta fem ganger.</li>
+
+<li>Avslutt mens hunden fortsatt synes det er gøy.</li>
+
+</ol>
+
+<hr>
+
+<h2>🧠 Visste du?</h2>
+
+<p>
+
+Hunder lærer raskest når de lykkes ofte.
+
+Derfor bør treningen være enkel nok til at hunden får mange små seire.
+
+</p>
+
+<hr>
+
+<h2>📅 Dagens oppgave</h2>
+
+<ul>
+
+<li>✅ Finn hundens favorittbelønning.</li>
+
+<li>✅ Gjennomfør tre treningsøkter på under fem minutter.</li>
+
+<li>✅ Avslutt alltid mens hunden vil ha mer.</li>
+
+</ul>
+
+<hr>
+
+<h2>⭐ Leksjonen er bestått når</h2>
+
+<ul>
+
+<li>✔ Hunden setter seg på signal.</li>
+
+<li>✔ Belønningen kommer raskt.</li>
+
+<li>✔ Hunden viser treningsglede.</li>
+
+<li>✔ Treningen avsluttes positivt.</li>
+
+</ul>
+
+<hr>
+
+<h2>🏆 Dagens gullregel</h2>
+
+<blockquote>
+
+"Hunder lærer ikke av det du ønsker de gjorde.
+De lærer av det du faktisk belønner."
+
+</blockquote>
+
+</section>
