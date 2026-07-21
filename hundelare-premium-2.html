@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hundene Våre Akademiet 13.0 WOW</title>
+<title>Hundene Våre Akademiet 13.1 Mobilfix</title>
 <style>
 :root{
   --bg:#0b1220;--panel:#121b2a;--panel2:#172235;--line:#2a3850;
@@ -77,12 +77,30 @@ details[open] summary::after{content:"⌃"}
 .admin-grid{display:grid;grid-template-columns:260px 1fr;gap:14px}
 .admin input,.admin textarea,.admin select{width:100%;margin:5px 0;padding:10px;background:#101827;border:1px solid #384760;color:#fff;border-radius:8px}
 .mobile-courses{display:none}
+.mobile-navbox{display:none;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:12px}
+.mobile-navbox label{display:block;color:var(--muted);font-size:.82rem;margin:4px 0 5px}
+.mobile-navbox select{width:100%;background:#111a28;border:1px solid #334158;color:#fff;border-radius:9px;padding:11px;margin-bottom:8px}
+.mobile-nav-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mobile-nav-actions button{width:100%}
 @media(max-width:1100px){
   .hero{grid-template-columns:90px 1fr} .bonnie{grid-column:1/-1}
   .dashboard{grid-template-columns:repeat(2,1fr)}
   .mainarea{grid-template-columns:1fr} .sidebar{position:static}
 }
 @media(max-width:700px){
+  .topbar-inner{flex-wrap:wrap;gap:8px}
+  .brand{font-size:1rem;white-space:normal;flex:1}
+  .version{font-size:.68rem}
+  .nav{width:100%;justify-content:space-between;margin-left:0;gap:8px}
+  .nav a.active{display:block}
+  .nav button{padding:6px}
+  .hero{margin-top:4px}
+  .bonnie{grid-template-columns:1fr 80px;min-height:auto}
+  .bonnie .dog{font-size:3.5rem}
+  .card{padding:14px}
+  .lesson-panel{padding:12px}
+  summary{padding:12px}
+
   .topbar-inner{padding:10px 14px} .nav a{display:none}
   .container{padding:12px}
   .hero{grid-template-columns:1fr;text-align:center}
@@ -98,9 +116,9 @@ details[open] summary::after{content:"⌃"}
 <body>
 <header class="topbar">
   <div class="topbar-inner">
-    <div class="brand"><span class="paw">🐾</span> Hundene Våre Akademiet <span class="version">13.0 WOW</span></div>
+    <div class="brand"><span class="paw">🐾</span> Hundene Våre Akademiet <span class="version">13.1 Mobilfix</span></div>
     <nav class="nav">
-      <a class="active" href="#">⌂ Forsiden</a>
+      <a class="active" href="index.html">⌂ Forsiden</a>
       <a href="#kurs">▣ Kursene</a>
       <a href="#hund">🐕 Min hund</a>
       <a href="#fremdrift">⌁ Fremdrift</a>
@@ -138,7 +156,16 @@ details[open] summary::after{content:"⌃"}
   <div class="card" id="fremdrift"><h3>⌁ Din fremdrift</h3><div class="big" id="circlePercent">0%</div><p>Fullført: <span id="doneMini">0</span><br>Ikke startet: <span id="leftMini">100</span></p><button class="btn" onclick="document.querySelector('#kurs').scrollIntoView()">Se alle kurs</button></div>
 </section>
 
-<select id="mobileCourseSelect" class="mobile-courses pill" onchange="openCourse(Number(this.value))"></select>
+<section class="mobile-navbox">
+  <label for="mobileCourseSelect">Velg kurs</label>
+  <select id="mobileCourseSelect" onchange="openCourse(Number(this.value))"></select>
+  <label for="mobileLessonSelect">Velg leksjon</label>
+  <select id="mobileLessonSelect" onchange="openLesson(Number(this.value))"></select>
+  <div class="mobile-nav-actions">
+    <button class="btn" onclick="previousLesson()">‹ Forrige</button>
+    <button class="btn primary" onclick="nextLesson()">Neste ›</button>
+  </div>
+</section>
 
 <section class="mainarea" id="kurs">
   <aside class="sidebar">
@@ -220,9 +247,13 @@ function buildDetails(l){
 function renderCourses(){
  $("courseList").innerHTML=courses.map((c,i)=>`<div class="course-row ${i===ci?"active":""}" onclick="openCourse(${i})"><div class="course-num">${i+1}</div><div class="course-title">${c.title}</div><div class="course-count">${c.lessons.filter((_,j)=>completed.has(`${i}-${j}`)).length}/10</div><div>›</div></div>`).join("");
  $("mobileCourseSelect").innerHTML=courses.map((c,i)=>`<option value="${i}" ${i===ci?"selected":""}>${i+1}. ${c.title}</option>`).join("");
+ const lessonSelect=$("mobileLessonSelect");
+ if(lessonSelect){
+   lessonSelect.innerHTML=courses[ci].lessons.map((l,j)=>`<option value="${j}" ${j===li?"selected":""}>${j+1}. ${l.title}</option>`).join("");
+ }
 }
 function openCourse(i){ci=i;li=0;showLesson();renderCourses()}
-function openLesson(j){li=j;showLesson()}
+function openLesson(j){li=j;showLesson();renderCourses()}
 function showLesson(){
  const c=courses[ci],l=c.lessons[li],d=buildDetails(l);
  $("breadcrumb").textContent=`Kurs ${ci+1} › Leksjon ${li+1}`;
@@ -231,8 +262,22 @@ function showLesson(){
  $("question").textContent=l.question;$("options").innerHTML=l.options.map((o,i)=>`<button class="option" onclick="answerQuiz(${i})">${o}</button>`).join("");
  $("notes").value=notesData[lessonKey()]||"";updateStatus();
  localStorage.setItem("hva-wow-last",JSON.stringify({ci,li}));
- $("continueMeta").textContent=`Kurs ${ci+1} · Leksjon ${li+1}`;$("continueTitle").textContent=l.title;
+ $("continueMeta").textContent=`Kurs ${ci+1} · Leksjon ${li+1}`;$("continueTitle").textContent=l.title;if($("mobileLessonSelect"))$("mobileLessonSelect").value=li;
 }
+
+function previousLesson(){
+ if(li>0){li--}
+ else if(ci>0){ci--;li=courses[ci].lessons.length-1}
+ else return;
+ showLesson();renderCourses();document.querySelector(".lesson-panel").scrollIntoView({behavior:"smooth"});
+}
+function nextLesson(){
+ if(li<courses[ci].lessons.length-1){li++}
+ else if(ci<courses.length-1){ci++;li=0}
+ else return;
+ showLesson();renderCourses();document.querySelector(".lesson-panel").scrollIntoView({behavior:"smooth"});
+}
+
 function answerQuiz(i){const l=courses[ci].lessons[li];$("quizResult").textContent=i===l.answer?"✅ Riktig!":"❌ Prøv igjen.";}
 function toggleComplete(){const k=lessonKey();completed.has(k)?completed.delete(k):completed.add(k);localStorage.setItem("hva-wow-completed",JSON.stringify([...completed]));updateStats();updateStatus();renderCourses();}
 function updateStatus(){const done=completed.has(lessonKey());$("statusBtn").textContent=done?"● Fullført":"● Ikke fullført";}
