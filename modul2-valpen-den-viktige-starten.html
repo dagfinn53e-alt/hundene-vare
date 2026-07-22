@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+
+<html lang="no">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modul 2 – Valpen, den viktige starten | Hundene Våre Akademiet</title>
+<meta content="Modul 2 i Hundene Våre Akademiet: den første tiden med valp, trygghet, søvn, renslighet, sosialisering, biting, lek og alene hjemme." name="description"/>
+<style>
+:root{
+  --green:#0f5b35;
+  --green-dark:#0a4026;
+  --green-soft:#eaf5ed;
+  --cream:#fbfaf5;
+  --gold:#e9a22d;
+  --red:#b84343;
+  --blue:#2f6fa8;
+  --purple:#6a56a6;
+  --text:#17211b;
+  --muted:#5f6d64;
+  --line:#e3e8e3;
+  --white:#fff;
+  --shadow:0 14px 36px rgba(20,45,30,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#fbfcf9 0%,#f6f8f4 100%);
+  color:var(--text);
+  line-height:1.65;
+}
+a{color:inherit;text-decoration:none}
+.container{width:min(1180px,calc(100% - 30px));margin:auto}
+.topbar{
+  background:linear-gradient(90deg,var(--green-dark),var(--green));
+  color:#fff;text-align:center;padding:9px 16px;font-size:14px
+}
+header{
+  background:rgba(255,255,255,.96);
+  border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:20;
+  backdrop-filter:blur(10px)
+}
+.nav{
+  min-height:72px;display:flex;align-items:center;
+  justify-content:space-between;gap:20px
+}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--green-dark)}
+.logo{
+  width:46px;height:46px;border-radius:14px;
+  display:grid;place-items:center;background:linear-gradient(145deg,var(--green-dark),var(--green));
+  color:#fff;font-size:24px;box-shadow:0 8px 18px rgba(15,91,53,.2)
+}
+.brand small{display:block;color:var(--muted);font-weight:600;margin-top:2px}
+.navlinks{display:flex;gap:8px;flex-wrap:wrap}
+.navlinks a{padding:10px 13px;border-radius:11px;font-weight:700}
+.navlinks a:hover{background:var(--green-soft);color:var(--green-dark)}
+
+.hero{
+  padding:44px 0 28px;
+  background:
+    radial-gradient(circle at 88% 20%,rgba(232,242,225,.8),transparent 28%),
+    radial-gradient(circle at 15% 75%,rgba(250,239,214,.5),transparent 32%);
+}
+.hero-grid{
+  display:grid;grid-template-columns:1.25fr .75fr;
+  gap:28px;align-items:center
+}
+.badge{
+  display:inline-flex;gap:8px;align-items:center;
+  border:1px solid #cfe3d3;background:#f0f8f2;
+  color:var(--green-dark);padding:8px 12px;border-radius:999px;
+  font-weight:800;font-size:13px
+}
+h1{
+  font-size:clamp(38px,5vw,66px);
+  line-height:1.05;letter-spacing:-.04em;
+  margin:16px 0 14px;color:var(--green-dark)
+}
+.lead{font-size:17px;color:#4f5d53;max-width:760px}
+.hero-card{
+  background:#fff;border:1px solid var(--line);border-radius:26px;
+  padding:24px;box-shadow:var(--shadow)
+}
+.hero-card .dog{
+  min-height:250px;border-radius:20px;
+  background:linear-gradient(145deg,#e8f3e9,#f4e5c8);
+  display:grid;place-items:center;font-size:110px
+}
+.hero-card p{margin:16px 0 0;color:var(--muted);font-size:14px;text-align:center}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:47px;padding:11px 18px;border-radius:13px;
+  font-weight:800;border:1px solid transparent;transition:.2s ease
+}
+.btn-primary{background:var(--green);color:#fff;box-shadow:0 10px 22px rgba(15,91,53,.18)}
+.btn-primary:hover{background:var(--green-dark);transform:translateY(-2px)}
+.btn-light{background:#fff;border-color:#dce2dd}
+.btn-light:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(20,45,30,.08)}
+
+.progress-wrap{
+  background:#fff;border:1px solid var(--line);border-radius:20px;
+  padding:18px;margin:22px auto 0;box-shadow:var(--shadow)
+}
+.progress-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px}
+.progress-head strong{color:var(--green-dark)}
+.track{height:12px;background:#e7ece7;border-radius:999px;overflow:hidden}
+.fill{width:0%;height:100%;background:linear-gradient(90deg,var(--green),#6fb284);transition:.35s ease}
+.small{font-size:13px;color:var(--muted)}
+
+.layout{
+  display:grid;grid-template-columns:280px 1fr;
+  gap:24px;padding:28px 0 50px
+}
+.sidebar{
+  position:sticky;top:95px;align-self:start;
+  background:#fff;border:1px solid var(--line);
+  border-radius:20px;padding:18px;box-shadow:var(--shadow)
+}
+.sidebar h2{font-size:17px;margin:0 0 12px;color:var(--green-dark)}
+.lesson-nav{display:grid;gap:8px}
+.lesson-nav a{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 11px;border-radius:11px;font-size:14px;
+  color:#3d4a41;border:1px solid transparent
+}
+.lesson-nav a:hover{background:var(--green-soft);border-color:#d5e6d8}
+.lesson-nav a.done{background:#eef7f0;color:var(--green-dark);font-weight:800}
+.lesson-nav span{
+  width:25px;height:25px;border-radius:50%;
+  display:grid;place-items:center;background:#edf1ed;font-size:12px;font-weight:800
+}
+
+.content{display:grid;gap:22px}
+.lesson{
+  background:#fff;border:1px solid var(--line);border-radius:24px;
+  padding:28px;box-shadow:var(--shadow)
+}
+.lesson-header{
+  display:flex;align-items:flex-start;gap:16px;margin-bottom:18px
+}
+.lesson-icon{
+  width:58px;height:58px;border-radius:18px;
+  display:grid;place-items:center;background:var(--green-soft);font-size:28px;flex:0 0 auto
+}
+.lesson h2{margin:0;color:var(--green-dark);font-size:28px;line-height:1.2}
+.lesson h3{color:var(--green-dark);margin:24px 0 8px;font-size:20px}
+.lesson p{margin:0 0 14px;color:#344138}
+.lesson ul{margin:8px 0 16px;padding-left:22px}
+.lesson li{margin-bottom:8px}
+.fact,.tip,.warning,.remember,.task{
+  border-radius:16px;padding:17px 18px;margin:18px 0
+}
+.fact{background:#eef5fb;border-left:5px solid var(--blue)}
+.tip{background:#eef8f1;border-left:5px solid var(--green)}
+.warning{background:#fff0f0;border-left:5px solid var(--red)}
+.remember{background:#fff8e9;border-left:5px solid var(--gold)}
+.task{background:#f3f0fb;border-left:5px solid var(--purple)}
+.fact strong,.tip strong,.warning strong,.remember strong,.task strong{display:block;margin-bottom:5px}
+.lesson-footer{
+  margin-top:22px;padding-top:18px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap
+}
+.complete-btn{
+  border:none;background:var(--green);color:#fff;border-radius:12px;
+  padding:11px 16px;font-weight:800;cursor:pointer
+}
+.complete-btn:hover{background:var(--green-dark)}
+.complete-btn.done{background:#6d7a71}
+
+.quiz{
+  background:linear-gradient(145deg,#fff,#f8fbf7);
+  border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow)
+}
+.quiz h2{margin-top:0;color:var(--green-dark)}
+.question{border-top:1px solid var(--line);padding:20px 0}
+.question:first-of-type{border-top:none}
+.question h3{margin:0 0 12px;font-size:18px}
+.option{
+  display:block;background:#fff;border:1px solid #dfe5df;
+  border-radius:12px;padding:11px 12px;margin:8px 0;cursor:pointer
+}
+.option:hover{background:#f6faf7}
+.quiz-result{
+  display:none;margin-top:18px;padding:16px;border-radius:14px;
+  background:var(--green-soft);font-weight:800;color:var(--green-dark)
+}
+.certificate{
+  display:none;text-align:center;background:linear-gradient(145deg,#fff9e9,#fff);
+  border:2px solid #e4c777;border-radius:24px;padding:30px;margin-top:22px
+}
+.certificate h2{font-family:Georgia,serif;font-size:34px;margin:0 0 10px;color:#70551a}
+footer{background:var(--green-dark);color:#dce9df}
+.footer{padding:30px 0;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer p{margin:5px 0 0;color:#b9cbbb;font-size:13px}
+
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:static}
+}
+@media(max-width:600px){
+  .container{width:min(100% - 20px,1180px)}
+  .navlinks{display:none}
+  .lesson{padding:20px}
+  .lesson-header{flex-direction:column}
+  .lesson h2{font-size:24px}
+  .hero-card .dog{min-height:210px;font-size:90px}
+  .actions{flex-direction:column}
+  .btn{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="topbar">🐾 Modul 2 – en trygg start legger grunnlaget for hele hundelivet.</div>
+<header>
+<div class="container nav">
+<a class="brand" href="hundeakademiet_ny.html">
+<span class="logo">🐾</span>
+<span>Hundene Våre Akademiet<small>Modul 2 – Valpen, den viktige starten</small></span>
+</a>
+<nav class="navlinks">
+<a href="hundeakademiet_ny.html">← Akademiet</a>
+<a href="#leksjoner">Leksjonene</a>
+<a href="#quiz">Quiz</a>
+</nav>
+</div>
+</header>
+<main>
+<section class="hero">
+<div class="container">
+<div class="hero-grid">
+<div>
+<span class="badge">🎓 MODUL 2</span>
+<h1>Valpen – den viktige starten</h1>
+<p class="lead">
+          De første ukene med valp er fulle av glede, læring og nye utfordringer. I denne modulen lærer du hvordan du skaper trygghet, gode rutiner og positive erfaringer fra første dag. Målet er å hjelpe valpen til å bli en trygg, sosial og samarbeidsvillig hund.
+        </p>
+<div class="actions">
+<a class="btn btn-primary" href="#leksjon1">Start første leksjon</a>
+<a class="btn btn-light" href="hundeakademiet_ny.html">← Tilbake til Hundeakademiet</a>
+</div>
+</div>
+<div class="hero-card">
+<div class="dog">🐕</div>
+<p>Valpen trenger ikke et perfekt hjem. Den trenger trygge mennesker, gode rutiner og tid til å lære.</p>
+</div>
+</div>
+<div class="progress-wrap">
+<div class="progress-head">
+<strong>Din fremdrift i modul 2</strong>
+<span id="progressText">0 av 8 leksjoner fullført</span>
+</div>
+<div class="track"><div class="fill" id="progressFill"></div></div>
+<div class="small" style="margin-top:8px">Fremdriften lagres automatisk på denne enheten.</div>
+</div>
+</div>
+</section>
+<div class="container layout" id="leksjoner">
+<aside class="sidebar">
+<h2>Innhold i modulen</h2>
+<nav class="lesson-nav" id="lessonNav">
+<a data-lesson="1" href="#leksjon1"><span>1</span> Den første dagen</a>
+<a data-lesson="2" href="#leksjon2"><span>2</span> Trygghet og søvn</a>
+<a data-lesson="3" href="#leksjon3"><span>3</span> Renslighetstrening</a>
+<a data-lesson="4" href="#leksjon4"><span>4</span> Sosialisering</a>
+<a data-lesson="5" href="#leksjon5"><span>5</span> Biting og napping</a>
+<a data-lesson="6" href="#leksjon6"><span>6</span> Lek og første trening</a>
+<a data-lesson="7" href="#leksjon7"><span>7</span> Alene hjemme</a>
+<a data-lesson="8" href="#leksjon8"><span>8</span> Oppsummering</a>
+<a href="#quiz"><span>✓</span> Modulquiz</a>
+</nav>
+</aside>
+<section class="content">
+<article class="lesson" id="leksjon1">
+<div class="lesson-header">
+<div class="lesson-icon">🏡</div>
+<div>
+<span class="badge">LEKSJON 1</span>
+<h2>Velkommen hjem – den første dagen</h2>
+</div>
+</div>
+<p>Den første dagen i nytt hjem er en stor overgang. Valpen har nettopp forlatt mor, søsken og kjente lukter. Alt er nytt: menneskene, lydene, rommene og rutinene. Det viktigste denne dagen er derfor ikke trening, besøk eller lange turer, men ro, trygghet og tid til å bli kjent.</p>
+<h3>La valpen utforske i sitt eget tempo</h3>
+<p>Vis valpen noen få rom om gangen. For mange inntrykk kan gjøre den sliten og urolig. La den snuse, undersøke og trekke seg tilbake. Ha vann tilgjengelig, og vis den hvor soveplassen og utgangsdøren er.</p>
+<ul>
+<li>Hold hjemkomsten rolig og enkel.</li>
+<li>Unngå mange gjester de første dagene.</li>
+<li>Bruk samme fôr som valpen er vant til i starten.</li>
+<li>Ta valpen ut etter søvn, lek og mat.</li>
+<li>La valpen være nær deg uten å bli båret hele tiden.</li>
+</ul>
+<div class="fact"><strong>💡 Visste du?</strong>Valpen kan virke modig den første timen og bli urolig senere. Når spenningen slipper, kommer ofte behovet for nærhet og søvn.</div>
+<div class="warning"><strong>⚠️ Vanlig feil</strong>Ikke inviter hele familien og vennegjengen samme dag. For mange mennesker og inntrykk kan gjøre valpen overveldet.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Lag en rolig velkomstsone med seng, vann, et trygt tyggeleketøy og kort vei til døren.</div>
+<div class="lesson-footer">
+<span class="small">Mål: Gi valpen en rolig og trygg første dag.</span>
+<button class="complete-btn" data-complete="1">Marker leksjonen som fullført</button>
+</div>
+</article>
+<article class="lesson" id="leksjon2">
+<div class="lesson-header">
+<div class="lesson-icon">😴</div>
+<div>
+<span class="badge">LEKSJON 2</span>
+<h2>Trygghet, søvn og faste rutiner</h2>
+</div>
+</div>
+<p>Valper trenger svært mye søvn. Mange sover mellom 18 og 20 timer i døgnet. Søvnen er avgjørende for vekst, læring og følelsesmessig balanse. En overtrøtt valp kan bli vill, bite mer, få raptuser og ha vanskelig for å roe seg.</p>
+<h3>Slik hjelper du valpen å hvile</h3>
+<p>Lag en fast og behagelig soveplass i et rolig område. Valpen bør få være i nærheten av familien, men ikke midt i konstant aktivitet. Barn må lære at valpen skal få være i fred når den sover.</p>
+<h3>Rutiner skaper trygghet</h3>
+<p>Valpen trenger ikke et strengt klokkeslettskjema, men en gjenkjennelig rytme. Når mat, lufting, lek og hvile kommer i en forutsigbar rekkefølge, blir det lettere for valpen å forstå dagen.</p>
+<ul>
+<li>Luft valpen straks den våkner.</li>
+<li>Ha korte perioder med lek og trening.</li>
+<li>Legg inn mange rolige pauser.</li>
+<li>Unngå høy aktivitet rett før natten.</li>
+<li>Ha samme rolige kveldsrutine hver dag.</li>
+</ul>
+<div class="tip"><strong>✅ Praktisk tips</strong>Hvis valpen blir veldig bitevill og ukonsentrert, kan den være overtrøtt. Hjelp den til et rolig sted med noe trygt å tygge på.</div>
+<div class="remember"><strong>📌 Husk dette</strong>Ro er noe valpen må lære. Det er ikke nok å slite den ut med mer aktivitet.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Noter når valpen sover i løpet av dagen. Se om den får nok sammenhengende hvile.</div>
+<div class="lesson-footer">
+<span class="small">Mål: Skape gode rutiner og nok søvn.</span>
+<button class="complete-btn" data-complete="2">Marker leksjonen som fullført</button>
+</div>
+</article>
+<article class="lesson" id="leksjon3">
+<div class="lesson-header">
+<div class="lesson-icon">🚽</div>
+<div>
+<span class="badge">LEKSJON 3</span>
+<h2>Renslighetstrening steg for steg</h2>
+</div>
+</div>
+<p>Renslighetstrening handler først og fremst om gode rutiner og mange muligheter til å lykkes. En liten valp har begrenset kontroll over blære og tarm. Uhell betyr ikke at valpen er sta eller ulydig.</p>
+<h3>Når bør valpen ut?</h3>
+<ul>
+<li>Med en gang den våkner.</li>
+<li>Etter mat og drikke.</li>
+<li>Etter lek og aktivitet.</li>
+<li>Når den går rastløst rundt eller snuser intenst.</li>
+<li>Før leggetid og tidlig om morgenen.</li>
+</ul>
+<p>Gå til samme rolige sted ute og vent tålmodig. Når valpen gjør fra seg, ros rolig og gi gjerne en liten belønning. Unngå å starte lek før den har gjort det den skal, ellers kan den glemme oppgaven.</p>
+<h3>Hva gjør du ved uhell?</h3>
+<p>Rydd opp uten å kjefte. Bruk et rengjøringsmiddel som fjerner lukt. Hvis du oppdager valpen midt i et uhell, kan du rolig løfte eller følge den ut. Målet er å forebygge neste uhell, ikke å straffe det som allerede har skjedd.</p>
+<div class="warning"><strong>⚠️ Viktig</strong>Ikke press valpens nese mot uhellet og ikke straff den. Det kan gjøre valpen redd for å gjøre fra seg når du er til stede.</div>
+<div class="tip"><strong>✅ Praktisk tips</strong>Før en enkel logg over mat, søvn og lufting. Da oppdager du raskt valpens rytme.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Lag en luftingsplan for de neste tre dagene og noter hvilke tidspunkt som fungerer best.</div>
+<div class="lesson-footer">
+<span class="small">Mål: Forebygge uhell og bygge gode toalettvaner.</span>
+<button class="complete-btn" data-complete="3">Marker leksjonen som fullført</button>
+</div>
+</article>
+<article class="lesson" id="leksjon4">
+<div class="lesson-header">
+<div class="lesson-icon">🌍</div>
+<div>
+<span class="badge">LEKSJON 4</span>
+<h2>Sosialisering – den viktigste perioden</h2>
+</div>
+</div>
+<p>Sosialisering betyr at valpen får trygge og positive erfaringer med mennesker, dyr, steder, lyder og situasjoner den skal møte senere i livet. Målet er ikke at valpen skal hilse på alt og alle, men at den lærer å forholde seg rolig og trygt til verden.</p>
+<h3>Kvalitet er viktigere enn mengde</h3>
+<p>Én god opplevelse er bedre enn ti overveldende møter. Valpen bør få velge avstand og tempo. Den trenger ikke bli løftet inn i armene på fremmede eller presses bort til hunder den er redd for.</p>
+<ul>
+<li>Møt rolige mennesker i ulike aldre og utseender.</li>
+<li>La valpen se trafikk, sykler og barnevogner på trygg avstand.</li>
+<li>Tren på bil, veterinærbesøk og håndtering.</li>
+<li>La valpen møte trygge, vaksinerte og vennlige hunder.</li>
+<li>Belønn rolig observasjon uten krav om hilsing.</li>
+</ul>
+<h3>Se etter valpens signaler</h3>
+<p>Hvis valpen trekker seg unna, blir stiv, gjesper mye eller slutter å ta godbit, kan situasjonen være for vanskelig. Øk avstanden og gjør opplevelsen enklere.</p>
+<div class="fact"><strong>💡 Visste du?</strong>Sosialisering handler også om å lære at man ikke skal hilse. Å kunne se andre hunder og mennesker uten å løpe bort er en viktig ferdighet.</div>
+<div class="remember"><strong>📌 Husk dette</strong>Valpen skal ikke «herdes». Den skal bygge trygghet gjennom gode erfaringer.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>La valpen oppleve én ny ting i rolig tempo, for eksempel en paraply, en heis eller en bussholdeplass.</div>
+<div class="lesson-footer">
+<span class="small">Mål: Gi valpen positive og kontrollerte erfaringer.</span>
+<button class="complete-btn" data-complete="4">Marker leksjonen som fullført</button>
+</div>
+</article>
+<article class="lesson" id="leksjon5">
+<div class="lesson-header">
+<div class="lesson-icon">🦷</div>
+<div>
+<span class="badge">LEKSJON 5</span>
+<h2>Biting og napping – hvorfor valpen gjør det</h2>
+</div>
+</div>
+<p>Valper undersøker verden med munnen. De biter når de leker, når de er oppspilte, når tennene klør og når de er slitne. Biting er derfor normalt, men valpen trenger hjelp til å lære hva den kan bite på og hvordan den skal omgås mennesker.</p>
+<h3>Gjør det lett å velge riktig</h3>
+<p>Ha flere trygge tyggeleker tilgjengelig. Når valpen biter i hender eller klær, stopp bevegelsen rolig og tilby et leketøy. Hvis valpen fortsetter, avslutt kontakten noen sekunder og gi den mulighet til å roe seg.</p>
+<ul>
+<li>Unngå vill lek med hender.</li>
+<li>Ha leketøy lett tilgjengelig i flere rom.</li>
+<li>Belønn rolig munn og myk lek.</li>
+<li>Ta pauser før valpen blir overtrøtt.</li>
+<li>Ikke rop, slå eller hold valpen fast.</li>
+</ul>
+<div class="tip"><strong>✅ Praktisk tips</strong>Frosne tyggeleker eller en kald, våt klut kan lindre kløe i tannfellingen. Bruk alltid noe som er trygt og under oppsyn.</div>
+<div class="warning"><strong>⚠️ Vanlig feil</strong>Å rive hendene raskt til seg kan gjøre leken enda morsommere for valpen. Stopp heller bevegelsen rolig.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Finn tre trygge ting valpen kan tygge på, og plasser dem der biting oftest oppstår.</div>
+<div class="lesson-footer">
+<span class="small">Mål: Redusere napping uten å skremme valpen.</span>
+<button class="complete-btn" data-complete="5">Marker leksjonen som fullført</button>
+</div>
+</article>
+<article class="lesson" id="leksjon6">
+<div class="lesson-header">
+<div class="lesson-icon">🎾</div>
+<div>
+<span class="badge">LEKSJON 6</span>
+<h2>Lek, trening og de første ferdighetene</h2>
+</div>
+</div>
+<p>Den første treningen skal være enkel, kort og morsom. Valpen trenger ikke lange økter eller mange kommandoer. Det viktigste er å bygge lyst til samarbeid og lære at det er trygt og lønnsomt å følge deg.</p>
+<h3>Gode ferdigheter å starte med</h3>
+<ul>
+<li>Reagere positivt på navnet sitt.</li>
+<li>Frivillig øyekontakt.</li>
+<li>Komme noen få skritt når du lokker vennlig.</li>
+<li>Følge hånden din med nesen.</li>
+<li>Stå rolig ved håndtering av poter, ører og munn.</li>
+<li>Slippe en leke i bytte mot en belønning.</li>
+</ul>
+<h3>Hold øktene korte</h3>
+<p>Én til to minutter kan være nok. Tren gjerne flere ganger om dagen, men stopp mens valpen fortsatt synes det er gøy. Bruk små godbiter og mye vennlig ros.</p>
+<div class="fact"><strong>💡 Visste du?</strong>Valpens måltider kan brukes som belønning i små treningsøkter. Da får den både mat og læring uten ekstra kalorier.</div>
+<div class="remember"><strong>📌 Husk dette</strong>Trening skal ikke være en prøve valpen kan mislykkes på. Det skal være en aktivitet dere lykkes med sammen.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Tren på navnet fem ganger. Si navnet én gang og belønn straks valpen ser på deg.</div>
+<div class="lesson-footer">
+<span class="small">Mål: Bygge treningsglede og enkle grunnferdigheter.</span>
+<button class="complete-btn" data-complete="6">Marker leksjonen som fullført</button>
+</div>
+</article>
+<article class="lesson" id="leksjon7">
+<div class="lesson-header">
+<div class="lesson-icon">⏰</div>
+<div>
+<span class="badge">LEKSJON 7</span>
+<h2>Alene hjemme og de første ukene</h2>
+</div>
+</div>
+<p>Valpen må gradvis lære at det er trygt å være alene. Denne treningen bør starte med svært korte øyeblikk mens valpen er rolig. Målet er ikke å la den «gråte seg ferdig», men å bygge trygghet før den blir redd.</p>
+<h3>Start med små avstander</h3>
+<p>Begynn med å bevege deg noen skritt unna mens valpen har noe rolig å holde på med. Gå ut av rommet i ett eller to sekunder og kom tilbake før valpen blir urolig. Øk tiden gradvis over mange dager og uker.</p>
+<ul>
+<li>Tren når valpen er luftet, rolig og litt trøtt.</li>
+<li>Start med sekunder, ikke minutter.</li>
+<li>Kom tilbake før valpen blir redd.</li>
+<li>Unngå store avskjedsritualer.</li>
+<li>Bruk gjerne kamera for å se hvordan valpen har det.</li>
+</ul>
+<h3>De første ukene handler om balanse</h3>
+<p>Valpen trenger nye erfaringer, men også mye ro. Unngå å fylle hver dag med aktiviteter. En god uke inneholder korte turer, søvn, lek, enkle øvelser og noen få positive nye opplevelser.</p>
+<div class="warning"><strong>⚠️ Viktig</strong>Hvis valpen hyler, peser, klorer på døren eller blir panisk, har treningen gått for raskt. Gå tilbake til et lettere nivå.</div>
+<div class="tip"><strong>✅ Praktisk tips</strong>Tren på at du går til et annet rom flere ganger om dagen, uten å gjøre noe stort nummer ut av det.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Gjør tre svært korte aleneøvelser der du kommer tilbake mens valpen fortsatt er rolig.</div>
+<div class="lesson-footer">
+<span class="small">Mål: Starte alene-hjemme-trening på en trygg måte.</span>
+<button class="complete-btn" data-complete="7">Marker leksjonen som fullført</button>
+</div>
+</article>
+<article class="lesson" id="leksjon8">
+<div class="lesson-header">
+<div class="lesson-icon">⭐</div>
+<div>
+<span class="badge">LEKSJON 8</span>
+<h2>Oppsummering – en trygg og god valpestart</h2>
+</div>
+</div>
+<p>Den viktigste oppgaven i valpetiden er ikke å rekke mest mulig, men å bygge trygghet og gode vaner. Valpen lærer hele tiden av hvordan hverdagen fungerer, hvordan du reagerer og hvilke erfaringer den får.</p>
+<h3>De viktigste punktene</h3>
+<ul>
+<li>Hold den første tiden rolig og forutsigbar.</li>
+<li>Gi valpen mye søvn og hjelp den til å finne ro.</li>
+<li>Forebygg uhell med hyppig lufting.</li>
+<li>Sosialiser med kvalitet, avstand og frivillighet.</li>
+<li>Møt biting med ro, tyggeleker og pauser.</li>
+<li>Tren kort og belønn raskt.</li>
+<li>Bygg alene-hjemme-ferdigheter gradvis.</li>
+</ul>
+<div class="remember"><strong>📌 Modulens viktigste budskap</strong>En trygg valp trenger tid, søvn, vennlig veiledning og mange små erfaringer den mestrer.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Velg én rutine du vil forbedre den kommende uken, og skriv ned hvordan du skal gjøre den enklere for valpen.</div>
+<div class="lesson-footer">
+<span class="small">Mål: Koble sammen kunnskapen fra hele modulen.</span>
+<button class="complete-btn" data-complete="8">Marker leksjonen som fullført</button>
+</div>
+</article>
+<section class="quiz" id="quiz">
+<h2>📝 Modulquiz – Valpen, den viktige starten</h2>
+<p>Svar på spørsmålene og test hva du har lært. Du trenger minst 6 av 7 riktige for å bestå.</p>
+<form id="quizForm">
+<div class="question">
+<h3>1. Hva er viktigst den første dagen hjemme?</h3>
+<label class="option"><input name="q1" type="radio" value="a"/> Mange gjester og mye aktivitet</label>
+<label class="option"><input name="q1" type="radio" value="b"/> Ro, trygghet og tid til å utforske</label>
+<label class="option"><input name="q1" type="radio" value="c"/> En lang treningstur</label>
+</div>
+<div class="question">
+<h3>2. Hvorfor blir noen valper ekstra ville og bitevillige?</h3>
+<label class="option"><input name="q2" type="radio" value="a"/> De kan være overtrøtte</label>
+<label class="option"><input name="q2" type="radio" value="b"/> De prøver å bestemme</label>
+<label class="option"><input name="q2" type="radio" value="c"/> De trenger alltid mer mosjon</label>
+</div>
+<div class="question">
+<h3>3. Hva bør du gjøre ved et uhell inne?</h3>
+<label class="option"><input name="q3" type="radio" value="a"/> Kjefte tydelig</label>
+<label class="option"><input name="q3" type="radio" value="b"/> Rydde rolig og forbedre rutinene</label>
+<label class="option"><input name="q3" type="radio" value="c"/> Vente til valpen forstår av seg selv</label>
+</div>
+<div class="question">
+<h3>4. Hva er god sosialisering?</h3>
+<label class="option"><input name="q4" type="radio" value="a"/> At valpen må hilse på alle</label>
+<label class="option"><input name="q4" type="radio" value="b"/> At valpen presses gjennom frykt</label>
+<label class="option"><input name="q4" type="radio" value="c"/> Trygge erfaringer i valpens tempo</label>
+</div>
+<div class="question">
+<h3>5. Hva er en god reaksjon når valpen biter i hendene?</h3>
+<label class="option"><input name="q5" type="radio" value="a"/> Tilby et passende leketøy og roe ned</label>
+<label class="option"><input name="q5" type="radio" value="b"/> Rope høyt</label>
+<label class="option"><input name="q5" type="radio" value="c"/> Holde valpen fast</label>
+</div>
+<div class="question">
+<h3>6. Hvor lange bør de første treningsøktene være?</h3>
+<label class="option"><input name="q6" type="radio" value="a"/> Minst tretti minutter</label>
+<label class="option"><input name="q6" type="radio" value="b"/> Korte og morsomme, gjerne ett til to minutter</label>
+<label class="option"><input name="q6" type="radio" value="c"/> Helt til valpen blir sliten</label>
+</div>
+<div class="question">
+<h3>7. Hvordan starter du alene-hjemme-trening?</h3>
+<label class="option"><input name="q7" type="radio" value="a"/> Med svært korte øyeblikk mens valpen er rolig</label>
+<label class="option"><input name="q7" type="radio" value="b"/> Med flere timer første gang</label>
+<label class="option"><input name="q7" type="radio" value="c"/> Ved å la valpen gråte til den stopper</label>
+</div>
+<button class="btn btn-primary" type="submit">Se resultatet</button>
+</form>
+<div class="quiz-result" id="quizResult"></div>
+<div class="certificate" id="certificate">
+<div style="font-size:52px">🏆</div>
+<h2>Modul 2 fullført</h2>
+<p>Gratulerer! Du har fullført <strong>Valpen – den viktige starten</strong> og bestått modulquizen.</p>
+<p>Du har nå et godt grunnlag for å gi valpen en trygg og positiv start.</p>
+<a class="btn btn-primary" href="modul3-grunnleggende-lydighet.html">Gå til modul 3 →</a>
+</div>
+</section>
+</section>
+</div>
+</main>
+<footer>
+<div class="container footer">
+<div><strong>Hundene Våre Akademiet</strong><p>Kunnskap, trygghet og glede for hele hundelivet.</p></div>
+<div><a href="hundeakademiet_ny.html" style="color:#fff;font-weight:800">Tilbake til akademiet</a></div>
+</div>
+</footer>
+<script>
+const key = "module2CompletedLessons";
+let completed = JSON.parse(localStorage.getItem(key) || "[]");
+
+function updateProgress(){
+  const unique = [...new Set(completed.map(Number))].filter(n => n >= 1 && n <= 8);
+  completed = unique;
+  localStorage.setItem(key, JSON.stringify(completed));
+
+  const percent = Math.round((completed.length / 8) * 100);
+  document.getElementById("progressText").textContent = `${completed.length} av 8 leksjoner fullført`;
+  document.getElementById("progressFill").style.width = `${percent}%`;
+
+  document.querySelectorAll("[data-complete]").forEach(btn => {
+    const id = Number(btn.dataset.complete);
+    if(completed.includes(id)){
+      btn.textContent = "✓ Leksjonen er fullført";
+      btn.classList.add("done");
+    } else {
+      btn.textContent = "Marker leksjonen som fullført";
+      btn.classList.remove("done");
+    }
+  });
+
+  document.querySelectorAll("#lessonNav a[data-lesson]").forEach(link => {
+    const id = Number(link.dataset.lesson);
+    link.classList.toggle("done", completed.includes(id));
+  });
+}
+
+document.querySelectorAll("[data-complete]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const id = Number(btn.dataset.complete);
+    if(completed.includes(id)){
+      completed = completed.filter(n => n !== id);
+    } else {
+      completed.push(id);
+    }
+    updateProgress();
+  });
+});
+
+document.getElementById("quizForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const answers = {
+    q1:"b",
+    q2:"a",
+    q3:"b",
+    q4:"c",
+    q5:"a",
+    q6:"b",
+    q7:"a"
+  };
+
+  let score = 0;
+  let answered = 0;
+
+  Object.entries(answers).forEach(([name, correct]) => {
+    const selected = document.querySelector(`input[name="${name}"]:checked`);
+    if(selected){
+      answered++;
+      if(selected.value === correct) score++;
+    }
+  });
+
+  const result = document.getElementById("quizResult");
+  result.style.display = "block";
+
+  if(answered < 7){
+    result.textContent = "Du må svare på alle spørsmålene før du kan levere quizen.";
+    return;
+  }
+
+  if(score >= 6){
+    result.textContent = `Gratulerer! Du fikk ${score} av 7 riktige og har bestått modulquizen.`;
+    document.getElementById("certificate").style.display = "block";
+    localStorage.setItem("academyQuizDone", Math.max(Number(localStorage.getItem("academyQuizDone") || 0), 2));
+    localStorage.setItem("academyModulesDone", Math.max(Number(localStorage.getItem("academyModulesDone") || 0), 2));
+    localStorage.setItem("module2QuizPassed", "true");
+  } else {
+    result.textContent = `Du fikk ${score} av 7 riktige. Les gjerne gjennom leksjonene én gang til og prøv igjen.`;
+    document.getElementById("certificate").style.display = "none";
+  }
+});
+
+if(localStorage.getItem("module2QuizPassed") === "true"){
+  document.getElementById("certificate").style.display = "block";
+}
+
+updateProgress();
+</script>
+</body>
+</html>

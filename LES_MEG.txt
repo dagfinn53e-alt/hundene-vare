@@ -1,0 +1,15 @@
+HUNDENE VÅRE AKADEMIET – FINAL
+
+Alle 9 kursene er samlet og koblet riktig.
+Forsiden-knappene peker nå direkte til:
+https://www.xn--hundenevre-85a.com/
+
+OPPLASTING TIL GITHUB:
+1. Pakk ut ZIP-filen.
+2. Åpne riktig GitHub-prosjekt.
+3. Velg Add file > Upload files.
+4. Dra inn alle HTML-filene fra mappen.
+5. Velg Commit changes.
+6. Vent 1–2 minutter og test nettstedet.
+
+Behold alle filnavnene uendret.

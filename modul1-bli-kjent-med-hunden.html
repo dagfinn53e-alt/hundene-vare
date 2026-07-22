@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+
+<html lang="no">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modul 1 – Bli kjent med hunden | Hundene Våre Akademiet</title>
+<meta content="Modul 1 i Hundene Våre Akademiet: hundens språk, behov, følelser, læring, kontakt og gode rutiner." name="description"/>
+<style>
+:root{
+  --green:#0f5b35;
+  --green-dark:#0a4026;
+  --green-soft:#eaf5ed;
+  --cream:#fbfaf5;
+  --gold:#e9a22d;
+  --red:#b84343;
+  --blue:#2f6fa8;
+  --text:#17211b;
+  --muted:#5f6d64;
+  --line:#e3e8e3;
+  --white:#fff;
+  --shadow:0 14px 36px rgba(20,45,30,.09);
+  --radius:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#fbfcf9 0%,#f6f8f4 100%);
+  color:var(--text);
+  line-height:1.65;
+}
+a{color:inherit;text-decoration:none}
+.container{width:min(1180px,calc(100% - 30px));margin:auto}
+.topbar{
+  background:linear-gradient(90deg,var(--green-dark),var(--green));
+  color:#fff;text-align:center;padding:9px 16px;font-size:14px
+}
+header{
+  background:rgba(255,255,255,.96);
+  border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:20;
+  backdrop-filter:blur(10px)
+}
+.nav{
+  min-height:72px;display:flex;align-items:center;
+  justify-content:space-between;gap:20px
+}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--green-dark)}
+.logo{
+  width:46px;height:46px;border-radius:14px;
+  display:grid;place-items:center;background:linear-gradient(145deg,var(--green-dark),var(--green));
+  color:#fff;font-size:24px;box-shadow:0 8px 18px rgba(15,91,53,.2)
+}
+.brand small{display:block;color:var(--muted);font-weight:600;margin-top:2px}
+.navlinks{display:flex;gap:8px;flex-wrap:wrap}
+.navlinks a{padding:10px 13px;border-radius:11px;font-weight:700}
+.navlinks a:hover{background:var(--green-soft);color:var(--green-dark)}
+
+.hero{
+  padding:44px 0 28px;
+  background:
+    radial-gradient(circle at 88% 20%,rgba(232,242,225,.8),transparent 28%),
+    radial-gradient(circle at 15% 75%,rgba(250,239,214,.5),transparent 32%);
+}
+.hero-grid{
+  display:grid;grid-template-columns:1.25fr .75fr;
+  gap:28px;align-items:center
+}
+.badge{
+  display:inline-flex;gap:8px;align-items:center;
+  border:1px solid #cfe3d3;background:#f0f8f2;
+  color:var(--green-dark);padding:8px 12px;border-radius:999px;
+  font-weight:800;font-size:13px
+}
+h1{
+  font-size:clamp(38px,5vw,66px);
+  line-height:1.05;letter-spacing:-.04em;
+  margin:16px 0 14px;color:var(--green-dark)
+}
+.lead{font-size:17px;color:#4f5d53;max-width:760px}
+.hero-card{
+  background:#fff;border:1px solid var(--line);border-radius:26px;
+  padding:24px;box-shadow:var(--shadow)
+}
+.hero-card .dog{
+  min-height:250px;border-radius:20px;
+  background:linear-gradient(145deg,#e8f3e9,#f4e5c8);
+  display:grid;place-items:center;font-size:110px
+}
+.hero-card p{margin:16px 0 0;color:var(--muted);font-size:14px;text-align:center}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:47px;padding:11px 18px;border-radius:13px;
+  font-weight:800;border:1px solid transparent;transition:.2s ease
+}
+.btn-primary{background:var(--green);color:#fff;box-shadow:0 10px 22px rgba(15,91,53,.18)}
+.btn-primary:hover{background:var(--green-dark);transform:translateY(-2px)}
+.btn-light{background:#fff;border-color:#dce2dd}
+.btn-light:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(20,45,30,.08)}
+
+.progress-wrap{
+  background:#fff;border:1px solid var(--line);border-radius:20px;
+  padding:18px;margin:22px auto 0;box-shadow:var(--shadow)
+}
+.progress-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px}
+.progress-head strong{color:var(--green-dark)}
+.track{height:12px;background:#e7ece7;border-radius:999px;overflow:hidden}
+.fill{width:0%;height:100%;background:linear-gradient(90deg,var(--green),#6fb284);transition:.35s ease}
+.small{font-size:13px;color:var(--muted)}
+
+.layout{
+  display:grid;grid-template-columns:280px 1fr;
+  gap:24px;padding:28px 0 50px
+}
+.sidebar{
+  position:sticky;top:95px;align-self:start;
+  background:#fff;border:1px solid var(--line);
+  border-radius:20px;padding:18px;box-shadow:var(--shadow)
+}
+.sidebar h2{font-size:17px;margin:0 0 12px;color:var(--green-dark)}
+.lesson-nav{display:grid;gap:8px}
+.lesson-nav a{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 11px;border-radius:11px;font-size:14px;
+  color:#3d4a41;border:1px solid transparent
+}
+.lesson-nav a:hover{background:var(--green-soft);border-color:#d5e6d8}
+.lesson-nav a.done{background:#eef7f0;color:var(--green-dark);font-weight:800}
+.lesson-nav span{
+  width:25px;height:25px;border-radius:50%;
+  display:grid;place-items:center;background:#edf1ed;font-size:12px;font-weight:800
+}
+
+.content{display:grid;gap:22px}
+.lesson{
+  background:#fff;border:1px solid var(--line);border-radius:24px;
+  padding:28px;box-shadow:var(--shadow)
+}
+.lesson-header{
+  display:flex;align-items:flex-start;gap:16px;margin-bottom:18px
+}
+.lesson-icon{
+  width:58px;height:58px;border-radius:18px;
+  display:grid;place-items:center;background:var(--green-soft);font-size:28px;flex:0 0 auto
+}
+.lesson h2{margin:0;color:var(--green-dark);font-size:28px;line-height:1.2}
+.lesson h3{color:var(--green-dark);margin:24px 0 8px;font-size:20px}
+.lesson p{margin:0 0 14px;color:#344138}
+.lesson ul{margin:8px 0 16px;padding-left:22px}
+.lesson li{margin-bottom:8px}
+.fact,.tip,.warning,.remember,.task{
+  border-radius:16px;padding:17px 18px;margin:18px 0
+}
+.fact{background:#eef5fb;border-left:5px solid var(--blue)}
+.tip{background:#eef8f1;border-left:5px solid var(--green)}
+.warning{background:#fff0f0;border-left:5px solid var(--red)}
+.remember{background:#fff8e9;border-left:5px solid var(--gold)}
+.task{background:#f3f0fb;border-left:5px solid #6a56a6}
+.fact strong,.tip strong,.warning strong,.remember strong,.task strong{display:block;margin-bottom:5px}
+.lesson-footer{
+  margin-top:22px;padding-top:18px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap
+}
+.complete-btn{
+  border:none;background:var(--green);color:#fff;border-radius:12px;
+  padding:11px 16px;font-weight:800;cursor:pointer
+}
+.complete-btn:hover{background:var(--green-dark)}
+.complete-btn.done{background:#6d7a71}
+
+.quiz{
+  background:linear-gradient(145deg,#fff,#f8fbf7);
+  border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow)
+}
+.quiz h2{margin-top:0;color:var(--green-dark)}
+.question{
+  border-top:1px solid var(--line);padding:20px 0
+}
+.question:first-of-type{border-top:none}
+.question h3{margin:0 0 12px;font-size:18px}
+.option{
+  display:block;background:#fff;border:1px solid #dfe5df;
+  border-radius:12px;padding:11px 12px;margin:8px 0;cursor:pointer
+}
+.option:hover{background:#f6faf7}
+.quiz-result{
+  display:none;margin-top:18px;padding:16px;border-radius:14px;
+  background:var(--green-soft);font-weight:800;color:var(--green-dark)
+}
+.certificate{
+  display:none;text-align:center;background:linear-gradient(145deg,#fff9e9,#fff);
+  border:2px solid #e4c777;border-radius:24px;padding:30px;margin-top:22px
+}
+.certificate h2{font-family:Georgia,serif;font-size:34px;margin:0 0 10px;color:#70551a}
+footer{background:var(--green-dark);color:#dce9df}
+.footer{padding:30px 0;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer p{margin:5px 0 0;color:#b9cbbb;font-size:13px}
+
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:static}
+}
+@media(max-width:600px){
+  .container{width:min(100% - 20px,1180px)}
+  .navlinks{display:none}
+  .lesson{padding:20px}
+  .lesson-header{flex-direction:column}
+  .lesson h2{font-size:24px}
+  .hero-card .dog{min-height:210px;font-size:90px}
+  .actions{flex-direction:column}
+  .btn{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="topbar">🐾 Modul 1 – forstå hunden før du begynner å trene den.</div>
+<header>
+<div class="container nav">
+<a class="brand" href="hundeakademiet_ny.html">
+<span class="logo">🐾</span>
+<span>Hundene Våre Akademiet<small>Modul 1 – Bli kjent med hunden</small></span>
+</a>
+<nav class="navlinks">
+<a href="hundeakademiet_ny.html">← Akademiet</a>
+<a href="#leksjoner">Leksjonene</a>
+<a href="#quiz">Quiz</a>
+</nav>
+</div>
+</header>
+<main>
+<section class="hero">
+<div class="container">
+<div class="hero-grid">
+<div>
+<span class="badge">🎓 MODUL 1</span>
+<h1>Bli kjent med hunden</h1>
+<p class="lead">
+          Før vi kan lære hunden noe, må vi lære å forstå den. I denne modulen blir du kjent med hundens språk, behov, følelser, læring og naturlige måter å kommunisere på. Målet er å skape et tryggere samarbeid og et sterkere bånd mellom deg og hunden din.
+        </p>
+<div class="actions">
+<a class="btn btn-primary" href="#leksjon1">Start første leksjon</a>
+<a class="btn btn-light" href="hundeakademiet_ny.html">← Tilbake til Hundeakademiet</a>
+</div>
+</div>
+<div class="hero-card">
+<div class="dog">🐶</div>
+<p>En trygg hund blir lettere å forstå, lettere å lære og lettere å leve sammen med.</p>
+</div>
+</div>
+<div class="progress-wrap">
+<div class="progress-head">
+<strong>Din fremdrift i modul 1</strong>
+<span id="progressText">0 av 7 leksjoner fullført</span>
+</div>
+<div class="track"><div class="fill" id="progressFill"></div></div>
+<div class="small" style="margin-top:8px">Fremdriften lagres automatisk på denne enheten.</div>
+</div>
+</div>
+</section>
+<div class="container layout" id="leksjoner">
+<aside class="sidebar">
+<h2>Innhold i modulen</h2>
+<nav class="lesson-nav" id="lessonNav">
+<a data-lesson="1" href="#leksjon1"><span>1</span> Hundens språk</a>
+<a data-lesson="2" href="#leksjon2"><span>2</span> Behov og instinkter</a>
+<a data-lesson="3" href="#leksjon3"><span>3</span> Følelser og trygghet</a>
+<a data-lesson="4" href="#leksjon4"><span>4</span> Hvordan hunder lærer</a>
+<a data-lesson="5" href="#leksjon5"><span>5</span> Kontakt og samarbeid</a>
+<a data-lesson="6" href="#leksjon6"><span>6</span> Grenser og rutiner</a>
+<a data-lesson="7" href="#leksjon7"><span>7</span> Oppsummering</a>
+<a href="#quiz"><span>✓</span> Modulquiz</a>
+</nav>
+</aside>
+<section class="content">
+<article class="lesson" id="leksjon1">
+<div class="lesson-header">
+<div class="lesson-icon">👀</div>
+<div>
+<span class="badge">LEKSJON 1</span>
+<h2>Hundens språk og kroppssignaler</h2>
+</div>
+</div>
+<p>Hunder kommuniserer hele tiden, men de bruker først og fremst kroppen. Ører, øyne, munn, hale, bevegelse og avstand forteller oss mye om hvordan hunden har det. Når vi lærer å legge merke til disse signalene, blir det lettere å forstå om hunden er trygg, usikker, stresset, glad eller trenger mer avstand.</p>
+<h3>Se på hele hunden</h3>
+<p>Det er lett å henge seg opp i halen eller ørene alene, men ett signal kan bety forskjellige ting i ulike situasjoner. En logrende hale betyr for eksempel at hunden er følelsesmessig aktivert, men ikke nødvendigvis at den er glad. Se derfor alltid på hele kroppen, situasjonen og hva som skjedde like før.</p>
+<ul>
+<li>En myk og bevegelig kropp tyder ofte på trygghet og vennlighet.</li>
+<li>En stiv kropp kan bety usikkerhet, spenning eller at hunden ønsker avstand.</li>
+<li>Lav kroppsholdning, senket hale og tilbaketrukne ører kan være tegn på ubehag.</li>
+<li>Gjesping, slikking rundt munnen og å snu hodet bort kan være dempende signaler.</li>
+<li>Fast blikk, lukket munn og fremoverlent kropp kan være tegn på høy spenning.</li>
+</ul>
+<div class="fact"><strong>💡 Visste du?</strong>Hunder prøver ofte å unngå konflikt før de knurrer eller bjeffer. Små signaler som å vende hodet bort, gå i en bue eller snuse i bakken kan være hundens måte å roe situasjonen på.</div>
+<div class="warning"><strong>⚠️ Vanlig feil</strong>Ikke straff hunden for å knurre. Knurring er informasjon. Den forteller at hunden er ukomfortabel og trenger hjelp eller mer avstand.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Se på hunden i tre rolige situasjoner i dag. Legg merke til hale, ører, munn og kroppsbevegelse. Skriv ned hva du tror hunden føler.</div>
+<div class="lesson-footer">
+<span class="small">Mål: Oppdage og tolke hundens viktigste kroppssignaler.</span>
+<button class="complete-btn" data-complete="1">Marker leksjonen som fullført</button>
+</div>
+</article>
+<article class="lesson" id="leksjon2">
+<div class="lesson-header">
+<div class="lesson-icon">🌿</div>
+<div>
+<span class="badge">LEKSJON 2</span>
+<h2>Hundens behov og naturlige instinkter</h2>
+</div>
+</div>
+<p>En hund trenger mer enn mat, vann og tur. Den trenger trygghet, søvn, sosial kontakt, mulighet til å bruke sansene og aktiviteter som passer alder, helse og personlighet. Når de grunnleggende behovene er dekket, blir hunden ofte roligere og mer mottakelig for læring.</p>
+<h3>De viktigste behovene</h3>
+<ul>
+<li><strong>Søvn og hvile:</strong> Mange voksne hunder trenger mellom 12 og 16 timer hvile i døgnet. Valper og unghunder kan trenge enda mer.</li>
+<li><strong>Trygghet:</strong> Hunden trenger forutsigbare mennesker og et sted der den får være i fred.</li>
+<li><strong>Bevegelse:</strong> Aktiviteten må tilpasses hundens alder, kropp og helse.</li>
+<li><strong>Snusing og utforsking:</strong> Nesen er et av hundens viktigste verktøy. Snuseturer gir mental aktivitet.</li>
+<li><strong>Sosial kontakt:</strong> De fleste hunder trenger nærhet og samvær, men også mulighet til å trekke seg unna.</li>
+<li><strong>Mestring:</strong> Små oppgaver hunden klarer, bygger selvtillit og motivasjon.</li>
+</ul>
+<h3>Instinkter forsvinner ikke</h3>
+<p>Raser er utviklet for ulike oppgaver. Noen har sterk lyst til å følge lukt, andre vil gjete, vokte, bære eller jage. Instinktene kan ikke alltid trenes bort, men de kan styres og få trygge utløp. En hund som får bruke naturlige egenskaper på en kontrollert måte, opplever ofte større tilfredshet.</p>
+<div class="tip"><strong>✅ Praktisk tips</strong>La hunden få snuse på tur. En rolig snusetur kan være mer mentalt slitsom og tilfredsstillende enn en rask tur med høyt tempo.</div>
+<div class="remember"><strong>📌 Husk dette</strong>Uønsket atferd kan være et tegn på et udekket behov. Før du korrigerer hunden, spør: Har den fått nok hvile, trygghet, aktivitet og mulighet til å bruke hodet?</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Lag en enkel liste over hundens dag: søvn, tur, mat, lek, trening og ro. Er det god balanse mellom aktivitet og hvile?</div>
+<div class="lesson-footer">
+<span class="small">Mål: Forstå hva hunden trenger for å fungere godt i hverdagen.</span>
+<button class="complete-btn" data-complete="2">Marker leksjonen som fullført</button>
+</div>
+</article>
+<article class="lesson" id="leksjon3">
+<div class="lesson-header">
+<div class="lesson-icon">💛</div>
+<div>
+<span class="badge">LEKSJON 3</span>
+<h2>Følelser, stress og trygghet</h2>
+</div>
+</div>
+<p>Hunder opplever blant annet glede, forventning, frykt, frustrasjon og usikkerhet. Følelsene påvirker hvordan hunden oppfører seg og hvor godt den klarer å lære. En hund som er redd eller sterkt stresset, har ofte vanskeligere for å lytte og ta gode valg.</p>
+<h3>Hva er stress?</h3>
+<p>Stress er kroppens reaksjon på krav eller belastning. Litt stress er normalt og kan være nyttig, men for mye eller langvarig stress kan gjøre hunden urolig, irritabel eller utslitt. Stress kan komme av bråk, lite søvn, for mye aktivitet, utrygge møter, smerte eller mange nye inntrykk på kort tid.</p>
+<ul>
+<li>Uro og vansker med å legge seg ned.</li>
+<li>Mye pesing uten at hunden er varm.</li>
+<li>Overdreven slikking, kløing eller biting på kroppen.</li>
+<li>Vansker med å ta godbiter eller konsentrere seg.</li>
+<li>Mer bjeffing, utfall eller rastløshet enn vanlig.</li>
+</ul>
+<h3>Slik bygger du trygghet</h3>
+<p>Trygghet skapes gjennom forutsigbarhet, vennlig kommunikasjon og erfaringer hunden mestrer. Gi hunden tid til å undersøke nye ting. Ikke press den inn i situasjoner den er tydelig redd for. Start heller på større avstand og la hunden nærme seg gradvis.</p>
+<div class="tip"><strong>✅ Praktisk tips</strong>Når hunden blir usikker, øk avstanden til det som er vanskelig. Avstand er ofte det enkleste verktøyet for å hjelpe hunden tilbake til ro.</div>
+<div class="warning"><strong>⚠️ Viktig</strong>Plutselige atferdsendringer kan skyldes smerte eller sykdom. Kontakt veterinær hvis hunden blir uvanlig redd, irritabel, passiv eller aggressiv.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Finn hundens tryggeste hvileplass. Sørg for at plassen er rolig, behagelig og at hunden får være i fred når den ligger der.</div>
+<div class="lesson-footer">
+<span class="small">Mål: Kjenne igjen stress og hjelpe hunden tilbake til trygghet.</span>
+<button class="complete-btn" data-complete="3">Marker leksjonen som fullført</button>
+</div>
+</article>
+<article class="lesson" id="leksjon4">
+<div class="lesson-header">
+<div class="lesson-icon">🧠</div>
+<div>
+<span class="badge">LEKSJON 4</span>
+<h2>Hvordan hunder lærer</h2>
+</div>
+</div>
+<p>Hunder lærer av konsekvensene av det de gjør. Atferd som fører til noe hunden ønsker, blir ofte gjentatt. Derfor er belønning et av de viktigste verktøyene i hundetrening. Belønning kan være mat, lek, ros, tilgang til å snuse eller noe annet hunden setter pris på.</p>
+<h3>Riktig timing</h3>
+<p>Belønningen må komme raskt, helst innen ett til to sekunder etter ønsket atferd. Da blir det tydelig for hunden hva som ga belønningen. Venter du for lenge, kan hunden tro at den ble belønnet for noe annet.</p>
+<h3>Små steg gir best læring</h3>
+<p>Del øvelsen opp i små deler. Hvis hunden ikke lykkes, er oppgaven sannsynligvis for vanskelig akkurat nå. Gjør den enklere, reduser forstyrrelsene og belønn små fremskritt. Trening skal gi mange muligheter til å lykkes.</p>
+<ul>
+<li>Tren kort, gjerne ett til tre minutter om gangen.</li>
+<li>Avslutt mens hunden fortsatt er motivert.</li>
+<li>Start i rolige omgivelser før du trener med forstyrrelser.</li>
+<li>Bruk belønninger hunden faktisk ønsker i situasjonen.</li>
+<li>Vær tålmodig og gjenta uten irritasjon.</li>
+</ul>
+<div class="fact"><strong>💡 Visste du?</strong>Hunden lærer hele dagen, ikke bare når du holder godbiter. Den lærer også hvilke handlinger som åpner dører, gir oppmerksomhet eller fører til tur.</div>
+<div class="remember"><strong>📌 Husk dette</strong>Når hunden gjør feil, trenger den ofte tydeligere veiledning – ikke strengere stemme.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Velg én enkel atferd, for eksempel øyekontakt. Belønn hunden raskt hver gang den frivillig ser på deg.</div>
+<div class="lesson-footer">
+<span class="small">Mål: Bruke belønning, timing og små steg i treningen.</span>
+<button class="complete-btn" data-complete="4">Marker leksjonen som fullført</button>
+</div>
+</article>
+<article class="lesson" id="leksjon5">
+<div class="lesson-header">
+<div class="lesson-icon">🤝</div>
+<div>
+<span class="badge">LEKSJON 5</span>
+<h2>Kontakt og samarbeid</h2>
+</div>
+</div>
+<p>God kontakt betyr ikke at hunden skal se på deg hele tiden. Det betyr at den frivillig søker deg, klarer å samarbeide og opplever deg som trygg og verdt å lytte til. Kontakt bygges i hverdagen gjennom mange små positive opplevelser.</p>
+<h3>Belønn frivillig kontakt</h3>
+<p>Når hunden ser på deg av seg selv, kan du smile, rose rolig eller gi en liten godbit. På tur kan du belønne når hunden snur seg mot deg. Slik lærer hunden at det lønner seg å holde kontakt, uten at du må mase eller gjenta navnet hele tiden.</p>
+<h3>Vær en trygg veiviser</h3>
+<p>Samarbeid handler også om at du hjelper hunden gjennom vanskelige situasjoner. Unngå å dra den inn i møter den ikke ønsker. Vis den at du tar ansvar, lager avstand og gir tydelige, rolige signaler.</p>
+<ul>
+<li>Bruk hundens navn én gang og belønn når den reagerer.</li>
+<li>Gjør deg interessant med vennlig stemme, bevegelse og gode belønninger.</li>
+<li>Ikke krev kontakt når hunden er for redd eller stresset.</li>
+<li>La treningen være en samtale, ikke en kommandoøvelse.</li>
+</ul>
+<div class="tip"><strong>✅ Praktisk tips</strong>På tur: Belønn hunden når den selv velger å gå nær deg eller se opp. Dette bygger kontakt uten trekking og mas.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Tell hvor mange ganger hunden frivillig tar kontakt med deg på en kort tur. Belønn minst fem av disse øyeblikkene.</div>
+<div class="lesson-footer">
+<span class="small">Mål: Skape frivillig kontakt og bedre samarbeid.</span>
+<button class="complete-btn" data-complete="5">Marker leksjonen som fullført</button>
+</div>
+</article>
+<article class="lesson" id="leksjon6">
+<div class="lesson-header">
+<div class="lesson-icon">🏡</div>
+<div>
+<span class="badge">LEKSJON 6</span>
+<h2>Respekt, grenser og gode rutiner</h2>
+</div>
+</div>
+<p>Hunder trenger tydelige og forutsigbare rammer, men grenser trenger ikke være harde. Gode grenser lærer hunden hva den kan gjøre i stedet for bare hva den ikke får gjøre. Når familien følger de samme reglene, blir hverdagen enklere for både hund og mennesker.</p>
+<h3>Lær ønsket alternativ</h3>
+<p>Hvis hunden hopper på gjester, kan du lære den å stå med fire poter i gulvet eller gå til plassen sin. Hvis den tar mat fra bordet, kan du belønne den for å ligge rolig på teppet. Det er mye lettere for hunden å lykkes når den får vite hva du ønsker.</p>
+<h3>Rutiner skaper trygghet</h3>
+<p>Faste rytmer for søvn, mat, tur, trening og ro gjør dagen mer forutsigbar. Det betyr ikke at alt må skje på nøyaktig samme klokkeslett, men hunden bør forstå hvordan hverdagen vanligvis fungerer.</p>
+<ul>
+<li>Bestem hvilke regler som gjelder i hjemmet.</li>
+<li>Sørg for at alle i familien følger de samme reglene.</li>
+<li>Belønn ønsket atferd før problemer oppstår.</li>
+<li>Forebygg fristelser når hunden ennå ikke har lært.</li>
+<li>Gi hunden et trygt sted der den får være i fred.</li>
+</ul>
+<div class="warning"><strong>⚠️ Vanlig feil</strong>Å si «nei» mange ganger uten å vise hunden hva den skal gjøre, gir lite læring og kan skape frustrasjon.</div>
+<div class="remember"><strong>📌 Husk dette</strong>Tydelighet betyr at reglene er enkle og konsekvente – ikke at stemmen må være streng.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Velg én hverdagsregel. Bestem hvilket ønsket alternativ hunden skal lære, og belønn dette aktivt gjennom dagen.</div>
+<div class="lesson-footer">
+<span class="small">Mål: Lage vennlige, tydelige og forutsigbare rammer.</span>
+<button class="complete-btn" data-complete="6">Marker leksjonen som fullført</button>
+</div>
+</article>
+<article class="lesson" id="leksjon7">
+<div class="lesson-header">
+<div class="lesson-icon">⭐</div>
+<div>
+<span class="badge">LEKSJON 7</span>
+<h2>Oppsummering – dette har du lært</h2>
+</div>
+</div>
+<p>Du har nå fått en grunnleggende forståelse av hvordan hunden kommuniserer, hva den trenger og hvordan du kan hjelpe den til å føle seg trygg. Dette er fundamentet for all videre trening i akademiet.</p>
+<h3>De viktigste punktene</h3>
+<ul>
+<li>Se på hele hunden og situasjonen når du tolker kroppsspråk.</li>
+<li>Trygghet, søvn, sosial kontakt, aktivitet og mestring er grunnleggende behov.</li>
+<li>Stress påvirker både atferd og læring.</li>
+<li>Belønn ønsket atferd raskt og tren i små steg.</li>
+<li>Frivillig kontakt gir bedre samarbeid enn mas og press.</li>
+<li>Tydelige rammer fungerer best når hunden også lærer hva den skal gjøre.</li>
+</ul>
+<div class="remember"><strong>📌 Modulens viktigste budskap</strong>Forstå hunden først. Trening og samarbeid blir lettere når hunden føler seg trygg og opplever at du lytter til signalene dens.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Velg én ting du vil gjøre annerledes etter denne modulen. Skriv den ned og prøv den de neste sju dagene.</div>
+<div class="lesson-footer">
+<span class="small">Mål: Koble sammen kunnskapen fra hele modulen.</span>
+<button class="complete-btn" data-complete="7">Marker leksjonen som fullført</button>
+</div>
+</article>
+<section class="quiz" id="quiz">
+<h2>📝 Modulquiz – Bli kjent med hunden</h2>
+<p>Svar på spørsmålene og test hva du har lært. Du trenger minst 4 av 5 riktige for å bestå.</p>
+<form id="quizForm">
+<div class="question">
+<h3>1. Hva bør du se på når du tolker hundens kroppsspråk?</h3>
+<label class="option"><input name="q1" type="radio" value="a"/> Bare halen</label>
+<label class="option"><input name="q1" type="radio" value="b"/> Hele hunden og situasjonen</label>
+<label class="option"><input name="q1" type="radio" value="c"/> Bare ørene</label>
+</div>
+<div class="question">
+<h3>2. Hva kan knurring bety?</h3>
+<label class="option"><input name="q2" type="radio" value="a"/> At hunden alltid er farlig</label>
+<label class="option"><input name="q2" type="radio" value="b"/> At hunden trenger straff</label>
+<label class="option"><input name="q2" type="radio" value="c"/> At hunden er ukomfortabel og kommuniserer</label>
+</div>
+<div class="question">
+<h3>3. Hva hjelper hunden til å lære best?</h3>
+<label class="option"><input name="q3" type="radio" value="a"/> Rask belønning og små steg</label>
+<label class="option"><input name="q3" type="radio" value="b"/> Lange treningsøkter</label>
+<label class="option"><input name="q3" type="radio" value="c"/> Høy stemme når hunden gjør feil</label>
+</div>
+<div class="question">
+<h3>4. Hva kan du gjøre når hunden blir usikker?</h3>
+<label class="option"><input name="q4" type="radio" value="a"/> Presse den nærmere</label>
+<label class="option"><input name="q4" type="radio" value="b"/> Øke avstanden og hjelpe den til ro</label>
+<label class="option"><input name="q4" type="radio" value="c"/> Ignorere alle signaler</label>
+</div>
+<div class="question">
+<h3>5. Hva er en god måte å sette grenser på?</h3>
+<label class="option"><input name="q5" type="radio" value="a"/> Si «nei» mange ganger</label>
+<label class="option"><input name="q5" type="radio" value="b"/> Straffe hunden etterpå</label>
+<label class="option"><input name="q5" type="radio" value="c"/> Lære hunden et ønsket alternativ</label>
+</div>
+<button class="btn btn-primary" type="submit">Se resultatet</button>
+</form>
+<div class="quiz-result" id="quizResult"></div>
+<div class="certificate" id="certificate">
+<div style="font-size:52px">🏆</div>
+<h2>Modul 1 fullført</h2>
+<p>Gratulerer! Du har fullført <strong>Bli kjent med hunden</strong> og bestått modulquizen.</p>
+<p>Du er nå klar for neste steg i Hundeakademiet.</p>
+<a class="btn btn-primary" href="modul2-valpen-den-viktige-starten.html">Gå til modul 2 →</a>
+</div>
+</section>
+</section>
+</div>
+</main>
+<footer>
+<div class="container footer">
+<div><strong>Hundene Våre Akademiet</strong><p>Kunnskap, trygghet og glede for hele hundelivet.</p></div>
+<div><a href="hundeakademiet_ny.html" style="color:#fff;font-weight:800">Tilbake til akademiet</a></div>
+</div>
+</footer>
+<script>
+const key = "module1CompletedLessons";
+let completed = JSON.parse(localStorage.getItem(key) || "[]");
+
+function updateProgress(){
+  const unique = [...new Set(completed.map(Number))].filter(n => n >= 1 && n <= 7);
+  completed = unique;
+  localStorage.setItem(key, JSON.stringify(completed));
+
+  const percent = Math.round((completed.length / 7) * 100);
+  document.getElementById("progressText").textContent = `${completed.length} av 7 leksjoner fullført`;
+  document.getElementById("progressFill").style.width = `${percent}%`;
+
+  document.querySelectorAll("[data-complete]").forEach(btn => {
+    const id = Number(btn.dataset.complete);
+    if(completed.includes(id)){
+      btn.textContent = "✓ Leksjonen er fullført";
+      btn.classList.add("done");
+    } else {
+      btn.textContent = "Marker leksjonen som fullført";
+      btn.classList.remove("done");
+    }
+  });
+
+  document.querySelectorAll("#lessonNav a[data-lesson]").forEach(link => {
+    const id = Number(link.dataset.lesson);
+    link.classList.toggle("done", completed.includes(id));
+  });
+}
+
+document.querySelectorAll("[data-complete]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const id = Number(btn.dataset.complete);
+    if(completed.includes(id)){
+      completed = completed.filter(n => n !== id);
+    } else {
+      completed.push(id);
+    }
+    updateProgress();
+  });
+});
+
+document.getElementById("quizForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const answers = {q1:"b", q2:"c", q3:"a", q4:"b", q5:"c"};
+  let score = 0;
+  let answered = 0;
+
+  Object.entries(answers).forEach(([name, correct]) => {
+    const selected = document.querySelector(`input[name="${name}"]:checked`);
+    if(selected){
+      answered++;
+      if(selected.value === correct) score++;
+    }
+  });
+
+  const result = document.getElementById("quizResult");
+  result.style.display = "block";
+
+  if(answered < 5){
+    result.textContent = "Du må svare på alle spørsmålene før du kan levere quizen.";
+    return;
+  }
+
+  if(score >= 4){
+    result.textContent = `Gratulerer! Du fikk ${score} av 5 riktige og har bestått modulquizen.`;
+    document.getElementById("certificate").style.display = "block";
+    localStorage.setItem("academyQuizDone", Math.max(Number(localStorage.getItem("academyQuizDone") || 0), 1));
+    localStorage.setItem("academyModulesDone", Math.max(Number(localStorage.getItem("academyModulesDone") || 0), 1));
+    localStorage.setItem("module1QuizPassed", "true");
+  } else {
+    result.textContent = `Du fikk ${score} av 5 riktige. Les gjerne gjennom leksjonene én gang til og prøv igjen.`;
+    document.getElementById("certificate").style.display = "none";
+  }
+});
+
+if(localStorage.getItem("module1QuizPassed") === "true"){
+  document.getElementById("certificate").style.display = "block";
+}
+
+updateProgress();
+</script>
+</body>
+</html>

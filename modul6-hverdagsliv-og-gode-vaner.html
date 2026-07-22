@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+
+<html lang="no">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modul 6 – Hverdagsliv og gode vaner | Hundene Våre Akademiet</title>
+<meta content="Modul 6 i Hundene Våre Akademiet: rutiner, ro, turer, besøk, alenetrening, bil, høflig atferd og en 30-dagers plan." name="description"/>
+<style>
+:root{
+  --green:#0f5b35;
+  --green-dark:#0a4026;
+  --green-soft:#eaf5ed;
+  --gold:#e9a22d;
+  --red:#b84343;
+  --blue:#2f6fa8;
+  --purple:#6a56a6;
+  --text:#17211b;
+  --muted:#5f6d64;
+  --line:#e3e8e3;
+  --shadow:0 14px 36px rgba(20,45,30,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#fbfcf9 0%,#f6f8f4 100%);
+  color:var(--text);
+  line-height:1.65;
+}
+a{color:inherit;text-decoration:none}
+.container{width:min(1180px,calc(100% - 30px));margin:auto}
+.topbar{background:linear-gradient(90deg,var(--green-dark),var(--green));color:#fff;text-align:center;padding:9px 16px;font-size:14px}
+header{background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;backdrop-filter:blur(10px)}
+.nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--green-dark)}
+.logo{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,var(--green-dark),var(--green));color:#fff;font-size:24px;box-shadow:0 8px 18px rgba(15,91,53,.2)}
+.brand small{display:block;color:var(--muted);font-weight:600;margin-top:2px}
+.navlinks{display:flex;gap:8px;flex-wrap:wrap}
+.navlinks a{padding:10px 13px;border-radius:11px;font-weight:700}
+.navlinks a:hover{background:var(--green-soft);color:var(--green-dark)}
+.hero{padding:44px 0 28px;background:radial-gradient(circle at 88% 20%,rgba(232,242,225,.8),transparent 28%),radial-gradient(circle at 15% 75%,rgba(250,239,214,.5),transparent 32%)}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center}
+.badge{display:inline-flex;gap:8px;align-items:center;border:1px solid #cfe3d3;background:#f0f8f2;color:var(--green-dark);padding:8px 12px;border-radius:999px;font-weight:800;font-size:13px}
+h1{font-size:clamp(38px,5vw,66px);line-height:1.05;letter-spacing:-.04em;margin:16px 0 14px;color:var(--green-dark)}
+.lead{font-size:17px;color:#4f5d53;max-width:760px}
+.hero-card{background:#fff;border:1px solid var(--line);border-radius:26px;padding:24px;box-shadow:var(--shadow)}
+.hero-card .dog{min-height:250px;border-radius:20px;background:linear-gradient(145deg,#e8f3e9,#f4e5c8);display:grid;place-items:center;font-size:110px}
+.hero-card p{margin:16px 0 0;color:var(--muted);font-size:14px;text-align:center}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:47px;padding:11px 18px;border-radius:13px;font-weight:800;border:1px solid transparent;transition:.2s ease}
+.btn-primary{background:var(--green);color:#fff;box-shadow:0 10px 22px rgba(15,91,53,.18)}
+.btn-primary:hover{background:var(--green-dark);transform:translateY(-2px)}
+.btn-light{background:#fff;border-color:#dce2dd}
+.btn-light:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(20,45,30,.08)}
+.progress-wrap{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;margin:22px auto 0;box-shadow:var(--shadow)}
+.progress-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px}
+.progress-head strong{color:var(--green-dark)}
+.track{height:12px;background:#e7ece7;border-radius:999px;overflow:hidden}
+.fill{width:0%;height:100%;background:linear-gradient(90deg,var(--green),#6fb284);transition:.35s ease}
+.small{font-size:13px;color:var(--muted)}
+.layout{display:grid;grid-template-columns:280px 1fr;gap:24px;padding:28px 0 50px}
+.sidebar{position:sticky;top:95px;align-self:start;background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
+.sidebar h2{font-size:17px;margin:0 0 12px;color:var(--green-dark)}
+.lesson-nav{display:grid;gap:8px}
+.lesson-nav a{display:flex;align-items:center;gap:10px;padding:10px 11px;border-radius:11px;font-size:14px;color:#3d4a41;border:1px solid transparent}
+.lesson-nav a:hover{background:var(--green-soft);border-color:#d5e6d8}
+.lesson-nav a.done{background:#eef7f0;color:var(--green-dark);font-weight:800}
+.lesson-nav span{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#edf1ed;font-size:12px;font-weight:800}
+.content{display:grid;gap:22px}
+.lesson{background:#fff;border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow)}
+.lesson-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
+.lesson-icon{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;background:var(--green-soft);font-size:28px;flex:0 0 auto}
+.lesson h2{margin:0;color:var(--green-dark);font-size:28px;line-height:1.2}
+.lesson h3{color:var(--green-dark);margin:24px 0 8px;font-size:20px}
+.lesson p{margin:0 0 14px;color:#344138}
+.lesson ul{margin:8px 0 16px;padding-left:22px}
+.lesson li{margin-bottom:8px}
+.fact,.tip,.warning,.remember,.task,.checklist{border-radius:16px;padding:17px 18px;margin:18px 0}
+.fact{background:#eef5fb;border-left:5px solid var(--blue)}
+.tip{background:#eef8f1;border-left:5px solid var(--green)}
+.warning{background:#fff0f0;border-left:5px solid var(--red)}
+.remember{background:#fff8e9;border-left:5px solid var(--gold)}
+.task{background:#f3f0fb;border-left:5px solid var(--purple)}
+.checklist{background:#f7f9f7;border:1px solid var(--line)}
+.fact strong,.tip strong,.warning strong,.remember strong,.task strong,.checklist strong{display:block;margin-bottom:5px}
+.lesson-footer{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.complete-btn{border:none;background:var(--green);color:#fff;border-radius:12px;padding:11px 16px;font-weight:800;cursor:pointer}
+.complete-btn:hover{background:var(--green-dark)}
+.complete-btn.done{background:#6d7a71}
+.plan{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+.plan th,.plan td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
+.plan th{background:var(--green-soft);color:var(--green-dark)}
+.quiz{background:linear-gradient(145deg,#fff,#f8fbf7);border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow)}
+.quiz h2{margin-top:0;color:var(--green-dark)}
+.question{border-top:1px solid var(--line);padding:20px 0}
+.question:first-of-type{border-top:none}
+.question h3{margin:0 0 12px;font-size:18px}
+.option{display:block;background:#fff;border:1px solid #dfe5df;border-radius:12px;padding:11px 12px;margin:8px 0;cursor:pointer}
+.option:hover{background:#f6faf7}
+.quiz-result{display:none;margin-top:18px;padding:16px;border-radius:14px;background:var(--green-soft);font-weight:800;color:var(--green-dark)}
+.certificate{display:none;text-align:center;background:linear-gradient(145deg,#fff9e9,#fff);border:2px solid #e4c777;border-radius:24px;padding:30px;margin-top:22px}
+.certificate h2{font-family:Georgia,serif;font-size:34px;margin:0 0 10px;color:#70551a}
+footer{background:var(--green-dark);color:#dce9df}
+.footer{padding:30px 0;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer p{margin:5px 0 0;color:#b9cbbb;font-size:13px}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.sidebar{position:static}}
+@media(max-width:700px){.plan{display:block;overflow-x:auto;white-space:nowrap}}
+@media(max-width:600px){.container{width:min(100% - 20px,1180px)}.navlinks{display:none}.lesson{padding:20px}.lesson-header{flex-direction:column}.lesson h2{font-size:24px}.hero-card .dog{min-height:210px;font-size:90px}.actions{flex-direction:column}.btn{width:100%}}
+</style>
+</head>
+<body>
+<div class="topbar">🐾 Modul 6 – gode rutiner gir en tryggere og roligere hundehverdag.</div>
+<header>
+<div class="container nav">
+<a class="brand" href="hundeakademiet_ny.html">
+<span class="logo">🐾</span>
+<span>Hundene Våre Akademiet<small>Modul 6 – Hverdagsliv og gode vaner</small></span>
+</a>
+<nav class="navlinks">
+<a href="hundeakademiet_ny.html">← Akademiet</a>
+<a href="#leksjoner">Leksjonene</a>
+<a href="#quiz">Quiz</a>
+</nav>
+</div>
+</header>
+<main>
+<section class="hero">
+<div class="container">
+<div class="hero-grid">
+<div>
+<span class="badge">🎓 MODUL 6</span>
+<h1>Hverdagsliv og gode vaner</h1>
+<p class="lead">I denne modulen lærer du hvordan du skaper gode rutiner, ro i hjemmet, trygge turer, vellykkede besøk, alenetrening, bilvaner og høflig atferd i hverdagen.</p>
+<div class="actions">
+<a class="btn btn-primary" href="#leksjon1">Start første leksjon</a>
+<a class="btn btn-light" href="hundeakademiet_ny.html">← Tilbake til Hundeakademiet</a>
+</div>
+</div>
+<div class="hero-card">
+<div class="dog">🏡</div>
+<p>Gode vaner bygges gjennom små, rolige repetisjoner i ekte hverdagssituasjoner.</p>
+</div>
+</div>
+<div class="progress-wrap">
+<div class="progress-head">
+<strong>Din fremdrift i modul 6</strong>
+<span id="progressText">0 av 10 leksjoner fullført</span>
+</div>
+<div class="track"><div class="fill" id="progressFill"></div></div>
+<div class="small" style="margin-top:8px">Fremdriften lagres automatisk på denne enheten.</div>
+</div>
+</div>
+</section>
+<div class="container layout" id="leksjoner">
+<aside class="sidebar">
+<h2>Innhold i modulen</h2>
+<nav class="lesson-nav" id="lessonNav">
+<a data-lesson="1" href="#leksjon1"><span>1</span> Rutiner i hverdagen</a>
+<a data-lesson="2" href="#leksjon2"><span>2</span> Ro og hvile</a>
+<a data-lesson="3" href="#leksjon3"><span>3</span> Gode gåturer</a>
+<a data-lesson="4" href="#leksjon4"><span>4</span> Besøk og gjester</a>
+<a data-lesson="5" href="#leksjon5"><span>5</span> Alenetrening</a>
+<a data-lesson="6" href="#leksjon6"><span>6</span> Bil og reiser</a>
+<a data-lesson="7" href="#leksjon7"><span>7</span> Høflig hverdagsatferd</a>
+<a data-lesson="8" href="#leksjon8"><span>8</span> Aktivitet og balanse</a>
+<a data-lesson="9" href="#leksjon9"><span>9</span> 30-dagers plan</a>
+<a data-lesson="10" href="#leksjon10"><span>10</span> Oppsummering</a>
+<a href="#quiz"><span>✓</span> Modulquiz</a>
+</nav>
+</aside>
+<section class="content">
+<article class="lesson" id="leksjon1">
+<div class="lesson-header">
+<div class="lesson-icon">🕒</div>
+<div><span class="badge">LEKSJON 1</span><h2>Rutiner i hverdagen</h2></div>
+</div>
+<p>Hunder trives ofte best når dagen har en viss forutsigbarhet. Faste rutiner rundt mat, tur, hvile og aktivitet kan gi trygghet og redusere stress.</p>
+<h3>Gode grunnrutiner</h3>
+<ul>
+<li>Omtrent faste tider for lufting og måltider.</li>
+<li>Rolige overganger mellom aktivitet og hvile.</li>
+<li>Et fast sted for søvn og avslapning.</li>
+<li>Små treningsøyeblikk gjennom dagen.</li>
+<li>Daglig tid til snusing og fri utforskning.</li>
+</ul>
+<div class="tip"><strong>✅ Praktisk tips</strong>Forutsigbarhet betyr ikke at alt må skje på minuttet. Det viktigste er en rolig og gjenkjennelig rytme.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Skriv ned hundens vanlige døgnrytme og se om det finnes perioder med for lite hvile eller for mye uro.</div>
+<div class="lesson-footer"><span class="small">Mål: Skape en tydelig og trygg hverdagsrytme.</span><button class="complete-btn" data-complete="1">Marker leksjonen som fullført</button></div>
+</article>
+<article class="lesson" id="leksjon2">
+<div class="lesson-header">
+<div class="lesson-icon">😴</div>
+<div><span class="badge">LEKSJON 2</span><h2>Ro og hvile</h2></div>
+</div>
+<p>Hvile er en viktig del av hundens helse og læring. En hund som får for lite ro, kan bli mer urolig, lettere frustrert og ha vanskeligere for å konsentrere seg.</p>
+<h3>Slik hjelper du hunden å finne ro</h3>
+<ul>
+<li>Lag en fast og skjermet hvileplass.</li>
+<li>Unngå å forstyrre hunden når den sover.</li>
+<li>Belønn rolig atferd, ikke bare aktivitet.</li>
+<li>Bruk en matte eller seng som ro-signal.</li>
+<li>Reduser lyd og aktivitet etter krevende opplevelser.</li>
+</ul>
+<div class="remember"><strong>📌 Husk dette</strong>Ro er en ferdighet som kan læres, men hunden må også få reell mulighet til å hvile.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Belønn hunden fem ganger i løpet av dagen når den frivillig legger seg rolig.</div>
+<div class="lesson-footer"><span class="small">Mål: Hjelpe hunden å slappe av i hjemmet.</span><button class="complete-btn" data-complete="2">Marker leksjonen som fullført</button></div>
+</article>
+<article class="lesson" id="leksjon3">
+<div class="lesson-header">
+<div class="lesson-icon">🚶</div>
+<div><span class="badge">LEKSJON 3</span><h2>Gode gåturer</h2></div>
+</div>
+<p>En god tur handler ikke bare om avstand. Snusing, tempo, variasjon og trygghet er like viktig som fysisk aktivitet.</p>
+<h3>Bygg gode turvaner</h3>
+<ul>
+<li>Start turen rolig.</li>
+<li>Belønn kontakt og slakt bånd.</li>
+<li>Gi hunden tid til å snuse.</li>
+<li>Tilpass lengde og tempo til hundens alder og form.</li>
+<li>Velg roligere ruter når hunden er stresset.</li>
+</ul>
+<div class="fact"><strong>💡 Visste du?</strong>Snusing er mental aktivitet og kan virke beroligende for mange hunder.</div>
+<div class="warning"><strong>⚠️ Vanlig feil</strong>Ikke hold jevnt stramt bånd. Stopp eller skift retning og belønn når båndet blir slakt.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Ta en rolig snusetur uten mål om fart eller distanse.</div>
+<div class="lesson-footer"><span class="small">Mål: Skape tryggere og mer behagelige turer.</span><button class="complete-btn" data-complete="3">Marker leksjonen som fullført</button></div>
+</article>
+<article class="lesson" id="leksjon4">
+<div class="lesson-header">
+<div class="lesson-icon">🚪</div>
+<div><span class="badge">LEKSJON 4</span><h2>Besøk og gjester</h2></div>
+</div>
+<p>Besøk kan være spennende eller krevende. Planlegg situasjonen slik at hunden får en tydelig oppgave og mulighet til å trekke seg unna.</p>
+<h3>Før gjestene kommer</h3>
+<ul>
+<li>Luft hunden på forhånd.</li>
+<li>Gjør klar seng, matte eller et rolig rom.</li>
+<li>Ha godbiter eller tyggeaktivitet tilgjengelig.</li>
+<li>Be gjestene ignorere hunden i starten.</li>
+<li>La hunden selv velge om den vil hilse.</li>
+</ul>
+<div class="tip"><strong>✅ Praktisk tips</strong>Belønn fire poter i gulvet. Det er ofte enklere enn å bare si «nei» til hopping.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Øv på at noen banker på døren mens hunden går til matten sin.</div>
+<div class="lesson-footer"><span class="small">Mål: Gjøre besøk roligere og mer forutsigbart.</span><button class="complete-btn" data-complete="4">Marker leksjonen som fullført</button></div>
+</article>
+<article class="lesson" id="leksjon5">
+<div class="lesson-header">
+<div class="lesson-icon">🏠</div>
+<div><span class="badge">LEKSJON 5</span><h2>Alenetrening</h2></div>
+</div>
+<p>Alenetrening bør bygges gradvis. Målet er at hunden skal oppleve korte fravær som trygge og udramatiske.</p>
+<h3>Start enkelt</h3>
+<ul>
+<li>Begynn med svært korte fravær.</li>
+<li>Gå ut og inn rolig.</li>
+<li>Øk tiden i små steg.</li>
+<li>Bruk gjerne kamera for å følge med.</li>
+<li>Gå tilbake et steg dersom hunden blir urolig.</li>
+</ul>
+<div class="warning"><strong>⚠️ Viktig</strong>Ikke la hunden «gråte det av seg». Sterk uro kan forverre problemet.</div>
+<div class="remember"><strong>📌 Tegn på stress</strong>Pesing, piping, bjeffing, vandring, sikling, kloring på dør eller at hunden ikke tar godbit.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Gjør fem helt korte ut-og-inn-repetisjoner mens hunden fortsatt er rolig.</div>
+<div class="lesson-footer"><span class="small">Mål: Bygge trygghet ved korte fravær.</span><button class="complete-btn" data-complete="5">Marker leksjonen som fullført</button></div>
+</article>
+<article class="lesson" id="leksjon6">
+<div class="lesson-header">
+<div class="lesson-icon">🚗</div>
+<div><span class="badge">LEKSJON 6</span><h2>Bil og reiser</h2></div>
+</div>
+<p>Biltrening bør skje gradvis, særlig hvis hunden er usikker eller blir bilsyk. Hunden skal alltid sikres forsvarlig under kjøring.</p>
+<h3>En trygg opptrapping</h3>
+<ul>
+<li>La hunden undersøke bilen uten at motoren går.</li>
+<li>Belønn rolig opphold i bilen.</li>
+<li>Start motoren uten å kjøre.</li>
+<li>Kjør svært korte turer.</li>
+<li>Avslutt gjerne på et hyggelig sted.</li>
+</ul>
+<div class="tip"><strong>✅ Praktisk tips</strong>Unngå stort måltid rett før kjøring hvis hunden lett blir kvalm.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Tren på rolig inn- og utstigning uten å kjøre.</div>
+<div class="lesson-footer"><span class="small">Mål: Skape tryggere bilvaner og reiser.</span><button class="complete-btn" data-complete="6">Marker leksjonen som fullført</button></div>
+</article>
+<article class="lesson" id="leksjon7">
+<div class="lesson-header">
+<div class="lesson-icon">🤝</div>
+<div><span class="badge">LEKSJON 7</span><h2>Høflig hverdagsatferd</h2></div>
+</div>
+<p>Høflig atferd betyr ikke at hunden skal være perfekt. Det betyr at den lærer enkle vaner som gjør hverdagen lettere og tryggere.</p>
+<h3>Nyttige ferdigheter</h3>
+<ul>
+<li>Vente rolig ved dør.</li>
+<li>Fire poter i gulvet ved hilsing.</li>
+<li>Slippe eller bytte gjenstander.</li>
+<li>Gå til seng eller matte.</li>
+<li>Vente på signal før den hopper ut av bil.</li>
+</ul>
+<div class="fact"><strong>💡 Tenk alternativ</strong>I stedet for bare å stoppe uønsket atferd, lær hunden hva den skal gjøre i stedet.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Velg én hverdagssituasjon og tren et tydelig alternativ til uønsket atferd.</div>
+<div class="lesson-footer"><span class="small">Mål: Bygge gode vaner gjennom tydelige alternativer.</span><button class="complete-btn" data-complete="7">Marker leksjonen som fullført</button></div>
+</article>
+<article class="lesson" id="leksjon8">
+<div class="lesson-header">
+<div class="lesson-icon">⚖️</div>
+<div><span class="badge">LEKSJON 8</span><h2>Aktivitet og balanse</h2></div>
+</div>
+<p>En god hundehverdag består av mer enn mosjon. Hunden trenger balanse mellom fysisk aktivitet, mental stimulering, sosial kontakt og hvile.</p>
+<h3>Fire viktige deler</h3>
+<ul>
+<li>Fysisk aktivitet tilpasset hunden.</li>
+<li>Snusing og problemløsning.</li>
+<li>Rolig samvær og trygghet.</li>
+<li>Nok søvn og pauser.</li>
+</ul>
+<div class="warning"><strong>⚠️ Mer er ikke alltid bedre</strong>For mye intens aktivitet kan gjøre enkelte hunder mer oppjaget i stedet for roligere.</div>
+<div class="tip"><strong>✅ Praktisk tips</strong>Etter en krevende dag bør hunden få en roligere dag med mye hvile og enkle aktiviteter.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Lag en balansert dagsplan med aktivitet, snusing, kontakt og hvile.</div>
+<div class="lesson-footer"><span class="small">Mål: Finne riktig balanse for den enkelte hund.</span><button class="complete-btn" data-complete="8">Marker leksjonen som fullført</button></div>
+</article>
+<article class="lesson" id="leksjon9">
+<div class="lesson-header">
+<div class="lesson-icon">📅</div>
+<div><span class="badge">LEKSJON 9</span><h2>30-dagers plan for gode vaner</h2></div>
+</div>
+<p>Programmet hjelper deg å bygge små forbedringer i ekte hverdagssituasjoner.</p>
+<table class="plan">
+<thead><tr><th>Dager</th><th>Fokus</th><th>Oppgave</th></tr></thead>
+<tbody>
+<tr><td>1–3</td><td>Rutiner</td><td>Lag en rolig og tydelig dagsrytme.</td></tr>
+<tr><td>4–6</td><td>Hvile</td><td>Belønn frivillig ro og bruk fast hvileplass.</td></tr>
+<tr><td>7–9</td><td>Tur</td><td>Legg inn korte snuseøkter og belønn slakt bånd.</td></tr>
+<tr><td>10–12</td><td>Dør</td><td>Tren venting før hunden går ut.</td></tr>
+<tr><td>13–15</td><td>Gjester</td><td>Tren matte eller fire poter i gulvet.</td></tr>
+<tr><td>16–18</td><td>Alene</td><td>Gjør korte, trygge fraværsøvelser.</td></tr>
+<tr><td>19–21</td><td>Bil</td><td>Tren rolig inn- og utstigning.</td></tr>
+<tr><td>22–24</td><td>Bytte</td><td>Bytt en gjenstand mot belønning.</td></tr>
+<tr><td>25–27</td><td>Balanse</td><td>Planlegg aktivitet og hvile.</td></tr>
+<tr><td>28–30</td><td>Oppsummering</td><td>Velg tre vaner som skal fortsette.</td></tr>
+</tbody>
+</table>
+<div class="tip"><strong>✅ Praktisk tips</strong>Fokuser på små forbedringer, ikke perfekte dager.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Velg startdato og bestem hvilke tre vaner som er viktigst for dere.</div>
+<div class="lesson-footer"><span class="small">Mål: Gjøre gode vaner stabile over tid.</span><button class="complete-btn" data-complete="9">Marker leksjonen som fullført</button></div>
+</article>
+<article class="lesson" id="leksjon10">
+<div class="lesson-header">
+<div class="lesson-icon">⭐</div>
+<div><span class="badge">LEKSJON 10</span><h2>Oppsummering</h2></div>
+</div>
+<p>Gode hverdagsvaner skapes gjennom forutsigbarhet, ro, tydelige alternativer og gradvis trening. Små justeringer kan gi stor forskjell for både hund og eier.</p>
+<h3>Det viktigste fra modulen</h3>
+<ul>
+<li>Lag en trygg og gjenkjennelig rytme.</li>
+<li>Prioriter hvile like høyt som aktivitet.</li>
+<li>La turer inneholde snusing og valgfrihet.</li>
+<li>Planlegg besøk før gjestene kommer.</li>
+<li>Bygg alenetrening svært gradvis.</li>
+<li>Tren bil og reiser i små steg.</li>
+<li>Lær tydelige alternativer til uønsket atferd.</li>
+<li>Tilpass hverdagen til den enkelte hund.</li>
+</ul>
+<div class="remember"><strong>📌 Modulens viktigste budskap</strong>En rolig og trygg hverdag bygges i de små øyeblikkene som gjentas hver dag.</div>
+<div class="task"><strong>🐾 Dagens oppgave</strong>Velg én vane du vil starte med allerede i dag.</div>
+<div class="lesson-footer"><span class="small">Mål: Kunne skape en trygg og balansert hundehverdag.</span><button class="complete-btn" data-complete="10">Marker leksjonen som fullført</button></div>
+</article>
+<section class="quiz" id="quiz">
+<h2>📝 Modulquiz – Hverdagsliv og gode vaner</h2>
+<p>Svar på spørsmålene. Du trenger minst 8 av 9 riktige for å bestå.</p>
+<form id="quizForm">
+<div class="question"><h3>1. Hva kan faste rutiner bidra til?</h3>
+<label class="option"><input name="q1" type="radio" value="a"/> Mer stress</label>
+<label class="option"><input name="q1" type="radio" value="b"/> Trygghet og forutsigbarhet</label>
+<label class="option"><input name="q1" type="radio" value="c"/> Mindre søvn</label>
+</div>
+<div class="question"><h3>2. Hva er viktig for god hvile?</h3>
+<label class="option"><input name="q2" type="radio" value="a"/> En skjermet hvileplass</label>
+<label class="option"><input name="q2" type="radio" value="b"/> Konstant aktivitet</label>
+<label class="option"><input name="q2" type="radio" value="c"/> Mange forstyrrelser</label>
+</div>
+<div class="question"><h3>3. Hva kan snusing bidra med på tur?</h3>
+<label class="option"><input name="q3" type="radio" value="a"/> Mental stimulering og ro</label>
+<label class="option"><input name="q3" type="radio" value="b"/> Ingen verdi</label>
+<label class="option"><input name="q3" type="radio" value="c"/> Bare mer stress</label>
+</div>
+<div class="question"><h3>4. Hva er lurt når gjester kommer?</h3>
+<label class="option"><input name="q4" type="radio" value="a"/> La alt skje uten plan</label>
+<label class="option"><input name="q4" type="radio" value="b"/> Forberede hvileplass og tydelig oppgave</label>
+<label class="option"><input name="q4" type="radio" value="c"/> Tvinge hunden til å hilse</label>
+</div>
+<div class="question"><h3>5. Hvordan bør alenetrening bygges?</h3>
+<label class="option"><input name="q5" type="radio" value="a"/> Gradvis og med korte fravær</label>
+<label class="option"><input name="q5" type="radio" value="b"/> Med lange fravær første dag</label>
+<label class="option"><input name="q5" type="radio" value="c"/> Uten å følge med på hunden</label>
+</div>
+<div class="question"><h3>6. Hva er en god start på biltrening?</h3>
+<label class="option"><input name="q6" type="radio" value="a"/> Lang motorveitur</label>
+<label class="option"><input name="q6" type="radio" value="b"/> Utforske bilen uten kjøring</label>
+<label class="option"><input name="q6" type="radio" value="c"/> Hoppe over sikring</label>
+</div>
+<div class="question"><h3>7. Hvordan lærer man høflig atferd best?</h3>
+<label class="option"><input name="q7" type="radio" value="a"/> Ved å lære et tydelig alternativ</label>
+<label class="option"><input name="q7" type="radio" value="b"/> Kun ved å si nei</label>
+<label class="option"><input name="q7" type="radio" value="c"/> Ved å ignorere all trening</label>
+</div>
+<div class="question"><h3>8. Hva kjennetegner en balansert hundehverdag?</h3>
+<label class="option"><input name="q8" type="radio" value="a"/> Bare fysisk aktivitet</label>
+<label class="option"><input name="q8" type="radio" value="b"/> Aktivitet, mental stimulering, kontakt og hvile</label>
+<label class="option"><input name="q8" type="radio" value="c"/> Ingen pauser</label>
+</div>
+<div class="question"><h3>9. Hva er viktigst i 30-dagers planen?</h3>
+<label class="option"><input name="q9" type="radio" value="a"/> Perfekte dager</label>
+<label class="option"><input name="q9" type="radio" value="b"/> Små forbedringer over tid</label>
+<label class="option"><input name="q9" type="radio" value="c"/> Lange økter hver dag</label>
+</div>
+<button class="btn btn-primary" type="submit">Se resultatet</button>
+</form>
+<div class="quiz-result" id="quizResult"></div>
+<div class="certificate" id="certificate">
+<div style="font-size:52px">🏆</div>
+<h2>Modul 6 fullført</h2>
+<p>Gratulerer! Du har fullført <strong>Hverdagsliv og gode vaner</strong> og bestått modulquizen.</p>
+<p>Du har nå verktøyene til å skape en tryggere, roligere og mer balansert hundehverdag.</p>
+<a class="btn btn-primary" href="hundeakademiet_ny.html">Tilbake til akademiet</a>
+</div>
+</section>
+</section>
+</div>
+</main>
+<footer>
+<div class="container footer">
+<div><strong>Hundene Våre Akademiet</strong><p>Kunnskap, trygghet og glede for hele hundelivet.</p></div>
+<div><a href="hundeakademiet_ny.html" style="color:#fff;font-weight:800">Tilbake til akademiet</a></div>
+</div>
+</footer>
+<script>
+const key = "module6CompletedLessons";
+let completed = JSON.parse(localStorage.getItem(key) || "[]");
+
+function updateProgress(){
+  const unique = [...new Set(completed.map(Number))].filter(n => n >= 1 && n <= 10);
+  completed = unique;
+  localStorage.setItem(key, JSON.stringify(completed));
+
+  const percent = Math.round((completed.length / 10) * 100);
+  document.getElementById("progressText").textContent = `${completed.length} av 10 leksjoner fullført`;
+  document.getElementById("progressFill").style.width = `${percent}%`;
+
+  document.querySelectorAll("[data-complete]").forEach(btn => {
+    const id = Number(btn.dataset.complete);
+    if(completed.includes(id)){
+      btn.textContent = "✓ Leksjonen er fullført";
+      btn.classList.add("done");
+    } else {
+      btn.textContent = "Marker leksjonen som fullført";
+      btn.classList.remove("done");
+    }
+  });
+
+  document.querySelectorAll("#lessonNav a[data-lesson]").forEach(link => {
+    const id = Number(link.dataset.lesson);
+    link.classList.toggle("done", completed.includes(id));
+  });
+}
+
+document.querySelectorAll("[data-complete]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const id = Number(btn.dataset.complete);
+    if(completed.includes(id)){
+      completed = completed.filter(n => n !== id);
+    } else {
+      completed.push(id);
+    }
+    updateProgress();
+  });
+});
+
+document.getElementById("quizForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const answers = {q1:"b",q2:"a",q3:"a",q4:"b",q5:"a",q6:"b",q7:"a",q8:"b",q9:"b"};
+  let score = 0;
+  let answered = 0;
+
+  Object.entries(answers).forEach(([name, correct]) => {
+    const selected = document.querySelector(`input[name="${name}"]:checked`);
+    if(selected){
+      answered++;
+      if(selected.value === correct) score++;
+    }
+  });
+
+  const result = document.getElementById("quizResult");
+  result.style.display = "block";
+
+  if(answered < 9){
+    result.textContent = "Du må svare på alle spørsmålene før du kan levere quizen.";
+    return;
+  }
+
+  if(score >= 8){
+    result.textContent = `Gratulerer! Du fikk ${score} av 9 riktige og har bestått modulquizen.`;
+    document.getElementById("certificate").style.display = "block";
+    localStorage.setItem("academyQuizDone", Math.max(Number(localStorage.getItem("academyQuizDone") || 0), 6));
+    localStorage.setItem("academyModulesDone", Math.max(Number(localStorage.getItem("academyModulesDone") || 0), 6));
+    localStorage.setItem("module6QuizPassed", "true");
+  } else {
+    result.textContent = `Du fikk ${score} av 9 riktige. Les gjerne gjennom leksjonene én gang til og prøv igjen.`;
+    document.getElementById("certificate").style.display = "none";
+  }
+});
+
+if(localStorage.getItem("module6QuizPassed") === "true"){
+  document.getElementById("certificate").style.display = "block";
+}
+
+updateProgress();
+</script>
+</body>
+</html>
