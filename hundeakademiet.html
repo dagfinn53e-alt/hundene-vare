@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modul 7 – Aktivisering, lek og mental stimulering | Hundene Våre Akademiet</title>
-<meta name="description" content="Modul 7 i Hundene Våre Akademiet: aktivisering, lek, nesearbeid, problemløsning, berikelse og et 30-dagers aktivitetsprogram.">
+<title>Modul 8 – Helse, stell og førstehjelp | Hundene Våre Akademiet</title>
+<meta name="description" content="Modul 8 i Hundene Våre Akademiet: daglig helsesjekk, pels, klør, tenner, ører, øyne, ernæring, sykdomstegn, førstehjelp og 30-dagers helseplan.">
 <style>
 :root{
   --green:#0f5b35;--green-dark:#0a4026;--green-soft:#eaf5ed;
@@ -61,13 +61,14 @@ h1{font-size:clamp(38px,5vw,66px);line-height:1.05;letter-spacing:-.04em;margin:
 .lesson p{margin:0 0 14px;color:#344138}
 .lesson ul{margin:8px 0 16px;padding-left:22px}
 .lesson li{margin-bottom:8px}
-.fact,.tip,.warning,.remember,.task{border-radius:16px;padding:17px 18px;margin:18px 0}
+.fact,.tip,.warning,.remember,.task,.emergency{border-radius:16px;padding:17px 18px;margin:18px 0}
 .fact{background:#eef5fb;border-left:5px solid var(--blue)}
 .tip{background:#eef8f1;border-left:5px solid var(--green)}
 .warning{background:#fff0f0;border-left:5px solid var(--red)}
 .remember{background:#fff8e9;border-left:5px solid var(--gold)}
 .task{background:#f3f0fb;border-left:5px solid var(--purple)}
-.fact strong,.tip strong,.warning strong,.remember strong,.task strong{display:block;margin-bottom:5px}
+.emergency{background:#fff4f4;border:2px solid #d85b5b}
+.fact strong,.tip strong,.warning strong,.remember strong,.task strong,.emergency strong{display:block;margin-bottom:5px}
 .lesson-footer{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
 .complete-btn{border:none;background:var(--green);color:#fff;border-radius:12px;padding:11px 16px;font-weight:800;cursor:pointer}
 .complete-btn.done{background:#6d7a71}
@@ -81,6 +82,9 @@ h1{font-size:clamp(38px,5vw,66px);line-height:1.05;letter-spacing:-.04em;margin:
 .quiz-result{display:none;margin-top:18px;padding:16px;border-radius:14px;background:var(--green-soft);font-weight:800;color:var(--green-dark)}
 .certificate{display:none;text-align:center;background:linear-gradient(145deg,#fff9e9,#fff);border:2px solid #e4c777;border-radius:24px;padding:30px;margin-top:22px}
 .certificate h2{font-family:Georgia,serif;font-size:34px;margin:0 0 10px;color:#70551a}
+.sourcebox{background:#f7f9f7;border:1px solid var(--line);border-radius:18px;padding:20px}
+.sourcebox h3{margin-top:0;color:var(--green-dark)}
+.sourcebox li{margin-bottom:7px}
 footer{background:var(--green-dark);color:#dce9df}
 .footer{padding:30px 0;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 @media(max-width:900px){.hero-grid{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.sidebar{position:static}}
@@ -90,13 +94,13 @@ footer{background:var(--green-dark);color:#dce9df}
 </head>
 <body>
 
-<div class="topbar">🐾 Modul 7 – aktivitet skal gi mestring, glede og balanse.</div>
+<div class="topbar">🐾 Modul 8 – lær å oppdage endringer tidlig og handle trygt.</div>
 
 <header>
   <div class="container nav">
     <a class="brand" href="hundeakademiet_ny.html">
       <span class="logo">🐾</span>
-      <span>Hundene Våre Akademiet<small>Modul 7 – Aktivisering, lek og mental stimulering</small></span>
+      <span>Hundene Våre Akademiet<small>Modul 8 – Helse, stell og førstehjelp</small></span>
     </a>
     <nav class="navlinks">
       <a href="hundeakademiet_ny.html">← Akademiet</a>
@@ -111,23 +115,23 @@ footer{background:var(--green-dark);color:#dce9df}
   <div class="container">
     <div class="hero-grid">
       <div>
-        <span class="badge">🎓 MODUL 7</span>
-        <h1>Aktivisering, lek og mental stimulering</h1>
-        <p class="lead">Her lærer du hvordan du gir hunden meningsfulle aktiviteter gjennom lek, nesearbeid, problemløsning, berikelse og trygg mestring – uten å skape unødvendig stress.</p>
+        <span class="badge">🎓 MODUL 8</span>
+        <h1>Helse, stell og førstehjelp</h1>
+        <p class="lead">I denne modulen lærer du å følge med på hundens helse, gjøre nødvendig stell, kjenne igjen viktige faresignaler og gi trygg førstehjelp mens du kontakter veterinær.</p>
         <div class="actions">
           <a class="btn btn-primary" href="#leksjon1">Start første leksjon</a>
           <a class="btn btn-light" href="hundeakademiet_ny.html">← Tilbake til Hundeakademiet</a>
         </div>
       </div>
       <div class="hero-card">
-        <div class="dog">🎾</div>
-        <p>Den beste aktiviteten er den som passer hundens alder, helse, personlighet og dagsform.</p>
+        <div class="dog">🩺</div>
+        <p>Du kjenner hunden best. Små endringer i matlyst, energi, pust, gange eller atferd kan være viktige.</p>
       </div>
     </div>
 
     <div class="progress-wrap">
       <div class="progress-head">
-        <strong>Din fremdrift i modul 7</strong>
+        <strong>Din fremdrift i modul 8</strong>
         <span id="progressText">0 av 10 leksjoner fullført</span>
       </div>
       <div class="track"><div class="fill" id="progressFill"></div></div>
@@ -140,15 +144,15 @@ footer{background:var(--green-dark);color:#dce9df}
   <aside class="sidebar">
     <h2>Innhold i modulen</h2>
     <nav class="lesson-nav" id="lessonNav">
-      <a href="#leksjon1" data-lesson="1"><span>1</span> Hvorfor aktivisering?</a>
-      <a href="#leksjon2" data-lesson="2"><span>2</span> Lek som samarbeid</a>
-      <a href="#leksjon3" data-lesson="3"><span>3</span> Nesearbeid</a>
-      <a href="#leksjon4" data-lesson="4"><span>4</span> Problemløsning</a>
-      <a href="#leksjon5" data-lesson="5"><span>5</span> Berikelse hjemme</a>
-      <a href="#leksjon6" data-lesson="6"><span>6</span> Kroppskontroll</a>
-      <a href="#leksjon7" data-lesson="7"><span>7</span> Tilpasset aktivitet</a>
-      <a href="#leksjon8" data-lesson="8"><span>8</span> Unngå overstimulering</a>
-      <a href="#leksjon9" data-lesson="9"><span>9</span> 30-dagers program</a>
+      <a href="#leksjon1" data-lesson="1"><span>1</span> Daglig helsesjekk</a>
+      <a href="#leksjon2" data-lesson="2"><span>2</span> Pels og hud</a>
+      <a href="#leksjon3" data-lesson="3"><span>3</span> Klør og poter</a>
+      <a href="#leksjon4" data-lesson="4"><span>4</span> Tenner og munn</a>
+      <a href="#leksjon5" data-lesson="5"><span>5</span> Ører og øyne</a>
+      <a href="#leksjon6" data-lesson="6"><span>6</span> Ernæring og vekt</a>
+      <a href="#leksjon7" data-lesson="7"><span>7</span> Forebyggende helse</a>
+      <a href="#leksjon8" data-lesson="8"><span>8</span> Førstehjelp</a>
+      <a href="#leksjon9" data-lesson="9"><span>9</span> 30-dagers helseplan</a>
       <a href="#leksjon10" data-lesson="10"><span>10</span> Oppsummering</a>
       <a href="#quiz"><span>✓</span> Modulquiz</a>
     </nav>
@@ -157,234 +161,263 @@ footer{background:var(--green-dark);color:#dce9df}
   <section class="content">
 
     <article class="lesson" id="leksjon1">
-      <div class="lesson-header"><div class="lesson-icon">🧠</div><div><span class="badge">LEKSJON 1</span><h2>Hvorfor trenger hunden aktivisering?</h2></div></div>
-      <p>Hunder trenger mer enn fysisk mosjon. Mental stimulering, problemløsning, snusing og samarbeid kan bidra til bedre trivsel og en mer balansert hverdag.</p>
-      <h3>Gode former for aktivisering</h3>
+      <div class="lesson-header"><div class="lesson-icon">🔎</div><div><span class="badge">LEKSJON 1</span><h2>Daglig helsesjekk</h2></div></div>
+      <p>En kort daglig sjekk gjør det lettere å oppdage endringer tidlig. Se på hele hunden, men legg særlig merke til forskjeller fra det som er normalt for akkurat din hund.</p>
+      <h3>Dette følger du med på</h3>
       <ul>
-        <li>Snusing og søk.</li>
-        <li>Enkle treningsoppgaver.</li>
-        <li>Problemløsning.</li>
-        <li>Lek med eier.</li>
-        <li>Miljøutforskning.</li>
+        <li>Matlyst og drikkelyst.</li>
+        <li>Energi, humør og søvn.</li>
+        <li>Pust og hoste.</li>
+        <li>Gange, halting og stivhet.</li>
+        <li>Urin og avføring.</li>
+        <li>Kuler, sår, hevelser eller ømhet.</li>
+        <li>Endringer i vekt eller kroppsform.</li>
       </ul>
-      <div class="fact"><strong>💡 Visste du?</strong>Mental aktivitet kan være like krevende som fysisk aktivitet, særlig når hunden må bruke nese, konsentrasjon og selvkontroll.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Legg inn én aktivitet som krever tenking, ikke bare bevegelse.</div>
-      <div class="lesson-footer"><span class="small">Mål: Forstå hvorfor variert aktivisering er viktig.</span><button class="complete-btn" data-complete="1">Marker leksjonen som fullført</button></div>
+      <div class="tip"><strong>✅ Praktisk tips</strong>Gjør helsesjekken til en rolig kosestund. Tren på at hunden frivillig lar deg se på poter, ører, øyne og munn.</div>
+      <div class="warning"><strong>⚠️ Kontakt veterinær</strong>Ved tydelig smerte, pustevansker, kollaps, gjentatt oppkast, blod, alvorlig slapphet eller rask forverring.</div>
+      <div class="task"><strong>🐾 Dagens oppgave</strong>Lag en kort beskrivelse av hvordan hunden er når den er frisk: appetitt, energi, avføring, pust og bevegelse.</div>
+      <div class="lesson-footer"><span class="small">Mål: Oppdage viktige endringer tidlig.</span><button class="complete-btn" data-complete="1">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon2">
-      <div class="lesson-header"><div class="lesson-icon">🎾</div><div><span class="badge">LEKSJON 2</span><h2>Lek som samarbeid</h2></div></div>
-      <p>Lek kan styrke relasjonen mellom hund og eier. God lek skal være trygg, frivillig og lett å avslutte.</p>
-      <h3>Slik leker du godt</h3>
+      <div class="lesson-header"><div class="lesson-icon">🧴</div><div><span class="badge">LEKSJON 2</span><h2>Pels og hud</h2></div></div>
+      <p>Pelsstell handler både om utseende og helse. Regelmessig børsting gir deg samtidig mulighet til å oppdage floker, sår, irritasjon, parasitter og kuler.</p>
+      <h3>God pelspleie</h3>
       <ul>
-        <li>Velg en leke hunden liker.</li>
-        <li>La leken starte og stoppe rolig.</li>
-        <li>Bytt mellom aktivitet og korte pauser.</li>
-        <li>Tren på «slipp» med bytte, ikke kamp.</li>
-        <li>Avslutt før hunden blir for oppjaget.</li>
+        <li>Bruk børste og kam som passer pelstypen.</li>
+        <li>Arbeid i små partier helt ned mot huden.</li>
+        <li>Sjekk ekstra godt bak ører, i armhuler, lyske og rundt halsbånd.</li>
+        <li>Hold pelsen tørr og ren mellom tær og hudfolder.</li>
+        <li>Bruk hundesjampo ved behov, ikke sterke menneskeprodukter.</li>
       </ul>
-      <div class="tip"><strong>✅ Praktisk tips</strong>Bruk gjerne leken som belønning i trening.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Ha en kort lekeøkt med to rolige pauser underveis.</div>
-      <div class="lesson-footer"><span class="small">Mål: Bruke lek til samarbeid og belønning.</span><button class="complete-btn" data-complete="2">Marker leksjonen som fullført</button></div>
+      <div class="remember"><strong>📌 Floker kan gjøre vondt</strong>Tette floker trekker i huden og kan skjule sår eller fuktig hud. Vanskelige floker bør håndteres skånsomt, eventuelt av hundefrisør eller veterinær.</div>
+      <div class="warning"><strong>⚠️ Tegn som bør undersøkes</strong>Vedvarende kløe, hårløse områder, vond lukt, væskende hud, mange skorper eller raskt voksende kuler.</div>
+      <div class="task"><strong>🐾 Dagens oppgave</strong>Børst hunden systematisk og noter områder som lett floker seg eller virker ømme.</div>
+      <div class="lesson-footer"><span class="small">Mål: Holde hud og pels ren, frisk og flokefri.</span><button class="complete-btn" data-complete="2">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon3">
-      <div class="lesson-header"><div class="lesson-icon">👃</div><div><span class="badge">LEKSJON 3</span><h2>Nesearbeid og søk</h2></div></div>
-      <p>Nesearbeid passer de fleste hunder og kan enkelt tilpasses både valper, voksne og eldre hunder.</p>
-      <h3>Enkle søksøvelser</h3>
+      <div class="lesson-header"><div class="lesson-icon">🐾</div><div><span class="badge">LEKSJON 3</span><h2>Klør og poter</h2></div></div>
+      <p>For lange klør kan påvirke hvordan hunden står og beveger seg. Potene bør også sjekkes etter turer, særlig ved varme, kulde, veisalt, skarpt underlag og snø.</p>
+      <h3>Trygg kloklipp</h3>
       <ul>
-        <li>Strø godbiter i gresset.</li>
-        <li>Gjem godbiter i rommet.</li>
-        <li>La hunden finne en kjent leke.</li>
-        <li>Bruk esker eller håndklær.</li>
-        <li>Lag korte spor ute.</li>
+        <li>Tren først på berøring av pote og kloklipper.</li>
+        <li>Klipp små biter om gangen.</li>
+        <li>Stopp før nerven og blodåren i kloen.</li>
+        <li>Bruk godt lys og skarpt verktøy.</li>
+        <li>Be fagperson vise deg teknikken dersom du er usikker.</li>
       </ul>
-      <div class="remember"><strong>📌 Husk dette</strong>Start lett. Hunden skal forstå oppgaven og lykkes ofte.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Gjem fem godbiter i et rom og la hunden søke i eget tempo.</div>
-      <div class="lesson-footer"><span class="small">Mål: Kunne lage trygge og enkle søksoppgaver.</span><button class="complete-btn" data-complete="3">Marker leksjonen som fullført</button></div>
+      <div class="fact"><strong>💡 Mørke klør</strong>På mørke klør er nerven vanskeligere å se. Klipp svært lite om gangen og følg med på snittflaten.</div>
+      <div class="warning"><strong>⚠️ Hvis kloen blør</strong>Hold hunden rolig og legg fast, jevnt trykk med ren kompress. Kontakt veterinær dersom blødningen ikke stanser eller kloen er revet.</div>
+      <div class="task"><strong>🐾 Dagens oppgave</strong>Undersøk alle poter, tredeputer, mellom tærne og ulveklør dersom hunden har dem.</div>
+      <div class="lesson-footer"><span class="small">Mål: Forebygge smertefulle klør og poteproblemer.</span><button class="complete-btn" data-complete="3">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon4">
-      <div class="lesson-header"><div class="lesson-icon">🧩</div><div><span class="badge">LEKSJON 4</span><h2>Problemløsning</h2></div></div>
-      <p>Problemløsning gir hunden mulighet til å prøve, feile og finne løsninger. Oppgaven må være trygg og ikke så vanskelig at hunden gir opp.</p>
-      <h3>Gode oppgaver</h3>
+      <div class="lesson-header"><div class="lesson-icon">🦷</div><div><span class="badge">LEKSJON 4</span><h2>Tenner og munnhygiene</h2></div></div>
+      <p>Tannproblemer er vanlige hos hund. Daglig tannpuss med tannkrem beregnet for hund er den viktigste hjemmevanen for å redusere plakk.</p>
+      <h3>Slik bygger du tannpuss</h3>
       <ul>
-        <li>Godbiter i en pappeske.</li>
-        <li>Mat under lette kopper.</li>
-        <li>Rullet håndkle med godbiter.</li>
-        <li>Enkel aktivitetsleke.</li>
-        <li>Velge riktig hånd.</li>
+        <li>Start med å berøre leppene kort.</li>
+        <li>La hunden bli kjent med tannkrem for hund.</li>
+        <li>Puss noen få tenner først.</li>
+        <li>Arbeid gradvis mot utsiden av alle tennene.</li>
+        <li>Belønn rolig samarbeid.</li>
       </ul>
-      <div class="warning"><strong>⚠️ Viktig</strong>Følg alltid med når hunden bruker papp, stoff eller andre løse materialer.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Lag én hjemmelaget problemløsningsoppgave.</div>
-      <div class="lesson-footer"><span class="small">Mål: Skape mestring gjennom enkle utfordringer.</span><button class="complete-btn" data-complete="4">Marker leksjonen som fullført</button></div>
+      <div class="warning"><strong>⚠️ Ikke bruk mennesketannkrem</strong>Produkter for mennesker kan inneholde stoffer hunden ikke bør svelge.</div>
+      <div class="remember"><strong>📌 Tegn på tannproblemer</strong>Dårlig ånde, rødt eller blødende tannkjøtt, mye tannstein, sikling, smerter ved tygging, løs tann eller at hunden bare tygger på én side.</div>
+      <div class="task"><strong>🐾 Dagens oppgave</strong>Se forsiktig på fortenner, hjørnetenner og jeksler på begge sider. Noter rødhet, tannstein eller lukt.</div>
+      <div class="lesson-footer"><span class="small">Mål: Etablere god munnhygiene og oppdage problemer.</span><button class="complete-btn" data-complete="4">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon5">
-      <div class="lesson-header"><div class="lesson-icon">🏡</div><div><span class="badge">LEKSJON 5</span><h2>Berikelse i hjemmet</h2></div></div>
-      <p>Berikelse betyr å gi hunden mulighet til naturlig atferd som å snuse, lete, tygge, undersøke og bruke sansene.</p>
-      <h3>Enkle ideer</h3>
+      <div class="lesson-header"><div class="lesson-icon">👂</div><div><span class="badge">LEKSJON 5</span><h2>Ører og øyne</h2></div></div>
+      <p>Friske ører og øyne skal normalt være uten tydelig irritasjon, kraftig lukt, smerte eller store mengder sekret.</p>
+      <h3>Ører</h3>
       <ul>
-        <li>Fôr i aktivitetsleke.</li>
-        <li>Trygg tyggeaktivitet.</li>
-        <li>Snusematte.</li>
-        <li>Variasjon i underlag og miljø.</li>
-        <li>Rolige utsiktspunkter og hvileplasser.</li>
+        <li>Se etter rødhet, hevelse, lukt og sekret.</li>
+        <li>Ikke stikk bomullspinner ned i øregangen.</li>
+        <li>Bruk bare anbefalt ørerens.</li>
+        <li>Kontakt veterinær ved smerte, kraftig hoderisting eller vedvarende kløe.</li>
       </ul>
-      <div class="tip"><strong>✅ Praktisk tips</strong>Bruk deler av hundens vanlige dagsrasjon i aktivitetene.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Bytt ut ett vanlig måltid med en trygg berikelsesaktivitet.</div>
-      <div class="lesson-footer"><span class="small">Mål: Gjøre hverdagen mer variert og meningsfull.</span><button class="complete-btn" data-complete="5">Marker leksjonen som fullført</button></div>
+      <h3>Øyne</h3>
+      <ul>
+        <li>Se etter rødhet, kniping, uklarhet og mye væske.</li>
+        <li>Tørk forsiktig rundt øyet med ren, fuktig kompress.</li>
+        <li>Ikke bruk tilfeldige øyedråper.</li>
+        <li>Øyesmerter og skader bør vurderes raskt.</li>
+      </ul>
+      <div class="warning"><strong>⚠️ Øyne kan haste</strong>Plutselig kniping, kraftig rødhet, skade, fremmedlegeme eller uklart øye bør vurderes av veterinær samme dag.</div>
+      <div class="task"><strong>🐾 Dagens oppgave</strong>Sammenlign høyre og venstre øre og øye. Forskjeller mellom sidene kan være nyttige å oppdage.</div>
+      <div class="lesson-footer"><span class="small">Mål: Kjenne igjen tegn på øre- og øyeproblemer.</span><button class="complete-btn" data-complete="5">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon6">
-      <div class="lesson-header"><div class="lesson-icon">🐾</div><div><span class="badge">LEKSJON 6</span><h2>Kroppskontroll og balanse</h2></div></div>
-      <p>Enkle øvelser for kroppskontroll kan hjelpe hunden å bli mer bevisst på egne bevegelser.</p>
-      <h3>Trygge øvelser</h3>
+      <div class="lesson-header"><div class="lesson-icon">🥣</div><div><span class="badge">LEKSJON 6</span><h2>Ernæring, vann og vekt</h2></div></div>
+      <p>Riktig mengde fullverdig fôr, tilgang til friskt vann og jevn kontroll av vekten er grunnleggende for helse.</p>
+      <h3>Følg med på kroppshold</h3>
       <ul>
-        <li>Gå rolig over ulike underlag.</li>
-        <li>Sette frambeina på en lav plattform.</li>
-        <li>Gå mellom kjegler.</li>
-        <li>Rygging i små steg.</li>
-        <li>Rolig vending rundt en gjenstand.</li>
+        <li>Ribbena skal kunne kjennes uten hardt trykk.</li>
+        <li>Midjen bør være synlig ovenfra hos de fleste hunder.</li>
+        <li>Buken bør trekke seg noe opp bak brystkassen.</li>
+        <li>Brå vektøkning eller vekttap bør undersøkes.</li>
+        <li>Juster godbiter inn i den totale dagsrasjonen.</li>
       </ul>
-      <div class="warning"><strong>⚠️ Tilpass alltid</strong>Unngå glatte underlag, høye hopp og brå bevegelser, spesielt for valper, eldre hunder og hunder med smerter.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Lag en enkel bane med tre trygge elementer.</div>
-      <div class="lesson-footer"><span class="small">Mål: Bedre trygghet og kroppskontroll.</span><button class="complete-btn" data-complete="6">Marker leksjonen som fullført</button></div>
+      <div class="tip"><strong>✅ Praktisk tips</strong>Vei hunden regelmessig på samme vekt og omtrent samme tidspunkt. Små endringer er lettere å se over tid.</div>
+      <div class="warning"><strong>⚠️ Giftige matvarer</strong>Ikke gi hunden blant annet sjokolade, druer eller rosiner, løk, hvitløk i større mengder, produkter med xylitol eller alkohol. Ved mulig forgiftning: kontakt veterinær raskt og ikke fremkall oppkast uten beskjed.</div>
+      <div class="task"><strong>🐾 Dagens oppgave</strong>Vei hunden eller vurder kroppsholdet, og skriv ned dagens fôrmengde og godbiter.</div>
+      <div class="lesson-footer"><span class="small">Mål: Holde stabil, sunn vekt og god ernæring.</span><button class="complete-btn" data-complete="6">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon7">
-      <div class="lesson-header"><div class="lesson-icon">🎯</div><div><span class="badge">LEKSJON 7</span><h2>Tilpass aktivitet til hunden</h2></div></div>
-      <p>Aktivisering må passe hundens alder, helse, raseegenskaper, personlighet og dagsform.</p>
-      <h3>Ta hensyn til</h3>
+      <div class="lesson-header"><div class="lesson-icon">🛡️</div><div><span class="badge">LEKSJON 7</span><h2>Forebyggende helse</h2></div></div>
+      <p>Forebyggende helse bør tilpasses hundens alder, livsstil, reiser, sykdomsrisiko og veterinærens anbefalinger.</p>
+      <h3>Viktige områder</h3>
       <ul>
-        <li>Alder og fysisk kapasitet.</li>
-        <li>Motivasjon og interesser.</li>
-        <li>Stressnivå.</li>
-        <li>Tidligere erfaringer.</li>
-        <li>Behov for pauser.</li>
+        <li>Regelmessige helsekontroller.</li>
+        <li>Vaksiner etter anbefalt program.</li>
+        <li>Beskyttelse mot flått og andre parasitter ved behov.</li>
+        <li>Oppfølging av tenner, vekt og bevegelse.</li>
+        <li>Dokumentasjon av medisiner, allergier og tidligere sykdommer.</li>
       </ul>
-      <div class="fact"><strong>💡 Individet først</strong>To hunder av samme rase kan ha svært ulike behov.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Skriv ned tre aktiviteter hunden liker og én den helst unngår.</div>
-      <div class="lesson-footer"><span class="small">Mål: Velge aktiviteter som passer individet.</span><button class="complete-btn" data-complete="7">Marker leksjonen som fullført</button></div>
+      <div class="remember"><strong>📌 Flåttsjekk</strong>Gå gjennom hodet, halsen, armhulene, lysken og mellom tærne etter tur i flåttområder.</div>
+      <div class="fact"><strong>💡 Reiseregler kan endres</strong>Undersøk alltid gjeldende regler for vaksiner, ID-merking, pass og parasittbehandling før utenlandsreise.</div>
+      <div class="task"><strong>🐾 Dagens oppgave</strong>Samle vaksinasjonskort, forsikringsinformasjon, veterinærnummer og medisiner på ett fast sted.</div>
+      <div class="lesson-footer"><span class="small">Mål: Lage en plan for forebyggende helsehjelp.</span><button class="complete-btn" data-complete="7">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon8">
-      <div class="lesson-header"><div class="lesson-icon">🌙</div><div><span class="badge">LEKSJON 8</span><h2>Unngå overstimulering</h2></div></div>
-      <p>Mer aktivitet er ikke alltid bedre. For mange inntrykk eller for intens lek kan gjøre hunden mer urolig.</p>
-      <h3>Tegn på at det blir for mye</h3>
+      <div class="lesson-header"><div class="lesson-icon">🚑</div><div><span class="badge">LEKSJON 8</span><h2>Førstehjelp og akutte situasjoner</h2></div></div>
+      <p>Førstehjelp erstatter ikke veterinærbehandling. Målet er å sikre området, vurdere hunden, begrense skade og få profesjonell hjelp raskt.</p>
+      <div class="emergency"><strong>🚨 Ring veterinær umiddelbart ved</strong>Pustevansker, kollaps eller bevisstløshet, store blødninger, alvorlige sår, påkjørsel, kramper, mulig forgiftning, oppblåst buk med uro eller brekninger, heteslag, alvorlig øyeskade eller sterke smerter.</div>
+      <h3>Husk rekkefølgen</h3>
       <ul>
-        <li>Vanskelig for å roe seg.</li>
-        <li>Overdreven biting eller hopping.</li>
-        <li>Pesing uten fysisk grunn.</li>
-        <li>Lav konsentrasjon.</li>
-        <li>Urolig søvn.</li>
+        <li>Sikre stedet slik at ingen blir skadet.</li>
+        <li>Vær forsiktig: en hund med smerter kan bite.</li>
+        <li>Sjekk om hunden reagerer og puster.</li>
+        <li>Kontakt veterinær og følg instruksjonene.</li>
+        <li>Hold hunden rolig og varm, men ikke overopphetet.</li>
+        <li>Transporter skånsomt.</li>
       </ul>
-      <div class="remember"><strong>📌 God balanse</strong>Veksle mellom aktivitet, snusing, rolige oppgaver og hvile.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Legg inn en rolig dag etter en krevende aktivitet.</div>
-      <div class="lesson-footer"><span class="small">Mål: Gjenkjenne behovet for pauser og restitusjon.</span><button class="complete-btn" data-complete="8">Marker leksjonen som fullført</button></div>
+      <h3>Blødning</h3>
+      <p>Legg en ren kompress eller klut direkte mot såret og hold jevnt trykk. Ikke løft for å sjekke hele tiden. Ved kraftig eller vedvarende blødning må hunden raskt til veterinær.</p>
+      <h3>Heteslag</h3>
+      <p>Flytt hunden til et kjøligere sted, start forsiktig nedkjøling med svalt vann og luftbevegelse, og kontakt veterinær umiddelbart. Ikke bruk isvann.</p>
+      <h3>Forgiftning</h3>
+      <p>Fjern hunden fra stoffet, ta vare på emballasje eller bilde av produktet, og ring veterinær. Ikke gi mat, melk, salt eller fremkall oppkast uten tydelig beskjed.</p>
+      <h3>Kramper</h3>
+      <p>Flytt gjenstander unna, demp lys og lyd, ta tiden og ikke putt hendene i munnen. Kontakt veterinær, særlig ved første anfall, langvarig anfall eller gjentatte anfall.</p>
+      <div class="remember"><strong>📌 Førstehjelpsutstyr</strong>Ha telefonnummer til veterinærvakt, kompresser, elastisk bandasje, tape, saks med butt spiss, hansker, pinsett, saltvann, håndkle og et teppe tilgjengelig.</div>
+      <div class="task"><strong>🐾 Dagens oppgave</strong>Lag eller kontroller førstehjelpsskrinet og lagre nummeret til nærmeste veterinærvakt på telefonen.</div>
+      <div class="lesson-footer"><span class="small">Mål: Handle rolig og riktig frem til veterinær overtar.</span><button class="complete-btn" data-complete="8">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon9">
-      <div class="lesson-header"><div class="lesson-icon">📅</div><div><span class="badge">LEKSJON 9</span><h2>30-dagers aktivitetsprogram</h2></div></div>
-      <p>Programmet gir variasjon uten at hver dag blir krevende.</p>
+      <div class="lesson-header"><div class="lesson-icon">📅</div><div><span class="badge">LEKSJON 9</span><h2>30-dagers helse- og stellplan</h2></div></div>
+      <p>Planen gjør helsekontroll og stell til en enkel del av hverdagen.</p>
       <table class="plan">
         <thead><tr><th>Dager</th><th>Fokus</th><th>Oppgave</th></tr></thead>
         <tbody>
-          <tr><td>1–3</td><td>Snusing</td><td>Godbittsøk inne og ute.</td></tr>
-          <tr><td>4–6</td><td>Lek</td><td>Korte lekeøkter med pauser.</td></tr>
-          <tr><td>7–9</td><td>Problemløsning</td><td>Enkle esker, kopper eller håndkle.</td></tr>
-          <tr><td>10–12</td><td>Berikelse</td><td>Server måltid på en ny måte.</td></tr>
-          <tr><td>13–15</td><td>Kroppskontroll</td><td>Trygg mini-bane hjemme.</td></tr>
-          <tr><td>16–18</td><td>Søk ute</td><td>Korte spor eller godbitsøk.</td></tr>
-          <tr><td>19–21</td><td>Samarbeid</td><td>Enkle triks og kontaktøvelser.</td></tr>
-          <tr><td>22–24</td><td>Valgfrihet</td><td>La hunden velge rute eller aktivitet.</td></tr>
-          <tr><td>25–27</td><td>Ro</td><td>Rolige tygge- og snuseaktiviteter.</td></tr>
-          <tr><td>28–30</td><td>Favoritter</td><td>Gjenta de tre beste aktivitetene.</td></tr>
+          <tr><td>1–3</td><td>Normaltilstand</td><td>Noter appetitt, energi, avføring, pust og bevegelse.</td></tr>
+          <tr><td>4–6</td><td>Håndtering</td><td>Tren rolig berøring av poter, ører, øyne og munn.</td></tr>
+          <tr><td>7–9</td><td>Pels og hud</td><td>Børst systematisk og undersøk huden.</td></tr>
+          <tr><td>10–12</td><td>Poter og klør</td><td>Sjekk tredeputer, tær og klolengde.</td></tr>
+          <tr><td>13–15</td><td>Tenner</td><td>Bygg opp daglig tannpuss i korte økter.</td></tr>
+          <tr><td>16–18</td><td>Ører og øyne</td><td>Sammenlign begge sider og noter endringer.</td></tr>
+          <tr><td>19–21</td><td>Vekt</td><td>Vei hunden og vurder kroppshold.</td></tr>
+          <tr><td>22–24</td><td>Forebygging</td><td>Kontroller vaksiner, parasittplan og helsekontroll.</td></tr>
+          <tr><td>25–27</td><td>Førstehjelp</td><td>Kontroller utstyr og nødnumre.</td></tr>
+          <tr><td>28–30</td><td>Helsejournal</td><td>Samle observasjoner og lag en fast månedsrutine.</td></tr>
         </tbody>
       </table>
-      <div class="tip"><strong>✅ Praktisk tips</strong>Før en enkel aktivitetslogg og noter hva som gir ro, glede og mestring.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Velg startdato og tre aktiviteter du vil teste først.</div>
-      <div class="lesson-footer"><span class="small">Mål: Skape en variert og balansert aktivitetsplan.</span><button class="complete-btn" data-complete="9">Marker leksjonen som fullført</button></div>
+      <div class="tip"><strong>✅ Praktisk tips</strong>Ta månedlige bilder av tenner, kroppshold, hudforandringer eller kuler når dette er relevant. Bilder kan vise utvikling over tid.</div>
+      <div class="task"><strong>🐾 Dagens oppgave</strong>Velg en fast dag hver måned til full helsesjekk hjemme.</div>
+      <div class="lesson-footer"><span class="small">Mål: Gjøre helsearbeidet systematisk og oversiktlig.</span><button class="complete-btn" data-complete="9">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon10">
       <div class="lesson-header"><div class="lesson-icon">⭐</div><div><span class="badge">LEKSJON 10</span><h2>Oppsummering</h2></div></div>
-      <p>God aktivisering handler om variasjon, tilpasning og balanse. Målet er ikke å holde hunden opptatt hele tiden, men å gi meningsfulle oppgaver og nok hvile.</p>
+      <p>God helseoppfølging handler om å kjenne hundens normaltilstand, gjøre jevnlig stell, forebygge problemer og vite når veterinærhjelp er nødvendig.</p>
       <h3>Det viktigste fra modulen</h3>
       <ul>
-        <li>Kombiner fysisk og mental aktivitet.</li>
-        <li>Bruk lek til samarbeid.</li>
-        <li>La hunden bruke nesen.</li>
-        <li>Lag trygge problemløsningsoppgaver.</li>
-        <li>Gi mulighet til naturlig atferd.</li>
-        <li>Tilpass aktiviteten til individet.</li>
-        <li>Pass på tegn til overstimulering.</li>
-        <li>Prioriter pauser og hvile.</li>
+        <li>Følg med på små endringer i atferd og kropp.</li>
+        <li>Gjør håndtering til positiv trening.</li>
+        <li>Hold hud, pels, klør og poter i god stand.</li>
+        <li>Prioriter tannpuss og regelmessig tannkontroll.</li>
+        <li>Ta øye- og øresymptomer på alvor.</li>
+        <li>Hold oversikt over vekt, fôr og forebyggende behandling.</li>
+        <li>Ha veterinærnummer og førstehjelpsutstyr klart.</li>
+        <li>Ved akutte faresignaler: kontakt veterinær raskt.</li>
       </ul>
-      <div class="remember"><strong>📌 Modulens viktigste budskap</strong>Aktivisering skal gi glede, mestring og balanse – ikke bare mer fart.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Velg én aktivitet hunden liker, og gjør den til en fast ukentlig rutine.</div>
-      <div class="lesson-footer"><span class="small">Mål: Kunne planlegge trygg og variert aktivisering.</span><button class="complete-btn" data-complete="10">Marker leksjonen som fullført</button></div>
+      <div class="remember"><strong>📌 Modulens viktigste budskap</strong>Førstehjelp kjøper tid – veterinæren stiller diagnose og gir behandling.</div>
+      <div class="task"><strong>🐾 Dagens oppgave</strong>Velg de tre helserutinene du vil følge fast hver uke.</div>
+      <div class="lesson-footer"><span class="small">Mål: Være en trygg og oppmerksom hundeeier.</span><button class="complete-btn" data-complete="10">Marker leksjonen som fullført</button></div>
     </article>
 
     <section class="quiz" id="quiz">
-      <h2>📝 Modulquiz – Aktivisering, lek og mental stimulering</h2>
+      <h2>📝 Modulquiz – Helse, stell og førstehjelp</h2>
       <p>Svar på spørsmålene. Du trenger minst 8 av 9 riktige for å bestå.</p>
       <form id="quizForm">
-        <div class="question"><h3>1. Hva trenger hunden i tillegg til fysisk mosjon?</h3>
-          <label class="option"><input type="radio" name="q1" value="a"> Mental stimulering</label>
-          <label class="option"><input type="radio" name="q1" value="b"> Ingen pauser</label>
-          <label class="option"><input type="radio" name="q1" value="c"> Bare mer fart</label>
+        <div class="question"><h3>1. Hva er viktigst ved en daglig helsesjekk?</h3>
+          <label class="option"><input type="radio" name="q1" value="a"> Å sammenligne med hundens normaltilstand</label>
+          <label class="option"><input type="radio" name="q1" value="b"> Å vente til hunden blir svært syk</label>
+          <label class="option"><input type="radio" name="q1" value="c"> Bare å se på pelsen</label>
         </div>
-        <div class="question"><h3>2. Hva kjennetegner god lek?</h3>
-          <label class="option"><input type="radio" name="q2" value="a"> Den skal alltid være intens</label>
-          <label class="option"><input type="radio" name="q2" value="b"> Den er trygg, frivillig og lett å avslutte</label>
-          <label class="option"><input type="radio" name="q2" value="c"> Den må vare lenge</label>
+        <div class="question"><h3>2. Hvor bør man se ekstra etter floker?</h3>
+          <label class="option"><input type="radio" name="q2" value="a"> Bare på ryggen</label>
+          <label class="option"><input type="radio" name="q2" value="b"> Bak ører, i armhuler og lyske</label>
+          <label class="option"><input type="radio" name="q2" value="c"> Ingen steder</label>
         </div>
-        <div class="question"><h3>3. Hva er en enkel søksøvelse?</h3>
-          <label class="option"><input type="radio" name="q3" value="a"> Gjemme godbiter i rommet</label>
-          <label class="option"><input type="radio" name="q3" value="b"> Holde hunden helt passiv</label>
-          <label class="option"><input type="radio" name="q3" value="c"> Kun løpe fort</label>
+        <div class="question"><h3>3. Hvordan bør mørke klør klippes?</h3>
+          <label class="option"><input type="radio" name="q3" value="a"> Store biter om gangen</label>
+          <label class="option"><input type="radio" name="q3" value="b"> Små biter om gangen</label>
+          <label class="option"><input type="radio" name="q3" value="c"> Bare med vanlig saks</label>
         </div>
-        <div class="question"><h3>4. Hvordan bør problemløsning tilpasses?</h3>
-          <label class="option"><input type="radio" name="q4" value="a"> Så vanskelig som mulig</label>
-          <label class="option"><input type="radio" name="q4" value="b"> Slik at hunden kan lykkes</label>
-          <label class="option"><input type="radio" name="q4" value="c"> Uten tilsyn</label>
+        <div class="question"><h3>4. Hva skal brukes til tannpuss?</h3>
+          <label class="option"><input type="radio" name="q4" value="a"> Mennesketannkrem</label>
+          <label class="option"><input type="radio" name="q4" value="b"> Tannkrem beregnet for hund</label>
+          <label class="option"><input type="radio" name="q4" value="c"> Såpe</label>
         </div>
-        <div class="question"><h3>5. Hva betyr berikelse?</h3>
-          <label class="option"><input type="radio" name="q5" value="a"> Mulighet til naturlig atferd</label>
-          <label class="option"><input type="radio" name="q5" value="b"> Bare mer lyd og uro</label>
-          <label class="option"><input type="radio" name="q5" value="c"> Ingen variasjon</label>
+        <div class="question"><h3>5. Hva gjør du ved et plutselig smertefullt eller uklart øye?</h3>
+          <label class="option"><input type="radio" name="q5" value="a"> Venter flere uker</label>
+          <label class="option"><input type="radio" name="q5" value="b"> Kontakter veterinær raskt</label>
+          <label class="option"><input type="radio" name="q5" value="c"> Bruker tilfeldige øyedråper</label>
         </div>
-        <div class="question"><h3>6. Hva er viktig ved kroppskontrolløvelser?</h3>
-          <label class="option"><input type="radio" name="q6" value="a"> Høye hopp</label>
-          <label class="option"><input type="radio" name="q6" value="b"> Trygge underlag og tilpassede bevegelser</label>
-          <label class="option"><input type="radio" name="q6" value="c"> Mest mulig fart</label>
+        <div class="question"><h3>6. Hva er en god vane for vektkontroll?</h3>
+          <label class="option"><input type="radio" name="q6" value="a"> Regelmessig veiing og vurdering av kroppshold</label>
+          <label class="option"><input type="radio" name="q6" value="b"> Aldri å veie hunden</label>
+          <label class="option"><input type="radio" name="q6" value="c"> Bare å telle turer</label>
         </div>
-        <div class="question"><h3>7. Hva bør aktivitet tilpasses etter?</h3>
-          <label class="option"><input type="radio" name="q7" value="a"> Individets alder, helse og personlighet</label>
-          <label class="option"><input type="radio" name="q7" value="b"> Bare rase</label>
-          <label class="option"><input type="radio" name="q7" value="c"> Eierens tempo alene</label>
+        <div class="question"><h3>7. Hva bør du gjøre ved mulig forgiftning?</h3>
+          <label class="option"><input type="radio" name="q7" value="a"> Fremkalle oppkast uten råd</label>
+          <label class="option"><input type="radio" name="q7" value="b"> Kontakte veterinær og ta vare på produktinformasjonen</label>
+          <label class="option"><input type="radio" name="q7" value="c"> Gi salt</label>
         </div>
-        <div class="question"><h3>8. Hva kan være tegn på overstimulering?</h3>
-          <label class="option"><input type="radio" name="q8" value="a"> Vanskelig for å roe seg</label>
-          <label class="option"><input type="radio" name="q8" value="b"> God hvile</label>
-          <label class="option"><input type="radio" name="q8" value="c"> Rolig konsentrasjon</label>
+        <div class="question"><h3>8. Hva er riktig ved kraftig blødning?</h3>
+          <label class="option"><input type="radio" name="q8" value="a"> Jevnt direkte trykk og rask veterinærkontakt</label>
+          <label class="option"><input type="radio" name="q8" value="b"> Vaske lenge før man gjør noe annet</label>
+          <label class="option"><input type="radio" name="q8" value="c"> La hunden løpe</label>
         </div>
-        <div class="question"><h3>9. Hva er hovedmålet med aktivitet?</h3>
-          <label class="option"><input type="radio" name="q9" value="a"> Mest mulig fart</label>
-          <label class="option"><input type="radio" name="q9" value="b"> Glede, mestring og balanse</label>
-          <label class="option"><input type="radio" name="q9" value="c"> Ingen hvile</label>
+        <div class="question"><h3>9. Hva er førstehjelpens hovedoppgave?</h3>
+          <label class="option"><input type="radio" name="q9" value="a"> Erstatte veterinærbehandling</label>
+          <label class="option"><input type="radio" name="q9" value="b"> Begrense skade og kjøpe tid frem til veterinærhjelp</label>
+          <label class="option"><input type="radio" name="q9" value="c"> Stille endelig diagnose hjemme</label>
         </div>
         <button class="btn btn-primary" type="submit">Se resultatet</button>
       </form>
       <div class="quiz-result" id="quizResult"></div>
       <div class="certificate" id="certificate">
         <div style="font-size:52px">🏆</div>
-        <h2>Modul 7 fullført</h2>
-        <p>Gratulerer! Du har fullført <strong>Aktivisering, lek og mental stimulering</strong> og bestått modulquizen.</p>
-        <p>Du kan nå planlegge trygg, variert og balansert aktivisering for hunden.</p>
+        <h2>Modul 8 fullført</h2>
+        <p>Gratulerer! Du har fullført <strong>Helse, stell og førstehjelp</strong> og bestått modulquizen.</p>
+        <p>Du har nå kunnskap om daglig helseoppfølging, stell, faresignaler og trygg førstehjelp.</p>
         <a class="btn btn-primary" href="hundeakademiet_ny.html">Tilbake til akademiet</a>
       </div>
+    </section>
+
+    <section class="sourcebox">
+      <h3>Viktig informasjon</h3>
+      <p>Kurset gir generell opplæring og erstatter ikke undersøkelse, diagnose eller behandling hos veterinær. Ved akutte symptomer eller usikkerhet skal veterinær eller veterinærvakt kontaktes.</p>
     </section>
 
   </section>
@@ -399,7 +432,7 @@ footer{background:var(--green-dark);color:#dce9df}
 </footer>
 
 <script>
-const key="module7CompletedLessons";
+const key="module8CompletedLessons";
 let completed=JSON.parse(localStorage.getItem(key)||"[]");
 
 function updateProgress(){
@@ -429,7 +462,7 @@ document.querySelectorAll("[data-complete]").forEach(btn=>{
 
 document.getElementById("quizForm").addEventListener("submit",function(e){
   e.preventDefault();
-  const answers={q1:"a",q2:"b",q3:"a",q4:"b",q5:"a",q6:"b",q7:"a",q8:"a",q9:"b"};
+  const answers={q1:"a",q2:"b",q3:"b",q4:"b",q5:"b",q6:"a",q7:"b",q8:"a",q9:"b"};
   let score=0,answered=0;
   Object.entries(answers).forEach(([name,correct])=>{
     const selected=document.querySelector(`input[name="${name}"]:checked`);
@@ -444,20 +477,19 @@ document.getElementById("quizForm").addEventListener("submit",function(e){
   if(score>=8){
     result.textContent=`Gratulerer! Du fikk ${score} av 9 riktige og har bestått modulquizen.`;
     document.getElementById("certificate").style.display="block";
-    localStorage.setItem("academyQuizDone",Math.max(Number(localStorage.getItem("academyQuizDone")||0),7));
-    localStorage.setItem("academyModulesDone",Math.max(Number(localStorage.getItem("academyModulesDone")||0),7));
-    localStorage.setItem("module7QuizPassed","true");
+    localStorage.setItem("academyQuizDone",Math.max(Number(localStorage.getItem("academyQuizDone")||0),8));
+    localStorage.setItem("academyModulesDone",Math.max(Number(localStorage.getItem("academyModulesDone")||0),8));
+    localStorage.setItem("module8QuizPassed","true");
   }else{
     result.textContent=`Du fikk ${score} av 9 riktige. Les gjennom leksjonene og prøv igjen.`;
     document.getElementById("certificate").style.display="none";
   }
 });
 
-if(localStorage.getItem("module7QuizPassed")==="true"){
+if(localStorage.getItem("module8QuizPassed")==="true"){
   document.getElementById("certificate").style.display="block";
 }
 updateProgress();
 </script>
-
 </body>
 </html>
