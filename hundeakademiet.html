@@ -3,109 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modul 8 – Helse, stell og førstehjelp | Hundene Våre Akademiet</title>
-<meta name="description" content="Modul 8 i Hundene Våre Akademiet: daglig helsesjekk, pels, klør, tenner, ører, øyne, ernæring, sykdomstegn, førstehjelp og 30-dagers helseplan.">
+<title>Modul 9 – Hundeeieren som ekspert | Hundene Våre Akademiet</title>
+<meta name="description" content="Avsluttende modul i Hundene Våre Akademiet med 10 leksjoner, hovedeksamen og hoveddiplom.">
 <style>
 :root{
-  --green:#0f5b35;--green-dark:#0a4026;--green-soft:#eaf5ed;
-  --gold:#e9a22d;--red:#b84343;--blue:#2f6fa8;--purple:#6a56a6;
-  --text:#17211b;--muted:#5f6d64;--line:#e3e8e3;
-  --shadow:0 14px 36px rgba(20,45,30,.09)
+  --green:#0f5b35;
+  --green-dark:#083d24;
+  --green-soft:#eaf5ed;
+  --gold:#d7a62b;
+  --gold-dark:#8c6714;
+  --gold-soft:#fff7df;
+  --text:#172119;
+  --muted:#607067;
+  --line:#e2e8e3;
+  --shadow:0 16px 38px rgba(14,52,30,.10);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#fbfcf9,#f6f8f4);color:var(--text);line-height:1.65}
-a{color:inherit;text-decoration:none}
-.container{width:min(1180px,calc(100% - 30px));margin:auto}
-.topbar{background:linear-gradient(90deg,var(--green-dark),var(--green));color:#fff;text-align:center;padding:9px 16px;font-size:14px}
-header{background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;backdrop-filter:blur(10px)}
-.nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--green-dark)}
-.logo{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,var(--green-dark),var(--green));color:#fff;font-size:24px;box-shadow:0 8px 18px rgba(15,91,53,.2)}
-.brand small{display:block;color:var(--muted);font-weight:600;margin-top:2px}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#fafcf9,#f5f8f4);color:var(--text);line-height:1.65}
+a{text-decoration:none;color:inherit}
+.container{width:min(1180px,calc(100% - 28px));margin:auto}
+.topbar{background:linear-gradient(90deg,var(--gold-dark),var(--gold));color:#fff;text-align:center;padding:9px 15px;font-weight:800;font-size:14px}
+header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+.nav{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;color:var(--green-dark)}
+.logo{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,var(--green-dark),var(--green));color:#fff;font-size:25px;box-shadow:0 9px 22px rgba(15,91,53,.2)}
+.brand small{display:block;color:var(--muted);font-weight:700;margin-top:2px}
 .navlinks{display:flex;gap:8px;flex-wrap:wrap}
-.navlinks a{padding:10px 13px;border-radius:11px;font-weight:700}
-.navlinks a:hover{background:var(--green-soft);color:var(--green-dark)}
-.hero{padding:44px 0 28px;background:radial-gradient(circle at 88% 20%,rgba(232,242,225,.8),transparent 28%),radial-gradient(circle at 15% 75%,rgba(250,239,214,.5),transparent 32%)}
+.navlinks a{padding:10px 13px;border-radius:11px;font-weight:800}
+.navlinks a:hover{background:var(--green-soft)}
+.hero{padding:50px 0 30px;background:
+radial-gradient(circle at 85% 15%,rgba(245,219,142,.35),transparent 27%),
+radial-gradient(circle at 8% 85%,rgba(159,210,173,.28),transparent 30%)}
 .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center}
-.badge{display:inline-flex;gap:8px;align-items:center;border:1px solid #cfe3d3;background:#f0f8f2;color:var(--green-dark);padding:8px 12px;border-radius:999px;font-weight:800;font-size:13px}
-h1{font-size:clamp(38px,5vw,66px);line-height:1.05;letter-spacing:-.04em;margin:16px 0 14px;color:var(--green-dark)}
-.lead{font-size:17px;color:#4f5d53;max-width:760px}
-.hero-card{background:#fff;border:1px solid var(--line);border-radius:26px;padding:24px;box-shadow:var(--shadow)}
-.hero-card .dog{min-height:250px;border-radius:20px;background:linear-gradient(145deg,#e8f3e9,#f4e5c8);display:grid;place-items:center;font-size:110px}
-.hero-card p{margin:16px 0 0;color:var(--muted);font-size:14px;text-align:center}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--gold-soft);border:1px solid #ecd89c;color:var(--gold-dark);font-weight:900;font-size:13px}
+h1{font-size:clamp(40px,5vw,70px);line-height:1.02;letter-spacing:-.045em;margin:16px 0;color:var(--green-dark)}
+.lead{font-size:18px;color:#4d5d53;max-width:760px}
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:47px;padding:11px 18px;border-radius:13px;font-weight:800;border:1px solid transparent;transition:.2s}
-.btn-primary{background:var(--green);color:#fff;box-shadow:0 10px 22px rgba(15,91,53,.18)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:11px 18px;border-radius:13px;font-weight:900;border:1px solid transparent;cursor:pointer}
+.btn-primary{background:var(--green);color:#fff;box-shadow:0 10px 24px rgba(15,91,53,.2)}
 .btn-primary:hover{background:var(--green-dark);transform:translateY(-2px)}
-.btn-light{background:#fff;border-color:#dce2dd}
-.progress-wrap{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;margin:22px auto 0;box-shadow:var(--shadow)}
-.progress-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px}
-.track{height:12px;background:#e7ece7;border-radius:999px;overflow:hidden}
-.fill{width:0;height:100%;background:linear-gradient(90deg,var(--green),#6fb284);transition:.35s}
+.btn-gold{background:linear-gradient(145deg,var(--gold),#efc754);color:#3c2d09;box-shadow:0 10px 24px rgba(188,139,28,.18)}
+.btn-light{background:#fff;border-color:#dce3dd}
+.hero-card{background:#fff;border:1px solid var(--line);border-radius:26px;padding:24px;box-shadow:var(--shadow)}
+.hero-visual{min-height:265px;border-radius:20px;background:linear-gradient(145deg,#edf7ef,#fff2ce);display:grid;place-items:center;font-size:115px}
+.hero-card p{text-align:center;color:var(--muted);margin:15px 0 0;font-size:14px}
+.progress-wrap{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;margin-top:24px;box-shadow:var(--shadow)}
+.progress-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.track{height:12px;background:#e8ede8;border-radius:999px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--green),#7fbc8f);transition:.35s}
 .small{font-size:13px;color:var(--muted)}
-.layout{display:grid;grid-template-columns:280px 1fr;gap:24px;padding:28px 0 50px}
-.sidebar{position:sticky;top:95px;align-self:start;background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
+.layout{display:grid;grid-template-columns:285px 1fr;gap:24px;padding:30px 0 54px}
+.sidebar{position:sticky;top:96px;align-self:start;background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
 .sidebar h2{font-size:17px;margin:0 0 12px;color:var(--green-dark)}
 .lesson-nav{display:grid;gap:8px}
-.lesson-nav a{display:flex;align-items:center;gap:10px;padding:10px 11px;border-radius:11px;font-size:14px;color:#3d4a41;border:1px solid transparent}
-.lesson-nav a:hover{background:var(--green-soft);border-color:#d5e6d8}
-.lesson-nav a.done{background:#eef7f0;color:var(--green-dark);font-weight:800}
-.lesson-nav span{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#edf1ed;font-size:12px;font-weight:800}
+.lesson-nav a{display:flex;align-items:center;gap:10px;padding:10px 11px;border-radius:11px;font-size:14px;color:#39483f;border:1px solid transparent}
+.lesson-nav a:hover{background:var(--green-soft);border-color:#d3e5d8}
+.lesson-nav a.done{background:#eef8f1;color:var(--green-dark);font-weight:900}
+.lesson-nav span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#edf1ed;font-size:12px;font-weight:900;flex:0 0 auto}
 .content{display:grid;gap:22px}
-.lesson{background:#fff;border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow)}
+.lesson,.exam,.academy-check,.sourcebox{background:#fff;border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow)}
 .lesson-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
-.lesson-icon{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;background:var(--green-soft);font-size:28px;flex:0 0 auto}
-.lesson h2{margin:0;color:var(--green-dark);font-size:28px;line-height:1.2}
+.lesson-icon{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;background:var(--green-soft);font-size:29px;flex:0 0 auto}
+.lesson h2,.exam h2,.academy-check h2{margin:0;color:var(--green-dark);font-size:29px;line-height:1.2}
 .lesson h3{color:var(--green-dark);margin:24px 0 8px;font-size:20px}
-.lesson p{margin:0 0 14px;color:#344138}
-.lesson ul{margin:8px 0 16px;padding-left:22px}
+.lesson p{margin:0 0 14px;color:#344139}
+.lesson ul{padding-left:22px;margin:8px 0 16px}
 .lesson li{margin-bottom:8px}
-.fact,.tip,.warning,.remember,.task,.emergency{border-radius:16px;padding:17px 18px;margin:18px 0}
-.fact{background:#eef5fb;border-left:5px solid var(--blue)}
+.tip,.fact,.remember,.task,.warning,.expert{border-radius:16px;padding:17px 18px;margin:18px 0}
 .tip{background:#eef8f1;border-left:5px solid var(--green)}
-.warning{background:#fff0f0;border-left:5px solid var(--red)}
-.remember{background:#fff8e9;border-left:5px solid var(--gold)}
-.task{background:#f3f0fb;border-left:5px solid var(--purple)}
-.emergency{background:#fff4f4;border:2px solid #d85b5b}
-.fact strong,.tip strong,.warning strong,.remember strong,.task strong,.emergency strong{display:block;margin-bottom:5px}
+.fact{background:#eef5fb;border-left:5px solid #3f78aa}
+.remember{background:#fff8e7;border-left:5px solid var(--gold)}
+.task{background:#f3f0fb;border-left:5px solid #6d58a8}
+.warning{background:#fff0f0;border-left:5px solid #b84343}
+.expert{background:linear-gradient(145deg,#fff8e1,#fffdf7);border:1px solid #ead79a}
+.tip strong,.fact strong,.remember strong,.task strong,.warning strong,.expert strong{display:block;margin-bottom:5px}
 .lesson-footer{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
-.complete-btn{border:none;background:var(--green);color:#fff;border-radius:12px;padding:11px 16px;font-weight:800;cursor:pointer}
-.complete-btn.done{background:#6d7a71}
+.complete-btn{border:none;background:var(--green);color:#fff;border-radius:12px;padding:11px 16px;font-weight:900;cursor:pointer}
+.complete-btn.done{background:#6c7a70}
 .plan{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
 .plan th,.plan td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
 .plan th{background:var(--green-soft);color:var(--green-dark)}
-.quiz{background:linear-gradient(145deg,#fff,#f8fbf7);border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow)}
+.academy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.module-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fbfcfb}
+.module-card strong{display:block;color:var(--green-dark);margin-bottom:5px}
+.status{display:inline-flex;margin-top:8px;padding:5px 9px;border-radius:999px;background:#edf1ed;font-size:12px;font-weight:900}
+.status.ok{background:#e8f5eb;color:var(--green-dark)}
 .question{border-top:1px solid var(--line);padding:20px 0}
 .question:first-of-type{border-top:none}
-.option{display:block;background:#fff;border:1px solid #dfe5df;border-radius:12px;padding:11px 12px;margin:8px 0;cursor:pointer}
-.quiz-result{display:none;margin-top:18px;padding:16px;border-radius:14px;background:var(--green-soft);font-weight:800;color:var(--green-dark)}
-.certificate{display:none;text-align:center;background:linear-gradient(145deg,#fff9e9,#fff);border:2px solid #e4c777;border-radius:24px;padding:30px;margin-top:22px}
-.certificate h2{font-family:Georgia,serif;font-size:34px;margin:0 0 10px;color:#70551a}
-.sourcebox{background:#f7f9f7;border:1px solid var(--line);border-radius:18px;padding:20px}
-.sourcebox h3{margin-top:0;color:var(--green-dark)}
-.sourcebox li{margin-bottom:7px}
+.option{display:block;background:#fff;border:1px solid #dde4de;border-radius:12px;padding:11px 12px;margin:8px 0;cursor:pointer}
+.option:hover{background:#f8fbf8}
+.exam-result{display:none;margin-top:18px;padding:16px;border-radius:14px;background:var(--green-soft);font-weight:900;color:var(--green-dark)}
+.certificate{display:none;text-align:center;background:
+linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,248,220,.98));
+border:7px double #c99a24;border-radius:28px;padding:36px 26px;margin-top:24px;position:relative;overflow:hidden}
+.certificate:before,.certificate:after{content:"★";position:absolute;color:rgba(201,154,36,.22);font-size:90px}
+.certificate:before{left:24px;top:20px}.certificate:after{right:24px;bottom:12px}
+.certificate .seal{width:92px;height:92px;margin:0 auto 15px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#f6d56d,#c9961d);font-size:45px;box-shadow:0 9px 22px rgba(174,127,23,.25)}
+.certificate h2{font-family:Georgia,serif;font-size:42px;color:#765612;margin:0 0 8px}
+.certificate h3{font-size:25px;color:var(--green-dark);margin:8px 0}
+.name-line{width:min(520px,90%);margin:24px auto 8px;border-bottom:2px solid #8a722e;height:36px}
+.print-btn{margin-top:16px}
+.sourcebox{background:#f8faf8}
 footer{background:var(--green-dark);color:#dce9df}
 .footer{padding:30px 0;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.sidebar{position:static}}
+@media(max-width:920px){.hero-grid{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.sidebar{position:static}.academy-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.plan{display:block;overflow-x:auto;white-space:nowrap}}
-@media(max-width:600px){.container{width:min(100% - 20px,1180px)}.navlinks{display:none}.lesson{padding:20px}.lesson-header{flex-direction:column}.lesson h2{font-size:24px}.hero-card .dog{min-height:210px;font-size:90px}.actions{flex-direction:column}.btn{width:100%}}
+@media(max-width:620px){.navlinks{display:none}.container{width:min(100% - 20px,1180px)}.lesson,.exam,.academy-check{padding:20px}.lesson-header{flex-direction:column}.lesson h2,.exam h2,.academy-check h2{font-size:25px}.academy-grid{grid-template-columns:1fr}.actions{flex-direction:column}.btn{width:100%}.hero-visual{min-height:210px;font-size:90px}.certificate h2{font-size:34px}}
+@media print{
+  body *{visibility:hidden}
+  #certificate,#certificate *{visibility:visible}
+  #certificate{display:block!important;position:absolute;left:0;top:0;width:100%;box-shadow:none}
+  .print-btn{display:none}
+}
 </style>
 </head>
 <body>
 
-<div class="topbar">🐾 Modul 8 – lær å oppdage endringer tidlig og handle trygt.</div>
+<div class="topbar">🏆 Avsluttende modul – Hundeeieren som ekspert</div>
 
 <header>
   <div class="container nav">
     <a class="brand" href="hundeakademiet_ny.html">
       <span class="logo">🐾</span>
-      <span>Hundene Våre Akademiet<small>Modul 8 – Helse, stell og førstehjelp</small></span>
+      <span>Hundene Våre Akademiet<small>Modul 9 – Avsluttende modul</small></span>
     </a>
     <nav class="navlinks">
       <a href="hundeakademiet_ny.html">← Akademiet</a>
-      <a href="#leksjoner">Leksjonene</a>
-      <a href="#quiz">Quiz</a>
+      <a href="#leksjoner">Leksjoner</a>
+      <a href="#eksamen">Hovedeksamen</a>
     </nav>
   </div>
 </header>
@@ -115,23 +141,23 @@ footer{background:var(--green-dark);color:#dce9df}
   <div class="container">
     <div class="hero-grid">
       <div>
-        <span class="badge">🎓 MODUL 8</span>
-        <h1>Helse, stell og førstehjelp</h1>
-        <p class="lead">I denne modulen lærer du å følge med på hundens helse, gjøre nødvendig stell, kjenne igjen viktige faresignaler og gi trygg førstehjelp mens du kontakter veterinær.</p>
+        <span class="badge">🏆 MODUL 9</span>
+        <h1>Hundeeieren som ekspert</h1>
+        <p class="lead">Dette er den avsluttende modulen i Hundene Våre Akademiet. Her samler du kunnskapen fra hele kurset, bygger din egen plan for et godt hundeliv og avslutter med hovedeksamen og hoveddiplom.</p>
         <div class="actions">
-          <a class="btn btn-primary" href="#leksjon1">Start første leksjon</a>
-          <a class="btn btn-light" href="hundeakademiet_ny.html">← Tilbake til Hundeakademiet</a>
+          <a class="btn btn-primary" href="#leksjon1">Start sluttmodulen</a>
+          <a class="btn btn-light" href="hundeakademiet_ny.html">← Tilbake til akademiet</a>
         </div>
       </div>
       <div class="hero-card">
-        <div class="dog">🩺</div>
-        <p>Du kjenner hunden best. Små endringer i matlyst, energi, pust, gange eller atferd kan være viktige.</p>
+        <div class="hero-visual">🏆</div>
+        <p>En ekte ekspert er ikke den som kan alt, men den som observerer, lærer, tilpasser seg og søker hjelp når det trengs.</p>
       </div>
     </div>
 
     <div class="progress-wrap">
       <div class="progress-head">
-        <strong>Din fremdrift i modul 8</strong>
+        <strong>Din fremdrift i modul 9</strong>
         <span id="progressText">0 av 10 leksjoner fullført</span>
       </div>
       <div class="track"><div class="fill" id="progressFill"></div></div>
@@ -142,282 +168,297 @@ footer{background:var(--green-dark);color:#dce9df}
 
 <div class="container layout" id="leksjoner">
   <aside class="sidebar">
-    <h2>Innhold i modulen</h2>
+    <h2>Innhold</h2>
     <nav class="lesson-nav" id="lessonNav">
-      <a href="#leksjon1" data-lesson="1"><span>1</span> Daglig helsesjekk</a>
-      <a href="#leksjon2" data-lesson="2"><span>2</span> Pels og hud</a>
-      <a href="#leksjon3" data-lesson="3"><span>3</span> Klør og poter</a>
-      <a href="#leksjon4" data-lesson="4"><span>4</span> Tenner og munn</a>
-      <a href="#leksjon5" data-lesson="5"><span>5</span> Ører og øyne</a>
-      <a href="#leksjon6" data-lesson="6"><span>6</span> Ernæring og vekt</a>
-      <a href="#leksjon7" data-lesson="7"><span>7</span> Forebyggende helse</a>
-      <a href="#leksjon8" data-lesson="8"><span>8</span> Førstehjelp</a>
-      <a href="#leksjon9" data-lesson="9"><span>9</span> 30-dagers helseplan</a>
-      <a href="#leksjon10" data-lesson="10"><span>10</span> Oppsummering</a>
-      <a href="#quiz"><span>✓</span> Modulquiz</a>
+      <a href="#leksjon1" data-lesson="1"><span>1</span> Ekspertrollen</a>
+      <a href="#leksjon2" data-lesson="2"><span>2</span> Se hele hunden</a>
+      <a href="#leksjon3" data-lesson="3"><span>3</span> Kommunikasjon</a>
+      <a href="#leksjon4" data-lesson="4"><span>4</span> Samarbeid</a>
+      <a href="#leksjon5" data-lesson="5"><span>5</span> Forebygging</a>
+      <a href="#leksjon6" data-lesson="6"><span>6</span> Livslang trening</a>
+      <a href="#leksjon7" data-lesson="7"><span>7</span> Hund i samfunnet</a>
+      <a href="#leksjon8" data-lesson="8"><span>8</span> Ansvar og etikk</a>
+      <a href="#leksjon9" data-lesson="9"><span>9</span> Din ekspertplan</a>
+      <a href="#leksjon10" data-lesson="10"><span>10</span> Hele akademiet</a>
+      <a href="#eksamen"><span>✓</span> Hovedeksamen</a>
     </nav>
   </aside>
 
   <section class="content">
 
     <article class="lesson" id="leksjon1">
-      <div class="lesson-header"><div class="lesson-icon">🔎</div><div><span class="badge">LEKSJON 1</span><h2>Daglig helsesjekk</h2></div></div>
-      <p>En kort daglig sjekk gjør det lettere å oppdage endringer tidlig. Se på hele hunden, men legg særlig merke til forskjeller fra det som er normalt for akkurat din hund.</p>
-      <h3>Dette følger du med på</h3>
+      <div class="lesson-header"><div class="lesson-icon">🎓</div><div><span class="badge">LEKSJON 1</span><h2>Fra hundeeier til hundeekspert</h2></div></div>
+      <p>Å være en dyktig hundeeier handler ikke om å kunne flest kommandoer. Det handler om å forstå hunden, gjøre gode valg og skape et trygt liv som passer både individet og familien.</p>
+      <h3>En ansvarlig ekspert</h3>
       <ul>
-        <li>Matlyst og drikkelyst.</li>
-        <li>Energi, humør og søvn.</li>
-        <li>Pust og hoste.</li>
-        <li>Gange, halting og stivhet.</li>
-        <li>Urin og avføring.</li>
-        <li>Kuler, sår, hevelser eller ømhet.</li>
-        <li>Endringer i vekt eller kroppsform.</li>
+        <li>Observerer før han eller hun handler.</li>
+        <li>Ser at atferd alltid har en sammenheng.</li>
+        <li>Tilpasser trening til alder, helse og personlighet.</li>
+        <li>Bruker vennlige og tydelige metoder.</li>
+        <li>Søker hjelp når situasjonen krever mer kompetanse.</li>
       </ul>
-      <div class="tip"><strong>✅ Praktisk tips</strong>Gjør helsesjekken til en rolig kosestund. Tren på at hunden frivillig lar deg se på poter, ører, øyne og munn.</div>
-      <div class="warning"><strong>⚠️ Kontakt veterinær</strong>Ved tydelig smerte, pustevansker, kollaps, gjentatt oppkast, blod, alvorlig slapphet eller rask forverring.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Lag en kort beskrivelse av hvordan hunden er når den er frisk: appetitt, energi, avføring, pust og bevegelse.</div>
-      <div class="lesson-footer"><span class="small">Mål: Oppdage viktige endringer tidlig.</span><button class="complete-btn" data-complete="1">Marker leksjonen som fullført</button></div>
+      <div class="expert"><strong>⭐ Eksperttanken</strong>Du trenger ikke ha svar på alt. Det viktigste er å stille gode spørsmål og finne trygge løsninger.</div>
+      <div class="task"><strong>🐾 Oppgave</strong>Skriv ned tre ting du har blitt bedre til gjennom Hundeakademiet.</div>
+      <div class="lesson-footer"><span class="small">Mål: Forstå hva god hundekompetanse betyr i praksis.</span><button class="complete-btn" data-complete="1">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon2">
-      <div class="lesson-header"><div class="lesson-icon">🧴</div><div><span class="badge">LEKSJON 2</span><h2>Pels og hud</h2></div></div>
-      <p>Pelsstell handler både om utseende og helse. Regelmessig børsting gir deg samtidig mulighet til å oppdage floker, sår, irritasjon, parasitter og kuler.</p>
-      <h3>God pelspleie</h3>
+      <div class="lesson-header"><div class="lesson-icon">🔍</div><div><span class="badge">LEKSJON 2</span><h2>Se hele hunden</h2></div></div>
+      <p>Atferd påvirkes av mer enn trening. Søvn, smerte, stress, miljø, erfaringer, hormoner, relasjoner og forventninger spiller sammen.</p>
+      <h3>Spør før du korrigerer</h3>
       <ul>
-        <li>Bruk børste og kam som passer pelstypen.</li>
-        <li>Arbeid i små partier helt ned mot huden.</li>
-        <li>Sjekk ekstra godt bak ører, i armhuler, lyske og rundt halsbånd.</li>
-        <li>Hold pelsen tørr og ren mellom tær og hudfolder.</li>
-        <li>Bruk hundesjampo ved behov, ikke sterke menneskeprodukter.</li>
+        <li>Er hunden sliten, redd eller overstimulert?</li>
+        <li>Er oppgaven for vanskelig?</li>
+        <li>Har hunden forstått hva som forventes?</li>
+        <li>Kan helse eller smerte påvirke atferden?</li>
+        <li>Er miljøet for krevende akkurat nå?</li>
       </ul>
-      <div class="remember"><strong>📌 Floker kan gjøre vondt</strong>Tette floker trekker i huden og kan skjule sår eller fuktig hud. Vanskelige floker bør håndteres skånsomt, eventuelt av hundefrisør eller veterinær.</div>
-      <div class="warning"><strong>⚠️ Tegn som bør undersøkes</strong>Vedvarende kløe, hårløse områder, vond lukt, væskende hud, mange skorper eller raskt voksende kuler.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Børst hunden systematisk og noter områder som lett floker seg eller virker ømme.</div>
-      <div class="lesson-footer"><span class="small">Mål: Holde hud og pels ren, frisk og flokefri.</span><button class="complete-btn" data-complete="2">Marker leksjonen som fullført</button></div>
+      <div class="fact"><strong>💡 Helhetlig vurdering</strong>Når en hund plutselig endrer atferd, bør helse og smerte alltid vurderes som en mulig årsak.</div>
+      <div class="task"><strong>🐾 Oppgave</strong>Velg én situasjon som ofte er vanskelig, og beskriv hva som skjer før, under og etter.</div>
+      <div class="lesson-footer"><span class="small">Mål: Forstå hundens atferd i sammenheng.</span><button class="complete-btn" data-complete="2">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon3">
-      <div class="lesson-header"><div class="lesson-icon">🐾</div><div><span class="badge">LEKSJON 3</span><h2>Klør og poter</h2></div></div>
-      <p>For lange klør kan påvirke hvordan hunden står og beveger seg. Potene bør også sjekkes etter turer, særlig ved varme, kulde, veisalt, skarpt underlag og snø.</p>
-      <h3>Trygg kloklipp</h3>
+      <div class="lesson-header"><div class="lesson-icon">💬</div><div><span class="badge">LEKSJON 3</span><h2>Kommunikasjon på ekspertnivå</h2></div></div>
+      <p>God kommunikasjon går begge veier. Hunden lærer våre signaler, og vi lærer å lese hundens kroppsspråk og behov.</p>
+      <h3>Se etter helheten</h3>
       <ul>
-        <li>Tren først på berøring av pote og kloklipper.</li>
-        <li>Klipp små biter om gangen.</li>
-        <li>Stopp før nerven og blodåren i kloen.</li>
-        <li>Bruk godt lys og skarpt verktøy.</li>
-        <li>Be fagperson vise deg teknikken dersom du er usikker.</li>
+        <li>Kroppens retning og tyngdepunkt.</li>
+        <li>Ører, øyne, munn og hale.</li>
+        <li>Tempo og intensitet.</li>
+        <li>Avstandssøkende eller kontaktsøkende atferd.</li>
+        <li>Små tegn som å snu hodet, slikke seg rundt munnen eller stivne.</li>
       </ul>
-      <div class="fact"><strong>💡 Mørke klør</strong>På mørke klør er nerven vanskeligere å se. Klipp svært lite om gangen og følg med på snittflaten.</div>
-      <div class="warning"><strong>⚠️ Hvis kloen blør</strong>Hold hunden rolig og legg fast, jevnt trykk med ren kompress. Kontakt veterinær dersom blødningen ikke stanser eller kloen er revet.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Undersøk alle poter, tredeputer, mellom tærne og ulveklør dersom hunden har dem.</div>
-      <div class="lesson-footer"><span class="small">Mål: Forebygge smertefulle klør og poteproblemer.</span><button class="complete-btn" data-complete="3">Marker leksjonen som fullført</button></div>
+      <div class="remember"><strong>📌 Ett signal er ikke hele svaret</strong>Kroppsspråk må alltid tolkes sammen med situasjonen og resten av hundens kropp.</div>
+      <div class="tip"><strong>✅ Eksperttips</strong>Film korte treningsøkter. På video ser du ofte små signaler du ikke oppdaget i øyeblikket.</div>
+      <div class="task"><strong>🐾 Oppgave</strong>Observer hunden i fem minutter uten å gi kommandoer. Skriv ned hva hunden forteller med kroppen.</div>
+      <div class="lesson-footer"><span class="small">Mål: Bli mer presis i lesingen av hundens signaler.</span><button class="complete-btn" data-complete="3">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon4">
-      <div class="lesson-header"><div class="lesson-icon">🦷</div><div><span class="badge">LEKSJON 4</span><h2>Tenner og munnhygiene</h2></div></div>
-      <p>Tannproblemer er vanlige hos hund. Daglig tannpuss med tannkrem beregnet for hund er den viktigste hjemmevanen for å redusere plakk.</p>
-      <h3>Slik bygger du tannpuss</h3>
+      <div class="lesson-header"><div class="lesson-icon">🤝</div><div><span class="badge">LEKSJON 4</span><h2>Bygg et sterkt samarbeid</h2></div></div>
+      <p>Det beste samarbeidet bygger på trygghet, forutsigbarhet og mange gode erfaringer sammen.</p>
+      <h3>Slik styrker du relasjonen</h3>
       <ul>
-        <li>Start med å berøre leppene kort.</li>
-        <li>La hunden bli kjent med tannkrem for hund.</li>
-        <li>Puss noen få tenner først.</li>
-        <li>Arbeid gradvis mot utsiden av alle tennene.</li>
-        <li>Belønn rolig samarbeid.</li>
+        <li>Vær tydelig uten å være hard.</li>
+        <li>Belønn det du ønsker mer av.</li>
+        <li>Gi hunden reelle pauser.</li>
+        <li>Velg aktiviteter hunden liker.</li>
+        <li>Vær konsekvent i viktige hverdagsregler.</li>
       </ul>
-      <div class="warning"><strong>⚠️ Ikke bruk mennesketannkrem</strong>Produkter for mennesker kan inneholde stoffer hunden ikke bør svelge.</div>
-      <div class="remember"><strong>📌 Tegn på tannproblemer</strong>Dårlig ånde, rødt eller blødende tannkjøtt, mye tannstein, sikling, smerter ved tygging, løs tann eller at hunden bare tygger på én side.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Se forsiktig på fortenner, hjørnetenner og jeksler på begge sider. Noter rødhet, tannstein eller lukt.</div>
-      <div class="lesson-footer"><span class="small">Mål: Etablere god munnhygiene og oppdage problemer.</span><button class="complete-btn" data-complete="4">Marker leksjonen som fullført</button></div>
+      <div class="expert"><strong>⭐ Samarbeid fremfor kontroll</strong>Målet er ikke en hund som alltid blir styrt, men en hund som ønsker å samarbeide.</div>
+      <div class="task"><strong>🐾 Oppgave</strong>Lag en liste med fem ting hunden din virkelig liker. Bruk dem bevisst i samarbeid og trening.</div>
+      <div class="lesson-footer"><span class="small">Mål: Skape mer frivillig samarbeid og tillit.</span><button class="complete-btn" data-complete="4">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon5">
-      <div class="lesson-header"><div class="lesson-icon">👂</div><div><span class="badge">LEKSJON 5</span><h2>Ører og øyne</h2></div></div>
-      <p>Friske ører og øyne skal normalt være uten tydelig irritasjon, kraftig lukt, smerte eller store mengder sekret.</p>
-      <h3>Ører</h3>
+      <div class="lesson-header"><div class="lesson-icon">🛡️</div><div><span class="badge">LEKSJON 5</span><h2>Forebygg problemer før de vokser</h2></div></div>
+      <p>Dyktige hundeeiere planlegger miljøet slik at hunden oftere lykkes. Forebygging er som regel lettere enn å reparere etablerte problemer.</p>
+      <h3>Praktisk forebygging</h3>
       <ul>
-        <li>Se etter rødhet, hevelse, lukt og sekret.</li>
-        <li>Ikke stikk bomullspinner ned i øregangen.</li>
-        <li>Bruk bare anbefalt ørerens.</li>
-        <li>Kontakt veterinær ved smerte, kraftig hoderisting eller vedvarende kløe.</li>
+        <li>Tilpass vanskelighetsgraden gradvis.</li>
+        <li>Unngå å presse hunden inn i situasjoner den ikke mestrer.</li>
+        <li>Tren gode vaner før behovet blir akutt.</li>
+        <li>Bruk avstand aktivt ved usikkerhet og utfall.</li>
+        <li>Ta små endringer på alvor.</li>
       </ul>
-      <h3>Øyne</h3>
-      <ul>
-        <li>Se etter rødhet, kniping, uklarhet og mye væske.</li>
-        <li>Tørk forsiktig rundt øyet med ren, fuktig kompress.</li>
-        <li>Ikke bruk tilfeldige øyedråper.</li>
-        <li>Øyesmerter og skader bør vurderes raskt.</li>
-      </ul>
-      <div class="warning"><strong>⚠️ Øyne kan haste</strong>Plutselig kniping, kraftig rødhet, skade, fremmedlegeme eller uklart øye bør vurderes av veterinær samme dag.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Sammenlign høyre og venstre øre og øye. Forskjeller mellom sidene kan være nyttige å oppdage.</div>
-      <div class="lesson-footer"><span class="small">Mål: Kjenne igjen tegn på øre- og øyeproblemer.</span><button class="complete-btn" data-complete="5">Marker leksjonen som fullført</button></div>
+      <div class="warning"><strong>⚠️ Få hjelp tidlig</strong>Ved bittfare, alvorlig frykt, ressursforsvar, sterk separasjonsproblematikk eller store atferdsendringer bør kvalifisert fagperson og eventuelt veterinær kobles inn.</div>
+      <div class="task"><strong>🐾 Oppgave</strong>Velg én utfordring og skriv tre måter du kan gjøre situasjonen lettere før den oppstår.</div>
+      <div class="lesson-footer"><span class="small">Mål: Bruke planlegging som et aktivt treningsverktøy.</span><button class="complete-btn" data-complete="5">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon6">
-      <div class="lesson-header"><div class="lesson-icon">🥣</div><div><span class="badge">LEKSJON 6</span><h2>Ernæring, vann og vekt</h2></div></div>
-      <p>Riktig mengde fullverdig fôr, tilgang til friskt vann og jevn kontroll av vekten er grunnleggende for helse.</p>
-      <h3>Følg med på kroppshold</h3>
+      <div class="lesson-header"><div class="lesson-icon">🔄</div><div><span class="badge">LEKSJON 6</span><h2>Trening gjennom hele livet</h2></div></div>
+      <p>Hunden endrer seg gjennom livet. Treningen bør følge utviklingen fra valp til voksen og videre inn i seniorårene.</p>
+      <h3>Tilpass etter livsfase</h3>
       <ul>
-        <li>Ribbena skal kunne kjennes uten hardt trykk.</li>
-        <li>Midjen bør være synlig ovenfra hos de fleste hunder.</li>
-        <li>Buken bør trekke seg noe opp bak brystkassen.</li>
-        <li>Brå vektøkning eller vekttap bør undersøkes.</li>
-        <li>Juster godbiter inn i den totale dagsrasjonen.</li>
+        <li>Valpen trenger korte økter, trygg sosialisering og mye hvile.</li>
+        <li>Unghunden trenger struktur, tålmodighet og realistiske forventninger.</li>
+        <li>Den voksne hunden trenger variasjon og vedlikehold av ferdigheter.</li>
+        <li>Seniorhunden trenger hensyn til sanser, bevegelighet og utholdenhet.</li>
       </ul>
-      <div class="tip"><strong>✅ Praktisk tips</strong>Vei hunden regelmessig på samme vekt og omtrent samme tidspunkt. Små endringer er lettere å se over tid.</div>
-      <div class="warning"><strong>⚠️ Giftige matvarer</strong>Ikke gi hunden blant annet sjokolade, druer eller rosiner, løk, hvitløk i større mengder, produkter med xylitol eller alkohol. Ved mulig forgiftning: kontakt veterinær raskt og ikke fremkall oppkast uten beskjed.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Vei hunden eller vurder kroppsholdet, og skriv ned dagens fôrmengde og godbiter.</div>
-      <div class="lesson-footer"><span class="small">Mål: Holde stabil, sunn vekt og god ernæring.</span><button class="complete-btn" data-complete="6">Marker leksjonen som fullført</button></div>
+      <div class="tip"><strong>✅ Bevar mestringsfølelsen</strong>Juster oppgavene slik at hunden fortsatt får lykkes, også når alder eller helse endrer kapasiteten.</div>
+      <div class="task"><strong>🐾 Oppgave</strong>Vurder hvilke ferdigheter hunden trenger mest i sin nåværende livsfase.</div>
+      <div class="lesson-footer"><span class="small">Mål: Lage trening som følger hundens utvikling.</span><button class="complete-btn" data-complete="6">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon7">
-      <div class="lesson-header"><div class="lesson-icon">🛡️</div><div><span class="badge">LEKSJON 7</span><h2>Forebyggende helse</h2></div></div>
-      <p>Forebyggende helse bør tilpasses hundens alder, livsstil, reiser, sykdomsrisiko og veterinærens anbefalinger.</p>
-      <h3>Viktige områder</h3>
+      <div class="lesson-header"><div class="lesson-icon">🏘️</div><div><span class="badge">LEKSJON 7</span><h2>Hunden som familiemedlem og samfunnsborger</h2></div></div>
+      <p>Et godt hundehold tar hensyn til både hunden, familien og omgivelsene.</p>
+      <h3>Viktige hverdagsferdigheter</h3>
       <ul>
-        <li>Regelmessige helsekontroller.</li>
-        <li>Vaksiner etter anbefalt program.</li>
-        <li>Beskyttelse mot flått og andre parasitter ved behov.</li>
-        <li>Oppfølging av tenner, vekt og bevegelse.</li>
-        <li>Dokumentasjon av medisiner, allergier og tidligere sykdommer.</li>
+        <li>Kunne roe seg hjemme og på besøk.</li>
+        <li>Gå kontrollert i bånd der det trengs.</li>
+        <li>Kunne passere mennesker og hunder med passende avstand.</li>
+        <li>Ha trygg innkalling før frihet gis.</li>
+        <li>Ikke forstyrre dyreliv, naboer eller andre brukere av naturen.</li>
       </ul>
-      <div class="remember"><strong>📌 Flåttsjekk</strong>Gå gjennom hodet, halsen, armhulene, lysken og mellom tærne etter tur i flåttområder.</div>
-      <div class="fact"><strong>💡 Reiseregler kan endres</strong>Undersøk alltid gjeldende regler for vaksiner, ID-merking, pass og parasittbehandling før utenlandsreise.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Samle vaksinasjonskort, forsikringsinformasjon, veterinærnummer og medisiner på ett fast sted.</div>
-      <div class="lesson-footer"><span class="small">Mål: Lage en plan for forebyggende helsehjelp.</span><button class="complete-btn" data-complete="7">Marker leksjonen som fullført</button></div>
+      <div class="remember"><strong>📌 Godt hundehold skaper tillit</strong>Når hundeeiere viser hensyn, blir det lettere å bevare gode muligheter for hunder i samfunnet.</div>
+      <div class="task"><strong>🐾 Oppgave</strong>Velg to hverdagsferdigheter familien skal vedlikeholde fast hver uke.</div>
+      <div class="lesson-footer"><span class="small">Mål: Kombinere hundens behov med hensyn til omgivelsene.</span><button class="complete-btn" data-complete="7">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon8">
-      <div class="lesson-header"><div class="lesson-icon">🚑</div><div><span class="badge">LEKSJON 8</span><h2>Førstehjelp og akutte situasjoner</h2></div></div>
-      <p>Førstehjelp erstatter ikke veterinærbehandling. Målet er å sikre området, vurdere hunden, begrense skade og få profesjonell hjelp raskt.</p>
-      <div class="emergency"><strong>🚨 Ring veterinær umiddelbart ved</strong>Pustevansker, kollaps eller bevisstløshet, store blødninger, alvorlige sår, påkjørsel, kramper, mulig forgiftning, oppblåst buk med uro eller brekninger, heteslag, alvorlig øyeskade eller sterke smerter.</div>
-      <h3>Husk rekkefølgen</h3>
+      <div class="lesson-header"><div class="lesson-icon">❤️</div><div><span class="badge">LEKSJON 8</span><h2>Ansvar, etikk og godt hundehold</h2></div></div>
+      <p>Hunden er avhengig av eieren for trygghet, omsorg, aktivitet, helseoppfølging og gode valg.</p>
+      <h3>Etisk ansvar</h3>
       <ul>
-        <li>Sikre stedet slik at ingen blir skadet.</li>
-        <li>Vær forsiktig: en hund med smerter kan bite.</li>
-        <li>Sjekk om hunden reagerer og puster.</li>
-        <li>Kontakt veterinær og følg instruksjonene.</li>
-        <li>Hold hunden rolig og varm, men ikke overopphetet.</li>
-        <li>Transporter skånsomt.</li>
+        <li>Respekter hundens fysiske og følelsesmessige grenser.</li>
+        <li>Ikke bruk smerte eller frykt som treningsverktøy.</li>
+        <li>Gi mulighet for hvile, lek, utforsking og sosial kontakt.</li>
+        <li>Ta helseproblemer og lidelse på alvor.</li>
+        <li>Vurder hundens livskvalitet ærlig gjennom hele livet.</li>
       </ul>
-      <h3>Blødning</h3>
-      <p>Legg en ren kompress eller klut direkte mot såret og hold jevnt trykk. Ikke løft for å sjekke hele tiden. Ved kraftig eller vedvarende blødning må hunden raskt til veterinær.</p>
-      <h3>Heteslag</h3>
-      <p>Flytt hunden til et kjøligere sted, start forsiktig nedkjøling med svalt vann og luftbevegelse, og kontakt veterinær umiddelbart. Ikke bruk isvann.</p>
-      <h3>Forgiftning</h3>
-      <p>Fjern hunden fra stoffet, ta vare på emballasje eller bilde av produktet, og ring veterinær. Ikke gi mat, melk, salt eller fremkall oppkast uten tydelig beskjed.</p>
-      <h3>Kramper</h3>
-      <p>Flytt gjenstander unna, demp lys og lyd, ta tiden og ikke putt hendene i munnen. Kontakt veterinær, særlig ved første anfall, langvarig anfall eller gjentatte anfall.</p>
-      <div class="remember"><strong>📌 Førstehjelpsutstyr</strong>Ha telefonnummer til veterinærvakt, kompresser, elastisk bandasje, tape, saks med butt spiss, hansker, pinsett, saltvann, håndkle og et teppe tilgjengelig.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Lag eller kontroller førstehjelpsskrinet og lagre nummeret til nærmeste veterinærvakt på telefonen.</div>
-      <div class="lesson-footer"><span class="small">Mål: Handle rolig og riktig frem til veterinær overtar.</span><button class="complete-btn" data-complete="8">Marker leksjonen som fullført</button></div>
+      <div class="expert"><strong>⭐ Ambassadør for godt hundehold</strong>Din måte å behandle hunden på påvirker også hvordan andre ser på hunder og hundeeiere.</div>
+      <div class="task"><strong>🐾 Oppgave</strong>Skriv ditt eget løfte om hvordan du vil ivareta hundens trygghet og livskvalitet.</div>
+      <div class="lesson-footer"><span class="small">Mål: Gjøre kunnskap om til ansvarlig praksis.</span><button class="complete-btn" data-complete="8">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon9">
-      <div class="lesson-header"><div class="lesson-icon">📅</div><div><span class="badge">LEKSJON 9</span><h2>30-dagers helse- og stellplan</h2></div></div>
-      <p>Planen gjør helsekontroll og stell til en enkel del av hverdagen.</p>
+      <div class="lesson-header"><div class="lesson-icon">🗺️</div><div><span class="badge">LEKSJON 9</span><h2>Din personlige ekspertplan</h2></div></div>
+      <p>En god plan skal være enkel nok til å brukes. Den bør dekke trening, aktivitet, helse, hvile og relasjon.</p>
       <table class="plan">
-        <thead><tr><th>Dager</th><th>Fokus</th><th>Oppgave</th></tr></thead>
+        <thead><tr><th>Område</th><th>Ukentlig mål</th><th>Hvordan følge opp</th></tr></thead>
         <tbody>
-          <tr><td>1–3</td><td>Normaltilstand</td><td>Noter appetitt, energi, avføring, pust og bevegelse.</td></tr>
-          <tr><td>4–6</td><td>Håndtering</td><td>Tren rolig berøring av poter, ører, øyne og munn.</td></tr>
-          <tr><td>7–9</td><td>Pels og hud</td><td>Børst systematisk og undersøk huden.</td></tr>
-          <tr><td>10–12</td><td>Poter og klør</td><td>Sjekk tredeputer, tær og klolengde.</td></tr>
-          <tr><td>13–15</td><td>Tenner</td><td>Bygg opp daglig tannpuss i korte økter.</td></tr>
-          <tr><td>16–18</td><td>Ører og øyne</td><td>Sammenlign begge sider og noter endringer.</td></tr>
-          <tr><td>19–21</td><td>Vekt</td><td>Vei hunden og vurder kroppshold.</td></tr>
-          <tr><td>22–24</td><td>Forebygging</td><td>Kontroller vaksiner, parasittplan og helsekontroll.</td></tr>
-          <tr><td>25–27</td><td>Førstehjelp</td><td>Kontroller utstyr og nødnumre.</td></tr>
-          <tr><td>28–30</td><td>Helsejournal</td><td>Samle observasjoner og lag en fast månedsrutine.</td></tr>
+          <tr><td>Samarbeid</td><td>2–3 korte treningsøkter</td><td>Noter hva hunden mestret.</td></tr>
+          <tr><td>Aktivisering</td><td>Variasjon mellom tur, søk og lek</td><td>Se etter balanse mellom aktivitet og ro.</td></tr>
+          <tr><td>Helse</td><td>Kort kroppssjekk</td><td>Følg med på endringer.</td></tr>
+          <tr><td>Stell</td><td>Pels, poter, klør, tenner</td><td>Fordel oppgavene gjennom uken.</td></tr>
+          <tr><td>Miljøtrening</td><td>Én kontrollert ny eller krevende situasjon</td><td>Tilpass avstand og vanskelighetsgrad.</td></tr>
+          <tr><td>Hvile</td><td>Nok uforstyrret søvn og pauser</td><td>Følg med på stress og uro.</td></tr>
         </tbody>
       </table>
-      <div class="tip"><strong>✅ Praktisk tips</strong>Ta månedlige bilder av tenner, kroppshold, hudforandringer eller kuler når dette er relevant. Bilder kan vise utvikling over tid.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Velg en fast dag hver måned til full helsesjekk hjemme.</div>
-      <div class="lesson-footer"><span class="small">Mål: Gjøre helsearbeidet systematisk og oversiktlig.</span><button class="complete-btn" data-complete="9">Marker leksjonen som fullført</button></div>
+      <div class="task"><strong>🐾 Oppgave</strong>Fyll ut planen med konkrete aktiviteter som passer hunden din.</div>
+      <div class="lesson-footer"><span class="small">Mål: Gjøre kunnskapen til faste, gode vaner.</span><button class="complete-btn" data-complete="9">Marker leksjonen som fullført</button></div>
     </article>
 
     <article class="lesson" id="leksjon10">
-      <div class="lesson-header"><div class="lesson-icon">⭐</div><div><span class="badge">LEKSJON 10</span><h2>Oppsummering</h2></div></div>
-      <p>God helseoppfølging handler om å kjenne hundens normaltilstand, gjøre jevnlig stell, forebygge problemer og vite når veterinærhjelp er nødvendig.</p>
-      <h3>Det viktigste fra modulen</h3>
+      <div class="lesson-header"><div class="lesson-icon">🏅</div><div><span class="badge">LEKSJON 10</span><h2>Oppsummering av hele Hundeakademiet</h2></div></div>
+      <p>Du har nå arbeidet deg gjennom hele Hundeakademiet – fra grunnleggende forståelse til trening, aktivisering, helse og etisk ansvar.</p>
+      <h3>De ni modulene</h3>
       <ul>
-        <li>Følg med på små endringer i atferd og kropp.</li>
-        <li>Gjør håndtering til positiv trening.</li>
-        <li>Hold hud, pels, klør og poter i god stand.</li>
-        <li>Prioriter tannpuss og regelmessig tannkontroll.</li>
-        <li>Ta øye- og øresymptomer på alvor.</li>
-        <li>Hold oversikt over vekt, fôr og forebyggende behandling.</li>
-        <li>Ha veterinærnummer og førstehjelpsutstyr klart.</li>
-        <li>Ved akutte faresignaler: kontakt veterinær raskt.</li>
+        <li><strong>Modul 1:</strong> Bli kjent med hunden.</li>
+        <li><strong>Modul 2:</strong> Valpen – den viktige starten.</li>
+        <li><strong>Modul 3:</strong> Grunnleggende lydighet.</li>
+        <li><strong>Modul 4:</strong> Atferd og problemløsning.</li>
+        <li><strong>Modul 5:</strong> Trening i praksis.</li>
+        <li><strong>Modul 6:</strong> Hverdagsliv og gode vaner.</li>
+        <li><strong>Modul 7:</strong> Aktivisering, lek og mental stimulering.</li>
+        <li><strong>Modul 8:</strong> Helse, stell og førstehjelp.</li>
+        <li><strong>Modul 9:</strong> Hundeeieren som ekspert.</li>
       </ul>
-      <div class="remember"><strong>📌 Modulens viktigste budskap</strong>Førstehjelp kjøper tid – veterinæren stiller diagnose og gir behandling.</div>
-      <div class="task"><strong>🐾 Dagens oppgave</strong>Velg de tre helserutinene du vil følge fast hver uke.</div>
-      <div class="lesson-footer"><span class="small">Mål: Være en trygg og oppmerksom hundeeier.</span><button class="complete-btn" data-complete="10">Marker leksjonen som fullført</button></div>
+      <div class="remember"><strong>📌 Det viktigste av alt</strong>Se hunden foran deg. Vær nysgjerrig, vennlig og tydelig. Små gode valg hver dag skaper et godt hundeliv.</div>
+      <div class="task"><strong>🐾 Siste oppgave</strong>Skriv ned hva du ønsker at hunden din skal oppleve mer av det neste året.</div>
+      <div class="lesson-footer"><span class="small">Mål: Samle kunnskapen og ta den med videre.</span><button class="complete-btn" data-complete="10">Marker leksjonen som fullført</button></div>
     </article>
 
-    <section class="quiz" id="quiz">
-      <h2>📝 Modulquiz – Helse, stell og førstehjelp</h2>
-      <p>Svar på spørsmålene. Du trenger minst 8 av 9 riktige for å bestå.</p>
-      <form id="quizForm">
-        <div class="question"><h3>1. Hva er viktigst ved en daglig helsesjekk?</h3>
-          <label class="option"><input type="radio" name="q1" value="a"> Å sammenligne med hundens normaltilstand</label>
-          <label class="option"><input type="radio" name="q1" value="b"> Å vente til hunden blir svært syk</label>
-          <label class="option"><input type="radio" name="q1" value="c"> Bare å se på pelsen</label>
+    <section class="academy-check">
+      <h2>📚 Status for hele akademiet</h2>
+      <p>Filen kontrollerer lagret fremdrift på denne enheten. Hoveddiplomet åpnes når modul 9 er fullført og hovedeksamen er bestått. Dersom eldre moduler bruker andre lagringsnavn, kan de fortsatt markeres som fullført fra akademiets hovedside.</p>
+      <div class="academy-grid" id="academyGrid"></div>
+    </section>
+
+    <section class="exam" id="eksamen">
+      <h2>🧠 Hovedeksamen – Hundene Våre Akademiet</h2>
+      <p>Eksamen består av 15 spørsmål fra hele akademiet. Du trenger minst 12 riktige for å bestå.</p>
+      <form id="examForm">
+        <div class="question"><h3>1. Hva er viktigst når man tolker kroppsspråk?</h3>
+          <label class="option"><input type="radio" name="q1" value="a"> Ett enkelt signal</label>
+          <label class="option"><input type="radio" name="q1" value="b"> Hele kroppen og situasjonen</label>
+          <label class="option"><input type="radio" name="q1" value="c"> Bare halen</label>
         </div>
-        <div class="question"><h3>2. Hvor bør man se ekstra etter floker?</h3>
-          <label class="option"><input type="radio" name="q2" value="a"> Bare på ryggen</label>
-          <label class="option"><input type="radio" name="q2" value="b"> Bak ører, i armhuler og lyske</label>
-          <label class="option"><input type="radio" name="q2" value="c"> Ingen steder</label>
+        <div class="question"><h3>2. Hva trenger en valp mye av?</h3>
+          <label class="option"><input type="radio" name="q2" value="a"> Lange krevende økter</label>
+          <label class="option"><input type="radio" name="q2" value="b"> Trygghet, korte økter og hvile</label>
+          <label class="option"><input type="radio" name="q2" value="c"> Stadig nye krav</label>
         </div>
-        <div class="question"><h3>3. Hvordan bør mørke klør klippes?</h3>
-          <label class="option"><input type="radio" name="q3" value="a"> Store biter om gangen</label>
-          <label class="option"><input type="radio" name="q3" value="b"> Små biter om gangen</label>
-          <label class="option"><input type="radio" name="q3" value="c"> Bare med vanlig saks</label>
+        <div class="question"><h3>3. Hva styrker innkalling best?</h3>
+          <label class="option"><input type="radio" name="q3" value="a"> Gode belønninger og gradvis trening</label>
+          <label class="option"><input type="radio" name="q3" value="b"> Å rope mange ganger</label>
+          <label class="option"><input type="radio" name="q3" value="c"> Å straffe hunden når den kommer sent</label>
         </div>
-        <div class="question"><h3>4. Hva skal brukes til tannpuss?</h3>
-          <label class="option"><input type="radio" name="q4" value="a"> Mennesketannkrem</label>
-          <label class="option"><input type="radio" name="q4" value="b"> Tannkrem beregnet for hund</label>
-          <label class="option"><input type="radio" name="q4" value="c"> Såpe</label>
+        <div class="question"><h3>4. Hva bør vurderes ved plutselig atferdsendring?</h3>
+          <label class="option"><input type="radio" name="q4" value="a"> Smerte eller helseproblem</label>
+          <label class="option"><input type="radio" name="q4" value="b"> At hunden er sta</label>
+          <label class="option"><input type="radio" name="q4" value="c"> At trening er unødvendig</label>
         </div>
-        <div class="question"><h3>5. Hva gjør du ved et plutselig smertefullt eller uklart øye?</h3>
-          <label class="option"><input type="radio" name="q5" value="a"> Venter flere uker</label>
-          <label class="option"><input type="radio" name="q5" value="b"> Kontakter veterinær raskt</label>
-          <label class="option"><input type="radio" name="q5" value="c"> Bruker tilfeldige øyedråper</label>
+        <div class="question"><h3>5. Hva betyr det å trene i små trinn?</h3>
+          <label class="option"><input type="radio" name="q5" value="a"> Øke vanskeligheten gradvis</label>
+          <label class="option"><input type="radio" name="q5" value="b"> Gjøre alt vanskelig med en gang</label>
+          <label class="option"><input type="radio" name="q5" value="c"> Bare trene én gang</label>
         </div>
-        <div class="question"><h3>6. Hva er en god vane for vektkontroll?</h3>
-          <label class="option"><input type="radio" name="q6" value="a"> Regelmessig veiing og vurdering av kroppshold</label>
-          <label class="option"><input type="radio" name="q6" value="b"> Aldri å veie hunden</label>
-          <label class="option"><input type="radio" name="q6" value="c"> Bare å telle turer</label>
+        <div class="question"><h3>6. Hvorfor er gode hverdagsvaner nyttige?</h3>
+          <label class="option"><input type="radio" name="q6" value="a"> De skaper forutsigbarhet</label>
+          <label class="option"><input type="radio" name="q6" value="b"> De gjør hunden passiv</label>
+          <label class="option"><input type="radio" name="q6" value="c"> De erstatter all trening</label>
         </div>
-        <div class="question"><h3>7. Hva bør du gjøre ved mulig forgiftning?</h3>
-          <label class="option"><input type="radio" name="q7" value="a"> Fremkalle oppkast uten råd</label>
-          <label class="option"><input type="radio" name="q7" value="b"> Kontakte veterinær og ta vare på produktinformasjonen</label>
-          <label class="option"><input type="radio" name="q7" value="c"> Gi salt</label>
+        <div class="question"><h3>7. Hva er et godt eksempel på mental aktivisering?</h3>
+          <label class="option"><input type="radio" name="q7" value="a"> Nesearbeid og problemløsning</label>
+          <label class="option"><input type="radio" name="q7" value="b"> Bare løping</label>
+          <label class="option"><input type="radio" name="q7" value="c"> Ingen pauser</label>
         </div>
-        <div class="question"><h3>8. Hva er riktig ved kraftig blødning?</h3>
-          <label class="option"><input type="radio" name="q8" value="a"> Jevnt direkte trykk og rask veterinærkontakt</label>
-          <label class="option"><input type="radio" name="q8" value="b"> Vaske lenge før man gjør noe annet</label>
-          <label class="option"><input type="radio" name="q8" value="c"> La hunden løpe</label>
+        <div class="question"><h3>8. Hva bør du gjøre ved mulig forgiftning?</h3>
+          <label class="option"><input type="radio" name="q8" value="a"> Kontakte veterinær raskt</label>
+          <label class="option"><input type="radio" name="q8" value="b"> Gi salt uten råd</label>
+          <label class="option"><input type="radio" name="q8" value="c"> Vente til neste dag</label>
         </div>
-        <div class="question"><h3>9. Hva er førstehjelpens hovedoppgave?</h3>
-          <label class="option"><input type="radio" name="q9" value="a"> Erstatte veterinærbehandling</label>
-          <label class="option"><input type="radio" name="q9" value="b"> Begrense skade og kjøpe tid frem til veterinærhjelp</label>
-          <label class="option"><input type="radio" name="q9" value="c"> Stille endelig diagnose hjemme</label>
+        <div class="question"><h3>9. Hva kjennetegner godt samarbeid?</h3>
+          <label class="option"><input type="radio" name="q9" value="a"> Tillit, tydelighet og gode erfaringer</label>
+          <label class="option"><input type="radio" name="q9" value="b"> Frykt for feil</label>
+          <label class="option"><input type="radio" name="q9" value="c"> Stadig strengere krav</label>
         </div>
-        <button class="btn btn-primary" type="submit">Se resultatet</button>
+        <div class="question"><h3>10. Hva er god forebygging?</h3>
+          <label class="option"><input type="radio" name="q10" value="a"> Legge til rette for at hunden lykkes</label>
+          <label class="option"><input type="radio" name="q10" value="b"> Vente til problemet er stort</label>
+          <label class="option"><input type="radio" name="q10" value="c"> Ignorere små endringer</label>
+        </div>
+        <div class="question"><h3>11. Hvordan bør trening tilpasses seniorhunden?</h3>
+          <label class="option"><input type="radio" name="q11" value="a"> Etter helse, sanser og utholdenhet</label>
+          <label class="option"><input type="radio" name="q11" value="b"> Den skal være like hard som før</label>
+          <label class="option"><input type="radio" name="q11" value="c"> Seniorhunder skal aldri lære noe nytt</label>
+        </div>
+        <div class="question"><h3>12. Hva er etisk godt hundehold?</h3>
+          <label class="option"><input type="radio" name="q12" value="a"> Å respektere hundens behov og grenser</label>
+          <label class="option"><input type="radio" name="q12" value="b"> Å bruke frykt for raskere resultat</label>
+          <label class="option"><input type="radio" name="q12" value="c"> Å overse smerte</label>
+        </div>
+        <div class="question"><h3>13. Hva bør være med i en ekspertplan?</h3>
+          <label class="option"><input type="radio" name="q13" value="a"> Trening, helse, aktivitet og hvile</label>
+          <label class="option"><input type="radio" name="q13" value="b"> Bare konkurransemål</label>
+          <label class="option"><input type="radio" name="q13" value="c"> Bare fôring</label>
+        </div>
+        <div class="question"><h3>14. Når bør profesjonell hjelp søkes?</h3>
+          <label class="option"><input type="radio" name="q14" value="a"> Ved alvorlig frykt, bittfare eller store endringer</label>
+          <label class="option"><input type="radio" name="q14" value="b"> Aldri</label>
+          <label class="option"><input type="radio" name="q14" value="c"> Bare etter flere år</label>
+        </div>
+        <div class="question"><h3>15. Hva kjennetegner en hundeeier på ekspertnivå?</h3>
+          <label class="option"><input type="radio" name="q15" value="a"> Observerer, lærer og tilpasser seg</label>
+          <label class="option"><input type="radio" name="q15" value="b"> Tror alltid at han eller hun har rett</label>
+          <label class="option"><input type="radio" name="q15" value="c"> Bruker samme løsning på alle hunder</label>
+        </div>
+        <button class="btn btn-gold" type="submit">Lever hovedeksamen</button>
       </form>
-      <div class="quiz-result" id="quizResult"></div>
+
+      <div class="exam-result" id="examResult"></div>
+
       <div class="certificate" id="certificate">
-        <div style="font-size:52px">🏆</div>
-        <h2>Modul 8 fullført</h2>
-        <p>Gratulerer! Du har fullført <strong>Helse, stell og førstehjelp</strong> og bestått modulquizen.</p>
-        <p>Du har nå kunnskap om daglig helseoppfølging, stell, faresignaler og trygg førstehjelp.</p>
-        <a class="btn btn-primary" href="hundeakademiet_ny.html">Tilbake til akademiet</a>
+        <div class="seal">🏆</div>
+        <div style="letter-spacing:.18em;font-weight:900;color:#8b6b1d">HOVEDDIPLOM</div>
+        <h2>Hundene Våre Akademiet</h2>
+        <p>Dette diplomet bekrefter at</p>
+        <div class="name-line"></div>
+        <h3>har fullført Hundeakademiet</h3>
+        <p>og bestått den avsluttende hovedeksamen i kunnskap om hundens behov, trening, atferd, aktivisering, helse og ansvarlig hundehold.</p>
+        <p><strong>9 Premium-moduler fullført</strong></p>
+        <p style="margin-top:25px">Dato: <span id="certificateDate"></span></p>
+        <button class="btn btn-gold print-btn" type="button" onclick="window.print()">🖨️ Skriv ut diplomet</button>
       </div>
     </section>
 
     <section class="sourcebox">
-      <h3>Viktig informasjon</h3>
-      <p>Kurset gir generell opplæring og erstatter ikke undersøkelse, diagnose eller behandling hos veterinær. Ved akutte symptomer eller usikkerhet skal veterinær eller veterinærvakt kontaktes.</p>
+      <h3>En siste hilsen</h3>
+      <p>Gratulerer med gjennomført Hundeakademi. Kunnskap blir mest verdifull når den brukes med omtanke. Fortsett å observere hunden, øve i små trinn, ta vare på helsen og bygge mange gode opplevelser sammen.</p>
     </section>
 
   </section>
@@ -427,17 +468,17 @@ footer{background:var(--green-dark);color:#dce9df}
 <footer>
   <div class="container footer">
     <div><strong>Hundene Våre Akademiet</strong><p>Kunnskap, trygghet og glede for hele hundelivet.</p></div>
-    <div><a href="hundeakademiet_ny.html" style="color:#fff;font-weight:800">Tilbake til akademiet</a></div>
+    <div><a href="hundeakademiet_ny.html" style="color:#fff;font-weight:900">Tilbake til akademiet</a></div>
   </div>
 </footer>
 
 <script>
-const key="module8CompletedLessons";
-let completed=JSON.parse(localStorage.getItem(key)||"[]");
+const lessonKey="module9CompletedLessons";
+let completed=JSON.parse(localStorage.getItem(lessonKey)||"[]");
 
 function updateProgress(){
   completed=[...new Set(completed.map(Number))].filter(n=>n>=1&&n<=10);
-  localStorage.setItem(key,JSON.stringify(completed));
+  localStorage.setItem(lessonKey,JSON.stringify(completed));
   const percent=Math.round((completed.length/10)*100);
   document.getElementById("progressText").textContent=`${completed.length} av 10 leksjoner fullført`;
   document.getElementById("progressFill").style.width=`${percent}%`;
@@ -450,6 +491,10 @@ function updateProgress(){
   document.querySelectorAll("#lessonNav a[data-lesson]").forEach(link=>{
     link.classList.toggle("done",completed.includes(Number(link.dataset.lesson)));
   });
+  if(completed.length===10){
+    localStorage.setItem("academyModulesDone",Math.max(Number(localStorage.getItem("academyModulesDone")||0),9));
+  }
+  renderAcademyStatus();
 }
 
 document.querySelectorAll("[data-complete]").forEach(btn=>{
@@ -460,36 +505,68 @@ document.querySelectorAll("[data-complete]").forEach(btn=>{
   });
 });
 
-document.getElementById("quizForm").addEventListener("submit",function(e){
+function modulePassed(n){
+  if(n===9) return completed.length===10;
+  if(localStorage.getItem(`module${n}QuizPassed`)==="true") return true;
+  const done=Number(localStorage.getItem("academyModulesDone")||0);
+  return done>=n;
+}
+
+function renderAcademyStatus(){
+  const names=[
+    "Bli kjent med hunden","Valpen – den viktige starten","Grunnleggende lydighet",
+    "Atferd og problemløsning","Trening i praksis","Hverdagsliv og gode vaner",
+    "Aktivisering og mental stimulering","Helse, stell og førstehjelp","Hundeeieren som ekspert"
+  ];
+  const grid=document.getElementById("academyGrid");
+  grid.innerHTML=names.map((name,i)=>{
+    const ok=modulePassed(i+1);
+    return `<div class="module-card"><strong>Modul ${i+1}</strong>${name}<br><span class="status ${ok?"ok":""}">${ok?"✓ Fullført":"Ikke registrert som fullført"}</span></div>`;
+  }).join("");
+}
+
+document.getElementById("examForm").addEventListener("submit",function(e){
   e.preventDefault();
-  const answers={q1:"a",q2:"b",q3:"b",q4:"b",q5:"b",q6:"a",q7:"b",q8:"a",q9:"b"};
+  const answers={
+    q1:"b",q2:"b",q3:"a",q4:"a",q5:"a",
+    q6:"a",q7:"a",q8:"a",q9:"a",q10:"a",
+    q11:"a",q12:"a",q13:"a",q14:"a",q15:"a"
+  };
   let score=0,answered=0;
   Object.entries(answers).forEach(([name,correct])=>{
     const selected=document.querySelector(`input[name="${name}"]:checked`);
     if(selected){answered++;if(selected.value===correct)score++}
   });
-  const result=document.getElementById("quizResult");
+  const result=document.getElementById("examResult");
   result.style.display="block";
-  if(answered<9){
-    result.textContent="Du må svare på alle spørsmålene før du kan levere quizen.";
+  if(answered<15){
+    result.textContent="Du må svare på alle 15 spørsmålene før du kan levere eksamen.";
     return;
   }
-  if(score>=8){
-    result.textContent=`Gratulerer! Du fikk ${score} av 9 riktige og har bestått modulquizen.`;
-    document.getElementById("certificate").style.display="block";
-    localStorage.setItem("academyQuizDone",Math.max(Number(localStorage.getItem("academyQuizDone")||0),8));
-    localStorage.setItem("academyModulesDone",Math.max(Number(localStorage.getItem("academyModulesDone")||0),8));
-    localStorage.setItem("module8QuizPassed","true");
+  if(score>=12){
+    result.textContent=`Gratulerer! Du fikk ${score} av 15 riktige og har bestått hovedeksamen.`;
+    localStorage.setItem("module9QuizPassed","true");
+    localStorage.setItem("academyQuizDone","9");
+    localStorage.setItem("academyModulesDone","9");
+    showCertificate();
+    renderAcademyStatus();
   }else{
-    result.textContent=`Du fikk ${score} av 9 riktige. Les gjennom leksjonene og prøv igjen.`;
+    result.textContent=`Du fikk ${score} av 15 riktige. Du trenger minst 12 riktige. Les gjennom leksjonene og prøv igjen.`;
     document.getElementById("certificate").style.display="none";
   }
 });
 
-if(localStorage.getItem("module8QuizPassed")==="true"){
-  document.getElementById("certificate").style.display="block";
+function showCertificate(){
+  if(localStorage.getItem("module9QuizPassed")==="true"){
+    document.getElementById("certificate").style.display="block";
+    const now=new Date();
+    document.getElementById("certificateDate").textContent=now.toLocaleDateString("no-NO",{day:"2-digit",month:"2-digit",year:"numeric"});
+  }
 }
+
 updateProgress();
+renderAcademyStatus();
+showCertificate();
 </script>
 </body>
 </html>
