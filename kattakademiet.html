@@ -1,7 +1,8 @@
-<!DOCTYPE html><html lang="no"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kattakademiet | Hundene Våre</title>
+<!DOCTYPE html><html lang="no"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kattakademiet – 9 Premium-moduler | Hundene Våre</title>
 <style>
 
 :root{
+  --p:#75508f;
   --purple:#75508f;
   --purple-dark:#4f3763;
   --purple-soft:#f1eaf5;
@@ -248,10 +249,28 @@ footer{background:var(--purple-dark);color:#efe7f1;margin-top:28px}
 .course-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center}.course-ico{min-height:250px;border-radius:20px;background:linear-gradient(145deg,#f5e7ef,#e9ddf1);display:grid;place-items:center;font-size:110px}
 .lesson-head{display:flex;align-items:flex-start;gap:16px}.lesson-foot{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}.complete{border:none;background:var(--purple);color:#fff;border-radius:12px;padding:11px 16px;font-weight:800;cursor:pointer}.result{display:none;margin-top:18px;padding:16px;border-radius:14px;background:var(--purple-soft);font-weight:800;color:var(--purple-dark)}
 @media(max-width:900px){.course-grid{grid-template-columns:1fr}}
+
+/* Fast hurtigmeny – publiseringsversjon */
+.quick-nav{display:flex;align-items:center;gap:7px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;padding:5px 0;max-width:100%;-webkit-overflow-scrolling:touch}
+.quick-nav a,.quick-nav button{flex:0 0 auto;white-space:nowrap;border:1px solid transparent}
+.quick-nav .academy-back{background:var(--purple-soft);color:var(--purple-dark);border-color:#dfd0e7}
+@media(max-width:980px){
+ .nav{align-items:center;gap:10px}.brand{flex:0 0 auto}.quick-nav{flex:1;justify-content:flex-start}
+}
+@media(max-width:640px){
+ .container{width:min(100% - 20px,1460px)}.nav{min-height:64px;display:block;padding:8px 0}.brand{margin-bottom:7px}.logo{width:38px;height:38px;border-radius:12px;font-size:20px}.brand-title{font-size:18px}.quick-nav{width:100%;padding:3px 0 7px}.quick-nav a,.quick-nav button{padding:9px 11px;font-size:14px}
+}
 </style></head><body>
+<!-- PUBLISERINGSKLAR: 9 Premium-moduler + fast hurtigmeny -->
 <div class="top">🐾 Lær i ditt eget tempo – små steg gir en tryggere og lykkeligere katt.</div>
-<header class="header"><div class="container nav"><a class="brand" href="#" onclick="showAcademy();return false"><span class="logo">🐾</span><span>Kattakademiet<br><small>Kunnskap • Trygghet • Glede</small></span></a><nav class="menu"><a href="index.html">🏠 Forsiden</a><button onclick="showAcademy()">🎓 Kursene</button><a href="#modules">📚 Moduler</a></nav></div></header>
-<div id="academy"><section class="hero"><div class="container"><div class="hero-grid"><div><span class="badge">🐱 Norges digitale læringssted for katteeiere</span><h1>Lær mer. Forstå mer.<br><span>Gi katten din det beste livet.</span></h1><p class="lead">Ni komplette moduler, 72 leksjoner, praktiske oppgaver, quiz og diplom.</p><div class="actions"><button class="btn primary" onclick="startCourse()">🎓 Fortsett læringen</button><a class="btn light" href="index.html">← Forsiden</a></div></div><div class="card"><h3>Din samlede fremdrift</h3><div class="progress-grid"><div class="ring" id="ring"><strong id="percent">0%</strong></div><div><div class="row"><span>Moduler</span><b id="mdone">0 / 9</b></div><div class="row"><span>Leksjoner</span><b id="ldone">0 / 72</b></div><div class="row"><span>Quiz</span><b id="qdone">0 / 9</b></div><div class="row"><span>Diplom</span><b id="diploma">Ikke låst opp</b></div></div></div></div><div class="visual">🐈‍⬛</div></div><div class="stats"><div class="stat"><strong>9</strong><br>moduler</div><div class="stat"><strong>72</strong><br>leksjoner</div><div class="stat"><strong>45</strong><br>quizspørsmål</div><div class="stat"><strong>72</strong><br>oppgaver</div><div class="stat"><strong>1</strong><br>diplom</div></div><section class="panel" id="modules"><h2>Velg en modul</h2><p>Alle modulene er åpne, og fremdriften lagres automatisk.</p><div class="module-grid" id="moduleGrid"></div></section>
+<header class="header"><div class="container nav"><a class="brand" href="#" onclick="showAcademy();return false"><span class="logo">🐾</span><span>Kattakademiet<br><small>Kunnskap • Trygghet • Glede</small></span></a><nav class="menu quick-nav" aria-label="Hurtigmeny">
+<a href="index.html">🏠 Forsiden</a>
+<button type="button" class="academy-back" onclick="showAcademy()">⬅️ Tilbake til akademiet</button>
+<a href="katt-oppdretterportal.html">🐱 Oppdrettere</a>
+<a href="katteleksikon.html">📚 Katteleksikon</a>
+<a href="katterasequiz.html">🧠 Kattequiz</a>
+</nav></div></header>
+<div id="academy"><section class="hero"><div class="container"><div class="hero-grid"><div><span class="badge">🐱 Norges digitale læringssted for katteeiere</span><h1>Lær mer. Forstå mer.<br><span>Gi katten din det beste livet.</span></h1><p class="lead">Ni komplette moduler, 72 leksjoner, praktiske oppgaver, quiz og diplom.</p><div class="actions"><button class="btn primary" onclick="startCourse()">🎓 Fortsett læringen</button><a class="btn light" href="index.html">← Forsiden</a></div></div><div class="card"><h3>Din samlede fremdrift</h3><div class="progress-grid"><div class="ring" id="ring"><strong id="percent">0%</strong></div><div><div class="row"><span>Moduler</span><b id="mdone">0 / 9</b></div><div class="row"><span>Leksjoner</span><b id="ldone">0 / 72</b></div><div class="row"><span>Quiz</span><b id="qdone">0 / 9</b></div><div class="row"><span>Diplom</span><b id="diploma">Ikke låst opp</b></div></div></div></div><div class="visual">🐈‍⬛</div></div><div class="stats"><div class="stat"><strong>9</strong><br>moduler</div><div class="stat"><strong>72</strong><br>leksjoner</div><div class="stat"><strong>80</strong><br>quizspørsmål</div><div class="stat"><strong>72</strong><br>oppgaver</div><div class="stat"><strong>1</strong><br>diplom</div></div><section class="panel" id="modules"><h2>Velg en modul</h2><p>Alle modulene er åpne, og fremdriften lagres automatisk.</p><div class="module-grid" id="moduleGrid"></div></section>
 <div class="bottom-grid" id="om">
  <section class="why"><h2>Derfor Kattakademiet</h2><div class="features">
   <div class="feature"><div class="ico">💜</div><div><h4>Forståelse først</h4><p>Lær hvorfor katten gjør som den gjør.</p></div></div>
@@ -305,5 +324,5 @@ function showAcademy(){course.style.display="none";academy.style.display="block"
 function startCourse(){const n=modules.find(m=>!moduleDone(m.num));openModule(n?n.num:1)}
 function updateAcademy(){let l=0,q=0,m=0;modules.forEach(x=>{l+=(completed[x.num]||[]).length;if(quizzes[x.num])q++;if(moduleDone(x.num))m++});const p=Math.round((l+q)/81*100);percent.textContent=p+"%";ring.style.background=`conic-gradient(var(--p) ${p*3.6}deg,#eee7ef 0)`;ldone.textContent=`${l} / 72`;qdone.textContent=`${q} / 9`;mdone.textContent=`${m} / 9`;const ok=m===9;diploma.textContent=ok?"Låst opp":"Ikke låst opp";certificate.classList.toggle("show",ok)}
 renderModules();
-openModule(9);
+showAcademy();
 </script></body></html>
