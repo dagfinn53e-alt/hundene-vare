@@ -159,6 +159,134 @@ body{font-family:Arial,sans-serif;color:var(--dark);min-height:100vh;background:
   .academy-banner .academy-button{width:100%;min-width:0}
 }
 
+
+/* Delt akademiboks – hund og katt */
+.academy-duo{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  margin-bottom:18px;
+  border-radius:34px;
+  overflow:hidden;
+  box-shadow:0 20px 48px rgba(15,23,42,.18);
+  border:1px solid rgba(255,255,255,.35);
+}
+.academy-side{
+  min-width:0;
+  padding:26px 28px;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:18px;
+}
+.dog-academy{
+  background:
+    radial-gradient(circle at 12% 18%,rgba(255,255,255,.22),transparent 24%),
+    linear-gradient(135deg,#0f3d2e,#17704e 55%,#2a8c65);
+}
+.cat-academy{
+  background:
+    radial-gradient(circle at 88% 16%,rgba(255,255,255,.25),transparent 25%),
+    linear-gradient(135deg,#9d3f72,#d56f9f 55%,#7b4b91);
+}
+.academy-label{
+  display:inline-flex;
+  align-self:flex-start;
+  padding:8px 11px;
+  border-radius:999px;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.24);
+  font-size:13px;
+  font-weight:900;
+}
+.academy-main{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:16px;
+  align-items:center;
+}
+.academy-animal{
+  width:82px;
+  height:82px;
+  border-radius:26px;
+  background:rgba(255,255,255,.16);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:48px;
+  border:1px solid rgba(255,255,255,.20);
+}
+.academy-side h2{
+  font-size:clamp(1.8rem,3vw,2.7rem);
+  margin-bottom:7px;
+}
+.academy-side p{
+  color:#fff;
+  font-size:15px;
+  line-height:1.48;
+  font-weight:700;
+  margin-bottom:12px;
+}
+.academy-mini-badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+.academy-mini-badges span{
+  padding:7px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.20);
+  font-size:12px;
+  font-weight:900;
+}
+.academy-dog-button,
+.academy-cat-button{
+  width:100%;
+  padding:14px 18px;
+  border:none;
+  font-size:15px;
+}
+.academy-dog-button{
+  background:linear-gradient(135deg,#f4cf72,#fff0b7);
+  color:#173d2f;
+}
+.academy-cat-button{
+  background:linear-gradient(135deg,#fff0f7,#ffd5e8);
+  color:#713652;
+}
+@media(max-width:760px){
+  .academy-duo{
+    grid-template-columns:1fr;
+    border-radius:22px;
+    margin-bottom:10px;
+  }
+  .academy-side{
+    padding:18px 14px;
+    gap:14px;
+  }
+  .academy-main{
+    grid-template-columns:auto 1fr;
+    gap:11px;
+  }
+  .academy-animal{
+    width:58px;
+    height:58px;
+    border-radius:19px;
+    font-size:34px;
+  }
+  .academy-side h2{
+    font-size:22px;
+  }
+  .academy-side p{
+    font-size:13px;
+    line-height:1.4;
+  }
+  .academy-label{
+    font-size:11px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -169,7 +297,7 @@ body{font-family:Arial,sans-serif;color:var(--dark);min-height:100vh;background:
 <a class="active" href="index.html">🏠 Forside</a>
 <a href="butikker-ny.html">🏪 Butikker</a>
 <a href="kunnskap.html">📚 Kunnskap</a>
-<a href="hundeakademiet_ny.html">🎓 Akademiet</a>
+<a href="#akademiene">🎓 Akademiene</a>
 <a href="spill.html">🎮 Spill</a>
 <a href="arrangementer.html">📅 Arrangementer</a>
 <a href="oppdretterportal.html">🏆 Oppdrettere</a><a href="katt-oppdretterportal.html">🐱 Katteoppdrettere</a>
@@ -188,20 +316,43 @@ body{font-family:Arial,sans-serif;color:var(--dark);min-height:100vh;background:
 <a class="btn white" href="butikker-ny.html">🏪 Butikker og tjenester</a>
 </div>
 </section>
-<section class="academy-banner">
-<div>
-<div class="badge" style="margin-bottom:10px">🎉 NYHET</div>
-<h2>🎓 Hundene Våre Akademiet</h2>
-<p>Start et komplett digitalt hundekurs med 10 kurs, 100 leksjoner, poeng, fremdrift og kursbevis. Alt er gratis og du lærer i ditt eget tempo.</p>
-<div class="academy-badges">
-<span>🐶 10 kurs</span>
-<span>📚 100 leksjoner</span>
-<span>⭐ Poeng og nivåer</span>
-<span>🏆 Kursbevis</span>
-</div>
-</div>
-<a class="btn academy-button" href="hundeakademiet_ny.html">🚀 Start Akademiet</a>
+
+<section class="academy-duo" id="akademiene">
+  <div class="academy-side dog-academy">
+    <div class="academy-label">🎓 HUNDEAKADEMIET</div>
+    <div class="academy-main">
+      <div class="academy-animal">🐶</div>
+      <div>
+        <h2>Hundeakademiet</h2>
+        <p>Et komplett digitalt hundekurs med 10 kurs, 100 leksjoner, poeng, fremdrift og kursbevis.</p>
+        <div class="academy-mini-badges">
+          <span>10 kurs</span>
+          <span>100 leksjoner</span>
+          <span>Kursbevis</span>
+        </div>
+      </div>
+    </div>
+    <a class="btn academy-dog-button" href="hundeakademiet_ny.html">🚀 Start Hundeakademiet</a>
+  </div>
+
+  <div class="academy-side cat-academy">
+    <div class="academy-label">🐱 KATTAKADEMIET</div>
+    <div class="academy-main">
+      <div class="academy-animal">🐱</div>
+      <div>
+        <h2>Kattakademiet</h2>
+        <p>Ni komplette moduler med 72 leksjoner, praktiske oppgaver, quiz, fremdrift og diplom.</p>
+        <div class="academy-mini-badges">
+          <span>9 moduler</span>
+          <span>72 leksjoner</span>
+          <span>Diplom</span>
+        </div>
+      </div>
+    </div>
+    <a class="btn academy-cat-button" href="kattakademiet.html">🌸 Start Kattakademiet</a>
+  </div>
 </section>
+
 <section class="feature">
 <div>
 <h2>🐶 Usikker på hvilken hund som passer deg?</h2>
@@ -224,7 +375,7 @@ body{font-family:Arial,sans-serif;color:var(--dark);min-height:100vh;background:
 <h2 class="section-title">Hva vil du gjøre?</h2>
 <p class="sub">Store, enkle innganger for nye besøkende.</p>
 <div class="launch-grid">
-<a class="launch-card academyCard" href="hundeakademiet_ny.html"><div class="launch-icon">🎓</div><h3>Akademiet</h3><p>10 kurs og 100 leksjoner</p></a>
+<a class="launch-card academyCard" href="#akademiene"><div class="launch-icon">🎓</div><h3>Akademiene</h3><p>Velg Hundeakademiet eller Kattakademiet</p></a>
 <a class="launch-card featureBlue" href="hundevelger.html"><div class="launch-icon">🐶</div><h3>Hundevelgeren</h3><p>Finn hunderasen som passer deg</p></a>
 <a class="launch-card" href="oppdretterportal.html"><div class="launch-icon">🏆</div><h3>Oppdrettere</h3><p>Finn kennel og valper</p></a><a class="launch-card" href="katt-oppdretterportal.html"><div class="launch-icon">🐱</div><h3>Katteoppdrettere</h3><p>Finn katterier og kattunger</p></a>
 <a class="launch-card" href="valpekull.html"><div class="launch-icon">🐾</div><h3>Valpekull</h3><p>Se godkjente kull</p></a>
