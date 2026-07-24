@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Akvarieakademiet Premium 1.0 | Hundene Våre</title>
+<title>Akvarieakademiet Premium 1.1 | Hundene Våre</title>
 <meta name="description" content="Akvarieakademiet – et komplett læringsunivers for akvarieeiere, fra oppstart til vannverdier, fisk, planter, sykdom og stell.">
 <style>
 :root{
@@ -239,6 +239,60 @@ footer{
 }
 footer strong{color:#fff}
 
+
+.full-course{padding-top:8px}
+.course-intro{
+  background:linear-gradient(135deg,#eaf9fb,#fff);
+  border:1px solid #bfe5ea;border-radius:20px;padding:22px;margin-bottom:18px
+}
+.course-intro h3{margin:0 0 8px;color:var(--deep);font-size:25px}
+.lesson-card{
+  background:#fff;border:1px solid var(--line);border-radius:20px;
+  margin:16px 0;overflow:hidden;box-shadow:0 8px 22px rgba(6,59,70,.06)
+}
+.lesson-card-header{
+  display:flex;align-items:center;gap:14px;padding:18px 20px;
+  background:linear-gradient(135deg,#f6fdfe,#e9f8fa);border-bottom:1px solid var(--line)
+}
+.lesson-number{
+  min-width:48px;height:48px;border-radius:15px;background:var(--ocean);color:#fff;
+  display:grid;place-items:center;font-weight:900;font-size:19px
+}
+.lesson-card-header h4{margin:0;color:var(--deep);font-size:21px}
+.lesson-card-header p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.lesson-content{padding:20px}
+.lesson-content h5{font-size:17px;color:var(--deep);margin:20px 0 7px}
+.lesson-content h5:first-child{margin-top:0}
+.lesson-content p{margin:8px 0;color:#456068}
+.lesson-content ul{padding-left:21px;margin:8px 0 14px}
+.lesson-content li{margin:7px 0}
+.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin:14px 0}
+.info-card{border:1px solid var(--line);border-radius:15px;padding:15px;background:#fbfeff}
+.info-card strong{display:block;color:var(--deep);margin-bottom:5px}
+.size-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+.size-table th,.size-table td{border:1px solid var(--line);padding:11px;text-align:left;vertical-align:top}
+.size-table th{background:var(--foam);color:var(--deep)}
+.checklist{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px}
+.checkitem{
+  display:flex;align-items:center;gap:9px;background:#f8fcfd;border:1px solid var(--line);
+  padding:11px;border-radius:12px
+}
+.checkitem input{width:19px;height:19px}
+.mistakes{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.mistake{background:#fff4f1;border:1px solid #f2cec5;border-radius:13px;padding:13px}
+.mistake strong{color:#9c4534}
+.lesson-quiz{
+  background:linear-gradient(135deg,#f1fbfc,#fff);border:1px solid #cbe8ec;
+  border-radius:18px;padding:18px;margin:18px 0
+}
+.lesson-quiz h4{margin:0 0 12px;color:var(--deep)}
+.module-one-result{font-weight:900;margin-top:12px;color:var(--deep)}
+@media(max-width:700px){
+  .info-grid,.checklist,.mistakes{grid-template-columns:1fr}
+  .size-table{font-size:12px}
+  .size-table th,.size-table td{padding:8px}
+}
+
 @media(max-width:980px){
   .hero-grid,.lesson-grid{grid-template-columns:1fr}
   .quick-stats{grid-template-columns:repeat(2,1fr)}
@@ -264,7 +318,7 @@ footer strong{color:#fff}
 </head>
 <body>
 
-<div class="topbar">🐠 Akvarieakademiet Premium 1.0 – fra første akvarium til trygg og kunnskapsrik akvarieglede</div>
+<div class="topbar">🐠 Akvarieakademiet Premium 1.1 – fra første akvarium til trygg og kunnskapsrik akvarieglede</div>
 
 <header>
   <div class="container nav">
@@ -397,7 +451,7 @@ footer strong{color:#fff}
 
 <footer>
   <div class="container">
-    <strong>Hundene Våre – Akvarieakademiet Premium 1.0</strong>
+    <strong>Hundene Våre – Akvarieakademiet Premium 1.1</strong>
     <div>Praktisk kunnskap, tryggere valg og større akvarieglede.</div>
   </div>
 </footer>
@@ -406,17 +460,301 @@ footer strong{color:#fff}
 const modules = [
 {
 icon:"🏡",title:"Før du kjøper akvarium",
-desc:"Planlegging, størrelse, plassering og realistiske forventninger.",
-intro:"Et godt akvarium begynner lenge før den første fisken flytter inn. Denne modulen hjelper deg å gjøre riktige valg fra starten.",
-lessons:[
-"Hvorfor ønsker du et akvarium?",
-"Hvor mye tid og vedlikehold krever hobbyen?",
-"Velg riktig størrelse og form",
-"Plassering, underlag og tilgang til strøm og vann"
-],
-tip:"Et større akvarium er ofte lettere å holde stabilt enn et svært lite akvarium.",
-warning:"Kjøp ikke fisk samme dag som akvariet settes opp.",
-task:"Lag en enkel plan med ønsket størrelse, plassering og budsjett."
+desc:"Komplett Premium-modul med 9 leksjoner, sjekkliste og 10 spørsmål.",
+fullContent:`
+<div class="full-course">
+  <div class="course-intro">
+    <h3>🏡 Modul 1 – Før du kjøper akvarium</h3>
+    <p>Et velfungerende akvarium begynner med gode valg før vann, planter og fisk kommer på plass. I denne modulen lærer du å velge riktig størrelse, finne en trygg plassering, beregne kostnader, skaffe nødvendig utstyr og unngå de vanligste nybegynnerfeilene.</p>
+    <div class="tip"><strong>💡 Erfaring fra zoobutikk</strong><br>De fleste problemene som dukker opp de første månedene, kan spores tilbake til for raske kjøp, for lite akvarium eller manglende planlegging. Litt ekstra tid før oppstart gir både friskere fisk og mer glede.</div>
+  </div>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">1</span><div><h4>Velkommen til akvariehobbyen</h4><p>Hva hobbyen innebærer, og hvilket ansvar du tar på deg.</p></div></div>
+    <div class="lesson-content">
+      <h5>Et lite økosystem i hjemmet</h5>
+      <p>Et akvarium er mer enn en glassbeholder med vann og fisk. Det er et levende miljø der fisk, planter, bakterier, bunnlag, filter og vannverdier påvirker hverandre. Når balansen er god, arbeider disse delene sammen. Når én del svikter, kan hele miljøet bli belastet.</p>
+      <p>Akvariehobbyen passer for mennesker som liker dyr, natur og læring. Den kan være avslappende, sosial og svært lærerik, men den krever regelmessig oppfølging. Fisk kan ikke fortelle med ord at noe er galt. Derfor må eieren lære å observere pust, svømming, appetitt, farger og samspill.</p>
+      <h5>Hva kreves av deg?</h5>
+      <ul>
+        <li>Du må sette av litt tid hver dag til å se over fisk og utstyr.</li>
+        <li>Du må utføre regelmessige delvannbytter og enkelt vedlikehold.</li>
+        <li>Du må undersøke behovene til hver art før du kjøper den.</li>
+        <li>Du må være villig til å vente mens akvariet modnes.</li>
+        <li>Du må ha en plan for ferie, strømbrudd og sykdom.</li>
+      </ul>
+      <div class="info-grid">
+        <div class="info-card"><strong>Daglig – 2 til 5 minutter</strong>Se at filter og varme virker, observer fisken og gi riktig mengde fôr.</div>
+        <div class="info-card"><strong>Ukentlig – 30 til 60 minutter</strong>Delvannbytte, lett rengjøring, plantepleie og kontroll av vannverdier ved behov.</div>
+      </div>
+      <div class="task"><strong>✅ Din første oppgave</strong><br>Skriv ned hvorfor du ønsker akvarium, hvor mye tid du realistisk kan bruke hver uke, og hvem som skal passe det når du er bortreist.</div>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">2</span><div><h4>Hvilket akvarium passer deg?</h4><p>Størrelse, form og plass må passe både fiskene og hverdagen din.</p></div></div>
+    <div class="lesson-content">
+      <h5>Større er ofte enklere</h5>
+      <p>Mange tror at et lite akvarium er enklest å starte med. I virkeligheten endres temperatur og vannkvalitet raskere i små vannmengder. Et litt større akvarium gir bedre stabilitet og flere valgmuligheter når du skal velge fisk.</p>
+      <table class="size-table">
+        <thead><tr><th>Størrelse</th><th>Passer til</th><th>Fordeler</th><th>Vær oppmerksom på</th></tr></thead>
+        <tbody>
+          <tr><td><strong>20–40 liter</strong></td><td>Reker, snegler og enkelte små spesialoppsett.</td><td>Tar liten plass og kan bli svært dekorativt.</td><td>Små feil gir raske utslag. Begrenset fiskeutvalg.</td></tr>
+          <tr><td><strong>54–70 liter</strong></td><td>Små stimfisk og et enkelt samfunn med lav belastning.</td><td>Overkommelig pris og størrelse.</td><td>Krever nøye artsvalg og moderat antall fisk.</td></tr>
+          <tr><td><strong>100–150 liter</strong></td><td>Godt nybegynnerakvarium med stimfisk, bunnfisk og planter.</td><td>Mer stabilt og fleksibelt.</td><td>Krever solid møbel og litt større budsjett.</td></tr>
+          <tr><td><strong>200–300 liter</strong></td><td>Større samfunnsakvarium og flere artskombinasjoner.</td><td>Meget stabilt når det drives riktig.</td><td>Vekten er betydelig, og vannbytter tar mer tid.</td></tr>
+          <tr><td><strong>500 liter eller mer</strong></td><td>Store arter, store stimer og avanserte oppsett.</td><td>Stor opplevelse og god stabilitet.</td><td>Krever plass, bæreevne, kraftig filtrering og gjennomtenkt drift.</td></tr>
+        </tbody>
+      </table>
+      <h5>Formen betyr også noe</h5>
+      <p>Et langt akvarium gir mer svømmeplass enn et høyt akvarium med samme literantall. For aktive stimfisk er lengden ofte viktigere enn høyden. Dype akvarier gir flotte muligheter for innredning, men kan være vanskeligere å nå ned i under vedlikehold.</p>
+      <div class="tip"><strong>💡 Anbefalt startpunkt</strong><br>For mange nybegynnere er et rektangulært akvarium på omtrent 100–150 liter et godt kompromiss mellom stabilitet, pris og plassbehov.</div>
+      <div class="warning"><strong>⚠️ Ikke velg etter utseende alene</strong><br>Runde boller og svært smale pynteakvarier gir ofte dårlig svømmeplass, lite utstyr og ustabile forhold.</div>
+      <div class="task"><strong>✅ Praktisk oppgave</strong><br>Mål området der akvariet kan stå. Noter maksimal bredde, dybde og høyde, inkludert plass til lokk, slanger og vedlikehold.</div>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">3</span><div><h4>Hvor skal akvariet stå?</h4><p>Riktig plassering gir tryggere drift og mindre algeproblemer.</p></div></div>
+    <div class="lesson-content">
+      <h5>Et tungt møbel</h5>
+      <p>Én liter vann veier omtrent ett kilogram. I tillegg kommer glass, møbel, bunnlag, stein, røtter og teknisk utstyr. Et akvarium på 200 liter kan derfor veie betydelig mer enn 250 kilogram når det er ferdig innredet.</p>
+      <ul>
+        <li>Bruk et møbel som er laget for akvariets vekt og mål.</li>
+        <li>Kontroller at underlaget er plant og stabilt.</li>
+        <li>Ved store akvarier eller usikre gulv bør bæreevnen vurderes faglig.</li>
+        <li>Akvariet må aldri stå slik at det kan velte eller bli påkjørt.</li>
+      </ul>
+      <h5>Lys, varme og praktisk tilgang</h5>
+      <div class="info-grid">
+        <div class="info-card"><strong>Unngå direkte sol</strong>Sollys kan gi overoppheting og kraftig algevekst. Litt dagslys i rommet er greit, men direkte sol på glasset bør unngås.</div>
+        <div class="info-card"><strong>Hold avstand til varmekilder</strong>Radiator, vedovn og varme gulvsoner kan gi ustabil temperatur.</div>
+        <div class="info-card"><strong>Ha strøm i nærheten</strong>Filter, lys og varme trenger strøm. Bruk dryppsløyfe på ledninger, slik at vann ikke kan renne inn i kontakten.</div>
+        <div class="info-card"><strong>Tenk på vannbytte</strong>Jo nærmere vannkilde og avløp, desto enklere blir vedlikeholdet.</div>
+      </div>
+      <h5>Ro rundt akvariet</h5>
+      <p>Unngå steder med kraftige vibrasjoner, stadig banking eller mye gjennomgang. Fisk trenger ikke total stillhet, men gjentatte skremmende bevegelser kan føre til stress. Samtidig bør akvariet stå et sted der du faktisk ser det hver dag.</p>
+      <div class="task"><strong>✅ Plasseringssjekk</strong><br>Kontroller gulv, sollys, varmekilder, strøm, tilgang til vann, vedlikeholdsplass og risiko for støt før du bestemmer deg.</div>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">4</span><div><h4>Hva koster et akvarium?</h4><p>Startkostnader, månedlige utgifter og et realistisk budsjett.</p></div></div>
+    <div class="lesson-content">
+      <h5>Se på totalkostnaden</h5>
+      <p>Prisen på selve glasskaret er bare én del av budsjettet. Et komplett oppsett kan også kreve møbel, filter, varme, lys, bunnlag, planter, dekor, tester, fôr og vedlikeholdsutstyr. Fiskene bør være siste post, ikke den første.</p>
+      <table class="size-table">
+        <thead><tr><th>Post</th><th>Hva påvirker prisen?</th><th>Kan kjøpes brukt?</th></tr></thead>
+        <tbody>
+          <tr><td>Akvarium og møbel</td><td>Størrelse, glasskvalitet, lokk og design.</td><td>Ja, men kontroller silikon, riper, lekkasje og møbelets tilstand.</td></tr>
+          <tr><td>Filter og varme</td><td>Kapasitet, merke, energibruk og type.</td><td>Mulig, men slitedeler og hygiene må vurderes.</td></tr>
+          <tr><td>Lys</td><td>Lengde, styrke og behovene til plantene.</td><td>Ja, dersom elektronikken er trygg og lyset fungerer stabilt.</td></tr>
+          <tr><td>Bunnlag og innredning</td><td>Mengde, materiale, planter, røtter og stein.</td><td>Dekor kan brukes igjen etter trygg rengjøring. Bunnlag bør vurderes nøye.</td></tr>
+          <tr><td>Fisk og andre dyr</td><td>Art, antall, størrelse og sjeldenhet.</td><td>Omplassering kan være fint, men karantene og helsekontroll er viktig.</td></tr>
+        </tbody>
+      </table>
+      <h5>Løpende utgifter</h5>
+      <ul>
+        <li>Strøm til varme, filter og lys.</li>
+        <li>Vann til regelmessige delvannbytter.</li>
+        <li>Fôr og eventuelle vitaminer eller spesialfôr.</li>
+        <li>Testmidler, filtermateriale og enkelte slitedeler.</li>
+        <li>Planter, medisiner eller erstatning av teknisk utstyr ved behov.</li>
+      </ul>
+      <div class="tip"><strong>💡 Spar på riktig sted</strong><br>Brukt akvarium og møbel kan være et godt kjøp. Ikke spar inn på nødvendig filtrering, sikker varme eller vannkvalitet.</div>
+      <div class="task"><strong>✅ Budsjettoppgave</strong><br>Lag to kolonner: «Må ha før oppstart» og «Kan kjøpes senere». Sett også av en reserve til uforutsette utgifter.</div>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">5</span><div><h4>Utstyr du må ha</h4><p>Grunnutstyret som holder miljøet stabilt og gjør stell mulig.</p></div></div>
+    <div class="lesson-content">
+      <div class="info-grid">
+        <div class="info-card"><strong>Filter</strong>Flytter vann, fanger partikler og gir plass til bakteriene som bryter ned avfall. Filteret må gå hele døgnet.</div>
+        <div class="info-card"><strong>Varmekolbe</strong>Nødvendig for tropiske arter. Velges etter vannmengde og romtemperatur, og brukes sammen med termometer.</div>
+        <div class="info-card"><strong>Lys med tidsstyring</strong>Gir fast døgnrytme og dekker plantenes behov. Timer gjør lysperioden stabil.</div>
+        <div class="info-card"><strong>Termometer</strong>Gjør det mulig å oppdage feil på varme eller store temperatursvingninger.</div>
+        <div class="info-card"><strong>Testutstyr</strong>Minst nitritt og gjerne pH og nitrat. Dråpetester gir ofte tydeligere målinger enn enkle strips.</div>
+        <div class="info-card"><strong>Vannbehandler</strong>Aktuelt når vannet inneholder klor eller kloramin, eller når produktet trengs av andre lokale forhold.</div>
+        <div class="info-card"><strong>Håv</strong>Brukes ved flytting eller kontroll av fisk. Ha gjerne ulike størrelser.</div>
+        <div class="info-card"><strong>Slamsuger</strong>Fjerner avfall fra bunnen samtidig som du tapper vann.</div>
+        <div class="info-card"><strong>Egne bøtter</strong>Skal aldri ha vært brukt til vaskemidler eller kjemikalier.</div>
+        <div class="info-card"><strong>Fôr til artene</strong>Velg type og størrelse etter fiskens munn, leveområde og ernæringsbehov.</div>
+      </div>
+      <h5>Filteret er akvariets viktigste tekniske del</h5>
+      <p>Filteret gir både mekanisk og biologisk filtrering. Mekanisk materiale fanger synlig smuss. Biologisk materiale gir stor overflate til bakterier. Disse bakteriene er avgjørende for å omdanne giftige avfallsstoffer.</p>
+      <div class="warning"><strong>⚠️ Viktig</strong><br>Skyll ikke alt filtermateriale grundig under varmt springvann. Det kan skade bakteriekulturen. Rengjør skånsomt i vann du har tappet fra akvariet.</div>
+      <div class="task"><strong>✅ Utstyrsoppgave</strong><br>Sammenlign minst to komplette oppsett. Kontroller at filter og varme faktisk passer akvariets volum og planlagte fiskebelastning.</div>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">6</span><div><h4>Utstyr som kan vente</h4><p>Nyttig ekstrautstyr som ikke alltid er nødvendig ved første oppstart.</p></div></div>
+    <div class="lesson-content">
+      <h5>CO₂-anlegg</h5>
+      <p>Tilført karbondioksid kan gi kraftigere plantevekst, men krever balanse mellom lys, gjødsel og CO₂. For mye CO₂ kan være farlig for fisk. Begynn heller med lettstelte planter dersom du er ny.</p>
+      <h5>UV-enhet</h5>
+      <p>Kan hjelpe mot enkelte typer svevealger og redusere frittlevende mikroorganismer i vannet. Den løser ikke årsaken til dårlig vedlikehold eller feil vannverdier.</p>
+      <h5>Automatisk fôrer</h5>
+      <p>Praktisk ved ferie eller faste rutiner, men må testes på forhånd. Feil innstilling kan gi overfôring.</p>
+      <h5>Osmoseanlegg</h5>
+      <p>Brukes når man trenger svært kontrollert eller mykt vann til krevende arter. Osmosevann må vanligvis mineraliseres eller blandes riktig før bruk.</p>
+      <h5>Ekstra sirkulasjon og avanserte kontrollsystemer</h5>
+      <p>Kan være nyttig i store eller spesielle akvarier, men er ikke en erstatning for riktig filter, gode rutiner og passende fiskemengde.</p>
+      <div class="tip"><strong>💡 God startregel</strong><br>Kjøp først det som er nødvendig for stabil drift. Legg til avansert utstyr når du vet hvilket problem eller behov det faktisk skal løse.</div>
+      <div class="task"><strong>✅ Prioriteringsoppgave</strong><br>Marker ekstrautstyret du synes virker interessant, og skriv én setning om hvilket konkret behov det skal dekke.</div>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">7</span><div><h4>De 20 vanligste nybegynnerfeilene</h4><p>Feilene som oftest fører til stress, sykdom og dårlig vannkvalitet.</p></div></div>
+    <div class="lesson-content">
+      <div class="mistakes">
+        <div class="mistake"><strong>1. For lite akvarium</strong><br>Vannverdiene endres raskt, og fiskene får for liten plass.</div>
+        <div class="mistake"><strong>2. Fisk samme dag</strong><br>Akvariet har ennå ikke opparbeidet nødvendig bakteriekultur.</div>
+        <div class="mistake"><strong>3. For mange fisk på én gang</strong><br>Filteret rekker ikke å tilpasse seg den brå belastningen.</div>
+        <div class="mistake"><strong>4. Feil arter sammen</strong><br>Temperament, størrelse eller vannkrav passer ikke sammen.</div>
+        <div class="mistake"><strong>5. Ignorere voksen størrelse</strong><br>Små butikkfisk kan bli svært store.</div>
+        <div class="mistake"><strong>6. For små stimer</strong><br>Stimfisk blir utrygge og viser dårligere naturlig atferd.</div>
+        <div class="mistake"><strong>7. Overfôring</strong><br>Fôrrester og avføring belaster vannet.</div>
+        <div class="mistake"><strong>8. Vaske filteret for hardt</strong><br>Viktige bakterier forsvinner.</div>
+        <div class="mistake"><strong>9. Slå av filteret om natten</strong><br>Oksygentilførselen til bakteriene stopper.</div>
+        <div class="mistake"><strong>10. Bytte alt vann</strong><br>Gir store endringer og unødvendig stress.</div>
+        <div class="mistake"><strong>11. Ingen vannmålinger</strong><br>Problemer oppdages først når fisken viser symptomer.</div>
+        <div class="mistake"><strong>12. For lange lysperioder</strong><br>Kan bidra til algevekst og uro i døgnrytmen.</div>
+        <div class="mistake"><strong>13. Direkte sollys</strong><br>Kan gi varme og alger.</div>
+        <div class="mistake"><strong>14. Feil temperatur</strong><br>Arter med ulike temperaturkrav blandes.</div>
+        <div class="mistake"><strong>15. Ingen skjulesteder</strong><br>Sky og territorielle fisk får ikke ro.</div>
+        <div class="mistake"><strong>16. Utrygg dekor</strong><br>Skarpe kanter eller ukjente materialer kan skade fisk og vann.</div>
+        <div class="mistake"><strong>17. Kjemikalier på utstyr</strong><br>Såpe og rengjøringsmidler kan være giftige.</div>
+        <div class="mistake"><strong>18. Behandle uten diagnose</strong><br>Feil medisin kan belaste fisk og bakteriekultur.</div>
+        <div class="mistake"><strong>19. Gjøre alt samtidig</strong><br>Store endringer gjør akvariet ustabilt.</div>
+        <div class="mistake"><strong>20. Mangle ferieplan</strong><br>Overfôring fra hjelperen er vanligere enn at fisken får for lite.</div>
+      </div>
+      <div class="tip"><strong>💡 Den viktigste regelen</strong><br>Når noe er galt: observer fisken, kontroller teknikken, test vannet og gjør ett gjennomtenkt tiltak om gangen.</div>
+      <div class="task"><strong>✅ Refleksjonsoppgave</strong><br>Velg de fem feilene du tror det er lettest å gjøre, og skriv hvordan du vil forebygge dem.</div>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">8</span><div><h4>Den komplette handlelisten</h4><p>Kryss av etter hvert. Valgene lagres automatisk på enheten din.</p></div></div>
+    <div class="lesson-content">
+      <div class="checklist" id="module1Checklist">
+        <label class="checkitem"><input type="checkbox" data-check="akvarium"> Akvarium med lokk eller dekkglass</label>
+        <label class="checkitem"><input type="checkbox" data-check="mobel"> Stabilt akvariemøbel</label>
+        <label class="checkitem"><input type="checkbox" data-check="filter"> Filter med riktig kapasitet</label>
+        <label class="checkitem"><input type="checkbox" data-check="varme"> Varmekolbe ved behov</label>
+        <label class="checkitem"><input type="checkbox" data-check="termometer"> Termometer</label>
+        <label class="checkitem"><input type="checkbox" data-check="lys"> Lys og tidsur</label>
+        <label class="checkitem"><input type="checkbox" data-check="bunnlag"> Sand eller grus</label>
+        <label class="checkitem"><input type="checkbox" data-check="dekor"> Trygge røtter, stein og skjul</label>
+        <label class="checkitem"><input type="checkbox" data-check="planter"> Passende planter</label>
+        <label class="checkitem"><input type="checkbox" data-check="test"> Vannprøver eller testsett</label>
+        <label class="checkitem"><input type="checkbox" data-check="behandler"> Vannbehandler ved behov</label>
+        <label class="checkitem"><input type="checkbox" data-check="slamsuger"> Slamsuger og slange</label>
+        <label class="checkitem"><input type="checkbox" data-check="bøtter"> Egne akvariebøtter</label>
+        <label class="checkitem"><input type="checkbox" data-check="håv"> Håv i passende størrelse</label>
+        <label class="checkitem"><input type="checkbox" data-check="for"> Riktig fôr til planlagte arter</label>
+        <label class="checkitem"><input type="checkbox" data-check="plan"> Skriftlig plan for arter og antall</label>
+      </div>
+      <div class="warning"><strong>⚠️ Vent med fiskene</strong><br>Handlelisten betyr ikke at fisk skal kjøpes med en gang. Akvariet må settes opp og kjøres inn først. Dette lærer du grundig i Modul 3.</div>
+      <button class="small-btn reset-btn" onclick="resetModule1Checklist()">Nullstill handlelisten</button>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">9</span><div><h4>Klar for neste modul?</h4><p>Oppsummering og kontroll før du går videre.</p></div></div>
+    <div class="lesson-content">
+      <h5>Dette skal du kunne nå</h5>
+      <ul>
+        <li>Forklare hvorfor et akvarium er et levende økosystem.</li>
+        <li>Velge en størrelse som passer plass, budsjett og ønskede arter.</li>
+        <li>Finne en sikker plassering uten direkte sol og varmeproblemer.</li>
+        <li>Sette opp et realistisk startbudsjett.</li>
+        <li>Skille mellom nødvendig utstyr og utstyr som kan vente.</li>
+        <li>Gjenkjenne og forebygge de vanligste nybegynnerfeilene.</li>
+      </ul>
+      <div class="task"><strong>✅ Før du går videre</strong><br>Du bør nå ha valgt omtrent hvilken størrelse du ønsker, hvor akvariet skal stå, og hvilket grunnutstyr du trenger. Du trenger ennå ikke kjøpe fisk.</div>
+    </div>
+  </article>
+
+  <div class="lesson-quiz">
+    <h4>🧠 Modulquiz – Før du kjøper akvarium</h4>
+    <div class="quiz-question"><strong>1. Hvorfor er et større akvarium ofte lettere å holde stabilt?</strong>
+      <div class="quiz-options">
+        <label><input type="radio" name="m1q1" value="1"> Større vannmengde endres vanligvis langsommere</label>
+        <label><input type="radio" name="m1q1" value="0"> Det trenger aldri filter</label>
+        <label><input type="radio" name="m1q1" value="0"> Det trenger ikke vannbytte</label>
+      </div>
+    </div>
+    <div class="quiz-question"><strong>2. Hva bør unngås ved plassering?</strong>
+      <div class="quiz-options">
+        <label><input type="radio" name="m1q2" value="0"> Tilgang til strøm</label>
+        <label><input type="radio" name="m1q2" value="1"> Direkte sollys og ustabile varmekilder</label>
+        <label><input type="radio" name="m1q2" value="0"> Et solid møbel</label>
+      </div>
+    </div>
+    <div class="quiz-question"><strong>3. Når bør fiskene kjøpes?</strong>
+      <div class="quiz-options">
+        <label><input type="radio" name="m1q3" value="0"> Samme dag som akvariet fylles</label>
+        <label><input type="radio" name="m1q3" value="1"> Etter at akvariet er satt opp og innkjøringen er fulgt</label>
+        <label><input type="radio" name="m1q3" value="0"> Før filteret er montert</label>
+      </div>
+    </div>
+    <div class="quiz-question"><strong>4. Hvorfor skal filteret normalt gå hele døgnet?</strong>
+      <div class="quiz-options">
+        <label><input type="radio" name="m1q4" value="1"> Det holder vannet i bevegelse og støtter bakteriekulturen</label>
+        <label><input type="radio" name="m1q4" value="0"> Kun for å lage lyd</label>
+        <label><input type="radio" name="m1q4" value="0"> Det varmer alltid vannet</label>
+      </div>
+    </div>
+    <div class="quiz-question"><strong>5. Hva er en vanlig følge av overfôring?</strong>
+      <div class="quiz-options">
+        <label><input type="radio" name="m1q5" value="0"> Renere vann</label>
+        <label><input type="radio" name="m1q5" value="1"> Økt belastning og dårligere vannkvalitet</label>
+        <label><input type="radio" name="m1q5" value="0"> Mindre avfall</label>
+      </div>
+    </div>
+    <div class="quiz-question"><strong>6. Hva er tryggest når filtermateriale må rengjøres?</strong>
+      <div class="quiz-options">
+        <label><input type="radio" name="m1q6" value="1"> Skånsomt i tappet akvarievann</label>
+        <label><input type="radio" name="m1q6" value="0"> Med såpe og varmt vann</label>
+        <label><input type="radio" name="m1q6" value="0"> I oppvaskmaskinen</label>
+      </div>
+    </div>
+    <div class="quiz-question"><strong>7. Hva skal være med i budsjettet?</strong>
+      <div class="quiz-options">
+        <label><input type="radio" name="m1q7" value="0"> Bare fiskene</label>
+        <label><input type="radio" name="m1q7" value="1"> Hele oppsettet og løpende drift</label>
+        <label><input type="radio" name="m1q7" value="0"> Bare glasskaret</label>
+      </div>
+    </div>
+    <div class="quiz-question"><strong>8. Hva bør du undersøke før du velger fisk?</strong>
+      <div class="quiz-options">
+        <label><input type="radio" name="m1q8" value="1"> Voksen størrelse, atferd, stimbehov og vannkrav</label>
+        <label><input type="radio" name="m1q8" value="0"> Bare fargen</label>
+        <label><input type="radio" name="m1q8" value="0"> Bare prisen</label>
+      </div>
+    </div>
+    <div class="quiz-question"><strong>9. Hva er riktig om såpe og rengjøringsmidler?</strong>
+      <div class="quiz-options">
+        <label><input type="radio" name="m1q9" value="1"> De skal ikke brukes på akvariets bøtter og utstyr</label>
+        <label><input type="radio" name="m1q9" value="0"> De gjør vannet tryggere</label>
+        <label><input type="radio" name="m1q9" value="0"> De er nødvendige ved hvert vannbytte</label>
+      </div>
+    </div>
+    <div class="quiz-question"><strong>10. Hva er den beste reaksjonen når noe virker galt?</strong>
+      <div class="quiz-options">
+        <label><input type="radio" name="m1q10" value="0"> Gjøre mange store endringer samtidig</label>
+        <label><input type="radio" name="m1q10" value="1"> Observere, kontrollere utstyr, teste vann og handle rolig</label>
+        <label><input type="radio" name="m1q10" value="0"> Tilsette tilfeldig medisin</label>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="checkModuleOneQuiz()">Se resultat og moduldiplom</button>
+    <div class="module-one-result" id="moduleOneResult"></div>
+  </div>
+</div>
+`
 },
 {
 icon:"⚙️",title:"Utstyr og teknikk",
@@ -595,6 +933,7 @@ function renderModules(){
         <span class="chevron">⌄</span>
       </button>
       <div class="module-body">
+        ${m.fullContent ? m.fullContent : `
         <div class="lesson-grid">
           <div class="lesson-panel">
             <h4>📖 Dette lærer du</h4>
@@ -608,7 +947,7 @@ function renderModules(){
             <div class="warning"><strong>⚠️ Vanlig feil</strong><br>${m.warning}</div>
             <div class="task"><strong>✅ Praktisk oppgave</strong><br>${m.task}</div>
           </div>
-        </div>
+        </div>`}
         <div class="module-footer">
           <button class="small-btn complete-btn ${done ? "done" : ""}" onclick="toggleComplete(${i})">
             ${done ? "✅ Modul fullført" : "Marker som fullført"}
@@ -621,6 +960,7 @@ function renderModules(){
   });
 
   updateProgress();
+  setTimeout(initModuleOneChecklist, 0);
 }
 
 function toggleOpen(btn){
@@ -644,6 +984,38 @@ function updateProgress(){
 
 function scrollToTopOfModule(btn){
   btn.closest(".module").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+
+function initModuleOneChecklist(){
+  const saved = JSON.parse(localStorage.getItem("akvarieModule1Checklist") || "{}");
+  document.querySelectorAll("#module1Checklist input[data-check]").forEach(box => {
+    box.checked = !!saved[box.dataset.check];
+    box.addEventListener("change", () => {
+      saved[box.dataset.check] = box.checked;
+      localStorage.setItem("akvarieModule1Checklist", JSON.stringify(saved));
+    });
+  });
+}
+function resetModule1Checklist(){
+  localStorage.removeItem("akvarieModule1Checklist");
+  document.querySelectorAll("#module1Checklist input[data-check]").forEach(box => box.checked = false);
+}
+function checkModuleOneQuiz(){
+  let score = 0;
+  for(let i=1;i<=10;i++){
+    const picked = document.querySelector(`input[name="m1q${i}"]:checked`);
+    if(picked) score += Number(picked.value);
+  }
+  const out = document.getElementById("moduleOneResult");
+  if(!out) return;
+  if(score >= 9){
+    out.innerHTML = `🏆 ${score} av 10 riktige – Gratulerer! Du har bestått Modul 1 og kan markere modulen som fullført.`;
+  }else if(score >= 7){
+    out.innerHTML = `👍 ${score} av 10 riktige – Godkjent! Les gjerne gjennom punktene du var usikker på.`;
+  }else{
+    out.innerHTML = `📘 ${score} av 10 riktige – Gå gjennom leksjonene én gang til og prøv på nytt.`;
+  }
 }
 
 function checkQuiz(){
