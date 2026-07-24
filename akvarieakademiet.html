@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Akvarieakademiet Premium 1.2 | Hundene Våre</title>
+<title>Akvarieakademiet Premium 1.3 | Hundene Våre</title>
 <meta name="description" content="Akvarieakademiet – et komplett læringsunivers for akvarieeiere, fra oppstart til vannverdier, fisk, planter, sykdom og stell.">
 <style>
 :root{
@@ -318,7 +318,7 @@ footer strong{color:#fff}
 </head>
 <body>
 
-<div class="topbar">🐠 Akvarieakademiet Premium 1.2 – fra første akvarium til trygg og kunnskapsrik akvarieglede</div>
+<div class="topbar">🐠 Akvarieakademiet Premium 1.3 – fra første akvarium til trygg og kunnskapsrik akvarieglede</div>
 
 <header>
   <div class="container nav">
@@ -451,7 +451,7 @@ footer strong{color:#fff}
 
 <footer>
   <div class="container">
-    <strong>Hundene Våre – Akvarieakademiet Premium 1.2</strong>
+    <strong>Hundene Våre – Akvarieakademiet Premium 1.3</strong>
     <div>Praktisk kunnskap, tryggere valg og større akvarieglede.</div>
   </div>
 </footer>
@@ -1124,17 +1124,254 @@ icon:"⚙️",title:"Utstyr og teknikk",desc:"Komplett Premium-modul med 10 leks
 },
 {
 icon:"🔄",title:"Innkjøring og nitrogensyklusen",
-desc:"Ammoniakk, nitritt, nitrat og de viktige bakteriene.",
-intro:"Innkjøringen er selve grunnlaget for et trygt akvarium.",
-lessons:[
-"Hva skjer med avfall og fôrrester?",
-"Fra ammoniakk til nitritt",
-"Fra nitritt til nitrat",
-"Når er akvariet klart for fisk?"
-],
-tip:"God tålmodighet i starten sparer deg for store problemer senere.",
-warning:"Nitritt er giftig og kan skade fisk selv om vannet ser klart ut.",
-task:"Før en enkel logg over oppstart, vannverdier og datoer."
+desc:"Komplett Premium-modul med 10 leksjoner, målelogg, sjekkliste og quiz.",
+fullContent:`
+<div class="full-course">
+  <div class="course-intro">
+    <h3>🔄 Modul 3 – Innkjøring og nitrogensyklusen</h3>
+    <p>Et nytt akvarium ser ofte ferdig ut lenge før det biologisk sett er klart. I denne modulen lærer du hva som skjer med fôrrester og avføring, hvordan nyttige bakterier etablerer seg, hvorfor ammoniakk og nitritt er farlige, og hvordan du avgjør når akvariet er klart for de første fiskene.</p>
+    <div class="tip"><strong>💡 Den viktigste lærdommen</strong><br>Klart vann betyr ikke nødvendigvis trygt vann. Innkjøring handler om usynlige bakterier og målbare vannverdier – ikke bare om hvordan akvariet ser ut.</div>
+  </div>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">1</span><div><h4>Hva betyr det å kjøre inn et akvarium?</h4><p>Fra nytt glasskar til et biologisk fungerende miljø.</p></div></div>
+    <div class="lesson-content">
+      <h5>Et nytt akvarium mangler bakteriekultur</h5>
+      <p>Når filter, bunnlag og dekor er nye, finnes det svært få av bakteriene som senere skal bryte ned avfallsstoffer. Så snart det kommer fôr, planterester, snegler eller fisk i akvariet, begynner organisk materiale å brytes ned. Da dannes stoffer som kan være giftige.</p>
+      <p>Innkjøringen er perioden der bakteriekulturen gradvis bygges opp. Bakteriene lever hovedsakelig på overflater med god vanngjennomstrømning, særlig i biologisk filtermateriale, men også på bunnlag, planter og dekor.</p>
+      <div class="info-grid">
+        <div class="info-card"><strong>Et teknisk ferdig akvarium</strong>Filter, varme, lys, bunnlag og vann er på plass.</div>
+        <div class="info-card"><strong>Et biologisk modent akvarium</strong>Bakteriekulturen kan håndtere den avfallsmengden som dyrene produserer.</div>
+      </div>
+      <div class="warning"><strong>⚠️ Vanlig misforståelse</strong><br>Å la et tomt akvarium stå med filter i én uke er ikke nødvendigvis en full innkjøring. Bakteriene trenger en kontrollert kilde til avfall for å vokse.</div>
+      <div class="task"><strong>✅ Oppgave</strong><br>Noter datoen filteret ble startet. Dette blir dag 1 i innkjøringsloggen.</div>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">2</span><div><h4>Nitrogensyklusen – hele kjeden</h4><p>Avfall blir omdannet trinn for trinn.</p></div></div>
+    <div class="lesson-content">
+      <h5>Fra avfall til nitrat</h5>
+      <table class="size-table">
+        <thead><tr><th>Trinn</th><th>Hva skjer?</th><th>Betydning</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1. Organisk avfall</strong></td><td>Fôrrester, avføring, døde plantedeler og annet organisk materiale brytes ned.</td><td>Danner ammoniakk eller ammonium, avhengig av vannets pH og temperatur.</td></tr>
+          <tr><td><strong>2. Ammoniakk/ammonium</strong></td><td>Den første bakteriegruppen oksiderer stoffet.</td><td>Omdannes videre til nitritt.</td></tr>
+          <tr><td><strong>3. Nitritt</strong></td><td>En annen bakteriegruppe bruker nitritt som energikilde.</td><td>Omdannes til nitrat.</td></tr>
+          <tr><td><strong>4. Nitrat</strong></td><td>Sluttproduktet i den vanlige akvariesyklusen.</td><td>Fjernes hovedsakelig gjennom planter og regelmessige delvannbytter.</td></tr>
+        </tbody>
+      </table>
+      <p>Bakteriene formerer seg langsomt sammenlignet med mange andre mikroorganismer. Derfor kan filteret bruke flere uker på å utvikle nok kapasitet. Når fiskemengden senere økes, må bakteriekulturen igjen tilpasse seg den større belastningen.</p>
+      <div class="tip"><strong>💡 Huskeregel</strong><br>Avfall → ammoniakk/ammonium → nitritt → nitrat → delvannbytte og planteopptak.</div>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">3</span><div><h4>Ammoniakk og ammonium</h4><p>Samme grunnstoff, men ulik giftighet.</p></div></div>
+    <div class="lesson-content">
+      <p>I vann finnes nitrogenholdig avfall hovedsakelig som ammonium og ammoniakk. Forholdet mellom dem påvirkes av pH og temperatur. Ved høyere pH og temperatur øker andelen giftig ammoniakk. Derfor kan samme totalmåling være farligere i hardt og basisk vann enn i surt vann.</p>
+      <ul>
+        <li>Ammoniakk kan skade gjeller og indre organer.</li>
+        <li>Fisk kan puste raskt, stå ved overflaten eller bli sløv.</li>
+        <li>En ny bakteriekultur kan bruke tid på å håndtere belastningen.</li>
+        <li>Råtnende materiale og overfôring kan gi rask økning.</li>
+      </ul>
+      <div class="warning"><strong>⚠️ Ved målbar ammoniakk med fisk i akvariet</strong><br>Reduser fôringen, fjern dødt organisk materiale, kontroller filter og oksygentilførsel, og utfør passende delvannbytte. Test igjen etter tiltaket.</div>
+      <div class="task"><strong>✅ Oppgave</strong><br>Sjekk om testsettet ditt måler ammoniakk, ammonium eller totalverdien. Les fargeskalaen og bruksanvisningen før første prøve.</div>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">4</span><div><h4>Nitritt – den farlige toppen</h4><p>Hvorfor nitritt ofte stiger midt i innkjøringen.</p></div></div>
+    <div class="lesson-content">
+      <p>Når den første bakteriegruppen begynner å omdanne ammoniakk, dannes nitritt. Bakteriene som omdanner nitritt til nitrat kan bruke lengre tid på å bli mange nok. Derfor oppstår det ofte en periode der nitrittverdien stiger tydelig.</p>
+      <p>Nitritt påvirker blodets evne til å transportere oksygen. Fisk kan derfor vise tegn på oksygenmangel selv om filteret går og vannoverflaten beveger seg.</p>
+      <div class="info-grid">
+        <div class="info-card"><strong>Mulige tegn</strong>Rask pust, gisping ved overflaten, sløvhet, mørkere farge eller sammenklemte finner.</div>
+        <div class="info-card"><strong>Første kontroll</strong>Test nitritt, temperatur og filterfunksjon. Se også etter overfôring eller døde dyr.</div>
+      </div>
+      <div class="warning"><strong>⚠️ Nitritt skal tas alvorlig</strong><br>Vannet kan se helt rent ut samtidig som nitrittverdien er farlig. Stol på målingen og fiskens atferd, ikke bare på synet.</div>
+      <div class="task"><strong>✅ Oppgave</strong><br>Legg nitrittesten på et fast og synlig sted, slik at den brukes regelmessig under innkjøringen.</div>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">5</span><div><h4>Nitrat – sluttproduktet vi må kontrollere</h4><p>Mindre akutt giftig, men ikke ubegrenset ufarlig.</p></div></div>
+    <div class="lesson-content">
+      <p>Når nitritt omdannes videre, dannes nitrat. Nitrat tåles vanligvis bedre enn ammoniakk og nitritt, men høye verdier over tid kan belaste fisk, planter og hele miljøet. Følsomme arter krever lavere nivåer enn robuste arter.</p>
+      <h5>Slik holdes nitrat under kontroll</h5>
+      <ul>
+        <li>Regelmessige delvannbytter.</li>
+        <li>Moderat fôring og passende fiskemengde.</li>
+        <li>Fjerning av døde plantedeler og avfall.</li>
+        <li>Godt voksende levende planter.</li>
+        <li>Riktig filtervedlikehold uten å ødelegge bakteriekulturen.</li>
+      </ul>
+      <div class="tip"><strong>💡 Viktig sammenligning</strong><br>Mål gjerne nitrat både i akvariet og i springvannet. Da vet du hvor mye av verdien som allerede kommer inn ved vannbytte.</div>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">6</span><div><h4>Fiskeløs innkjøring</h4><p>Bygg bakteriekultur uten å utsette fisk for giftige topper.</p></div></div>
+    <div class="lesson-content">
+      <p>Fiskeløs innkjøring betyr at akvariet tilføres en kontrollert ammoniakkkilde uten levende fisk. Filteret får dermed tid til å utvikle bakterier før dyrene flyttes inn. Metoden krever nøyaktige målinger og tålmodighet.</p>
+      <h5>Prinsippet</h5>
+      <ol>
+        <li>Start filter og varme, og sørg for god vannbevegelse.</li>
+        <li>Tilfør en kontrollert avfallskilde etter valgt metode.</li>
+        <li>Test ammoniakk/ammonium og nitritt regelmessig.</li>
+        <li>Observer at ammoniakk først stiger og deretter faller.</li>
+        <li>Observer at nitritt deretter stiger og til slutt faller.</li>
+        <li>Bekreft at systemet omdanner ny belastning uten målbar ammoniakk eller nitritt.</li>
+      </ol>
+      <div class="warning"><strong>⚠️ Ikke bruk tilfeldige husholdningsprodukter</strong><br>Produkter med parfyme, såpe, fargestoff eller andre tilsetninger skal aldri tilsettes akvariet.</div>
+      <div class="tip"><strong>💡 Modent filtermateriale</strong><br>En liten mengde friskt, modent filtermateriale fra et dokumentert friskt akvarium kan forkorte innkjøringen. Det må holdes vått og brukes raskt.</div>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">7</span><div><h4>Innkjøring med fisk – risikofylt og krevende</h4><p>Hva som kreves dersom fisk allerede er satt inn.</p></div></div>
+    <div class="lesson-content">
+      <p>Innkjøring med fisk anbefales ikke som førstevalg fordi fiskene kan bli utsatt for ammoniakk og nitritt. Dersom fisk allerede er i et umodent akvarium, må belastningen holdes lav og vannet følges tett.</p>
+      <ul>
+        <li>Ha få fisk og ikke sett inn flere før verdiene er stabile.</li>
+        <li>Fôr svært forsiktig og fjern rester.</li>
+        <li>Test ammoniakk/ammonium og nitritt ofte.</li>
+        <li>Utfør nødvendige delvannbytter når verdiene stiger.</li>
+        <li>Sørg for god oksygentilførsel og stabil temperatur.</li>
+        <li>Ikke bytt eller vask alt filtermaterialet.</li>
+      </ul>
+      <div class="warning"><strong>⚠️ Ingen fast kalender kan erstatte tester</strong><br>To akvarier kan utvikle seg i ulik hastighet. Måleverdier og fiskens atferd bestemmer hva du må gjøre.</div>
+      <div class="task"><strong>✅ Oppgave</strong><br>Lag en akuttplan med testutstyr, slange, bøtte og vannbehandler lett tilgjengelig dersom fisk allerede er i akvariet.</div>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">8</span><div><h4>Slik tester og logger du innkjøringen</h4><p>En enkel logg gjør utviklingen synlig.</p></div></div>
+    <div class="lesson-content">
+      <table class="size-table">
+        <thead><tr><th>Dato</th><th>Ammoniakk/ammonium</th><th>Nitritt</th><th>Nitrat</th><th>pH</th><th>Tiltak/observasjon</th></tr></thead>
+        <tbody>
+          <tr><td>Dag 1</td><td>___</td><td>___</td><td>___</td><td>___</td><td>Filter startet</td></tr>
+          <tr><td>Dag ___</td><td>___</td><td>___</td><td>___</td><td>___</td><td>________________</td></tr>
+          <tr><td>Dag ___</td><td>___</td><td>___</td><td>___</td><td>___</td><td>________________</td></tr>
+          <tr><td>Dag ___</td><td>___</td><td>___</td><td>___</td><td>___</td><td>________________</td></tr>
+        </tbody>
+      </table>
+      <h5>Gode målerutiner</h5>
+      <ul>
+        <li>Følg testens angitte vannmengde og antall dråper nøyaktig.</li>
+        <li>Rist reagensflasker når bruksanvisningen krever det.</li>
+        <li>Les fargen i godt, nøytralt lys og innen riktig tidsrom.</li>
+        <li>Skyll måleglass i rent vann etter bruk.</li>
+        <li>Noter resultatet med én gang.</li>
+      </ul>
+      <div class="task"><strong>✅ Digital sjekkliste</strong><br>Kryss av når hvert punkt er bekreftet. Valgene lagres på enheten din.</div>
+      <div class="checklist" id="module3Checklist">
+        <label class="checkitem"><input type="checkbox" data-check="filter"> Filteret går hele døgnet</label>
+        <label class="checkitem"><input type="checkbox" data-check="temp"> Temperaturen er stabil</label>
+        <label class="checkitem"><input type="checkbox" data-check="ammonia"> Ammoniakk/ammonium er testet</label>
+        <label class="checkitem"><input type="checkbox" data-check="nitrite"> Nitritt er testet</label>
+        <label class="checkitem"><input type="checkbox" data-check="nitrate"> Nitrat er testet</label>
+        <label class="checkitem"><input type="checkbox" data-check="ph"> pH er notert</label>
+        <label class="checkitem"><input type="checkbox" data-check="log"> Målingene er ført i logg</label>
+        <label class="checkitem"><input type="checkbox" data-check="flow"> God vannstrøm er kontrollert</label>
+        <label class="checkitem"><input type="checkbox" data-check="waste"> Dødt organisk materiale er fjernet</label>
+        <label class="checkitem"><input type="checkbox" data-check="ready"> Klar-testen er bestått før fisk</label>
+      </div>
+      <button class="small-btn reset-btn" onclick="resetModule3Checklist()">Nullstill sjekklisten</button>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">9</span><div><h4>Når er akvariet klart for fisk?</h4><p>Ikke gå etter antall dager alene.</p></div></div>
+    <div class="lesson-content">
+      <p>Akvariet er først klart når bakteriekulturen kan håndtere en relevant avfallsbelastning uten at ammoniakk/ammonium eller nitritt blir målbar. Nitrat vil vanligvis være til stede som tegn på at omdanningen skjer.</p>
+      <div class="info-grid">
+        <div class="info-card"><strong>Grønt lys</strong>Filteret går stabilt, ammoniakk/ammonium og nitritt er ikke målbare etter belastning, og nitratutviklingen er forstått.</div>
+        <div class="info-card"><strong>Rødt lys</strong>Nitritt eller ammoniakk er fortsatt målbar, filteret har stoppet, eller store deler av filtermediet er nylig skiftet.</div>
+      </div>
+      <h5>Sett inn fisk gradvis</h5>
+      <p>Selv et innkjørt filter har en begrenset kapasitet. Begynn med en liten, planlagt gruppe som passer akvariet. Vent og mål før neste gruppe settes inn. Da får bakteriene tid til å tilpasse seg den økte belastningen.</p>
+      <div class="warning"><strong>⚠️ Ikke fyll hele fiskelisten samme dag</strong><br>En brå økning i fiskemengde kan gi en ny ammoniakk- eller nitritttopp, selv i et akvarium som var ferdig innkjørt.</div>
+    </div>
+  </article>
+
+  <article class="lesson-card">
+    <div class="lesson-card-header"><span class="lesson-number">10</span><div><h4>Feilsøking under innkjøringen</h4><p>Finn årsaken før du gjør store endringer.</p></div></div>
+    <div class="lesson-content">
+      <table class="size-table">
+        <thead><tr><th>Problem</th><th>Mulige årsaker</th><th>Kontroller først</th></tr></thead>
+        <tbody>
+          <tr><td>Ingen målbar utvikling</td><td>For lite avfallskilde, lav temperatur, feil test eller vannbehandling som påvirker målingen.</td><td>Testmetode, temperatur, filterdrift og hvilken kilde som brukes.</td></tr>
+          <tr><td>Nitritt forblir høyt</td><td>Bakteriekulturen er ikke ferdig, belastningen er for stor eller oksygentilførselen er dårlig.</td><td>Filterstrøm, temperatur, pH og dosering av avfallskilde.</td></tr>
+          <tr><td>Vannet blir melkehvitt</td><td>Bakterieblomstring eller mye oppløst organisk materiale.</td><td>Overfôring, råtnende materiale og filterfunksjon.</td></tr>
+          <tr><td>Vannet lukter vondt</td><td>Råtnende materiale, stillestående områder eller alvorlig overbelastning.</td><td>Fjern dødt materiale, kontroller sirkulasjon og test vannet.</td></tr>
+          <tr><td>Filteret stoppet</td><td>Strømbrudd, tett inntak eller teknisk feil.</td><td>Start filteret, kontroller lukt i filtermediet og mål vannverdier.</td></tr>
+        </tbody>
+      </table>
+      <div class="tip"><strong>💡 Arbeid i riktig rekkefølge</strong><br>Observer → test → kontroller teknikken → fjern årsaken → gjør ett nødvendig tiltak → test på nytt.</div>
+      <div class="task"><strong>✅ Før Modul 4</strong><br>Du skal nå kunne forklare nitrogensyklusen, tolke en innkjøringslogg og avgjøre om akvariet er biologisk klart for gradvis innsetting av fisk.</div>
+    </div>
+  </article>
+
+  <div class="lesson-quiz">
+    <h4>🧠 Modulquiz – Innkjøring og nitrogensyklusen</h4>
+    <div class="quiz-question"><strong>1. Hvor lever de fleste nyttige bakteriene?</strong><div class="quiz-options">
+      <label><input type="radio" name="m3q1" value="1"> På filtermedier og andre overflater med vannstrøm</label>
+      <label><input type="radio" name="m3q1" value="0"> Bare fritt i vannet</label>
+      <label><input type="radio" name="m3q1" value="0"> Kun på utsiden av akvariet</label>
+    </div></div>
+    <div class="quiz-question"><strong>2. Hva er riktig rekkefølge i nitrogensyklusen?</strong><div class="quiz-options">
+      <label><input type="radio" name="m3q2" value="0"> Nitrat → nitritt → ammoniakk</label>
+      <label><input type="radio" name="m3q2" value="1"> Ammoniakk/ammonium → nitritt → nitrat</label>
+      <label><input type="radio" name="m3q2" value="0"> Nitritt → oksygen → pH</label>
+    </div></div>
+    <div class="quiz-question"><strong>3. Hvorfor er nitritt farlig?</strong><div class="quiz-options">
+      <label><input type="radio" name="m3q3" value="1"> Det svekker blodets evne til å transportere oksygen</label>
+      <label><input type="radio" name="m3q3" value="0"> Det gjør bare vannet uklart</label>
+      <label><input type="radio" name="m3q3" value="0"> Det senker alltid temperaturen</label>
+    </div></div>
+    <div class="quiz-question"><strong>4. Hva øker andelen giftig ammoniakk?</strong><div class="quiz-options">
+      <label><input type="radio" name="m3q4" value="1"> Høyere pH og temperatur</label>
+      <label><input type="radio" name="m3q4" value="0"> Lavere lysstyrke</label>
+      <label><input type="radio" name="m3q4" value="0"> Større akvariedekor</label>
+    </div></div>
+    <div class="quiz-question"><strong>5. Hvordan fjernes nitrat vanligvis?</strong><div class="quiz-options">
+      <label><input type="radio" name="m3q5" value="1"> Delvannbytter og planteopptak</label>
+      <label><input type="radio" name="m3q5" value="0"> Ved å slå av filteret</label>
+      <label><input type="radio" name="m3q5" value="0"> Ved å tilsette mer fôr</label>
+    </div></div>
+    <div class="quiz-question"><strong>6. Hva er en fordel med fiskeløs innkjøring?</strong><div class="quiz-options">
+      <label><input type="radio" name="m3q6" value="1"> Bakteriekulturen kan bygges uten at fisk utsettes for giftige topper</label>
+      <label><input type="radio" name="m3q6" value="0"> Filteret trenger ikke gå</label>
+      <label><input type="radio" name="m3q6" value="0"> Vannprøver blir unødvendige</label>
+    </div></div>
+    <div class="quiz-question"><strong>7. Hva skal du gjøre dersom nitritt måles med fisk i akvariet?</strong><div class="quiz-options">
+      <label><input type="radio" name="m3q7" value="0"> Sette inn flere fisk</label>
+      <label><input type="radio" name="m3q7" value="1"> Redusere belastningen, kontrollere filteret og gjøre nødvendige vannbytter</label>
+      <label><input type="radio" name="m3q7" value="0"> Vaske hele filteret med såpe</label>
+    </div></div>
+    <div class="quiz-question"><strong>8. Når er akvariet biologisk klart?</strong><div class="quiz-options">
+      <label><input type="radio" name="m3q8" value="0"> Etter nøyaktig sju dager</label>
+      <label><input type="radio" name="m3q8" value="1"> Når relevant belastning omdannes uten målbar ammoniakk eller nitritt</label>
+      <label><input type="radio" name="m3q8" value="0"> Når vannet ser klart ut</label>
+    </div></div>
+    <div class="quiz-question"><strong>9. Hvorfor bør fisk settes inn gradvis?</strong><div class="quiz-options">
+      <label><input type="radio" name="m3q9" value="1"> Bakteriekulturen trenger tid til å tilpasse seg økt avfallsmengde</label>
+      <label><input type="radio" name="m3q9" value="0"> Fisk liker bare små grupper</label>
+      <label><input type="radio" name="m3q9" value="0"> For å gjøre vannet kaldere</label>
+    </div></div>
+    <div class="quiz-question"><strong>10. Hva er beste rekkefølge ved problemer?</strong><div class="quiz-options">
+      <label><input type="radio" name="m3q10" value="1"> Observere, teste, kontrollere teknikk, fjerne årsak og teste igjen</label>
+      <label><input type="radio" name="m3q10" value="0"> Tilsette flere produkter samtidig</label>
+      <label><input type="radio" name="m3q10" value="0"> Ignorere problemet til vannet endrer farge</label>
+    </div></div>
+    <button class="btn btn-primary" onclick="checkModuleThreeQuiz()">Se resultat og moduldiplom</button>
+    <div class="module-one-result" id="moduleThreeResult"></div>
+  </div>
+</div>
+`
 },
 {
 icon:"🧪",title:"Vannverdier og testing",
@@ -1314,6 +1551,7 @@ function renderModules(){
   updateProgress();
   setTimeout(initModuleOneChecklist, 0);
   setTimeout(initModuleTwoChecklist, 0);
+  setTimeout(initModuleThreeChecklist, 0);
 }
 
 function toggleOpen(btn){
@@ -1368,6 +1606,38 @@ function resetModule2Checklist(){
   localStorage.removeItem("akvarieModule2Checklist");
   document.querySelectorAll("#module2Checklist input[data-check]").forEach(box => box.checked = false);
 }
+
+function initModuleThreeChecklist(){
+  const saved = JSON.parse(localStorage.getItem("akvarieModule3Checklist") || "{}");
+  document.querySelectorAll("#module3Checklist input[data-check]").forEach(box => {
+    box.checked = !!saved[box.dataset.check];
+    box.addEventListener("change", () => {
+      saved[box.dataset.check] = box.checked;
+      localStorage.setItem("akvarieModule3Checklist", JSON.stringify(saved));
+    });
+  });
+}
+function resetModule3Checklist(){
+  localStorage.removeItem("akvarieModule3Checklist");
+  document.querySelectorAll("#module3Checklist input[data-check]").forEach(box => box.checked = false);
+}
+function checkModuleThreeQuiz(){
+  let score = 0;
+  for(let i=1;i<=10;i++){
+    const picked = document.querySelector(`input[name="m3q${i}"]:checked`);
+    if(picked) score += Number(picked.value);
+  }
+  const out = document.getElementById("moduleThreeResult");
+  if(!out) return;
+  if(score >= 9){
+    out.innerHTML = `🏆 ${score} av 10 riktige – Gratulerer! Du har bestått Premium Modul 3 og kan markere modulen som fullført.`;
+  }else if(score >= 7){
+    out.innerHTML = `👍 ${score} av 10 riktige – Godkjent! Les gjerne gjennom punktene du var usikker på.`;
+  }else{
+    out.innerHTML = `📘 ${score} av 10 riktige – Gå gjennom leksjonene én gang til og prøv på nytt.`;
+  }
+}
+
 function checkModuleTwoQuiz(){
   let score = 0;
   for(let i=1;i<=10;i++){
