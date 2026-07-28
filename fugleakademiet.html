@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Fugleakademiet – Full Premium Modul 1</title>
+<title>Fugleakademiet – Full Premium Modul 2</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --sky:#0f6fb6;--sky2:#39a9dc;--navy:#0a2944;--gold:#e5b84f;
-  --cream:#fff9eb;--line:#cfe8f5;--text:#17384f;--muted:#627c8f;
-  --green:#2f9b69;--red:#b84f4f;--purple:#7359a5;--panel:#fffffff4
+  --line:#cfe8f5;--text:#17384f;--muted:#627c8f;--green:#2f9b69;
+  --red:#b84f4f;--purple:#7359a5;--panel:#fffffff4
 }
 html{scroll-behavior:smooth}
 body{
@@ -38,7 +38,7 @@ body{
   background:
     radial-gradient(circle at 14% 12%,#ffffff30,transparent 25%),
     radial-gradient(circle at 88% 14%,#ffffff20,transparent 24%),
-    linear-gradient(135deg,#082945,#0f6fb6 56%,#3bb7d8);
+    linear-gradient(135deg,#12334b,#277b9c 56%,#55bac5);
   box-shadow:0 30px 72px #0a4a7752;overflow:hidden
 }
 .badge{
@@ -69,17 +69,14 @@ body{
 }
 .section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:18px}
 .section-head h2{font-size:32px}.section-head p{color:var(--muted);font-weight:700}
-.profile{
-  display:grid;grid-template-columns:.82fr 1.18fr;gap:18px;align-items:stretch
-}
+.profile{display:grid;grid-template-columns:.82fr 1.18fr;gap:18px;align-items:stretch}
 .profile-card{
-  border-radius:28px;padding:24px;color:#fff;
-  background:linear-gradient(135deg,#3b8b2d,#76b74d);
-  box-shadow:0 18px 42px #29531933
+  border-radius:28px;padding:24px;color:#fff;background:linear-gradient(135deg,#8b6b2d,#d1a64c);
+  box-shadow:0 18px 42px #6d521c33
 }
 .profile-card .bird{font-size:84px;text-align:center;margin-bottom:8px}
 .profile-card h2{text-align:center;font-size:31px;margin-bottom:6px}
-.profile-card p{text-align:center;color:#efffe9;font-weight:700}
+.profile-card p{text-align:center;color:#fff9e6;font-weight:700}
 .fact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .fact-box{
   background:#fff;border:1px solid var(--line);border-radius:18px;padding:13px;
@@ -99,9 +96,7 @@ body{
   border:1px solid var(--line);border-radius:28px;padding:22px;
   margin-bottom:15px;box-shadow:0 12px 28px #143c5a12
 }
-.lesson-top{
-  display:grid;grid-template-columns:auto 1fr;gap:15px;align-items:center;margin-bottom:12px
-}
+.lesson-top{display:grid;grid-template-columns:auto 1fr;gap:15px;align-items:center;margin-bottom:12px}
 .lesson-icon{
   width:62px;height:62px;border-radius:20px;background:linear-gradient(135deg,#eaf7fd,#dff3fb);
   display:grid;place-items:center;font-size:34px;border:1px solid var(--line)
@@ -111,17 +106,13 @@ body{
 .lesson ul{padding-left:21px;color:#36566d;font-weight:700}
 .lesson li{margin:6px 0}
 .columns{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:13px}
-.tip,.warning,.remember,.fact,.check{
-  padding:14px;border-radius:18px;font-weight:800
-}
+.tip,.warning,.remember,.fact,.check{padding:14px;border-radius:18px;font-weight:800}
 .tip{background:#eefaf4;border:1px solid #bfe7d1;color:#247450}
 .warning{background:#fff3f3;border:1px solid #efcaca;color:#8e3d3d}
 .remember{background:#fff9e8;border:1px solid #ecd99b;color:#755c1f}
 .fact{background:#f5f1ff;border:1px solid #d9cdf1;color:#63468d}
 .check{background:#eef8fd;border:1px solid var(--line);color:#275f80}
-.miniquiz{
-  margin-top:14px;padding:15px;border-radius:18px;background:#f1f8fd;border:1px solid var(--line)
-}
+.miniquiz{margin-top:14px;padding:15px;border-radius:18px;background:#f1f8fd;border:1px solid var(--line)}
 .miniquiz h4{margin-bottom:8px;color:var(--sky)}
 .miniquiz button{
   width:100%;text-align:left;border:1px solid #c9e3f1;background:#fff;color:#315a72;
@@ -164,7 +155,7 @@ td{color:#516d80;font-weight:700}
 .finish h2{font-size:31px;margin-bottom:8px}.finish p{color:var(--muted);font-weight:700}
 .next{
   margin-top:15px;padding:18px;border-radius:22px;color:#fff;
-  background:linear-gradient(135deg,#7a4e2f,#c58b46)
+  background:linear-gradient(135deg,#46652e,#78a64b)
 }
 .footer{text-align:center;color:var(--muted);font-weight:700;margin-top:20px}
 @media(max-width:1050px){
@@ -193,37 +184,37 @@ td{color:#516d80;font-weight:700}
 <div class="wrap">
 
 <header class="top">
-  <div class="brand">🐦 Fugleakademiet – Modul 1</div>
+  <div class="brand">🐦 Fugleakademiet – Modul 2</div>
   <nav class="nav">
     <a href="index.html">🏠 Forsiden</a>
-    <a href="#modul">📚 Modul 1</a>
-    <a href="#fuglevalg">🦜 Sammenlign</a>
+    <a href="#modul">📚 Modul 2</a>
+    <a href="#sikkerhet">🛡️ Sjekkliste</a>
     <a href="#quiz">🎯 Sluttquiz</a>
   </nav>
 </header>
 
 <section class="hero">
   <div>
-    <span class="badge">🐦 Full Premium Modul 1</span>
-    <h1>Hvilken fugl skal jeg velge?</h1>
-    <p>Før du velger art, farge eller størrelse, må du vite hva fuglehold faktisk innebærer. Denne modulen hjelper deg å vurdere tid, plass, lyd, økonomi, sosialt behov og langsiktig ansvar – slik at både du og fuglen får den beste starten.</p>
+    <span class="badge">🐦 Full Premium Modul 2</span>
+    <h1>Før fuglen flytter inn</h1>
+    <p>Et godt fuglehold starter lenge før fuglen kommer hjem. I denne modulen lærer du å velge riktig bur, plassere det trygt, sikre rommet, unngå farlige materialer og forberede den første dagen og den første uken.</p>
   </div>
   <div class="hero-card">
-    <div class="hero-birds">🦜 🐤 🐦</div>
+    <div class="hero-birds">🏡 🦜 🪶</div>
     <h2>Dette lærer du</h2>
     <div class="hero-list">
-      <div>✅ Om fugl passer inn i livet ditt</div>
-      <div>✅ Hvor mye tid, plass og økonomi som kreves</div>
-      <div>✅ Én fugl eller flere</div>
-      <div>✅ Hvordan velge et friskt individ</div>
-      <div>✅ Hvordan unngå de vanligste nybegynnerfeilene</div>
+      <div>✅ Hvordan du velger og innreder riktig bur</div>
+      <div>✅ Hvor buret bør stå</div>
+      <div>✅ Hvordan du gjør hjemmet fuglesikkert</div>
+      <div>✅ Hva som kan være giftig eller farlig</div>
+      <div>✅ Hvordan den første tiden bør organiseres</div>
     </div>
   </div>
 </section>
 
 <section class="stats">
   <div class="stat"><b>12</b><span>Grundige leksjoner</span></div>
-  <div class="stat"><b>6</b><span>Fuglegrupper sammenlignet</span></div>
+  <div class="stat"><b>8</b><span>Sikkerhetsområder</span></div>
   <div class="stat"><b>12</b><span>Miniquizer</span></div>
   <div class="stat"><b>15</b><span>Spørsmål i sluttquiz</span></div>
 </section>
@@ -231,25 +222,25 @@ td{color:#516d80;font-weight:700}
 <section class="panel">
   <div class="section-head">
     <div>
-      <h2>🦜 Eksempelfugl: Undulat</h2>
+      <h2>🦜 Eksempelfugl: Nymfeparakitt</h2>
       <p>En kort introduksjon – full artsprofil kommer senere i Fugleleksikonet.</p>
     </div>
   </div>
   <div class="profile">
     <div class="profile-card">
-      <div class="bird">🐤</div>
-      <h2>Undulat</h2>
-      <p>En sosial, aktiv og nysgjerrig liten papegøyefugl som ofte passer godt for nye fugleeiere.</p>
+      <div class="bird">🦜</div>
+      <h2>Nymfeparakitt</h2>
+      <p>En sosial og følsom papegøyefugl som trenger god plass, rolige rutiner og daglig aktivitet.</p>
     </div>
     <div class="fact-grid">
       <div class="fact-box"><b>🌍 OPPRINNELSE</b><span>Australia</span></div>
-      <div class="fact-box"><b>📏 STØRRELSE</b><span>Ca. 18–20 cm</span></div>
-      <div class="fact-box"><b>⚖️ VEKT</b><span>Omtrent 25–40 gram</span></div>
-      <div class="fact-box"><b>⏳ LEVEALDER</b><span>Ofte 8–15 år</span></div>
-      <div class="fact-box"><b>🎵 LYDNIVÅ</b><span>Lavt til middels</span></div>
-      <div class="fact-box"><b>❤️ TEMPERAMENT</b><span>Sosial og lærevillig</span></div>
-      <div class="fact-box"><b>👥 SOSIALT BEHOV</b><span>Høyt</span></div>
-      <div class="fact-box"><b>⭐ NIVÅ</b><span>God nybegynnerfugl</span></div>
+      <div class="fact-box"><b>📏 STØRRELSE</b><span>Ca. 30–33 cm</span></div>
+      <div class="fact-box"><b>⚖️ VEKT</b><span>Omtrent 80–120 gram</span></div>
+      <div class="fact-box"><b>⏳ LEVEALDER</b><span>Ofte 15–25 år</span></div>
+      <div class="fact-box"><b>🎵 LYDNIVÅ</b><span>Middels</span></div>
+      <div class="fact-box"><b>❤️ TEMPERAMENT</b><span>Sosial og kontaktsøkende</span></div>
+      <div class="fact-box"><b>🏠 PLASSBEHOV</b><span>Stort bur og daglig flytid</span></div>
+      <div class="fact-box"><b>⭐ NIVÅ</b><span>Passer for forberedte nybegynnere</span></div>
     </div>
   </div>
 </section>
@@ -258,342 +249,285 @@ td{color:#516d80;font-weight:700}
   <div class="section-head">
     <div>
       <h2>📚 Modulens innhold</h2>
-      <p>En tydelig reise fra første tanke til et trygt og gjennomtenkt valg.</p>
+      <p>Fra tomt rom til et ferdig, trygt og gjennomtenkt fuglehjem.</p>
     </div>
   </div>
   <div class="course-map">
-    <div class="map-card"><strong>1. Passer fugl for meg?</strong><span>Livsstil, ansvar og forventninger</span></div>
-    <div class="map-card"><strong>2. Tid i hverdagen</strong><span>Daglige rutiner og sosial kontakt</span></div>
-    <div class="map-card"><strong>3. Økonomi</strong><span>Innkjøp, drift og veterinær</span></div>
-    <div class="map-card"><strong>4. Plass</strong><span>Bur, rom og flymuligheter</span></div>
-    <div class="map-card"><strong>5. Lyd</strong><span>Hva hjemmet og naboene tåler</span></div>
-    <div class="map-card"><strong>6. Én eller flere</strong><span>Sosiale behov og samhold</span></div>
-    <div class="map-card"><strong>7. Størrelse og art</strong><span>Små og store fuglers behov</span></div>
-    <div class="map-card"><strong>8. Alder</strong><span>Ungfugl, voksen og omplassering</span></div>
-    <div class="map-card"><strong>9. Kjøpssted</strong><span>Oppdretter, dyrebutikk eller omplassering</span></div>
-    <div class="map-card"><strong>10. Frisk fugl</strong><span>Hva du skal observere</span></div>
-    <div class="map-card"><strong>11. Nybegynnerfeil</strong><span>Hva som oftest går galt</span></div>
-    <div class="map-card"><strong>12. Sjekklisten</strong><span>Er du virkelig klar?</span></div>
+    <div class="map-card"><strong>1. Planlegg rommet</strong><span>Plass, rutiner og daglig bruk</span></div>
+    <div class="map-card"><strong>2. Velg riktig bur</strong><span>Form, kvalitet og størrelse</span></div>
+    <div class="map-card"><strong>3. Plasser buret</strong><span>Lys, trekk, varme og trygghet</span></div>
+    <div class="map-card"><strong>4. Sittepinner</strong><span>Naturgrener og variasjon</span></div>
+    <div class="map-card"><strong>5. Skåler og vann</strong><span>Hygiene og plassering</span></div>
+    <div class="map-card"><strong>6. Lys og døgnrytme</strong><span>Søvn, ro og stabilitet</span></div>
+    <div class="map-card"><strong>7. Temperatur og luft</strong><span>Trekk, røyk og tørr luft</span></div>
+    <div class="map-card"><strong>8. Gift og kjemikalier</strong><span>Farlige damper og materialer</span></div>
+    <div class="map-card"><strong>9. Vinduer og speil</strong><span>Sikker flytid</span></div>
+    <div class="map-card"><strong>10. Barn og andre dyr</strong><span>Grenser og tilsyn</span></div>
+    <div class="map-card"><strong>11. Første dagen</strong><span>Ro og trygghet</span></div>
+    <div class="map-card"><strong>12. Første uken</strong><span>Rutiner og observasjon</span></div>
   </div>
 </section>
 
 <main id="modul">
 
 <section class="lesson">
-  <div class="lesson-top">
-    <div class="lesson-icon">🐦</div>
-    <div>
-      <h3>Leksjon 1 – Passer fugl for meg?</h3>
-      <p>Fugler er intelligente, følsomme og sosiale dyr. De kan være fantastiske familiemedlemmer, men passer ikke i alle hjem.</p>
-    </div>
-  </div>
-  <p>Fuglehold krever daglig tilstedeværelse. Fuglen skal ikke bare ha mat og vann; den skal observeres, aktiviseres og få trygg sosial kontakt. Mange arter trenger også daglig flytid eller god plass i voliere. Før du bestemmer deg, bør du tenke gjennom hva du ønsker av et kjæledyr og hva du faktisk kan tilby.</p>
-  <p>Fugler har et annet kroppsspråk enn hund og katt. De kan skjule sykdom, reagere sterkt på raske endringer og være følsomme for røyk, damp, trekk og stress. Et godt fuglehold starter derfor med kunnskap og realistiske forventninger.</p>
+  <div class="lesson-top"><div class="lesson-icon">🗺️</div><div>
+    <h3>Leksjon 1 – Planlegg rommet før du kjøper utstyr</h3>
+    <p>Før du kjøper bur og innredning, må du vite hvor fuglen faktisk skal bo.</p>
+  </div></div>
+  <p>Rommet bør være lyst, rolig og en naturlig del av hjemmet. Fuglen bør kunne følge med på familien uten å stå midt i konstant trafikk, høye lyder eller sterke lukter. Tenk også gjennom hvordan rommet brukes morgen, dag og kveld.</p>
+  <p>Det må være nok plass rundt buret til rengjøring, åpning av dører og trygg håndtering. Du bør også ha en plan for hvor fuglen skal fly, hvor transportburet skal oppbevares og hvordan du kan skape ro om natten.</p>
   <div class="columns">
-    <div class="tip">💡 Fugleakademiets tips: Tenk på hvordan hjemmet og rutinene dine ser ut på en travel hverdag.</div>
-    <div class="warning">⚠️ Vanlig feil: Å tro at en liten fugl automatisk krever lite tid og lite plass.</div>
+    <div class="tip">💡 Planlegg hele rommet, ikke bare stedet der buret skal stå.</div>
+    <div class="warning">⚠️ Unngå å plassere fuglen i et rom som sjelden brukes. Sosial isolasjon kan skape stress.</div>
   </div>
-  <div class="check">✅ Dette bør du huske: Fuglen trenger trygghet, aktivitet, sosial kontakt og et stabilt miljø hver eneste dag.</div>
   <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,false)">Fugl passer alle hjem fordi den er liten.</button>
-    <button onclick="mini(this,true)">Fugl passer best når eieren har tid, kunnskap og realistiske forventninger.</button>
+    <button onclick="mini(this,true)">Rommet bør være lyst, trygt og en del av hverdagen.</button>
+    <button onclick="mini(this,false)">Buret bør stå alene i et ubrukt rom.</button>
     <div class="mini-result"></div>
   </div>
 </section>
 
 <section class="lesson">
-  <div class="lesson-top">
-    <div class="lesson-icon">⏰</div>
-    <div>
-      <h3>Leksjon 2 – Hvor mye tid krever en fugl?</h3>
-      <p>Tidsbehovet varierer, men alle fugler trenger daglig oppfølging.</p>
-    </div>
-  </div>
-  <p>Hver dag må vann byttes, mat kontrolleres og buret inspiseres. I tillegg kommer rengjøring, aktivisering og sosial kontakt. Fugler som er håndtamme og sterkt knyttet til mennesker kan kreve mye direkte oppmerksomhet.</p>
-  <p>Små finker i gruppe bruker mye tid sammen, men trenger fortsatt daglig tilsyn og et godt miljø. Papegøyefugler kan derimot utvikle stress eller problematferd dersom de blir understimulert eller overlatt for mye til seg selv.</p>
+  <div class="lesson-top"><div class="lesson-icon">🏠</div><div>
+    <h3>Leksjon 2 – Velg riktig bur</h3>
+    <p>Buret skal være artstilpasset, sikkert og stort nok til naturlig bevegelse.</p>
+  </div></div>
+  <p>Et godt bur har trygg avstand mellom sprinklene, solide dører og materialer som tåler rengjøring. Unngå løs maling, skarpe kanter og åpninger der hodet eller beina kan sette seg fast.</p>
+  <p>Fugler flyr hovedsakelig horisontalt. Derfor er et langt bur som regel bedre enn et høyt og smalt bur. Fuglen skal kunne strekke vingene uten å treffe leker, skåler eller vegger.</p>
   <ul>
-    <li>Daglig mat, vann og kontroll av avføring.</li>
-    <li>Daglig aktivitet, flytid eller berikelse.</li>
-    <li>Ukentlig grundigere rengjøring.</li>
-    <li>Regelmessig observasjon av vekt, fjærdrakt og atferd.</li>
+    <li>Riktig sprinkelform og avstand for arten.</li>
+    <li>Stor nok dør for trygg håndtering.</li>
+    <li>Enkel tilgang til skåler og rengjøring.</li>
+    <li>Plass til flere sittepinner uten å blokkere flyveien.</li>
   </ul>
-  <div class="columns">
-    <div class="tip">💡 Lag en realistisk ukeplan før du kjøper fuglen.</div>
-    <div class="warning">⚠️ Ikke baser valget på hvor mye tid du har akkurat nå i ferien.</div>
-  </div>
+  <div class="remember">✅ Velg større bur enn minimum når du har mulighet.</div>
   <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">Fuglen trenger daglig tilsyn og aktivitet.</button>
-    <button onclick="mini(this,false)">Det holder å fylle opp mat for flere dager.</button>
-    <div class="mini-result"></div>
-  </div>
-</section>
-
-<section class="lesson">
-  <div class="lesson-top">
-    <div class="lesson-icon">💰</div>
-    <div>
-      <h3>Leksjon 3 – Hva koster det å eie fugl?</h3>
-      <p>Selve fuglen er ofte den minste delen av den totale kostnaden.</p>
-    </div>
-  </div>
-  <p>Du må regne med bur eller voliere, transportbur, sittepinner, matskåler, leker, belysning, rengjøringsutstyr og kvalitetsfôr. I tillegg kan veterinærutgifter bli betydelige, særlig fordi fugler ofte trenger en veterinær med spesialkunnskap.</p>
-  <p>Utstyret skal også vedlikeholdes og skiftes. Leker blir ødelagt, sittepinner må fornyes, og enkelte fugler trenger jevnlig nye tygge- og aktiviseringsmaterialer.</p>
-  <ul>
-    <li>Startutstyr og passende bur.</li>
-    <li>Fast utgift til fôr og grønt.</li>
-    <li>Leker og berikelse.</li>
-    <li>Feriepass og transport.</li>
-    <li>Veterinær og eventuell akuttbehandling.</li>
-  </ul>
-  <div class="remember">✅ Ha en økonomisk buffer før fuglen flytter inn.</div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,false)">Den største kostnaden er alltid selve fuglen.</button>
-    <button onclick="mini(this,true)">Utstyr, fôr og veterinær kan koste mer over tid.</button>
-    <div class="mini-result"></div>
-  </div>
-</section>
-
-<section class="lesson">
-  <div class="lesson-top">
-    <div class="lesson-icon">🏠</div>
-    <div>
-      <h3>Leksjon 4 – Hvor mye plass trenger du?</h3>
-      <p>Fugler beveger seg hovedsakelig horisontalt, og trenger lengde og flyplass.</p>
-    </div>
-  </div>
-  <p>Et høyt og smalt bur ser stort ut, men kan gi dårlig flyplass. Mange fugler trenger et langt bur, riktige sittepinner og mulighet til å bruke vingene. Større arter krever betydelig større plass og ofte et eget fuglerom eller voliere.</p>
-  <p>Plassen rundt buret er også viktig. Fuglen trenger et trygt rom uten åpne vinduer, takvifter, varme plater, giftige planter eller andre farer.</p>
-  <div class="columns">
-    <div class="tip">💡 Velg bur etter artens behov – ikke etter hvor lite plass du ønsker at buret skal ta.</div>
-    <div class="warning">⚠️ Små arter trenger fortsatt god flylengde.</div>
-  </div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">Lengde og flyplass er ofte viktigere enn bare høyde.</button>
+    <button onclick="mini(this,true)">Lengde og fri flyplass er svært viktig.</button>
     <button onclick="mini(this,false)">Et smalt, høyt bur passer alle fugler.</button>
     <div class="mini-result"></div>
   </div>
 </section>
 
 <section class="lesson">
-  <div class="lesson-top">
-    <div class="lesson-icon">🔊</div>
-    <div>
-      <h3>Leksjon 5 – Hvor mye lyd tåler du?</h3>
-      <p>Alle fugler lager lyd, men typen og styrken varierer mye.</p>
-    </div>
-  </div>
-  <p>Undulater småprater ofte gjennom dagen. Kanarifuglhanner kan synge mye, mens nymfeparakitter og dvergpapegøyer kan rope etter kontakt. Større papegøyer kan ha svært kraftige rop som høres langt.</p>
-  <p>Spør deg selv om hjemmet, familien og naboene tåler dette. Lyd oppleves også forskjellig: jevn småprat kan være lettere å leve med enn korte, svært høye rop.</p>
-  <div class="fact">🌿 Visste du at? Lydnivået påvirkes av art, individ, kjønn, tidspunkt på dagen og hvor trygg fuglen føler seg.</div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,false)">Det finnes helt lydløse fugler.</button>
-    <button onclick="mini(this,true)">Alle fugler lager lyd, men nivået varierer.</button>
-    <div class="mini-result"></div>
-  </div>
-</section>
-
-<section class="lesson">
-  <div class="lesson-top">
-    <div class="lesson-icon">👥</div>
-    <div>
-      <h3>Leksjon 6 – Én fugl eller flere?</h3>
-      <p>Fugler er sosiale dyr, men riktig løsning avhenger av art og miljø.</p>
-    </div>
-  </div>
-  <p>Mange småfugler trives best med artsfrender. Finker bør vanligvis ikke holdes alene. Undulater og andre papegøyefugler kan også ha stor glede av en partner, men sammensetting må gjøres riktig.</p>
-  <p>En enslig fugl kan bli svært knyttet til mennesker, men da må eieren dekke en stor del av det sosiale behovet hver dag. Dette kan være vanskelig over tid.</p>
+  <div class="lesson-top"><div class="lesson-icon">📍</div><div>
+    <h3>Leksjon 3 – Hvor skal buret stå?</h3>
+    <p>Plasseringen påvirker trygghet, søvn, temperatur og sosial trivsel.</p>
+  </div></div>
+  <p>Buret bør stå stabilt, gjerne med minst én side mot en vegg. Dette kan gi fuglen en følelse av beskyttelse. Samtidig bør den kunne se hva som skjer i rommet.</p>
+  <p>Unngå kjøkken, trekkfulle ganger, direkte varme fra ovn eller radiator og sterk sol gjennom vinduet. Fuglen skal heller ikke stå der dører stadig slår opp eller mennesker går tett forbi hele tiden.</p>
   <div class="columns">
-    <div class="tip">💡 To fugler kan fortsatt bli trygge på mennesker dersom treningen skjer rolig og positivt.</div>
-    <div class="warning">⚠️ Ikke sett to ukjente fugler rett sammen uten tilvenning.</div>
+    <div class="tip">💡 Plasser buret omtrent i øyehøyde eller litt høyere, avhengig av art og rom.</div>
+    <div class="warning">⚠️ Kjøkkenet er uegnet på grunn av varme, damp, røyk og farlige matlagingsprodukter.</div>
   </div>
   <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">Artsfrender kan dekke viktige sosiale behov.</button>
-    <button onclick="mini(this,false)">Alle fugler bør alltid holdes alene.</button>
+    <button onclick="mini(this,false)">Buret bør stå ved komfyren.</button>
+    <button onclick="mini(this,true)">Buret bør stå trygt, lyst og uten trekk eller matos.</button>
     <div class="mini-result"></div>
   </div>
 </section>
 
 <section class="lesson">
-  <div class="lesson-top">
-    <div class="lesson-icon">📏</div>
-    <div>
-      <h3>Leksjon 7 – Hvilken størrelse og fuglegruppe passer deg?</h3>
-      <p>Små fugler er ikke nødvendigvis enkle, og store fugler er ikke bare større utgaver av små fugler.</p>
-    </div>
-  </div>
-  <p>Små arter som undulat, kanarifugl og fink kan passe mange hjem, men de trenger fortsatt plass, aktivitet og sosial kontakt. Dvergpapegøyer er små, men kan være intense, høylytte og territorielle.</p>
-  <p>Større papegøyer lever lenge, krever mye plass og kan utvikle svært sterke bånd til mennesker. De har kraftige nebb og et stort behov for mental stimulering.</p>
-  <div class="remember">✅ Velg ikke bare etter størrelse. Se på temperament, lyd, levetid og behov.</div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,false)">Små fugler er alltid enkle.</button>
-    <button onclick="mini(this,true)">Behov og temperament er viktigere enn størrelse alene.</button>
-    <div class="mini-result"></div>
-  </div>
-</section>
-
-<section class="lesson">
-  <div class="lesson-top">
-    <div class="lesson-icon">🎂</div>
-    <div>
-      <h3>Leksjon 8 – Ungfugl, voksen eller omplasseringsfugl?</h3>
-      <p>Alder påvirker erfaring, tilvenning og forventninger.</p>
-    </div>
-  </div>
-  <p>En ungfugl kan lettere venne seg til nye rutiner, men trenger trygg og riktig oppfølging. En voksen fugl kan allerede ha etablerte vaner og erfaringer, både gode og vanskelige.</p>
-  <p>Omplasseringsfugler kan bli fantastiske familiemedlemmer, men du må være forberedt på at tillit kan ta tid. Spør alltid om tidligere miljø, kosthold, helse og atferd.</p>
-  <div class="tip">💡 Vurder hva du har erfaring og tid til – ikke bare hvilken alder som virker mest spennende.</div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">Omplasseringsfugler kan trenge ekstra tid og forståelse.</button>
-    <button onclick="mini(this,false)">Voksne fugler kan aldri bli trygge i nytt hjem.</button>
-    <div class="mini-result"></div>
-  </div>
-</section>
-
-<section class="lesson">
-  <div class="lesson-top">
-    <div class="lesson-icon">🏪</div>
-    <div>
-      <h3>Leksjon 9 – Oppdretter, dyrebutikk eller omplassering?</h3>
-      <p>Kjøpsstedet skal kunne gi ærlig informasjon om fuglens bakgrunn og behov.</p>
-    </div>
-  </div>
-  <p>En seriøs oppdretter eller forhandler kjenner arten, kan forklare kosthold og helse, og lar deg se fuglen i et rent og trygt miljø. De skal ikke presse deg til et raskt kjøp.</p>
-  <p>Ved omplassering bør du få så mye informasjon som mulig om tidligere miljø og årsaken til omplasseringen. Avtal gjerne en prøveperiode dersom det er mulig og ansvarlig.</p>
+  <div class="lesson-top"><div class="lesson-icon">🌳</div><div>
+    <h3>Leksjon 4 – Sittepinner og naturgrener</h3>
+    <p>Riktige sittepinner trener føtter, balanse og muskler.</p>
+  </div></div>
+  <p>Bruk gjerne naturgrener av trygge treslag med ulik tykkelse og form. Variasjon gjør at fuglen bruker føttene på forskjellige måter og reduserer ensidig belastning.</p>
+  <p>Plasser pinnene slik at fuglen kan bevege seg uten at avføring faller ned i mat- og vannskåler. Ikke fyll buret med så mange pinner at flyveien blokkeres.</p>
   <ul>
-    <li>Spør om alder og opprinnelse.</li>
-    <li>Spør hva fuglen spiser nå.</li>
-    <li>Spør om helsekontroller og tidligere sykdom.</li>
-    <li>Se på miljøet fuglen holdes i.</li>
+    <li>Ulik tykkelse og struktur.</li>
+    <li>Stabile og rene fester.</li>
+    <li>Ingen sandpapirhylser eller svært ru overflater.</li>
+    <li>God avstand til skåler og leker.</li>
   </ul>
-  <div class="warning">⚠️ Unngå selgere som ikke vil svare på grunnleggende spørsmål.</div>
+  <div class="warning">⚠️ Ensartede, glatte pinner kan gi dårlig belastningsvariasjon.</div>
   <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">En seriøs selger gir tydelig informasjon og presser deg ikke.</button>
-    <button onclick="mini(this,false)">Det er best å kjøpe uten spørsmål.</button>
+    <button onclick="mini(this,true)">Ulik tykkelse gir bedre variasjon for føttene.</button>
+    <button onclick="mini(this,false)">Alle pinner bør være helt like.</button>
     <div class="mini-result"></div>
   </div>
 </section>
 
 <section class="lesson">
-  <div class="lesson-top">
-    <div class="lesson-icon">🩺</div>
-    <div>
-      <h3>Leksjon 10 – Hvordan velger du en frisk fugl?</h3>
-      <p>Fugler skjuler sykdom, så små tegn kan være viktige.</p>
-    </div>
+  <div class="lesson-top"><div class="lesson-icon">🥣</div><div>
+    <h3>Leksjon 5 – Mat- og vannskåler</h3>
+    <p>Skåler skal være enkle å rengjøre og plasseres hygienisk.</p>
+  </div></div>
+  <p>Mat og vann bør ikke stå direkte under sittepinner. Vannskåler må kontrolleres flere ganger daglig fordi fugler kan søle mat, fjær og avføring i vannet.</p>
+  <p>Rustfritt stål eller andre rengjøringsvennlige materialer er ofte gode valg. Ha gjerne ekstra skåler slik at du kan bytte raskt under rengjøring.</p>
+  <div class="columns">
+    <div class="tip">💡 Bytt vann daglig og oftere dersom det blir skittent.</div>
+    <div class="warning">⚠️ Skåler som er vanskelige å rengjøre kan samle bakterier og biofilm.</div>
   </div>
-  <p>En frisk fugl er våken, reagerer på omgivelsene og beveger seg sikkert. Øynene skal være klare, neseborene rene og fjærdrakten velstelt. Pusten skal være jevn og stille.</p>
-  <p>Se også på området rundt kloakken, fuglens grep rundt pinnen og hvordan den samhandler med andre fugler. En fugl som sitter lenge oppblåst, virker sløv eller puster tungt bør vurderes av fuglekyndig veterinær.</p>
-  <div class="check">✅ Se etter: klare øyne, ren pust, jevnt grep, aktiv atferd og ren fjærdrakt.</div>
   <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">Jevn pust og aktiv atferd er gode tegn.</button>
-    <button onclick="mini(this,false)">Oppblåst fjærdrakt og sløvhet er alltid normalt.</button>
+    <button onclick="mini(this,true)">Skåler skal stå rent og ikke under sittepinner.</button>
+    <button onclick="mini(this,false)">Vann kan stå urørt i flere dager.</button>
     <div class="mini-result"></div>
   </div>
 </section>
 
 <section class="lesson">
-  <div class="lesson-top">
-    <div class="lesson-icon">⚠️</div>
-    <div>
-      <h3>Leksjon 11 – Vanlige nybegynnerfeil</h3>
-      <p>De fleste feil skyldes for lite planlegging, ikke dårlige intensjoner.</p>
-    </div>
+  <div class="lesson-top"><div class="lesson-icon">☀️</div><div>
+    <h3>Leksjon 6 – Lys, søvn og døgnrytme</h3>
+    <p>Fugler trenger en stabil rytme med aktivitet og sammenhengende mørke.</p>
+  </div></div>
+  <p>Et urolig rom med TV, lys og aktivitet sent på kvelden kan forstyrre søvnen. Mange fugler har behov for en lang og rolig natt uten stadig oppvåkning.</p>
+  <p>Dagslys er viktig, men buret skal ikke stå i sterk sol uten mulighet til skygge. Belysning må brukes på en trygg måte og bør følge en jevn døgnrytme.</p>
+  <div class="remember">✅ Lag faste tider for morgen, kveld og ro.</div>
+  <div class="miniquiz"><h4>Miniquiz</h4>
+    <button onclick="mini(this,false)">Fuglen bør ha lys og TV hele natten.</button>
+    <button onclick="mini(this,true)">Fuglen trenger en stabil og rolig døgnrytme.</button>
+    <div class="mini-result"></div>
   </div>
+</section>
+
+<section class="lesson">
+  <div class="lesson-top"><div class="lesson-icon">🌡️</div><div>
+    <h3>Leksjon 7 – Temperatur, trekk og luftfuktighet</h3>
+    <p>Stabile forhold er viktigere enn å jage en bestemt temperatur hele tiden.</p>
+  </div></div>
+  <p>Friske fugler tåler ofte moderate og gradvise temperaturendringer, men raske skifter og trekk kan være belastende. Buret bør stå unna kalde vinduer, ytterdører og direkte varme.</p>
+  <p>For tørr luft kan påvirke hud og fjærdrakt, mens høy fuktighet kombinert med dårlig ventilasjon kan gi andre problemer. God luftutskifting uten trekk er målet.</p>
+  <div class="fact">🌿 Mange fugler har glede av trygg bading eller lett dusjing, avhengig av art og individ.</div>
+  <div class="miniquiz"><h4>Miniquiz</h4>
+    <button onclick="mini(this,true)">Stabile forhold og god ventilasjon uten trekk er viktig.</button>
+    <button onclick="mini(this,false)">Buret bør stå rett ved en kald ytterdør.</button>
+    <div class="mini-result"></div>
+  </div>
+</section>
+
+<section class="lesson">
+  <div class="lesson-top"><div class="lesson-icon">☠️</div><div>
+    <h3>Leksjon 8 – Giftige damper, røyk og kjemikalier</h3>
+    <p>Fuglers luftveier er svært følsomme.</p>
+  </div></div>
+  <p>Røyk, aerosoler, parfyme, sterke rengjøringsmidler og kjemiske damper kan være farlige. Overopphetede slippbelegg og enkelte kjøkkenprodukter kan avgi gasser som er særlig farlige for fugler.</p>
+  <p>Ikke bruk spray, røyk, duftlys eller sterke kjemikalier i rommet der fuglen oppholder seg. Sørg for god ventilasjon og flytt fuglen langt unna ved oppussing eller bruk av maling og lim.</p>
+  <div class="warning">⚠️ Matos og overopphetede slippbelegg kan være akutt farlig. Fuglen skal ikke bo på kjøkkenet.</div>
+  <div class="miniquiz"><h4>Miniquiz</h4>
+    <button onclick="mini(this,true)">Fugler skal beskyttes mot røyk, spray og kjemiske damper.</button>
+    <button onclick="mini(this,false)">Sterk parfyme i fuglerommet er ufarlig.</button>
+    <div class="mini-result"></div>
+  </div>
+</section>
+
+<section class="lesson">
+  <div class="lesson-top"><div class="lesson-icon">🪟</div><div>
+    <h3>Leksjon 9 – Vinduer, speil, vann og ledninger</h3>
+    <p>Et rom kan se trygt ut for mennesker, men være fullt av farer for en flygende fugl.</p>
+  </div></div>
+  <p>Lukk vinduer og dører før fuglen slippes ut. Store vinduer og speil bør gjøres synlige til fuglen har lært rommet. Dekk åpne toaletter, vasker og beholdere med vann.</p>
+  <p>Skjul elektriske ledninger og fjern limfeller, åpne flammer, varme plater og andre gjenstander fuglen kan lande på eller tygge i.</p>
   <ul>
-    <li>Å velge fugl bare etter utseende.</li>
-    <li>Å kjøpe for lite bur.</li>
-    <li>Å undervurdere lydnivå og rengjøring.</li>
-    <li>Å gi for lite sosial kontakt og aktivisering.</li>
-    <li>Å leve på frø alene uten variert kosthold.</li>
-    <li>Å vente for lenge med veterinær ved sykdomstegn.</li>
-    <li>Å bruke farlige materialer, røyk eller sterke dufter i rommet.</li>
-    <li>Å tro at håndtamhet skal oppnås med tvang.</li>
+    <li>Lukk vinduer og ytterdører.</li>
+    <li>Dekk eller marker store glassflater.</li>
+    <li>Slå av takvifter.</li>
+    <li>Skjul ledninger og fjern giftige planter.</li>
+    <li>Dekk åpne vannkilder.</li>
   </ul>
-  <div class="remember">✅ Godt fuglehold handler om tålmodighet, kunnskap og stabile rutiner.</div>
+  <div class="check">✅ Gå gjennom rommet fra fuglens perspektiv før første flytur.</div>
   <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,false)">Tvang er den raskeste veien til tillit.</button>
-    <button onclick="mini(this,true)">Tillit bygges med ro, tid og positive erfaringer.</button>
+    <button onclick="mini(this,true)">Vinduer, speil og åpne vannkilder må sikres.</button>
+    <button onclick="mini(this,false)">Fuglen forstår glass automatisk.</button>
     <div class="mini-result"></div>
   </div>
 </section>
 
 <section class="lesson">
-  <div class="lesson-top">
-    <div class="lesson-icon">📋</div>
-    <div>
-      <h3>Leksjon 12 – Er du klar?</h3>
-      <p>Bruk sjekklisten før du går videre til Modul 2.</p>
-    </div>
-  </div>
-  <div class="checklist">
-    <div class="check-row"><span>⏰</span><span>Jeg har tid til daglig stell og aktivitet.</span></div>
-    <div class="check-row"><span>🏠</span><span>Jeg har plass til riktig bur eller voliere.</span></div>
-    <div class="check-row"><span>🔊</span><span>Jeg og naboene tåler lydnivået.</span></div>
-    <div class="check-row"><span>💰</span><span>Jeg har økonomi til utstyr, fôr og veterinær.</span></div>
-    <div class="check-row"><span>🩺</span><span>Jeg vet hvor nærmeste fuglekyndige veterinær finnes.</span></div>
-    <div class="check-row"><span>🌴</span><span>Jeg har plan for ferie og lang levetid.</span></div>
-    <div class="check-row"><span>👥</span><span>Jeg har vurdert om fuglen trenger artsfrender.</span></div>
-    <div class="check-row"><span>📚</span><span>Jeg er villig til å lære videre.</span></div>
+  <div class="lesson-top"><div class="lesson-icon">👶</div><div>
+    <h3>Leksjon 10 – Barn, hund, katt og andre dyr</h3>
+    <p>Samvær må alltid styres av voksne og skje under kontroll.</p>
+  </div></div>
+  <p>Barn må lære at fuglen ikke er et leketøy. De skal ikke stikke fingre inn i buret, jage fuglen eller forsøke å fange den. Rolig observasjon og enkle oppgaver kan være en god start.</p>
+  <p>Hunder og katter kan reagere instinktivt på en flygende fugl. Selv et vennlig kjæledyr kan skade fuglen på sekunder. Hold fysisk adskillelse og aldri stol på samvær uten tilsyn.</p>
+  <div class="columns">
+    <div class="tip">💡 Lag tydelige regler for hele familien før fuglen kommer.</div>
+    <div class="warning">⚠️ Katt og fugl skal aldri være løse sammen uten full kontroll.</div>
   </div>
   <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">Jeg bør være trygg på tid, plass, økonomi og kunnskap først.</button>
-    <button onclick="mini(this,false)">Jeg kan ordne alt etter at fuglen kommer.</button>
+    <button onclick="mini(this,true)">Barn og andre dyr må alltid følges opp av en voksen.</button>
+    <button onclick="mini(this,false)">Fuglen kan være alene med katten når de har møttes én gang.</button>
+    <div class="mini-result"></div>
+  </div>
+</section>
+
+<section class="lesson">
+  <div class="lesson-top"><div class="lesson-icon">🚪</div><div>
+    <h3>Leksjon 11 – Den første dagen hjemme</h3>
+    <p>Den første dagen skal handle om ro, mat, vann og observasjon.</p>
+  </div></div>
+  <p>Sett transportburet nær det ferdige buret og la overføringen skje så rolig som mulig. Unngå å jage fuglen eller gripe etter den dersom det ikke er nødvendig.</p>
+  <p>Fuglen bør få tid til å finne mat, vann og sittepinner. Hold rommet rolig og unngå mange besøkende, høy musikk og intensiv håndtrening.</p>
+  <div class="remember">✅ Første mål er at fuglen føler seg trygg nok til å spise, drikke og hvile.</div>
+  <div class="miniquiz"><h4>Miniquiz</h4>
+    <button onclick="mini(this,false)">Håndtrening skal starte med en gang og vare lenge.</button>
+    <button onclick="mini(this,true)">Fuglen bør få ro og tid til å orientere seg.</button>
+    <div class="mini-result"></div>
+  </div>
+</section>
+
+<section class="lesson">
+  <div class="lesson-top"><div class="lesson-icon">📅</div><div>
+    <h3>Leksjon 12 – Den første uken</h3>
+    <p>Bygg rutiner gradvis og observer fuglen nøye.</p>
+  </div></div>
+  <p>Den første uken bør du notere appetitt, drikkelyst, avføring, lyd, aktivitetsnivå og søvn. Små endringer kan være viktige, særlig dersom fuglen virker sløv eller sitter mye oppblåst.</p>
+  <p>Start kontakt og trening forsiktig. Sitt nær buret, snakk rolig og la fuglen bli kjent med stemmen og bevegelsene dine. Ikke tving fram håndkontakt.</p>
+  <ul>
+    <li>Hold samme fôr som fuglen er vant til i starten.</li>
+    <li>Bygg døgnrytme og rengjøringsrutiner.</li>
+    <li>Gi tid til hvile.</li>
+    <li>Kontakt fuglekyndig veterinær ved sykdomstegn.</li>
+  </ul>
+  <div class="tip">💡 Ta gjerne et bilde av normal avføring og noter startvekten dersom fuglen kan veies trygt.</div>
+  <div class="miniquiz"><h4>Miniquiz</h4>
+    <button onclick="mini(this,true)">Observer matlyst, avføring, pust og aktivitet.</button>
+    <button onclick="mini(this,false)">Store endringer i fôr og rutiner bør gjøres første dag.</button>
     <div class="mini-result"></div>
   </div>
 </section>
 
 </main>
 
-<section class="panel" id="fuglevalg">
+<section class="panel" id="sikkerhet">
   <div class="section-head">
     <div>
-      <h2>🦜 Sammenlign vanlige fuglegrupper</h2>
-      <p>En enkel oversikt før du går videre til Fugleleksikonet senere.</p>
+      <h2>🛡️ Sjekkliste før fuglen kommer</h2>
+      <p>Alle punktene bør være ferdige før transportburet bæres inn.</p>
     </div>
   </div>
-  <div class="compare">
-    <table>
-      <thead>
-        <tr>
-          <th>Fuglegruppe</th>
-          <th>Opprinnelse</th>
-          <th>Typisk størrelse</th>
-          <th>Lydnivå</th>
-          <th>Sosialt behov</th>
-          <th>Nybegynner?</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Undulat</td><td>Australia</td><td>Liten</td><td>Lavt–middels</td><td>Høyt</td><td>Ofte ja</td></tr>
-        <tr><td>Nymfeparakitt</td><td>Australia</td><td>Middels</td><td>Middels</td><td>Høyt</td><td>Ja, med plass</td></tr>
-        <tr><td>Kanarifugl</td><td>Kanariøyene</td><td>Liten</td><td>Middels sang</td><td>Middels</td><td>Ja</td></tr>
-        <tr><td>Sebrafink</td><td>Australia</td><td>Liten</td><td>Lavt–middels</td><td>Høyt med artsfrender</td><td>Ja</td></tr>
-        <tr><td>Dvergpapegøye</td><td>Afrika</td><td>Liten</td><td>Middels–høyt</td><td>Høyt</td><td>Delvis</td></tr>
-        <tr><td>Store papegøyer</td><td>Flere verdensdeler</td><td>Stor</td><td>Svært høyt</td><td>Svært høyt</td><td>Vanligvis nei</td></tr>
-      </tbody>
-    </table>
+  <div class="checklist">
+    <div class="check-row"><span>🏠</span><span>Buret er ferdig montert, vasket og kontrollert.</span></div>
+    <div class="check-row"><span>📏</span><span>Sprinkelavstand og størrelse passer arten.</span></div>
+    <div class="check-row"><span>🌳</span><span>Sittepinner har trygg variasjon i tykkelse.</span></div>
+    <div class="check-row"><span>🥣</span><span>Mat og vann står rent og ikke under sittepinner.</span></div>
+    <div class="check-row"><span>☀️</span><span>Rommet har stabil døgnrytme og ro om natten.</span></div>
+    <div class="check-row"><span>🌡️</span><span>Buret står uten trekk, sterk varme og direkte sol.</span></div>
+    <div class="check-row"><span>☠️</span><span>Spray, røyk, slippbelegg og sterke kjemikalier er fjernet.</span></div>
+    <div class="check-row"><span>🪟</span><span>Vinduer, speil, vifter, vann og ledninger er sikret.</span></div>
+    <div class="check-row"><span>🐶</span><span>Barn og andre dyr har tydelige regler.</span></div>
+    <div class="check-row"><span>🚗</span><span>Transportbur og veterinærkontakt er klare.</span></div>
   </div>
 </section>
 
 <section class="quiz" id="quiz">
-  <h2>🎯 Sluttquiz – Modul 1</h2>
+  <h2>🎯 Sluttquiz – Modul 2</h2>
   <p>Svar riktig på alle spørsmålene for å fullføre modulen.</p>
-
   <div id="questions"></div>
   <div class="progress"><span id="progressBar"></span></div>
   <div id="quizSummary" style="margin-top:12px;font-weight:900">0 av 15 spørsmål fullført</div>
 </section>
 
 <section class="finish">
-  <h2>🏆 Modul 1 fullført</h2>
-  <p>Når alle spørsmålene er besvart riktig, er du klar for neste modul.</p>
+  <h2>🏆 Modul 2 fullført</h2>
+  <p>Når alle spørsmålene er besvart riktig, er hjemmet klart for en trygg og rolig start.</p>
   <div class="next">
-    <h3>➡️ Neste modul: Før fuglen flytter inn</h3>
-    <p>I Modul 2 lærer du om bur, plassering, sittepinner, belysning, temperatur, sikkerhet i hjemmet og den første tiden med fuglen.</p>
+    <h3>➡️ Neste modul: Mat, ernæring og vann</h3>
+    <p>I Modul 3 lærer du om frø, pellets, grønnsaker, mineraler, vannhygiene, giftige matvarer og hvordan et balansert kosthold bygges opp.</p>
   </div>
 </section>
 
-<p class="footer">Fugleakademiet – Full Premium Modul 1 🐦</p>
+<p class="footer">Fugleakademiet – Full Premium Modul 2 🐦</p>
 </div>
 
 <script>
@@ -603,25 +537,23 @@ function mini(btn,correct){
   btn.classList.add(correct?'good':'bad');
   box.querySelector('.mini-result').textContent=correct?'✅ Riktig!':'❌ Prøv igjen.';
 }
-
 const quizData=[
-['Hva bør vurderes før valg av fugl?',['Bare fargen','Tid, plass, lyd og sosialt behov','Bare prisen'],1],
-['Hva er buret?',['Fuglens hele liv','En trygg base','Bare et sted for mat'],1],
-['Hva krever alle fugler?',['Daglig tilsyn','Ingen kontakt','Bare ukentlig vann'],0],
-['Hva er ofte viktigst ved bur?',['Horisontal flyplass','Bare høyde','Mørk plassering'],0],
-['Hva er riktig om lyd?',['Alle fugler lager lyd','Noen arter er helt lydløse','Bare store fugler lager lyd'],0],
-['Hva er riktig om finker?',['De trives ofte med artsfrender','De skal alltid være alene','De trenger ingen flyplass'],0],
-['Hva er riktig om små fugler?',['De krever alltid lite','Behov er viktigere enn størrelse','De trenger ikke aktivitet'],1],
-['Hva kan være bra med en voksen omplasseringsfugl?',['Den kan bli et godt familiemedlem med tid','Den kan aldri bli trygg','Den trenger ingen tilvenning'],0],
-['Hva kjennetegner en seriøs selger?',['Presser raskt salg','Gir tydelig informasjon','Unngår spørsmål'],1],
-['Hva er et godt tegn hos en frisk fugl?',['Jevn pust og klar respons','Sløvhet','Tung pust'],0],
-['Hva er en vanlig nybegynnerfeil?',['Å planlegge godt','Å velge bare etter utseende','Å finne veterinær'],1],
-['Hvordan bygges tillit?',['Med tvang','Med ro og positive erfaringer','Ved å jage fuglen'],1],
-['Hva bør være klart før kjøp?',['Tid, økonomi og plass','Bare navn på fuglen','Bare matskål'],0],
-['Hva kan bli en stor kostnad?',['Veterinær og utstyr','Ingenting etter kjøpet','Bare frø'],0],
-['Hva er målet med Modul 1?',['Å velge raskest mulig','Å ta et gjennomtenkt valg','Å lære alle arter utenat'],1]
+['Hvor bør fuglen bo?',['I et ubrukt rom','I et lyst, trygt rom nær familien','På kjøkkenet'],1],
+['Hva er viktig ved valg av bur?',['Bare høyde','Horisontal plass og riktig sprinkelavstand','Lavest mulig pris'],1],
+['Hvor bør buret ikke stå?',['Nær matos og sterk varme','Mot en trygg vegg','I et rolig oppholdsrom'],0],
+['Hva er riktig om sittepinner?',['Alle bør være like','Ulik tykkelse og trygg struktur er bra','Sandpapir er alltid best'],1],
+['Hvor bør mat og vann stå?',['Under sittepinner','Rent og beskyttet mot avføring','På burbunnen'],1],
+['Hva trenger fuglen om natten?',['Rolig og stabil mørkeperiode','TV og lys hele natten','Mange besøkende'],0],
+['Hva er viktig for temperatur?',['Stabile forhold uten trekk','Rask temperaturendring','Buret rett ved ytterdør'],0],
+['Hva kan være farlig for fugler?',['Røyk og kjemiske damper','Rent vann','Naturgrener'],0],
+['Hva må sikres før flytid?',['Vinduer, speil, vifter og vann','Bare matskålen','Ingenting'],0],
+['Hva er riktig om katt og fugl?',['De kan alltid være alene sammen','De må holdes adskilt og under kontroll','Katten bør sitte på buret'],1],
+['Hva er hovedmålet første dag?',['Lang håndtrening','Ro, mat, vann og trygghet','Mange gjester'],1],
+['Hva bør observeres første uke?',['Matlyst, avføring, pust og aktivitet','Bare lydnivå','Bare fjærfarge'],0],
+['Hva er riktig om kjøkken?',['Et godt sted for fuglebur','Uegnet på grunn av røyk og damper','Best fordi det er varmt'],1],
+['Hva er viktig ved vannskålen?',['Daglig kontroll og rengjøring','Bytte én gang i uken','Plassere den under favorittpinnen'],0],
+['Hva er målet med Modul 2?',['Å gjøre hjemmet klart før fuglen kommer','Å vente med alt til etter kjøpet','Å kjøpe flest mulig leker'],0]
 ];
-
 const qWrap=document.getElementById('questions');
 qWrap.innerHTML=quizData.map((q,i)=>`
   <div class="question" data-done="false">
@@ -631,7 +563,6 @@ qWrap.innerHTML=quizData.map((q,i)=>`
     </div>
     <div class="result"></div>
   </div>`).join('');
-
 function answer(btn,correct){
   const question=btn.closest('.question');
   const result=question.querySelector('.result');
