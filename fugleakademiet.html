@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fugleakademiet</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sky:#0f6fb6;--sky2:#36a8dc;--navy:#0b2b4a;
+  --gold:#e4b74f;--cream:#fff9eb;--line:#cfe9f6;
+  --text:#16344b;--muted:#637d8e;--green:#2b9a67
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:Arial,sans-serif;color:var(--text);min-height:100vh;
+  background:
+    radial-gradient(circle at 8% 6%,rgba(72,181,224,.22),transparent 25%),
+    radial-gradient(circle at 92% 10%,rgba(244,199,87,.18),transparent 25%),
+    linear-gradient(180deg,#edfaff,#fff 46%,#f8fbf5);
+}
+.wrap{max-width:1280px;margin:auto;padding:14px 12px 60px}
+.top{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  background:#fffffff0;border:1px solid var(--line);border-radius:28px;padding:12px 16px;
+  box-shadow:0 16px 38px #143c5a18;position:sticky;top:8px;z-index:20;backdrop-filter:blur(12px)
+}
+.brand{font-size:23px;font-weight:900;color:var(--sky)}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{
+  padding:10px 13px;border-radius:999px;background:#eef8fd;color:var(--sky);
+  font-weight:900;text-decoration:none;border:1px solid var(--line)
+}
+.nav a:first-child{background:linear-gradient(135deg,var(--sky),var(--sky2));color:#fff}
+.hero{
+  margin-top:18px;border-radius:42px;padding:44px;min-height:500px;color:#fff;
+  display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;
+  background:
+    radial-gradient(circle at 18% 15%,#ffffff30,transparent 25%),
+    radial-gradient(circle at 88% 12%,#ffffff22,transparent 24%),
+    linear-gradient(135deg,#082945,#0f6fb6 54%,#3bb5d7);
+  box-shadow:0 30px 72px #0a4a7752;overflow:hidden
+}
+.badge{
+  display:inline-flex;padding:9px 13px;border-radius:999px;background:#ffffff20;
+  border:1px solid #ffffff40;font-weight:900
+}
+.hero h1{font-size:clamp(3rem,6vw,5.2rem);line-height:.98;margin:14px 0}
+.hero p{font-size:18px;line-height:1.55;font-weight:700;color:#ecfaff;max-width:760px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;text-decoration:none;
+  border:0;border-radius:999px;padding:13px 18px;font-weight:900;cursor:pointer
+}
+.btn.primary{background:linear-gradient(135deg,#f3cf73,#fff0ad);color:#17384f}
+.btn.white{background:#ffffffeb;color:#0e6098}
+.hero-card{
+  border-radius:30px;background:#ffffff18;border:1px solid #ffffff35;
+  padding:24px;min-height:330px;display:flex;flex-direction:column;justify-content:center;text-align:center
+}
+.birds{font-size:76px;letter-spacing:10px;margin-bottom:14px}
+.hero-card h2{font-size:30px;margin-bottom:9px}
+.hero-card p{font-size:15px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+.stat{
+  background:#fff;border:1px solid var(--line);border-radius:23px;padding:17px;text-align:center;
+  box-shadow:0 10px 25px #143c5a12
+}
+.stat b{display:block;font-size:28px;color:var(--sky)}
+.stat span{font-size:13px;color:var(--muted);font-weight:800}
+.panel{
+  background:#fffffff2;border:1px solid var(--line);border-radius:30px;padding:23px;
+  margin-bottom:16px;box-shadow:0 16px 38px #143c5a12
+}
+.head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:17px}
+.head h2{font-size:31px}.head p{color:var(--muted);font-weight:700}
+.module-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.module{
+  border:1px solid var(--line);border-radius:26px;overflow:hidden;background:linear-gradient(180deg,#fff,#f7fcff);
+  box-shadow:0 12px 28px #143c5a12;transition:.2s;cursor:pointer
+}
+.module:hover{transform:translateY(-5px)}
+.module-top{
+  min-height:145px;padding:20px;color:#fff;display:flex;flex-direction:column;justify-content:space-between
+}
+.module:nth-child(1) .module-top{background:linear-gradient(135deg,#0e5d96,#2fa9d6)}
+.module:nth-child(2) .module-top{background:linear-gradient(135deg,#4a7d2b,#76b950)}
+.module:nth-child(3) .module-top{background:linear-gradient(135deg,#99601d,#d9a13b)}
+.module:nth-child(4) .module-top{background:linear-gradient(135deg,#815278,#b874a4)}
+.module:nth-child(5) .module-top{background:linear-gradient(135deg,#2b6c67,#4daaa2)}
+.module:nth-child(6) .module-top{background:linear-gradient(135deg,#7b3e31,#bd725e)}
+.module-icon{font-size:46px}
+.module-top h3{font-size:23px}
+.module-body{padding:15px}
+.module-body p{font-size:14px;line-height:1.5;color:var(--muted);font-weight:700}
+.module-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.module-meta span{
+  padding:6px 8px;border-radius:999px;background:#eef8fd;color:var(--sky);
+  font-size:11px;font-weight:900;border:1px solid var(--line)
+}
+.preview{
+  display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center;
+  background:linear-gradient(135deg,#fffdf6,#f2fbff);border:1px solid var(--line);
+  border-radius:30px;padding:24px
+}
+.preview h2{font-size:31px;margin-bottom:8px}
+.preview p{color:var(--muted);font-weight:700;line-height:1.55;margin-bottom:14px}
+.lesson-list{display:grid;gap:8px}
+.lesson{
+  display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);
+  border-radius:16px;padding:11px;font-weight:800
+}
+.lesson span:first-child{font-size:22px}
+.quiz-card{
+  background:linear-gradient(135deg,#0b2b4a,#0f6fb6);color:#fff;
+  border-radius:28px;padding:24px;box-shadow:0 18px 40px #143c5a22
+}
+.quiz-card h3{font-size:27px;margin-bottom:8px}
+.quiz-card p{color:#e8f7ff;margin-bottom:15px}
+.answer-grid{display:grid;gap:8px}
+.answer{
+  border:1px solid #ffffff35;background:#ffffff16;color:#fff;border-radius:14px;
+  padding:11px;text-align:left;font-weight:800;cursor:pointer
+}
+.answer.correct{background:#2c9f67}.answer.wrong{background:#b94a4a}
+.result{margin-top:12px;font-weight:900;min-height:20px}
+.footer{text-align:center;color:var(--muted);font-weight:700;margin-top:18px}
+@media(max-width:950px){
+  .hero{grid-template-columns:1fr}.hero-card{display:none}
+  .module-grid{grid-template-columns:repeat(2,1fr)}.preview{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+  .wrap{padding:8px 7px 40px}.top{position:static;border-radius:20px}
+  .brand{width:100%;text-align:center}.nav{justify-content:center;width:100%}
+  .nav a{font-size:12px;padding:8px 9px}
+  .hero{padding:24px 16px;border-radius:26px;min-height:auto}
+  .hero h1{font-size:40px}.hero p{font-size:15px}
+  .hero-actions .btn{width:100%}
+  .stats{grid-template-columns:repeat(2,1fr);gap:7px}
+  .stat{padding:11px;border-radius:17px}
+  .panel{padding:13px;border-radius:21px}
+  .head h2,.preview h2{font-size:23px}
+  .module-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="brand">🐦 Fugleakademiet</div>
+  <nav class="nav">
+    <a href="index.html">🏠 Forsiden</a>
+    <a href="#moduler">📚 Moduler</a>
+    <a href="#test">📝 Testleksjon</a>
+    <a href="#quiz">🎯 Quiz</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
+    <span class="badge">🐦 Premium 1.0</span>
+    <h1>Tryggere og bedre fuglehold</h1>
+    <p>Et digitalt akademi for undulat, nymfeparakitt, kanarifugl, fink, dvergpapegøye og andre vanlige burfugler. Lær om valg av art, bur og voliere, ernæring, atferd, helse og aktivisering.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#moduler">🚀 Se modulene</a>
+      <a class="btn white" href="#test">🦜 Åpne testleksjonen</a>
+    </div>
+  </div>
+
+  <div class="hero-card">
+    <div class="birds">🦜 🐤 🐦</div>
+    <h2>Fra første fugl til trygg fugleeier</h2>
+    <p>Praktisk kunnskap, oppgaver, quiz og tydelige råd samlet i ett akademi.</p>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stat"><b>12</b><span>Komplette moduler</span></div>
+  <div class="stat"><b>120+</b><span>Planlagte leksjoner</span></div>
+  <div class="stat"><b>6</b><span>Vanlige fuglegrupper</span></div>
+  <div class="stat"><b>100 %</b><span>Mobiltilpasset</span></div>
+</section>
+
+<section class="panel" id="moduler">
+  <div class="head">
+    <div>
+      <h2>📚 Forslag til oppbygning</h2>
+      <p>Et komplett digitalt kurs for tryggere og bedre fuglehold.</p>
+    </div>
+  </div>
+
+  <div class="module-grid">
+    <article class="module" onclick="showModule(1)">
+      <div class="module-top">
+        <div class="module-icon">🐦</div>
+        <h3>Modul 1 – Hvilken fugl skal jeg velge?</h3>
+      </div>
+      <div class="module-body">
+        <p>Finn ut om fugl passer for deg, og vurder tid, plass, lydnivå, økonomi og langsiktig ansvar før du velger.</p>
+        <div class="module-meta"><span>8 leksjoner</span><span>Nybegynner</span></div>
+      </div>
+    </article>
+
+    <article class="module" onclick="showModule(2)">
+      <div class="module-top">
+        <div class="module-icon">🏡</div>
+        <h3>Modul 2 – Før fuglen flytter inn</h3>
+      </div>
+      <div class="module-body">
+        <p>Gjør hjemmet klart, velg riktig bur, sikre rommet og planlegg den første tiden.</p>
+        <div class="module-meta"><span>8 leksjoner</span><span>Praktisk</span></div>
+      </div>
+    </article>
+
+    <article class="module" onclick="showModule(3)">
+      <div class="module-top">
+        <div class="module-icon">🥕</div>
+        <h3>Modul 3 – Mat, ernæring og vann</h3>
+      </div>
+      <div class="module-body">
+        <p>Frø, pellets, grøntfôr, mineraler, giftige matvarer og riktig fôring for ulike arter.</p>
+        <div class="module-meta"><span>8 leksjoner</span><span>Viktig</span></div>
+      </div>
+    </article>
+
+    <article class="module" onclick="showModule(4)">
+      <div class="module-top">
+        <div class="module-icon">🧠</div>
+        <h3>Modul 4 – Atferd, tillit og håndtrening</h3>
+      </div>
+      <div class="module-body">
+        <p>Kroppsspråk, tillit, håndtrening, biting, lydnivå, sosial kontakt og stress.</p>
+        <div class="module-meta"><span>8 leksjoner</span><span>Atferd</span></div>
+      </div>
+    </article>
+
+    <article class="module" onclick="showModule(5)">
+      <div class="module-top">
+        <div class="module-icon">🩺</div>
+        <h3>Modul 5 – Helse, sykdom og førstehjelp</h3>
+      </div>
+      <div class="module-body">
+        <p>Tegn på sykdom, fjærdrakt, klør og nebb, parasitter, hygiene og når veterinær må kontaktes.</p>
+        <div class="module-meta"><span>8 leksjoner</span><span>Helse</span></div>
+      </div>
+    </article>
+
+    <article class="module" onclick="showModule(6)">
+      <div class="module-top">
+        <div class="module-icon">🎡</div>
+        <h3>Modul 6 – Aktivisering, flyging og berikelse</h3>
+      </div>
+      <div class="module-body">
+        <p>Leker, søk etter mat, trygg flyging, bading, sosialt miljø og forebygging av kjedsomhet.</p>
+        <div class="module-meta"><span>8 leksjoner</span><span>Berikelse</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+<section class="panel">
+  <div class="head">
+    <div>
+      <h2>📚 Videre moduler</h2>
+      <p>Fugleakademiet bygges videre med disse seks modulene.</p>
+    </div>
+  </div>
+  <div class="module-grid">
+    <article class="module">
+      <div class="module-top" style="background:linear-gradient(135deg,#465d8a,#758bc1)">
+        <div class="module-icon">🧼</div>
+        <h3>Modul 7 – Renhold og daglige rutiner</h3>
+      </div>
+      <div class="module-body">
+        <p>Daglig og ukentlig rengjøring, trygg desinfisering, hygiene og gode rutiner.</p>
+        <div class="module-meta"><span>10 leksjoner</span><span>Praktisk</span></div>
+      </div>
+    </article>
+    <article class="module">
+      <div class="module-top" style="background:linear-gradient(135deg,#8a5f32,#c58a45)">
+        <div class="module-icon">👨‍👩‍👧</div>
+        <h3>Modul 8 – Barn, familie og andre dyr</h3>
+      </div>
+      <div class="module-body">
+        <p>Sikkerhet, ansvar og samspill med barn, hund, katt og andre dyr.</p>
+        <div class="module-meta"><span>10 leksjoner</span><span>Sikkerhet</span></div>
+      </div>
+    </article>
+    <article class="module">
+      <div class="module-top" style="background:linear-gradient(135deg,#5a6f2c,#91a84a)">
+        <div class="module-icon">🥚</div>
+        <h3>Modul 9 – Kjønn, hormoner og avl</h3>
+      </div>
+      <div class="module-body">
+        <p>Kjønnsforskjeller, hormonatferd, reirtrang og ansvarlig avl.</p>
+        <div class="module-meta"><span>10 leksjoner</span><span>Videregående</span></div>
+      </div>
+    </article>
+    <article class="module">
+      <div class="module-top" style="background:linear-gradient(135deg,#6f456c,#a6669e)">
+        <div class="module-icon">🚗</div>
+        <h3>Modul 10 – Reise, ferie og transport</h3>
+      </div>
+      <div class="module-body">
+        <p>Transportbur, bilreise, feriepass, flytting og trygg transport.</p>
+        <div class="module-meta"><span>8 leksjoner</span><span>Planlegging</span></div>
+      </div>
+    </article>
+    <article class="module">
+      <div class="module-top" style="background:linear-gradient(135deg,#2d6c76,#4fa2ad)">
+        <div class="module-icon">🪶</div>
+        <h3>Modul 11 – Fjær, nebb, klør og kroppspleie</h3>
+      </div>
+      <div class="module-body">
+        <p>Fjærskifte, bading, nebb, klør, sittepinner og daglig kroppspleie.</p>
+        <div class="module-meta"><span>10 leksjoner</span><span>Stell</span></div>
+      </div>
+    </article>
+    <article class="module">
+      <div class="module-top" style="background:linear-gradient(135deg,#7c4e2d,#d69b42)">
+        <div class="module-icon">🏆</div>
+        <h3>Modul 12 – Den trygge fugleeieren</h3>
+      </div>
+      <div class="module-body">
+        <p>Oppsummering, sjekklister, avsluttende eksamen og diplom.</p>
+        <div class="module-meta"><span>8 leksjoner</span><span>Eksamen</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="preview" id="test">
+  <div>
+    <span class="badge" style="background:#0f6fb614;color:#0f6fb6;border-color:#bcdff0">🦜 Testleksjon</span>
+    <h2 id="lessonTitle">Modul 1 – Hvilken fugl skal jeg velge?</h2>
+    <p id="lessonText">Den riktige fuglen velges ikke bare etter utseende. Du må også vurdere lydnivå, forventet levealder, behov for sosial kontakt, plass, flytid og hvor mye tid du kan bruke hver dag.</p>
+
+    <div class="lesson-list" id="lessonList">
+      <div class="lesson"><span>🐤</span><span>Undulaten er sosial, aktiv og passer ofte godt for nybegynnere.</span></div>
+      <div class="lesson"><span>🦜</span><span>Nymfeparakitten trenger mye kontakt, plass og daglig aktivisering.</span></div>
+      <div class="lesson"><span>🎶</span><span>Kanarifuglen holdes ofte for sang og observasjon, ikke nødvendigvis håndtamhet.</span></div>
+      <div class="lesson"><span>👥</span><span>Finker trives vanligvis best sammen med artsfrender.</span></div>
+    </div>
+  </div>
+
+  <div class="quiz-card" id="quiz">
+    <h3>🎯 Miniquiz</h3>
+    <p>Hva bør vurderes før man velger fugleart?</p>
+    <div class="answer-grid">
+      <button class="answer" onclick="answer(this,false)">Bare fargen på fuglen</button>
+      <button class="answer" onclick="answer(this,true)">Tid, plass, lydnivå og sosialt behov</button>
+      <button class="answer" onclick="answer(this,false)">Bare prisen på buret</button>
+    </div>
+    <div class="result" id="result"></div>
+  </div>
+</section>
+
+<p class="footer">Fugleakademiet – Premium 1.0 🐦</p>
+</div>
+
+<script>
+const modules={
+  1:{
+    title:'Modul 1 – Hvilken fugl skal jeg velge?',
+    text:'Den riktige fuglen velges ikke bare etter utseende. Du må også vurdere lydnivå, forventet levealder, behov for sosial kontakt, plass, flytid og hvor mye tid du kan bruke hver dag.',
+    items:[
+      ['🐤','Undulaten er sosial, aktiv og passer ofte godt for nybegynnere.'],
+      ['🦜','Nymfeparakitten trenger mye kontakt, plass og daglig aktivisering.'],
+      ['🎶','Kanarifuglen holdes ofte for sang og observasjon, ikke nødvendigvis håndtamhet.'],
+      ['👥','Finker trives vanligvis best sammen med artsfrender.']
+    ]
+  },
+  2:{
+    title:'Modul 2 – Før fuglen flytter inn',
+    text:'Buret skal være langt nok til at fuglen kan bevege seg horisontalt. Det må stå lyst og trygt, men ikke i trekk, sterk sol eller midt i kjøkkenos.',
+    items:[
+      ['📏','Bredde og lengde er ofte viktigere enn høyde.'],
+      ['🌳','Bruk naturpinner med ulik tykkelse.'],
+      ['☀️','Gi stabil døgnrytme og nok mørke om natten.'],
+      ['🚪','Planlegg daglig trygg flytid utenfor buret.']
+    ]
+  },
+  3:{
+    title:'Modul 3 – Mat, ernæring og vann',
+    text:'Et variert kosthold er viktig. Mange fugler bør ikke leve på frø alene, fordi frøblandinger ofte inneholder mye fett og lite av enkelte næringsstoffer.',
+    items:[
+      ['🥬','Tilby trygge grønnsaker og urter regelmessig.'],
+      ['🥣','Pellets kan være en del av et balansert kosthold.'],
+      ['💧','Friskt vann skal være tilgjengelig hver dag.'],
+      ['⚠️','Avokado, sjokolade, alkohol og koffein er farlig.']
+    ]
+  },
+  4:{
+    title:'Modul 4 – Atferd, tillit og håndtrening',
+    text:'Tillit bygges gradvis. Fuglen må få velge kontakt selv og skal aldri jages rundt i buret for å bli håndtam.',
+    items:[
+      ['👀','Lær å lese kroppsspråk og avstandssignaler.'],
+      ['🤲','Belønn rolig kontakt med godbit og ros.'],
+      ['🔊','Lyd er en naturlig del av fuglens kommunikasjon.'],
+      ['🧘','Rolige rutiner reduserer stress og biting.']
+    ]
+  },
+  5:{
+    title:'Modul 5 – Helse, sykdom og førstehjelp',
+    text:'Fugler skjuler ofte sykdom lenge. Små endringer i appetitt, avføring, pust, aktivitet eller fjærdrakt må derfor tas alvorlig.',
+    items:[
+      ['⚖️','Ukentlig veiing kan oppdage vekttap tidlig.'],
+      ['🪶','Oppblåst fjærdrakt og sløvhet kan være sykdomstegn.'],
+      ['🫁','Halevipping og tung pust krever rask vurdering.'],
+      ['🩺','Kontakt fuglekyndig veterinær ved bekymring.']
+    ]
+  },
+  6:{
+    title:'Modul 6 – Aktivisering, flyging og berikelse',
+    text:'Fugler trenger daglige oppgaver, bevegelse og sosial kontakt. Et bur med bare matskål og sittepinne er ikke nok.',
+    items:[
+      ['🧩','Bytt mellom trygge leker og tyggeaktiviteter.'],
+      ['🌾','La fuglen lete etter deler av maten.'],
+      ['🚿','Tilby trygg bading eller dusjing.'],
+      ['🪽','Gi mulighet til daglig flyging og trening.']
+    ]
+  }
+};
+
+function showModule(id){
+  const m=modules[id];
+  document.getElementById('lessonTitle').textContent=m.title;
+  document.getElementById('lessonText').textContent=m.text;
+  document.getElementById('lessonList').innerHTML=m.items.map(x=>
+    `<div class="lesson"><span>${x[0]}</span><span>${x[1]}</span></div>`
+  ).join('');
+  document.getElementById('test').scrollIntoView({behavior:'smooth'});
+}
+
+function answer(btn,correct){
+  document.querySelectorAll('.answer').forEach(b=>b.classList.remove('correct','wrong'));
+  btn.classList.add(correct?'correct':'wrong');
+  document.getElementById('result').textContent=correct
+    ? '✅ Riktig! Fuglehold må passe både hjemmet og hverdagen.'
+    : '❌ Prøv igjen. Fuglen må velges ut fra behov, plass og tid.';
+}
+</script>
+</body>
+</html>
