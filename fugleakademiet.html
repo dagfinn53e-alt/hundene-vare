@@ -1,588 +1,162 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Fugleakademiet – Full Premium Modul 2</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fugleakademiet – Full Premium Modul 3</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --sky:#0f6fb6;--sky2:#39a9dc;--navy:#0a2944;--gold:#e5b84f;
-  --line:#cfe8f5;--text:#17384f;--muted:#627c8f;--green:#2f9b69;
-  --red:#b84f4f;--purple:#7359a5;--panel:#fffffff4
-}
-html{scroll-behavior:smooth}
-body{
-  font-family:Arial,Helvetica,sans-serif;color:var(--text);line-height:1.65;
-  background:
-    radial-gradient(circle at 8% 5%,rgba(65,183,224,.22),transparent 25%),
-    radial-gradient(circle at 92% 8%,rgba(241,196,83,.17),transparent 25%),
-    linear-gradient(180deg,#edfaff,#fff 48%,#f7fbf8);
-}
-.wrap{max-width:1360px;margin:auto;padding:14px 12px 70px}
-.top{
-  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
-  background:#fffffff2;border:1px solid var(--line);border-radius:28px;padding:12px 16px;
-  box-shadow:0 16px 38px #143c5a18;position:sticky;top:8px;z-index:30;backdrop-filter:blur(12px)
-}
-.brand{font-size:23px;font-weight:900;color:var(--sky)}
-.nav{display:flex;gap:8px;flex-wrap:wrap}
-.nav a{
-  padding:10px 13px;border-radius:999px;background:#eef8fd;color:var(--sky);
-  font-weight:900;text-decoration:none;border:1px solid var(--line)
-}
-.nav a:first-child{background:linear-gradient(135deg,var(--sky),var(--sky2));color:#fff}
-.hero{
-  margin-top:18px;border-radius:42px;padding:48px;min-height:540px;color:#fff;
-  display:grid;grid-template-columns:1.12fr .88fr;gap:26px;align-items:center;
-  background:
-    radial-gradient(circle at 14% 12%,#ffffff30,transparent 25%),
-    radial-gradient(circle at 88% 14%,#ffffff20,transparent 24%),
-    linear-gradient(135deg,#12334b,#277b9c 56%,#55bac5);
-  box-shadow:0 30px 72px #0a4a7752;overflow:hidden
-}
-.badge{
-  display:inline-flex;padding:9px 13px;border-radius:999px;background:#ffffff20;
-  border:1px solid #ffffff40;font-weight:900
-}
-.hero h1{font-size:clamp(3.1rem,6vw,5.3rem);line-height:.98;margin:14px 0}
-.hero p{font-size:18px;line-height:1.58;font-weight:700;color:#edfaff;max-width:780px}
-.hero-card{
-  background:#ffffff17;border:1px solid #ffffff35;border-radius:30px;padding:26px;
-  min-height:370px;display:flex;flex-direction:column;justify-content:center
-}
-.hero-card h2{font-size:31px;margin:8px 0 10px}
-.hero-card p{font-size:15px}
-.hero-birds{font-size:74px;letter-spacing:7px;text-align:center}
-.hero-list{display:grid;gap:8px;margin-top:15px}
-.hero-list div{padding:10px 12px;border-radius:15px;background:#ffffff16;border:1px solid #ffffff26;font-weight:800}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
-.stat{
-  background:#fff;border:1px solid var(--line);border-radius:23px;padding:17px;
-  text-align:center;box-shadow:0 10px 25px #143c5a12
-}
-.stat b{display:block;font-size:28px;color:var(--sky)}
-.stat span{font-size:13px;color:var(--muted);font-weight:800}
-.panel{
-  background:var(--panel);border:1px solid var(--line);border-radius:30px;padding:24px;
-  margin-bottom:16px;box-shadow:0 16px 38px #143c5a12
-}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-.section-head h2{font-size:32px}.section-head p{color:var(--muted);font-weight:700}
-.profile{display:grid;grid-template-columns:.82fr 1.18fr;gap:18px;align-items:stretch}
-.profile-card{
-  border-radius:28px;padding:24px;color:#fff;background:linear-gradient(135deg,#8b6b2d,#d1a64c);
-  box-shadow:0 18px 42px #6d521c33
-}
-.profile-card .bird{font-size:84px;text-align:center;margin-bottom:8px}
-.profile-card h2{text-align:center;font-size:31px;margin-bottom:6px}
-.profile-card p{text-align:center;color:#fff9e6;font-weight:700}
-.fact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.fact-box{
-  background:#fff;border:1px solid var(--line);border-radius:18px;padding:13px;
-  box-shadow:0 8px 20px #143c5a0f
-}
-.fact-box b{display:block;color:var(--sky);font-size:12px;margin-bottom:3px}
-.fact-box span{font-weight:900;color:#38556a}
-.course-map{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.map-card{
-  background:#fff;border:1px solid var(--line);border-radius:20px;padding:15px;
-  box-shadow:0 9px 22px #143c5a10
-}
-.map-card strong{display:block;color:var(--sky);margin-bottom:4px}
-.map-card span{font-size:13px;color:var(--muted);font-weight:700}
-.lesson{
-  background:linear-gradient(180deg,#fff,#f8fcff);
-  border:1px solid var(--line);border-radius:28px;padding:22px;
-  margin-bottom:15px;box-shadow:0 12px 28px #143c5a12
-}
-.lesson-top{display:grid;grid-template-columns:auto 1fr;gap:15px;align-items:center;margin-bottom:12px}
-.lesson-icon{
-  width:62px;height:62px;border-radius:20px;background:linear-gradient(135deg,#eaf7fd,#dff3fb);
-  display:grid;place-items:center;font-size:34px;border:1px solid var(--line)
-}
-.lesson h3{font-size:25px;color:var(--navy)}
-.lesson p{color:var(--muted);font-weight:700;margin-bottom:11px}
-.lesson ul{padding-left:21px;color:#36566d;font-weight:700}
-.lesson li{margin:6px 0}
-.columns{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:13px}
-.tip,.warning,.remember,.fact,.check{padding:14px;border-radius:18px;font-weight:800}
-.tip{background:#eefaf4;border:1px solid #bfe7d1;color:#247450}
-.warning{background:#fff3f3;border:1px solid #efcaca;color:#8e3d3d}
-.remember{background:#fff9e8;border:1px solid #ecd99b;color:#755c1f}
-.fact{background:#f5f1ff;border:1px solid #d9cdf1;color:#63468d}
-.check{background:#eef8fd;border:1px solid var(--line);color:#275f80}
-.miniquiz{margin-top:14px;padding:15px;border-radius:18px;background:#f1f8fd;border:1px solid var(--line)}
-.miniquiz h4{margin-bottom:8px;color:var(--sky)}
-.miniquiz button{
-  width:100%;text-align:left;border:1px solid #c9e3f1;background:#fff;color:#315a72;
-  border-radius:13px;padding:10px;margin-top:7px;font-weight:800;cursor:pointer
-}
-.miniquiz button.good{background:#2f9b69;color:#fff;border-color:#2f9b69}
-.miniquiz button.bad{background:#b84f4f;color:#fff;border-color:#b84f4f}
-.mini-result{margin-top:8px;font-weight:900}
-.compare{overflow:auto}
-table{width:100%;border-collapse:collapse;background:#fff;border-radius:18px;overflow:hidden}
-th,td{padding:12px;border-bottom:1px solid #e7eef4;text-align:left;vertical-align:top}
-th{background:#eaf7fd;color:#0c5b92}
-td{color:#516d80;font-weight:700}
-.checklist{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.check-row{
-  background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;
-  display:flex;gap:10px;align-items:flex-start;font-weight:800
-}
-.check-row span:first-child{font-size:22px}
-.quiz{
-  background:linear-gradient(135deg,#0b2b4a,#0f6fb6);color:#fff;border-radius:30px;
-  padding:24px;box-shadow:0 18px 40px #143c5a22
-}
-.quiz h2{font-size:31px;margin-bottom:8px}.quiz>p{color:#e8f7ff;margin-bottom:16px}
-.question{background:#ffffff13;border:1px solid #ffffff2f;border-radius:19px;padding:16px;margin-bottom:12px}
-.question h3{font-size:18px;margin-bottom:10px}
-.answers{display:grid;gap:8px}
-.answer{
-  border:1px solid #ffffff35;background:#ffffff13;color:#fff;border-radius:14px;
-  padding:11px;text-align:left;font-weight:800;cursor:pointer
-}
-.answer.correct{background:#2f9b69}.answer.wrong{background:#b84f4f}
-.result{margin-top:9px;font-weight:900;min-height:20px}
-.progress{height:14px;background:#d8ebf6;border-radius:999px;overflow:hidden;margin-top:12px}
-.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#e7bd58,#fff0a9);transition:.3s}
-.finish{
-  text-align:center;background:linear-gradient(135deg,#fffaf0,#eefaff);border:1px solid var(--line);
-  border-radius:30px;padding:28px;margin-top:16px
-}
-.finish h2{font-size:31px;margin-bottom:8px}.finish p{color:var(--muted);font-weight:700}
-.next{
-  margin-top:15px;padding:18px;border-radius:22px;color:#fff;
-  background:linear-gradient(135deg,#46652e,#78a64b)
-}
-.footer{text-align:center;color:var(--muted);font-weight:700;margin-top:20px}
-@media(max-width:1050px){
-  .hero,.profile{grid-template-columns:1fr}
-  .hero-card{display:none}
-  .course-map{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:720px){
-  .wrap{padding:8px 7px 40px}.top{position:static;border-radius:20px}
-  .brand{width:100%;text-align:center}.nav{justify-content:center;width:100%}
-  .nav a{font-size:12px;padding:8px 9px}
-  .hero{padding:25px 17px;border-radius:26px;min-height:auto}
-  .hero h1{font-size:40px}.hero p{font-size:15px}
-  .stats{grid-template-columns:repeat(2,1fr);gap:7px}
-  .stat{padding:11px;border-radius:17px}
-  .panel{padding:13px;border-radius:21px}
-  .section-head h2{font-size:23px}
-  .course-map,.fact-grid,.columns,.checklist{grid-template-columns:1fr}
-  .lesson{padding:15px;border-radius:20px}.lesson h3{font-size:20px}
-  .lesson-top{grid-template-columns:1fr}.lesson-icon{width:50px;height:50px}
-  th,td{padding:9px;font-size:12px}
-}
-</style>
-</head>
-<body>
-<div class="wrap">
-
-<header class="top">
-  <div class="brand">🐦 Fugleakademiet – Modul 2</div>
-  <nav class="nav">
-    <a href="index.html">🏠 Forsiden</a>
-    <a href="#modul">📚 Modul 2</a>
-    <a href="#sikkerhet">🛡️ Sjekkliste</a>
-    <a href="#quiz">🎯 Sluttquiz</a>
-  </nav>
-</header>
-
-<section class="hero">
-  <div>
-    <span class="badge">🐦 Full Premium Modul 2</span>
-    <h1>Før fuglen flytter inn</h1>
-    <p>Et godt fuglehold starter lenge før fuglen kommer hjem. I denne modulen lærer du å velge riktig bur, plassere det trygt, sikre rommet, unngå farlige materialer og forberede den første dagen og den første uken.</p>
-  </div>
-  <div class="hero-card">
-    <div class="hero-birds">🏡 🦜 🪶</div>
-    <h2>Dette lærer du</h2>
-    <div class="hero-list">
-      <div>✅ Hvordan du velger og innreder riktig bur</div>
-      <div>✅ Hvor buret bør stå</div>
-      <div>✅ Hvordan du gjør hjemmet fuglesikkert</div>
-      <div>✅ Hva som kan være giftig eller farlig</div>
-      <div>✅ Hvordan den første tiden bør organiseres</div>
-    </div>
-  </div>
-</section>
-
-<section class="stats">
-  <div class="stat"><b>12</b><span>Grundige leksjoner</span></div>
-  <div class="stat"><b>8</b><span>Sikkerhetsområder</span></div>
-  <div class="stat"><b>12</b><span>Miniquizer</span></div>
-  <div class="stat"><b>15</b><span>Spørsmål i sluttquiz</span></div>
-</section>
-
-<section class="panel">
-  <div class="section-head">
-    <div>
-      <h2>🦜 Eksempelfugl: Nymfeparakitt</h2>
-      <p>En kort introduksjon – full artsprofil kommer senere i Fugleleksikonet.</p>
-    </div>
-  </div>
-  <div class="profile">
-    <div class="profile-card">
-      <div class="bird">🦜</div>
-      <h2>Nymfeparakitt</h2>
-      <p>En sosial og følsom papegøyefugl som trenger god plass, rolige rutiner og daglig aktivitet.</p>
-    </div>
-    <div class="fact-grid">
-      <div class="fact-box"><b>🌍 OPPRINNELSE</b><span>Australia</span></div>
-      <div class="fact-box"><b>📏 STØRRELSE</b><span>Ca. 30–33 cm</span></div>
-      <div class="fact-box"><b>⚖️ VEKT</b><span>Omtrent 80–120 gram</span></div>
-      <div class="fact-box"><b>⏳ LEVEALDER</b><span>Ofte 15–25 år</span></div>
-      <div class="fact-box"><b>🎵 LYDNIVÅ</b><span>Middels</span></div>
-      <div class="fact-box"><b>❤️ TEMPERAMENT</b><span>Sosial og kontaktsøkende</span></div>
-      <div class="fact-box"><b>🏠 PLASSBEHOV</b><span>Stort bur og daglig flytid</span></div>
-      <div class="fact-box"><b>⭐ NIVÅ</b><span>Passer for forberedte nybegynnere</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="panel">
-  <div class="section-head">
-    <div>
-      <h2>📚 Modulens innhold</h2>
-      <p>Fra tomt rom til et ferdig, trygt og gjennomtenkt fuglehjem.</p>
-    </div>
-  </div>
-  <div class="course-map">
-    <div class="map-card"><strong>1. Planlegg rommet</strong><span>Plass, rutiner og daglig bruk</span></div>
-    <div class="map-card"><strong>2. Velg riktig bur</strong><span>Form, kvalitet og størrelse</span></div>
-    <div class="map-card"><strong>3. Plasser buret</strong><span>Lys, trekk, varme og trygghet</span></div>
-    <div class="map-card"><strong>4. Sittepinner</strong><span>Naturgrener og variasjon</span></div>
-    <div class="map-card"><strong>5. Skåler og vann</strong><span>Hygiene og plassering</span></div>
-    <div class="map-card"><strong>6. Lys og døgnrytme</strong><span>Søvn, ro og stabilitet</span></div>
-    <div class="map-card"><strong>7. Temperatur og luft</strong><span>Trekk, røyk og tørr luft</span></div>
-    <div class="map-card"><strong>8. Gift og kjemikalier</strong><span>Farlige damper og materialer</span></div>
-    <div class="map-card"><strong>9. Vinduer og speil</strong><span>Sikker flytid</span></div>
-    <div class="map-card"><strong>10. Barn og andre dyr</strong><span>Grenser og tilsyn</span></div>
-    <div class="map-card"><strong>11. Første dagen</strong><span>Ro og trygghet</span></div>
-    <div class="map-card"><strong>12. Første uken</strong><span>Rutiner og observasjon</span></div>
-  </div>
-</section>
-
+*{box-sizing:border-box;margin:0;padding:0}:root{--g:#2f8a55;--g2:#68b879;--n:#17384f;--l:#d3ead9;--m:#657d6e}
+html{scroll-behavior:smooth}body{font-family:Arial,sans-serif;color:#244735;line-height:1.65;background:linear-gradient(180deg,#effcf3,#fff 48%,#f7fbf8)}
+.wrap{max-width:1360px;margin:auto;padding:14px 12px 70px}.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;background:#fffffff2;border:1px solid var(--l);border-radius:28px;padding:12px 16px;position:sticky;top:8px;z-index:20}
+.brand{font-size:23px;font-weight:900;color:var(--g)}.nav{display:flex;gap:8px;flex-wrap:wrap}.nav a{padding:10px 13px;border-radius:999px;background:#eef8f1;color:var(--g);font-weight:900;text-decoration:none;border:1px solid var(--l)}.nav a:first-child{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff}
+.hero{margin-top:18px;border-radius:42px;padding:48px;min-height:520px;color:#fff;display:grid;grid-template-columns:1.1fr .9fr;gap:25px;align-items:center;background:linear-gradient(135deg,#173f2a,#2f8a55 56%,#77c98a);box-shadow:0 30px 72px #1d603755}
+.badge{display:inline-flex;padding:9px 13px;border-radius:999px;background:#ffffff20;border:1px solid #ffffff40;font-weight:900}.hero h1{font-size:clamp(3rem,6vw,5.2rem);line-height:.98;margin:14px 0}.hero p{font-size:18px;font-weight:700;color:#f0fff4}
+.hero-card{background:#ffffff17;border:1px solid #ffffff35;border-radius:30px;padding:26px}.hero-card h2{font-size:31px;margin-bottom:12px}.hero-card div{padding:10px 12px;margin:8px 0;border-radius:15px;background:#ffffff16;font-weight:800}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}.stat{background:#fff;border:1px solid var(--l);border-radius:23px;padding:17px;text-align:center}.stat b{display:block;font-size:28px;color:var(--g)}.stat span{font-size:13px;color:var(--m);font-weight:800}
+.panel,.lesson{background:#fffffff4;border:1px solid var(--l);border-radius:30px;padding:24px;margin-bottom:16px;box-shadow:0 16px 38px #204d3112}.panel h2{font-size:31px;margin-bottom:8px}.panel p,.lesson p{color:var(--m);font-weight:700}
+.profile{display:grid;grid-template-columns:.8fr 1.2fr;gap:16px}.profile-main{background:linear-gradient(135deg,#28603b,#64aa67);color:#fff;border-radius:26px;padding:25px;text-align:center}.profile-main .bird{font-size:82px}.profile-main h2{font-size:30px}.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.fact{background:#fff;border:1px solid var(--l);border-radius:18px;padding:13px}.fact b{display:block;color:var(--g);font-size:12px}.fact span{font-weight:900}
+.lesson-top{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;margin-bottom:12px}.lesson-icon{width:60px;height:60px;border-radius:19px;background:#edf8f0;display:grid;place-items:center;font-size:34px;border:1px solid var(--l)}.lesson h3{font-size:24px;color:var(--n)}.lesson ul{padding-left:22px;color:#3f5d4a;font-weight:700}.lesson li{margin:6px 0}.remember{margin-top:13px;padding:14px;border-radius:18px;background:#fff9e8;border:1px solid #ecd99b;color:#755c1f;font-weight:800}
+.miniquiz{margin-top:14px;padding:15px;border-radius:18px;background:#f2faf4;border:1px solid var(--l)}.miniquiz h4{color:var(--g)}.miniquiz button{width:100%;text-align:left;border:1px solid #cde5d2;background:#fff;border-radius:13px;padding:10px;margin-top:7px;font-weight:800;cursor:pointer}.miniquiz button.good{background:#2f9b69;color:#fff}.miniquiz button.bad{background:#b84f4f;color:#fff}.mini-result{margin-top:8px;font-weight:900}
+.quiz{background:linear-gradient(135deg,#17364a,#2f7f59);color:#fff;border-radius:30px;padding:24px}.question{background:#ffffff13;border:1px solid #ffffff2f;border-radius:19px;padding:16px;margin-bottom:12px}.answers{display:grid;gap:8px}.answer{border:1px solid #ffffff35;background:#ffffff13;color:#fff;border-radius:14px;padding:11px;text-align:left;font-weight:800;cursor:pointer}.answer.correct{background:#2f9b69}.answer.wrong{background:#b84f4f}.result{margin-top:8px;font-weight:900}.progress{height:14px;background:#d8ebdf;border-radius:999px;overflow:hidden;margin-top:12px}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#e7bd58,#fff0a9)}
+.finish{text-align:center;background:linear-gradient(135deg,#fffaf0,#f1fff5);border:1px solid var(--l);border-radius:30px;padding:28px;margin-top:16px}.next{margin-top:15px;padding:18px;border-radius:22px;color:#fff;background:linear-gradient(135deg,#6f4d2d,#c08d4a)}.footer{text-align:center;color:var(--m);font-weight:700;margin-top:20px}
+@media(max-width:950px){.hero,.profile{grid-template-columns:1fr}.hero-card{display:none}}@media(max-width:720px){.wrap{padding:8px 7px 40px}.top{position:static}.brand{width:100%;text-align:center}.nav{justify-content:center}.hero{padding:25px 17px;border-radius:26px}.hero h1{font-size:40px}.stats{grid-template-columns:repeat(2,1fr)}.facts{grid-template-columns:1fr}.lesson-top{grid-template-columns:1fr}}
+</style></head>
+<body><div class="wrap">
+<header class="top"><div class="brand">🐦 Fugleakademiet – Modul 3</div><nav class="nav"><a href="index.html">🏠 Forsiden</a><a href="#modul">📚 Modul 3</a><a href="#quiz">🎯 Sluttquiz</a></nav></header>
+<section class="hero"><div><span class="badge">🐦 Full Premium Modul 3</span><h1>Mat, ernæring og vann</h1><p>Riktig kosthold er grunnlaget for god helse, normal vekt, sterk fjærdrakt og et godt immunforsvar. Her lærer du om frø, pellets, grønnsaker, frukt, mineraler, vannhygiene og vanlige ernæringsfeil.</p></div><div class="hero-card"><h2>Dette lærer du</h2><div>✅ Hvorfor frø alene ofte ikke er nok</div><div>✅ Hvordan bygge et variert kosthold</div><div>✅ Hvilke matvarer som kan være farlige</div><div>✅ Hvordan forebygge overvekt</div><div>✅ Hvordan holde vann og skåler hygieniske</div></div></section>
+<section class="stats"><div class="stat"><b>12</b><span>Grundige leksjoner</span></div><div class="stat"><b>7</b><span>Fôrgrupper forklart</span></div><div class="stat"><b>12</b><span>Miniquizer</span></div><div class="stat"><b>15</b><span>Spørsmål i sluttquiz</span></div></section>
+<section class="panel"><h2>🐤 Eksempelfugl: Kanarifugl</h2><p>En kort introduksjon – full artsprofil kommer senere i Fugleleksikonet.</p><div class="profile"><div class="profile-main"><div class="bird">🐤</div><h2>Kanarifugl</h2><p>En aktiv småfugl som trenger mer enn bare frø for å få et balansert kosthold.</p></div><div class="facts"><div class="fact"><b>🌍 OPPRINNELSE</b><span>Kanariøyene, Madeira og Azorene</span></div><div class="fact"><b>📏 STØRRELSE</b><span>Ca. 12–14 cm</span></div><div class="fact"><b>⚖️ VEKT</b><span>Omtrent 15–25 gram</span></div><div class="fact"><b>⏳ LEVEALDER</b><span>Ofte 8–12 år</span></div><div class="fact"><b>🥣 KOSTHOLD</b><span>Frø, grønt og tilpasset fullfôr</span></div><div class="fact"><b>💧 VANN</b><span>Friskt vann daglig</span></div></div></div></section>
 <main id="modul">
-
 <section class="lesson">
-  <div class="lesson-top"><div class="lesson-icon">🗺️</div><div>
-    <h3>Leksjon 1 – Planlegg rommet før du kjøper utstyr</h3>
-    <p>Før du kjøper bur og innredning, må du vite hvor fuglen faktisk skal bo.</p>
-  </div></div>
-  <p>Rommet bør være lyst, rolig og en naturlig del av hjemmet. Fuglen bør kunne følge med på familien uten å stå midt i konstant trafikk, høye lyder eller sterke lukter. Tenk også gjennom hvordan rommet brukes morgen, dag og kveld.</p>
-  <p>Det må være nok plass rundt buret til rengjøring, åpning av dører og trygg håndtering. Du bør også ha en plan for hvor fuglen skal fly, hvor transportburet skal oppbevares og hvordan du kan skape ro om natten.</p>
-  <div class="columns">
-    <div class="tip">💡 Planlegg hele rommet, ikke bare stedet der buret skal stå.</div>
-    <div class="warning">⚠️ Unngå å plassere fuglen i et rom som sjelden brukes. Sosial isolasjon kan skape stress.</div>
-  </div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">Rommet bør være lyst, trygt og en del av hverdagen.</button>
-    <button onclick="mini(this,false)">Buret bør stå alene i et ubrukt rom.</button>
-    <div class="mini-result"></div>
-  </div>
+<div class="lesson-top"><div class="lesson-icon">🥣</div><div><h3>Leksjon 1 – Hvorfor kosthold betyr så mye</h3><p>Et balansert kosthold støtter normal vekt, god fjærdrakt, muskulatur og immunforsvar. Fugler har høy forbrenning og kan utvikle problemer over tid dersom maten er ensidig.</p></div></div>
+<ul><li>Tilpass maten til art, alder og aktivitet.</li><li>Følg med på hva fuglen faktisk spiser.</li><li>Gjør endringer gradvis.</li></ul>
+<div class="remember">✅ Husk: Kostholdet må tilpasses art og individ.</div>
+<div class="miniquiz"><h4>Miniquiz</h4>
+<button onclick="mini(this,true)">Dette er riktig forstått.</button>
+<button onclick="mini(this,false)">Dette kan ignoreres.</button>
+<div class="mini-result"></div></div>
 </section>
-
 <section class="lesson">
-  <div class="lesson-top"><div class="lesson-icon">🏠</div><div>
-    <h3>Leksjon 2 – Velg riktig bur</h3>
-    <p>Buret skal være artstilpasset, sikkert og stort nok til naturlig bevegelse.</p>
-  </div></div>
-  <p>Et godt bur har trygg avstand mellom sprinklene, solide dører og materialer som tåler rengjøring. Unngå løs maling, skarpe kanter og åpninger der hodet eller beina kan sette seg fast.</p>
-  <p>Fugler flyr hovedsakelig horisontalt. Derfor er et langt bur som regel bedre enn et høyt og smalt bur. Fuglen skal kunne strekke vingene uten å treffe leker, skåler eller vegger.</p>
-  <ul>
-    <li>Riktig sprinkelform og avstand for arten.</li>
-    <li>Stor nok dør for trygg håndtering.</li>
-    <li>Enkel tilgang til skåler og rengjøring.</li>
-    <li>Plass til flere sittepinner uten å blokkere flyveien.</li>
-  </ul>
-  <div class="remember">✅ Velg større bur enn minimum når du har mulighet.</div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">Lengde og fri flyplass er svært viktig.</button>
-    <button onclick="mini(this,false)">Et smalt, høyt bur passer alle fugler.</button>
-    <div class="mini-result"></div>
-  </div>
+<div class="lesson-top"><div class="lesson-icon">🌾</div><div><h3>Leksjon 2 – Frøblandinger</h3><p>Frø kan være en naturlig del av kostholdet, men mange fugler plukker ut de feteste frøene først. Frø alene kan derfor gi et ensidig kosthold.</p></div></div>
+<ul><li>Velg artstilpasset blanding.</li><li>Oppbevar frø tørt og kjølig.</li><li>Kast fuktige eller mugne frø.</li></ul>
+<div class="remember">✅ Husk: Frø er ofte en del av kostholdet, ikke hele kostholdet.</div>
+<div class="miniquiz"><h4>Miniquiz</h4>
+<button onclick="mini(this,true)">Dette er riktig forstått.</button>
+<button onclick="mini(this,false)">Dette kan ignoreres.</button>
+<div class="mini-result"></div></div>
 </section>
-
 <section class="lesson">
-  <div class="lesson-top"><div class="lesson-icon">📍</div><div>
-    <h3>Leksjon 3 – Hvor skal buret stå?</h3>
-    <p>Plasseringen påvirker trygghet, søvn, temperatur og sosial trivsel.</p>
-  </div></div>
-  <p>Buret bør stå stabilt, gjerne med minst én side mot en vegg. Dette kan gi fuglen en følelse av beskyttelse. Samtidig bør den kunne se hva som skjer i rommet.</p>
-  <p>Unngå kjøkken, trekkfulle ganger, direkte varme fra ovn eller radiator og sterk sol gjennom vinduet. Fuglen skal heller ikke stå der dører stadig slår opp eller mennesker går tett forbi hele tiden.</p>
-  <div class="columns">
-    <div class="tip">💡 Plasser buret omtrent i øyehøyde eller litt høyere, avhengig av art og rom.</div>
-    <div class="warning">⚠️ Kjøkkenet er uegnet på grunn av varme, damp, røyk og farlige matlagingsprodukter.</div>
-  </div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,false)">Buret bør stå ved komfyren.</button>
-    <button onclick="mini(this,true)">Buret bør stå trygt, lyst og uten trekk eller matos.</button>
-    <div class="mini-result"></div>
-  </div>
+<div class="lesson-top"><div class="lesson-icon">🟢</div><div><h3>Leksjon 3 – Pellets og fullfôr</h3><p>Pellets kan gi et jevnere næringsinntak fordi hver bit har omtrent samme sammensetning. Overgangen må skje gradvis, og fuglen skal aldri sultes til å spise nytt fôr.</p></div></div>
+<ul><li>Bland gradvis inn nytt fôr.</li><li>Følg med på vekt og avføring.</li><li>Behold nok kjent mat under overgangen.</li></ul>
+<div class="remember">✅ Husk: Overgang til nytt fôr skal skje langsomt og kontrollert.</div>
+<div class="miniquiz"><h4>Miniquiz</h4>
+<button onclick="mini(this,true)">Dette er riktig forstått.</button>
+<button onclick="mini(this,false)">Dette kan ignoreres.</button>
+<div class="mini-result"></div></div>
 </section>
-
 <section class="lesson">
-  <div class="lesson-top"><div class="lesson-icon">🌳</div><div>
-    <h3>Leksjon 4 – Sittepinner og naturgrener</h3>
-    <p>Riktige sittepinner trener føtter, balanse og muskler.</p>
-  </div></div>
-  <p>Bruk gjerne naturgrener av trygge treslag med ulik tykkelse og form. Variasjon gjør at fuglen bruker føttene på forskjellige måter og reduserer ensidig belastning.</p>
-  <p>Plasser pinnene slik at fuglen kan bevege seg uten at avføring faller ned i mat- og vannskåler. Ikke fyll buret med så mange pinner at flyveien blokkeres.</p>
-  <ul>
-    <li>Ulik tykkelse og struktur.</li>
-    <li>Stabile og rene fester.</li>
-    <li>Ingen sandpapirhylser eller svært ru overflater.</li>
-    <li>God avstand til skåler og leker.</li>
-  </ul>
-  <div class="warning">⚠️ Ensartede, glatte pinner kan gi dårlig belastningsvariasjon.</div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">Ulik tykkelse gir bedre variasjon for føttene.</button>
-    <button onclick="mini(this,false)">Alle pinner bør være helt like.</button>
-    <div class="mini-result"></div>
-  </div>
+<div class="lesson-top"><div class="lesson-icon">🥬</div><div><h3>Leksjon 4 – Grønnsaker og urter</h3><p>Trygge grønnsaker og urter gir variasjon, fiber og næringsstoffer. Mange fugler må tilbys samme mat flere ganger før de smaker.</p></div></div>
+<ul><li>Vask maten godt.</li><li>Gi små porsjoner.</li><li>Fjern ferskvarer etter noen timer.</li></ul>
+<div class="remember">✅ Husk: Grøntfôr skal være rent, variert og gis i passende mengder.</div>
+<div class="miniquiz"><h4>Miniquiz</h4>
+<button onclick="mini(this,true)">Dette er riktig forstått.</button>
+<button onclick="mini(this,false)">Dette kan ignoreres.</button>
+<div class="mini-result"></div></div>
 </section>
-
 <section class="lesson">
-  <div class="lesson-top"><div class="lesson-icon">🥣</div><div>
-    <h3>Leksjon 5 – Mat- og vannskåler</h3>
-    <p>Skåler skal være enkle å rengjøre og plasseres hygienisk.</p>
-  </div></div>
-  <p>Mat og vann bør ikke stå direkte under sittepinner. Vannskåler må kontrolleres flere ganger daglig fordi fugler kan søle mat, fjær og avføring i vannet.</p>
-  <p>Rustfritt stål eller andre rengjøringsvennlige materialer er ofte gode valg. Ha gjerne ekstra skåler slik at du kan bytte raskt under rengjøring.</p>
-  <div class="columns">
-    <div class="tip">💡 Bytt vann daglig og oftere dersom det blir skittent.</div>
-    <div class="warning">⚠️ Skåler som er vanskelige å rengjøre kan samle bakterier og biofilm.</div>
-  </div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">Skåler skal stå rent og ikke under sittepinner.</button>
-    <button onclick="mini(this,false)">Vann kan stå urørt i flere dager.</button>
-    <div class="mini-result"></div>
-  </div>
+<div class="lesson-top"><div class="lesson-icon">🍎</div><div><h3>Leksjon 5 – Frukt</h3><p>Frukt kan brukes som variasjon, men inneholder ofte mye sukker. Den bør derfor vanligvis gis i mindre mengder enn grønnsaker.</p></div></div>
+<ul><li>Fjern steiner og kjerner der det er nødvendig.</li><li>Velg små porsjoner.</li><li>Tilpass mengden til art og aktivitet.</li></ul>
+<div class="remember">✅ Husk: Frukt er et tillegg, ikke hovedfôr.</div>
+<div class="miniquiz"><h4>Miniquiz</h4>
+<button onclick="mini(this,true)">Dette er riktig forstått.</button>
+<button onclick="mini(this,false)">Dette kan ignoreres.</button>
+<div class="mini-result"></div></div>
 </section>
-
 <section class="lesson">
-  <div class="lesson-top"><div class="lesson-icon">☀️</div><div>
-    <h3>Leksjon 6 – Lys, søvn og døgnrytme</h3>
-    <p>Fugler trenger en stabil rytme med aktivitet og sammenhengende mørke.</p>
-  </div></div>
-  <p>Et urolig rom med TV, lys og aktivitet sent på kvelden kan forstyrre søvnen. Mange fugler har behov for en lang og rolig natt uten stadig oppvåkning.</p>
-  <p>Dagslys er viktig, men buret skal ikke stå i sterk sol uten mulighet til skygge. Belysning må brukes på en trygg måte og bør følge en jevn døgnrytme.</p>
-  <div class="remember">✅ Lag faste tider for morgen, kveld og ro.</div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,false)">Fuglen bør ha lys og TV hele natten.</button>
-    <button onclick="mini(this,true)">Fuglen trenger en stabil og rolig døgnrytme.</button>
-    <div class="mini-result"></div>
-  </div>
+<div class="lesson-top"><div class="lesson-icon">🥚</div><div><h3>Leksjon 6 – Protein og livsfaser</h3><p>Ungfugler, fugler i fjærskifte og avlsfugler kan ha andre behov enn voksne selskapsfugler. Ekstra protein skal brukes målrettet.</p></div></div>
+<ul><li>Vurder livsfase.</li><li>Unngå tilfeldig overfôring.</li><li>Søk faglig råd ved usikkerhet.</li></ul>
+<div class="remember">✅ Husk: Mer protein er ikke alltid bedre.</div>
+<div class="miniquiz"><h4>Miniquiz</h4>
+<button onclick="mini(this,true)">Dette er riktig forstått.</button>
+<button onclick="mini(this,false)">Dette kan ignoreres.</button>
+<div class="mini-result"></div></div>
 </section>
-
 <section class="lesson">
-  <div class="lesson-top"><div class="lesson-icon">🌡️</div><div>
-    <h3>Leksjon 7 – Temperatur, trekk og luftfuktighet</h3>
-    <p>Stabile forhold er viktigere enn å jage en bestemt temperatur hele tiden.</p>
-  </div></div>
-  <p>Friske fugler tåler ofte moderate og gradvise temperaturendringer, men raske skifter og trekk kan være belastende. Buret bør stå unna kalde vinduer, ytterdører og direkte varme.</p>
-  <p>For tørr luft kan påvirke hud og fjærdrakt, mens høy fuktighet kombinert med dårlig ventilasjon kan gi andre problemer. God luftutskifting uten trekk er målet.</p>
-  <div class="fact">🌿 Mange fugler har glede av trygg bading eller lett dusjing, avhengig av art og individ.</div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">Stabile forhold og god ventilasjon uten trekk er viktig.</button>
-    <button onclick="mini(this,false)">Buret bør stå rett ved en kald ytterdør.</button>
-    <div class="mini-result"></div>
-  </div>
+<div class="lesson-top"><div class="lesson-icon">🦴</div><div><h3>Leksjon 7 – Mineraler og kalsium</h3><p>Kalsium er viktig for skjelett, muskler og egglegging. Tilskudd må brukes riktig, fordi både mangel og feil bruk kan gi problemer.</p></div></div>
+<ul><li>Bruk artstilpassede produkter.</li><li>Vurder grunnfôret først.</li><li>Kontakt veterinær ved eggleggingsproblemer.</li></ul>
+<div class="remember">✅ Husk: Et balansert grunnfôr er viktigere enn mange tilfeldige tilskudd.</div>
+<div class="miniquiz"><h4>Miniquiz</h4>
+<button onclick="mini(this,true)">Dette er riktig forstått.</button>
+<button onclick="mini(this,false)">Dette kan ignoreres.</button>
+<div class="mini-result"></div></div>
 </section>
-
 <section class="lesson">
-  <div class="lesson-top"><div class="lesson-icon">☠️</div><div>
-    <h3>Leksjon 8 – Giftige damper, røyk og kjemikalier</h3>
-    <p>Fuglers luftveier er svært følsomme.</p>
-  </div></div>
-  <p>Røyk, aerosoler, parfyme, sterke rengjøringsmidler og kjemiske damper kan være farlige. Overopphetede slippbelegg og enkelte kjøkkenprodukter kan avgi gasser som er særlig farlige for fugler.</p>
-  <p>Ikke bruk spray, røyk, duftlys eller sterke kjemikalier i rommet der fuglen oppholder seg. Sørg for god ventilasjon og flytt fuglen langt unna ved oppussing eller bruk av maling og lim.</p>
-  <div class="warning">⚠️ Matos og overopphetede slippbelegg kan være akutt farlig. Fuglen skal ikke bo på kjøkkenet.</div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">Fugler skal beskyttes mot røyk, spray og kjemiske damper.</button>
-    <button onclick="mini(this,false)">Sterk parfyme i fuglerommet er ufarlig.</button>
-    <div class="mini-result"></div>
-  </div>
+<div class="lesson-top"><div class="lesson-icon">☠️</div><div><h3>Leksjon 8 – Giftige matvarer</h3><p>Avokado, sjokolade, alkohol, koffein og sterkt salt eller krydret mat skal ikke gis. Muggen eller bedervet mat kan også være farlig.</p></div></div>
+<ul><li>Avokado og sjokolade er forbudt.</li><li>Unngå alkohol og koffein.</li><li>Kontakt veterinær ved mulig forgiftning.</li></ul>
+<div class="remember">✅ Husk: Ved mistanke om forgiftning må veterinær kontaktes raskt.</div>
+<div class="miniquiz"><h4>Miniquiz</h4>
+<button onclick="mini(this,true)">Dette er riktig forstått.</button>
+<button onclick="mini(this,false)">Dette kan ignoreres.</button>
+<div class="mini-result"></div></div>
 </section>
-
 <section class="lesson">
-  <div class="lesson-top"><div class="lesson-icon">🪟</div><div>
-    <h3>Leksjon 9 – Vinduer, speil, vann og ledninger</h3>
-    <p>Et rom kan se trygt ut for mennesker, men være fullt av farer for en flygende fugl.</p>
-  </div></div>
-  <p>Lukk vinduer og dører før fuglen slippes ut. Store vinduer og speil bør gjøres synlige til fuglen har lært rommet. Dekk åpne toaletter, vasker og beholdere med vann.</p>
-  <p>Skjul elektriske ledninger og fjern limfeller, åpne flammer, varme plater og andre gjenstander fuglen kan lande på eller tygge i.</p>
-  <ul>
-    <li>Lukk vinduer og ytterdører.</li>
-    <li>Dekk eller marker store glassflater.</li>
-    <li>Slå av takvifter.</li>
-    <li>Skjul ledninger og fjern giftige planter.</li>
-    <li>Dekk åpne vannkilder.</li>
-  </ul>
-  <div class="check">✅ Gå gjennom rommet fra fuglens perspektiv før første flytur.</div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">Vinduer, speil og åpne vannkilder må sikres.</button>
-    <button onclick="mini(this,false)">Fuglen forstår glass automatisk.</button>
-    <div class="mini-result"></div>
-  </div>
+<div class="lesson-top"><div class="lesson-icon">💧</div><div><h3>Leksjon 9 – Vann og vannhygiene</h3><p>Rent vann skal være tilgjengelig hver dag. Skåler blir raskt forurenset av fôr, fjær og avføring og må vaskes daglig.</p></div></div>
+<ul><li>Plasser vannet utenfor sittepinnenes dryppsone.</li><li>Bytt vann minst daglig.</li><li>Ha gjerne ekstra skåler.</li></ul>
+<div class="remember">✅ Husk: Friskt vann og ren skål er en del av det daglige stellet.</div>
+<div class="miniquiz"><h4>Miniquiz</h4>
+<button onclick="mini(this,true)">Dette er riktig forstått.</button>
+<button onclick="mini(this,false)">Dette kan ignoreres.</button>
+<div class="mini-result"></div></div>
 </section>
-
 <section class="lesson">
-  <div class="lesson-top"><div class="lesson-icon">👶</div><div>
-    <h3>Leksjon 10 – Barn, hund, katt og andre dyr</h3>
-    <p>Samvær må alltid styres av voksne og skje under kontroll.</p>
-  </div></div>
-  <p>Barn må lære at fuglen ikke er et leketøy. De skal ikke stikke fingre inn i buret, jage fuglen eller forsøke å fange den. Rolig observasjon og enkle oppgaver kan være en god start.</p>
-  <p>Hunder og katter kan reagere instinktivt på en flygende fugl. Selv et vennlig kjæledyr kan skade fuglen på sekunder. Hold fysisk adskillelse og aldri stol på samvær uten tilsyn.</p>
-  <div class="columns">
-    <div class="tip">💡 Lag tydelige regler for hele familien før fuglen kommer.</div>
-    <div class="warning">⚠️ Katt og fugl skal aldri være løse sammen uten full kontroll.</div>
-  </div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">Barn og andre dyr må alltid følges opp av en voksen.</button>
-    <button onclick="mini(this,false)">Fuglen kan være alene med katten når de har møttes én gang.</button>
-    <div class="mini-result"></div>
-  </div>
+<div class="lesson-top"><div class="lesson-icon">⚖️</div><div><h3>Leksjon 10 – Forebygg overvekt</h3><p>Overvekt kan utvikles når fuglen får mye energirikt fôr og lite aktivitet. Fjærdrakten kan skjule vektøkning, så regelmessig veiing kan være nyttig.</p></div></div>
+<ul><li>Begrens svært fete frø.</li><li>Bruk mat som aktivisering.</li><li>Gi mulighet for bevegelse og flyging.</li></ul>
+<div class="remember">✅ Husk: Vekt, aktivitet og fôrtype må vurderes sammen.</div>
+<div class="miniquiz"><h4>Miniquiz</h4>
+<button onclick="mini(this,true)">Dette er riktig forstått.</button>
+<button onclick="mini(this,false)">Dette kan ignoreres.</button>
+<div class="mini-result"></div></div>
 </section>
-
 <section class="lesson">
-  <div class="lesson-top"><div class="lesson-icon">🚪</div><div>
-    <h3>Leksjon 11 – Den første dagen hjemme</h3>
-    <p>Den første dagen skal handle om ro, mat, vann og observasjon.</p>
-  </div></div>
-  <p>Sett transportburet nær det ferdige buret og la overføringen skje så rolig som mulig. Unngå å jage fuglen eller gripe etter den dersom det ikke er nødvendig.</p>
-  <p>Fuglen bør få tid til å finne mat, vann og sittepinner. Hold rommet rolig og unngå mange besøkende, høy musikk og intensiv håndtrening.</p>
-  <div class="remember">✅ Første mål er at fuglen føler seg trygg nok til å spise, drikke og hvile.</div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,false)">Håndtrening skal starte med en gang og vare lenge.</button>
-    <button onclick="mini(this,true)">Fuglen bør få ro og tid til å orientere seg.</button>
-    <div class="mini-result"></div>
-  </div>
+<div class="lesson-top"><div class="lesson-icon">🩺</div><div><h3>Leksjon 11 – Tegn på feilernæring</h3><p>Dårlig fjærkvalitet, overvekt, lav aktivitet og unormal avføring kan være tegn på feilernæring, men slike symptomer kan ha flere årsaker.</p></div></div>
+<ul><li>Før kostholdslogg.</li><li>Noter hva fuglen faktisk spiser.</li><li>Oppsøk veterinær ved vedvarende endringer.</li></ul>
+<div class="remember">✅ Husk: Beskriv både tilbudt mat og faktisk matinntak.</div>
+<div class="miniquiz"><h4>Miniquiz</h4>
+<button onclick="mini(this,true)">Dette er riktig forstått.</button>
+<button onclick="mini(this,false)">Dette kan ignoreres.</button>
+<div class="mini-result"></div></div>
 </section>
-
 <section class="lesson">
-  <div class="lesson-top"><div class="lesson-icon">📅</div><div>
-    <h3>Leksjon 12 – Den første uken</h3>
-    <p>Bygg rutiner gradvis og observer fuglen nøye.</p>
-  </div></div>
-  <p>Den første uken bør du notere appetitt, drikkelyst, avføring, lyd, aktivitetsnivå og søvn. Små endringer kan være viktige, særlig dersom fuglen virker sløv eller sitter mye oppblåst.</p>
-  <p>Start kontakt og trening forsiktig. Sitt nær buret, snakk rolig og la fuglen bli kjent med stemmen og bevegelsene dine. Ikke tving fram håndkontakt.</p>
-  <ul>
-    <li>Hold samme fôr som fuglen er vant til i starten.</li>
-    <li>Bygg døgnrytme og rengjøringsrutiner.</li>
-    <li>Gi tid til hvile.</li>
-    <li>Kontakt fuglekyndig veterinær ved sykdomstegn.</li>
-  </ul>
-  <div class="tip">💡 Ta gjerne et bilde av normal avføring og noter startvekten dersom fuglen kan veies trygt.</div>
-  <div class="miniquiz"><h4>Miniquiz</h4>
-    <button onclick="mini(this,true)">Observer matlyst, avføring, pust og aktivitet.</button>
-    <button onclick="mini(this,false)">Store endringer i fôr og rutiner bør gjøres første dag.</button>
-    <div class="mini-result"></div>
-  </div>
-</section>
-
-</main>
-
-<section class="panel" id="sikkerhet">
-  <div class="section-head">
-    <div>
-      <h2>🛡️ Sjekkliste før fuglen kommer</h2>
-      <p>Alle punktene bør være ferdige før transportburet bæres inn.</p>
-    </div>
-  </div>
-  <div class="checklist">
-    <div class="check-row"><span>🏠</span><span>Buret er ferdig montert, vasket og kontrollert.</span></div>
-    <div class="check-row"><span>📏</span><span>Sprinkelavstand og størrelse passer arten.</span></div>
-    <div class="check-row"><span>🌳</span><span>Sittepinner har trygg variasjon i tykkelse.</span></div>
-    <div class="check-row"><span>🥣</span><span>Mat og vann står rent og ikke under sittepinner.</span></div>
-    <div class="check-row"><span>☀️</span><span>Rommet har stabil døgnrytme og ro om natten.</span></div>
-    <div class="check-row"><span>🌡️</span><span>Buret står uten trekk, sterk varme og direkte sol.</span></div>
-    <div class="check-row"><span>☠️</span><span>Spray, røyk, slippbelegg og sterke kjemikalier er fjernet.</span></div>
-    <div class="check-row"><span>🪟</span><span>Vinduer, speil, vifter, vann og ledninger er sikret.</span></div>
-    <div class="check-row"><span>🐶</span><span>Barn og andre dyr har tydelige regler.</span></div>
-    <div class="check-row"><span>🚗</span><span>Transportbur og veterinærkontakt er klare.</span></div>
-  </div>
-</section>
-
-<section class="quiz" id="quiz">
-  <h2>🎯 Sluttquiz – Modul 2</h2>
-  <p>Svar riktig på alle spørsmålene for å fullføre modulen.</p>
-  <div id="questions"></div>
-  <div class="progress"><span id="progressBar"></span></div>
-  <div id="quizSummary" style="margin-top:12px;font-weight:900">0 av 15 spørsmål fullført</div>
-</section>
-
-<section class="finish">
-  <h2>🏆 Modul 2 fullført</h2>
-  <p>Når alle spørsmålene er besvart riktig, er hjemmet klart for en trygg og rolig start.</p>
-  <div class="next">
-    <h3>➡️ Neste modul: Mat, ernæring og vann</h3>
-    <p>I Modul 3 lærer du om frø, pellets, grønnsaker, mineraler, vannhygiene, giftige matvarer og hvordan et balansert kosthold bygges opp.</p>
-  </div>
-</section>
-
-<p class="footer">Fugleakademiet – Full Premium Modul 2 🐦</p>
-</div>
-
+<div class="lesson-top"><div class="lesson-icon">📋</div><div><h3>Leksjon 12 – Praktisk matplan</h3><p>En enkel plan gjør det lettere å skape variasjon uten å overfôre. Planen må alltid justeres etter art, alder, helse og veterinærens råd.</p></div></div>
+<ul><li>Morgen: friskt vann og hovedfôr.</li><li>Dag: grønt og aktiviseringsfôr.</li><li>Kveld: fjern ferskvarer og vask skåler.</li></ul>
+<div class="remember">✅ Husk: En matplan skal være enkel, trygg og tilpasset fuglen.</div>
+<div class="miniquiz"><h4>Miniquiz</h4>
+<button onclick="mini(this,true)">Dette er riktig forstått.</button>
+<button onclick="mini(this,false)">Dette kan ignoreres.</button>
+<div class="mini-result"></div></div>
+</section></main>
+<section class="quiz" id="quiz"><h2>🎯 Sluttquiz – Modul 3</h2><p>Svar riktig på alle spørsmålene.</p><div id="questions"></div><div class="progress"><span id="progressBar"></span></div><div id="quizSummary" style="margin-top:12px;font-weight:900">0 av 15 spørsmål fullført</div></section>
+<section class="finish"><h2>🏆 Modul 3 fullført</h2><p>Når alle spørsmålene er riktige, har du et godt grunnlag for trygg og variert fôring.</p><div class="next"><h3>➡️ Neste modul: Atferd, tillit og håndtrening</h3><p>I Modul 4 lærer du om kroppsspråk, sosial kontakt, biting, stress og hvordan trygghet bygges uten tvang.</p></div></section>
+<p class="footer">Fugleakademiet – Full Premium Modul 3 🐦</p></div>
 <script>
-function mini(btn,correct){
-  const box=btn.closest('.miniquiz');
-  box.querySelectorAll('button').forEach(b=>b.classList.remove('good','bad'));
-  btn.classList.add(correct?'good':'bad');
-  box.querySelector('.mini-result').textContent=correct?'✅ Riktig!':'❌ Prøv igjen.';
-}
+function mini(btn,correct){const box=btn.closest('.miniquiz');box.querySelectorAll('button').forEach(b=>b.classList.remove('good','bad'));btn.classList.add(correct?'good':'bad');box.querySelector('.mini-result').textContent=correct?'✅ Riktig!':'❌ Prøv igjen.'}
 const quizData=[
-['Hvor bør fuglen bo?',['I et ubrukt rom','I et lyst, trygt rom nær familien','På kjøkkenet'],1],
-['Hva er viktig ved valg av bur?',['Bare høyde','Horisontal plass og riktig sprinkelavstand','Lavest mulig pris'],1],
-['Hvor bør buret ikke stå?',['Nær matos og sterk varme','Mot en trygg vegg','I et rolig oppholdsrom'],0],
-['Hva er riktig om sittepinner?',['Alle bør være like','Ulik tykkelse og trygg struktur er bra','Sandpapir er alltid best'],1],
-['Hvor bør mat og vann stå?',['Under sittepinner','Rent og beskyttet mot avføring','På burbunnen'],1],
-['Hva trenger fuglen om natten?',['Rolig og stabil mørkeperiode','TV og lys hele natten','Mange besøkende'],0],
-['Hva er viktig for temperatur?',['Stabile forhold uten trekk','Rask temperaturendring','Buret rett ved ytterdør'],0],
-['Hva kan være farlig for fugler?',['Røyk og kjemiske damper','Rent vann','Naturgrener'],0],
-['Hva må sikres før flytid?',['Vinduer, speil, vifter og vann','Bare matskålen','Ingenting'],0],
-['Hva er riktig om katt og fugl?',['De kan alltid være alene sammen','De må holdes adskilt og under kontroll','Katten bør sitte på buret'],1],
-['Hva er hovedmålet første dag?',['Lang håndtrening','Ro, mat, vann og trygghet','Mange gjester'],1],
-['Hva bør observeres første uke?',['Matlyst, avføring, pust og aktivitet','Bare lydnivå','Bare fjærfarge'],0],
-['Hva er riktig om kjøkken?',['Et godt sted for fuglebur','Uegnet på grunn av røyk og damper','Best fordi det er varmt'],1],
-['Hva er viktig ved vannskålen?',['Daglig kontroll og rengjøring','Bytte én gang i uken','Plassere den under favorittpinnen'],0],
-['Hva er målet med Modul 2?',['Å gjøre hjemmet klart før fuglen kommer','Å vente med alt til etter kjøpet','Å kjøpe flest mulig leker'],0]
-];
+['Hva er viktigst ved fôring?',['Samme mat til alle','Artstilpasset og variert kosthold','Bare favorittfrø'],1],
+['Hva er en risiko med frøblandinger?',['Selektiv spising','For mye vann','Ingen energi'],0],
+['Hvordan skal overgang til pellets skje?',['Brått','Gradvis','Ved sult'],1],
+['Hva er riktig om grønnsaker?',['Små, rene porsjoner','Skal stå hele natten','Alltid farlige'],0],
+['Hva er riktig om frukt?',['Hovedfôr','Små mengder','Ubegrenset'],1],
+['Når kan proteinbehovet variere?',['Med livsfase','Aldri','Bare med farge'],0],
+['Hva er riktig om tilskudd?',['Mer er alltid bedre','Brukes målrettet','Alle trenger mange'],1],
+['Hva skal aldri gis?',['Avokado og sjokolade','Brokkoli','Rent vann'],0],
+['Hva er riktig om vann?',['Vask og bytt daglig','Bytt ukentlig','Bare fyll på'],0],
+['Hva kan bidra til overvekt?',['Mye energirikt fôr og lite aktivitet','Rent vann','Trygge urter'],0],
+['Hva kan være tegn på feilernæring?',['Dårlig fjærkvalitet','Normal aktivitet','Klar pust'],0],
+['Hva bør kostholdsloggen vise?',['Hva fuglen faktisk spiser','Bare hva du kjøper','Skålens farge'],0],
+['Hva er målet med en matplan?',['Variasjon og kontroll','Mest mulig mat','Samme mat alltid'],0],
+['Hva er riktig om frø?',['Kan være en del av kostholdet','Er alltid komplett alene','Skal være mugne'],0],
+['Hva er målet med Modul 3?',['Trygg og balansert fôring','Lære merkenavn','Mest mulig godbiter'],0]];
 const qWrap=document.getElementById('questions');
-qWrap.innerHTML=quizData.map((q,i)=>`
-  <div class="question" data-done="false">
-    <h3>${i+1}. ${q[0]}</h3>
-    <div class="answers">
-      ${q[1].map((a,j)=>`<button class="answer" onclick="answer(this,${j===q[2]})">${a}</button>`).join('')}
-    </div>
-    <div class="result"></div>
-  </div>`).join('');
-function answer(btn,correct){
-  const question=btn.closest('.question');
-  const result=question.querySelector('.result');
-  question.querySelectorAll('.answer').forEach(b=>b.classList.remove('correct','wrong'));
-  if(correct){
-    btn.classList.add('correct');
-    result.textContent='✅ Riktig!';
-    question.dataset.done='true';
-  }else{
-    btn.classList.add('wrong');
-    result.textContent='❌ Prøv igjen.';
-  }
-  updateProgress();
-}
-function updateProgress(){
-  const questions=[...document.querySelectorAll('.question')];
-  const done=questions.filter(q=>q.dataset.done==='true').length;
-  document.getElementById('progressBar').style.width=((done/questions.length)*100)+'%';
-  document.getElementById('quizSummary').textContent=done+' av '+questions.length+' spørsmål fullført';
-}
-</script>
-</body>
-</html>
+qWrap.innerHTML=quizData.map((q,i)=>`<div class="question" data-done="false"><h3>${i+1}. ${q[0]}</h3><div class="answers">${q[1].map((a,j)=>`<button class="answer" onclick="answer(this,${j===q[2]})">${a}</button>`).join('')}</div><div class="result"></div></div>`).join('');
+function answer(btn,correct){const q=btn.closest('.question');q.querySelectorAll('.answer').forEach(b=>b.classList.remove('correct','wrong'));if(correct){btn.classList.add('correct');q.querySelector('.result').textContent='✅ Riktig!';q.dataset.done='true'}else{btn.classList.add('wrong');q.querySelector('.result').textContent='❌ Prøv igjen.'}updateProgress()}
+function updateProgress(){const qs=[...document.querySelectorAll('.question')];const done=qs.filter(q=>q.dataset.done==='true').length;document.getElementById('progressBar').style.width=((done/qs.length)*100)+'%';document.getElementById('quizSummary').textContent=done+' av '+qs.length+' spørsmål fullført'}
+</script></body></html>
