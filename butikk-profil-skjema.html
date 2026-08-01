@@ -4,242 +4,69 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registrer butikk</title>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
-    body{font-family:Arial,sans-serif;background:#f4f8ff;margin:0;padding:20px;color:#0f172a;}
-    .container{max-width:760px;margin:auto;background:white;padding:25px;border-radius:25px;box-shadow:0 10px 30px rgba(0,0,0,0.1);}
-    h1{text-align:center;color:#1e3a8a;margin-top:0;}
-    .sub{text-align:center;color:#64748b;line-height:1.5;margin-bottom:22px;}
-    .form-group{margin-bottom:18px;}
-    label{display:block;margin-bottom:8px;font-weight:bold;}
-    input,textarea,select{width:100%;padding:14px;border-radius:14px;border:1px solid #cbd5e1;font-size:15px;box-sizing:border-box;background:white;}
-    textarea{min-height:120px;resize:vertical;}
-    button{width:100%;padding:16px;border:none;border-radius:16px;background:#2563eb;color:white;font-size:17px;font-weight:bold;cursor:pointer;}
-    button:hover{background:#1d4ed8;}
-    .back{display:inline-block;margin-bottom:18px;text-decoration:none;background:#eaf2ff;color:#1d4ed8;padding:12px 18px;border-radius:999px;font-weight:bold;border:1px solid #bfd7ff;}
-    .status{margin-top:16px;font-weight:bold;text-align:center;min-height:24px;}
-    .help{font-size:13px;color:#64748b;margin-top:6px;}
+    body{font-family:Arial,sans-serif;background:#f4f8ff;margin:0;padding:20px;color:#0f172a}
+    .container{max-width:760px;margin:auto;background:#fff;padding:25px;border-radius:25px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+    h1{text-align:center;color:#1e3a8a;margin-top:0}.sub{text-align:center;color:#64748b;line-height:1.5;margin-bottom:22px}
+    .section{margin-top:24px;padding:20px;border-radius:20px;background:#f8fbff;border:1px solid #dbeafe}.section h2{margin:0 0 16px;color:#1e3a8a;font-size:20px}
+    .form-group{margin-bottom:18px}label{display:block;margin-bottom:8px;font-weight:bold}
+    input,textarea,select{width:100%;padding:14px;border-radius:14px;border:1px solid #cbd5e1;font-size:15px;box-sizing:border-box;background:#fff}
+    textarea{min-height:120px;resize:vertical}button{width:100%;padding:16px;border:none;border-radius:16px;background:#2563eb;color:#fff;font-size:17px;font-weight:bold;cursor:pointer;margin-top:8px}
+    button:hover{background:#1d4ed8}button:disabled{opacity:.65;cursor:not-allowed}.back{display:inline-block;margin-bottom:18px;text-decoration:none;background:#eaf2ff;color:#1d4ed8;padding:12px 18px;border-radius:999px;font-weight:bold;border:1px solid #bfd7ff}
+    .status{margin-top:16px;font-weight:bold;text-align:center;min-height:24px}.help{font-size:13px;color:#64748b;margin-top:6px;line-height:1.45}.hidden{display:none}
+    .model-info{margin-top:10px;padding:13px 15px;border-radius:14px;background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;font-size:14px;font-weight:bold;line-height:1.45}
+    @media(max-width:600px){body{padding:10px}.container{padding:18px;border-radius:20px}.section{padding:15px}}
   </style>
 </head>
-
 <body>
-
 <div class="container">
-
   <a class="back" href="index.html">← Tilbake til appen</a>
-
   <h1>🐶 Registrer butikk / samarbeidspartner</h1>
+  <p class="sub">Fyll inn informasjon om butikk, nettbutikk, klubb eller samarbeidspartner. Når du trykker lagre, blir registreringen sendt til godkjenning.</p>
 
-  <p class="sub">
-    Fyll inn informasjon om butikk, klubb eller samarbeidspartner. Når du trykker lagre, blir den sendt til godkjenning.
-  </p>
-
-  <div class="form-group">
-    <label>Navn på butikk / gruppe / samarbeidspartner</label>
-    <input type="text" id="shopName" placeholder="Skriv navn">
+  <div class="section">
+    <h2>🏪 Grunnopplysninger</h2>
+    <div class="form-group"><label for="shopName">Navn på butikk / gruppe / samarbeidspartner</label><input type="text" id="shopName" placeholder="Skriv navn"></div>
+    <div class="form-group"><label for="businessModel">Butikkmodell</label><select id="businessModel" onchange="toggleOnlineFields()"><option value="physical">🏪 Fysisk butikk / tjeneste</option><option value="online">🛒 Nettbutikk</option><option value="both">🏪🛒 Fysisk butikk + nettbutikk</option></select><div id="modelInfo" class="model-info">Adresse og område brukes for å vise den fysiske butikken eller tjenesten.</div></div>
+    <div class="form-group"><label for="shopType">Type</label><select id="shopType"><option>Hundepensjonat</option><option>Hundepass</option><option>Frisør</option><option>Veterinær</option><option>Zoo butikk</option><option>Kafé</option><option>Hundeklubb</option><option>Samarbeidspartner</option><option>Nettbutikk</option><option>Hundefôr</option><option>Hundeutstyr</option><option>Katteutstyr</option><option>Fugleutstyr</option><option>Akvarieutstyr</option></select></div>
+    <div class="form-group" id="regionGroup"><label for="shopRegion">Område</label><select id="shopRegion"><option value="Haugalandet">Haugalandet</option><option value="Stavanger">Stavanger</option><option value="Stord">Stord</option><option value="Bergen">Bergen</option><option value="Oslo">Oslo</option><option value="Akershus">Akershus</option><option value="Østfold">Østfold</option><option value="Innlandet">Innlandet</option><option value="Buskerud">Buskerud</option><option value="Vestfold">Vestfold</option><option value="Telemark">Telemark</option><option value="Agder">Agder</option><option value="Rogaland">Rogaland</option><option value="Vestland">Vestland</option><option value="Møre og Romsdal">Møre og Romsdal</option><option value="Trøndelag">Trøndelag</option><option value="Nordland">Nordland</option><option value="Troms">Troms</option><option value="Finnmark">Finnmark</option><option value="Hele Norge">Hele Norge</option></select></div>
+    <div class="form-group" id="addressGroup"><label for="shopAddress">Adresse</label><input type="text" id="shopAddress" placeholder="Adresse"></div>
+    <div class="form-group"><label for="shopPhone">Telefon</label><input type="text" id="shopPhone" placeholder="Telefonnummer"></div>
+    <div class="form-group"><label for="shopFacebook">Facebook / Nettside</label><input type="url" id="shopFacebook" placeholder="https://..."></div>
+    <div class="form-group"><label for="shopDescription">Beskrivelse</label><textarea id="shopDescription" placeholder="Beskrivelse av butikk, gruppe eller samarbeidspartner"></textarea></div>
   </div>
 
-  <div class="form-group">
-    <label>Type</label>
-    <select id="shopType">
-      <option>Hundepensjonat</option>
-      <option>Hundepass</option>
-      <option>Frisør</option>
-      <option>Veterinær</option>
-      <option>Zoo butikk</option>
-      <option>Kafé</option>
-      <option>Hundeklubb</option>
-      <option>Samarbeidspartner</option>
-    </select>
+  <div id="onlineSection" class="section hidden">
+    <h2>🛒 Opplysninger om nettbutikken</h2>
+    <div class="form-group"><label for="onlineStoreUrl">Nettbutikkadresse</label><input type="url" id="onlineStoreUrl" placeholder="https://www.nettbutikken.no"></div>
+    <div class="form-group"><label for="deliveryArea">Leveringsområde</label><select id="deliveryArea"><option value="Hele Norge">Hele Norge</option><option value="Norge og Norden">Norge og Norden</option><option value="Europa">Europa</option><option value="Hele verden">Hele verden</option><option value="Lokalt område">Lokalt område</option></select></div>
+    <div class="form-group"><label for="shippingInfo">Fraktinformasjon</label><textarea id="shippingInfo" placeholder="For eksempel fast frakt, Posten, Bring eller henting"></textarea></div>
+    <div class="form-group"><label for="freeShippingLimit">Gratis frakt over</label><input type="text" id="freeShippingLimit" placeholder="For eksempel 799 kr"></div>
+    <div class="form-group"><label for="discountCode">Rabattkode</label><input type="text" id="discountCode" placeholder="Valgfritt"></div>
+    <div class="form-group"><label for="deliveryTime">Leveringstid</label><input type="text" id="deliveryTime" placeholder="For eksempel 2–5 virkedager"></div>
   </div>
 
-  <div class="form-group">
-    <label>Område</label>
-    <select id="shopRegion">
-      <option value="Haugalandet">Haugalandet</option>
-      <option value="Stavanger">Stavanger</option>
-      <option value="Stord">Stord</option>
-      <option value="Bergen">Bergen</option>
-      <option value="Oslo">Oslo</option>
-      <option value="Akershus">Akershus</option>
-      <option value="Østfold">Østfold</option>
-      <option value="Innlandet">Innlandet</option>
-      <option value="Buskerud">Buskerud</option>
-      <option value="Vestfold">Vestfold</option>
-      <option value="Telemark">Telemark</option>
-      <option value="Agder">Agder</option>
-      <option value="Rogaland">Rogaland</option>
-      <option value="Vestland">Vestland</option>
-      <option value="Møre og Romsdal">Møre og Romsdal</option>
-      <option value="Trøndelag">Trøndelag</option>
-      <option value="Nordland">Nordland</option>
-      <option value="Troms">Troms</option>
-      <option value="Finnmark">Finnmark</option>
-    </select>
+  <div class="section">
+    <h2>🖼️ Logo og bilder</h2>
+    <div class="form-group"><label for="logoUpload">Logo</label><input type="file" id="logoUpload" accept="image/*"><div class="help">Valgfritt. Last opp butikkens logo.</div></div>
+    <div class="form-group"><label for="imageUpload">Bilder</label><input type="file" id="imageUpload" accept="image/*" multiple><div class="help">Valgfritt. Du kan velge flere bilder samtidig.</div></div>
   </div>
 
-  <div class="form-group">
-    <label>Adresse</label>
-    <input type="text" id="shopAddress" placeholder="Adresse">
-  </div>
-
-  <div class="form-group">
-    <label>Telefon</label>
-    <input type="text" id="shopPhone" placeholder="Telefonnummer">
-  </div>
-
-  <div class="form-group">
-    <label>Facebook / Nettside</label>
-    <input type="text" id="shopFacebook" placeholder="Facebook-link eller nettside">
-  </div>
-
-  <div class="form-group">
-    <label>Beskrivelse</label>
-    <textarea id="shopDescription" placeholder="Beskrivelse av butikk, gruppe eller samarbeidspartner"></textarea>
-  </div>
-
-  <div class="form-group">
-    <label>Logo</label>
-    <input type="file" id="logoUpload" accept="image/*">
-    <div class="help">Valgfritt. Last opp butikkens logo.</div>
-  </div>
-
-  <div class="form-group">
-    <label>Bilder</label>
-    <input type="file" id="imageUpload" accept="image/*" multiple>
-    <div class="help">Valgfritt. Du kan velge flere bilder samtidig.</div>
-  </div>
-
-  <button type="button" onclick="saveShop()">
-    Lagre og send til godkjenning
-  </button>
-
+  <button id="saveButton" type="button" onclick="saveShop()">Lagre og send til godkjenning</button>
   <div id="status" class="status">Klar.</div>
-
 </div>
-
 <script>
-  const supabaseClient = window.supabase.createClient(
-    "https://kxudiviidwwwclbzgdyx.supabase.co",
-    "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
-  );
-
-  function setStatus(text, color){
-    const el = document.getElementById("status");
-    el.textContent = text;
-    el.style.color = color || "black";
-  }
-
-  function cleanFileName(name){
-    return String(name || "bilde.jpg").replace(/[^a-zA-Z0-9._-]/g, "_");
-  }
-
-  async function uploadOneFile(file, folder){
-    if(!file) return "";
-
-    const fileName = Date.now() + "-" + cleanFileName(file.name);
-    const filePath = folder + "/" + fileName;
-
-    const { error } = await supabaseClient.storage
-      .from("story-images")
-      .upload(filePath, file);
-
-    if(error){
-      throw new Error(error.message);
-    }
-
-    const { data } = supabaseClient.storage
-      .from("story-images")
-      .getPublicUrl(filePath);
-
-    return data.publicUrl || "";
-  }
-
-  async function uploadManyFiles(files, folder){
-    const urls = [];
-
-    for(let i = 0; i < files.length; i++){
-      const url = await uploadOneFile(files[i], folder);
-      if(url) urls.push(url);
-    }
-
-    return urls;
-  }
-
-  window.saveShop = async function(){
-    try{
-      const name = document.getElementById("shopName").value.trim();
-      const type = document.getElementById("shopType").value;
-      const region = document.getElementById("shopRegion").value;
-      const address = document.getElementById("shopAddress").value.trim();
-      const phone = document.getElementById("shopPhone").value.trim();
-      const facebook = document.getElementById("shopFacebook").value.trim();
-      const description = document.getElementById("shopDescription").value.trim();
-
-      const logoFile = document.getElementById("logoUpload").files[0];
-      const imageFiles = document.getElementById("imageUpload").files;
-
-      if(!name){
-        setStatus("Skriv inn navn.", "crimson");
-        alert("Skriv inn navn.");
-        return;
-      }
-
-      let logoUrl = "";
-      let galleryUrls = [];
-
-      if(logoFile){
-        setStatus("Laster opp logo ...", "#1d4ed8");
-        logoUrl = await uploadOneFile(logoFile, "butikk-logo");
-      }
-
-      if(imageFiles && imageFiles.length > 0){
-        setStatus("Laster opp bilder ...", "#1d4ed8");
-        galleryUrls = await uploadManyFiles(imageFiles, "butikk-bilder");
-      }
-
-      setStatus("Lagrer og sender til godkjenning ...", "#1d4ed8");
-
-      const { error } = await supabaseClient
-        .from("businesses")
-        .insert([{
-          name: name,
-          type: type,
-          region: region,
-          place: address,
-          phone: phone,
-          website: facebook,
-          description: description,
-          logo_url: logoUrl,
-          gallery_urls: galleryUrls,
-          approved: false
-        }]);
-
-      if(error){
-        setStatus("Feil: " + error.message, "crimson");
-        alert("Feil: " + error.message);
-        return;
-      }
-
-      document.getElementById("shopName").value = "";
-      document.getElementById("shopAddress").value = "";
-      document.getElementById("shopPhone").value = "";
-      document.getElementById("shopFacebook").value = "";
-      document.getElementById("shopDescription").value = "";
-      document.getElementById("logoUpload").value = "";
-      document.getElementById("imageUpload").value = "";
-
-      setStatus("Sendt til godkjenning 😊", "green");
-      alert("Sendt til godkjenning 😊");
-
-    }catch(error){
-      setStatus("Feil: " + error.message, "crimson");
-      alert("Feil: " + error.message);
-    }
-  }
+const supabaseClient=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
+function setStatus(text,color){const el=document.getElementById("status");el.textContent=text;el.style.color=color||"black"}
+function cleanFileName(name){return String(name||"bilde.jpg").replace(/[^a-zA-Z0-9._-]/g,"_")}
+function toggleOnlineFields(){const model=document.getElementById("businessModel").value;const onlineSection=document.getElementById("onlineSection");const addressGroup=document.getElementById("addressGroup");const region=document.getElementById("shopRegion");const info=document.getElementById("modelInfo");const hasOnlineStore=model==="online"||model==="both";onlineSection.classList.toggle("hidden",!hasOnlineStore);if(model==="online"){addressGroup.classList.add("hidden");region.value="Hele Norge";info.textContent="Nettbutikken kan vises for brukere i hele Norge. Fysisk adresse er ikke nødvendig."}else if(model==="both"){addressGroup.classList.remove("hidden");info.textContent="Både fysisk adresse og nettbutikkopplysninger blir registrert."}else{addressGroup.classList.remove("hidden");info.textContent="Adresse og område brukes for å vise den fysiske butikken eller tjenesten."}}
+async function uploadOneFile(file,folder){if(!file)return"";const fileName=Date.now()+"-"+cleanFileName(file.name);const filePath=folder+"/"+fileName;const{error}=await supabaseClient.storage.from("story-images").upload(filePath,file);if(error)throw new Error(error.message);const{data}=supabaseClient.storage.from("story-images").getPublicUrl(filePath);return data.publicUrl||""}
+async function uploadManyFiles(files,folder){const urls=[];for(let i=0;i<files.length;i++){const url=await uploadOneFile(files[i],folder);if(url)urls.push(url)}return urls}
+function buildFallbackDescription(description,o){if(o.business_model==="physical")return description;return [description,"","— NETTBUTIKKOPPLYSNINGER —","Butikkmodell: "+(o.business_model==="both"?"Fysisk butikk + nettbutikk":"Nettbutikk"),"Nettbutikk: "+(o.online_store_url||"Ikke oppgitt"),"Leveringsområde: "+(o.delivery_area||"Ikke oppgitt"),"Fraktinformasjon: "+(o.shipping_info||"Ikke oppgitt"),"Gratis frakt over: "+(o.free_shipping_limit||"Ikke oppgitt"),"Rabattkode: "+(o.discount_code||"Ingen"),"Leveringstid: "+(o.delivery_time||"Ikke oppgitt")].join("\n").trim()}
+function isMissingColumnError(message){const text=String(message||"").toLowerCase();return text.includes("column")||text.includes("schema cache")||text.includes("business_model")||text.includes("online_store_url")}
+window.saveShop=async function(){const saveButton=document.getElementById("saveButton");try{saveButton.disabled=true;const name=document.getElementById("shopName").value.trim();const type=document.getElementById("shopType").value;const region=document.getElementById("shopRegion").value;const address=document.getElementById("shopAddress").value.trim();const phone=document.getElementById("shopPhone").value.trim();const facebook=document.getElementById("shopFacebook").value.trim();const description=document.getElementById("shopDescription").value.trim();const businessModel=document.getElementById("businessModel").value;const onlineData={business_model:businessModel,online_store_url:document.getElementById("onlineStoreUrl").value.trim(),delivery_area:document.getElementById("deliveryArea").value,shipping_info:document.getElementById("shippingInfo").value.trim(),free_shipping_limit:document.getElementById("freeShippingLimit").value.trim(),discount_code:document.getElementById("discountCode").value.trim(),delivery_time:document.getElementById("deliveryTime").value.trim()};const logoFile=document.getElementById("logoUpload").files[0];const imageFiles=document.getElementById("imageUpload").files;if(!name){setStatus("Skriv inn navn.","crimson");alert("Skriv inn navn.");return}if((businessModel==="online"||businessModel==="both")&&!onlineData.online_store_url){setStatus("Skriv inn nettbutikkadressen.","crimson");alert("Skriv inn nettbutikkadressen.");return}let logoUrl="";let galleryUrls=[];if(logoFile){setStatus("Laster opp logo ...","#1d4ed8");logoUrl=await uploadOneFile(logoFile,"butikk-logo")}if(imageFiles&&imageFiles.length>0){setStatus("Laster opp bilder ...","#1d4ed8");galleryUrls=await uploadManyFiles(imageFiles,"butikk-bilder")}setStatus("Lagrer og sender til godkjenning ...","#1d4ed8");const fullInsert={name,type,region,place:businessModel==="online"?"":address,phone,website:onlineData.online_store_url||facebook,description,logo_url:logoUrl,gallery_urls:galleryUrls,approved:false,business_model:onlineData.business_model,online_store_url:onlineData.online_store_url,delivery_area:onlineData.delivery_area,shipping_info:onlineData.shipping_info,free_shipping_limit:onlineData.free_shipping_limit,discount_code:onlineData.discount_code,delivery_time:onlineData.delivery_time};let{error}=await supabaseClient.from("businesses").insert([fullInsert]);if(error&&isMissingColumnError(error.message)){const fallbackInsert={name,type,region,place:businessModel==="online"?"":address,phone,website:onlineData.online_store_url||facebook,description:buildFallbackDescription(description,onlineData),logo_url:logoUrl,gallery_urls:galleryUrls,approved:false};const fallbackResult=await supabaseClient.from("businesses").insert([fallbackInsert]);error=fallbackResult.error}if(error){setStatus("Feil: "+error.message,"crimson");alert("Feil: "+error.message);return}["shopName","shopAddress","shopPhone","shopFacebook","shopDescription","onlineStoreUrl","shippingInfo","freeShippingLimit","discountCode","deliveryTime"].forEach(id=>document.getElementById(id).value="");document.getElementById("businessModel").value="physical";document.getElementById("shopType").selectedIndex=0;document.getElementById("shopRegion").value="Haugalandet";document.getElementById("deliveryArea").value="Hele Norge";document.getElementById("logoUpload").value="";document.getElementById("imageUpload").value="";toggleOnlineFields();setStatus("Sendt til godkjenning 😊","green");alert("Sendt til godkjenning 😊")}catch(error){setStatus("Feil: "+error.message,"crimson");alert("Feil: "+error.message)}finally{saveButton.disabled=false}}
+toggleOnlineFields();
 </script>
-
 </body>
 </html>
