@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nettbutikker – Hundene Våre</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    *{box-sizing:border-box}
+    :root{
+      --blue:#2563eb;
+      --blue-dark:#1d4ed8;
+      --line:#dbeafe;
+      --text:#0f172a;
+      --muted:#64748b;
+      --green:#166534;
+      --shadow:0 14px 34px rgba(15,23,42,.10);
+    }
+
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left,rgba(96,165,250,.18) 0%,transparent 30%),
+        linear-gradient(180deg,#dbe7f5 0%,#edf4fb 48%,#f8fbff 100%);
+    }
+
+    .wrap{
+      max-width:1180px;
+      margin:auto;
+      padding:20px 14px 60px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:14px 18px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+      position:sticky;
+      top:8px;
+      z-index:20;
+    }
+
+    .brand{
+      font-size:23px;
+      font-weight:900;
+      color:var(--blue-dark);
+    }
+
+    .back{
+      text-decoration:none;
+      background:#eaf2ff;
+      color:var(--blue-dark);
+      border:1px solid #bfd7ff;
+      border-radius:999px;
+      padding:11px 16px;
+      font-weight:900;
+    }
+
+    .hero{
+      border-radius:34px;
+      padding:34px;
+      color:#fff;
+      background:
+        linear-gradient(135deg,rgba(30,64,175,.96),rgba(124,58,237,.88));
+      box-shadow:0 20px 48px rgba(30,64,175,.22);
+      margin-bottom:18px;
+    }
+
+    .hero h1{
+      margin:0 0 10px;
+      font-size:46px;
+      line-height:1.05;
+    }
+
+    .hero p{
+      margin:0;
+      max-width:760px;
+      line-height:1.6;
+      font-size:17px;
+      color:#eef4ff;
+    }
+
+    .controls{
+      background:linear-gradient(180deg,#fff,#f8fbff);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:20px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+
+    .search-grid{
+      display:grid;
+      grid-template-columns:2fr 1fr;
+      gap:12px;
+    }
+
+    input,select{
+      width:100%;
+      padding:14px 15px;
+      border-radius:16px;
+      border:1px solid #cbd5e1;
+      font-size:15px;
+      background:#fff;
+    }
+
+    input:focus,select:focus{
+      outline:none;
+      border-color:#60a5fa;
+      box-shadow:0 0 0 4px rgba(96,165,250,.16);
+    }
+
+    .status{
+      margin-top:14px;
+      font-weight:800;
+      color:var(--muted);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .shop-card{
+      background:linear-gradient(180deg,#fff 0%,#f8fbff 100%);
+      border:1px solid var(--line);
+      border-radius:28px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      transition:transform .18s ease,box-shadow .18s ease;
+    }
+
+    .shop-card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 20px 42px rgba(30,64,175,.15);
+    }
+
+    .shop-main{
+      padding:20px;
+    }
+
+    .shop-top{
+      display:flex;
+      gap:16px;
+      align-items:flex-start;
+    }
+
+    .logo{
+      width:105px;
+      height:105px;
+      object-fit:contain;
+      border-radius:22px;
+      border:1px solid #e2e8f0;
+      background:#fff;
+      padding:8px;
+      flex-shrink:0;
+    }
+
+    .logo-fallback{
+      width:105px;
+      height:105px;
+      display:grid;
+      place-items:center;
+      border-radius:22px;
+      border:1px solid #e2e8f0;
+      background:#eef4ff;
+      font-size:42px;
+      flex-shrink:0;
+    }
+
+    .shop-title{
+      margin:0 0 6px;
+      font-size:27px;
+      line-height:1.15;
+      font-weight:900;
+    }
+
+    .meta{
+      color:var(--muted);
+      font-size:14px;
+      font-weight:700;
+      line-height:1.45;
+    }
+
+    .description{
+      color:#334155;
+      line-height:1.6;
+      margin-top:14px;
+      white-space:pre-wrap;
+    }
+
+    .facts{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .fact{
+      background:#fff;
+      border:1px solid #e2e8f0;
+      border-radius:16px;
+      padding:12px;
+      overflow-wrap:anywhere;
+    }
+
+    .fact b{
+      display:block;
+      color:var(--blue-dark);
+      font-size:12px;
+      margin-bottom:4px;
+    }
+
+    .discount{
+      margin-top:14px;
+      padding:14px;
+      border-radius:18px;
+      background:#fff7ed;
+      border:1px solid #fed7aa;
+      color:#9a3412;
+      font-weight:900;
+    }
+
+    .actions{
+      padding:0 20px 20px;
+    }
+
+    .visit{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      min-height:50px;
+      border-radius:999px;
+      background:linear-gradient(135deg,#2563eb,#7c3aed);
+      color:#fff;
+      text-decoration:none;
+      font-weight:900;
+      font-size:16px;
+      box-shadow:0 12px 24px rgba(37,99,235,.22);
+    }
+
+    .empty{
+      grid-column:1/-1;
+      text-align:center;
+      background:#fff;
+      border:1px dashed #cbd5e1;
+      color:var(--muted);
+      border-radius:24px;
+      padding:30px;
+      font-weight:900;
+    }
+
+    @media(max-width:850px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    @media(max-width:650px){
+      .wrap{padding:10px 8px 40px}
+      .topbar{position:static;border-radius:20px}
+      .brand{width:100%;text-align:center}
+      .back{width:100%;text-align:center}
+      .hero{padding:24px 18px;border-radius:26px}
+      .hero h1{font-size:34px}
+      .search-grid{grid-template-columns:1fr}
+      .shop-top{flex-direction:column}
+      .facts{grid-template-columns:1fr}
+      .logo,.logo-fallback{width:90px;height:90px}
+      .shop-title{font-size:23px}
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <header class="topbar">
+    <div class="brand">🛒 Hundene Våre – Nettbutikker</div>
+    <a class="back" href="index.html">← Tilbake til forsiden</a>
+  </header>
+
+  <section class="hero">
+    <h1>Nettbutikker</h1>
+    <p>
+      Finn godkjente nettbutikker med produkter og tjenester for hund, katt,
+      fugl, akvarium og andre kjæledyr.
+    </p>
+  </section>
+
+  <section class="controls">
+    <div class="search-grid">
+      <input type="search" id="searchInput" placeholder="Søk etter butikk, produkt eller beskrivelse">
+      <select id="categoryFilter">
+        <option value="">Alle kategorier</option>
+        <option value="Nettbutikk">Nettbutikk</option>
+        <option value="Hundefôr">Hundefôr</option>
+        <option value="Hundeutstyr">Hundeutstyr</option>
+        <option value="Katteutstyr">Katteutstyr</option>
+        <option value="Fugleutstyr">Fugleutstyr</option>
+        <option value="Akvarieutstyr">Akvarieutstyr</option>
+        <option value="Zoo butikk">Zoo butikk</option>
+        <option value="Samarbeidspartner">Samarbeidspartner</option>
+      </select>
+    </div>
+    <div id="status" class="status">Laster nettbutikker ...</div>
+  </section>
+
+  <main id="shopGrid" class="grid"></main>
+
+</div>
+
+<script>
+const supabaseClient = window.supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+const grid = document.getElementById("shopGrid");
+const statusEl = document.getElementById("status");
+const searchInput = document.getElementById("searchInput");
+const categoryFilter = document.getElementById("categoryFilter");
+
+let allShops = [];
+
+function escapeHtml(value){
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function safeUrl(value){
+  let url = String(value || "").trim();
+  if(!url) return "";
+
+  if(!/^https?:\/\//i.test(url)){
+    url = "https://" + url;
+  }
+
+  try{
+    const parsed = new URL(url);
+    return parsed.href;
+  }catch{
+    return "";
+  }
+}
+
+function fact(label,value){
+  if(value === null || value === undefined || String(value).trim() === ""){
+    return "";
+  }
+
+  return `
+    <div class="fact">
+      <b>${escapeHtml(label)}</b>
+      <span>${escapeHtml(value)}</span>
+    </div>
+  `;
+}
+
+function isOnlineShop(shop){
+  const model = String(shop.business_model || "").toLowerCase();
+
+  if(model === "online" || model === "both"){
+    return true;
+  }
+
+  const type = String(shop.type || "").toLowerCase();
+  if(type.includes("nettbutikk")){
+    return true;
+  }
+
+  const description = String(shop.description || "").toLowerCase();
+  return description.includes("— nettbutikkopplysninger —") ||
+         description.includes("nettbutikk:");
+}
+
+function getOnlineUrl(shop){
+  return safeUrl(
+    shop.online_store_url ||
+    shop.website ||
+    ""
+  );
+}
+
+function renderShops(){
+  const search = searchInput.value.trim().toLowerCase();
+  const category = categoryFilter.value;
+
+  const filtered = allShops.filter(shop => {
+    const haystack = [
+      shop.name,
+      shop.type,
+      shop.description,
+      shop.delivery_area,
+      shop.shipping_info
+    ].join(" ").toLowerCase();
+
+    const matchesSearch = !search || haystack.includes(search);
+    const matchesCategory = !category || shop.type === category;
+
+    return matchesSearch && matchesCategory;
+  });
+
+  statusEl.textContent =
+    filtered.length + " nettbutikk(er) vises.";
+
+  if(!filtered.length){
+    grid.innerHTML =
+      '<div class="empty">Ingen nettbutikker passer med søket eller filteret.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(shop => {
+    const logo = safeUrl(shop.logo_url);
+    const url = getOnlineUrl(shop);
+    const description = String(shop.description || "")
+      .replace(/\n*— NETTBUTIKKOPPLYSNINGER —[\s\S]*$/i,"")
+      .trim();
+
+    return `
+      <article class="shop-card">
+        <div class="shop-main">
+          <div class="shop-top">
+            ${logo
+              ? `<img class="logo" src="${escapeHtml(logo)}" alt="${escapeHtml(shop.name || "Nettbutikk")}">`
+              : `<div class="logo-fallback">🛒</div>`
+            }
+
+            <div>
+              <h2 class="shop-title">${escapeHtml(shop.name || "Nettbutikk")}</h2>
+              <div class="meta">
+                ${escapeHtml(shop.type || "Nettbutikk")}
+                ${shop.delivery_area ? " • " + escapeHtml(shop.delivery_area) : ""}
+              </div>
+            </div>
+          </div>
+
+          ${description
+            ? `<div class="description">${escapeHtml(description)}</div>`
+            : ""
+          }
+
+          <div class="facts">
+            ${fact("Leveringsområde",shop.delivery_area)}
+            ${fact("Fraktinformasjon",shop.shipping_info)}
+            ${fact("Gratis frakt over",shop.free_shipping_limit)}
+            ${fact("Leveringstid",shop.delivery_time)}
+          </div>
+
+          ${shop.discount_code
+            ? `<div class="discount">🎟 Rabattkode: ${escapeHtml(shop.discount_code)}</div>`
+            : ""
+          }
+        </div>
+
+        <div class="actions">
+          ${url
+            ? `<a class="visit" href="${escapeHtml(url)}" target="_blank" rel="noopener">🛒 Besøk nettbutikken</a>`
+            : `<div class="visit" style="opacity:.55;pointer-events:none;">Nettadresse mangler</div>`
+          }
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+async function loadShops(){
+  statusEl.textContent = "Laster nettbutikker ...";
+
+  const { data, error } = await supabaseClient
+    .from("businesses")
+    .select("*")
+    .eq("approved", true)
+    .order("name", { ascending: true });
+
+  if(error){
+    console.error(error);
+    statusEl.textContent = "Kunne ikke laste nettbutikker: " + error.message;
+    grid.innerHTML =
+      '<div class="empty">Kontroller Supabase-reglene dersom siden ikke kan lese butikkene.</div>';
+    return;
+  }
+
+  allShops = (data || []).filter(isOnlineShop);
+  renderShops();
+}
+
+searchInput.addEventListener("input",renderShops);
+categoryFilter.addEventListener("change",renderShops);
+
+loadShops();
+</script>
+</body>
+</html>
