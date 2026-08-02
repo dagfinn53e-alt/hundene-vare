@@ -1,404 +1,69 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin – Godkjenning av butikker</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      padding:20px;
-      font-family:Arial,sans-serif;
-      color:#0f172a;
-      background:linear-gradient(180deg,#eaf4ff 0%,#f8fbff 100%);
-    }
-    .wrap{max-width:1000px;margin:auto}
-    .top{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-      background:#fff;
-      border:1px solid #dbeafe;
-      border-radius:24px;
-      padding:18px 20px;
-      box-shadow:0 10px 28px rgba(15,23,42,.08);
-      margin-bottom:18px;
-    }
-    h1{margin:0;color:#1d4ed8;font-size:28px}
-    .back{
-      text-decoration:none;
-      background:#eaf2ff;
-      color:#1d4ed8;
-      border:1px solid #bfd7ff;
-      padding:11px 16px;
-      border-radius:999px;
-      font-weight:800;
-    }
-    .panel{
-      background:#fff;
-      border:1px solid #dbeafe;
-      border-radius:24px;
-      padding:20px;
-      box-shadow:0 10px 28px rgba(15,23,42,.08);
-    }
-    .status{
-      padding:14px 16px;
-      border-radius:16px;
-      background:#f8fbff;
-      border:1px solid #dbeafe;
-      font-weight:800;
-      margin-bottom:16px;
-    }
-    .actions-top{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-bottom:16px;
-    }
-    button{
-      border:none;
-      border-radius:999px;
-      padding:11px 16px;
-      font-weight:900;
-      cursor:pointer;
-      font-size:14px;
-    }
-    .refresh{background:#2563eb;color:#fff}
-    .approve{background:#16a34a;color:#fff}
-    .delete{background:#dc2626;color:#fff}
-    button:disabled{opacity:.55;cursor:not-allowed}
-    .list{display:grid;grid-template-columns:1fr;gap:16px}
-    .card{
-      border:1px solid #dbeafe;
-      border-radius:22px;
-      padding:18px;
-      background:linear-gradient(180deg,#fff 0%,#f8fbff 100%);
-      box-shadow:0 8px 22px rgba(15,23,42,.06);
-    }
-    .head{
-      display:flex;
-      gap:16px;
-      align-items:flex-start;
-      flex-wrap:wrap;
-    }
-    .logo{
-      width:100px;
-      height:100px;
-      object-fit:contain;
-      background:#fff;
-      border:1px solid #e2e8f0;
-      border-radius:18px;
-      padding:8px;
-      flex-shrink:0;
-    }
-    .info{flex:1;min-width:220px}
-    .name{font-size:24px;font-weight:900;margin:0 0 6px}
-    .meta{color:#64748b;font-weight:700;margin-bottom:8px}
-    .desc{white-space:pre-wrap;line-height:1.55;color:#334155}
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:10px;
-      margin-top:14px;
-    }
-    .field{
-      padding:11px 12px;
-      background:#fff;
-      border:1px solid #e2e8f0;
-      border-radius:14px;
-      overflow-wrap:anywhere;
-    }
-    .field b{display:block;color:#1d4ed8;font-size:12px;margin-bottom:4px}
-    .gallery{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-      gap:10px;
-      margin-top:14px;
-    }
-    .gallery img{
-      width:100%;
-      height:120px;
-      object-fit:cover;
-      border-radius:14px;
-      border:1px solid #e2e8f0;
-      background:#f8fafc;
-    }
-    .card-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:16px;
-    }
-    .empty{
-      padding:24px;
-      text-align:center;
-      color:#64748b;
-      font-weight:800;
-      border:1px dashed #cbd5e1;
-      border-radius:18px;
-      background:#fff;
-    }
-    .notice{
-      margin-top:14px;
-      padding:13px 15px;
-      border-radius:16px;
-      background:#fff7ed;
-      border:1px solid #fed7aa;
-      color:#9a3412;
-      font-weight:700;
-      line-height:1.45;
-    }
-    @media(max-width:700px){
-      body{padding:10px}
-      .top,.panel{border-radius:20px;padding:15px}
-      h1{font-size:23px}
-      .grid{grid-template-columns:1fr}
-      .logo{width:82px;height:82px}
-      .name{font-size:21px}
-      .card-actions{flex-direction:column}
-      .card-actions button{width:100%}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin – Butikker</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:20px;font-family:Arial,sans-serif;background:linear-gradient(180deg,#eaf4ff,#f8fbff);color:#0f172a}.wrap{max-width:1100px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:#fff;border:1px solid #dbeafe;border-radius:24px;padding:18px 20px;box-shadow:0 10px 28px rgba(15,23,42,.08);margin-bottom:18px}h1{margin:0;color:#1d4ed8;font-size:28px}.back{padding:11px 16px;border-radius:999px;background:#eaf2ff;color:#1d4ed8;border:1px solid #bfd7ff;text-decoration:none;font-weight:900}.panel{background:#fff;border:1px solid #dbeafe;border-radius:24px;padding:20px;box-shadow:0 10px 28px rgba(15,23,42,.08);margin-bottom:18px}.status{padding:13px 15px;border-radius:16px;background:#f8fbff;border:1px solid #dbeafe;font-weight:800;margin-bottom:14px}.list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{border:1px solid #dbeafe;border-radius:22px;padding:18px;background:linear-gradient(180deg,#fff,#f8fbff);box-shadow:0 8px 22px rgba(15,23,42,.06)}.head{display:flex;gap:14px;align-items:flex-start}.logo{width:82px;height:82px;object-fit:contain;border-radius:18px;border:1px solid #e2e8f0;background:#fff;padding:7px}.name{font-size:22px;font-weight:900;margin:0 0 5px}.meta{color:#64748b;font-weight:700;line-height:1.45}.desc{margin-top:12px;color:#334155;line-height:1.5;white-space:pre-wrap}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}button,.btn{border:none;border-radius:999px;padding:10px 14px;font-weight:900;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.approve{background:#16a34a;color:#fff}.delete{background:#dc2626;color:#fff}.edit{background:#111827;color:#fff}.view{background:#2563eb;color:#fff}.refresh{background:#7c3aed;color:#fff}.empty{grid-column:1/-1;padding:24px;text-align:center;border:1px dashed #cbd5e1;border-radius:18px;color:#64748b;font-weight:800}@media(max-width:800px){.list{grid-template-columns:1fr}}@media(max-width:600px){body{padding:10px}.actions{flex-direction:column}.actions>*{width:100%}.head{flex-direction:column}}
+</style>
 </head>
-
 <body>
 <div class="wrap">
+<header class="top">
+<h1>🔧 Admin – Butikker</h1>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<button class="refresh" onclick="loadAll()">🔄 Oppdater</button>
+<a class="back" href="index.html">← Til forsiden</a>
+</div>
+</header>
 
-  <div class="top">
-    <h1>🔐 Admin – Godkjenning av butikker</h1>
-    <a class="back" href="index.html">← Tilbake til appen</a>
-  </div>
+<section class="panel">
+<h2>⏳ Venter på godkjenning</h2>
+<div id="pendingStatus" class="status">Laster ...</div>
+<div id="pendingList" class="list"></div>
+</section>
 
-  <div class="panel">
-    <div class="actions-top">
-      <button class="refresh" onclick="loadPending()">🔄 Oppdater listen</button>
-    </div>
-
-    <div id="status" class="status">Laster ventende butikker ...</div>
-
-    <div id="list" class="list"></div>
-
-    <div class="notice">
-      Denne siden viser bare butikker med <strong>approved = false</strong>.
-      Godkjente butikker forsvinner automatisk fra listen.
-    </div>
-  </div>
-
+<section class="panel">
+<h2>✅ Godkjente butikker</h2>
+<div id="approvedStatus" class="status">Laster ...</div>
+<div id="approvedList" class="list"></div>
+</section>
 </div>
 
 <script>
-const supabaseClient = window.supabase.createClient(
-  "https://kxudiviidwwwclbzgdyx.supabase.co",
-  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
-);
-
-const statusEl = document.getElementById("status");
-const listEl = document.getElementById("list");
-
-function setStatus(text, color="#0f172a"){
-  statusEl.textContent = text;
-  statusEl.style.color = color;
+const supabaseClient=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
+function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+function safeUrl(v){const u=String(v||"").trim();return /^https?:\/\//i.test(u)?u:""}
+function card(item,pending){
+ const logo=safeUrl(item.logo_url);
+ return `<article class="card" id="card-${esc(item.id)}">
+ <div class="head">
+ ${logo?`<img class="logo" src="${esc(logo)}" alt="Logo">`:`<div class="logo" style="display:grid;place-items:center;font-size:34px">🏪</div>`}
+ <div><h3 class="name">${esc(item.name||"Uten navn")}</h3>
+ <div class="meta">${esc(item.type||"Ukjent type")} • ${esc(item.region||"Ukjent område")}</div>
+ <div class="meta">${esc(item.place||item.address||"")}</div></div></div>
+ <div class="desc">${esc(item.description||"Ingen beskrivelse")}</div>
+ <div class="actions">
+ ${pending?`<button class="approve" onclick="approveShop('${esc(item.id)}')">✅ Godkjenn</button>`:""}
+ <a class="edit" href="rediger-butikk.html?id=${esc(item.id)}">✏️ Rediger</a>
+ <a class="view" href="butikk.html?id=${esc(item.id)}" target="_blank">👁️ Se butikk</a>
+ <button class="delete" onclick="deleteShop('${esc(item.id)}')">🗑️ Slett</button>
+ </div></article>`;
 }
-
-function escapeHtml(value){
-  return String(value ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+async function loadSection(approved,listId,statusId){
+ const list=document.getElementById(listId),status=document.getElementById(statusId);
+ status.textContent="Laster ...";
+ const {data,error}=await supabaseClient.from("businesses").select("*").eq("approved",approved).order("name",{ascending:true});
+ if(error){status.textContent="❌ Feil: "+error.message;list.innerHTML='<div class="empty">Kunne ikke laste butikker.</div>';return}
+ const rows=data||[];status.textContent=rows.length+" butikk(er)";
+ list.innerHTML=rows.length?rows.map(x=>card(x,!approved)).join(""):'<div class="empty">Ingen butikker her.</div>';
 }
-
-function safeUrl(value){
-  const url = String(value || "").trim();
-  return /^https?:\/\//i.test(url) ? url : "";
-}
-
-function parseGallery(value){
-  if(Array.isArray(value)) return value;
-  if(typeof value === "string"){
-    try{
-      const parsed = JSON.parse(value);
-      return Array.isArray(parsed) ? parsed : [];
-    }catch{
-      return [];
-    }
-  }
-  return [];
-}
-
-function field(label, value){
-  if(value === null || value === undefined || String(value).trim() === "") return "";
-  return `
-    <div class="field">
-      <b>${escapeHtml(label)}</b>
-      <span>${escapeHtml(value)}</span>
-    </div>
-  `;
-}
-
-function renderBusinesses(items){
-  if(!items.length){
-    listEl.innerHTML = '<div class="empty">Ingen butikker venter på godkjenning.</div>';
-    return;
-  }
-
-  listEl.innerHTML = items.map(item => {
-    const gallery = parseGallery(item.gallery_urls);
-    const logo = safeUrl(item.logo_url);
-    const website = safeUrl(item.website);
-    const onlineUrl = safeUrl(item.online_store_url);
-
-    const modelText =
-      item.business_model === "online" ? "Nettbutikk" :
-      item.business_model === "both" ? "Fysisk butikk + nettbutikk" :
-      item.business_model === "physical" ? "Fysisk butikk / tjeneste" :
-      "";
-
-    return `
-      <article class="card" id="card-${escapeHtml(item.id)}">
-        <div class="head">
-          ${logo
-            ? `<img class="logo" src="${escapeHtml(logo)}" alt="Logo">`
-            : `<div class="logo" style="display:grid;place-items:center;font-size:34px;">🏪</div>`
-          }
-
-          <div class="info">
-            <h2 class="name">${escapeHtml(item.name || "Uten navn")}</h2>
-            <div class="meta">
-              ${escapeHtml(item.type || "Ukjent type")}
-              ${item.region ? " • " + escapeHtml(item.region) : ""}
-            </div>
-
-            <div class="desc">${escapeHtml(item.description || "Ingen beskrivelse")}</div>
-          </div>
-        </div>
-
-        <div class="grid">
-          ${field("Butikkmodell", modelText)}
-          ${field("Adresse", item.place)}
-          ${field("Telefon", item.phone)}
-          ${field("Leveringsområde", item.delivery_area)}
-          ${field("Fraktinformasjon", item.shipping_info)}
-          ${field("Gratis frakt over", item.free_shipping_limit)}
-          ${field("Rabattkode", item.discount_code)}
-          ${field("Leveringstid", item.delivery_time)}
-        </div>
-
-        ${(website || onlineUrl) ? `
-          <div class="grid">
-            ${website ? `
-              <div class="field">
-                <b>Facebook / nettside</b>
-                <a href="${escapeHtml(website)}" target="_blank" rel="noopener">${escapeHtml(website)}</a>
-              </div>` : ""}
-            ${onlineUrl ? `
-              <div class="field">
-                <b>Nettbutikk</b>
-                <a href="${escapeHtml(onlineUrl)}" target="_blank" rel="noopener">${escapeHtml(onlineUrl)}</a>
-              </div>` : ""}
-          </div>
-        ` : ""}
-
-        ${gallery.length ? `
-          <div class="gallery">
-            ${gallery.map(url => {
-              const safe = safeUrl(url);
-              return safe ? `<img src="${escapeHtml(safe)}" alt="Butikkbilde">` : "";
-            }).join("")}
-          </div>
-        ` : ""}
-
-        <div class="card-actions">
-          <button class="approve" onclick="approveBusiness('${escapeHtml(item.id)}', this)">✅ Godkjenn</button>
-          <button class="delete" onclick="deleteBusiness('${escapeHtml(item.id)}', this)">🗑️ Slett</button>
-        </div>
-      </article>
-    `;
-  }).join("");
-}
-
-async function loadPending(){
-  setStatus("Laster ventende butikker ...", "#1d4ed8");
-  listEl.innerHTML = "";
-
-  const { data, error } = await supabaseClient
-    .from("businesses")
-    .select("*")
-    .eq("approved", false)
-    .order("created_at", { ascending: false });
-
-  if(error){
-    console.error(error);
-    setStatus("❌ Kunne ikke laste butikker: " + error.message, "crimson");
-    listEl.innerHTML = '<div class="empty">Kontroller Supabase-reglene dersom listen ikke kan leses.</div>';
-    return;
-  }
-
-  const items = data || [];
-  setStatus(items.length + " butikk(er) venter på godkjenning.", "green");
-  renderBusinesses(items);
-}
-
-async function approveBusiness(id, button){
-  if(!confirm("Vil du godkjenne denne butikken?")) return;
-
-  button.disabled = true;
-  setStatus("Godkjenner butikk ...", "#1d4ed8");
-
-  const { error } = await supabaseClient
-    .from("businesses")
-    .update({ approved: true })
-    .eq("id", id);
-
-  if(error){
-    console.error(error);
-    button.disabled = false;
-    setStatus("❌ Kunne ikke godkjenne: " + error.message, "crimson");
-    return;
-  }
-
-  document.getElementById("card-" + id)?.remove();
-  setStatus("✅ Butikken er godkjent.", "green");
-
-  if(!listEl.querySelector(".card")){
-    listEl.innerHTML = '<div class="empty">Ingen butikker venter på godkjenning.</div>';
-  }
-}
-
-async function deleteBusiness(id, button){
-  if(!confirm("Vil du slette denne registreringen permanent?")) return;
-
-  button.disabled = true;
-  setStatus("Sletter registrering ...", "#b45309");
-
-  const { error } = await supabaseClient
-    .from("businesses")
-    .delete()
-    .eq("id", id);
-
-  if(error){
-    console.error(error);
-    button.disabled = false;
-    setStatus("❌ Kunne ikke slette: " + error.message, "crimson");
-    return;
-  }
-
-  document.getElementById("card-" + id)?.remove();
-  setStatus("✅ Registreringen er slettet.", "green");
-
-  if(!listEl.querySelector(".card")){
-    listEl.innerHTML = '<div class="empty">Ingen butikker venter på godkjenning.</div>';
-  }
-}
-
-loadPending();
+async function loadAll(){await Promise.all([loadSection(false,"pendingList","pendingStatus"),loadSection(true,"approvedList","approvedStatus")])}
+async function approveShop(id){if(!confirm("Godkjenne denne butikken?"))return;const {error}=await supabaseClient.from("businesses").update({approved:true}).eq("id",id);if(error){alert("Feil: "+error.message);return}loadAll()}
+async function deleteShop(id){if(!confirm("Slette denne butikken permanent?"))return;const {error}=await supabaseClient.from("businesses").delete().eq("id",id);if(error){alert("Feil: "+error.message);return}loadAll()}
+loadAll();
 </script>
 </body>
 </html>
