@@ -1,12 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="no">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
 <title>Rediger butikk</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 body{
   margin:0;
@@ -94,93 +93,63 @@ button{
 }
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
 <div class="card">
-
 <h1>✏️ Rediger butikk</h1>
-
 <a href="javascript:history.back()">← Tilbake til butikksiden</a>
-
-<div id="status" class="status">
+<div class="status" id="status">
 Laster butikk...
 </div>
-
 <div id="editor" style="display:none;">
-
 <label>Logo</label>
-
-<img id="logoPreview" class="preview">
-
-<input type="file" id="logoInput">
-
+<img class="preview" id="logoPreview"/>
+<input id="logoInput" type="file"/>
 <label>Butikknavn</label>
-<input type="text" id="name">
-
+<input id="name" type="text"/><label>Type</label><select id="type"><option value="Hundepensjonat">Hundepensjonat</option><option value="Hundepass">Hundepass</option><option value="Frisør">Frisør</option><option value="Veterinær">Veterinær</option><option value="Zoo butikk">Zoo butikk</option><option value="Kafé">Kafé</option><option value="Hundeklubb">Hundeklubb</option><option value="Samarbeidspartner">Samarbeidspartner</option><option value="Nettbutikk">Nettbutikk</option><option value="Hundefôr">Hundefôr</option><option value="Hundeutstyr">Hundeutstyr</option><option value="Katteutstyr">Katteutstyr</option><option value="Fugleutstyr">Fugleutstyr</option><option value="Akvarieutstyr">Akvarieutstyr</option></select><label>Område</label><select id="region"><option value="Haugalandet">Haugalandet</option><option value="Stavanger">Stavanger</option><option value="Stord">Stord</option><option value="Bergen">Bergen</option><option value="Oslo">Oslo</option><option value="Akershus">Akershus</option><option value="Østfold">Østfold</option><option value="Innlandet">Innlandet</option><option value="Buskerud">Buskerud</option><option value="Vestfold">Vestfold</option><option value="Telemark">Telemark</option><option value="Agder">Agder</option><option value="Rogaland">Rogaland</option><option value="Vestland">Vestland</option><option value="Møre og Romsdal">Møre og Romsdal</option><option value="Trøndelag">Trøndelag</option><option value="Nordland">Nordland</option><option value="Troms">Troms</option><option value="Finnmark">Finnmark</option><option value="Hele Norge">Hele Norge</option></select><label>Adresse</label><input id="address" type="text"/>
 <label>Beskrivelse</label>
 <textarea id="description"></textarea>
-
 <label>Telefon</label>
-<input type="text" id="phone">
-
+<input id="phone" type="text"/>
 <label>Facebook / Nettside</label>
-<input type="text" id="website">
-
+<input id="website" type="text"/>
 <label>🎥 Reel-link</label>
-<input type="text" id="reel">
-
-
+<input id="reel" type="text"/>
 <label>Butikkmodell</label>
 <select id="businessModel" onchange="toggleOnlineFields()">
-  <option value="physical">🏪 Fysisk butikk / tjeneste</option>
-  <option value="online">🛒 Nettbutikk</option>
-  <option value="both">🏪🛒 Fysisk butikk + nettbutikk</option>
+<option value="physical">🏪 Fysisk butikk / tjeneste</option>
+<option value="online">🛒 Nettbutikk</option>
+<option value="both">🏪🛒 Fysisk butikk + nettbutikk</option>
 </select>
-
 <div id="onlineFields" style="display:none;">
-  <label>Nettbutikkadresse</label>
-  <input type="url" id="onlineStoreUrl" placeholder="https://www.nettbutikken.no">
-
-  <label>Leveringsområde</label>
-  <select id="deliveryArea">
-    <option value="Hele Norge">Hele Norge</option>
-    <option value="Norge og Norden">Norge og Norden</option>
-    <option value="Europa">Europa</option>
-    <option value="Hele verden">Hele verden</option>
-    <option value="Lokalt område">Lokalt område</option>
-  </select>
-
-  <label>Fraktinformasjon</label>
-  <textarea id="shippingInfo" placeholder="For eksempel fast frakt, Posten, Bring eller henting"></textarea>
-
-  <label>Gratis frakt over</label>
-  <input type="text" id="freeShippingLimit" placeholder="For eksempel 799 kr">
-
-  <label>Rabattkode</label>
-  <input type="text" id="discountCode" placeholder="Valgfritt">
-
-  <label>Leveringstid</label>
-  <input type="text" id="deliveryTime" placeholder="For eksempel 2–5 virkedager">
+<label>Nettbutikkadresse</label>
+<input id="onlineStoreUrl" placeholder="https://www.nettbutikken.no" type="url"/>
+<label>Leveringsområde</label>
+<select id="deliveryArea">
+<option value="Hele Norge">Hele Norge</option>
+<option value="Norge og Norden">Norge og Norden</option>
+<option value="Europa">Europa</option>
+<option value="Hele verden">Hele verden</option>
+<option value="Lokalt område">Lokalt område</option>
+</select>
+<label>Fraktinformasjon</label>
+<textarea id="shippingInfo" placeholder="For eksempel fast frakt, Posten, Bring eller henting"></textarea>
+<label>Gratis frakt over</label>
+<input id="freeShippingLimit" placeholder="For eksempel 799 kr" type="text"/>
+<label>Rabattkode</label>
+<input id="discountCode" placeholder="Valgfritt" type="text"/>
+<label>Leveringstid</label>
+<input id="deliveryTime" placeholder="For eksempel 2–5 virkedager" type="text"/>
 </div>
-
 <label>Last opp bilder</label>
-<input type="file" id="galleryInput" multiple>
-
-<div id="gallery" class="gallery"></div>
-
+<input id="galleryInput" multiple="" type="file"/>
+<div class="gallery" id="gallery"></div>
 <button onclick="saveShop()">
 💾 Lagre Endringer
 </button>
-
 </div>
-
 </div>
-
 </div>
-
 <script>
 const supabaseClient = window.supabase.createClient(
   "https://kxudiviidwwwclbzgdyx.supabase.co",
@@ -285,6 +254,10 @@ async function loadShop(){
 
     document.getElementById("description").value =
       data.description || "";
+
+    document.getElementById("type").value = data.type || "Zoo butikk";
+    document.getElementById("region").value = data.region || "Haugalandet";
+    document.getElementById("address").value = data.address || data.place || "";
 
     document.getElementById("phone").value =
       data.phone || "";
@@ -493,6 +466,15 @@ async function saveShop(){
     name:
       document.getElementById("name").value,
 
+    type:
+      document.getElementById("type").value,
+
+    region:
+      document.getElementById("region").value,
+
+    place:
+      document.getElementById("address").value,
+
     description:
       document.getElementById("description").value,
 
@@ -545,6 +527,15 @@ async function saveShop(){
     const fallbackData = {
       name:
         document.getElementById("name").value,
+
+      type:
+        document.getElementById("type").value,
+
+      region:
+        document.getElementById("region").value,
+
+      place:
+        document.getElementById("address").value,
 
       description:
         buildFallbackDescription(
@@ -599,6 +590,5 @@ async function saveShop(){
 toggleOnlineFields();
 loadShop();
 </script>
-
 </body>
 </html>
