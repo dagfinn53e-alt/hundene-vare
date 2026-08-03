@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nettbutikker – Hundene Våre</title>
+  <title>Nettbutikker Premium – Hundene Våre</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     *{box-sizing:border-box}
     :root{
-      --blue:#2563eb;
-      --blue-dark:#1d4ed8;
+      --blue:#0b5cff;
+      --blue-dark:#0f2f73;
+      --navy:#061b55;
+      --gold:#d7a83d;
+      --orange:#f97316;
+      --pink:#db2777;
       --line:#dbeafe;
       --text:#0f172a;
       --muted:#64748b;
-      --green:#166534;
-      --shadow:0 14px 34px rgba(15,23,42,.10);
+      --shadow:0 18px 42px rgba(15,23,42,.11);
     }
 
     body{
@@ -24,14 +27,16 @@
       font-family:Arial,sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at top left,rgba(96,165,250,.18) 0%,transparent 30%),
-        linear-gradient(180deg,#dbe7f5 0%,#edf4fb 48%,#f8fbff 100%);
+        radial-gradient(circle at 8% 5%,rgba(96,165,250,.24),transparent 30%),
+        radial-gradient(circle at 93% 8%,rgba(249,115,22,.16),transparent 32%),
+        linear-gradient(180deg,#eff6ff,#fff7ed 48%,#f8fbff);
+      min-height:100vh;
     }
 
     .wrap{
-      max-width:1180px;
+      max-width:1260px;
       margin:auto;
-      padding:20px 14px 60px;
+      padding:18px 14px 70px;
     }
 
     .topbar{
@@ -40,79 +45,214 @@
       align-items:center;
       gap:12px;
       flex-wrap:wrap;
-      background:rgba(255,255,255,.92);
-      border:1px solid var(--line);
-      border-radius:26px;
       padding:14px 18px;
-      box-shadow:var(--shadow);
       margin-bottom:18px;
+      border-radius:30px;
+      background:rgba(255,255,255,.96);
+      border:1px solid #bfd7ff;
+      box-shadow:0 16px 38px rgba(15,23,42,.10);
       position:sticky;
       top:8px;
-      z-index:20;
+      z-index:50;
     }
 
     .brand{
-      font-size:23px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:25px;
       font-weight:900;
-      color:var(--blue-dark);
+      color:#0757d8;
+      text-decoration:none;
     }
 
-    .back{
+    .brand-icon{
+      width:44px;
+      height:44px;
+      border-radius:15px;
+      background:#fff3e8;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:26px;
+    }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .nav a,
+    .btn{
       text-decoration:none;
-      background:#eaf2ff;
-      color:var(--blue-dark);
-      border:1px solid #bfd7ff;
+      border:none;
       border-radius:999px;
       padding:11px 16px;
+      background:#eaf2ff;
+      color:#0b4fd4;
+      border:1px solid #bfd7ff;
       font-weight:900;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 6px 16px rgba(15,23,42,.07);
+      cursor:pointer;
+    }
+
+    .nav a.active,
+    .btn.primary{
+      background:linear-gradient(135deg,#0b5cff,#2563eb);
+      color:#fff;
+      border:none;
     }
 
     .hero{
-      border-radius:34px;
-      padding:34px;
+      border-radius:38px;
+      padding:38px 34px;
       color:#fff;
-      background:
-        linear-gradient(135deg,rgba(30,64,175,.96),rgba(124,58,237,.88));
-      box-shadow:0 20px 48px rgba(30,64,175,.22);
+      overflow:hidden;
       margin-bottom:18px;
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:24px;
+      align-items:center;
+      background:
+        radial-gradient(circle at 18% 20%,rgba(255,255,255,.22),transparent 24%),
+        radial-gradient(circle at 88% 12%,rgba(255,214,120,.20),transparent 24%),
+        linear-gradient(135deg,#061b55,#0b5cff 48%,#7c3aed);
+      box-shadow:0 28px 65px rgba(15,23,42,.22);
+    }
+
+    .hero-badge{
+      display:inline-flex;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.24);
+      font-weight:900;
+      margin-bottom:14px;
     }
 
     .hero h1{
-      margin:0 0 10px;
-      font-size:46px;
-      line-height:1.05;
+      font-size:clamp(2.7rem,6vw,4.8rem);
+      line-height:1.02;
+      margin:0 0 12px;
+      text-shadow:0 8px 22px rgba(0,0,0,.24);
     }
 
     .hero p{
-      margin:0;
-      max-width:760px;
-      line-height:1.6;
       font-size:17px;
-      color:#eef4ff;
+      line-height:1.55;
+      font-weight:700;
+      color:#eef6ff;
+      margin:0 0 18px;
+      max-width:780px;
     }
 
-    .controls{
-      background:linear-gradient(180deg,#fff,#f8fbff);
-      border:1px solid var(--line);
-      border-radius:28px;
-      padding:20px;
-      box-shadow:var(--shadow);
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .hero-actions .btn{
+      padding:14px 20px;
+      font-size:16px;
+    }
+
+    .btn.white{
+      background:#fff;
+      color:#0b4fd4;
+      border:none;
+    }
+
+    .hero-card{
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.25);
+      border-radius:30px;
+      padding:24px;
+      box-shadow:0 18px 42px rgba(0,0,0,.15);
+    }
+
+    .hero-card h2{
+      font-size:28px;
+      margin:0 0 12px;
+    }
+
+    .hero-point{
+      padding:11px 13px;
+      margin:8px 0;
+      border-radius:16px;
+      background:rgba(255,255,255,.13);
+      font-weight:800;
+    }
+
+    .featured{
+      display:none;
       margin-bottom:18px;
+      padding:24px;
+      border-radius:32px;
+      background:linear-gradient(135deg,#fff7ed,#fef3c7,#fff);
+      border:2px solid #f59e0b;
+      box-shadow:var(--shadow);
     }
 
-    .search-grid{
+    .featured-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .featured h2{
+      margin:0;
+      font-size:30px;
+      color:#9a3412;
+    }
+
+    .featured-grid{
       display:grid;
-      grid-template-columns:2fr 1fr;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .panel{
+      background:rgba(255,255,255,.96);
+      border:1px solid var(--line);
+      border-radius:32px;
+      padding:24px;
+      margin-bottom:18px;
+      box-shadow:0 16px 36px rgba(15,23,42,.08);
+    }
+
+    .section-title{
+      font-size:32px;
+      margin:0 0 7px;
+    }
+
+    .sub{
+      margin:0 0 18px;
+      color:var(--muted);
+      line-height:1.5;
+      font-weight:700;
+    }
+
+    .filters{
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr auto;
       gap:12px;
     }
 
     input,select{
       width:100%;
       padding:14px 15px;
-      border-radius:16px;
-      border:1px solid #cbd5e1;
-      font-size:15px;
+      border-radius:17px;
+      border:1px solid #cbdcf5;
       background:#fff;
+      font-size:15px;
     }
 
     input:focus,select:focus{
@@ -123,110 +263,141 @@
 
     .status{
       margin-top:14px;
-      font-weight:800;
       color:var(--muted);
+      font-weight:900;
     }
 
     .grid{
       display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
+      grid-template-columns:repeat(3,1fr);
       gap:18px;
     }
 
     .shop-card{
-      background:linear-gradient(180deg,#fff 0%,#f8fbff 100%);
-      border:1px solid var(--line);
-      border-radius:28px;
+      background:#fff;
+      border:1px solid #cfe0ff;
+      border-radius:30px;
       overflow:hidden;
-      box-shadow:var(--shadow);
-      transition:transform .18s ease,box-shadow .18s ease;
+      box-shadow:0 16px 36px rgba(30,64,175,.10);
+      transition:.18s;
+      display:flex;
+      flex-direction:column;
+      min-height:100%;
     }
 
     .shop-card:hover{
-      transform:translateY(-2px);
-      box-shadow:0 20px 42px rgba(30,64,175,.15);
-    }
-
-    .shop-main{
-      padding:20px;
+      transform:translateY(-3px);
+      box-shadow:0 22px 46px rgba(30,64,175,.15);
     }
 
     .shop-top{
+      padding:20px;
       display:flex;
-      gap:16px;
-      align-items:flex-start;
+      gap:14px;
+      align-items:center;
+      background:linear-gradient(135deg,#f8fbff,#fff7ed);
+      border-bottom:1px solid #e2e8f0;
     }
 
-    .logo{
-      width:105px;
-      height:105px;
-      object-fit:contain;
-      border-radius:22px;
-      border:1px solid #e2e8f0;
+    .shop-logo{
+      width:86px;
+      height:86px;
+      border-radius:20px;
+      border:1px solid #dbeafe;
       background:#fff;
-      padding:8px;
+      object-fit:contain;
+      padding:7px;
       flex-shrink:0;
     }
 
     .logo-fallback{
-      width:105px;
-      height:105px;
+      width:86px;
+      height:86px;
+      border-radius:20px;
+      border:1px solid #dbeafe;
+      background:#eef4ff;
       display:grid;
       place-items:center;
-      border-radius:22px;
-      border:1px solid #e2e8f0;
-      background:#eef4ff;
-      font-size:42px;
+      font-size:38px;
       flex-shrink:0;
     }
 
     .shop-title{
+      font-size:24px;
+      font-weight:900;
       margin:0 0 6px;
-      font-size:27px;
       line-height:1.15;
+    }
+
+    .shop-meta{
+      color:var(--muted);
+      font-size:14px;
+      font-weight:800;
+      line-height:1.4;
+    }
+
+    .shop-body{
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      flex:1;
+    }
+
+    .chips{
+      display:flex;
+      gap:7px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+
+    .chip{
+      border-radius:999px;
+      padding:7px 10px;
+      background:#eef4ff;
+      color:#0b4fd4;
+      font-size:12px;
       font-weight:900;
     }
 
-    .meta{
-      color:var(--muted);
-      font-size:14px;
-      font-weight:700;
-      line-height:1.45;
+    .chip.online{
+      background:#ede9fe;
+      color:#6d28d9;
     }
 
-    .description{
+    .desc{
       color:#334155;
-      line-height:1.6;
-      margin-top:14px;
+      line-height:1.55;
+      font-size:14px;
+      margin-bottom:14px;
       white-space:pre-wrap;
     }
 
     .facts{
       display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:10px;
-      margin-top:16px;
+      grid-template-columns:1fr 1fr;
+      gap:9px;
+      margin-top:auto;
     }
 
     .fact{
-      background:#fff;
       border:1px solid #e2e8f0;
-      border-radius:16px;
-      padding:12px;
+      background:#f8fafc;
+      border-radius:15px;
+      padding:11px;
       overflow-wrap:anywhere;
     }
 
     .fact b{
       display:block;
-      color:var(--blue-dark);
-      font-size:12px;
+      color:#1d4ed8;
+      font-size:11px;
       margin-bottom:4px;
     }
 
     .discount{
-      margin-top:14px;
-      padding:14px;
-      border-radius:18px;
+      margin-top:12px;
+      padding:12px;
+      border-radius:16px;
       background:#fff7ed;
       border:1px solid #fed7aa;
       color:#9a3412;
@@ -234,51 +405,96 @@
     }
 
     .actions{
-      padding:0 20px 20px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      padding:0 18px 18px;
     }
 
-    .visit{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      width:100%;
-      min-height:50px;
-      border-radius:999px;
-      background:linear-gradient(135deg,#2563eb,#7c3aed);
-      color:#fff;
-      text-decoration:none;
-      font-weight:900;
-      font-size:16px;
-      box-shadow:0 12px 24px rgba(37,99,235,.22);
+    .actions a{
+      min-height:46px;
+      text-align:center;
     }
 
     .empty{
       grid-column:1/-1;
       text-align:center;
       background:#fff;
-      border:1px dashed #cbd5e1;
-      color:var(--muted);
-      border-radius:24px;
-      padding:30px;
+      border:2px dashed #93c5fd;
+      color:#0b4fd4;
+      border-radius:28px;
+      padding:32px;
       font-weight:900;
+      font-size:18px;
     }
 
-    @media(max-width:850px){
-      .grid{grid-template-columns:1fr}
+    .cta{
+      display:grid;
+      grid-template-columns:1fr auto;
+      align-items:center;
+      gap:18px;
+      border-radius:34px;
+      padding:28px;
+      color:#fff;
+      background:linear-gradient(135deg,#9a3412,#f97316,#db2777);
+      box-shadow:0 20px 46px rgba(154,52,18,.18);
     }
 
-    @media(max-width:650px){
-      .wrap{padding:10px 8px 40px}
-      .topbar{position:static;border-radius:20px}
-      .brand{width:100%;text-align:center}
-      .back{width:100%;text-align:center}
-      .hero{padding:24px 18px;border-radius:26px}
-      .hero h1{font-size:34px}
-      .search-grid{grid-template-columns:1fr}
-      .shop-top{flex-direction:column}
+    .cta h2{
+      margin:0 0 8px;
+      font-size:32px;
+    }
+
+    .cta p{
+      margin:0;
+      color:#fff7ed;
+      line-height:1.5;
+      font-weight:700;
+    }
+
+    .cta .btn{
+      min-width:240px;
+      padding:15px 20px;
+      background:#fff;
+      color:#b45309;
+      border:none;
+      font-size:16px;
+    }
+
+    .footer-note{
+      text-align:center;
+      color:#64748b;
+      font-size:14px;
+      margin-top:22px;
+    }
+
+    @media(max-width:1050px){
+      .hero{grid-template-columns:1fr}
+      .featured-grid,.grid{grid-template-columns:1fr 1fr}
+      .filters{grid-template-columns:1fr 1fr}
+    }
+
+    @media(max-width:760px){
+      .wrap{padding:10px 9px 50px}
+      .topbar{position:static;padding:10px;border-radius:22px}
+      .brand{width:100%;justify-content:center;font-size:21px}
+      .nav{width:100%;justify-content:center}
+      .nav a{flex:1 1 42%;font-size:12px;padding:9px 8px}
+      .hero{padding:24px 18px;border-radius:28px;text-align:center}
+      .hero h1{font-size:36px}
+      .hero p{font-size:14px}
+      .hero-actions{justify-content:center}
+      .hero-actions .btn{width:100%}
+      .hero-card{display:none}
+      .featured-grid,.grid{grid-template-columns:1fr}
+      .filters{grid-template-columns:1fr}
+      .panel{padding:14px;border-radius:22px}
+      .section-title{font-size:24px}
       .facts{grid-template-columns:1fr}
-      .logo,.logo-fallback{width:90px;height:90px}
-      .shop-title{font-size:23px}
+      .actions{grid-template-columns:1fr}
+      .cta{grid-template-columns:1fr;text-align:center;padding:20px;border-radius:24px}
+      .cta h2{font-size:24px}
+      .cta .btn{width:100%;min-width:0}
     }
   </style>
 </head>
@@ -287,21 +503,59 @@
 <div class="wrap">
 
   <header class="topbar">
-    <div class="brand">🛒 Hundene Våre – Nettbutikker</div>
-    <a class="back" href="index.html">← Tilbake til forsiden</a>
+    <a class="brand" href="index.html">
+      <span class="brand-icon">🐶</span>
+      Hundene Våre
+    </a>
+
+    <nav class="nav">
+      <a href="index.html">🏠 Forside</a>
+      <a href="butikker-ny.html">🏪 Butikker</a>
+      <a class="active" href="nettbutikker.html">🛒 Nettbutikker</a>
+      <a href="butikk-profil-skjema.html">➕ Registrer bedrift</a>
+    </nav>
   </header>
 
   <section class="hero">
-    <h1>Nettbutikker</h1>
-    <p>
-      Finn godkjente nettbutikker med produkter og tjenester for hund, katt,
-      fugl, akvarium og andre kjæledyr.
-    </p>
+    <div>
+      <div class="hero-badge">🛒 Nettbutikker for kjæledyr</div>
+      <h1>Handle trygt og enkelt på nett</h1>
+      <p>
+        Finn godkjente nettbutikker med produkter og tjenester for hund, katt,
+        fugl, akvarium og andre kjæledyr – samlet på ett sted.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn white" href="#butikkene">🔎 Se nettbutikkene</a>
+        <a class="btn primary" href="butikk-profil-skjema.html">➕ Registrer nettbutikk</a>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <h2>Dette finner du her</h2>
+      <div class="hero-point">✅ Godkjente nettbutikker</div>
+      <div class="hero-point">✅ Produkter for flere kjæledyr</div>
+      <div class="hero-point">✅ Frakt og levering samlet</div>
+      <div class="hero-point">✅ Rabattkoder når de finnes</div>
+      <div class="hero-point">✅ Direkte lenke til nettbutikken</div>
+    </div>
   </section>
 
-  <section class="controls">
-    <div class="search-grid">
-      <input type="search" id="searchInput" placeholder="Søk etter butikk, produkt eller beskrivelse">
+  <section id="featuredSection" class="featured">
+    <div class="featured-head">
+      <h2>⭐ Anbefalte nettbutikker</h2>
+      <span id="featuredCount"></span>
+    </div>
+    <div id="featuredGrid" class="featured-grid"></div>
+  </section>
+
+  <section id="butikkene" class="panel">
+    <h2 class="section-title">Finn nettbutikk</h2>
+    <p class="sub">Søk etter butikk, kategori eller det du ønsker å kjøpe.</p>
+
+    <div class="filters">
+      <input id="searchInput" type="search" placeholder="Søk etter butikk, produkt eller beskrivelse">
+
       <select id="categoryFilter">
         <option value="">Alle kategorier</option>
         <option value="Nettbutikk">Nettbutikk</option>
@@ -313,11 +567,37 @@
         <option value="Zoo butikk">Zoo butikk</option>
         <option value="Samarbeidspartner">Samarbeidspartner</option>
       </select>
+
+      <select id="deliveryFilter">
+        <option value="">Alle leveringsområder</option>
+        <option value="Hele Norge">Hele Norge</option>
+        <option value="Norge og Norden">Norge og Norden</option>
+        <option value="Europa">Europa</option>
+        <option value="Hele verden">Hele verden</option>
+        <option value="Lokalt område">Lokalt område</option>
+      </select>
+
+      <button class="btn" id="clearBtn" type="button">🔄 Nullstill</button>
     </div>
+
     <div id="status" class="status">Laster nettbutikker ...</div>
   </section>
 
   <main id="shopGrid" class="grid"></main>
+
+  <section class="cta">
+    <div>
+      <h2>Har du en butikk eller nettbutikk?</h2>
+      <p>
+        Kontakt oss, så ordner vi registreringen helt gratis.
+        Vi hjelper deg med å bli synlig for kjæledyreiere over hele Norge.
+      </p>
+    </div>
+
+    <a class="btn" href="butikk-profil-skjema.html">📝 Registrer nettbutikk gratis</a>
+  </section>
+
+  <p class="footer-note">Hundenevåre.com – nettbutikker for kjæledyr samlet på ett sted.</p>
 
 </div>
 
@@ -327,10 +607,15 @@ const supabaseClient = window.supabase.createClient(
   "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
 );
 
-const grid = document.getElementById("shopGrid");
+const shopGrid = document.getElementById("shopGrid");
 const statusEl = document.getElementById("status");
 const searchInput = document.getElementById("searchInput");
 const categoryFilter = document.getElementById("categoryFilter");
+const deliveryFilter = document.getElementById("deliveryFilter");
+const clearBtn = document.getElementById("clearBtn");
+const featuredSection = document.getElementById("featuredSection");
+const featuredGrid = document.getElementById("featuredGrid");
+const featuredCount = document.getElementById("featuredCount");
 
 let allShops = [];
 
@@ -352,11 +637,32 @@ function safeUrl(value){
   }
 
   try{
-    const parsed = new URL(url);
-    return parsed.href;
+    return new URL(url).href;
   }catch{
     return "";
   }
+}
+
+function isOnlineShop(shop){
+  const model = String(shop.business_model || "").toLowerCase();
+  const type = String(shop.type || "").toLowerCase();
+  const description = String(shop.description || "").toLowerCase();
+
+  return model === "online" ||
+         model === "both" ||
+         Boolean(shop.online_store_url) ||
+         type.includes("nettbutikk") ||
+         description.includes("— nettbutikkopplysninger —");
+}
+
+function cleanDescription(value){
+  return String(value || "")
+    .replace(/\n*— NETTBUTIKKOPPLYSNINGER —[\s\S]*$/i,"")
+    .trim();
+}
+
+function getOnlineUrl(shop){
+  return safeUrl(shop.online_store_url || shop.website || "");
 }
 
 function fact(label,value){
@@ -372,89 +678,47 @@ function fact(label,value){
   `;
 }
 
-function isOnlineShop(shop){
+function shopCard(shop,compact=false){
+  const logo = safeUrl(shop.logo_url);
+  const url = getOnlineUrl(shop);
+  const description = cleanDescription(shop.description);
   const model = String(shop.business_model || "").toLowerCase();
 
-  if(model === "online" || model === "both"){
-    return true;
-  }
+  const modelLabel =
+    model === "both" ? "Fysisk butikk + nettbutikk" :
+    model === "online" ? "Nettbutikk" :
+    shop.online_store_url ? "Nettbutikk" :
+    "Nettbutikk";
 
-  const type = String(shop.type || "").toLowerCase();
-  if(type.includes("nettbutikk")){
-    return true;
-  }
+  return `
+    <article class="shop-card">
+      <div class="shop-top">
+        ${logo
+          ? `<img class="shop-logo" src="${escapeHtml(logo)}" alt="${escapeHtml(shop.name || "Nettbutikk")}">`
+          : `<div class="logo-fallback">🛒</div>`
+        }
 
-  const description = String(shop.description || "").toLowerCase();
-  return description.includes("— nettbutikkopplysninger —") ||
-         description.includes("nettbutikk:");
-}
-
-function getOnlineUrl(shop){
-  return safeUrl(
-    shop.online_store_url ||
-    shop.website ||
-    ""
-  );
-}
-
-function renderShops(){
-  const search = searchInput.value.trim().toLowerCase();
-  const category = categoryFilter.value;
-
-  const filtered = allShops.filter(shop => {
-    const haystack = [
-      shop.name,
-      shop.type,
-      shop.description,
-      shop.delivery_area,
-      shop.shipping_info
-    ].join(" ").toLowerCase();
-
-    const matchesSearch = !search || haystack.includes(search);
-    const matchesCategory = !category || shop.type === category;
-
-    return matchesSearch && matchesCategory;
-  });
-
-  statusEl.textContent =
-    filtered.length + " nettbutikk(er) vises.";
-
-  if(!filtered.length){
-    grid.innerHTML =
-      '<div class="empty">Ingen nettbutikker passer med søket eller filteret.</div>';
-    return;
-  }
-
-  grid.innerHTML = filtered.map(shop => {
-    const logo = safeUrl(shop.logo_url);
-    const url = getOnlineUrl(shop);
-    const description = String(shop.description || "")
-      .replace(/\n*— NETTBUTIKKOPPLYSNINGER —[\s\S]*$/i,"")
-      .trim();
-
-    return `
-      <article class="shop-card">
-        <div class="shop-main">
-          <div class="shop-top">
-            ${logo
-              ? `<img class="logo" src="${escapeHtml(logo)}" alt="${escapeHtml(shop.name || "Nettbutikk")}">`
-              : `<div class="logo-fallback">🛒</div>`
-            }
-
-            <div>
-              <h2 class="shop-title">${escapeHtml(shop.name || "Nettbutikk")}</h2>
-              <div class="meta">
-                ${escapeHtml(shop.type || "Nettbutikk")}
-                ${shop.delivery_area ? " • " + escapeHtml(shop.delivery_area) : ""}
-              </div>
-            </div>
+        <div>
+          <h2 class="shop-title">${escapeHtml(shop.name || "Nettbutikk")}</h2>
+          <div class="shop-meta">
+            ${escapeHtml(shop.type || "Nettbutikk")}
+            ${shop.delivery_area ? " • " + escapeHtml(shop.delivery_area) : ""}
           </div>
+        </div>
+      </div>
 
-          ${description
-            ? `<div class="description">${escapeHtml(description)}</div>`
-            : ""
-          }
+      <div class="shop-body">
+        <div class="chips">
+          <span class="chip online">🛒 ${escapeHtml(modelLabel)}</span>
+          ${shop.type ? `<span class="chip">${escapeHtml(shop.type)}</span>` : ""}
+        </div>
 
+        ${description
+          ? `<div class="desc">${escapeHtml(description)}</div>`
+          : `<div class="desc">Nettbutikk registrert hos Hundene Våre.</div>`
+        }
+
+        ${compact ? "" : `
           <div class="facts">
             ${fact("Leveringsområde",shop.delivery_area)}
             ${fact("Fraktinformasjon",shop.shipping_info)}
@@ -466,17 +730,70 @@ function renderShops(){
             ? `<div class="discount">🎟 Rabattkode: ${escapeHtml(shop.discount_code)}</div>`
             : ""
           }
-        </div>
+        `}
+      </div>
 
-        <div class="actions">
-          ${url
-            ? `<a class="visit" href="${escapeHtml(url)}" target="_blank" rel="noopener">🛒 Besøk nettbutikken</a>`
-            : `<div class="visit" style="opacity:.55;pointer-events:none;">Nettadresse mangler</div>`
-          }
-        </div>
-      </article>
-    `;
-  }).join("");
+      <div class="actions">
+        ${shop.id
+          ? `<a class="btn" href="butikk.html?id=${escapeHtml(shop.id)}">👁️ Se profil</a>`
+          : `<span></span>`
+        }
+
+        ${url
+          ? `<a class="btn primary" href="${escapeHtml(url)}" target="_blank" rel="noopener">🛍️ Besøk nettbutikken</a>`
+          : `<span class="btn" style="opacity:.55;pointer-events:none;">Nettadresse mangler</span>`
+        }
+      </div>
+    </article>
+  `;
+}
+
+function renderFeatured(){
+  const featured = allShops
+    .filter(shop => shop.featured === true || shop.recommended === true)
+    .slice(0,3);
+
+  if(!featured.length){
+    featuredSection.style.display = "none";
+    return;
+  }
+
+  featuredCount.textContent = featured.length + " fremhevet";
+  featuredGrid.innerHTML = featured.map(shop => shopCard(shop,true)).join("");
+  featuredSection.style.display = "block";
+}
+
+function renderShops(){
+  const search = searchInput.value.trim().toLowerCase();
+  const category = categoryFilter.value;
+  const delivery = deliveryFilter.value;
+
+  const filtered = allShops.filter(shop => {
+    const haystack = [
+      shop.name,
+      shop.type,
+      shop.description,
+      shop.delivery_area,
+      shop.shipping_info,
+      shop.discount_code
+    ].join(" ").toLowerCase();
+
+    const matchesSearch = !search || haystack.includes(search);
+    const matchesCategory = !category || String(shop.type || "") === category;
+    const matchesDelivery = !delivery || String(shop.delivery_area || "") === delivery;
+
+    return matchesSearch && matchesCategory && matchesDelivery;
+  });
+
+  statusEl.textContent = filtered.length + " nettbutikk(er) vises.";
+
+  if(!filtered.length){
+    shopGrid.innerHTML =
+      '<div class="empty">Ingen nettbutikker passer med søket eller filteret.</div>';
+    return;
+  }
+
+  shopGrid.innerHTML = filtered.map(shop => shopCard(shop,false)).join("");
 }
 
 async function loadShops(){
@@ -491,17 +808,27 @@ async function loadShops(){
   if(error){
     console.error(error);
     statusEl.textContent = "Kunne ikke laste nettbutikker: " + error.message;
-    grid.innerHTML =
+    shopGrid.innerHTML =
       '<div class="empty">Kontroller Supabase-reglene dersom siden ikke kan lese butikkene.</div>';
     return;
   }
 
   allShops = (data || []).filter(isOnlineShop);
+
+  renderFeatured();
   renderShops();
 }
 
 searchInput.addEventListener("input",renderShops);
 categoryFilter.addEventListener("change",renderShops);
+deliveryFilter.addEventListener("change",renderShops);
+
+clearBtn.addEventListener("click",()=>{
+  searchInput.value = "";
+  categoryFilter.value = "";
+  deliveryFilter.value = "";
+  renderShops();
+});
 
 loadShops();
 </script>
