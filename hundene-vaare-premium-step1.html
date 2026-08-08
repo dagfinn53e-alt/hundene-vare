@@ -989,6 +989,38 @@ const breeds = {
     courses:["Valpekurs","Hverdagslydighet","Innkalling","Nosework og søk","Brukshundtrening","Førstehjelp for hund"],
     pass:[["🏃","Aktive"],["🎓","Treningsinteresserte"],["🧠","Erfarne eiere"],["🏡","Aktive familier"]],
     quote:"«Schäferhunden blomstrer når intelligensen, arbeidslysten og lojaliteten får en oppgave.»"
+  },
+
+  cocker: {
+    name:"Cocker Spaniel",
+    group:"Spaniel",
+    subtitle:"Glad, hengiven og full av liv",
+    intro:"En vennlig, livlig og sosial hund med stor arbeidslyst, mykt temperament og sterk tilknytning til familien.",
+    rating:"★★★★★ Premium raseprofil",
+    hero:"https://images.unsplash.com/photo-1612536057832-2ff7ead58194?auto=format&fit=crop&w=1800&q=92",
+    facts:[
+      ["📏","Høyde","38–41 cm"],["⚖️","Vekt","13–15 kg"],["❤️","Levetid","12–15 år"],
+      ["🏃","Aktivitet","Middels–høy"],["✂️","Pelsstell","Høyt"],["🧹","Røyter","Middels"],
+      ["🌐","FCI gruppe","8"],["🌍","Opprinnelse","Storbritannia"],["👨‍👩‍👧","Familiehund","Svært god"]
+    ],
+    historyTitle:"En klassisk britisk jakthund",
+    historyText:"Cocker Spaniel ble utviklet i Storbritannia som en mindre spaniel for jakt i tett terreng. Rasen er kjent for sin energi, gode nese, arbeidslyst og sitt vennlige vesen, og har i dag også en sterk plass som familie- og selskapshund.",
+    historyImage:"https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=1400&q=88",
+    breedFacts:[
+      ["Opprinnelsesland","Storbritannia"],["FCI nummer","5"],["FCI gruppe","8 – Støtende og apporterende hunder"],
+      ["Bruksområde","Jakt / familie / aktivitet"],["Levetid","12–15 år"],["Pels","Silkemyk med faner"]
+    ],
+    fit:[["Barn",5],["Katt",4],["Andre hunder",5],["Eldre",4],["Aktive personer",4],["Førstegangseier",4]],
+    healthTitle:"Trivelig og robust med behov for godt øre- og pelsstell",
+    healthText:"Rasen kan ha god helse, men krever jevnlig oppfølging av ører, hud, øyne og vekt. Ansvarlig avl og regelmessig pelsstell er viktig.",
+    healthImage:"https://images.unsplash.com/photo-1601758064224-c3c4a08d4d02?auto=format&fit=crop&w=1400&q=88",
+    diseases:["Ørebetennelser","Øyesykdommer","Hudproblemer og allergi","Patellaluksasjon","Hofteproblemer","Overvekt"],
+    country:"Storbritannia", flag:"🇬🇧", originNote:"Utviklet som støtende jakthund for arbeid i tett terreng.",
+    healthOverview:["Kontroller ører ukentlig","Hold pelsen flokefri","Følg øyehelsen","Hold normal kroppsvekt","Årlige helsekontroller"],
+    temperament:[["Vennlighet",5],["Intelligens",4],["Aktivitetsnivå",4],["Lydnivå",3],["Vaktinstinkt",2]],
+    courses:["Valpekurs","Hverdagslydighet","Innkalling","Nosework og søk","Pelsstell og håndtering","Aktivisering for familiehund"],
+    pass:[["👨‍👩‍👧","Familier"],["🏃","Aktive"],["🎓","Førstegangseiere"],["🌲","Turglade"]],
+    quote:"«Cocker Spanielen kombinerer arbeidsglede, nærhet og livsglede i en kompakt og sjarmerende hund.»"
   }
 };
 
@@ -1001,7 +1033,7 @@ const stageLabels = [
 ];
 
 let current = "golden";
-const editorNotes = {"golden": "Svært familievennlig og lærevillig, men trenger mer aktivitet, trening og pelsstell enn mange først forventer.", "labrador": "En fantastisk allrounder for aktive hjem. Vektkontroll, aktivitet og tydelige rutiner er særlig viktig.", "border": "En utrolig arbeidshund – men ikke nødvendigvis den enkleste familiehunden. Den må få bruke hodet, ikke bare beina.", "bichon": "En sosial liten hund som passer mange hjem, men den eksklusive hvite pelsen krever jevnlig og grundig stell.", "chihuahua": "Liten i kroppen, stor i personlighet. Trenger like mye sosialisering og trening som større hunder, men mer skånsom håndtering.", "schaefer": "En imponerende allrounder for mennesker som ønsker å trene og samarbeide med hunden. Tidlig sosialisering, god helse og balansert aktivitet er spesielt viktig."};
+const editorNotes = {"golden": "Svært familievennlig og lærevillig, men trenger mer aktivitet, trening og pelsstell enn mange først forventer.", "labrador": "En fantastisk allrounder for aktive hjem. Vektkontroll, aktivitet og tydelige rutiner er særlig viktig.", "border": "En utrolig arbeidshund – men ikke nødvendigvis den enkleste familiehunden. Den må få bruke hodet, ikke bare beina.", "bichon": "En sosial liten hund som passer mange hjem, men den eksklusive hvite pelsen krever jevnlig og grundig stell.", "chihuahua": "Liten i kroppen, stor i personlighet. Trenger like mye sosialisering og trening som større hunder, men mer skånsom håndtering.", "schaefer": "En imponerende allrounder for mennesker som ønsker å trene og samarbeide med hunden. Tidlig sosialisering, god helse og balansert aktivitet er spesielt viktig.", "cocker": "En glad og sosial familiehund som trenger både aktivitet og regelmessig øre- og pelsstell. Trives best når den får være tett på familien."};
 
 function stars(n){ return "🐾".repeat(n) + "•".repeat(5-n); }
 
