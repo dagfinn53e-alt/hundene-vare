@@ -1117,6 +1117,38 @@ const breeds = {
     courses:["Valpekurs","Miljøtrening","Hverdagslydighet","Ro-trening","Håndtering og stell","Førstehjelp for hund"],
     pass:[["👨‍👩‍👧","Familier"],["🏢","Leilighet"],["❤️","Nær kontakt"],["🎓","Førstegangseiere"]],
     quote:"«Fransk Bulldog er en liten hund med stor personlighet – men god helse må alltid komme foran utseendet.»"
+  },
+
+  schnauzer: {
+    name:"Schnauzer",
+    group:"Pinscher og schnauzer",
+    subtitle:"Robust, intelligent og karaktersterk",
+    intro:"En våken, energisk og lojal mellomstor hund med tydelig personlighet, stor arbeidslyst og et karakteristisk skjegg.",
+    rating:"★★★★★ Premium raseprofil",
+    hero:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Schnauzer.jpg?width=1800",
+    facts:[
+      ["📏","Høyde","45–50 cm"],["⚖️","Vekt","14–20 kg"],["❤️","Levetid","12–14 år"],
+      ["🏃","Aktivitet","Høy"],["✂️","Pelsstell","Høyt"],["🧹","Røyter","Lite"],
+      ["🌐","FCI gruppe","2"],["🌍","Opprinnelse","Tyskland"],["👨‍👩‍👧","Familiehund","God"]
+    ],
+    historyTitle:"Den klassiske tyske gårds- og brukshunden",
+    historyText:"Schnauzeren har røtter i Tyskland og ble brukt som allsidig gårdshund, vakthund og rottefanger. Den robuste kroppen, intelligensen og årvåkenheten gjorde rasen til en praktisk arbeidshund.",
+    historyImage:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Standard_Schnauzer.jpg?width=1400",
+    breedFacts:[
+      ["Opprinnelsesland","Tyskland"],["FCI nummer","182"],["FCI gruppe","2 – Pinscher, schnauzer, molosser og sennenhunder"],
+      ["Bruksområde","Bruks-/familiehund"],["Levetid","12–14 år"],["Pels","Stri dekkpels med underull"]
+    ],
+    fit:[["Barn",4],["Katt",3],["Andre hunder",4],["Eldre",3],["Aktive personer",5],["Førstegangseier",3]],
+    healthTitle:"Robust rase med behov for god oppfølging",
+    healthText:"Schnauzeren er generelt en robust hund. God avl, sunn vekt, regelmessig mosjon og oppfølging av øyne, hofter og generell helse er viktig gjennom livet.",
+    healthImage:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Schnauzer_1.jpg?width=1400",
+    diseases:["Hofteleddsdysplasi (HD)","Øyesykdommer","Hudproblemer","Urinveisproblemer","Bukspyttkjertelproblemer","Overvekt"],
+    country:"Tyskland", flag:"🇩🇪", originNote:"Utviklet som allsidig gårds- og brukshund.",
+    healthOverview:["Følg hofter og bevegelse","Regelmessig øyekontroll","Hold normal kroppsvekt","Trim pelsen jevnlig","Årlige helsekontroller"],
+    temperament:[["Vennlighet",4],["Intelligens",5],["Aktivitetsnivå",4],["Lydnivå",3],["Vaktinstinkt",5]],
+    courses:["Valpekurs","Hverdagslydighet","Innkalling","Nosework og søk","Aktivisering","Pelsstell og trimming"],
+    pass:[["🏃","Aktive"],["🎓","Treningsglade"],["🏡","Familier"],["🧠","Erfarne eiere"]],
+    quote:"«Schnauzeren er en klok og karaktersterk kamerat som trives når den får være en aktiv del av familien.»"
   }
 };
 
@@ -1129,7 +1161,7 @@ const stageLabels = [
 ];
 
 let current = "golden";
-const editorNotes = {"golden": "Svært familievennlig og lærevillig, men trenger mer aktivitet, trening og pelsstell enn mange først forventer.", "labrador": "En fantastisk allrounder for aktive hjem. Vektkontroll, aktivitet og tydelige rutiner er særlig viktig.", "border": "En utrolig arbeidshund – men ikke nødvendigvis den enkleste familiehunden. Den må få bruke hodet, ikke bare beina.", "bichon": "En sosial liten hund som passer mange hjem, men den eksklusive hvite pelsen krever jevnlig og grundig stell.", "chihuahua": "Liten i kroppen, stor i personlighet. Trenger like mye sosialisering og trening som større hunder, men mer skånsom håndtering.", "schaefer": "En imponerende allrounder for mennesker som ønsker å trene og samarbeide med hunden. Tidlig sosialisering, god helse og balansert aktivitet er spesielt viktig.", "cocker": "En glad og sosial familiehund som trenger både aktivitet og regelmessig øre- og pelsstell. Trives best når den får være tett på familien.", "cavalier": "En svært menneskekjær selskapshund med mildt temperament. Helse hos foreldredyrene bør veie tungt ved valg av oppdretter.", "springer": "En aktiv og arbeidsvillig spaniel som passer best hos mennesker som liker tur, trening og samarbeid med hunden.", "franskbulldog": "En sosial og sjarmerende selskapshund. Ved valg av valp bør fri pust, funksjonell kropp og dokumentert helse veie langt tyngre enn et ekstremt utseende."};
+const editorNotes = {"golden": "Svært familievennlig og lærevillig, men trenger mer aktivitet, trening og pelsstell enn mange først forventer.", "labrador": "En fantastisk allrounder for aktive hjem. Vektkontroll, aktivitet og tydelige rutiner er særlig viktig.", "border": "En utrolig arbeidshund – men ikke nødvendigvis den enkleste familiehunden. Den må få bruke hodet, ikke bare beina.", "bichon": "En sosial liten hund som passer mange hjem, men den eksklusive hvite pelsen krever jevnlig og grundig stell.", "chihuahua": "Liten i kroppen, stor i personlighet. Trenger like mye sosialisering og trening som større hunder, men mer skånsom håndtering.", "schaefer": "En imponerende allrounder for mennesker som ønsker å trene og samarbeide med hunden. Tidlig sosialisering, god helse og balansert aktivitet er spesielt viktig.", "cocker": "En glad og sosial familiehund som trenger både aktivitet og regelmessig øre- og pelsstell. Trives best når den får være tett på familien.", "cavalier": "En svært menneskekjær selskapshund med mildt temperament. Helse hos foreldredyrene bør veie tungt ved valg av oppdretter.", "springer": "En aktiv og arbeidsvillig spaniel som passer best hos mennesker som liker tur, trening og samarbeid med hunden.", "franskbulldog": "En sosial og sjarmerende selskapshund. Ved valg av valp bør fri pust, funksjonell kropp og dokumentert helse veie langt tyngre enn et ekstremt utseende.", "schnauzer": "En intelligent og robust hund for mennesker som liker aktivitet og samarbeid. Den strie pelsen krever regelmessig trimming, og tydelig, positiv trening gir best resultat."};
 
 function stars(n){ return "🐾".repeat(n) + "•".repeat(5-n); }
 
