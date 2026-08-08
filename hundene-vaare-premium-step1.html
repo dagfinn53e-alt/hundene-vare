@@ -359,6 +359,82 @@ font-size:1rem;
 color:#fff;
 }
 
+
+.section-nav{
+position:sticky;
+top:67px;
+z-index:28;
+display:flex;
+gap:8px;
+overflow-x:auto;
+padding:10px 2px;
+margin:12px 0 10px;
+scrollbar-width:none;
+background:linear-gradient(180deg,rgba(6,19,27,.94),rgba(6,19,27,.76));
+backdrop-filter:blur(16px);
+}
+.section-nav::-webkit-scrollbar{display:none}
+.section-nav button{
+flex:0 0 auto;
+border:1px solid rgba(215,163,59,.28);
+background:#0b1d27;
+color:#e7ecee;
+border-radius:999px;
+padding:9px 13px;
+font-weight:850;
+font-size:.82rem;
+transition:.22s ease;
+}
+.section-nav button:hover,
+.section-nav button.active{
+background:linear-gradient(135deg,var(--gold2),var(--gold));
+color:#111;
+border-color:transparent;
+transform:translateY(-1px);
+}
+.reveal{
+opacity:0;
+transform:translateY(16px);
+transition:opacity .55s ease, transform .55s ease;
+}
+.reveal.visible{
+opacity:1;
+transform:none;
+}
+.gallery img,
+.history,
+.health-hero{
+transition:transform .3s ease, filter .3s ease;
+}
+.gallery img:hover{transform:scale(1.02)}
+.history:hover,
+.health-hero:hover{filter:brightness(1.04)}
+.premium-highlight{
+margin-top:10px;
+display:grid;
+grid-template-columns:1.1fr .9fr;
+gap:10px;
+}
+.premium-note{
+background:linear-gradient(135deg,rgba(215,163,59,.14),rgba(255,255,255,.03));
+border:1px solid rgba(215,163,59,.35);
+border-radius:18px;
+padding:20px;
+}
+.premium-note h3{
+margin:0 0 8px;
+color:var(--gold2);
+font-family:Georgia,serif;
+font-size:1.45rem;
+text-transform:none;
+letter-spacing:0;
+}
+.premium-note p{margin:0;color:#d0d7d9;line-height:1.65}
+@media(max-width:760px){
+.section-nav{top:66px}
+.premium-highlight{grid-template-columns:1fr}
+}
+
 @media(max-width:1150px){
   .app{grid-template-columns:1fr}
   .sidebar{position:relative;height:auto}
@@ -440,8 +516,16 @@ color:#fff;
     <main class="content">
       <section class="panel quickfacts" id="quickfacts"></section>
       <section class="premium-stats" id="premiumStats"></section>
+      <nav class="section-nav" aria-label="Raseinnhold">
+        <button data-scroll="historyCard" class="active">Historie</button>
+        <button data-scroll="healthHero">Helse</button>
+        <button data-scroll="lifeStages">Livsfaser</button>
+        <button data-scroll="gallery">Galleri</button>
+        <button data-scroll="temperament">Temperament</button>
+        <button data-scroll="courses">Akademiet</button>
+      </nav>
 
-      <section class="grid3">
+      <section class="grid3 reveal">
         <article class="card history" id="historyCard">
           <div class="history-inner">
             <h3>Om rasen</h3>
@@ -461,7 +545,7 @@ color:#fff;
         </article>
       </section>
 
-      <section class="health-grid">
+      <section class="health-grid reveal">
         <article class="card health-hero" id="healthHero">
           <div class="health-inner">
             <h3>Helse og sykdommer</h3>
@@ -487,12 +571,12 @@ color:#fff;
         </article>
       </section>
 
-      <section class="card" style="margin-top:10px">
+      <section class="card reveal" style="margin-top:10px">
         <h3>Livets faser</h3>
         <div class="life" id="lifeStages"></div>
       </section>
 
-      <section class="gallery-health">
+      <section class="gallery-health reveal">
         <article class="card">
           <h3>Galleri</h3>
           <div class="gallery" id="gallery"></div>
@@ -509,7 +593,7 @@ color:#fff;
         </article>
       </section>
 
-      <section class="bottom-grid">
+      <section class="bottom-grid reveal">
         <article class="card">
           <h3>Lignende raser</h3>
           <div class="related" id="related"></div>
@@ -526,7 +610,18 @@ color:#fff;
         </article>
       </section>
 
-      <div class="quote" id="quote"></div>
+      
+      <section class="premium-highlight reveal">
+        <article class="premium-note">
+          <h3>Hundene Våres vurdering</h3>
+          <p id="editorNote">En rase med tydelig personlighet, egne behov og mye å gi når den får riktig oppfølging.</p>
+        </article>
+        <article class="premium-note">
+          <h3>Før du bestemmer deg</h3>
+          <p>Se alltid på helse, aktivitetsbehov, pelsstell, temperament og livssituasjonen din – ikke bare utseendet.</p>
+        </article>
+      </section>
+<div class="quote" id="quote"></div>
     </main>
   </section>
 </div>
@@ -699,6 +794,7 @@ const stageLabels = [
 ];
 
 let current = "golden";
+const editorNotes = {"golden": "Svært familievennlig og lærevillig, men trenger mer aktivitet, trening og pelsstell enn mange først forventer.", "labrador": "En fantastisk allrounder for aktive hjem. Vektkontroll, aktivitet og tydelige rutiner er særlig viktig.", "border": "En utrolig arbeidshund – men ikke nødvendigvis den enkleste familiehunden. Den må få bruke hodet, ikke bare beina.", "bichon": "En sosial liten hund som passer mange hjem, men den eksklusive hvite pelsen krever jevnlig og grundig stell.", "chihuahua": "Liten i kroppen, stor i personlighet. Trenger like mye sosialisering og trening som større hunder, men mer skånsom håndtering."};
 
 function stars(n){ return "🐾".repeat(n) + "•".repeat(5-n); }
 
@@ -824,6 +920,7 @@ function render(){
   });
 
   document.getElementById("quote").textContent = b.quote;
+  document.getElementById("editorNote").textContent = editorNotes[current] || "En rase med tydelig personlighet, egne behov og mye å gi når den får riktig oppfølging.";
   renderBreedList();
 }
 
@@ -833,6 +930,24 @@ document.getElementById("searchInput").addEventListener("input", e=>{
     btn.style.display = btn.textContent.toLowerCase().includes(q) ? "" : "none";
   });
 });
+
+
+document.querySelectorAll(".section-nav button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".section-nav button").forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");
+    const target=document.getElementById(btn.dataset.scroll);
+    if(target) target.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+});
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) entry.target.classList.add("visible");
+  });
+},{threshold:.08});
+
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
 
 render();
 </script>
