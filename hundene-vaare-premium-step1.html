@@ -1383,6 +1383,38 @@ const breeds = {
     courses:["Valpekurs","Hverdagslydighet","Innkalling","Kontakttrening","Nosework og søk","Brukshundtrening"],
     pass:[["👨‍👩‍👧","Aktive familier"],["🏃","Aktive"],["🎓","Treningsinteresserte"],["❤️","Sosiale hjem"]],
     quote:"«Boxeren beholder ofte valpens lekelyst langt inn i voksenlivet – en energisk og hengiven venn med stort hjerte.»"
+  },
+
+  beagle: {
+    name:"Beagle",
+    group:"Drivende hund",
+    subtitle:"Glad, nysgjerrig og med en fantastisk nese",
+    intro:"En vennlig og energisk jakthund med sterk luktesans, mye personlighet og stor glede av å bruke nesen. Beaglen er sosial og trives godt i en aktiv familie.",
+    rating:"★★★★★ Premium raseprofil",
+    hero:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Bronco%20the%20Beagle.JPG?width=1800",
+    facts:[
+      ["📏","Høyde","33–40 cm"],["⚖️","Vekt","Ca. 9–14 kg"],["❤️","Levetid","12–15 år"],
+      ["🏃","Aktivitet","Høy"],["✂️","Pelsstell","Lavt"],["🧹","Røyter","Middels"],
+      ["🌐","FCI gruppe","6"],["🌍","Opprinnelse","Storbritannia"],["👨‍👩‍👧","Familiehund","Svært god"]
+    ],
+    historyTitle:"En klassisk britisk jakthund",
+    historyText:"Beaglen ble utviklet i Storbritannia som en liten drivende jakthund, særlig brukt til harejakt. Den sterke luktesansen, utholdenheten og evnen til å arbeide sammen med andre hunder har preget rasen gjennom historien.",
+    historyImage:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Beagle%20puppy%20Cadet.jpg?width=1400",
+    breedFacts:[
+      ["Opprinnelsesland","Storbritannia"],["FCI nummer","161"],["FCI gruppe","6 – Drivende hunder og sporhunder"],
+      ["Bruksområde","Jakt / spor / familie"],["Levetid","12–15 år"],["Pels","Kort, tett og værbestandig"]
+    ],
+    fit:[["Barn",5],["Katt",3],["Andre hunder",5],["Eldre",3],["Aktive personer",5],["Førstegangseier",3]],
+    healthTitle:"Robust hund som bør holdes slank og aktiv",
+    healthText:"Beaglen er ofte robust, men vekt, ører, øyne og ledd bør følges. Matlysten kan være stor, så riktig fôring og daglig aktivitet er viktig.",
+    healthImage:"https://images1.ynet.co.il/PicServer4/2014/05/29/5359998/Image5.jpg",
+    diseases:["Overvekt","Ørebetennelser","Øyesykdommer","Epilepsi","Hofte- og leddproblemer","Hypotyreose"],
+    country:"Storbritannia", flag:"🇬🇧", originNote:"Utviklet som drivende jakthund med svært god luktesans.",
+    healthOverview:["Hold normal kroppsvekt","Kontroller ørene regelmessig","Følg øyehelsen","Gi daglig fysisk aktivitet","Årlige helsekontroller"],
+    temperament:[["Vennlighet",5],["Intelligens",4],["Aktivitetsnivå",4],["Lydnivå",4],["Vaktinstinkt",2]],
+    courses:["Valpekurs","Innkalling","Nosework og søk","Sportrening","Hverdagslydighet","Miljøtrening"],
+    pass:[["👨‍👩‍👧","Familier"],["🌲","Turglade"],["👃","Sporinteresserte"],["🐕","Flerhundshjem"]],
+    quote:"«Beaglen følger gjerne nesen først og spør etterpå – en glad og sosial hund med ekte jaktglede.»"
   }
 };
 
@@ -1395,7 +1427,7 @@ const stageLabels = [
 ];
 
 let current = "golden";
-const editorNotes = {"golden": "Svært familievennlig og lærevillig, men trenger mer aktivitet, trening og pelsstell enn mange først forventer.", "labrador": "En fantastisk allrounder for aktive hjem. Vektkontroll, aktivitet og tydelige rutiner er særlig viktig.", "border": "En utrolig arbeidshund – men ikke nødvendigvis den enkleste familiehunden. Den må få bruke hodet, ikke bare beina.", "bichon": "En sosial liten hund som passer mange hjem, men den eksklusive hvite pelsen krever jevnlig og grundig stell.", "chihuahua": "Liten i kroppen, stor i personlighet. Trenger like mye sosialisering og trening som større hunder, men mer skånsom håndtering.", "schaefer": "En imponerende allrounder for mennesker som ønsker å trene og samarbeide med hunden. Tidlig sosialisering, god helse og balansert aktivitet er spesielt viktig.", "cocker": "En glad og sosial familiehund som trenger både aktivitet og regelmessig øre- og pelsstell. Trives best når den får være tett på familien.", "cavalier": "En svært menneskekjær selskapshund med mildt temperament. Helse hos foreldredyrene bør veie tungt ved valg av oppdretter.", "springer": "En aktiv og arbeidsvillig spaniel som passer best hos mennesker som liker tur, trening og samarbeid med hunden.", "franskbulldog": "En sosial og sjarmerende selskapshund. Ved valg av valp bør fri pust, funksjonell kropp og dokumentert helse veie langt tyngre enn et ekstremt utseende.", "schnauzer": "En intelligent og robust hund for mennesker som liker aktivitet og samarbeid. Den strie pelsen krever regelmessig trimming, og tydelig, positiv trening gir best resultat.", "norsk_lundehund": "En helt spesiell norsk rase med unik historie og anatomi. Potensielle eiere bør sette seg godt inn i rasens særskilte fordøyelseshelse og behov før valpekjøp.", "shiba": "En intelligent og selvstendig japansk spisshund som passer best for eiere som respekterer rasens sterke personlighet og arbeider tålmodig med sosialisering og trening.", "akita": "En stor, selvstendig og lojal japansk spisshund. Tidlig sosialisering, ansvarlig hundehold og en erfaren eier er særlig viktig.", "dalmatiner": "En atletisk og sosial hund som passer best hos aktive eiere. Hørsel, urinveishelse og nok fysisk og mental aktivitet fortjener særlig oppmerksomhet.", "husky": "En svært aktiv og sosial polarhund for eiere som kan tilby mye mosjon og sikre rammer. Jaktinstinkt, rømningslyst og behovet for fysisk aktivitet må tas på alvor.", "engelsk_bulldog": "En hengiven og rolig familiehund. Fri pust, bevegelighet og dokumentert helse bør være avgjørende ved valg av valp og oppdretter.", "rottweiler": "En kraftfull og intelligent brukshund som krever tidlig sosialisering, konsekvent positiv trening og en ansvarlig eier som kan gi hunden både fysisk og mental aktivitet.", "boxer": "En livlig og svært sosial familiehund som trenger aktivitet, trening og mye kontakt. Hjertehelse og ansvarlig avl bør få særlig oppmerksomhet."};
+const editorNotes = {"golden": "Svært familievennlig og lærevillig, men trenger mer aktivitet, trening og pelsstell enn mange først forventer.", "labrador": "En fantastisk allrounder for aktive hjem. Vektkontroll, aktivitet og tydelige rutiner er særlig viktig.", "border": "En utrolig arbeidshund – men ikke nødvendigvis den enkleste familiehunden. Den må få bruke hodet, ikke bare beina.", "bichon": "En sosial liten hund som passer mange hjem, men den eksklusive hvite pelsen krever jevnlig og grundig stell.", "chihuahua": "Liten i kroppen, stor i personlighet. Trenger like mye sosialisering og trening som større hunder, men mer skånsom håndtering.", "schaefer": "En imponerende allrounder for mennesker som ønsker å trene og samarbeide med hunden. Tidlig sosialisering, god helse og balansert aktivitet er spesielt viktig.", "cocker": "En glad og sosial familiehund som trenger både aktivitet og regelmessig øre- og pelsstell. Trives best når den får være tett på familien.", "cavalier": "En svært menneskekjær selskapshund med mildt temperament. Helse hos foreldredyrene bør veie tungt ved valg av oppdretter.", "springer": "En aktiv og arbeidsvillig spaniel som passer best hos mennesker som liker tur, trening og samarbeid med hunden.", "franskbulldog": "En sosial og sjarmerende selskapshund. Ved valg av valp bør fri pust, funksjonell kropp og dokumentert helse veie langt tyngre enn et ekstremt utseende.", "schnauzer": "En intelligent og robust hund for mennesker som liker aktivitet og samarbeid. Den strie pelsen krever regelmessig trimming, og tydelig, positiv trening gir best resultat.", "norsk_lundehund": "En helt spesiell norsk rase med unik historie og anatomi. Potensielle eiere bør sette seg godt inn i rasens særskilte fordøyelseshelse og behov før valpekjøp.", "shiba": "En intelligent og selvstendig japansk spisshund som passer best for eiere som respekterer rasens sterke personlighet og arbeider tålmodig med sosialisering og trening.", "akita": "En stor, selvstendig og lojal japansk spisshund. Tidlig sosialisering, ansvarlig hundehold og en erfaren eier er særlig viktig.", "dalmatiner": "En atletisk og sosial hund som passer best hos aktive eiere. Hørsel, urinveishelse og nok fysisk og mental aktivitet fortjener særlig oppmerksomhet.", "husky": "En svært aktiv og sosial polarhund for eiere som kan tilby mye mosjon og sikre rammer. Jaktinstinkt, rømningslyst og behovet for fysisk aktivitet må tas på alvor.", "engelsk_bulldog": "En hengiven og rolig familiehund. Fri pust, bevegelighet og dokumentert helse bør være avgjørende ved valg av valp og oppdretter.", "rottweiler": "En kraftfull og intelligent brukshund som krever tidlig sosialisering, konsekvent positiv trening og en ansvarlig eier som kan gi hunden både fysisk og mental aktivitet.", "boxer": "En livlig og svært sosial familiehund som trenger aktivitet, trening og mye kontakt. Hjertehelse og ansvarlig avl bør få særlig oppmerksomhet.", "beagle": "En glad og sosial jakthund med svært sterk nese. God innkalling, trygg sikring og nok spor- og søksarbeid er spesielt viktig."};
 
 function stars(n){ return "🐾".repeat(n) + "•".repeat(5-n); }
 
