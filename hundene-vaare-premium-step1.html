@@ -435,6 +435,17 @@ letter-spacing:0;
 .premium-highlight{grid-template-columns:1fr}
 }
 
+
+.enhanced-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:10px;margin-top:10px}
+.timeline{display:grid;gap:10px}
+.tl{display:grid;grid-template-columns:42px 1fr;gap:12px;align-items:start}
+.dot{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
+background:linear-gradient(135deg,#f2cf75,#d7a33b);color:#111;font-weight:bold}
+.tipbox{background:linear-gradient(180deg,#0d202a,#091922);border:1px solid rgba(215,163,59,.35);
+border-radius:18px;padding:18px}
+.tipbox h3{margin:0 0 10px;color:#f2cf75}
+@media(max-width:900px){.enhanced-grid{grid-template-columns:1fr}}
+
 @media(max-width:1150px){
   .app{grid-template-columns:1fr}
   .sidebar{position:relative;height:auto}
@@ -632,6 +643,29 @@ letter-spacing:0;
 <div><strong>Valg av oppdretter</strong><p>Velg oppdrettere som dokumenterer helseundersøkelser, godt gemytt og god sosialisering av valpene.</p></div>
 </div>
 </section>
+
+<section class="enhanced-grid reveal" id="healthPlus">
+<div class="tipbox">
+<h3>Forebygging</h3>
+<div class="timeline">
+<div class="tl"><div class="dot">1</div><div><strong>Årlig helsesjekk</strong><br>Veterinærkontroll, vekt og tenner.</div></div>
+<div class="tl"><div class="dot">2</div><div><strong>Riktig aktivitet</strong><br>Daglige turer og mental stimulering.</div></div>
+<div class="tl"><div class="dot">3</div><div><strong>Kosthold</strong><br>Tilpasset alder, størrelse og aktivitetsnivå.</div></div>
+<div class="tl"><div class="dot">4</div><div><strong>Pels og poter</strong><br>Ukentlig stell og kontroll etter tur.</div></div>
+</div>
+</div>
+<div class="tipbox">
+<h3>Premium sjekkliste</h3>
+<ul class="list">
+<li>✓ HD/AD-dokumentasjon ved valpekjøp</li>
+<li>✓ Øyelysing der det anbefales</li>
+<li>✓ Vaksiner og parasittkontroll</li>
+<li>✓ Tannhelse gjennom hele livet</li>
+<li>✓ Tilpass trening til alder</li>
+</ul>
+</div>
+</section>
+
 <div class="quote" id="quote"></div>
     </main>
   </section>
