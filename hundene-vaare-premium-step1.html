@@ -479,6 +479,30 @@ text-align:center;
 .breed-tile p{font-size:.82rem;color:#cfd6d9;margin:0}
 @media(max-width:900px){.breed-selector{grid-template-columns:1fr 1fr}}
 
+
+.ready-banner{
+margin:12px 0;
+padding:20px;
+border-radius:18px;
+border:1px solid rgba(215,163,59,.35);
+background:linear-gradient(135deg,rgba(215,163,59,.12),rgba(255,255,255,.03));
+display:grid;
+grid-template-columns:1.2fr .8fr;
+gap:18px;
+}
+.ready-banner h2{margin:0;color:#f2cf75;font-family:Georgia,serif}
+.ready-banner ul{margin:10px 0 0;padding-left:18px}
+.scorebox{
+display:grid;place-items:center;
+border-radius:16px;
+background:#0b1d27;
+border:1px solid rgba(215,163,59,.25);
+font-size:2rem;
+font-weight:900;
+color:#f2cf75;
+}
+@media(max-width:900px){.ready-banner{grid-template-columns:1fr}}
+
 @media(max-width:1150px){
   .app{grid-template-columns:1fr}
   .sidebar{position:relative;height:auto}
@@ -679,6 +703,24 @@ text-align:center;
 
 
 
+
+
+<section class="ready-banner reveal">
+<div>
+<h2>Hundene Våre Premium – Klar for innhold</h2>
+<p>Designet er nå låst. Videre arbeid består av å fylle Premium-malen med komplette raseprofiler.</p>
+<ul class="list">
+<li>Golden Retriever – Premium</li>
+<li>Labrador Retriever – Neste</li>
+<li>Border Collie</li>
+<li>Bichon Frisé</li>
+<li>Chihuahua</li>
+</ul>
+</div>
+<div class="scorebox">
+Design ✓
+</div>
+</section>
 
 <section class="breed-selector reveal">
 <div class="breed-tile"><h4>🐶 Golden</h4><p>Ferdig Premium-mal</p></div>
