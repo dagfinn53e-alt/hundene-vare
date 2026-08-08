@@ -461,6 +461,24 @@ border-radius:18px;padding:18px}
 .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(215,163,59,.15);border:1px solid rgba(215,163,59,.35);margin:4px;font-size:.85rem}
 @media(max-width:900px){.adoption-grid{grid-template-columns:1fr}}
 
+
+.breed-selector{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:10px;
+margin:10px 0;
+}
+.breed-tile{
+background:linear-gradient(180deg,#0d202a,#091922);
+border:1px solid rgba(215,163,59,.35);
+border-radius:16px;
+padding:14px;
+text-align:center;
+}
+.breed-tile h4{margin:8px 0 4px;color:#f2cf75}
+.breed-tile p{font-size:.82rem;color:#cfd6d9;margin:0}
+@media(max-width:900px){.breed-selector{grid-template-columns:1fr 1fr}}
+
 @media(max-width:1150px){
   .app{grid-template-columns:1fr}
   .sidebar{position:relative;height:auto}
@@ -660,6 +678,15 @@ border-radius:18px;padding:18px}
 </section>
 
 
+
+
+<section class="breed-selector reveal">
+<div class="breed-tile"><h4>🐶 Golden</h4><p>Ferdig Premium-mal</p></div>
+<div class="breed-tile"><h4>🐶 Labrador</h4><p>Klar for innhold</p></div>
+<div class="breed-tile"><h4>🐶 Border Collie</h4><p>Klar for innhold</p></div>
+<div class="breed-tile"><h4>🐶 Bichon Frisé</h4><p>Klar for innhold</p></div>
+<div class="breed-tile"><h4>🐶 Chihuahua</h4><p>Klar for innhold</p></div>
+</section>
 
 <section class="adoption-grid reveal">
 <div class="adoption-card">
