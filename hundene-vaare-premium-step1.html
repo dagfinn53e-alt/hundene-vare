@@ -621,6 +621,17 @@ letter-spacing:0;
           <p>Se alltid på helse, aktivitetsbehov, pelsstell, temperament og livssituasjonen din – ikke bare utseendet.</p>
         </article>
       </section>
+
+<section class="card reveal" id="goldenGuide" style="margin-top:10px;display:none">
+<h3>Premium raseguide</h3>
+<h4>Golden Retriever – Alt du bør vite</h4>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
+<div><strong>Hverdagen</strong><p>Golden Retriever trives best som en aktiv familiehund med daglige turer, mental stimulering og tett kontakt med menneskene sine.</p></div>
+<div><strong>Mosjon</strong><p>1–2 timer variert aktivitet daglig. Kombiner turer, apportering, søksarbeid og lek.</p></div>
+<div><strong>Pelsstell</strong><p>Børstes flere ganger i uken. Kontroller ører og poter etter turer, og hold klørne korte.</p></div>
+<div><strong>Valg av oppdretter</strong><p>Velg oppdrettere som dokumenterer helseundersøkelser, godt gemytt og god sosialisering av valpene.</p></div>
+</div>
+</section>
 <div class="quote" id="quote"></div>
     </main>
   </section>
@@ -920,6 +931,10 @@ function render(){
   });
 
   document.getElementById("quote").textContent = b.quote;
+  const guide=document.getElementById("goldenGuide");
+  if(current==="golden"){guide.style.display="block";}
+  else{guide.style.display="none";}
+
   document.getElementById("editorNote").textContent = editorNotes[current] || "En rase med tydelig personlighet, egne behov og mye å gi når den får riktig oppfølging.";
   renderBreedList();
 }
