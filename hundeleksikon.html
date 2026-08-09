@@ -785,6 +785,49 @@ color:#f2cf75;
   }
 }
 
+
+/* Mobil: kompakt raseoversikt */
+@media(max-width:760px){
+  body.mobile-breed-menu .breed-list{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:7px !important;
+  }
+  body.mobile-breed-menu .breed-btn{
+    min-height:48px !important;
+    padding:6px 7px !important;
+    font-size:.72rem !important;
+    line-height:1.1 !important;
+  }
+  body.mobile-breed-menu .breed-thumb{
+    width:26px !important;
+    height:26px !important;
+    flex:0 0 26px !important;
+  }
+}
+
+/* På litt bredere telefoner får vi 3 raser i bredden */
+@media(min-width:430px) and (max-width:760px){
+  body.mobile-breed-menu .breed-list{
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  }
+  body.mobile-breed-menu .breed-btn{
+    font-size:.68rem !important;
+    padding:5px !important;
+  }
+  body.mobile-breed-menu .breed-thumb{
+    width:24px !important;
+    height:24px !important;
+    flex-basis:24px !important;
+  }
+}
+
+/* Smal iPhone: alltid 2 kolonner, aldri én */
+@media(max-width:429px){
+  body.mobile-breed-menu .breed-list{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+
 </style>
 </head>
 <body>
