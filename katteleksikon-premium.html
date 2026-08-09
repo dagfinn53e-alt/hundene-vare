@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Katteleksikon Premium – Ragdoll TEST</title>
+<style>
+:root{
+  --rose:#b783aa;
+  --rose-dark:#5f3b72;
+  --lav:#735b9d;
+  --cream:#fff9fc;
+  --cream2:#f5eef8;
+  --ink:#443a40;
+  --muted:#7d7278;
+  --line:#eadfe4;
+  --white:#fff;
+  --shadow:0 18px 42px rgba(111,88,101,.11);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 90% 0%,rgba(170,160,200,.18),transparent 32rem),
+    radial-gradient(circle at 0% 30%,rgba(217,166,184,.15),transparent 28rem),
+    linear-gradient(180deg,#fffdfc,#faf6f4 60%,#fff);
+}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+.app{min-height:100vh;display:grid;grid-template-columns:250px 1fr}
+
+/* SIDE */
+.sidebar{
+  position:sticky;top:0;height:100vh;overflow:auto;
+  background:linear-gradient(180deg,#f7eefb,#e9dced);
+  border-right:1px solid var(--line);padding:18px 14px;
+}
+.brand{display:flex;align-items:center;gap:10px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.logo{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,var(--rose),var(--lav));font-size:25px}
+.brand strong{display:block;color:var(--rose-dark)}
+.brand small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.side-title{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:900;margin:18px 6px 9px}
+.breed-btn{
+  width:100%;border:1px solid #e8dce1;border-radius:14px;background:#fff;
+  padding:10px 12px;display:flex;align-items:center;gap:10px;font-weight:900;color:var(--rose-dark)
+}
+.breed-btn.active{background:linear-gradient(135deg,#dfc8e8,#cbbdde);border-color:#dbc8d2}
+.thumb{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#f8edf2;font-size:22px}
+.side-link{display:block;margin-top:9px;padding:10px 12px;border-radius:12px;color:#655760;font-weight:800}
+.side-link:hover{background:#fff}
+
+/* MAIN */
+.main{min-width:0}
+.topbar{
+  position:sticky;top:0;z-index:20;background:rgba(255,250,247,.9);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);padding:11px 18px;display:flex;justify-content:space-between;gap:10px;align-items:center
+}
+.search{flex:1;max-width:520px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:11px 15px;color:var(--muted)}
+.back{border:1px solid #dfccd5;background:#fff;border-radius:999px;padding:10px 14px;font-weight:900;color:var(--rose-dark)}
+
+.hero{
+  min-height:430px;padding:70px 34px 34px;display:flex;align-items:flex-end;position:relative;overflow:hidden;
+  background:
+    linear-gradient(90deg,rgba(80,58,69,.92),rgba(105,76,91,.58),rgba(120,110,140,.18)),
+    radial-gradient(circle at 75% 42%,#efe3e8 0 8%,#d7c5cf 9% 18%,transparent 19%),
+    linear-gradient(135deg,#e7d7df,#cfc8df 55%,#f4ebe7);
+}
+.hero:after{
+  content:"🐱";position:absolute;right:8%;bottom:5%;font-size:260px;opacity:.32;filter:drop-shadow(0 16px 25px rgba(0,0,0,.15))
+}
+.hero-copy{position:relative;z-index:2;max-width:700px;color:#fff}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;font-weight:900;color:#f7dce6}
+.hero h1{font-family:Georgia,serif;font-size:clamp(3rem,7vw,6.2rem);line-height:.92;margin:9px 0 6px}
+.hero h2{font-family:Georgia,serif;font-size:clamp(1.3rem,2.6vw,2rem);font-weight:400;color:#f7dce6;margin:0 0 12px}
+.hero p{line-height:1.65;max-width:620px;color:#fff8fb}
+.hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.btn{border:0;border-radius:999px;padding:11px 17px;font-weight:900}
+.btn.primary{background:linear-gradient(135deg,#f3d1dc,#c8bfdc);color:#503d47}
+.btn.light{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff}
+
+.content{width:min(1320px,calc(100% - 20px));margin:12px auto 36px}
+.quickfacts{display:grid;grid-template-columns:repeat(7,1fr);background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.fact{padding:16px 10px;text-align:center;border-right:1px solid var(--line)}
+.fact:last-child{border-right:0}
+.fact b{display:block;color:var(--rose-dark);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.fact span{font-weight:900}
+
+.grid3{display:grid;grid-template-columns:1.2fr .9fr .9fr;gap:12px;margin-top:12px}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 10px 26px rgba(111,88,101,.07)}
+.card h3{margin:0 0 10px;color:var(--rose-dark);font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+.card h4{font-family:Georgia,serif;font-size:1.9rem;margin:0 0 9px}
+.card p{color:var(--muted);line-height:1.65;margin:0}
+.soft{background:linear-gradient(135deg,#fffafd,#f7f1f5)}
+.rating-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.rating-row:last-child{border-bottom:0}
+.stars{color:#c792a7;font-weight:900}
+
+.section{margin-top:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.list{margin:0;padding-left:20px;color:var(--muted);line-height:1.75}
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.tag{background:#f7edf1;border:1px solid #ead5df;color:var(--rose-dark);padding:7px 10px;border-radius:999px;font-size:12px;font-weight:900}
+.quote{margin-top:12px;text-align:center;padding:21px;border-radius:18px;background:linear-gradient(135deg,#f8eef2,#eeeaf6);border:1px solid var(--line);font-family:Georgia,serif;color:#6f5362;font-size:1.25rem}
+
+
+.gallery{
+  display:grid;
+  grid-template-columns:1.25fr 1fr 1fr;
+  gap:10px;
+}
+.gallery img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:16px;
+  border:1px solid var(--line);
+}
+.gallery img:first-child{
+  grid-row:span 2;
+  height:370px;
+}
+.kit-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.kit-item{
+  background:linear-gradient(135deg,#faf3fc,#f1e9f7);
+  border:1px solid #e5d8ea;
+  border-radius:16px;
+  padding:15px;
+  text-align:center;
+}
+.kit-item .ico{
+  font-size:30px;
+  margin-bottom:7px;
+}
+.kit-item strong{
+  display:block;
+  color:var(--rose-dark);
+  margin-bottom:4px;
+}
+.kit-item span{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.4;
+}
+.check-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.check{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+}
+.check h3{
+  margin:0 0 10px;
+  color:var(--rose-dark);
+  font-size:15px;
+}
+.check ul{
+  margin:0;
+  padding-left:18px;
+  color:var(--muted);
+  line-height:1.7;
+}
+@media(max-width:900px){
+  .kit-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:650px){
+  .gallery{grid-template-columns:1fr 1fr}
+  .gallery img,.gallery img:first-child{height:180px;grid-row:auto}
+  .kit-grid,.check-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:430px){
+  .gallery,.kit-grid,.check-grid{grid-template-columns:1fr}
+  .gallery img,.gallery img:first-child{height:220px}
+}
+
+/* MOBILE */
+.mobile-only{display:none}
+@media(max-width:900px){
+  .app{display:block}
+  .sidebar{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line)}
+  .side-links{display:none}
+  .topbar{display:none}
+  .hero{min-height:330px;padding:42px 17px 24px}
+  .hero:after{font-size:180px;right:-4%;bottom:2%}
+  .quickfacts{grid-template-columns:repeat(2,1fr)}
+  .fact{border-bottom:1px solid var(--line)}
+  .grid3,.two{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+  body.mobile-menu .main{display:none}
+  body.mobile-menu .sidebar{min-height:100vh}
+  body.mobile-menu .breed-btn{display:flex}
+  body.mobile-menu .side-title{display:block}
+  .mobile-only{display:block}
+  .content{width:calc(100% - 14px)}
+  .hero h1{font-size:3.2rem}
+}
+
+/* ===== Premium finpuss v4 ===== */
+.topbar{
+  background:linear-gradient(90deg,rgba(248,240,252,.96),rgba(237,226,246,.96));
+}
+.back{
+  background:linear-gradient(135deg,#69447d,#8b68a5);
+  color:#fff;
+  border:0;
+}
+.breed-btn.active{
+  background:linear-gradient(135deg,#d9c0e4,#bda9d2);
+  color:#4f3260;
+  box-shadow:0 7px 18px rgba(84,54,100,.12);
+}
+.life-stage-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+.life-stage{
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden;
+  background:#fff;
+}
+.life-stage img{
+  width:100%;
+  height:185px;
+  object-fit:cover;
+  display:block;
+}
+.life-stage div{padding:14px}
+.life-stage h4{
+  margin:0 0 6px;
+  color:var(--rose-dark);
+  font-family:Georgia,serif;
+  font-size:1.25rem;
+}
+.life-stage p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.5;
+  font-size:13px;
+}
+.match-box{
+  margin-top:12px;
+  background:linear-gradient(135deg,#5f3b72,#80609a);
+  color:#fff;
+  border-radius:20px;
+  padding:22px;
+  box-shadow:var(--shadow);
+}
+.match-box h3{margin:0 0 8px;font-family:Georgia,serif;font-size:1.65rem}
+.match-box p{margin:0 0 14px;color:#f5edf8;line-height:1.6}
+.match-pills{display:flex;gap:7px;flex-wrap:wrap}
+.match-pills span{
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:999px;
+  padding:7px 10px;
+  font-size:12px;
+  font-weight:800;
+}
+@media(max-width:650px){
+  .life-stage-grid{grid-template-columns:1fr}
+  .life-stage{display:grid;grid-template-columns:42% 58%}
+  .life-stage img{height:150px}
+}
+
+
+@media(min-width:901px){
+  .quickfacts{grid-template-columns:repeat(8,1fr)}
+}
+
+
+/* ===== Premium v6: mørkere infobunn + fotologo ===== */
+.content{
+  background:linear-gradient(180deg,#4b315b,#3f294c);
+  border-radius:24px;
+  padding:14px;
+  box-shadow:0 18px 40px rgba(48,28,59,.16);
+}
+.content .card,
+.content .quickfacts{
+  background:#fdf9ff;
+}
+.content .soft{
+  background:linear-gradient(135deg,#f6edf9,#eee3f4);
+}
+.content .quote{
+  background:linear-gradient(135deg,#6b4a7d,#806493);
+  color:#fff;
+  border-color:rgba(255,255,255,.12);
+}
+.match-box{
+  background:linear-gradient(135deg,#4f2f62,#76558d);
+}
+.logo{
+  overflow:hidden;
+  padding:0;
+  background:#fff;
+  border:2px solid #d9c6e3;
+}
+.logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+@media(max-width:650px){
+  .content{
+    width:calc(100% - 10px);
+    padding:8px;
+    border-radius:18px;
+  }
+}
+
+
+/* ===== Premium v7: ekte rasebilder + utstyrsbilder ===== */
+.breed-btn .thumb{
+  overflow:hidden;
+  padding:0;
+  background:#fff;
+  border:1px solid #d9c6e3;
+}
+.breed-btn .thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.kit-item{
+  padding:0 0 13px;
+  overflow:hidden;
+}
+.kit-photo{
+  width:100%;
+  height:115px;
+  object-fit:cover;
+  display:block;
+  margin-bottom:11px;
+}
+.kit-item strong,
+.kit-item span{
+  padding-left:10px;
+  padding-right:10px;
+}
+@media(max-width:650px){
+  .kit-photo{height:135px}
+}
+
+
+/* ===== APPROVED PREMIUM DESIGN: PC + MOBIL ===== */
+:root{
+  --rose:#a46bc4 !important;
+  --rose-dark:#5b2d78 !important;
+  --lav:#7b4aa5 !important;
+  --cream:#10091c !important;
+  --cream2:#160b26 !important;
+  --ink:#f7f1fb !important;
+  --muted:#cdbfd7 !important;
+  --line:#4d2869 !important;
+  --white:#180c29 !important;
+  --shadow:0 18px 42px rgba(0,0,0,.28) !important;
+}
+body{
+  color:#f7f1fb !important;
+  background:
+    radial-gradient(circle at 82% 0%,rgba(106,54,145,.25),transparent 30rem),
+    linear-gradient(180deg,#080510,#130820 58%,#090510) !important;
+}
+.app{background:transparent}
+.sidebar{
+  background:linear-gradient(180deg,#120820,#0d0618) !important;
+  border-color:#3e2254 !important;
+}
+.brand{border-color:#3e2254 !important}
+.brand strong{color:#f0d99d !important;font-family:Georgia,serif;letter-spacing:.04em}
+.brand small{color:#c7a6d6 !important}
+.logo{border:2px solid #d8b84d !important;box-shadow:0 0 0 3px rgba(216,184,77,.08)}
+.side-title{color:#d5c2df !important}
+.breed-btn{
+  background:#180c29 !important;
+  border-color:#4d2869 !important;
+  color:#fff !important;
+}
+.breed-btn.active{
+  background:linear-gradient(135deg,#3e185e,#6b2f93) !important;
+  border-color:#8c55b3 !important;
+  color:#fff !important;
+}
+.side-link{color:#d8c9e0 !important}
+.side-link:hover{background:#211033 !important}
+.topbar{
+  background:rgba(10,5,18,.94) !important;
+  border-color:#3e2254 !important;
+}
+.search{
+  background:#160b26 !important;
+  border-color:#4d2869 !important;
+  color:#d8c9e0 !important;
+}
+.back{
+  background:linear-gradient(135deg,#4b1d6b,#71349b) !important;
+  color:#fff !important;
+}
+.hero{
+  border-bottom:1px solid #4d2869;
+}
+.content{
+  background:linear-gradient(180deg,#130820,#0d0618) !important;
+  border:1px solid #3f2255;
+}
+.quickfacts{
+  background:#170b28 !important;
+  border-color:#4d2869 !important;
+}
+.fact{border-color:#3e2254 !important}
+.fact b{color:#b985d2 !important}
+.fact span{color:#fff !important}
+.card{
+  background:#180c29 !important;
+  border-color:#4d2869 !important;
+  color:#fff !important;
+}
+.card.soft{
+  background:linear-gradient(135deg,#1c0d2e,#241038) !important;
+}
+.card h3,.card h4{color:#eadcf1 !important}
+.card p,.list,.kit-item span,.life-stage p{color:#cdbfd7 !important}
+.tag{
+  background:#2a123e !important;
+  border-color:#5c3376 !important;
+  color:#dcb8ee !important;
+}
+.rating-row{border-color:#3e2254 !important}
+.stars{color:#e5b93f !important}
+.life-stage{
+  background:#180c29 !important;
+  border-color:#4d2869 !important;
+}
+.life-stage h4{color:#e6d3ef !important}
+.kit-item{
+  background:#180c29 !important;
+  border-color:#4d2869 !important;
+}
+.kit-item strong{color:#fff !important}
+.match-box{
+  background:linear-gradient(135deg,#3d1759,#642889) !important;
+}
+.quote{
+  background:linear-gradient(135deg,#321346,#51206c) !important;
+  color:#fff !important;
+}
+.gallery img,.kit-photo{
+  border-color:#4d2869 !important;
+}
+
+/* Mobil: først bare rasevalg, 2 i bredden. Profil etter trykk. */
+@media(max-width:650px){
+  body.mobile-menu{
+    background:linear-gradient(180deg,#090510,#150921) !important;
+  }
+  body.mobile-menu .sidebar{
+    min-height:100vh !important;
+    padding:14px 10px 22px !important;
+  }
+  body.mobile-menu .breed-list{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:8px !important;
+  }
+  body.mobile-menu .breed-btn{
+    min-height:58px !important;
+    padding:7px !important;
+  }
+  .hero{
+    min-height:350px !important;
+    padding:42px 16px 22px !important;
+  }
+  .hero h1{font-size:3rem !important}
+  .quickfacts{grid-template-columns:repeat(2,1fr) !important}
+  .content{padding:8px !important}
+  .kit-grid{grid-template-columns:repeat(2,1fr) !important}
+  .kit-photo{height:115px !important}
+}
+@media(max-width:390px){
+  .kit-grid{grid-template-columns:1fr 1fr !important}
+  .kit-item strong{font-size:.8rem}
+  .kit-item span{font-size:.68rem}
+}
+
+</style>
+</head>
+<body class="mobile-menu">
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo"><img src="https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?auto=format&fit=crop&w=200&q=88" alt="Katt"></div>
+      <div><strong>KATTELEKSIKON</strong><small>Hundene Våre Premium</small></div>
+    </div>
+    <div class="side-title">Katteraser</div>
+    <div class="breed-list">
+      <button class="breed-btn active" id="ragdollBtn"><span class="thumb"><img src="https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?auto=format&fit=crop&w=240&q=88" alt="Ragdoll"></span>Ragdoll</button>
+      <button class="breed-btn" id="maineBtn"><span class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Maine%20Coon%20-%20Creative%20Commons%20by%20gnuckx%20%283207571173%29.jpg?width=240" alt="Maine Coon"></span>Maine Coon</button>
+    </div>
+    <div class="side-links">
+      <a class="side-link" href="kattakademiet.html">🎓 Kattakademiet</a>
+      <a class="side-link" href="kattevelger.html">🐾 Kattevelger</a>
+      <a class="side-link" href="katterasequiz.html">🧠 Kattequiz</a>
+      <a class="side-link" href="index.html">🏠 Forsiden</a>
+    </div>
+  </aside>
+
+  <section class="main">
+    <div class="topbar">
+      <div class="search">🔎 Søk etter katterase...</div>
+      <a class="back" href="kattakademiet.html">← Tilbake til Kattakademiet</a>
+    </div>
+
+    <section class="hero" id="breedHero">
+      <div class="hero-copy">
+        <div class="eyebrow">Selskapshund? Nei – selskapsskatt 🐱</div>
+        <h1 id="breedName">Ragdoll</h1>
+        <h2 id="breedSubtitle">Rolig, mild og menneskekjær</h2>
+        <p id="breedIntro">Rolig, mild og menneskekjær katt som gjerne følger eieren tett. En god familie- og innekatt for rolige hjem.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="kattevelger.html">🐾 Ta Kattevelgeren</a>
+          <a class="btn light" href="kattakademiet.html">🎓 Kattakademiet</a>
+        </div>
+      </div>
+    </section>
+
+    <main class="content">
+      <section class="quickfacts">
+        <div class="fact"><b>Opprinnelse</b><span>USA</span></div>
+        <div class="fact"><b>Levealder</b><span>12–17 år</span></div>
+        <div class="fact"><b>Vekt</b><span>4–9 kg</span></div>
+        <div class="fact"><b>Pels</b><span>Halvlang</span></div>
+        <div class="fact"><b>Aktivitet</b><span>★★☆☆☆</span></div>
+        <div class="fact"><b>Pelsstell</b><span>★★★☆☆</span></div>
+        <div class="fact"><b>Familie</b><span>★★★★★</span></div>
+        <div class="fact"><b>🐾 Kullstørrelse</b><span>Typisk 4–6</span></div>
+        <div class="fact"><b>🐾 Kullstørrelse</b><span>Typisk 4–6</span></div>
+      </section>
+
+      <section class="grid3">
+        <article class="card soft">
+          <h3>Om rasen</h3>
+          <h4>En moderne amerikansk rase</h4>
+          <p>Rasen ble utviklet i California på 1960-tallet. Ragdoll er kjent som en avslappet, tillitsfull og kosete katt.</p>
+        </article>
+        <article class="card">
+          <h3>Temperament</h3>
+          <p>Avslappet, tillitsfull og kosete. Den trives gjerne tett på familien.</p>
+          <div class="tags"><span class="tag">Rolig</span><span class="tag">Kosete</span><span class="tag">Innekatt</span></div>
+        </article>
+        <article class="card">
+          <h3>Passer for</h3>
+          <div class="rating-row"><span>Familie</span><span class="stars">★★★★★</span></div>
+          <div class="rating-row"><span>Barn</span><span class="stars">★★★★★</span></div>
+          <div class="rating-row"><span>Rolige hjem</span><span class="stars">★★★★★</span></div>
+        </article>
+      </section>
+
+      <section class="two section">
+        <article class="card">
+          <h3>👨‍👩‍👧 Familie og barn</h3>
+          <p>Ragdoll er en god familie- og innekatt for rolige hjem. Den er ofte mild og tålmodig med barn.</p>
+        </article>
+        <article class="card">
+          <h3>🐶 Hund og andre katter</h3>
+          <p>Den er vanligvis god med rolige hunder og trives ofte med en annen katt.</p>
+        </article>
+      </section>
+
+      <section class="two section">
+        <article class="card soft">
+          <h3>🏡 Inne eller ute</h3>
+          <p>Ragdoll bør holdes inne eller ha et sikret uteområde.</p>
+        </article>
+        <article class="card soft">
+          <h3>🪮 Pelsstell</h3>
+          <p>Den halv-lange pelsen bør børstes ukentlig.</p>
+        </article>
+      </section>
+
+      <section class="two section">
+        <article class="card">
+          <h3>🩺 Helse</h3>
+          <p>Hjertesykdom kan forekomme. Velg oppdretter med helsefokus og følg vanlig helseoppfølging.</p>
+        </article>
+        <article class="card">
+          <h3>✨ Hundene Våres vurdering</h3>
+          <p>En mild og sosial katt for mennesker som ønsker en rolig innekatt med mye nærhet og kontakt.</p>
+        </article>
+      </section>
+
+
+
+      <section class="card section soft">
+        <h3>🐾 Fra kattunge til senior</h3>
+        <div class="life-stage-grid">
+          <article class="life-stage">
+            <img alt="Ragdoll kattunge" src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=900&q=86">
+            <div><h4>Kattunge</h4><p>Trygg sosialisering, lek, gode rutiner og forsiktig tilvenning til pelsstell er viktig fra starten.</p></div>
+          </article>
+          <article class="life-stage">
+            <img alt="Ragdoll voksen" src="https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?auto=format&fit=crop&w=900&q=86">
+            <div><h4>Voksen</h4><p>Som voksen er Ragdoll ofte rolig og sosial. Hold katten aktiv og følg vekt, pels og generell helse.</p></div>
+          </article>
+          <article class="life-stage">
+            <img alt="Ragdoll senior" src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=900&q=86">
+            <div><h4>Senior</h4><p>Seniorer trenger komfortable hvileplasser, tilpasset aktivitet og tettere oppfølging av helse og vekt.</p></div>
+          </article>
+        </div>
+      </section>
+      <section class="match-box">
+        <h3>💜 Passer Ragdoll for deg?</h3>
+        <p>Et godt valg hvis du ønsker en rolig, sosial innekatt som liker nærhet og et forutsigbart familieliv.</p>
+        <div class="match-pills"><span>✓ Rolige hjem</span><span>✓ Familie</span><span>✓ Inneliv</span><span>✓ Mye kontakt</span></div>
+      </section>
+
+      <section class="card section">
+        <h3>📸 Fra kattunge til voksen</h3>
+        <div class="gallery">
+          <img alt="Ragdoll voksen katt" src="https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?auto=format&fit=crop&w=1200&q=86">
+          <img alt="Kattunge" src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=900&q=86">
+          <img alt="Kattunge nærbilde" src="https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?auto=format&fit=crop&w=900&q=86">
+          <img alt="Rolig innekatt" src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=900&q=86">
+          <img alt="Katt hjemme" src="https://images.unsplash.com/photo-1529778873920-4da4926a72c2?auto=format&fit=crop&w=900&q=86">
+        </div>
+      </section>
+
+      <section class="card section soft">
+        <h3>🧺 Utstyr du bør ha klart</h3>
+        <div class="kit-grid">
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/A%20cat%20sleeping%20in%20a%20cat%20bed.jpg?width=900" alt="God seng"><strong>God seng</strong><span>En lun og rolig hvileplass.</span></div>
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Modkat%20Cat%20Litter%20Box%20White%20by%20Modko.jpg?width=900" alt="Kattedo"><strong>Kattedo</strong><span>Stor nok, lett tilgjengelig og rengjøres ofte.</span></div>
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Cat%20food%20%28pellets%20and%20water%29.jpg?width=900" alt="Mat og vann"><strong>Mat og vann</strong><span>Stabile skåler og gjerne vannfontene.</span></div>
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Using%20cat%20comb.jpg?width=900" alt="Børste"><strong>Børste</strong><span>Tilpasset halvlang pels og jevnlig stell.</span></div>
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Mindy%20Mouse%20cat%20toy.jpg?width=900" alt="Leker"><strong>Leker</strong><span>Variert lek for jakt, aktivitet og kontakt.</span></div>
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Cat%20tree%20with%202%20cats.jpg?width=900" alt="Klorestativ"><strong>Klorestativ</strong><span>Solid og høyt nok til full strekk.</span></div>
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Dogtainers%20Pet%20Transport%20Clipper%20Cat%20Cage%20Plastic%20Travel%20Crate%20Labelled.jpg?width=900" alt="Transportbur"><strong>Transportbur</strong><span>Trygt bur til veterinær og reiser.</span></div>
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/A%20kitten%20in%20a%20cat%20tree.jpg?width=900" alt="Høyder"><strong>Høyder</strong><span>Klatremuligheter og trygge utsiktsposter.</span></div>
+        </div>
+      </section>
+
+      <section class="check-grid section">
+        <article class="check">
+          <h3>✅ Før katten kommer hjem</h3>
+          <ul>
+            <li>Avtal veterinær og forsikring.</li>
+            <li>Sikre vinduer, balkong og farlige åpninger.</li>
+            <li>Lag et rolig rom for de første dagene.</li>
+            <li>Ha samme fôr som katten er vant til i starten.</li>
+          </ul>
+        </article>
+        <article class="check">
+          <h3>💜 Før du velger Ragdoll</h3>
+          <ul>
+            <li>Sett deg inn i pelsstell og helse.</li>
+            <li>Velg oppdretter som dokumenterer helsefokus.</li>
+            <li>Beregn plass til klatremiljø og store kattedoer.</li>
+            <li>Vær forberedt på en katt som ønsker mye nærhet.</li>
+          </ul>
+        </article>
+      </section>
+
+      <div class="quote">«Ragdoll passer spesielt godt i rolige hjem der den får være tett på menneskene sine.»</div>
+    </main>
+
+    <main class="content" id="maineProfile" style="display:none">
+      <section class="quickfacts">
+        <div class="fact"><b>Opprinnelse</b><span>USA</span></div>
+        <div class="fact"><b>Levealder</b><span>12–15 år</span></div>
+        <div class="fact"><b>Vekt</b><span>5–10 kg</span></div>
+        <div class="fact"><b>Pels</b><span>Halvlang</span></div>
+        <div class="fact"><b>Aktivitet</b><span>★★★★☆</span></div>
+        <div class="fact"><b>Pelsstell</b><span>★★★★☆</span></div>
+        <div class="fact"><b>Familie</b><span>★★★★★</span></div>
+      </section>
+
+      <section class="grid3">
+        <article class="card soft">
+          <h3>Om rasen</h3>
+          <h4>Den milde kjempen</h4>
+          <p>Maine Coon stammer fra Maine i USA og utviklet seg som en robust gårdskatt. Den er stor, vennlig og sosial uten nødvendigvis å være påtrengende.</p>
+        </article>
+        <article class="card">
+          <h3>Temperament</h3>
+          <p>Vennlig, leken og sosial. Mange Maine Coon-katter beholder et lekent preg langt inn i voksen alder.</p>
+          <div class="tags"><span class="tag">Familievennlig</span><span class="tag">Stor</span><span class="tag">Sosial</span></div>
+        </article>
+        <article class="card">
+          <h3>Passer for</h3>
+          <div class="rating-row"><span>Familie</span><span class="stars">★★★★★</span></div>
+          <div class="rating-row"><span>Barn</span><span class="stars">★★★★★</span></div>
+          <div class="rating-row"><span>Aktive hjem</span><span class="stars">★★★★☆</span></div>
+        </article>
+      </section>
+
+      <section class="two section">
+        <article class="card"><h3>👨‍👩‍👧 Familie og barn</h3><p>Et godt valg for familier som ønsker en stor og sosial katt. Rasen er vanligvis tålmodig med barn.</p></article>
+        <article class="card"><h3>🐶 Hund og andre katter</h3><p>Maine Coon kan ofte leve godt med hund og trives gjerne sammen med andre katter.</p></article>
+      </section>
+
+      <section class="two section">
+        <article class="card soft"><h3>🏡 Hjem og aktivitet</h3><p>Den trenger plass, solide møbler og gode klatre- og aktivitetsmuligheter.</p></article>
+        <article class="card soft"><h3>🪮 Pelsstell</h3><p>Den halv-lange pelsen bør børstes flere ganger i uken.</p></article>
+      </section>
+
+      <section class="two section">
+        <article class="card"><h3>🩺 Helse</h3><p>Hjerte-, hofte- og nyreproblemer kan forekomme. Velg oppdretter med dokumentert helsefokus.</p></article>
+        <article class="card"><h3>✨ Hundene Våres vurdering</h3><p>En imponerende, sosial og familievennlig katt for hjem som har plass til en stor katt og kan tilby nok aktivitet.</p></article>
+      </section>
+
+
+      <section class="card section soft">
+        <h3>🐾 Fra kattunge til senior</h3>
+        <div class="life-stage-grid">
+          <article class="life-stage">
+            <img alt="Maine Coon kattunge" src="https://images.unsplash.com/photo-1606214174585-fe31582dc6ee?auto=format&fit=crop&w=900&q=86">
+            <div><h4>Kattunge</h4><p>En leken og nysgjerrig periode. Start tidlig med børsting, kloklipp, transportbur og gode aktivitetsvaner.</p></div>
+          </article>
+          <article class="life-stage">
+            <img alt="Maine Coon voksen" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Maine%20Coon%20-%20Creative%20Commons%20by%20gnuckx%20%283207571173%29.jpg?width=1200">
+            <div><h4>Voksen</h4><p>Den voksne Maine Coon trenger solide klatremuligheter, aktivitet og regelmessig pelsstell.</p></div>
+          </article>
+          <article class="life-stage">
+            <img alt="Maine Coon senior" src="https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=900&q=86">
+            <div><h4>Senior</h4><p>Følg bevegelighet, vekt og allmenntilstand. Gjør favorittplassene lettere tilgjengelige når katten blir eldre.</p></div>
+          </article>
+        </div>
+      </section>
+      <section class="match-box">
+        <h3>💜 Passer Maine Coon for deg?</h3>
+        <p>Et godt valg hvis du ønsker en stor, sosial og leken katt og har plass til solide klatremøbler og en romslig hverdag.</p>
+        <div class="match-pills"><span>✓ Familier</span><span>✓ Barn</span><span>✓ Sosiale hjem</span><span>✓ God plass</span></div>
+      </section>
+
+      <section class="card section">
+        <h3>📸 Maine Coon – fra kattunge til voksen</h3>
+        <div class="gallery">
+          <img alt="Maine Coon voksen" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Maine%20Coon%20-%20Creative%20Commons%20by%20gnuckx%20%283207571173%29.jpg?width=1200">
+          <img alt="Maine Coon kattunge" src="https://images.unsplash.com/photo-1606214174585-fe31582dc6ee?auto=format&fit=crop&w=900&q=86">
+          <img alt="Kattunge" src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=900&q=86">
+          <img alt="Maine Coon hjemme" src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=900&q=86">
+          <img alt="Stor langhåret katt" src="https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=900&q=86">
+        </div>
+      </section>
+
+      <section class="card section soft">
+        <h3>🧺 Utstyr du bør ha klart</h3>
+        <div class="kit-grid">
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Cat%20tree%20with%202%20cats.jpg?width=900" alt="Solid klorestativ"><strong>Solid klorestativ</strong><span>Stort og stabilt nok for en tung voksen katt.</span></div>
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Modkat%20Cat%20Litter%20Box%20White%20by%20Modko.jpg?width=900" alt="Stor kattedo"><strong>Stor kattedo</strong><span>Velg en romslig modell med god plass.</span></div>
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Using%20cat%20comb.jpg?width=900" alt="God børste"><strong>God børste</strong><span>Til regelmessig stell av halvlang pels.</span></div>
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Cat%20food%20%28pellets%20and%20water%29.jpg?width=900" alt="Mat og vann"><strong>Mat og vann</strong><span>Stabile skåler og gjerne vannfontene.</span></div>
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Dogtainers%20Pet%20Transport%20Clipper%20Cat%20Cage%20Plastic%20Travel%20Crate%20Labelled.jpg?width=900" alt="Stort transportbur"><strong>Stort transportbur</strong><span>Beregn størrelse for en stor voksen Maine Coon.</span></div>
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Ball%20Track%20Cat%20Toy%201%202017-01-13.jpg?width=900" alt="Aktivitetsleker"><strong>Aktivitetsleker</strong><span>Lek, jakt og problemløsning hver dag.</span></div>
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/A%20cat%20sleeping%20in%20a%20cat%20bed.jpg?width=900" alt="Romslig seng"><strong>Romslig seng</strong><span>En lun hvileplass med god størrelse.</span></div>
+          <div class="kit-item"><img class="kit-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/A%20kitten%20in%20a%20cat%20tree.jpg?width=900" alt="Klatremiljø"><strong>Klatremiljø</strong><span>Hyller og høyder som tåler rasens størrelse.</span></div>
+        </div>
+      </section>
+
+      <div class="quote">«Maine Coon er en stor katt med et mildt vesen – sosial, leken og ofte en fantastisk familiekatt.»</div>
+    </main>
+  </section>
+</div>
+
+<script>
+const ragdollBtn=document.getElementById("ragdollBtn");
+const maineBtn=document.getElementById("maineBtn");
+const ragdollProfile=document.querySelector(".content:not(#maineProfile)");
+const maineProfile=document.getElementById("maineProfile");
+const hero=document.getElementById("breedHero");
+
+function showBreed(type){
+  document.body.classList.remove("mobile-menu");
+  const isMaine=type==="maine";
+  ragdollProfile.style.display=isMaine?"none":"block";
+  maineProfile.style.display=isMaine?"block":"none";
+  ragdollBtn.classList.toggle("active",!isMaine);
+  maineBtn.classList.toggle("active",isMaine);
+  document.getElementById("breedName").textContent=isMaine?"Maine Coon":"Ragdoll";
+  document.getElementById("breedSubtitle").textContent=isMaine?"Stor, vennlig og sosial":"Rolig, mild og menneskekjær";
+  document.getElementById("breedIntro").textContent=isMaine
+    ?"En stor, robust og sosial katt som ofte kalles den milde kjempen. Maine Coon passer godt i familier som har plass og ønsker en leken og vennlig katt."
+    :"Rolig, mild og menneskekjær katt som gjerne følger eieren tett. En god familie- og innekatt for rolige hjem.";
+  hero.style.background=isMaine
+    ?"linear-gradient(90deg,rgba(55,31,72,.94),rgba(76,48,96,.68),rgba(99,78,130,.22)),url('https://commons.wikimedia.org/wiki/Special:Redirect/file/Maine%20Coon%20-%20Creative%20Commons%20by%20gnuckx%20%283207571173%29.jpg?width=1800') center/cover"
+    :"linear-gradient(90deg,rgba(55,31,72,.94),rgba(76,48,96,.68),rgba(99,78,130,.22)),url('https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?auto=format&fit=crop&w=1800&q=88') center/cover";
+  setTimeout(()=>hero.scrollIntoView({behavior:"smooth",block:"start"}),50);
+}
+ragdollBtn.addEventListener("click",()=>showBreed("ragdoll"));
+maineBtn.addEventListener("click",()=>showBreed("maine"));
+if(window.innerWidth>650) document.body.classList.remove("mobile-menu");
+window.addEventListener("resize",()=>{if(window.innerWidth>650)document.body.classList.remove("mobile-menu")});
+</script>
+
+<div class="image-credit" style="text-align:center;color:#9f8bab;font-size:10px;padding:8px 12px 18px">
+Utstyrs- og enkelte rasebilder: Wikimedia Commons (bilder brukes i henhold til lisensen på den enkelte bildefilen).
+</div>
+
+</body>
+</html>
