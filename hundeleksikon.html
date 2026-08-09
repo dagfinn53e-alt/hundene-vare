@@ -733,6 +733,58 @@ color:#f2cf75;
   }
 }
 
+
+/* ===== MOBIL: vis bare raselisten til en rase velges ===== */
+@media(max-width:760px){
+  body.mobile-breed-menu .topbar,
+  body.mobile-breed-menu main,
+  body.mobile-breed-menu .main,
+  body.mobile-breed-menu .content,
+  body.mobile-breed-menu .hero,
+  body.mobile-breed-menu .section-nav{
+    display:none !important;
+  }
+
+  body.mobile-breed-menu .app{
+    display:block !important;
+  }
+
+  body.mobile-breed-menu .sidebar{
+    min-height:100vh;
+    width:100% !important;
+    max-width:none !important;
+    position:relative !important;
+    inset:auto !important;
+    overflow:visible !important;
+    border-right:0 !important;
+    padding:14px 12px 24px !important;
+  }
+
+  body.mobile-breed-menu .breed-list{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    max-height:none !important;
+    overflow:visible !important;
+    gap:8px !important;
+  }
+
+  body.mobile-breed-menu .breed-btn{
+    width:100% !important;
+    min-height:54px;
+  }
+
+  body.mobile-breed-menu .side-link,
+  body.mobile-breed-menu .premium-box{
+    display:none !important;
+  }
+}
+
+@media(max-width:430px){
+  body.mobile-breed-menu .breed-list{
+    grid-template-columns:1fr !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2739,5 +2791,49 @@ document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
 
 render();
 </script>
+
+<script>
+(function(){
+  function isMobile(){ return window.matchMedia("(max-width:760px)").matches; }
+
+  function hasBreedSelection(){
+    var p = new URLSearchParams(location.search);
+    if (p.get("rase") || p.get("breed") || p.get("hund")) return true;
+    if (location.hash && location.hash.length > 1) return true;
+    return false;
+  }
+
+  function openBreed(){
+    document.body.classList.remove("mobile-breed-menu");
+    setTimeout(function(){
+      var main = document.querySelector("main, .main, .content, .hero");
+      if(main) main.scrollIntoView({behavior:"smooth", block:"start"});
+    },40);
+  }
+
+  function initMobileMenu(){
+    if(isMobile() && !hasBreedSelection()){
+      document.body.classList.add("mobile-breed-menu");
+    }
+
+    document.querySelectorAll(".breed-btn").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        if(isMobile()) openBreed();
+      });
+    });
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", initMobileMenu);
+  } else {
+    initMobileMenu();
+  }
+
+  window.addEventListener("resize", function(){
+    if(!isMobile()) document.body.classList.remove("mobile-breed-menu");
+  });
+})();
+</script>
+
 </body>
 </html>
