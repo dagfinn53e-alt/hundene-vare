@@ -828,9 +828,45 @@ color:#f2cf75;
   }
 }
 
+
+/* Tilbake til Hundeakademiet */
+.back-academy{
+  position:fixed;
+  left:18px;
+  bottom:18px;
+  z-index:10000;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  padding:11px 16px;
+  border-radius:999px;
+  background:#0f5b35;
+  color:#fff !important;
+  text-decoration:none;
+  font-weight:800;
+  font-size:.88rem;
+  box-shadow:0 8px 22px rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.18);
+}
+.back-academy:hover{
+  background:#0a4026;
+  transform:translateY(-1px);
+}
+@media(max-width:760px){
+  .back-academy{
+    left:10px;
+    bottom:10px;
+    padding:9px 12px;
+    font-size:.76rem;
+  }
+}
+
 </style>
 </head>
 <body>
+<a class="back-academy" href="hundeakademiet.html">← 🎓 Tilbake til akademiet</a>
+
 <div class="app">
   <aside class="sidebar">
     <div class="brand">
