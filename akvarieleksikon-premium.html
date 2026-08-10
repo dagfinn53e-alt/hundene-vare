@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akvarieleksikon Premium – TEST 2 arter</title>
+<style>
+*{box-sizing:border-box}
+:root{
+ --blue:#0b73b7;--blue2:#16a8b8;--dark:#041521;--panel:#08283a;
+ --panel2:#0c3348;--line:#15516c;--text:#f1fbff;--muted:#b8d9e5;
+ --gold:#e8c55a;--shadow:0 18px 42px rgba(0,0,0,.28);
+}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#020b11,#061824 58%,#020b11);color:var(--text)}
+.app{min-height:100vh;display:grid;grid-template-columns:255px 1fr}
+.sidebar{position:sticky;top:0;height:100vh;overflow:auto;background:linear-gradient(180deg,#041622,#03101a);border-right:1px solid var(--line);padding:18px 14px}
+.brand{display:flex;align-items:center;gap:10px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.logo{width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#0b73b7,#16a8b8);display:grid;place-items:center;font-size:27px}
+.brand strong{display:block;color:#f2d77d} .brand small{display:block;color:#9fcbdc;font-size:11px;margin-top:2px}
+.side-title{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#9fcbdc;font-weight:900;margin:18px 6px 9px}
+.breed-list{display:grid;gap:9px}
+.fish-btn{width:100%;border:1px solid var(--line);border-radius:14px;background:#092638;padding:9px;display:flex;align-items:center;gap:10px;color:white;font-weight:900;cursor:pointer;text-align:left}
+.fish-btn.active{background:linear-gradient(135deg,#0c4f75,#0b73b7);border-color:#2ca7d4}
+.thumb{width:42px;height:42px;border-radius:50%;overflow:hidden;flex:0 0 42px;border:1px solid #2f7692}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.main{min-width:0}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(3,14,22,.94);border-bottom:1px solid var(--line);padding:11px 18px;display:flex;justify-content:flex-end}
+.back{text-decoration:none;background:linear-gradient(135deg,#0b73b7,#16a8b8);color:white;padding:10px 15px;border-radius:999px;font-weight:900}
+.hero{min-height:390px;padding:60px 34px 30px;display:flex;align-items:flex-end;position:relative;overflow:hidden;background:linear-gradient(90deg,rgba(1,13,22,.95),rgba(4,46,68,.6),rgba(6,78,103,.18)),var(--hero) center/cover}
+.hero-copy{max-width:720px;position:relative;z-index:2}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:#a7dded;font-weight:900}
+.hero h1{font-family:Georgia,serif;font-size:clamp(3rem,7vw,6rem);margin:8px 0 5px;line-height:.95}
+.hero h2{font-family:Georgia,serif;font-weight:400;color:#bfeaf5;margin:0 0 12px}
+.hero p{color:#e9fbff;line-height:1.6;max-width:650px}
+.content{width:min(1300px,calc(100% - 20px));margin:12px auto 36px;background:linear-gradient(180deg,#061c29,#04131e);border:1px solid var(--line);border-radius:24px;padding:14px}
+.quickfacts{display:grid;grid-template-columns:repeat(8,1fr);background:#092638;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.fact{padding:15px 8px;text-align:center;border-right:1px solid var(--line)} .fact:last-child{border-right:0}
+.fact b{display:block;color:#7fd4e7;font-size:11px;text-transform:uppercase;margin-bottom:5px} .fact span{font-weight:900}
+.grid3{display:grid;grid-template-columns:1.2fr .9fr .9fr;gap:12px;margin-top:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.card{background:#092638;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 10px 26px rgba(0,0,0,.15)}
+.card.soft{background:linear-gradient(135deg,#0a2d42,#0b354a)} .card h3{margin:0 0 10px;color:#8bdff0;font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+.card h4{font-family:Georgia,serif;font-size:1.9rem;margin:0 0 9px} .card p{color:var(--muted);line-height:1.65;margin:0}
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px} .tag{background:#0b3c54;border:1px solid #1c6d8a;color:#bfefff;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:900}
+.rating-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)} .stars{color:#f2cf66;font-weight:900}
+.gallery{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:10px} .gallery img{width:100%;height:180px;object-fit:cover;border-radius:16px;border:1px solid var(--line)} .gallery img:first-child{grid-row:span 2;height:370px}
+.kit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kit-item{background:#092638;border:1px solid var(--line);border-radius:16px;padding:14px;text-align:center}
+.kit-ico{font-size:34px;margin-bottom:7px} .kit-item strong{display:block;margin-bottom:4px} .kit-item span{color:var(--muted);font-size:12px;line-height:1.4}
+.match-box{margin-top:12px;background:linear-gradient(135deg,#07557a,#0b7f96);border-radius:20px;padding:22px;color:white}
+.match-pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px} .match-pills span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);padding:7px 10px;border-radius:999px;font-size:12px;font-weight:900}
+.quote{margin-top:12px;text-align:center;padding:20px;border-radius:18px;background:linear-gradient(135deg,#0a354d,#0b526a);font-family:Georgia,serif;font-size:1.2rem}
+.section{margin-top:12px}
+@media(max-width:900px){.app{display:block}.sidebar{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line)}.topbar{display:none}.quickfacts{grid-template-columns:repeat(2,1fr)}.grid3,.two{grid-template-columns:1fr}}
+@media(max-width:650px){body.mobile-menu .main{display:none}.breed-list{grid-template-columns:repeat(2,1fr)}.fish-btn{min-height:60px}.hero{min-height:330px;padding:42px 16px 22px}.hero h1{font-size:3rem}.content{width:calc(100% - 10px);padding:8px}.kit-grid{grid-template-columns:repeat(2,1fr)}.gallery{grid-template-columns:1fr 1fr}.gallery img,.gallery img:first-child{height:180px;grid-row:auto}}
+</style>
+</head>
+<body class="mobile-menu">
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">🐠</div><div><strong>AKVARIELEKSIKON</strong><small>Hundene Våre Premium – TEST</small></div></div>
+  <div class="side-title">Fiskearter</div>
+  <div class="breed-list">
+    <button class="fish-btn active" id="guppyBtn"><span class="thumb"><img src="https://mesbestiolesdabordboutique.com/cdn/shop/articles/terrarium_44_9b07d211-e006-4bdc-93ef-24c1cc56fffd.png?v=1756808882" alt="Guppy"></span>Guppy</button>
+    <button class="fish-btn" id="neonBtn"><span class="thumb"><img src="https://cdn2.bigcommerce.com/server2800/7824a/products/3898/images/9857/neon-tetra-paracheirodon-1381835-hero-2cc17d27c90d4215bfe4deeeab03e0a5__34644.1633500343.1280.1280.jpg?c=2" alt="Neontetra"></span>Neontetra</button>
+  </div>
+</aside>
+
+<div class="main">
+<div class="topbar"><a class="back" href="akvarieakademiet.html">← Tilbake til Akvarieakademiet</a></div>
+<section class="hero" id="fishHero" style="--hero:url('https://mesbestiolesdabordboutique.com/cdn/shop/articles/terrarium_44_9b07d211-e006-4bdc-93ef-24c1cc56fffd.png?v=1756808882')">
+  <div class="hero-copy">
+    <div class="eyebrow">AKVARIELEKSIKON PREMIUM</div>
+    <h1 id="fishName">Guppy</h1>
+    <h2 id="fishSubtitle">Fargerik, aktiv og lett å lykkes med</h2>
+    <p id="fishIntro">En klassisk selskapsfisk som passer godt for både nybegynnere og erfarne akvarister.</p>
+  </div>
+</section>
+
+<main class="content" id="guppyProfile">
+<section class="quickfacts">
+<div class="fact"><b>Latinsk navn</b><span>Poecilia reticulata</span></div><div class="fact"><b>Størrelse</b><span>3–6 cm</span></div>
+<div class="fact"><b>Temperatur</b><span>22–28 °C</span></div><div class="fact"><b>pH</b><span>7,0–8,0</span></div>
+<div class="fact"><b>Akvarium</b><span>Fra ca. 60 L</span></div><div class="fact"><b>Nivå</b><span>Lett</span></div>
+<div class="fact"><b>Fôr</b><span>Alteter</span></div><div class="fact"><b>Levealder</b><span>Ca. 2–3 år</span></div>
+</section>
+<section class="grid3">
+<article class="card soft"><h3>Om arten</h3><h4>En av verdens mest populære akvariefisk</h4><p>Guppyen er kjent for sterke farger, stor variasjon og et aktivt temperament. Hannene er ofte mest fargerike, mens hunnene gjerne er større.</p></article>
+<article class="card"><h3>Temperament</h3><p>Fredelig og sosial. Guppy trives best i grupper og passer sammen med andre rolige fisk som liker tilsvarende vannverdier.</p><div class="tags"><span class="tag">Fredelig</span><span class="tag">Sosial</span><span class="tag">Aktiv</span></div></article>
+<article class="card"><h3>Passer for</h3><div class="rating-row"><span>Nybegynner</span><span class="stars">★★★★★</span></div><div class="rating-row"><span>Selskapskar</span><span class="stars">★★★★★</span></div><div class="rating-row"><span>Plantet kar</span><span class="stars">★★★★☆</span></div></article>
+</section>
+<section class="two"><article class="card"><h3>🐟 Gruppe og adferd</h3><p>Hold flere sammen. En gruppe med flere hunner enn hanner gir ofte roligere dynamikk.</p></article><article class="card"><h3>🥚 Formering</h3><p>Guppy er levendefødende og formerer seg lett. Tette planter gir yngelen skjul.</p></article></section>
+<section class="two"><article class="card soft"><h3>🌿 Innredning</h3><p>Planter, åpne svømmeområder og rolig til moderat strøm passer godt.</p></article><article class="card soft"><h3>🍽️ Fôring</h3><p>Variert kvalitetsfôr med små granulat, flak og gjerne frossent eller levende fôr.</p></article></section>
+<section class="match-box"><h3>💙 Passer Guppy for ditt akvarium?</h3><p>Et godt valg hvis du ønsker en fargerik, sosial og forholdsvis enkel fisk.</p><div class="match-pills"><span>✓ Nybegynner</span><span>✓ Selskapskar</span><span>✓ Planter</span><span>✓ Aktiv</span></div></section>
+<section class="card section"><h3>📸 Guppy</h3><div class="gallery"><img src="https://mesbestiolesdabordboutique.com/cdn/shop/articles/terrarium_44_9b07d211-e006-4bdc-93ef-24c1cc56fffd.png?v=1756808882" alt="Guppy"><img src="https://mesbestiolesdabordboutique.com/cdn/shop/articles/terrarium_44_9b07d211-e006-4bdc-93ef-24c1cc56fffd.png?v=1756808882" alt="Guppy"><img src="https://mesbestiolesdabordboutique.com/cdn/shop/articles/terrarium_44_9b07d211-e006-4bdc-93ef-24c1cc56fffd.png?v=1756808882" alt="Guppy"></div></section>
+<section class="card section soft"><h3>🧰 Utstyr du bør ha klart</h3><div class="kit-grid">
+<div class="kit-item"><div class="kit-ico">🌡️</div><strong>Varmeelement</strong><span>Stabil temperatur.</span></div>
+<div class="kit-item"><div class="kit-ico">🧽</div><strong>Filter</strong><span>God biologisk filtrering.</span></div>
+<div class="kit-item"><div class="kit-ico">💡</div><strong>Lys</strong><span>Til fisk og planter.</span></div>
+<div class="kit-item"><div class="kit-ico">🌿</div><strong>Planter</strong><span>Gir skjul og trygghet.</span></div>
+<div class="kit-item"><div class="kit-ico">🧪</div><strong>Vanntest</strong><span>Kontroller pH, nitritt og nitrat.</span></div>
+<div class="kit-item"><div class="kit-ico">🪣</div><strong>Bøtte/slange</strong><span>Til vannbytter.</span></div>
+<div class="kit-item"><div class="kit-ico">🥣</div><strong>Fôr</strong><span>Små porsjoner, variert kost.</span></div>
+<div class="kit-item"><div class="kit-ico">🕸️</div><strong>Håv</strong><span>For trygg håndtering.</span></div>
+</div></section>
+<div class="quote">«Guppyen er liten i størrelse, men stor på farger og personlighet.»</div>
+</main>
+
+<main class="content" id="neonProfile" style="display:none">
+<section class="quickfacts">
+<div class="fact"><b>Latinsk navn</b><span>Paracheirodon innesi</span></div><div class="fact"><b>Størrelse</b><span>3–4 cm</span></div>
+<div class="fact"><b>Temperatur</b><span>20–26 °C</span></div><div class="fact"><b>pH</b><span>5,0–7,5</span></div>
+<div class="fact"><b>Akvarium</b><span>Fra ca. 60 L</span></div><div class="fact"><b>Nivå</b><span>Lett–middels</span></div>
+<div class="fact"><b>Fôr</b><span>Alteter</span></div><div class="fact"><b>Levealder</b><span>Ca. 5 år</span></div>
+</section>
+<section class="grid3">
+<article class="card soft"><h3>Om arten</h3><h4>Den blå og røde klassikeren</h4><p>Neontetra er en liten stimfisk med en intens blå stripe og rød bakre kroppsdel. Den gjør seg best når mange svømmer sammen.</p></article>
+<article class="card"><h3>Temperament</h3><p>Fredelig og sosial. Neontetra bør holdes i stim, gjerne 10 eller flere, for å vise naturlig adferd.</p><div class="tags"><span class="tag">Stimfisk</span><span class="tag">Fredelig</span><span class="tag">Rolig</span></div></article>
+<article class="card"><h3>Passer for</h3><div class="rating-row"><span>Selskapskar</span><span class="stars">★★★★★</span></div><div class="rating-row"><span>Plantet kar</span><span class="stars">★★★★★</span></div><div class="rating-row"><span>Nybegynner</span><span class="stars">★★★★☆</span></div></article>
+</section>
+<section class="two"><article class="card"><h3>🐟 Stim og adferd</h3><p>Jo større stim, desto flottere blir uttrykket og desto tryggere blir fisken.</p></article><article class="card"><h3>🌑 Lys og miljø</h3><p>Mørkere bunn, planter og dempet lys fremhever fargene svært godt.</p></article></section>
+<section class="two"><article class="card soft"><h3>🌿 Innredning</h3><p>Tette plantefelt kombinert med åpne svømmeområder gir et naturlig og vakkert miljø.</p></article><article class="card soft"><h3>🍽️ Fôring</h3><p>Smått kvalitetsfôr, gjerne supplert med små frosne eller levende fôrdyr.</p></article></section>
+<section class="match-box"><h3>💙 Passer Neontetra for ditt akvarium?</h3><p>Et godt valg hvis du ønsker en fredelig, vakker stimfisk i et plantet selskapsakvarium.</p><div class="match-pills"><span>✓ Stim</span><span>✓ Selskapskar</span><span>✓ Planter</span><span>✓ Fredelig</span></div></section>
+<section class="card section"><h3>📸 Neontetra</h3><div class="gallery"><img src="https://cdn2.bigcommerce.com/server2800/7824a/products/3898/images/9857/neon-tetra-paracheirodon-1381835-hero-2cc17d27c90d4215bfe4deeeab03e0a5__34644.1633500343.1280.1280.jpg?c=2" alt="Neontetra"><img src="https://cdn2.bigcommerce.com/server2800/7824a/products/3898/images/9857/neon-tetra-paracheirodon-1381835-hero-2cc17d27c90d4215bfe4deeeab03e0a5__34644.1633500343.1280.1280.jpg?c=2" alt="Neontetra"><img src="https://cdn2.bigcommerce.com/server2800/7824a/products/3898/images/9857/neon-tetra-paracheirodon-1381835-hero-2cc17d27c90d4215bfe4deeeab03e0a5__34644.1633500343.1280.1280.jpg?c=2" alt="Neontetra"></div></section>
+<section class="card section soft"><h3>🧰 Utstyr du bør ha klart</h3><div class="kit-grid">
+<div class="kit-item"><div class="kit-ico">🌡️</div><strong>Varmeelement</strong><span>Stabil temperatur.</span></div>
+<div class="kit-item"><div class="kit-ico">🧽</div><strong>Filter</strong><span>Rolig og stabil filtrering.</span></div>
+<div class="kit-item"><div class="kit-ico">💡</div><strong>Lys</strong><span>Gjerne noe dempet.</span></div>
+<div class="kit-item"><div class="kit-ico">🌿</div><strong>Planter</strong><span>Skjul og trygghet.</span></div>
+<div class="kit-item"><div class="kit-ico">🧪</div><strong>Vanntest</strong><span>Hold vannverdiene stabile.</span></div>
+<div class="kit-item"><div class="kit-ico">🪣</div><strong>Bøtte/slange</strong><span>Regelmessige vannbytter.</span></div>
+<div class="kit-item"><div class="kit-ico">🥣</div><strong>Smått fôr</strong><span>Tilpasset liten munn.</span></div>
+<div class="kit-item"><div class="kit-ico">🕸️</div><strong>Håv</strong><span>Finmasket håv.</span></div>
+</div></section>
+<div class="quote">«En god stim Neontetra kan bli selve blikkfanget i et plantet akvarium.»</div>
+</main>
+</div>
+</div>
+
+<script>
+const guppyBtn=document.getElementById("guppyBtn");
+const neonBtn=document.getElementById("neonBtn");
+const guppyProfile=document.getElementById("guppyProfile");
+const neonProfile=document.getElementById("neonProfile");
+const hero=document.getElementById("fishHero");
+const nameEl=document.getElementById("fishName");
+const subEl=document.getElementById("fishSubtitle");
+const introEl=document.getElementById("fishIntro");
+
+const data={
+ guppy:{name:"Guppy",subtitle:"Fargerik, aktiv og lett å lykkes med",intro:"En klassisk selskapsfisk som passer godt for både nybegynnere og erfarne akvarister.",image:"https://mesbestiolesdabordboutique.com/cdn/shop/articles/terrarium_44_9b07d211-e006-4bdc-93ef-24c1cc56fffd.png?v=1756808882"},
+ neon:{name:"Neontetra",subtitle:"Fredelig, vakker og best i stim",intro:"En klassisk liten stimfisk som virkelig kommer til sin rett i et plantet selskapsakvarium.",image:"https://cdn2.bigcommerce.com/server2800/7824a/products/3898/images/9857/neon-tetra-paracheirodon-1381835-hero-2cc17d27c90d4215bfe4deeeab03e0a5__34644.1633500343.1280.1280.jpg?c=2"}
+};
+function showFish(type){
+ document.body.classList.remove("mobile-menu");
+ guppyProfile.style.display=type==="guppy"?"block":"none";
+ neonProfile.style.display=type==="neon"?"block":"none";
+ guppyBtn.classList.toggle("active",type==="guppy");
+ neonBtn.classList.toggle("active",type==="neon");
+ const d=data[type];
+ nameEl.textContent=d.name;subEl.textContent=d.subtitle;introEl.textContent=d.intro;
+ hero.style.setProperty("--hero","url('"+d.image+"')");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+guppyBtn.addEventListener("click",()=>showFish("guppy"));
+neonBtn.addEventListener("click",()=>showFish("neon"));
+</script>
+</body>
+</html>
