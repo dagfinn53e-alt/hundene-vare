@@ -497,6 +497,537 @@
       .cta .btn{width:100%;min-width:0}
     }
   </style>
+
+<style>
+/* ===== Nettbutikker Premium 2.0 – mørk Hundene Våre-stil ===== */
+:root{
+  --blue:#27b6d6;
+  --blue-dark:#0b6682;
+  --navy:#03131f;
+  --gold:#e6b85c;
+  --orange:#f59e42;
+  --pink:#d85f9f;
+  --line:#16495d;
+  --text:#eefcff;
+  --muted:#9fc5d2;
+  --shadow:0 20px 46px rgba(0,0,0,.24);
+}
+body{
+  color:var(--text)!important;
+  background:
+    radial-gradient(circle at 8% 5%,rgba(22,163,190,.18),transparent 28%),
+    radial-gradient(circle at 93% 8%,rgba(31,112,140,.14),transparent 30%),
+    linear-gradient(180deg,#02090f 0%,#041722 46%,#062735 100%)!important;
+}
+.topbar{
+  background:rgba(4,20,30,.94)!important;
+  border-color:rgba(87,190,213,.22)!important;
+  box-shadow:0 18px 42px rgba(0,0,0,.30)!important;
+  backdrop-filter:blur(14px);
+}
+.brand{color:#a8eff8!important}
+.brand-icon{
+  background:linear-gradient(135deg,#0c3548,#0c5269)!important;
+  box-shadow:inset 0 0 0 1px rgba(120,220,235,.15);
+}
+.nav a,.btn{
+  background:#0b3142!important;
+  color:#c6f3f9!important;
+  border-color:#1a6076!important;
+  box-shadow:0 8px 18px rgba(0,0,0,.14)!important;
+}
+.nav a:hover,.btn:hover{filter:brightness(1.12)}
+.nav a.active,.btn.primary{
+  background:linear-gradient(135deg,#0d718f,#18a9b9)!important;
+  color:#fff!important;
+  border-color:transparent!important;
+}
+.hero{
+  background:
+    radial-gradient(circle at 16% 17%,rgba(255,255,255,.13),transparent 23%),
+    radial-gradient(circle at 86% 12%,rgba(58,211,225,.14),transparent 22%),
+    linear-gradient(135deg,#03131f,#0a4563 52%,#087383)!important;
+  border:1px solid rgba(89,194,213,.18);
+  box-shadow:0 32px 75px rgba(0,0,0,.34)!important;
+}
+.hero-badge{
+  background:rgba(255,255,255,.10)!important;
+  border-color:rgba(255,255,255,.18)!important;
+}
+.hero p{color:#d9f3f7!important}
+.hero-card{
+  background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.055))!important;
+  border-color:rgba(255,255,255,.17)!important;
+}
+.hero-point{background:rgba(255,255,255,.09)!important}
+.btn.white{
+  background:#f4feff!important;
+  color:#075d76!important;
+}
+.featured{
+  background:linear-gradient(135deg,#0d302d,#102a32,#09202b)!important;
+  border-color:#9d7c35!important;
+}
+.featured h2{color:#ffd986!important}
+.panel{
+  background:linear-gradient(180deg,rgba(7,31,43,.97),rgba(5,24,34,.97))!important;
+  border-color:rgba(76,168,191,.20)!important;
+  box-shadow:0 20px 44px rgba(0,0,0,.20)!important;
+}
+.section-title{color:#f1fdff!important}
+.sub,.status{color:#9fc5d2!important}
+input,select{
+  background:#092b3b!important;
+  color:#e8fbff!important;
+  border-color:#1b6076!important;
+}
+input::placeholder{color:#85aeba!important}
+input:focus,select:focus{
+  border-color:#36b8d0!important;
+  box-shadow:0 0 0 4px rgba(54,184,208,.13)!important;
+}
+.shop-card{
+  background:linear-gradient(180deg,#0a2c3b,#071f2b)!important;
+  border-color:#164f64!important;
+  box-shadow:0 18px 40px rgba(0,0,0,.20)!important;
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease!important;
+}
+.shop-card:hover{
+  transform:translateY(-6px)!important;
+  box-shadow:0 28px 58px rgba(0,0,0,.30)!important;
+  border-color:#2b849c!important;
+}
+.shop-top{
+  background:linear-gradient(135deg,#0b3344,#092735)!important;
+  border-bottom-color:#16495d!important;
+}
+.shop-logo{
+  border-color:#1c5c70!important;
+  background:#f8feff!important;
+}
+.logo-fallback{
+  border-color:#1c5c70!important;
+  background:#0d3a4d!important;
+}
+.shop-title{color:#f2fdff!important}
+.shop-meta{color:#9fc5d2!important}
+.chip{
+  background:#0d3a4d!important;
+  color:#bceef5!important;
+}
+.chip.online{
+  background:#193a54!important;
+  color:#b8ddff!important;
+}
+.desc{color:#bed6de!important}
+.fact{
+  border-color:#164b5e!important;
+  background:#082632!important;
+}
+.fact b{color:#78d9e9!important}
+.fact span{color:#d4e9ee!important}
+.discount{
+  background:#3b3119!important;
+  border-color:#77612d!important;
+  color:#ffe09a!important;
+}
+.empty{
+  background:#082735!important;
+  border-color:#287b91!important;
+  color:#bdeef5!important;
+}
+.cta{
+  background:
+    radial-gradient(circle at 85% 15%,rgba(255,255,255,.11),transparent 25%),
+    linear-gradient(135deg,#041722,#0b536d,#087887)!important;
+  box-shadow:0 24px 54px rgba(0,0,0,.27)!important;
+}
+.cta p{color:#d9f3f7!important}
+.cta .btn{
+  background:#f5feff!important;
+  color:#075e76!important;
+}
+.footer-note{color:#86aebb!important}
+@media(max-width:760px){
+  .hero{padding:25px 17px!important}
+  .shop-card{border-radius:24px!important}
+  .shop-top{padding:16px!important}
+  .shop-logo,.logo-fallback{width:72px!important;height:72px!important}
+  .shop-title{font-size:21px!important}
+}
+</style>
+
+
+<style>
+/* ===== Nettbutikker Premium 2.1 – finpuss ===== */
+body{
+  background:
+    radial-gradient(circle at 9% 6%,rgba(35,173,198,.20),transparent 26%),
+    radial-gradient(circle at 92% 10%,rgba(85,110,190,.13),transparent 28%),
+    linear-gradient(180deg,#02090f 0%,#041722 42%,#082b39 100%)!important;
+}
+.wrap{max-width:1320px!important}
+.topbar{
+  border-color:rgba(102,205,226,.24)!important;
+  box-shadow:0 20px 48px rgba(0,0,0,.32)!important;
+}
+.hero{
+  min-height:360px;
+  background:
+    radial-gradient(circle at 12% 18%,rgba(255,255,255,.14),transparent 22%),
+    radial-gradient(circle at 86% 14%,rgba(57,211,224,.16),transparent 22%),
+    linear-gradient(135deg,#02101a,#0a3f59 48%,#08758a)!important;
+  box-shadow:0 36px 86px rgba(0,0,0,.38)!important;
+}
+.hero h1{
+  letter-spacing:-.02em;
+  text-shadow:0 10px 26px rgba(0,0,0,.34),0 0 24px rgba(54,184,208,.08);
+}
+.hero-card{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.055))!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 18px 40px rgba(0,0,0,.14)!important;
+}
+.hero-point{
+  background:rgba(255,255,255,.085)!important;
+  border:1px solid rgba(255,255,255,.08);
+}
+.panel{
+  border-color:rgba(88,188,211,.22)!important;
+  box-shadow:0 22px 50px rgba(0,0,0,.22)!important;
+}
+.filters{
+  background:linear-gradient(180deg,#082b3b,#072532);
+  border:1px solid #174f63;
+  border-radius:22px;
+  padding:12px;
+}
+input,select{
+  min-height:50px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+}
+#clearBtn{
+  min-height:50px;
+}
+.grid{
+  gap:20px!important;
+}
+.shop-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:32px!important;
+}
+.shop-card:before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto;
+  height:3px;
+  background:linear-gradient(90deg,#18a9b9,#4fd1e4,#8ab4ff);
+  opacity:.9;
+}
+.shop-card:hover{
+  transform:translateY(-7px) scale(1.006)!important;
+}
+.shop-top{
+  min-height:128px;
+  padding:22px!important;
+}
+.shop-logo,.logo-fallback{
+  width:92px!important;
+  height:92px!important;
+  border-radius:23px!important;
+  box-shadow:0 12px 28px rgba(0,0,0,.16);
+}
+.shop-title{
+  font-size:25px!important;
+  letter-spacing:-.01em;
+}
+.shop-body{
+  padding:20px!important;
+}
+.chips{
+  margin-bottom:14px!important;
+}
+.chip{
+  border:1px solid rgba(89,175,197,.14);
+}
+.desc{
+  font-size:14.5px!important;
+  line-height:1.62!important;
+}
+.facts{
+  gap:10px!important;
+}
+.fact{
+  min-height:72px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.discount{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+}
+.actions{
+  padding:0 20px 20px!important;
+}
+.actions a{
+  min-height:50px!important;
+  font-size:14px;
+}
+.featured{
+  box-shadow:0 22px 50px rgba(0,0,0,.20)!important;
+}
+.featured .shop-card{
+  border-color:#7c6a37!important;
+}
+.cta{
+  min-height:180px;
+  border:1px solid rgba(103,198,218,.18);
+  box-shadow:0 28px 64px rgba(0,0,0,.30)!important;
+}
+.cta h2{
+  font-size:34px!important;
+  letter-spacing:-.015em;
+}
+.footer-note{
+  opacity:.9;
+}
+@media(max-width:1050px){
+  .shop-title{font-size:23px!important}
+}
+@media(max-width:760px){
+  .wrap{padding:9px 8px 46px!important}
+  .hero{
+    min-height:0;
+    padding:24px 16px!important;
+    border-radius:26px!important;
+  }
+  .hero h1{font-size:34px!important}
+  .hero p{font-size:14px!important}
+  .panel{
+    padding:13px!important;
+    border-radius:20px!important;
+  }
+  .filters{
+    padding:9px;
+    border-radius:17px;
+    gap:9px!important;
+  }
+  .shop-card{
+    border-radius:22px!important;
+  }
+  .shop-top{
+    min-height:0;
+    padding:15px!important;
+    gap:12px!important;
+  }
+  .shop-logo,.logo-fallback{
+    width:68px!important;
+    height:68px!important;
+    border-radius:18px!important;
+  }
+  .shop-title{font-size:20px!important}
+  .shop-meta{font-size:12px!important}
+  .shop-body{padding:14px!important}
+  .desc{font-size:13px!important}
+  .actions{padding:0 14px 14px!important;gap:8px!important}
+  .actions a{min-height:46px!important}
+  .cta{
+    min-height:0;
+    padding:18px!important;
+  }
+  .cta h2{font-size:23px!important}
+}
+</style>
+
+
+<style>
+/* ===== Nettbutikker Premium 2.2 – sluttfinish ===== */
+
+/* Litt mer ro og premiumfølelse */
+body{
+  background:
+    radial-gradient(circle at 10% 6%,rgba(40,184,207,.18),transparent 25%),
+    radial-gradient(circle at 90% 10%,rgba(74,117,176,.12),transparent 26%),
+    linear-gradient(180deg,#02090f 0%,#041722 40%,#072836 100%)!important;
+}
+
+/* Toppfelt */
+.topbar{
+  border:1px solid rgba(114,214,232,.24)!important;
+  box-shadow:0 18px 44px rgba(0,0,0,.30)!important;
+}
+.brand{
+  text-shadow:0 0 18px rgba(91,211,229,.08);
+}
+.brand-icon{
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 8px 18px rgba(0,0,0,.18)!important;
+}
+
+/* Hero - mer eksklusiv, men uten å bli prangende */
+.hero{
+  position:relative;
+  overflow:hidden;
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  inset:auto -8% -45% auto;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(76,213,228,.10),transparent 68%);
+  pointer-events:none;
+}
+.hero h1{
+  letter-spacing:-.03em!important;
+}
+.hero-card{
+  backdrop-filter:blur(10px);
+}
+.hero-point{
+  transition:transform .18s ease,background .18s ease;
+}
+.hero-point:hover{
+  transform:translateX(3px);
+  background:rgba(255,255,255,.12)!important;
+}
+
+/* Søkefelt */
+.filters{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025),0 10px 24px rgba(0,0,0,.10);
+}
+input,select{
+  transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;
+}
+input:hover,select:hover{
+  background:#0a3041!important;
+}
+
+/* Butikkort - siste finish */
+.shop-card{
+  isolation:isolate;
+}
+.shop-card:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.025),transparent 26%);
+  opacity:.7;
+}
+.shop-top{
+  position:relative;
+}
+.shop-top:after{
+  content:"";
+  position:absolute;
+  left:20px;
+  right:20px;
+  bottom:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(88,190,211,.25),transparent);
+}
+.shop-logo{
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+.shop-card:hover .shop-logo{
+  transform:scale(1.035);
+  box-shadow:0 16px 34px rgba(0,0,0,.22);
+}
+.shop-title{
+  line-height:1.08!important;
+}
+.chip{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+}
+.fact{
+  transition:transform .18s ease,border-color .18s ease;
+}
+.fact:hover{
+  transform:translateY(-1px);
+  border-color:#28758b!important;
+}
+.actions a{
+  transition:transform .16s ease,filter .16s ease,box-shadow .16s ease;
+}
+.actions a:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 20px rgba(0,0,0,.16);
+}
+
+/* Anbefalte nettbutikker */
+.featured{
+  position:relative;
+  overflow:hidden;
+}
+.featured:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 92% 10%,rgba(255,214,120,.08),transparent 26%);
+  pointer-events:none;
+}
+
+/* CTA */
+.cta{
+  position:relative;
+  overflow:hidden;
+}
+.cta:after{
+  content:"";
+  position:absolute;
+  width:260px;
+  height:260px;
+  right:-90px;
+  top:-100px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.09),transparent 70%);
+  pointer-events:none;
+}
+
+/* Små detaljer */
+.status{
+  letter-spacing:.01em;
+}
+.footer-note{
+  letter-spacing:.01em;
+}
+
+/* Mobil - litt strammere og mer luksuriøs */
+@media(max-width:760px){
+  .hero h1{
+    font-size:35px!important;
+    line-height:1.02!important;
+  }
+  .hero-badge{
+    font-size:12px;
+    padding:8px 11px!important;
+  }
+  .filters{
+    background:transparent!important;
+    border:none!important;
+    padding:0!important;
+    box-shadow:none!important;
+  }
+  input,select,#clearBtn{
+    min-height:48px!important;
+  }
+  .shop-card{
+    margin-bottom:2px;
+  }
+  .shop-top:after{
+    left:14px;
+    right:14px;
+  }
+  .fact{
+    min-height:64px!important;
+  }
+}
+</style>
+
 </head>
 
 <body>
