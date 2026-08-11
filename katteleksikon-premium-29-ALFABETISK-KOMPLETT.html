@@ -500,37 +500,37 @@ body{
 
 </style>
 
-<style id="katteleksikon-desktop-grid-FIX">
-@media (min-width:1160px){
+<style id="katteleksikon-PC-3-kolonner-endelig">
+/* PC/nettbrett-landskap: 3 katteraser i bredden */
+@media (min-width:901px){
   .app{
-    grid-template-columns:540px minmax(0,1fr) !important;
+    grid-template-columns:560px minmax(0,1fr) !important;
   }
   .sidebar{
     padding:18px 12px !important;
   }
-  .breed-list{
+  .sidebar .breed-list{
     display:grid !important;
     grid-template-columns:repeat(3,minmax(0,1fr)) !important;
     gap:8px !important;
-    align-items:stretch !important;
+    width:100% !important;
   }
-  .breed-list > .breed-btn{
+  .sidebar .breed-list > button.breed-btn{
     width:100% !important;
     min-width:0 !important;
     margin:0 !important;
     padding:7px 6px !important;
-    border-radius:11px !important;
     font-weight:1000 !important;
-    font-size:.79rem !important;
+    font-size:.80rem !important;
     line-height:1.12 !important;
     letter-spacing:.01em !important;
-    text-shadow:0 0 .35px currentColor;
+    text-shadow:0 0 .4px currentColor !important;
   }
-  .breed-list > .breed-btn .thumb{
-    width:27px !important;
-    height:27px !important;
-    min-width:27px !important;
-    flex:0 0 27px !important;
+  .sidebar .breed-list > button.breed-btn .thumb{
+    width:28px !important;
+    height:28px !important;
+    min-width:28px !important;
+    flex:0 0 28px !important;
   }
 }
 </style>
