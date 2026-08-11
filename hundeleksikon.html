@@ -863,6 +863,38 @@ color:#f2cf75;
 }
 
 </style>
+<style id="desktop-breed-grid-test">
+@media (min-width:1160px){
+.app{grid-template-columns:520px minmax(0,1fr)!important}
+.sidebar{padding:18px 12px!important}
+.breed-list{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important}
+.breed-btn{min-width:0!important;padding:7px 6px!important;border-radius:11px!important;font-size:.72rem!important;line-height:1.12!important}
+.breed-thumb{width:27px!important;height:27px!important;flex:0 0 27px!important}
+}
+</style>
+
+<style id="desktop-breed-name-bolder">
+@media (min-width:1160px){
+  .breed-btn{
+    font-weight:950 !important;
+    font-size:.76rem !important;
+    letter-spacing:.01em;
+  }
+}
+</style>
+
+
+<style id="desktop-breed-name-extra-bold">
+@media (min-width:1160px){
+  .breed-btn{
+    font-weight:1000 !important;
+    font-size:.80rem !important;
+    letter-spacing:.015em !important;
+    text-shadow:0 0 .35px currentColor;
+  }
+}
+</style>
+
 </head>
 <body>
 <a class="back-academy" href="hundeakademiet_ny.html">← 🎓 Tilbake til akademiet</a>
