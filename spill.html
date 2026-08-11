@@ -306,6 +306,168 @@ body{
   .big-card,.game-card{min-height:auto}
 }
 </style>
+
+<style id="premium-dark-games-upgrade">
+/* Premium mørk stil – beholder alle eksisterende spill og lenker */
+body{
+  color:#f5f9ff!important;
+  background:
+    radial-gradient(circle at 8% 0%,rgba(255,185,45,.10),transparent 28rem),
+    radial-gradient(circle at 92% 4%,rgba(38,171,255,.13),transparent 30rem),
+    linear-gradient(180deg,#020914 0%,#041426 48%,#07172d 100%)!important;
+}
+.paw-bg{opacity:.035!important}
+.wrap{max-width:1450px!important}
+
+.topbar{
+  background:rgba(5,18,39,.96)!important;
+  border:1px solid rgba(89,151,255,.34)!important;
+  box-shadow:0 18px 45px rgba(0,0,0,.30)!important;
+}
+.logo{color:#fff!important}
+.logo-badge{
+  border-radius:50%!important;
+  background:linear-gradient(145deg,#ffd35a,#e99d21)!important;
+  color:#281a05!important;
+  box-shadow:0 0 26px rgba(255,188,49,.26)!important;
+}
+.nav a{
+  background:#081b34!important;
+  color:#dceaff!important;
+  border-color:rgba(255,255,255,.09)!important;
+}
+.nav a:hover{background:#126cf3!important;color:#fff!important}
+
+.hero{
+  padding:48px 22px!important;
+  background:
+    radial-gradient(circle at 15% 20%,rgba(255,194,61,.22),transparent 24rem),
+    radial-gradient(circle at 86% 20%,rgba(38,207,255,.20),transparent 25rem),
+    linear-gradient(135deg,#071b38 0%,#123a6c 48%,#4a2268 100%)!important;
+  border:1px solid rgba(103,157,255,.34);
+  box-shadow:0 26px 65px rgba(0,0,0,.34)!important;
+}
+.hero h1{
+  font-family:Georgia,serif;
+  font-style:italic;
+  color:#fff!important;
+  text-shadow:0 4px 20px rgba(0,0,0,.30)!important;
+}
+.hero p{color:#e5edf8!important}
+.hero-icons span{filter:drop-shadow(0 8px 16px rgba(0,0,0,.28))!important}
+
+.section h2{color:#fff!important}
+.section p.lead{color:#c8d7e9!important;font-size:17px!important;font-weight:700!important}
+
+.main-grid{gap:14px!important}
+.big-card{
+  min-height:355px!important;
+  border:1px solid rgba(255,255,255,.15)!important;
+  box-shadow:0 20px 48px rgba(0,0,0,.28)!important;
+}
+.big-card.dog-puzzle{
+  background:
+    radial-gradient(circle at 50% 5%,rgba(255,215,107,.45),transparent 14rem),
+    linear-gradient(155deg,#0b3553,#08758c 50%,#06213a)!important;
+}
+.big-card.cat-puzzle{
+  background:
+    radial-gradient(circle at 50% 5%,rgba(255,180,223,.38),transparent 14rem),
+    linear-gradient(155deg,#55224d,#a62c79 50%,#35172f)!important;
+}
+.big-card.memory{
+  background:
+    radial-gradient(circle at 50% 5%,rgba(255,206,82,.35),transparent 14rem),
+    linear-gradient(155deg,#36205f,#532a80 50%,#120a27)!important;
+}
+.big-icon{
+  width:118px;height:118px;margin:0 auto 18px!important;
+  display:grid;place-items:center;
+  border-radius:34px;
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.17);
+  font-size:66px!important;
+}
+.big-card h3{font-size:28px!important}
+.big-card p{color:#e5edf6!important;font-size:15px!important}
+.stars{font-size:23px!important}
+.play-button{min-height:48px!important;font-size:15px!important}
+
+.game-grid{gap:12px!important}
+.game-card{
+  min-height:275px!important;
+  padding:14px!important;
+  color:#f5f9ff!important;
+  background:linear-gradient(155deg,#0b2847,#071a30)!important;
+  border:1px solid rgba(83,161,232,.28)!important;
+  box-shadow:0 16px 38px rgba(0,0,0,.24)!important;
+}
+.game-card.music{border-color:rgba(255,194,65,.42)!important}
+.game-card.dog{border-color:rgba(70,207,236,.38)!important}
+.game-card.cat{border-color:rgba(238,91,184,.38)!important}
+.game-icon{
+  height:112px!important;
+  border-radius:20px!important;
+  background:linear-gradient(145deg,#0e3c5b,#0a223d)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.07)!important;
+}
+.music .game-icon{background:linear-gradient(145deg,#5d3a22,#39235d)!important}
+.cat .game-icon{background:linear-gradient(145deg,#552348,#321b4e)!important}
+.game-card h3{font-size:20px!important}
+.game-card p{color:#cbd9e7!important;font-size:14px!important}
+.game-card .play-button{
+  min-width:110px!important;
+  min-height:44px!important;
+  padding:0 16px!important;
+  font-size:14px!important;
+}
+
+.footer{
+  color:#aebfd2!important;
+  padding:18px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+
+/* Fast tilbakeknapp på mobil */
+.mobile-home{
+  display:none;
+}
+@media(max-width:760px){
+  .wrap{padding:8px 8px 72px!important}
+  .topbar{border-radius:21px!important;margin-bottom:10px!important}
+  .logo{width:100%;justify-content:center}
+  .nav{width:100%}
+  .nav a{font-size:12px;padding:9px 8px!important}
+  .hero{border-radius:24px!important;padding:29px 13px!important}
+  .hero h1{font-size:38px!important}
+  .hero-icons{font-size:37px!important;gap:11px!important}
+  .section{margin-top:22px!important}
+  .section h2{font-size:27px!important}
+  .main-grid{gap:9px!important}
+  .big-card{min-height:auto!important;padding:17px 12px!important;border-radius:22px!important}
+  .big-icon{width:76px;height:76px;font-size:43px!important;border-radius:23px}
+  .big-card h3{font-size:22px!important}
+  .game-grid{grid-template-columns:repeat(2,1fr)!important;gap:8px!important}
+  .game-card{min-height:210px!important;padding:9px!important;border-radius:19px!important}
+  .game-icon{height:76px!important;font-size:39px!important;margin-bottom:10px!important}
+  .game-card h3{font-size:16px!important;margin-bottom:7px!important}
+  .game-card p{font-size:12px!important}
+  .game-card .stars{font-size:16px!important;margin:10px 0!important;letter-spacing:1px!important}
+  .game-card .play-button{min-width:0!important;width:100%;min-height:38px!important;font-size:12px!important;padding:0 8px!important}
+  .mobile-home{
+    display:flex;
+    position:fixed;
+    left:12px;bottom:12px;z-index:999;
+    align-items:center;justify-content:center;
+    padding:11px 15px;border-radius:999px;
+    background:linear-gradient(135deg,#ffd35a,#efa522);
+    color:#1d1507;font-weight:900;text-decoration:none;
+    box-shadow:0 12px 30px rgba(0,0,0,.35);
+    border:1px solid rgba(255,255,255,.45);
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -453,5 +615,6 @@ body{
 </div>
 
 </div>
+<a class="mobile-home" href="index.html">← Forsiden</a>
 </body>
 </html>
