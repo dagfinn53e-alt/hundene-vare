@@ -35,6 +35,33 @@ a{text-decoration:none;color:inherit}.wrap{width:min(1500px,calc(100% - 20px));m
 @media(max-width:1000px){.hero{height:390px}.academies{grid-template-columns:1fr}.academy{height:330px}.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:650px){.wrap{width:calc(100% - 10px)}.top{position:static;justify-content:center}.brand{width:100%;text-align:center}.nav{justify-content:center}.nav a{flex:1 1 43%;text-align:center}.hero{height:250px;border-radius:22px;background-position:center}.hero-buttons{bottom:12px;width:calc(100% - 24px)}.hero-buttons .btn{flex:1;font-size:12px;padding:10px}.academies{gap:8px}.academy{height:280px}.choose{padding:12px;border-radius:20px}.choose h2{font-size:23px}.grid{gap:7px}.card{min-height:130px;padding:10px}.card p{display:none}.card h3{font-size:14px}.icon{width:42px;height:42px;font-size:22px}.trust{grid-template-columns:1fr 1fr}}
 </style>
+
+<style id="action-card-photo-upgrade">
+.card{
+  padding:0 !important;
+  overflow:hidden !important;
+}
+.card-photo{
+  width:100%;
+  height:92px;
+  object-fit:cover;
+  display:block;
+  border-bottom:1px solid color-mix(in srgb,var(--accent) 48%,transparent);
+  filter:saturate(1.08) contrast(1.03);
+}
+.card-body{
+  padding:12px 13px 10px;
+  display:flex;
+  flex-direction:column;
+  flex:1;
+}
+.card .go{margin-top:auto}
+@media(max-width:650px){
+  .card-photo{height:68px}
+  .card-body{padding:8px}
+}
+</style>
+
 </head>
 <body>
 <div class="wrap">
@@ -58,14 +85,14 @@ a{text-decoration:none;color:inherit}.wrap{width:min(1500px,calc(100% - 20px));m
 <section class="choose" id="valg">
   <h2>✨ Hva vil du gjøre?</h2><p>Velg et område og sett i gang – alt er samlet på ett sted.</p>
   <div class="grid">
-    <a class="card c1" href="kunnskap.html"><div><div class="icon">📖</div><h3>Dyreleksikon</h3><p>Raser, arter og fakta</p></div><span class="go">→</span></a>
-    <a class="card c2" href="kunnskap.html"><div><div class="icon">🎓</div><h3>Kunnskap</h3><p>Artikler, guider og tips</p></div><span class="go">→</span></a>
-    <a class="card c3" href="butikker-ny.html"><div><div class="icon">🛍️</div><h3>Butikker</h3><p>Fysiske butikker i Norge</p></div><span class="go">→</span></a>
-    <a class="card c4" href="nettbutikker.html"><div><div class="icon">🛒</div><h3>Nettbutikker</h3><p>Alt til dine dyr på nett</p></div><span class="go">→</span></a>
-    <a class="card c5" href="arrangementer.html"><div><div class="icon">📅</div><h3>Arrangementer</h3><p>Kurs, utstillinger og aktiviteter</p></div><span class="go">→</span></a>
-    <a class="card c6" href="butikker-ny.html"><div><div class="icon">✂️</div><h3>Hundefrisører</h3><p>Finn salonger og pelsstell</p></div><span class="go">→</span></a>
-    <a class="card c7" href="butikker-ny.html"><div><div class="icon">🩺</div><h3>Veterinærer</h3><p>Finn veterinærer og dyreklinikker</p></div><span class="go">→</span></a>
-    <a class="card c8" href="butikker-ny.html"><div><div class="icon">🏠</div><h3>Hundepass</h3><p>Finn hundepass og pensjonat</p></div><span class="go">→</span></a>
+    <a class="card c1" href="kunnskap.html"><img class="card-photo" src="dyreleksikon.jpg" alt="Dyreleksikon"><div class="card-body"><div class="icon">📖</div><h3>Dyreleksikon</h3><p>Raser, arter og fakta</p><span class="go">→</span></div></a>
+    <a class="card c2" href="kunnskap.html"><img class="card-photo" src="kunnskap.jpg" alt="Kunnskap"><div class="card-body"><div class="icon">🎓</div><h3>Kunnskap</h3><p>Artikler, guider og tips</p><span class="go">→</span></div></a>
+    <a class="card c3" href="butikker-ny.html"><img class="card-photo" src="butikker.jpg" alt="Butikker"><div class="card-body"><div class="icon">🛍️</div><h3>Butikker</h3><p>Fysiske butikker i Norge</p><span class="go">→</span></div></a>
+    <a class="card c4" href="nettbutikker.html"><img class="card-photo" src="nettbutikker.jpg" alt="Nettbutikker"><div class="card-body"><div class="icon">🛒</div><h3>Nettbutikker</h3><p>Alt til dine dyr på nett</p><span class="go">→</span></div></a>
+    <a class="card c5" href="arrangementer.html"><img class="card-photo" src="arrangementer.jpg" alt="Arrangementer"><div class="card-body"><div class="icon">📅</div><h3>Arrangementer</h3><p>Kurs, utstillinger og aktiviteter</p><span class="go">→</span></div></a>
+    <a class="card c6" href="butikker-ny.html"><img class="card-photo" src="hundefrisor.jpg" alt="Hundefrisør"><div class="card-body"><div class="icon">✂️</div><h3>Hundefrisører</h3><p>Finn salonger og pelsstell</p><span class="go">→</span></div></a>
+    <a class="card c7" href="butikker-ny.html"><img class="card-photo" src="veterinaer.jpg" alt="Veterinær"><div class="card-body"><div class="icon">🩺</div><h3>Veterinærer</h3><p>Finn veterinærer og dyreklinikker</p><span class="go">→</span></div></a>
+    <a class="card c8" href="butikker-ny.html"><img class="card-photo" src="hundepass.jpg" alt="Hundepass"><div class="card-body"><div class="icon">🏠</div><h3>Hundepass</h3><p>Finn hundepass og pensjonat</p><span class="go">→</span></div></a>
   </div>
 </section>
 
