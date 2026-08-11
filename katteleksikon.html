@@ -499,6 +499,38 @@ body{
 }
 
 </style>
+
+<style id="katteleksikon-3-kolonner-pc">
+@media (min-width:901px){
+  .app{
+    grid-template-columns:560px minmax(0,1fr) !important;
+  }
+  .sidebar{
+    padding:18px 12px !important;
+  }
+  .sidebar .breed-list{
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:8px !important;
+  }
+  .sidebar .breed-list .breed-btn{
+    width:100% !important;
+    min-width:0 !important;
+    margin:0 !important;
+    padding:8px 6px !important;
+    font-weight:1000 !important;
+    font-size:.80rem !important;
+    line-height:1.12 !important;
+  }
+  .sidebar .breed-list .breed-btn .thumb{
+    width:28px !important;
+    height:28px !important;
+    min-width:28px !important;
+    flex:0 0 28px !important;
+  }
+}
+</style>
+
 </head>
 <body class="mobile-menu">
 <div class="app">
