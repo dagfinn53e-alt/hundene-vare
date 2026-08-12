@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Samarbeid med Hundene våre</title>
+<title>Bli samarbeidspartner – Hundene våre</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -38,6 +38,102 @@ body{margin:0;font-family:Arial,sans-serif;color:#102033;background:linear-gradi
 .footer-note{text-align:center;color:#64748b;font-size:14px;margin-top:22px}
 @media(max-width:760px){.wrap{padding:14px 12px 50px}.brand{width:100%;text-align:center}.actions{width:100%;justify-content:center}.navbtn{flex:1 1 42%;font-size:13px}.hero{padding:26px}.hero h1{font-size:34px}.section-title{font-size:28px}.partner-image{height:240px}.partner-card{min-height:auto}}
 </style>
+
+<style id="samarbeid-premium-mork">
+body{
+  color:#f5f9ff!important;
+  background:
+    radial-gradient(circle at 8% 0%,rgba(255,188,48,.11),transparent 28rem),
+    radial-gradient(circle at 92% 4%,rgba(36,177,255,.14),transparent 30rem),
+    linear-gradient(180deg,#020914,#041426 48%,#07172d 100%)!important;
+}
+.wrap{max-width:1250px!important}
+.topbar{
+  background:rgba(5,18,39,.96)!important;
+  border-color:rgba(91,153,255,.34)!important;
+  box-shadow:0 18px 45px rgba(0,0,0,.30)!important;
+}
+.brand{
+  color:#fff!important;
+  background:linear-gradient(135deg,#0b2c4a,#13294e)!important;
+  border-color:#285b89!important;
+}
+.navbtn{
+  background:#0a2341!important;
+  color:#dceaff!important;
+  border-color:#245887!important;
+}
+.navbtn:hover{transform:translateY(-2px)}
+.hero{
+  background:
+    radial-gradient(circle at 14% 18%,rgba(255,195,61,.20),transparent 24rem),
+    radial-gradient(circle at 86% 18%,rgba(40,210,235,.16),transparent 25rem),
+    linear-gradient(135deg,#071b38,#123d69 48%,#4c245f)!important;
+  border:1px solid rgba(105,161,255,.32)!important;
+  box-shadow:0 26px 65px rgba(0,0,0,.34)!important;
+}
+.hero h1{
+  color:#fff!important;
+  font-family:Georgia,serif;
+  font-style:italic;
+  text-shadow:0 7px 25px rgba(0,0,0,.34);
+}
+.hero p{color:#e1ebf6!important}
+.mainbtn{
+  background:linear-gradient(135deg,#ffd356,#efa725)!important;
+  color:#1d1507!important;
+  box-shadow:0 12px 28px rgba(255,184,41,.20)!important;
+}
+.card{
+  background:linear-gradient(155deg,#0b2847,#07192f)!important;
+  border-color:rgba(74,157,230,.30)!important;
+  color:#f4f8ff!important;
+  box-shadow:0 18px 42px rgba(0,0,0,.25)!important;
+}
+.card.ad{
+  background:linear-gradient(135deg,#342055,#163e5c)!important;
+  border-color:#7357a7!important;
+}
+.section-title{color:#fff!important}
+.sub,.info,.status{color:#c6d7e7!important}
+.partner-card{
+  background:linear-gradient(155deg,#0d2b49,#081a30)!important;
+  color:#f5f9ff!important;
+  border-color:rgba(75,159,232,.30)!important;
+  box-shadow:0 16px 38px rgba(0,0,0,.24)!important;
+}
+.partner-card h3{color:#fff!important}
+.partner-card p,.partner-meta{color:#c5d5e5!important}
+.partner-link{
+  background:linear-gradient(135deg,#22c8df,#2985ff)!important;
+  color:#031a2c!important;
+}
+.empty{
+  background:#0b263f!important;
+  color:#b9cadc!important;
+  border-color:#315f87!important;
+}
+.footer-note{color:#9eb2c7!important}
+.mobile-back{display:none}
+@media(max-width:760px){
+  .wrap{padding:8px 8px 72px!important}
+  .topbar{border-radius:21px!important;position:static!important}
+  .brand{width:100%;text-align:center!important}
+  .actions{width:100%!important}
+  .navbtn{flex:1 1 42%!important;text-align:center!important;font-size:12px!important;padding:9px 7px!important}
+  .hero{border-radius:24px!important;padding:27px 14px!important}
+  .hero h1{font-size:35px!important}
+  .card{border-radius:22px!important;padding:15px!important}
+  .partner-image{height:210px!important}
+  .mobile-back{
+    display:flex;position:fixed;left:12px;bottom:12px;z-index:999;
+    align-items:center;justify-content:center;padding:11px 15px;border-radius:999px;
+    background:linear-gradient(135deg,#ffd356,#efa725);color:#1d1507;font-weight:900;
+    text-decoration:none;box-shadow:0 12px 30px rgba(0,0,0,.35)
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -49,42 +145,29 @@ body{margin:0;font-family:Arial,sans-serif;color:#102033;background:linear-gradi
     <a class="navbtn alt" href="index.html">🏠 Forside</a>
     <a class="navbtn alt" href="kunnskap.html">📚 Kunnskap</a>
     <a class="navbtn alt" href="spill.html">🎮 Spill</a>
-    <a class="navbtn alt" href="butikker-ny.html">🏪 Butikker</a>
+    <a class="navbtn alt" href="se-butikker.html">🏪 Butikker</a>
     <a class="navbtn alt" href="arrangementer.html">📅 Arrangementer</a>
-    <a class="navbtn alt" href="om-oss.html">ℹ️ Om oss</a>
+    <a class="navbtn alt" href="omoss.html">ℹ️ Om oss</a>
     <a class="navbtn admin" href="admin.html">🔧 Admin</a>
   </div>
 </div>
 
 <section class="hero">
-  <h1>🤝 Samarbeid med Hundenevåre.com</h1>
-  <p>Her samler vi samarbeidspartnere, sponsorer, Facebook-sider, bedrifter og aktører som ønsker synlighet, markedsføring og samarbeid gjennom Hundenevåre.com.</p>
-  <a class="mainbtn" href="butikk-profil-skjema.html">📝 Registrer samarbeid / sponsor / Facebook-side</a>
+  <h1>🤝 Bli samarbeidspartner</h1>
+  <p>Her samler vi samarbeidspartnere, sponsorer, Facebook-sider, bedrifter og aktører som ønsker synlighet og samarbeid gjennom Hundenevåre.com.</p>
+  <a class="mainbtn" href="butikk-profil-skjema.html">📝 Registrer deg som samarbeidspartner</a>
 </section>
 
 <section class="card ad">
-  <h2>🐾 Vil du samarbeide med Hundenevåre.com?</h2>
-  <p>Bruk registreringsskjemaet og velg riktig type samarbeid. Dette kan være <b>Samarbeidspartner</b>, <b>Sponsor</b>, <b>Facebook-side</b>, <b>Facebook-kampanje</b> eller annen synlighet. Etter godkjenning kan dere vises på denne siden.</p>
+  <h2>🐾 Vil du bli samarbeidspartner?</h2>
+  <p>Bruk registreringsskjemaet og velg <b>Samarbeidspartner</b>, <b>Sponsor</b>, <b>Facebook-side</b> eller tilsvarende under Type. Etter godkjenning vises dere på denne siden.</p>
 </section>
 
 <section class="card">
-  <h2 class="section-title">Våre samarbeidspartnere og sponsorer</h2>
-  <p class="sub">Her vises godkjente samarbeidspartnere, sponsorer, Facebook-sider og kampanjer. Nye forespørsler må godkjennes i Admin før de blir synlige.</p>
+  <h2 class="section-title">Våre samarbeidspartnere</h2>
+  <p class="sub">Her vises godkjente samarbeidspartnere, sponsorer og Facebook-sider. Nye forespørsler må godkjennes i Admin før de blir synlige.</p>
   <div id="status" class="status">Laster samarbeidspartnere ...</div>
   <div id="partnerGrid" class="partner-grid"></div>
-</section>
-
-
-<section class="card">
-  <h2 class="section-title">Hvem kan registrere seg?</h2>
-  <div class="info">
-    🤝 Samarbeidspartnere<br>
-    🏆 Sponsorer<br>
-    📢 Facebook-sider og Facebook-kampanjer<br>
-    🏪 Bedrifter og tjenester<br>
-    🩺 Veterinærer, hundesalonger og hundepass<br>
-    🎓 Hundetrenere, klubber og andre hundeaktører
-  </div>
 </section>
 
 <section class="card">
@@ -224,5 +307,6 @@ async function loadPartners(){
 loadPartners();
 </script>
 
+<a class="mobile-back" href="index.html">← Forsiden</a>
 </body>
 </html>
