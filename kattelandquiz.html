@@ -197,13 +197,30 @@ min-height:40px;
 }
 
 </style>
-</head>
+<style id="premium-katteland">
+body{background:linear-gradient(180deg,#160821,#3b123f 58%,#210b2c)!important;color:#fff!important}
+.container{max-width:1120px!important;margin:0 auto!important;padding:10px 14px 32px!important}
+.premium-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:#210b30;border:1px solid #805392;border-radius:20px;padding:9px 12px;margin-bottom:10px}
+.premium-brand{font:italic 900 23px Georgia;color:#ffd35a}.premium-nav{display:flex;gap:6px}.premium-nav a{color:#fff;text-decoration:none;background:#42174e;border:1px solid #85549a;border-radius:999px;padding:8px 11px;font-size:10px;font-weight:900}
+.land-hero{background:linear-gradient(135deg,#35145f,#6b1f69 52%,#8d315e);border:1px solid #8b5ca0;border-radius:24px;padding:18px 14px;margin-bottom:10px}.land-hero h1{margin:0;font:900 clamp(29px,5vw,47px) Georgia;color:#ffd35a}.land-hero p{font-size:13px}
+.stats{gap:7px!important;margin-bottom:9px!important}.stat{background:#40164c!important;color:#fff!important;border:1px solid #805392;padding:9px!important;border-radius:14px!important;font-size:12px}
+.memory-game-box{padding:9px!important;margin:0 0 9px!important;grid-template-columns:70px 1fr!important;gap:10px!important;border-radius:16px!important}.memory-logo{width:70px!important;height:70px!important}.memory-title{font-size:16px!important}.memory-text{font-size:10px!important;margin-bottom:5px!important}.memory-btn{font-size:9px!important;padding:7px 10px!important}
+.quiz-box{background:linear-gradient(145deg,#32133e,#18102d)!important;color:#fff!important;border:1px solid #805392;padding:12px!important;border-radius:22px!important}
+#catImage{height:315px!important;max-height:none!important;object-fit:contain!important;background:#fff!important;border-radius:16px!important;margin-bottom:6px!important;border:4px solid #fff}
+#breed{font:900 22px Georgia!important;color:#ffd35a!important;margin-bottom:4px!important}.question{font-size:17px!important;font-weight:900!important;margin-bottom:6px!important}
+#answers{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.answer-btn{margin:0!important;padding:13px 7px!important;border:1px solid #8b5ca0!important;border-radius:12px!important;background:#52205f!important;color:#fff!important;font-size:14px!important}
+.answer-btn.correct,.answer-btn.correct:hover,.answer-btn.correct:disabled{background:#10b981!important;color:#fff!important;border-color:#6ee7b7!important;opacity:1!important}
+.answer-btn.wrong,.answer-btn.wrong:hover,.answer-btn.wrong:disabled{background:#ef4444!important;color:#fff!important;border-color:#fca5a5!important;opacity:1!important}
+#nextBtn{margin-top:8px!important;padding:10px 20px!important;border-radius:999px!important;background:#ffd35a!important;color:#241600!important;font-size:13px!important}
+.back button{margin-top:10px!important;padding:9px 14px!important;border-radius:999px!important;background:#42174e!important;font-size:10px!important}
+@media(max-width:700px){.container{padding:5px 6px 18px!important}.premium-top{padding:6px 7px}.premium-brand{font-size:17px}.premium-nav a{font-size:8px;padding:5px 7px}.land-hero{padding:10px 7px}.land-hero h1{font-size:24px!important}.land-hero p{font-size:9px}.stat{font-size:9px!important;padding:6px 3px!important}.memory-game-box{grid-template-columns:45px 1fr!important;padding:5px!important}.memory-logo{width:45px!important;height:45px!important}.memory-text{display:none}.quiz-box{padding:6px!important}#catImage{height:205px!important}#breed{font-size:16px!important}.question{font-size:13px!important}#answers{gap:4px}.answer-btn{font-size:10px!important;padding:9px 3px!important}}
+</style></head>
 
 <body>
 
 <div class="container">
-
-<h1>🐱 Katteland Quiz MASTER</h1>
+<div class="premium-top"><div class="premium-brand">🐾 Hundene Våre • Katteland</div><div class="premium-nav"><a href="index.html">🏠 Forsiden</a><a href="spill.html">🎮 Spill</a></div></div>
+<div class="land-hero"><h1>🌍 Katteland Quiz Premium</h1><p>Vet du hvor katterasene kommer fra? Se rasen, velg riktig land og samle poeng gjennom hele runden.</p></div>
 
 <div class="stats">
 <div class="stat">🏆 Poeng: <span id="score">0</span></div>
@@ -255,30 +272,30 @@ Hvor kommer denne katterasen fra?
 <script>
 /* GAME OVER ER FJERNET - FEIL SVAR TELLER BARE OPP */
 const questions=[
-{breed:"Maine Coon",image:"bilder/maine-coon.jpg",answers:["USA","Canada","England"],correct:"USA"},
-{breed:"Siameser",image:"bilder/siameser.jpg",answers:["Thailand","Japan","Kina"],correct:"Thailand"},
-{breed:"Perser",image:"bilder/perser.jpg",answers:["Iran","India","Tyrkia"],correct:"Iran"},
-{breed:"Bengal",image:"bilder/bengal.jpg",answers:["USA","India","Thailand"],correct:"USA"},
-{breed:"Abyssiner",image:"bilder/abyssiner.jpg",answers:["Etiopia","Egypt","Marokko"],correct:"Etiopia"},
-{breed:"Birma",image:"bilder/birma.jpg",answers:["Myanmar","Thailand","India"],correct:"Myanmar"},
-{breed:"Devon Rex",image:"bilder/devon-rex.jpg",answers:["England","USA","Frankrike"],correct:"England"},
-{breed:"Oriental Shorthair",image:"bilder/oriental-shorthair.jpg",answers:["England","Thailand","Japan"],correct:"England"},
-{breed:"Russian Blue",image:"bilder/russian-blue.jpg",answers:["Russland","Polen","Finland"],correct:"Russland"},
-{breed:"Scottish Fold",image:"bilder/scottish-fold.jpg",answers:["Skottland","Irland","Wales"],correct:"Skottland"},
-{breed:"Sibirsk Katt",image:"bilder/sibirsk-katt.jpg",answers:["Russland","Sverige","Norge"],correct:"Russland"},
-{breed:"Tyrkisk Angora",image:"bilder/tyrkisk-angora.jpg",answers:["Tyrkia","Iran","Egypt"],correct:"Tyrkia"},
-{breed:"Savannah",image:"bilder/savannah.jpg",answers:["USA","Kenya","Egypt"],correct:"USA"},
-{breed:"Munchkin",image:"bilder/munchkin.jpg",answers:["USA","Japan","England"],correct:"USA"},
-{breed:"Exotic Shorthair",image:"bilder/exotic-shorthair.jpg",answers:["USA","Iran","Russland"],correct:"USA"},
-{breed:"Turkish Van",image:"bilder/turkish-van.jpg",answers:["Tyrkia","Iran","Egypt"],correct:"Tyrkia"},
-{breed:"Bombay",image:"bilder/bombay.jpg",answers:["USA","India","Egypt"],correct:"USA"},
-{breed:"Cornish Rex",image:"bilder/cornish-rex.jpg",answers:["England","USA","Frankrike"],correct:"England"},
-{breed:"Ocicat",image:"bilder/ocicat.jpg",answers:["USA","Mexico","Egypt"],correct:"USA"},
-{breed:"Egyptian Mau",image:"bilder/egyptian-mau.jpg",answers:["Egypt","Iran","Tyrkia"],correct:"Egypt"},
-{breed:"Balineser",image:"bilder/balineser.jpg",answers:["USA","Indonesia","Thailand"],correct:"USA"},
-{breed:"American Curl",image:"bilder/american-curl.jpg",answers:["USA","Canada","England"],correct:"USA"},
-{breed:"Snowshoe",image:"bilder/snowshoe.jpg",answers:["USA","Thailand","Sverige"],correct:"USA"},
-{breed:"Manx",image:"bilder/manx.jpg",answers:["Isle of Man","Irland","Skottland"],correct:"Isle of Man"}
+{breed:"Maine Coon",image:"https://www.xn--hundenevre-85a.com/bilder/maine-coon.jpg",answers:["USA","Canada","England"],correct:"USA"},
+{breed:"Siameser",image:"https://www.xn--hundenevre-85a.com/bilder/siameser.jpg",answers:["Thailand","Japan","Kina"],correct:"Thailand"},
+{breed:"Perser",image:"https://www.xn--hundenevre-85a.com/bilder/perser.jpg",answers:["Iran","India","Tyrkia"],correct:"Iran"},
+{breed:"Bengal",image:"https://www.xn--hundenevre-85a.com/bilder/bengal.jpg",answers:["USA","India","Thailand"],correct:"USA"},
+{breed:"Abyssiner",image:"https://www.xn--hundenevre-85a.com/bilder/abyssiner.jpg",answers:["Etiopia","Egypt","Marokko"],correct:"Etiopia"},
+{breed:"Birma",image:"https://www.xn--hundenevre-85a.com/bilder/birma.jpg",answers:["Myanmar","Thailand","India"],correct:"Myanmar"},
+{breed:"Devon Rex",image:"https://www.xn--hundenevre-85a.com/bilder/devon-rex.jpg",answers:["England","USA","Frankrike"],correct:"England"},
+{breed:"Oriental Shorthair",image:"https://www.xn--hundenevre-85a.com/bilder/oriental-shorthair.jpg",answers:["England","Thailand","Japan"],correct:"England"},
+{breed:"Russian Blue",image:"https://www.xn--hundenevre-85a.com/bilder/russian-blue.jpg",answers:["Russland","Polen","Finland"],correct:"Russland"},
+{breed:"Scottish Fold",image:"https://www.xn--hundenevre-85a.com/bilder/scottish-fold.jpg",answers:["Skottland","Irland","Wales"],correct:"Skottland"},
+{breed:"Sibirsk Katt",image:"https://www.xn--hundenevre-85a.com/bilder/sibirsk-katt.jpg",answers:["Russland","Sverige","Norge"],correct:"Russland"},
+{breed:"Tyrkisk Angora",image:"https://www.xn--hundenevre-85a.com/bilder/tyrkisk-angora.jpg",answers:["Tyrkia","Iran","Egypt"],correct:"Tyrkia"},
+{breed:"Savannah",image:"https://www.xn--hundenevre-85a.com/bilder/savannah.jpg",answers:["USA","Kenya","Egypt"],correct:"USA"},
+{breed:"Munchkin",image:"https://www.xn--hundenevre-85a.com/bilder/munchkin.jpg",answers:["USA","Japan","England"],correct:"USA"},
+{breed:"Exotic Shorthair",image:"https://www.xn--hundenevre-85a.com/bilder/exotic-shorthair.jpg",answers:["USA","Iran","Russland"],correct:"USA"},
+{breed:"Turkish Van",image:"https://www.xn--hundenevre-85a.com/bilder/turkish-van.jpg",answers:["Tyrkia","Iran","Egypt"],correct:"Tyrkia"},
+{breed:"Bombay",image:"https://www.xn--hundenevre-85a.com/bilder/bombay.jpg",answers:["USA","India","Egypt"],correct:"USA"},
+{breed:"Cornish Rex",image:"https://www.xn--hundenevre-85a.com/bilder/cornish-rex.jpg",answers:["England","USA","Frankrike"],correct:"England"},
+{breed:"Ocicat",image:"https://www.xn--hundenevre-85a.com/bilder/ocicat.jpg",answers:["USA","Mexico","Egypt"],correct:"USA"},
+{breed:"Egyptian Mau",image:"https://www.xn--hundenevre-85a.com/bilder/egyptian-mau.jpg",answers:["Egypt","Iran","Tyrkia"],correct:"Egypt"},
+{breed:"Balineser",image:"https://www.xn--hundenevre-85a.com/bilder/balineser.jpg",answers:["USA","Indonesia","Thailand"],correct:"USA"},
+{breed:"American Curl",image:"https://www.xn--hundenevre-85a.com/bilder/american-curl.jpg",answers:["USA","Canada","England"],correct:"USA"},
+{breed:"Snowshoe",image:"https://www.xn--hundenevre-85a.com/bilder/snowshoe.jpg",answers:["USA","Thailand","Sverige"],correct:"USA"},
+{breed:"Manx",image:"https://www.xn--hundenevre-85a.com/bilder/manx.jpg",answers:["Isle of Man","Irland","Skottland"],correct:"Isle of Man"}
 ];
 
 let currentQuestion=0;
@@ -299,7 +316,9 @@ return copy;
 function loadQuestion(){
 const q=questions[currentQuestion];
 
-document.getElementById("catImage").src=q.image;
+const catImg=document.getElementById("catImage");
+catImg.onerror=()=>{catImg.onerror=null;catImg.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='900' height='600'><rect width='900' height='600' fill='#5b205f'/><text x='450' y='270' text-anchor='middle' font-size='150'>🐱</text><text x='450' y='410' text-anchor='middle' fill='white' font-family='Arial' font-size='44' font-weight='700'>${q.breed}</text></svg>`);};
+catImg.src=q.image;
 document.getElementById("breed").textContent=q.breed;
 document.getElementById("questionNumber").textContent=(currentQuestion+1)+"/"+questions.length;
 
