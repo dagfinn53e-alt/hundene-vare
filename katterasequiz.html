@@ -144,13 +144,34 @@ h1{font-size:30px}
 .answer-btn{font-size:20px;padding:16px}
 }
 </style>
+
+<style id="premium-10-cat">
+:root{--navy:#120720;--purple:#52206f;--pink:#be185d;--gold:#ffd35a;--line:#744b8f}
+body{background:radial-gradient(circle at 8% 0,rgba(255,211,90,.15),transparent 24rem),radial-gradient(circle at 92% 8%,rgba(190,24,93,.2),transparent 28rem),linear-gradient(180deg,#11071e,#35113e 58%,#1c0b2b);color:#fff;min-height:100vh}
+.container{max-width:1120px;margin:0 auto;padding:10px 14px 32px}
+.premium-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:rgba(25,8,39,.94);border:1px solid #744b8f;border-radius:20px;padding:9px 12px;box-shadow:0 12px 28px #0005;margin-bottom:10px}
+.premium-brand{font:italic 900 23px Georgia;color:var(--gold)}
+.premium-nav{display:flex;gap:6px;flex-wrap:wrap}.premium-nav a{color:#fff;text-decoration:none;background:#42174e;border:1px solid #85549a;border-radius:999px;padding:8px 11px;font-size:10px;font-weight:900}
+.quiz-hero{background:linear-gradient(135deg,#35145f,#6b1f69 52%,#8d315e);border:1px solid #8b5ca0;border-radius:24px;padding:19px 14px;margin-bottom:11px;box-shadow:0 18px 38px #0005}
+.quiz-hero h1{margin:0;font:900 clamp(30px,5vw,48px) Georgia;color:var(--gold)}.quiz-hero p{margin:7px auto 0;max-width:760px;color:#fff0fa;font-size:13px;line-height:1.5}
+.stats{gap:7px!important;margin-bottom:9px!important}.stat{background:#40164c!important;color:#fff!important;border:1px solid #805392;padding:9px!important;border-radius:14px!important;box-shadow:none!important;font-size:12px}
+.quiz-box,.result-box{background:linear-gradient(145deg,#32133e,#18102d)!important;color:#fff;border:1px solid #805392;padding:13px!important;border-radius:22px!important;box-shadow:0 18px 38px #0006!important}
+#catImage{width:100%;height:330px;max-height:none!important;object-fit:contain!important;background:#fff!important;border-radius:17px!important;margin-bottom:8px!important;border:4px solid #fff;box-shadow:0 10px 25px #0005}
+.question{font:900 21px Georgia!important;color:var(--gold);margin:5px 0 6px!important}
+#answers{display:grid;grid-template-columns:1fr 1fr;gap:7px}.answer-btn{display:block!important;width:100%!important;margin:0!important;padding:13px 9px!important;border:1px solid #8b5ca0!important;border-radius:13px!important;background:#52205f!important;color:#fff!important;font-size:15px!important;font-weight:900!important;box-shadow:none!important}
+.answer-btn:hover{background:#6d2a78!important;transform:translateY(-1px)}.answer-btn.correct{background:#10b981!important}.answer-btn.wrong{background:#ef4444!important}
+#message{margin-top:8px!important;font-size:15px!important;min-height:22px!important;color:#ffd35a!important}
+#nextBtn,#restartBtn{margin-top:8px!important;padding:11px 22px!important;border-radius:999px!important;background:linear-gradient(135deg,#ffd65c,#e9a91d)!important;color:#241600!important;font-size:14px!important}
+.back button{margin-top:11px!important;padding:9px 15px!important;border:1px solid #805392!important;background:#42174e!important;font-size:11px!important;border-radius:999px!important}
+@media(max-width:700px){.container{padding:5px 6px 20px}.premium-top{padding:6px 7px;border-radius:14px;margin-bottom:6px}.premium-brand{font-size:17px}.premium-nav a{font-size:8px;padding:5px 7px}.quiz-hero{padding:11px 7px;border-radius:16px;margin-bottom:6px}.quiz-hero h1{font-size:25px!important}.quiz-hero p{font-size:9px;margin-top:4px}.stats{gap:4px!important;margin-bottom:5px!important}.stat{font-size:9px;padding:6px 4px!important}.quiz-box{padding:6px!important;border-radius:14px!important}#catImage{height:210px!important;margin-bottom:4px!important}.question{font-size:15px!important;margin:3px 0 5px!important}#answers{gap:4px}.answer-btn{font-size:11px!important;padding:9px 4px!important;border-radius:9px!important}#message{font-size:10px!important;margin-top:4px!important;min-height:15px!important}#nextBtn{font-size:11px!important;padding:8px 15px!important;margin-top:5px!important}.back button{font-size:9px!important;margin-top:7px!important;padding:7px 10px!important}}
+</style>
 </head>
 
 <body>
 
 <div class="container">
-
-<h1>🐱 Katterase Quiz 2.0</h1>
+<div class="premium-top"><div class="premium-brand">🐾 Hundene Våre • Quiz</div><div class="premium-nav"><a href="index.html">🏠 Forsiden</a><a href="spill.html">🎮 Spill</a></div></div>
+<div class="quiz-hero"><h1>🐱 Katterase Quiz Premium</h1><p>Hvor godt kjenner du katterasene? Se bildet, velg riktig svar og samle poeng. Alle 24 rasene og quiz-funksjonen er beholdt.</p></div>
 
 <div class="stats">
 <div class="stat">🏆 Poeng: <span id="score">0</span></div>
@@ -197,30 +218,30 @@ Velg riktig katterase blant 4 alternativer 🐱
 
 <script>
 const questions=[
-{breed:"Maine Coon",image:"bilder/maine-coon.jpg"},
-{breed:"Siameser",image:"bilder/siameser.jpg"},
-{breed:"Perser",image:"bilder/perser.jpg"},
-{breed:"Bengal",image:"bilder/bengal.jpg"},
-{breed:"Abyssiner",image:"bilder/abyssiner.jpg"},
-{breed:"Birma",image:"bilder/birma.jpg"},
-{breed:"Devon Rex",image:"bilder/devon-rex.jpg"},
-{breed:"Oriental Shorthair",image:"bilder/oriental-shorthair.jpg"},
-{breed:"Russian Blue",image:"bilder/russian-blue.jpg"},
-{breed:"Scottish Fold",image:"bilder/scottish-fold.jpg"},
-{breed:"Sibirsk Katt",image:"bilder/sibirsk-katt.jpg"},
-{breed:"Tyrkisk Angora",image:"bilder/tyrkisk-angora.jpg"},
-{breed:"Savannah",image:"bilder/savannah.jpg"},
-{breed:"Munchkin",image:"bilder/munchkin.jpg"},
-{breed:"Exotic Shorthair",image:"bilder/exotic-shorthair.jpg"},
-{breed:"Turkish Van",image:"bilder/turkish-van.jpg"},
-{breed:"Bombay",image:"bilder/bombay.jpg"},
-{breed:"Cornish Rex",image:"bilder/cornish-rex.jpg"},
-{breed:"Ocicat",image:"bilder/ocicat.jpg"},
-{breed:"Egyptian Mau",image:"bilder/egyptian-mau.jpg"},
-{breed:"Balineser",image:"bilder/balineser.jpg"},
-{breed:"American Curl",image:"bilder/american-curl.jpg"},
-{breed:"Snowshoe",image:"bilder/snowshoe.jpg"},
-{breed:"Manx",image:"bilder/manx.jpg"}
+{breed:"Maine Coon",image:"https://www.xn--hundenevre-85a.com/bilder/maine-coon.jpg"},
+{breed:"Siameser",image:"https://www.xn--hundenevre-85a.com/bilder/siameser.jpg"},
+{breed:"Perser",image:"https://www.xn--hundenevre-85a.com/bilder/perser.jpg"},
+{breed:"Bengal",image:"https://www.xn--hundenevre-85a.com/bilder/bengal.jpg"},
+{breed:"Abyssiner",image:"https://www.xn--hundenevre-85a.com/bilder/abyssiner.jpg"},
+{breed:"Birma",image:"https://www.xn--hundenevre-85a.com/bilder/birma.jpg"},
+{breed:"Devon Rex",image:"https://www.xn--hundenevre-85a.com/bilder/devon-rex.jpg"},
+{breed:"Oriental Shorthair",image:"https://www.xn--hundenevre-85a.com/bilder/oriental-shorthair.jpg"},
+{breed:"Russian Blue",image:"https://www.xn--hundenevre-85a.com/bilder/russian-blue.jpg"},
+{breed:"Scottish Fold",image:"https://www.xn--hundenevre-85a.com/bilder/scottish-fold.jpg"},
+{breed:"Sibirsk Katt",image:"https://www.xn--hundenevre-85a.com/bilder/sibirsk-katt.jpg"},
+{breed:"Tyrkisk Angora",image:"https://www.xn--hundenevre-85a.com/bilder/tyrkisk-angora.jpg"},
+{breed:"Savannah",image:"https://www.xn--hundenevre-85a.com/bilder/savannah.jpg"},
+{breed:"Munchkin",image:"https://www.xn--hundenevre-85a.com/bilder/munchkin.jpg"},
+{breed:"Exotic Shorthair",image:"https://www.xn--hundenevre-85a.com/bilder/exotic-shorthair.jpg"},
+{breed:"Turkish Van",image:"https://www.xn--hundenevre-85a.com/bilder/turkish-van.jpg"},
+{breed:"Bombay",image:"https://www.xn--hundenevre-85a.com/bilder/bombay.jpg"},
+{breed:"Cornish Rex",image:"https://www.xn--hundenevre-85a.com/bilder/cornish-rex.jpg"},
+{breed:"Ocicat",image:"https://www.xn--hundenevre-85a.com/bilder/ocicat.jpg"},
+{breed:"Egyptian Mau",image:"https://www.xn--hundenevre-85a.com/bilder/egyptian-mau.jpg"},
+{breed:"Balineser",image:"https://www.xn--hundenevre-85a.com/bilder/balineser.jpg"},
+{breed:"American Curl",image:"https://www.xn--hundenevre-85a.com/bilder/american-curl.jpg"},
+{breed:"Snowshoe",image:"https://www.xn--hundenevre-85a.com/bilder/snowshoe.jpg"},
+{breed:"Manx",image:"https://www.xn--hundenevre-85a.com/bilder/manx.jpg"}
 ];
 
 const breedNames = questions.map(q => q.breed);
@@ -256,7 +277,9 @@ loadQuestion();
 function loadQuestion(){
 const q=quizQuestions[currentQuestion];
 
-document.getElementById("catImage").src=q.image;
+const catImg=document.getElementById("catImage");
+catImg.onerror=()=>{catImg.onerror=null;catImg.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='900' height='600'><defs><linearGradient id='g' x2='1' y2='1'><stop stop-color='#35145f'/><stop offset='1' stop-color='#8d315e'/></linearGradient></defs><rect width='900' height='600' fill='url(#g)'/><text x='450' y='245' text-anchor='middle' font-size='150'>🐱</text><text x='450' y='390' text-anchor='middle' fill='white' font-family='Arial' font-size='44' font-weight='700'>${q.breed}</text><text x='450' y='455' text-anchor='middle' fill='#ffd35a' font-family='Arial' font-size='24'>Hundene Våre</text></svg>`);};
+catImg.src=q.image;
 document.getElementById("breed").textContent="";
 document.getElementById("questionNumber").textContent=(currentQuestion+1)+"/"+quizQuestions.length;
 
