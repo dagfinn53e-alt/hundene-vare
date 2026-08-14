@@ -8,7 +8,161 @@
 <style>
 body{
   margin:0;
-  font-family:Arial,sans-serif;
+  font-family:Arial,sans-serif;<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hundepuslespill Premium 10.0 – Hundene Våre</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#030817;--panel:#09172e;--line:#294d7c;--gold:#ffd45c;--blue:#2c77ff;--text:#fff;--muted:#c8d6ea}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:
+radial-gradient(circle at 8% 0,rgba(255,191,62,.12),transparent 26rem),
+radial-gradient(circle at 92% 8%,rgba(39,112,255,.15),transparent 30rem),
+linear-gradient(180deg,#030815,#07162a 55%,#071b31);min-height:100vh}
+.wrap{width:min(1450px,calc(100% - 18px));margin:auto;padding:9px 0 30px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 14px;border:1px solid #2e568b;border-radius:22px;background:rgba(5,18,40,.94);position:sticky;top:5px;z-index:20;box-shadow:0 14px 35px #0006}
+.brand{font:italic 900 26px Georgia;color:var(--gold)}
+.nav{display:flex;gap:6px;flex-wrap:wrap}
+.nav a,.nav button{border:1px solid #31578c;background:#0c2244;color:#fff;border-radius:999px;padding:9px 12px;font-weight:900;font-size:11px;text-decoration:none;cursor:pointer}
+.hero{margin-top:10px;border:1px solid #365c92;border-radius:28px;padding:28px 18px;text-align:center;background:linear-gradient(135deg,#0f305e,#341958 52%,#75294a);box-shadow:0 22px 50px #0005}
+.hero h1{font:900 clamp(32px,5vw,58px) Georgia;margin:0;color:var(--gold);letter-spacing:.03em}
+.hero p{max-width:760px;margin:9px auto 0;color:#edf4ff;line-height:1.55;font-size:14px}
+.pills{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-top:13px}
+.pills span{padding:7px 11px;border-radius:999px;background:#ffffff16;border:1px solid #ffffff2b;font-size:10px;font-weight:900}
+.screen{margin-top:14px}
+.screen.hidden{display:none}
+.section-title{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:16px 3px 9px}
+.section-title h2{margin:0;font:italic 900 28px Georgia;color:var(--gold)}
+.section-title p{margin:0;color:var(--muted);font-size:11px}
+.breed-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+.breed-card{position:relative;min-height:205px;border-radius:20px;overflow:hidden;border:1px solid #31598b;background:#0b1c36;cursor:pointer;box-shadow:0 13px 28px #0004;transition:.18s}
+.breed-card:hover{transform:translateY(-4px)}
+.breed-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.breed-card:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,#06101cf2 0,#07101a6b 50%,transparent 76%)}
+.breed-name{position:absolute;left:11px;right:11px;bottom:11px;z-index:2;font:900 17px Georgia;text-shadow:0 2px 5px #000}
+.breed-name small{display:block;font:800 9px Arial;color:#f6cf68;margin-top:4px}
+.level-box{max-width:1000px;margin:0 auto;padding:18px;border:1px solid #31598b;border-radius:23px;background:linear-gradient(145deg,#0b1b35,#231038);box-shadow:0 18px 38px #0005}
+.selected-breed{display:grid;grid-template-columns:260px 1fr;gap:18px;align-items:center}
+.selected-breed img{width:100%;height:220px;object-fit:cover;border-radius:18px;border:1px solid #456ea1}
+.selected-breed h2{font:900 32px Georgia;color:var(--gold);margin:0 0 7px}
+.selected-breed p{color:var(--muted);line-height:1.55}
+.level-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:15px}
+.level{border:1px solid #466793;border-radius:16px;padding:16px 10px;background:#0d2242;color:#fff;cursor:pointer;text-align:center;font-weight:900}
+.level b{display:block;font-size:20px;margin-bottom:5px;color:var(--gold)}
+.level span{font-size:10px;color:#bed0e5}
+.level:hover{background:#143262}
+.game-card{border:1px solid #31598b;border-radius:24px;background:linear-gradient(145deg,#0b1c36,#17102f);padding:14px;box-shadow:0 18px 40px #0005}
+.game-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.game-head h2{margin:0;font:900 27px Georgia;color:var(--gold)}
+.stats{display:flex;gap:6px;flex-wrap:wrap}
+.stat{padding:8px 10px;border:1px solid #345a87;border-radius:999px;background:#0b2446;font-size:10px;font-weight:900}
+.game-layout{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:14px;align-items:start}
+#board{width:min(76vw,620px);aspect-ratio:1;display:grid;gap:2px;background:#071124;padding:5px;border-radius:20px;margin:auto;box-shadow:0 15px 35px #0008}
+.piece{background-repeat:no-repeat;border:1px solid #fff3;border-radius:6px;cursor:pointer}
+.piece.selected{outline:4px solid var(--gold);z-index:2}
+.side{border:1px solid #345a87;border-radius:18px;background:#091a33;padding:11px}
+.side h3{font-size:13px;margin:0 0 8px;color:var(--gold)}
+.side img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px}
+.message{text-align:center;min-height:28px;margin-top:10px;font-weight:900;color:#7ff0a9}
+.actions{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-top:10px}
+.actions button{border:1px solid #3d6594;border-radius:999px;padding:10px 14px;background:#0d284e;color:#fff;font-weight:900;cursor:pointer}
+.actions .gold{background:linear-gradient(135deg,#ffda63,#e9a71b);color:#241704;border-color:#ffd45c}
+.confetti{position:fixed;top:-20px;font-size:26px;pointer-events:none;z-index:99;animation:fall 3s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+@media(max-width:950px){.breed-grid{grid-template-columns:repeat(4,1fr)}.game-layout{grid-template-columns:1fr}.side{max-width:280px;margin:auto}}
+@media(max-width:650px){
+.wrap{width:calc(100% - 10px)}.top{padding:7px 8px;border-radius:15px}.brand{font-size:19px}.nav a,.nav button{font-size:8px;padding:6px 8px}
+.hero{padding:17px 7px;border-radius:19px}.hero h1{font-size:29px}.hero p{font-size:10px}.pills span{font-size:8px;padding:5px 7px}
+.section-title{margin:11px 2px 6px}.section-title h2{font-size:21px}.section-title p{display:none}
+.breed-grid{grid-template-columns:repeat(3,1fr);gap:5px}.breed-card{min-height:128px;border-radius:13px}.breed-name{font-size:11px;left:7px;right:7px;bottom:7px}.breed-name small{font-size:7px}
+.level-box{padding:9px;border-radius:16px}.selected-breed{grid-template-columns:110px 1fr;gap:10px}.selected-breed img{height:110px;border-radius:12px}.selected-breed h2{font-size:20px}.selected-breed p{font-size:9px}
+.level-grid{grid-template-columns:repeat(2,1fr);gap:5px;margin-top:8px}.level{padding:10px 5px;border-radius:11px}.level b{font-size:14px}.level span{font-size:8px}
+.game-card{padding:7px}.game-head h2{font-size:20px}.stat{font-size:8px;padding:6px 8px}#board{width:94vw;max-width:560px;border-radius:14px}
+.side{max-width:160px;padding:7px}.side h3{font-size:10px}.actions button{font-size:9px;padding:8px 10px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><div class="brand">🐾 Hundene Våre • Puslespill</div><nav class="nav"><a href="spill.html">🎮 Spill</a><a href="index.html">🏠 Forsiden</a><button onclick="showBreeds()">🐶 Velg rase</button></nav></header>
+<section class="hero"><h1>🐶 Hundepuslespill Premium</h1><p>Velg en hunderase, se bildet og velg vanskelighetsgrad. Hver rase har fire nivåer – fra 9 til 36 brikker.</p><div class="pills"><span>20 raser</span><span>4 nivåer per rase</span><span>⭐ Stjerner</span><span>🏆 Trekk</span></div></section>
+
+<section id="breedScreen" class="screen">
+<div class="section-title"><h2>Velg hunderase</h2><p>Trykk direkte på et bilde</p></div>
+<div id="breedGrid" class="breed-grid"></div>
+</section>
+
+<section id="levelScreen" class="screen hidden">
+<div class="level-box">
+<div class="selected-breed"><img id="selectedImg" alt=""><div><h2 id="selectedName"></h2><p>Velg nivå. Det samme rasebildet blir delt opp i brikker, og du setter det sammen igjen.</p></div></div>
+<div class="level-grid">
+<button class="level" onclick="startGame(3)"><b>🙂 Lett</b><span>9 brikker • 3 × 3</span></button>
+<button class="level" onclick="startGame(4)"><b>😎 Medium</b><span>16 brikker • 4 × 4</span></button>
+<button class="level" onclick="startGame(5)"><b>🔥 Vanskelig</b><span>25 brikker • 5 × 5</span></button>
+<button class="level" onclick="startGame(6)"><b>👑 Ekspert</b><span>36 brikker • 6 × 6</span></button>
+</div>
+<div class="actions"><button onclick="showBreeds()">← Tilbake til raser</button></div>
+</div>
+</section>
+
+<section id="gameScreen" class="screen hidden">
+<div class="game-card">
+<div class="game-head"><h2 id="gameTitle">Puslespill</h2><div class="stats"><div class="stat">🏆 Trekk: <span id="moves">0</span></div><div class="stat">⭐ Stjerner: <span id="stars">0</span></div><div class="stat">🎯 <span id="levelName">Lett</span></div></div></div>
+<div class="game-layout"><div><div id="board"></div><div id="message" class="message"></div></div><aside class="side"><h3>🖼️ Originalbildet</h3><img id="previewImage" alt="Originalbilde"></aside></div>
+<div class="actions"><button onclick="showLevels()">← Nivåer</button><button class="gold" onclick="startGame(size)">🔄 Spill på nytt</button><button onclick="showBreeds()">🐶 Ny rase</button></div>
+</div>
+</section>
+</div>
+<script>
+const breeds=[{"name": "Bichon Frisé", "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Bichon%20Frise.jpg?width=1800"}, {"name": "Collie", "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rough_Collie_600.jpg?width=1800"}, {"name": "Puddel", "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Poodle.jpg?width=1800"}, {"name": "Lhasa Apso", "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Lhasa_Apso.jpg?width=1800"}, {"name": "St. Bernard", "img": "https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=1200&q=85"}, {"name": "Boston Terrier", "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/A%20Boston%20terrier.jpg?width=1800"}, {"name": "Mops", "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Pug_600.jpg?width=1200"}, {"name": "Chihuahua", "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Chihuahua%20dog.jpg?width=1800"}, {"name": "Dachs", "img": "https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=1200&q=85"}, {"name": "Border Collie", "img": "https://images.unsplash.com/photo-1503256207526-0d5d80fa2f47?auto=format&fit=crop&w=1800&q=92"}, {"name": "Husky", "img": "https://images.thevoicemag.ru/upload/img_cache/13b/13b070cb28ea4cbae2bc52ddffd72612_cropped_666x666.jpg"}, {"name": "Golden Retriever", "img": "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=1800&q=92"}, {"name": "Dalmatiner", "img": "https://cdn.nezavisne.com/2018/09/750x450/20180910085108_496671.jpg"}, {"name": "Cavalier King Charles Spaniel", "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/A%20Cavalier%20King%20Charles%20Spaniel.jpg?width=1800"}, {"name": "Newfoundland", "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Newfoundland_dog_Smoky.jpg?width=1200"}, {"name": "Pomeranian", "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Pomeranian.jpg?width=1800"}, {"name": "Fransk Bulldog", "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Bulldog%20franc%C3%A9s%20fawn.jpg?width=1800"}, {"name": "Rottweiler", "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rottweiler_standing_facing_left.jpg?width=1800"}, {"name": "Beagle", "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Bronco%20the%20Beagle.JPG?width=1800"}, {"name": "Akita", "img": "https://s3-ap-northeast-1.amazonaws.com/thegate/2020/10/21/12/53/55/Akita-Dog.jpg"}];
+let selectedBreed=breeds[0],size=3,pieces=[],selected=null,moves=0,stars=0,gameWon=false;
+
+function safeImg(img,url,name){
+  img.src=url;
+  img.onerror=()=>{img.onerror=null;img.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='800' height='800'><defs><linearGradient id='g' x2='1' y2='1'><stop stop-color='#245ea8'/><stop offset='1' stop-color='#39194d'/></linearGradient></defs><rect width='800' height='800' fill='url(#g)'/><text x='400' y='330' text-anchor='middle' font-size='190'>🐶</text><text x='400' y='500' text-anchor='middle' fill='white' font-family='Arial' font-size='46' font-weight='700'>${name}</text><text x='400' y='570' text-anchor='middle' fill='#ffd45c' font-family='Arial' font-size='28'>Hundene Våre</text></svg>`)}}
+
+function renderBreeds(){
+ const grid=document.getElementById('breedGrid');grid.innerHTML='';
+ breeds.forEach((b,i)=>{
+   const card=document.createElement('div');card.className='breed-card';card.onclick=()=>chooseBreed(i);
+   const img=document.createElement('img');safeImg(img,b.img,b.name);
+   const n=document.createElement('div');n.className='breed-name';n.innerHTML=b.name+'<small>TRYKK FOR NIVÅER →</small>';
+   card.append(img,n);grid.appendChild(card);
+ });
+}
+function chooseBreed(i){selectedBreed=breeds[i];document.getElementById('selectedName').textContent=selectedBreed.name;safeImg(document.getElementById('selectedImg'),selectedBreed.img,selectedBreed.name);showLevels()}
+function showBreeds(){document.getElementById('breedScreen').classList.remove('hidden');document.getElementById('levelScreen').classList.add('hidden');document.getElementById('gameScreen').classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'})}
+function showLevels(){document.getElementById('breedScreen').classList.add('hidden');document.getElementById('levelScreen').classList.remove('hidden');document.getElementById('gameScreen').classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'})}
+function shuffleArray(a){const c=[...a];for(let i=c.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[c[i],c[j]]=[c[j],c[i]]}return c}
+function levelText(){return size===3?'Lett':size===4?'Medium':size===5?'Vanskelig':'Ekspert'}
+function startGame(s){
+ size=s;selected=null;moves=0;stars=0;gameWon=false;
+ document.getElementById('breedScreen').classList.add('hidden');document.getElementById('levelScreen').classList.add('hidden');document.getElementById('gameScreen').classList.remove('hidden');
+ document.getElementById('gameTitle').textContent='🧩 '+selectedBreed.name;
+ document.getElementById('moves').textContent='0';document.getElementById('stars').textContent='0';document.getElementById('levelName').textContent=levelText();document.getElementById('message').textContent='';
+ safeImg(document.getElementById('previewImage'),selectedBreed.img,selectedBreed.name);
+ pieces=[...Array(size*size).keys()];do{pieces=shuffleArray(pieces)}while(isSolved());drawBoard();window.scrollTo({top:document.getElementById('gameScreen').offsetTop-8,behavior:'smooth'});
+}
+function isSolved(){return pieces.every((v,i)=>v===i)}
+function drawBoard(){
+ const board=document.getElementById('board');board.innerHTML='';board.style.gridTemplateColumns=`repeat(${size},1fr)`;
+ pieces.forEach((piece,index)=>{
+  const d=document.createElement('div');d.className='piece'+(selected===index?' selected':'');
+  const row=Math.floor(piece/size),col=piece%size;
+  d.style.backgroundImage=`url("${selectedBreed.img}")`;d.style.backgroundSize=`${size*100}% ${size*100}%`;
+  d.style.backgroundPosition=`${(col*100)/(size-1)}% ${(row*100)/(size-1)}%`;d.onclick=()=>selectPiece(index);board.appendChild(d);
+ });
+}
+function selectPiece(index){if(gameWon)return;if(selected===null){selected=index;drawBoard();return}if(selected===index){selected=null;drawBoard();return}[pieces[selected],pieces[index]]=[pieces[index],pieces[selected]];selected=null;moves++;document.getElementById('moves').textContent=moves;drawBoard();if(isSolved())finish()}
+function finish(){
+ gameWon=true;let three=20,two=40;if(size===4){three=45;two=80}if(size===5){three=80;two=140}if(size===6){three=120;two=220}stars=moves<=three?3:moves<=two?2:1;document.getElementById('stars').textContent=stars;document.getElementById('message').textContent=`🏆 Gratulerer! ${selectedBreed.name} er ferdig – ${stars} stjerner!`;celebrate()
+}
+function celebrate(){const em=['⭐','✨','🎉','🏆','🐶','🧩'];for(let i=0;i<45;i++){let x=document.createElement('div');x.className='confetti';x.textContent=em[Math.floor(Math.random()*em.length)];x.style.left=Math.random()*100+'vw';x.style.animationDelay=Math.random()*.7+'s';document.body.appendChild(x);setTimeout(()=>x.remove(),3400)}}
+renderBreeds();
+</script>
+</body></html>
   background:linear-gradient(to bottom,#dbeafe,#eef6ff);
   color:#123c73;
   text-align:center;
