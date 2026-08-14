@@ -87,10 +87,47 @@ h1{margin-bottom:20px}
 }
 
 </style>
+<style id="premium-hundeland">
+body{background:linear-gradient(180deg,#041126,#092449 58%,#071a34)!important;color:#fff!important}
+.container{max-width:1120px!important;margin:0 auto!important;padding:10px 14px 32px!important}
+.premium-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:#071a35;border:1px solid #315a8c;border-radius:20px;padding:9px 12px;margin-bottom:10px}
+.premium-brand{font:italic 900 23px Georgia;color:#ffd35a}.premium-nav{display:flex;gap:6px}.premium-nav a{color:#fff;text-decoration:none;background:#0d2b55;border:1px solid #3b6598;border-radius:999px;padding:8px 11px;font-size:10px;font-weight:900}
+.land-hero{background:linear-gradient(135deg,#0e4072,#165c55 52%,#62451d);border:1px solid #4b779a;border-radius:24px;padding:18px 14px;margin-bottom:10px}.land-hero h1{margin:0;font:900 clamp(29px,5vw,47px) Georgia;color:#ffd35a}.land-hero p{font-size:13px}
+.stats{gap:7px!important;margin-bottom:9px!important}.stat{background:#0c2b54!important;color:#fff!important;border:1px solid #3d679a;padding:9px!important;border-radius:14px!important;font-size:12px}
+.memory-game-box{padding:9px!important;margin:0 0 9px!important;grid-template-columns:70px 1fr!important;gap:10px!important;border-radius:16px!important}.memory-logo{width:70px!important;height:70px!important}.memory-title{font-size:16px!important}.memory-text{font-size:10px!important;margin-bottom:5px!important}.memory-btn{font-size:9px!important;padding:7px 10px!important}
+.quiz-box{background:linear-gradient(145deg,#0b2345,#132d31)!important;color:#fff!important;border:1px solid #3b6395;padding:12px!important;border-radius:22px!important}
+#dogImage{height:315px!important;max-height:none!important;object-fit:contain!important;background:#fff!important;border-radius:16px!important;margin-bottom:6px!important}
+#breed{font:900 22px Georgia!important;color:#ffd35a!important;margin-bottom:4px!important}.question{font-size:17px!important;font-weight:900!important;margin-bottom:6px!important}
+#answers{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.answer-btn{margin:0!important;padding:13px 7px!important;border:1px solid #456e9f!important;border-radius:12px!important;background:#102f5b!important;color:#fff!important;font-size:14px!important}
+#nextBtn{margin-top:8px!important;padding:10px 20px!important;border-radius:999px!important;background:#ffd35a!important;color:#241600!important;font-size:13px!important}
+.back button{margin-top:10px!important;padding:9px 14px!important;border-radius:999px!important;background:#0d2b55!important;font-size:10px!important}
+@media(max-width:700px){.container{padding:5px 6px 18px!important}.premium-top{padding:6px 7px}.premium-brand{font-size:17px}.premium-nav a{font-size:8px;padding:5px 7px}.land-hero{padding:10px 7px}.land-hero h1{font-size:24px!important}.land-hero p{font-size:9px}.stat{font-size:9px!important;padding:6px 3px!important}.memory-game-box{grid-template-columns:45px 1fr!important;padding:5px!important}.memory-logo{width:45px!important;height:45px!important}.memory-text{display:none}.quiz-box{padding:6px!important}#dogImage{height:205px!important}#breed{font-size:16px!important}.question{font-size:13px!important}#answers{gap:4px}.answer-btn{font-size:10px!important;padding:9px 3px!important}}
+</style>
+<style id="answer-colour-fix">
+.answer-btn.correct,
+.answer-btn.correct:hover,
+.answer-btn.correct:disabled{
+  background:#10b981 !important;
+  color:#fff !important;
+  border-color:#6ee7b7 !important;
+  opacity:1 !important;
+  box-shadow:0 0 0 3px rgba(16,185,129,.20) !important;
+}
+.answer-btn.wrong,
+.answer-btn.wrong:hover,
+.answer-btn.wrong:disabled{
+  background:#ef4444 !important;
+  color:#fff !important;
+  border-color:#fca5a5 !important;
+  opacity:1 !important;
+  box-shadow:0 0 0 3px rgba(239,68,68,.18) !important;
+}
+</style>
 </head>
 <body>
 <div class="container">
-<h1>🌍 Hvilket land kommer disse hundene fra?</h1>
+<div class="premium-top"><div class="premium-brand">🐾 Hundene Våre • Hundeland</div><div class="premium-nav"><a href="index.html">🏠 Forsiden</a><a href="spill.html">🎮 Spill</a></div></div>
+<div class="land-hero"><h1>🌍 Hundeland Quiz Premium</h1><p>Vet du hvor hunderasene kommer fra? Se rasen, velg riktig land og samle poeng gjennom hele runden.</p></div>
 <div class="stats">
 <div class="stat">🏆 Poeng: <span id="score">0</span></div>
 <div class="stat">❌ Feil: <span id="lives">0</span></div>
@@ -123,46 +160,46 @@ h1{margin-bottom:20px}
 <script>
 
 const questions = [
-{breed:"Kinesisk Nakenhund",image:"bilder/kinesisk-nakenhund.png",answers:["Kina","Japan","Mexico"],correct:"Kina"},
-{breed:"Chihuahua",image:"bilder/Chihuahua.png",answers:["Mexico","Spania","Italia"],correct:"Mexico"},
-{breed:"Dachs",image:"bilder/dachs.png",answers:["Tyskland","Sveits","Frankrike"],correct:"Tyskland"},
-{breed:"Briard",image:"bilder/briard.png",answers:["Frankrike","Belgia","Italia"],correct:"Frankrike"},
-{breed:"Norsk Lundehund",image:"bilder/lundehund.png",answers:["Norge","Sverige","Finland"],correct:"Norge"},
-{breed:"Shar Pei",image:"bilder/sharpei.png",answers:["Kina","Japan","Thailand"],correct:"Kina"},
-{breed:"Schæfer",image:"bilder/schafer.png",answers:["Tyskland","Nederland","Belgia"],correct:"Tyskland"},
-{breed:"Engelsk Cocker Spaniel",image:"bilder/cocker.png",answers:["England","USA","Australia"],correct:"England"},
-{breed:"Border Collie",image:"bilder/border-collie.png",answers:["Skottland","Irland","England"],correct:"Skottland"},
-{breed:"Husky",image:"bilder/husky.png",answers:["Russland","Canada","USA"],correct:"Russland"},
-{breed:"Golden Retriever",image:"bilder/golden.png",answers:["Skottland","USA","Canada"],correct:"Skottland"},
-{breed:"Dalmatiner",image:"bilder/dalmatiner.png",answers:["Kroatia","Italia","Hellas"],correct:"Kroatia"},
-{breed:"Dobermann",image:"bilder/dobermann.png",answers:["Tyskland","Russland","Frankrike"],correct:"Tyskland"},
-{breed:"Boxer",image:"bilder/boxer.png",answers:["Tyskland","England","USA"],correct:"Tyskland"},
-{breed:"Cavalier King Charles Spaniel",image:"bilder/cavalier.png",answers:["England","Frankrike","Italia"],correct:"England"},
-{breed:"Collie",image:"bilder/collie.png",answers:["Skottland","Irland","Wales"],correct:"Skottland"},
-{breed:"Newfoundland",image:"bilder/newfoundland.png",answers:["Canada","USA","Russland"],correct:"Canada"},
-{breed:"Mops",image:"bilder/mops.png",answers:["Kina","Japan","Thailand"],correct:"Kina"},
-{breed:"Puddel",image:"bilder/puddel.png",answers:["Tyskland","Frankrike","Spania"],correct:"Tyskland"},
-{breed:"Boston Terrier",image:"bilder/boston-terrier.png",answers:["USA","England","Canada"],correct:"USA"},
-{breed:"Irsk Ulvehund",image:"bilder/irsk-ulvehund.png",answers:["Irland","Skottland","England"],correct:"Irland"},
-{breed:"Lowchen",image:"bilder/lowchen.png",answers:["Frankrike","Tyskland","Belgia"],correct:"Frankrike"},
-{breed:"Lhasa Apso",image:"bilder/lhasa-apso.png",answers:["Tibet","Kina","Nepal"],correct:"Tibet"},
-{breed:"Pomeranian",image:"bilder/pomeranian.png",answers:["Tyskland","Polen","Russland"],correct:"Tyskland"},
-{breed:"Fransk Bulldog",image:"bilder/fransk-bulldog.png",answers:["Frankrike","Belgia","Italia"],correct:"Frankrike"},
-{breed:"Rottweiler",image:"bilder/rottweiler.png",answers:["Tyskland","Russland","Polen"],correct:"Tyskland"},
-{breed:"Basenji",image:"bilder/basenji.png",answers:["Kongo","Kenya","Egypt"],correct:"Kongo"},
-{breed:"Bull Terrier",image:"bilder/bull-terrier.png",answers:["England","USA","Canada"],correct:"England"},
-{breed:"Irsk Setter",image:"bilder/irsk-setter.png",answers:["Irland","Skottland","England"],correct:"Irland"},
-{breed:"Beagle",image:"bilder/beagle.png",answers:["England","USA","Canada"],correct:"England"},
-{breed:"Samojed",image:"bilder/samojed.png",answers:["Russland","Finland","Canada"],correct:"Russland"},
-{breed:"Akita",image:"bilder/akita.png",answers:["Japan","Kina","Thailand"],correct:"Japan"},
-{breed:"Shiba Inu",image:"bilder/shiba-inu.png",answers:["Japan","Kina","Sør-Korea"],correct:"Japan"},
-{breed:"Cane Corso",image:"bilder/cane-corso.png",answers:["Italia","Spania","Portugal"],correct:"Italia"},
-{breed:"Weimaraner",image:"bilder/weimaraner.png",answers:["Tyskland","Østerrike","Sveits"],correct:"Tyskland"},
-{breed:"Malteser",image:"bilder/malteser.png",answers:["Malta","Italia","Hellas"],correct:"Malta"},
-{breed:"Corgi",image:"bilder/corgi.png",answers:["Wales","Irland","England"],correct:"Wales"},
-{breed:"Grand Danois",image:"bilder/grand-danois.png",answers:["Tyskland","Danmark","Nederland"],correct:"Tyskland"},
-{breed:"Sankt Bernhard",image:"bilder/sankt-bernhard.png",answers:["Sveits","Tyskland","Østerrike"],correct:"Sveits"},
-{breed:"Australian Shepherd",image:"bilder/australian-shepherd.png",answers:["USA","Australia","Canada"],correct:"USA"}
+{breed:"Kinesisk Nakenhund",image:"https://www.xn--hundenevre-85a.com/bilder/kinesisk-nakenhund.png",answers:["Kina","Japan","Mexico"],correct:"Kina"},
+{breed:"Chihuahua",image:"https://www.xn--hundenevre-85a.com/bilder/Chihuahua.png",answers:["Mexico","Spania","Italia"],correct:"Mexico"},
+{breed:"Dachs",image:"https://www.xn--hundenevre-85a.com/bilder/dachs.png",answers:["Tyskland","Sveits","Frankrike"],correct:"Tyskland"},
+{breed:"Briard",image:"https://www.xn--hundenevre-85a.com/bilder/briard.png",answers:["Frankrike","Belgia","Italia"],correct:"Frankrike"},
+{breed:"Norsk Lundehund",image:"https://www.xn--hundenevre-85a.com/bilder/lundehund.png",answers:["Norge","Sverige","Finland"],correct:"Norge"},
+{breed:"Shar Pei",image:"https://www.xn--hundenevre-85a.com/bilder/sharpei.png",answers:["Kina","Japan","Thailand"],correct:"Kina"},
+{breed:"Schæfer",image:"https://www.xn--hundenevre-85a.com/bilder/schafer.png",answers:["Tyskland","Nederland","Belgia"],correct:"Tyskland"},
+{breed:"Engelsk Cocker Spaniel",image:"https://www.xn--hundenevre-85a.com/bilder/cocker.png",answers:["England","USA","Australia"],correct:"England"},
+{breed:"Border Collie",image:"https://www.xn--hundenevre-85a.com/bilder/border-collie.png",answers:["Skottland","Irland","England"],correct:"Skottland"},
+{breed:"Husky",image:"https://www.xn--hundenevre-85a.com/bilder/husky.png",answers:["Russland","Canada","USA"],correct:"Russland"},
+{breed:"Golden Retriever",image:"https://www.xn--hundenevre-85a.com/bilder/golden.png",answers:["Skottland","USA","Canada"],correct:"Skottland"},
+{breed:"Dalmatiner",image:"https://www.xn--hundenevre-85a.com/bilder/dalmatiner.png",answers:["Kroatia","Italia","Hellas"],correct:"Kroatia"},
+{breed:"Dobermann",image:"https://www.xn--hundenevre-85a.com/bilder/dobermann.png",answers:["Tyskland","Russland","Frankrike"],correct:"Tyskland"},
+{breed:"Boxer",image:"https://www.xn--hundenevre-85a.com/bilder/boxer.png",answers:["Tyskland","England","USA"],correct:"Tyskland"},
+{breed:"Cavalier King Charles Spaniel",image:"https://www.xn--hundenevre-85a.com/bilder/cavalier.png",answers:["England","Frankrike","Italia"],correct:"England"},
+{breed:"Collie",image:"https://www.xn--hundenevre-85a.com/bilder/collie.png",answers:["Skottland","Irland","Wales"],correct:"Skottland"},
+{breed:"Newfoundland",image:"https://www.xn--hundenevre-85a.com/bilder/newfoundland.png",answers:["Canada","USA","Russland"],correct:"Canada"},
+{breed:"Mops",image:"https://www.xn--hundenevre-85a.com/bilder/mops.png",answers:["Kina","Japan","Thailand"],correct:"Kina"},
+{breed:"Puddel",image:"https://www.xn--hundenevre-85a.com/bilder/puddel.png",answers:["Tyskland","Frankrike","Spania"],correct:"Tyskland"},
+{breed:"Boston Terrier",image:"https://www.xn--hundenevre-85a.com/bilder/boston-terrier.png",answers:["USA","England","Canada"],correct:"USA"},
+{breed:"Irsk Ulvehund",image:"https://www.xn--hundenevre-85a.com/bilder/irsk-ulvehund.png",answers:["Irland","Skottland","England"],correct:"Irland"},
+{breed:"Lowchen",image:"https://www.xn--hundenevre-85a.com/bilder/lowchen.png",answers:["Frankrike","Tyskland","Belgia"],correct:"Frankrike"},
+{breed:"Lhasa Apso",image:"https://www.xn--hundenevre-85a.com/bilder/lhasa-apso.png",answers:["Tibet","Kina","Nepal"],correct:"Tibet"},
+{breed:"Pomeranian",image:"https://www.xn--hundenevre-85a.com/bilder/pomeranian.png",answers:["Tyskland","Polen","Russland"],correct:"Tyskland"},
+{breed:"Fransk Bulldog",image:"https://www.xn--hundenevre-85a.com/bilder/fransk-bulldog.png",answers:["Frankrike","Belgia","Italia"],correct:"Frankrike"},
+{breed:"Rottweiler",image:"https://www.xn--hundenevre-85a.com/bilder/rottweiler.png",answers:["Tyskland","Russland","Polen"],correct:"Tyskland"},
+{breed:"Basenji",image:"https://www.xn--hundenevre-85a.com/bilder/basenji.png",answers:["Kongo","Kenya","Egypt"],correct:"Kongo"},
+{breed:"Bull Terrier",image:"https://www.xn--hundenevre-85a.com/bilder/bull-terrier.png",answers:["England","USA","Canada"],correct:"England"},
+{breed:"Irsk Setter",image:"https://www.xn--hundenevre-85a.com/bilder/irsk-setter.png",answers:["Irland","Skottland","England"],correct:"Irland"},
+{breed:"Beagle",image:"https://www.xn--hundenevre-85a.com/bilder/beagle.png",answers:["England","USA","Canada"],correct:"England"},
+{breed:"Samojed",image:"https://www.xn--hundenevre-85a.com/bilder/samojed.png",answers:["Russland","Finland","Canada"],correct:"Russland"},
+{breed:"Akita",image:"https://www.xn--hundenevre-85a.com/bilder/akita.png",answers:["Japan","Kina","Thailand"],correct:"Japan"},
+{breed:"Shiba Inu",image:"https://www.xn--hundenevre-85a.com/bilder/shiba-inu.png",answers:["Japan","Kina","Sør-Korea"],correct:"Japan"},
+{breed:"Cane Corso",image:"https://www.xn--hundenevre-85a.com/bilder/cane-corso.png",answers:["Italia","Spania","Portugal"],correct:"Italia"},
+{breed:"Weimaraner",image:"https://www.xn--hundenevre-85a.com/bilder/weimaraner.png",answers:["Tyskland","Østerrike","Sveits"],correct:"Tyskland"},
+{breed:"Malteser",image:"https://www.xn--hundenevre-85a.com/bilder/malteser.png",answers:["Malta","Italia","Hellas"],correct:"Malta"},
+{breed:"Corgi",image:"https://www.xn--hundenevre-85a.com/bilder/corgi.png",answers:["Wales","Irland","England"],correct:"Wales"},
+{breed:"Grand Danois",image:"https://www.xn--hundenevre-85a.com/bilder/grand-danois.png",answers:["Tyskland","Danmark","Nederland"],correct:"Tyskland"},
+{breed:"Sankt Bernhard",image:"https://www.xn--hundenevre-85a.com/bilder/sankt-bernhard.png",answers:["Sveits","Tyskland","Østerrike"],correct:"Sveits"},
+{breed:"Australian Shepherd",image:"https://www.xn--hundenevre-85a.com/bilder/australian-shepherd.png",answers:["USA","Australia","Canada"],correct:"USA"}
 ];
 
 
@@ -181,7 +218,9 @@ function shuffleArray(array){
 
 function loadQuestion(){
   const q=questions[currentQuestion];
-  document.getElementById("dogImage").src=q.image;
+  const dogImg=document.getElementById("dogImage");
+dogImg.onerror=()=>{dogImg.onerror=null;dogImg.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='900' height='600'><rect width='900' height='600' fill='#123c73'/><text x='450' y='270' text-anchor='middle' font-size='150'>🐶</text><text x='450' y='410' text-anchor='middle' fill='white' font-family='Arial' font-size='44' font-weight='700'>${q.breed}</text></svg>`);};
+dogImg.src=q.image;
   document.getElementById("breed").textContent=q.breed;
   document.getElementById("questionNumber").textContent=(currentQuestion+1)+"/"+questions.length;
 
