@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hva heter fisken? – Premium 10</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;color:#fff;background:radial-gradient(circle at 10% 0,#0d6077 0,transparent 28rem),linear-gradient(180deg,#020b12,#052534 58%,#03141f);min-height:100vh}
+.wrap{max-width:900px;margin:auto;padding:10px 12px 30px}.top{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#061c29;border:1px solid #1d6075;border-radius:20px;padding:9px 12px}.brand{font:italic 900 21px Georgia;color:#8eeaf5}.top a{color:#d9faff;text-decoration:none;background:#0c3548;border:1px solid #246b80;border-radius:999px;padding:8px 11px;font-size:10px;font-weight:900}
+.hero{text-align:center;padding:17px 10px 10px}h1{margin:0;color:#ffd35a;font:900 clamp(30px,6vw,48px) Georgia}.hero p{margin:6px auto;color:#bfe6ef;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:8px}.stat{text-align:center;background:#082b3a;border:1px solid #1b5b70;border-radius:14px;padding:8px;font-size:11px}.stat b{display:block;color:#78dfed;font-size:18px}
+.box{background:linear-gradient(145deg,#082b3b,#061b28);border:1px solid #216277;border-radius:22px;padding:10px;box-shadow:0 20px 45px #0006;text-align:center}
+#fishImage{width:100%;height:360px;object-fit:contain;background:#fff;border:4px solid #fff;border-radius:17px;display:block}.question{font:900 21px Georgia;color:#ffd35a;margin:9px 0 7px}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:7px}button.answer{border:1px solid #2c7589;background:#0d4055;color:#fff;border-radius:13px;padding:13px 8px;font-size:15px;font-weight:900;cursor:pointer}button.answer.correct{background:#10b981!important;border-color:#6ee7b7!important}button.answer.wrong{background:#ef4444!important;border-color:#fca5a5!important}button:disabled{opacity:1}
+#msg{min-height:24px;margin-top:7px;color:#ffd35a;font-weight:900}#next{display:none;border:0;border-radius:999px;background:#ffd35a;color:#261900;font-weight:900;padding:11px 22px;cursor:pointer}.result{display:none;padding:25px}.result h2{color:#ffd35a;font:900 30px Georgia}.result button{border:0;border-radius:999px;background:#ffd35a;padding:11px 18px;font-weight:900}
+@media(max-width:650px){.wrap{padding:5px 6px 20px}.top{padding:6px 7px;border-radius:14px}.brand{font-size:15px}.top a{font-size:8px;padding:5px 7px}.hero{padding:10px 5px 6px}h1{font-size:27px}.hero p{font-size:9px}.stat{font-size:8px;padding:5px}.stat b{font-size:14px}.box{padding:6px;border-radius:14px}#fishImage{height:215px;border-radius:11px}.question{font-size:16px;margin:5px 0}button.answer{font-size:11px;padding:9px 4px;border-radius:9px}#msg{font-size:10px;min-height:16px}#next{font-size:10px;padding:8px 15px}}
+</style></head>
+<body><div class="wrap">
+<div class="top"><div class="brand">🐠 Hundene Våre • Akvarium</div><div><a href="index.html">🏠 Forsiden</a> <a href="spill.html">🎮 Spill</a></div></div>
+<div class="hero"><h1>🐠 Hva heter fisken?</h1><p>Se på bildet og velg riktig fiskeart. 20 arter fra Akvarieleksikonet.</p></div>
+<div class="stats"><div class="stat"><b id="score">0</b>Poeng</div><div class="stat"><b id="num">1 / 20</b>Fisk</div><div class="stat"><b id="best">0</b>Beste</div></div>
+<div class="box" id="game"><img id="fishImage" alt="Akvariefisk"><div class="question">Hva heter fisken?</div><div class="answers" id="answers"></div><div id="msg"></div><button id="next" onclick="nextQ()">Neste fisk →</button></div>
+<div class="box result" id="result"><h2>🏆 Quizen er ferdig!</h2><p id="final"></p><button onclick="start()">Spill igjen</button></div>
+</div>
+<script>
+const fish=[{name:'Guppy',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Guppy%20-%20Poecilia%20reticulata.jpg?width=900'},
+{name:'Neontetra',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Paracheirodon%20innesi%20%28aka%29.jpg?width=900'},
+{name:'Scalare',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Pterophyllum%20scalare.jpg?width=900'},
+{name:'Corydoras',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Panda%20Corydoras.jpg?width=900'},
+{name:'Ancistrus',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Ancistrus%20sp.%20in%20aquarium.jpg?width=900'},
+{name:'Platy',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Xiphophorus%20maculatus%20Platy.JPG?width=900'},
+{name:'Molly',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Chocolate%20mollies%28Poecilia%20sphenops%29%20fish.jpg?width=900'},
+{name:'Kampfisk',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Betta%20splendens%20rot.jpg?width=900'},
+{name:'Gullfisk',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Goldfish%20carassius%20auratus.jpg?width=900'},
+{name:'Discus',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Blue%20Discus%20fish%20Symphysodon%20aequifasciatus.jpg?width=900'},
+{name:'Sølvhai',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Balantiocheilos%20melanopterus.jpg?width=900'},
+{name:'Sort knivfisk',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Apteronotus%20albifrons.jpg?width=900'},
+{name:'Elefantfisk',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Gnathonemus%20petersii.jpg?width=900'},
+{name:'Medaka',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Oryzias%20latipes.jpg?width=900'},
+{name:'Hvit skyfisk',image:'https://commons.wikimedia.org/wiki/Special:FilePath/White%20Cloud%20Mountain%20Minnow%20%28Tanichthys%20albonubes%29.jpg?width=900'},
+{name:'Rosabarbe',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Pethia%20conchonius%20Prachtbarbe.JPG?width=900'},
+{name:'Tigerbarbe',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Puntius%20tetrazona%20%28aka%29.jpg?width=900'},
+{name:'Kirsebærbarbe',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Puntius%20titteya-cherry%20barb.jpg?width=900'},
+{name:'Boesemani regnbuefisk',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Melanotaenia%20boesemani.jpg?width=900'},
+{name:'Kuhliål',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Pangio%20kuhlii.jpg?width=900'}];
+let order=[],i=0,score=0,locked=false;
+const $=id=>document.getElementById(id);
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function start(){order=shuffle(fish);i=0;score=0;locked=false;$("game").style.display="block";$("result").style.display="none";show()}
+function show(){
+ locked=false; $("msg").textContent=""; $("next").style.display="none";
+ const q=order[i]; $("score").textContent=score;$("num").textContent=(i+1)+" / "+order.length;$("best").textContent=localStorage.fishQuizBest||0;
+ const im=$("fishImage"); im.onerror=()=>{im.onerror=null;im.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='900' height='600'><rect width='900' height='600' fill='#0b5268'/><text x='450' y='270' text-anchor='middle' font-size='150'>🐠</text><text x='450' y='410' text-anchor='middle' fill='white' font-family='Arial' font-size='40' font-weight='700'>Bilde mangler</text></svg>`);}; im.src=q.image;
+ const wrong=shuffle(fish.filter(x=>x.name!==q.name)).slice(0,3); const opts=shuffle([q,...wrong]);
+ $("answers").innerHTML=""; opts.forEach(o=>{let b=document.createElement("button");b.className="answer";b.textContent=o.name;b.onclick=()=>answer(b,o.name,q.name);$("answers").appendChild(b)})
+}
+function answer(btn,chosen,correct){
+ if(locked)return; locked=true; const bs=[...document.querySelectorAll(".answer")];bs.forEach(b=>b.disabled=true);
+ if(chosen===correct){btn.classList.add("correct");score++;$("msg").textContent="✓ Riktig!"}else{btn.classList.add("wrong");bs.find(b=>b.textContent===correct)?.classList.add("correct");$("msg").textContent="Riktig svar er "+correct}
+ $("score").textContent=score;$("next").style.display="inline-block";
+}
+function nextQ(){i++;if(i<order.length)show();else finish()}
+function finish(){let best=Math.max(score,Number(localStorage.fishQuizBest||0));localStorage.fishQuizBest=best;$("game").style.display="none";$("result").style.display="block";$("final").textContent=`Du fikk ${score} av ${order.length} riktige. Beste resultat: ${best}.`;$("best").textContent=best}
+start();
+</script></body></html>
