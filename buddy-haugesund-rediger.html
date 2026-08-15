@@ -35,7 +35,7 @@ logoInputEl.onchange=async e=>{const f=e.target.files[0];if(!f)return;msg('Laste
 galleryInputEl.onchange=async e=>{const fs=[...e.target.files];if(!fs.length)return;msg('Laster opp bilder …');for(const f of fs){const u=await upload(f,'gallery');if(u)galleryUrls.push(u)}render();msg('✅ Bilder lastet opp – trykk Lagre')};
 async function saveShop(){
  msg('Lagrer …');
- const patch={name:nameEl.value.trim(),description:descriptionEl.value.trim(),address:addressEl.value.trim(),phone:phoneEl.value.trim(),website:websiteEl.value.trim(),reel_url:reelEl.value.trim(),logo_url:shop.logo_url||'',gallery_urls:galleryUrls};
+ const patch={name:nameEl.value.trim(),description:descriptionEl.value.trim(),place:addressEl.value.trim(),phone:phoneEl.value.trim(),website:websiteEl.value.trim(),reel_url:reelEl.value.trim(),logo_url:shop.logo_url||'',gallery_urls:galleryUrls};
  const {data,error}=await sb.from('businesses').update(patch).eq('id',ID).select();
  if(error){msg('❌ Kunne ikke lagre: '+error.message,true);return}
  if(!data||!data.length){msg('❌ Supabase avviste lagringen. Ingen data ble endret.',true);return}
