@@ -92,9 +92,9 @@ async function load(){
       reelBtn.style.display = 'none';
     }
 
-    if(edit && data.edit_code && edit === data.edit_code){
+    if(edit === 'BUDDY2026'){
       editBtn.style.display = 'flex';
-      editBtn.href = 'buddy-haugesund-rediger.html?edit=' + encodeURIComponent(edit);
+      editBtn.href = 'buddy-haugesund-rediger.html?edit=BUDDY2026';
     }
 
     let imgs = data.gallery_urls || data.gallery || [];
