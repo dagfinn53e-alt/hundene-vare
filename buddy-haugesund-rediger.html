@@ -17,6 +17,22 @@ button,.btn{background:linear-gradient(135deg,#0d718f,#18a9b9)!important;color:#
 .preview,.thumb{background:#0a3040!important;border-color:#287b91!important}
 .badge{background:linear-gradient(135deg,#d7ad58,#f0c977)!important;color:#211707!important}
 </style>
+
+<style>
+/* FINAL FIX: tydelig lagringsmelding */
+#status.status{
+  background:#d9fff6!important;
+  color:#064e3b!important;
+  border:2px solid #34d399!important;
+  font-weight:900!important;
+  opacity:1!important;
+}
+#status.status.deny{
+  background:#ffe4e6!important;
+  color:#9f1239!important;
+  border-color:#fb7185!important;
+}
+</style>
 </head><body><main class="wrap"><header class="head"><small>BUDDY RAGLAMYR • PREMIUM</small><h1>Rediger Premium-profil</h1><p>Her kan butikken endre innhold og bilder uten å bruke kode.</p><a id="back" class="back">← Se Premium-profilen</a></header><div id="status" class="status">Kontrollerer tilgang …</div><div style="margin-top:8px;color:#8eb4bf;font-size:12px">Redigering versjon 4 – 15.08.2026</div><section id="editor" class="card" style="display:none"><label>Logo</label><img id="logoPreview" class="preview"><input id="logoInput" type="file" accept="image/*"><label>Butikknavn</label><input id="name"><label>Beskrivelse</label><textarea id="description"></textarea><div class="module-grid">
 <div><label>Adresse</label><input id="address"></div>
 <div><label>Område</label><input id="region" placeholder="Haugalandet"></div>
