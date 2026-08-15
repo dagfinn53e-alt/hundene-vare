@@ -16,6 +16,43 @@ body{background:radial-gradient(circle at 80% 8%,#123c55 0,#061f2c 34%,#031721 1
 .gallery img{border-color:#287b91!important;background:#0a3040!important}
 hr{border-color:#164f64!important}
 </style>
+
+<style>
+/* FINAL FIX: synlig tekst i Premium-moduler */
+.mini{
+  background:linear-gradient(180deg,#0d3a4d,#092a39)!important;
+  border:1px solid #287b91!important;
+  color:#f2fdff!important;
+}
+.mini b{
+  color:#ffffff!important;
+}
+.mini p{
+  color:#c8e7ef!important;
+  opacity:1!important;
+}
+
+.info{
+  background:linear-gradient(180deg,#0d3a4d,#092a39)!important;
+  border:1px solid #287b91!important;
+  color:#f2fdff!important;
+}
+.info strong{
+  color:#ffffff!important;
+}
+.info span{
+  color:#c8e7ef!important;
+  opacity:1!important;
+}
+
+#about{
+  color:#c8e7ef!important;
+}
+
+.card{
+  color:#f2fdff!important;
+}
+</style>
 </head><body><main class="page"><a class="back" href="butikker-ny.html">← Til butikkoversikten</a><div id="status" class="status">Laster Buddy Raglamyr …</div><div id="content" style="display:none"><section class="hero"><div class="hero-inner"><img id="logo" class="logo" alt="Buddy Raglamyr logo"><div><div class="ey">HUNDENE VÅRE • PREMIUM PARTNER</div><h1 id="name">Buddy Raglamyr</h1><div id="desc" class="tag"></div><span class="badge">★ PREMIUM PARTNER</span></div></div></section><nav class="actions"><a id="phoneBtn" class="btn primary">☎ Ring</a><a id="webBtn" class="btn">🌐 Nettside</a><a id="mapBtn" class="btn" target="_blank">📍 Veibeskrivelse</a><a id="reelBtn" class="btn" target="_blank">🎥 Video / Reel</a><a id="editBtn" class="btn gold edit-slot" style="display:none">✎ Rediger Premium-profil</a></nav><section class="grid"><article class="card"><h2>Om Buddy Raglamyr</h2><p id="about" style="line-height:1.7"></p><div class="premium-strip"><div class="mini"><b>🐶 Hund</b><p id="moduleDog">Fôr, utstyr, godbiter og tilbehør.</p></div><div class="mini"><b>🐱 Katt</b><p id="moduleCat">Produkter og utstyr til katt.</p></div><div class="mini"><b>⭐ Buddy Premium</b><p id="modulePremium">Personlig service, gode råd og stort utvalg.</p></div></div></article><aside class="card"><h2>Butikkinformasjon</h2><div class="info-grid"><div class="info"><strong>📍 Adresse</strong><span id="address"></span></div><div class="info"><strong>🌍 Område</strong><span id="region"></span></div><div class="info"><strong>🏪 Type</strong><span id="type"></span></div><div class="info"><strong>📞 Telefon</strong><span id="phone"></span></div><div class="info wide"><strong>🌐 Nettside</strong><span id="websiteInfo"></span></div></div></aside></section><section class="card"><h2>📷 Bilder fra butikken</h2><div id="gallery" class="gallery"></div><p id="galleryEmpty" class="empty" style="display:none">Butikken kan selv legge inn bilder fra Premium-redigeringen.</p></section><div class="private-edit">Premium-demo for Buddy Raglamyr på Hundene Våre</div></div></main><div id="modal" onclick="this.style.display='none'" style="display:none;position:fixed;inset:0;background:#000d;z-index:999;align-items:center;justify-content:center;padding:20px"><img id="modalImg" style="max-width:95%;max-height:90vh;border-radius:18px"></div><script>
 const sb = window.supabase.createClient(
   'https://kxudiviidwwwclbzgdyx.supabase.co',
