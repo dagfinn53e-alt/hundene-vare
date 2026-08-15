@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="no"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rediger Premium-butikk</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>*{box-sizing:border-box}body{margin:0;background:#f3f6fb;color:#14213a;font-family:Inter,Arial,sans-serif}.wrap{max-width:920px;margin:auto;padding:18px}.head{background:linear-gradient(135deg,#071a37,#123f78);color:#fff;border-radius:26px;padding:28px;box-shadow:0 16px 40px #10284b30;border-bottom:4px solid #e4b344}.head small{color:#f3cb6d;font-weight:900;letter-spacing:1.5px}.card{background:#fff;border:1px solid #e3e9f1;border-radius:22px;padding:24px;margin-top:18px;box-shadow:0 8px 24px #10284b0c}label{display:block;font-weight:800;margin:17px 0 7px}input,textarea,select{width:100%;padding:13px 14px;border:1px solid #ccd7e5;border-radius:13px;font:inherit}textarea{min-height:130px;resize:vertical}.preview{width:130px;height:130px;object-fit:cover;border-radius:20px;border:2px solid #e4b344;background:#f5f6f8}.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}.imgbox{position:relative}.imgbox img{width:100%;height:150px;object-fit:cover;border-radius:15px}.del{position:absolute;right:7px;top:7px;border:0;background:#9f1f2f;color:#fff;padding:7px 9px;border-radius:9px;cursor:pointer}.save{width:100%;border:0;border-radius:15px;padding:16px;margin-top:22px;background:linear-gradient(135deg,#f7d97d,#dfa52b);color:#332000;font-weight:900;font-size:17px;cursor:pointer}.back{display:inline-flex;margin-top:14px;color:#fff;text-decoration:none;font-weight:800}.status{padding:14px;border-radius:13px;background:#dff7f2;color:#063b37;margin-top:16px;font-weight:900;border:1px solid #62d5c6}.deny{background:#ffe4e6;color:#9f1239;border-color:#fb7185}@media(max-width:650px){.wrap{padding:10px}.gallery{grid-template-columns:1fr 1fr}}
+.module-title{margin-top:26px;padding-top:18px;border-top:1px solid #287b91;color:#f2fdff!important}
+.module-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.module-grid .full{grid-column:1/-1}
+@media(max-width:650px){.module-grid{grid-template-columns:1fr}.module-grid .full{grid-column:auto}}
+</style>
+<style>
+:root{--bg:#031721;--panel:#082a39;--panel2:#071f2b;--line:#18576c;--teal:#18a9b9;--text:#f2fdff;--muted:#a9ccd7;--gold:#e4b95d}
+body{background:radial-gradient(circle at 80% 8%,#123c55 0,#061f2c 34%,#031721 100%)!important;color:var(--text)!important}
+.wrap,.container{max-width:1000px!important}
+header,.head,.card,.panel,section{background:linear-gradient(180deg,#092a39,#071f2b)!important;border-color:#164f64!important;color:#f2fdff!important;box-shadow:0 18px 40px rgba(0,0,0,.20)!important}
+h1,h2,h3,label{color:#f2fdff!important}
+p,.help,.muted,.hint{color:#a9ccd7!important}
+input,textarea,select{background:#061f2c!important;color:#f2fdff!important;border:1px solid #287b91!important}
+input:focus,textarea:focus,select:focus{outline:2px solid #18a9b9!important}
+button,.btn{background:linear-gradient(135deg,#0d718f,#18a9b9)!important;color:#fff!important;border:0!important}
+.preview,.thumb{background:#0a3040!important;border-color:#287b91!important}
+.badge{background:linear-gradient(135deg,#d7ad58,#f0c977)!important;color:#211707!important}
+</style>
+
+<style>
+/* FINAL FIX: tydelig lagringsmelding */
+#status.status{
+  background:#d9fff6!important;
+  color:#064e3b!important;
+  border:2px solid #34d399!important;
+  font-weight:900!important;
+  opacity:1!important;
+}
+#status.status.deny{
+  background:#ffe4e6!important;
+  color:#9f1239!important;
+  border-color:#fb7185!important;
+}
+</style>
+</head><body><main class="wrap"><header class="head"><small>HUNDENE VÅRE • PREMIUM</small><h1>Rediger Premium-profil</h1><p>Her kan butikken endre innhold og bilder uten å bruke kode.</p><a id="back" class="back">← Se Premium-profilen</a></header><div id="status" class="status">Kontrollerer tilgang …</div><div style="margin-top:8px;color:#8eb4bf;font-size:12px">Redigering versjon 4 – 15.08.2026</div><section id="editor" class="card" style="display:none"><label>Logo</label><img id="logoPreview" class="preview"><input id="logoInput" type="file" accept="image/*"><label>Butikknavn</label><input id="name"><label>Beskrivelse</label><textarea id="description"></textarea><div class="module-grid">
+<div><label>Adresse</label><input id="address"></div>
+<div><label>Område</label><input id="region" placeholder="Haugalandet"></div>
+<div><label>Butikktype</label><input id="type" placeholder="Dyrebutikk"></div>
+<div><label>Telefon</label><input id="phone"></div>
+<div class="full"><label>Nettside / Facebook</label><input id="website"></div>
+<div class="full"><label>Video / Reel</label><input id="reel"></div>
+</div>
+<h2 class="module-title">✏️ Tekst i «Om Premium-butikk»</h2>
+<label>🐶 Modul 1 – Hund</label><textarea id="moduleDog" placeholder="F.eks. Fôr, utstyr, godbiter og tilbehør til hund."></textarea>
+<label>🐱 Modul 2 – Katt</label><textarea id="moduleCat" placeholder="F.eks. Produkter, fôr og utstyr til katt."></textarea>
+<label>⭐ Modul 3 – Buddy Premium</label><textarea id="modulePremium" placeholder="F.eks. Personlig service, gode råd og stort utvalg."></textarea>
+<h2 class="module-title">📷 Bilder fra butikken</h2><label>Last opp bilder</label><input id="galleryInput" type="file" multiple accept="image/*"><div id="gallery" class="gallery"></div><button id="saveBtn" class="save" type="button" onclick="saveShop()">💾 Lagre Premium-profil</button></section></main><script>
+const sb=window.supabase.createClient('https://kxudiviidwwwclbzgdyx.supabase.co','sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH');
+const params=new URLSearchParams(location.search);
+const ID=params.get('id')||'';
+const code=params.get('edit')||'';
+let shop={},galleryUrls=[];
+const $=id=>document.getElementById(id);
+const statusEl=$('status'),editorEl=$('editor'),backEl=$('back'),nameEl=$('name'),descriptionEl=$('description'),addressEl=$('address'),regionEl=$('region'),typeEl=$('type'),phoneEl=$('phone'),websiteEl=$('website'),reelEl=$('reel'),moduleDogEl=$('moduleDog'),moduleCatEl=$('moduleCat'),modulePremiumEl=$('modulePremium'),logoPreviewEl=$('logoPreview'),logoInputEl=$('logoInput'),galleryInputEl=$('galleryInput'),galleryEl=$('gallery');
+backEl.href='premium-butikk.html?id='+encodeURIComponent(ID)+(code?'&edit='+encodeURIComponent(code):'');
+function msg(t,bad=false){statusEl.textContent=t;statusEl.className='status'+(bad?' deny':'');statusEl.style.display='block'}
+
+function parsePremiumDescription(raw){
+  const text=String(raw||'');
+  const marker='— PREMIUMMODULER —';
+  const net='— NETTBUTIKKOPPLYSNINGER —';
+  const mi=text.indexOf(marker);
+  if(mi<0) return {base:text.trim(),dog:'',cat:'',premium:''};
+  let before=text.slice(0,mi).trim();
+  let block=text.slice(mi+marker.length);
+  const ni=block.indexOf(net);
+  let tail='';
+  if(ni>=0){tail=block.slice(ni);block=block.slice(0,ni)}
+  const get=(label)=>{
+    const m=block.match(new RegExp('(?:^|\\\\n)'+label+':\\\\s*([\\\\s\\\\S]*?)(?=\\\\n(?:Hund|Katt|Premium):|$)','i'));
+    return m?m[1].trim():'';
+  };
+  return {base:before+(tail?'\\n\\n'+tail:''),dog:get('Hund'),cat:get('Katt'),premium:get('Premium')};
+}
+function buildPremiumDescription(base,dog,cat,premium){
+  const raw=String(base||'');
+  const net='— NETTBUTIKKOPPLYSNINGER —';
+  const ni=raw.indexOf(net);
+  const main=(ni>=0?raw.slice(0,ni):raw).trim();
+  const tail=(ni>=0?raw.slice(ni).trim():'');
+  const parts=[main,'','— PREMIUMMODULER —','Hund: '+dog.trim(),'Katt: '+cat.trim(),'Premium: '+premium.trim()];
+  if(tail) parts.push('',tail);
+  return parts.join('\\n').trim();
+}
+
+async function load(){
+ if(!ID){msg('Mangler butikk-ID i lenken.',true);return}
+ const {data,error}=await sb.from('businesses').select('*').eq('id',ID).single();
+ if(error||!data){msg('Kunne ikke laste butikken: '+(error?.message||'ukjent feil'),true);return}
+ if(!code || !data.edit_code || code!==data.edit_code){msg('Denne private redigeringslenken er ikke gyldig.',true);return}
+ shop=data;
+  const pd=parsePremiumDescription(data.description||data.text||'');
+  nameEl.value=data.name||'';
+  descriptionEl.value=pd.base||'';
+  moduleDogEl.value=pd.dog||'Fôr, utstyr, godbiter og tilbehør til hund.';
+  moduleCatEl.value=pd.cat||'Produkter, fôr og utstyr til katt.';
+  modulePremiumEl.value=pd.premium||'Personlig service, gode råd og stort utvalg.';
+  addressEl.value=data.address||data.place||'';
+  regionEl.value=data.region||'Haugalandet';
+  typeEl.value=data.type||'Dyrebutikk';
+  phoneEl.value=data.phone||'';
+  websiteEl.value=data.website||'';
+  reelEl.value=data.reel_url||data.reel||'';
+  logoPreviewEl.src=data.logo_url||data.logo||'';
+ galleryUrls=data.gallery_urls||data.gallery||[];try{if(typeof galleryUrls==='string')galleryUrls=JSON.parse(galleryUrls)}catch(e){galleryUrls=[]}if(!Array.isArray(galleryUrls))galleryUrls=[];
+ render();editorEl.style.display='block';msg('✅ Klar for redigering');
+}
+function render(){galleryEl.innerHTML='';galleryUrls.forEach((u,i)=>{const b=document.createElement('div');b.className='imgbox';const im=document.createElement('img');im.src=u;const bt=document.createElement('button');bt.className='del';bt.type='button';bt.textContent='Slett';bt.onclick=()=>{galleryUrls.splice(i,1);render()};b.append(im,bt);galleryEl.appendChild(b)})}
+async function upload(file,path){const safe=(file.name||'bilde').replace(/[^a-zA-Z0-9._-]/g,'-');const key=path+'/'+Date.now()+'-'+Math.random().toString(36).slice(2,7)+'-'+safe;const r=await sb.storage.from('story-images').upload(key,file,{upsert:false});if(r.error){msg('Bildeopplasting feilet: '+r.error.message,true);return null}return sb.storage.from('story-images').getPublicUrl(key).data.publicUrl}
+logoInputEl.onchange=async e=>{const f=e.target.files[0];if(!f)return;msg('Laster opp logo …');const u=await upload(f,'logos');if(u){shop.logo_url=u;logoPreviewEl.src=u;msg('✅ Logo lastet opp – trykk Lagre')}};
+galleryInputEl.onchange=async e=>{const fs=[...e.target.files];if(!fs.length)return;msg('Laster opp bilder …');for(const f of fs){const u=await upload(f,'gallery');if(u)galleryUrls.push(u)}render();msg('✅ Bilder lastet opp – trykk Lagre')};
+window.saveShop=async function(){
+  const btn=document.getElementById('saveBtn');
+  if(btn){btn.disabled=true;btn.textContent='⏳ Lagrer …';}
+  msg('⏳ Lagrer endringene …');
+
+  try{
+    const patch={
+      name:nameEl.value.trim(),
+      description:buildPremiumDescription(
+        descriptionEl.value,
+        moduleDogEl.value,
+        moduleCatEl.value,
+        modulePremiumEl.value
+      ),
+      place:addressEl.value.trim(),
+      region:regionEl.value.trim(),
+      type:typeEl.value.trim(),
+      phone:phoneEl.value.trim(),
+      website:websiteEl.value.trim(),
+      reel_url:reelEl.value.trim(),
+      logo_url:shop.logo_url||'',
+      gallery_urls:galleryUrls
+    };
+
+    const {data,error}=await sb
+      .from('businesses')
+      .update(patch)
+      .eq('id',ID)
+      .eq('edit_code',code)
+      .select();
+
+    if(error){
+      console.error(error);
+      msg('❌ Kunne ikke lagre: '+error.message,true);
+      return;
+    }
+
+    if(!data || data.length===0){
+      msg('❌ Ingen data ble lagret. Supabase returnerte ingen oppdatert rad.',true);
+      return;
+    }
+
+    shop={...shop,...patch};
+    msg('✅ Premium-profilen er lagret. Endringene er nå sendt til Supabase.');
+  }catch(err){
+    console.error(err);
+    msg('❌ Feil ved lagring: '+(err?.message||String(err)),true);
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent='💾 Lagre Premium-profil';}
+  }
+};
+
+load();
+</script></body></html>
