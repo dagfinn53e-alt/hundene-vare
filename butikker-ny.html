@@ -226,48 +226,81 @@ body{
 <section class="panel"><h2 class="section-title">⭐ Populære tjenester</h2><p class="sub">Velg hva du leter etter.</p><div id="serviceGrid" class="service-grid"></div><div class="filters"><input id="searchInput" placeholder="Søk mer presist..."><select id="typeFilter"><option value="">Alle kategorier</option><option value="Zoo butikk">Zoo butikk</option><option value="Dyrebutikk">Dyrebutikk</option><option value="Veterinær">Veterinær</option><option value="Frisør">Hundesalong</option><option value="Hundepensjonat">Hundepensjonat</option><option value="Hundepass">Hundepass</option><option value="Hundeklubb">Hundeklubb</option><option value="Kafé">Kafé</option><option value="Samarbeidspartner">Samarbeidspartner</option></select><select id="sortFilter"><option value="name">Sorter etter navn</option><option value="region">Sorter etter område</option><option value="type">Sorter etter kategori</option></select><button class="btn" id="clearBtn">🔄 Nullstill</button></div></section>
 <section class="panel"><h2 class="section-title">📍 Velg område</h2><p class="sub">Startområdene vises nå. Nye hovedområder kommer automatisk når du legger inn butikker der.</p><div id="areaButtons" class="area-grid"></div></section>
 
-<section class="buddy-premium-strip" id="buddyPremium">
+<section class="buddy-premium-strip" id="premiumShops">
   <div class="buddy-premium-head">
-    <h2>👑 Premium-butikk</h2>
+    <h2>👑 Premium-butikker</h2>
     <div class="buddy-premium-badge">★ PREMIUM PARTNER</div>
   </div>
-  <div class="buddy-premium-card">
-    <div class="buddy-premium-logo" id="buddyPremiumLogo">
-      <div class="buddy-premium-fallback">BUDDY<span>Raglamyr</span></div>
-    </div>
-    <div>
-      <h3 id="buddyPremiumName">Buddy Raglamyr</h3>
-      <div class="buddy-premium-meta" id="buddyPremiumMeta">📍 Haugesund • Dyrebutikk</div>
-      <p id="buddyPremiumText">Alt til hund og katt – fôr, utstyr, godbiter, leker og nyttige produkter.</p>
-    </div>
-    <div class="buddy-premium-actions">
-      <a class="premium" href="buddy-haugesund-premium.html">⭐ Se Premium-profil</a>
-      <a class="shop" href="butikk.html?id=5e2383a8-6664-481b-ba17-409909bf5d57">Se butikk →</a>
-    </div>
-  </div>
+  <div id="premiumShopList" style="display:grid;gap:14px"></div>
 </section>
 
 <section class="portal-row"><div class="portal-feature" id="weekStore"><div class="portal-logo">🏪</div><div><h2>🌟 Ukens butikk</h2><h3>Velg område</h3><p>Velg område, kategori eller bruk søket for å vise en butikk her.</p><a class="btn" href="#businessGrid">Se butikker</a></div></div><div class="portal-side"><h2>⭐ Her kunne din butikk stått</h2><p>Få ekstra synlighet for din butikk, klinikk, hundesalong, hundepass, pensjonat eller hundeklubb.</p><a class="btn primary" href="butikk-profil-skjema.html">Registrer din bedrift →</a></div></section>
 <section class="portal-mini"><div class="portal-mini-card"><h3>🆕 Nye butikker</h3><p>De nyeste registrerte virksomhetene blir synlige i portalen og kan nå dyreeiere i sitt område.</p></div><div class="portal-mini-card"><h3>🎁 Aktuelle tilbud</h3><p>Her kan vi senere vise tilbud fra butikker og samarbeidspartnere direkte i portalen.</p></div><div class="portal-mini-card"><h3>📍 Finn nær deg</h3><p>Når vi kobler på avstandssøk, kan brukeren finne nærmeste butikk og tjeneste automatisk.</p></div></section>
 <section class="panel"><div class="section-head"><div><h2 class="section-title">🏪 Resultater</h2><div id="status" class="status">Laster butikker ...</div></div></div><div id="businessGrid" class="grid"></div></section><p class="footer-note">Hundenevåre.com – butikker og tjenester for hund og katt i hele Norge.</p></div>
 <script>
-const supabaseClient=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");let allBusinesses=[],selectedRegion="",selectedType="";const services=[{type:"Zoo butikk",label:"Dyrebutikker",icon:"🏪",desc:"Butikker og utstyr"},{type:"Veterinær",label:"Veterinærer",icon:"🏥",desc:"Helse og klinikker"},{type:"Frisør",label:"Hundesalonger",icon:"✂️",desc:"Pels og klipp"},{type:"Hundepensjonat",label:"Hundepensjonat",icon:"🏡",desc:"Trygg overnatting"},{type:"Hundepass",label:"Hundepass",icon:"🐾",desc:"Pass i hverdagen"},{type:"Hundeklubb",label:"Hundeklubber",icon:"🎓",desc:"Kurs og miljø"}];const regionImages={"Haugalandet":"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=600&auto=format&fit=crop","Stavanger":"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop","Stord":"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=600&auto=format&fit=crop","Bergen":"https://images.unsplash.com/photo-1520769669658-f07657f5a307?q=80&w=600&auto=format&fit=crop","Oslo":"https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?q=80&w=600&auto=format&fit=crop"};const grid=document.getElementById("businessGrid"),statusEl=document.getElementById("status"),searchInput=document.getElementById("searchInput"),mainSearch=document.getElementById("mainSearch"),typeFilter=document.getElementById("typeFilter"),mainType=document.getElementById("mainType"),sortFilter=document.getElementById("sortFilter"),areaButtons=document.getElementById("areaButtons"),serviceGrid=document.getElementById("serviceGrid");function safeText(v){return String(v||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}function getImage(b){return b.image_url||b.logo_url||b.logo||b.image||b.main_image||b.photo||""}function getLogo(b){return b.logo_url||b.logo||""}function getName(b){return b.name||b.title||b.bizName||"Uten navn"}function getRegion(b){return b.region||b.area||b.city||b.place||""}function getType(b){return b.type||b.category||b.bizType||""}function getDescription(b){return b.text||b.description||b.bizText||""}function getPhone(b){return b.phone||b.telephone||b.bizPhone||""}function getWebsite(b){return b.website||b.url||b.facebook||b.bizWebsite||""}function normalizeUrl(url){if(!url)return"";return url.startsWith("http")?url:"https://"+url}function isAddressLikeRegion(region){const r=String(region||"").trim();if(!r)return true;const lower=r.toLowerCase();if(/\d/.test(r))return true;if(lower.includes("vegen")||lower.includes("veien")||lower.includes("gata")||lower.includes("gate"))return true;if(lower.includes("norway")||lower.includes("germany"))return true;if(["karmøy","karmoy","skudeneshavn","haugesund","avaldenes","norheim","visnes"].includes(lower))return true;return false}function getDisplayRegion(rawRegion){const r=String(rawRegion||"").trim(),lower=r.toLowerCase();if(lower.includes("haugesund")||lower.includes("karmøy")||lower.includes("karmoy")||lower.includes("skudeneshavn")||lower.includes("avaldenes")||lower.includes("norheim")||lower.includes("visnes")||lower.includes("jovegen")||lower.includes("norheimvegen"))return"Haugalandet";return r}async function loadBusinesses(){statusEl.textContent="Laster butikker ...";try{const{data,error}=await supabaseClient.from("businesses").select("*");if(error){statusEl.textContent="Kunne ikke laste butikker.";grid.innerHTML='<div class="empty">Noe gikk galt ved lasting av butikker.</div>';return}allBusinesses=data||[];buildServices();buildAreas();updateStats();renderBuddyPremium();renderBusinesses()}catch(e){statusEl.textContent="Kunne ikke laste butikker.";grid.innerHTML='<div class="empty">Noe gikk galt ved lasting av butikker.</div>'}}
-function renderBuddyPremium(){
-  const buddy=allBusinesses.find(b=>String(b.id||"")==="5e2383a8-6664-481b-ba17-409909bf5d57");
-  if(!buddy)return;
-  const name=getName(buddy)||"Buddy Raglamyr";
-  const region=(typeof getDisplayRegion==="function"?getDisplayRegion(getRegion(buddy)):getRegion(buddy))||"Haugesund";
-  const type=getType(buddy)||"Dyrebutikk";
-  const desc=getDescription(buddy)||"Alt til hund og katt – fôr, utstyr, godbiter, leker og nyttige produkter.";
-  const logo=getLogo(buddy)||getImage(buddy);
-  const n=document.getElementById("buddyPremiumName");
-  const m=document.getElementById("buddyPremiumMeta");
-  const t=document.getElementById("buddyPremiumText");
-  const l=document.getElementById("buddyPremiumLogo");
-  if(n)n.textContent=name;
-  if(m)m.textContent="📍 "+region+" • "+type;
-  if(t)t.textContent=desc;
-  if(l&&logo)l.innerHTML='<img src="'+safeText(logo)+'" alt="'+safeText(name)+' logo">';
+const supabaseClient=window.supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");let allBusinesses=[],selectedRegion="",selectedType="";const services=[{type:"Zoo butikk",label:"Dyrebutikker",icon:"🏪",desc:"Butikker og utstyr"},{type:"Veterinær",label:"Veterinærer",icon:"🏥",desc:"Helse og klinikker"},{type:"Frisør",label:"Hundesalonger",icon:"✂️",desc:"Pels og klipp"},{type:"Hundepensjonat",label:"Hundepensjonat",icon:"🏡",desc:"Trygg overnatting"},{type:"Hundepass",label:"Hundepass",icon:"🐾",desc:"Pass i hverdagen"},{type:"Hundeklubb",label:"Hundeklubber",icon:"🎓",desc:"Kurs og miljø"}];const regionImages={"Haugalandet":"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=600&auto=format&fit=crop","Stavanger":"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop","Stord":"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=600&auto=format&fit=crop","Bergen":"https://images.unsplash.com/photo-1520769669658-f07657f5a307?q=80&w=600&auto=format&fit=crop","Oslo":"https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?q=80&w=600&auto=format&fit=crop"};const grid=document.getElementById("businessGrid"),statusEl=document.getElementById("status"),searchInput=document.getElementById("searchInput"),mainSearch=document.getElementById("mainSearch"),typeFilter=document.getElementById("typeFilter"),mainType=document.getElementById("mainType"),sortFilter=document.getElementById("sortFilter"),areaButtons=document.getElementById("areaButtons"),serviceGrid=document.getElementById("serviceGrid");function safeText(v){return String(v||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}function getImage(b){return b.image_url||b.logo_url||b.logo||b.image||b.main_image||b.photo||""}function getLogo(b){return b.logo_url||b.logo||""}function getName(b){return b.name||b.title||b.bizName||"Uten navn"}function getRegion(b){return b.region||b.area||b.city||b.place||""}function getType(b){return b.type||b.category||b.bizType||""}function getDescription(b){return b.text||b.description||b.bizText||""}function getPhone(b){return b.phone||b.telephone||b.bizPhone||""}function getWebsite(b){return b.website||b.url||b.facebook||b.bizWebsite||""}function normalizeUrl(url){if(!url)return"";return url.startsWith("http")?url:"https://"+url}function isAddressLikeRegion(region){const r=String(region||"").trim();if(!r)return true;const lower=r.toLowerCase();if(/\d/.test(r))return true;if(lower.includes("vegen")||lower.includes("veien")||lower.includes("gata")||lower.includes("gate"))return true;if(lower.includes("norway")||lower.includes("germany"))return true;if(["karmøy","karmoy","skudeneshavn","haugesund","avaldenes","norheim","visnes"].includes(lower))return true;return false}function getDisplayRegion(rawRegion){const r=String(rawRegion||"").trim(),lower=r.toLowerCase();if(lower.includes("haugesund")||lower.includes("karmøy")||lower.includes("karmoy")||lower.includes("skudeneshavn")||lower.includes("avaldenes")||lower.includes("norheim")||lower.includes("visnes")||lower.includes("jovegen")||lower.includes("norheimvegen"))return"Haugalandet";return r}async function loadBusinesses(){statusEl.textContent="Laster butikker ...";try{const{data,error}=await supabaseClient.from("businesses").select("*");if(error){statusEl.textContent="Kunne ikke laste butikker.";grid.innerHTML='<div class="empty">Noe gikk galt ved lasting av butikker.</div>';return}allBusinesses=data||[];buildServices();buildAreas();updateStats();renderBusinesses();renderPremiumShops()}catch(e){statusEl.textContent="Kunne ikke laste butikker.";grid.innerHTML='<div class="empty">Noe gikk galt ved lasting av butikker.</div>'}}
+const PREMIUM_SHOPS=[
+  {id:"5e2383a8-6664-481b-ba17-409909bf5d57", fallbackName:"Buddy Raglamyr"},
+  {id:"25432b03-9a83-4b06-9245-5e39ddd55dcb", fallbackName:"Dyrisk"}
+];
+
+function cleanPremiumDescription(text){
+  let d=String(text||"").trim();
+  const marker="— PREMIUMMODULER —";
+  const i=d.indexOf(marker);
+  if(i>=0)d=d.slice(0,i).trim();
+  return d;
+}
+
+function renderPremiumShops(){
+  try{
+    const holder=document.getElementById("premiumShopList");
+    const section=document.getElementById("premiumShops");
+    if(!holder||!section)return;
+
+    const cards=[];
+
+    PREMIUM_SHOPS.forEach(item=>{
+      const b=allBusinesses.find(x=>String(x.id||"")===item.id);
+      if(!b)return;
+
+      const id=String(b.id||"");
+      const name=getName(b)||item.fallbackName;
+      const region=getDisplayRegion(getRegion(b))||"Haugalandet";
+      const type=getType(b)||"Dyrebutikk";
+      const desc=cleanPremiumDescription(getDescription(b))||"Premium-partner hos Hundene Våre.";
+      const logo=getLogo(b)||getImage(b);
+
+      cards.push(`
+        <div class="buddy-premium-card">
+          <div class="buddy-premium-logo">
+            ${logo
+              ? `<img src="${safeText(logo)}" alt="${safeText(name)} logo">`
+              : `<div class="buddy-premium-fallback">${safeText(name)}</div>`}
+          </div>
+          <div>
+            <h3>${safeText(name)}</h3>
+            <div class="buddy-premium-meta">📍 ${safeText(region)} • ${safeText(type)}</div>
+            <p>${safeText(desc)}</p>
+          </div>
+          <div class="buddy-premium-actions">
+            <a class="premium" href="premium-butikk.html?id=${encodeURIComponent(id)}">⭐ Se Premium-profil</a>
+            <a class="shop" href="butikk.html?id=${encodeURIComponent(id)}">Se butikk →</a>
+          </div>
+        </div>
+      `);
+    });
+
+    if(!cards.length){
+      section.style.display="none";
+      return;
+    }
+
+    holder.innerHTML=cards.join("");
+    section.style.display="";
+  }catch(err){
+    console.warn("Premium-visning feilet, butikklisten fortsetter:",err);
+  }
 }
 
 function countType(type){if(type==="Zoo butikk")return allBusinesses.filter(b=>getType(b)==="Zoo butikk"||getType(b)==="Dyrebutikk").length;return allBusinesses.filter(b=>getType(b)===type).length}function buildServices(){serviceGrid.innerHTML=services.map(s=>`<button class="service-card ${selectedType===s.type?'active':''}" data-type="${safeText(s.type)}" type="button"><div class="service-icon">${s.icon}</div><div class="service-name">${s.label}</div><div class="service-desc">${s.desc}</div><div class="service-count">${countType(s.type)}</div></button>`).join("");serviceGrid.querySelectorAll(".service-card").forEach(btn=>btn.addEventListener("click",()=>{selectedType=selectedType===btn.dataset.type?"":btn.dataset.type;typeFilter.value=selectedType;mainType.value=selectedType;buildServices();renderBusinesses()}))}function updateStats(){const regions=new Set(allBusinesses.map(b=>getDisplayRegion(getRegion(b))).filter(r=>r&&!isAddressLikeRegion(r))),cats=new Set(allBusinesses.map(getType).filter(Boolean));document.getElementById("statStores").textContent=allBusinesses.length;document.getElementById("statRegions").textContent=regions.size||0;document.getElementById("statCats").textContent=cats.size||0}function buildAreas(){const counts={};allBusinesses.forEach(b=>{const displayRegion=getDisplayRegion(getRegion(b));if(!displayRegion||isAddressLikeRegion(displayRegion))return;counts[displayRegion]=(counts[displayRegion]||0)+1});const startAreas=["Haugalandet","Stavanger","Stord"],extraAreas=Object.keys(counts).filter(r=>!startAreas.includes(r)).filter(r=>!isAddressLikeRegion(r)).sort(),regions=[...startAreas,...extraAreas];areaButtons.innerHTML=regions.map(r=>`<button class="area-card ${selectedRegion===r?'active':''}" data-region="${safeText(r)}" type="button"><div class="area-img" style="background-image:url('${regionImages[r]||regionImages.Haugalandet}')"></div><div class="area-body"><div class="area-name">${safeText(r)}</div><div class="area-count">${counts[r]||0}</div></div></button>`).join("");areaButtons.querySelectorAll(".area-card").forEach(btn=>btn.addEventListener("click",()=>{selectedRegion=selectedRegion===btn.dataset.region?"":btn.dataset.region;buildAreas();renderBusinesses()}))}function updateWeekStore(list){const box=document.getElementById("weekStore");if(!box)return;const b=(list&&list.length)?list[0]:(allBusinesses&&allBusinesses.length?allBusinesses[0]:null);if(!b)return;const id=b.id||"",name=safeText(getName(b)),region=safeText(getDisplayRegion(getRegion(b))),type=safeText(getType(b)),desc=safeText(getDescription(b))||"En registrert butikk eller tjeneste i Hundene våre.",logo=getLogo(b);box.innerHTML=`<div class="portal-logo">${logo?`<img src="${logo}" alt="${name} logo">`:"🏪"}</div><div><h2>🌟 Ukens butikk</h2><h3>${name}</h3><p>${desc}</p><p style="font-weight:900">📍 ${region||"Norge"} ${type?" · 🏷️ "+type:""}</p>${id?`<a class="btn" href="butikk.html?id=${id}">Se butikk →</a>`:`<a class="btn" href="#businessGrid">Se butikker</a>`}</div>`}function renderBusinesses(){const search=searchInput.value.trim().toLowerCase(),type=typeFilter.value;let list=allBusinesses.filter(b=>{const name=getName(b).toLowerCase(),rawRegion=getRegion(b),region=getDisplayRegion(rawRegion),bType=getType(b),desc=getDescription(b).toLowerCase(),place=String(b.place||b.city||"").toLowerCase();const matchesSearch=!search||name.includes(search)||desc.includes(search)||place.includes(search)||String(region).toLowerCase().includes(search)||String(rawRegion).toLowerCase().includes(search),matchesRegion=!selectedRegion||region===selectedRegion,matchesType=!type||bType===type||(type==="Zoo butikk"&&bType==="Dyrebutikk");return matchesSearch&&matchesRegion&&matchesType});const sort=sortFilter.value;list.sort((a,b)=>String(sort==="region"?getDisplayRegion(getRegion(a)):sort==="type"?getType(a):getName(a)).localeCompare(String(sort==="region"?getDisplayRegion(getRegion(b)):sort==="type"?getType(b):getName(b))));statusEl.textContent=(selectedRegion?selectedRegion+": ":"")+list.length+" resultat(er)";updateWeekStore(list);if(!selectedRegion&&!search&&!type){grid.innerHTML='<div class="empty">📍 Velg område, kategori eller bruk søkefeltet.</div>';return}if(list.length===0){grid.innerHTML='<div class="empty">Ingen resultater funnet. Prøv et annet område eller søk.</div>';return}grid.innerHTML=list.map(b=>{const id=b.id||"",name=safeText(getName(b)),region=safeText(getDisplayRegion(getRegion(b))),type=safeText(getType(b)),desc=safeText(getDescription(b))||"Ingen beskrivelse lagt inn ennå.",img=getImage(b),logo=getLogo(b),phone=getPhone(b),website=normalizeUrl(getWebsite(b));return `<article class="biz-card"><div class="biz-img">${img?`<img src="${img}" alt="${name}">`:`<div class="placeholder">🏪</div>`}<div class="open-tag">Synlig</div></div><div class="biz-body"><div class="biz-title-row"><div class="biz-logo">${logo?`<img src="${logo}" alt="${name} logo">`:"🏪"}</div><div><div class="biz-title">${name}</div><div class="biz-place">📍 ${region||"Norge"}</div></div></div><div class="chips">${type?`<span class="chip">${type}</span>`:""}<span class="chip">Hund</span><span class="chip">Katt</span></div><div class="desc">${desc}</div><div class="rating">4.9 <span>★</span> <small>(Hundene våre)</small></div><div class="card-actions">${id?`<a class="btn primary" href="butikk.html?id=${id}">Se butikk →</a>`:""}${website?`<a class="btn" href="${website}" target="_blank">Nettside</a>`:""}${phone?`<a class="btn" href="tel:${phone}">Ring</a>`:""}</div></div></article>`}).join("")}document.getElementById("heroBtn").addEventListener("click",()=>{searchInput.value=mainSearch.value;typeFilter.value=mainType.value;selectedType=mainType.value;buildServices();renderBusinesses();document.getElementById("businessGrid").scrollIntoView({behavior:"smooth",block:"start"})});document.getElementById("clearBtn").addEventListener("click",()=>{searchInput.value="";mainSearch.value="";typeFilter.value="";mainType.value="";sortFilter.value="name";selectedRegion="";selectedType="";buildServices();buildAreas();renderBusinesses()});document.querySelectorAll(".quick-search button").forEach(btn=>btn.addEventListener("click",()=>{mainSearch.value=btn.dataset.search;searchInput.value=btn.dataset.search;renderBusinesses();document.getElementById("businessGrid").scrollIntoView({behavior:"smooth",block:"start"})}));searchInput.addEventListener("input",()=>{mainSearch.value=searchInput.value;renderBusinesses()});mainSearch.addEventListener("input",()=>{searchInput.value=mainSearch.value;renderBusinesses()});typeFilter.addEventListener("change",()=>{selectedType=typeFilter.value;mainType.value=typeFilter.value;buildServices();renderBusinesses()});mainType.addEventListener("change",()=>{selectedType=mainType.value;typeFilter.value=mainType.value;buildServices();renderBusinesses()});sortFilter.addEventListener("change",renderBusinesses);loadBusinesses();
