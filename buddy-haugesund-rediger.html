@@ -100,8 +100,15 @@ window.saveShop=async function(){
   try{
     const patch={
       name:nameEl.value.trim(),
-      description:descriptionEl.value.trim(),
+      description:buildPremiumDescription(
+        descriptionEl.value,
+        moduleDogEl.value,
+        moduleCatEl.value,
+        modulePremiumEl.value
+      ),
       place:addressEl.value.trim(),
+      region:regionEl.value.trim(),
+      type:typeEl.value.trim(),
       phone:phoneEl.value.trim(),
       website:websiteEl.value.trim(),
       reel_url:reelEl.value.trim(),
