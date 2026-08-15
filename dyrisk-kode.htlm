@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sett Dyrisk Premium-kode</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{margin:0;background:#031721;color:#f2fdff;font-family:Arial,sans-serif}
+.wrap{max-width:700px;margin:50px auto;padding:20px}
+.card{background:linear-gradient(180deg,#092a39,#071f2b);border:1px solid #18576c;border-radius:24px;padding:28px;box-shadow:0 18px 40px #0005}
+h1{margin-top:0}
+.code{background:#0d3a4d;border:1px solid #287b91;border-radius:14px;padding:15px;font-size:20px;font-weight:900;margin:18px 0}
+button{width:100%;padding:15px;border:0;border-radius:999px;background:linear-gradient(135deg,#d7ad58,#f0c977);color:#211707;font-size:17px;font-weight:900;cursor:pointer}
+#status{margin-top:18px;padding:14px;border-radius:13px;background:#0d3a4d;color:#c8e7ef;font-weight:900}
+.ok{background:#d9fff6!important;color:#064e3b!important}
+.bad{background:#ffe4e6!important;color:#9f1239!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>Sett Premium-kode for Dyrisk</h1>
+    <p>Denne siden brukes bare én gang. Trykk knappen under, og slett deretter filen fra GitHub.</p>
+    <div class="code">DYRISK-8N4K-27QX</div>
+    <button onclick="setCode()">🔐 Lagre Premium-kode</button>
+    <div id="status">Klar.</div>
+  </div>
+</div>
+<script>
+const sb=window.supabase.createClient(
+  'https://kxudiviidwwwclbzgdyx.supabase.co',
+  'sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH'
+);
+const ID='25432b03-9a83-4b06-9245-5e39ddd55dcb';
+const EDIT_CODE='DYRISK-8N4K-27QX';
+
+async function setCode(){
+  const st=document.getElementById('status');
+  st.className='';
+  st.textContent='Lagrer kode …';
+  const {data,error}=await sb
+    .from('businesses')
+    .update({edit_code:EDIT_CODE})
+    .eq('id',ID)
+    .select('id,name,edit_code');
+
+  if(error){
+    st.className='bad';
+    st.textContent='❌ Kunne ikke lagre: '+error.message;
+    return;
+  }
+  if(!data || !data.length){
+    st.className='bad';
+    st.textContent='❌ Ingen butikk ble oppdatert.';
+    return;
+  }
+  st.className='ok';
+  st.textContent='✅ Koden er lagret. Du kan nå slette denne engangsfilen fra GitHub.';
+}
+</script>
+</body>
+</html>
