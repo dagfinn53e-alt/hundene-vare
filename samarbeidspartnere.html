@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bli samarbeidspartner – Hundene våre</title>
+<title>Anbefalte aktører – Hundene våre</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -194,25 +194,25 @@ body{
 </div>
 
 <section class="hero">
-  <h1>🤝 Bli samarbeidspartner</h1>
-  <p>Her samler vi samarbeidspartnere, sponsorer, Facebook-sider, bedrifter og aktører som ønsker synlighet og samarbeid gjennom Hundenevåre.com.</p>
-  <a class="mainbtn" href="butikk-profil-skjema.html">📝 Registrer deg som samarbeidspartner</a>
+  <h1>⭐ Anbefalte aktører</h1>
+  <p>Her løfter vi frem organisasjoner, Facebook-sider, foreninger og andre aktører som gjør noe positivt for dyr og dyreeiere.</p>
+  <a class="mainbtn" href="butikk-profil-skjema.html">📝 Foreslå en aktør</a>
 </section>
 
 <section class="card ad">
-  <h2>🐾 Vil du bli samarbeidspartner?</h2>
-  <p>Bruk registreringsskjemaet og velg <b>Samarbeidspartner</b>, <b>Sponsor</b>, <b>Facebook-side</b> eller tilsvarende under Type. Etter godkjenning vises dere på denne siden.</p>
+  <h2>🐾 Ønsker dere gratis synlighet?</h2>
+  <p>Vi kan presentere relevante organisasjoner, Facebook-sider, foreninger og andre dyrevennlige aktører. Oppføringen er gratis og uforpliktende. Etter godkjenning vises aktøren på denne siden.</p>
 </section>
 
 <section class="card">
-  <h2 class="section-title">Våre samarbeidspartnere</h2>
-  <p class="sub">Her vises godkjente samarbeidspartnere, sponsorer og Facebook-sider. Nye forespørsler må godkjennes i Admin før de blir synlige.</p>
-  <div id="status" class="status">Laster samarbeidspartnere ...</div>
+  <h2 class="section-title">Aktører vi gjerne løfter frem</h2>
+  <p class="sub">Her finner du aktører som Hundene Våre gjerne gir ekstra synlighet. Oppføringen er gratis og innebærer ingen økonomisk avtale eller forpliktelse.</p>
+  <div id="status" class="status">Laster anbefalte aktører ...</div>
   <div id="partnerGrid" class="partner-grid"></div>
 </section>
 
 <section class="card">
-  <h2 class="section-title">Hva får en samarbeidspartner?</h2>
+  <h2 class="section-title">Hva får en anbefalt aktør?</h2>
   <div class="info">
     ✅ Eget kort med logo/bilde<br>
     ✅ Navn og kort beskrivelse<br>
@@ -223,7 +223,7 @@ body{
   </div>
 </section>
 
-<p class="footer-note">Hundenevåre.com – samarbeid, sponsorer og synlighet for hunde- og katteaktører.</p>
+<p class="footer-note">Hundenevåre.com – vi løfter frem gode aktører for dyr og dyreeiere.</p>
 
 </div>
 
@@ -287,7 +287,7 @@ function normalizeUrl(url){
 }
 
 async function loadPartners(){
-  statusEl.textContent = "Laster samarbeidspartnere ...";
+  statusEl.textContent = "Laster anbefalte aktører ...";
 
   try{
     const { data, error } = await supabaseClient
@@ -297,17 +297,17 @@ async function loadPartners(){
       .order("created_at", { ascending:false });
 
     if(error){
-      statusEl.textContent = "Kunne ikke laste samarbeidspartnere.";
+      statusEl.textContent = "Kunne ikke laste anbefalte aktører.";
       grid.innerHTML = '<div class="empty">Noe gikk galt ved lasting.</div>';
       return;
     }
 
     const partners = (data || []).filter(isVisiblePartner);
 
-    statusEl.textContent = partners.length + " samarbeidspartner(e) funnet";
+    statusEl.textContent = partners.length + " anbefalt(e) aktør(er) funnet";
 
     if(partners.length === 0){
-      grid.innerHTML = '<div class="empty">Ingen godkjente samarbeidspartnere ennå.</div>';
+      grid.innerHTML = '<div class="empty">Ingen godkjente anbefalte aktører ennå.</div>';
       return;
     }
 
@@ -340,7 +340,7 @@ async function loadPartners(){
     }).join("");
 
   }catch(e){
-    statusEl.textContent = "Kunne ikke laste samarbeidspartnere.";
+    statusEl.textContent = "Kunne ikke laste anbefalte aktører.";
     grid.innerHTML = '<div class="empty">Noe gikk galt ved lasting.</div>';
   }
 }
