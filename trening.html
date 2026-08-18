@@ -2,536 +2,401 @@
 <html lang="no">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trening 2.1 - Hundene våre</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Trening & Hundeskole – Hundene Våre Premium</title>
 <style>
-:root{
-  --blue:#2563eb;
-  --blue-dark:#1d4ed8;
-  --purple:#7c3aed;
-  --green:#16a34a;
-  --text:#102033;
-  --muted:#5f7088;
-}
-
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at top left,rgba(34,197,94,.14) 0%,transparent 28%),
-    radial-gradient(circle at top right,rgba(37,99,235,.14) 0%,transparent 30%),
-    linear-gradient(180deg,#eaf7ef 0%,#f8fbff 100%);
-}
-
-.wrap{
-  max-width:1180px;
-  margin:0 auto;
-  padding:22px 18px 70px;
-}
-
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-bottom:18px;
-  padding:14px 18px;
-  border:1px solid rgba(187,247,208,.75);
-  border-radius:28px;
-  background:rgba(255,255,255,.90);
-  box-shadow:0 16px 38px rgba(15,23,42,.10);
-  position:sticky;
-  top:8px;
-  z-index:50;
-}
-
-.brand{
-  font-size:24px;
-  font-weight:900;
-  color:var(--green);
-  padding:12px 18px;
-  border-radius:999px;
-  background:linear-gradient(135deg,#ffffff,#ecfdf5);
-  border:1px solid #bbf7d0;
-}
-
-.actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.navbtn,.mainbtn,.openbtn{
-  border:none;
-  border-radius:999px;
-  padding:11px 16px;
-  background:var(--green);
-  color:#fff;
-  font-weight:900;
-  cursor:pointer;
-  text-decoration:none;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 6px 16px rgba(15,23,42,.08);
-}
-
-.navbtn.alt{
-  background:#ecfdf5;
-  color:#166534;
-  border:1px solid #bbf7d0;
-}
-
-.navbtn.admin{
-  background:#fff7ed;
-  color:#b45309;
-  border:1px solid #fed7aa;
-}
-
-.hero{
-  min-height:255px;
-  border-radius:34px;
-  padding:38px;
-  color:white;
-  background:
-    linear-gradient(rgba(15,23,42,.44),rgba(15,23,42,.48)),
-    url('https://images.unsplash.com/photo-1601758228041-f3b2795255f1?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
-  box-shadow:0 22px 48px rgba(15,23,42,.18);
-  margin-bottom:22px;
-}
-
-.hero h1{
-  margin:0 0 12px;
-  font-size:52px;
-  line-height:1.05;
-  text-shadow:0 6px 18px rgba(0,0,0,.25);
-}
-
-.hero p{
-  margin:0 0 18px;
-  max-width:780px;
-  font-size:18px;
-  line-height:1.6;
-  color:#f8fafc;
-}
-
-.mainbtn{
-  background:linear-gradient(135deg,#16a34a,#2563eb);
-  min-height:48px;
-  padding:13px 22px;
-}
-
-.card{
-  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
-  border:1px solid rgba(187,247,208,.75);
-  border-radius:34px;
-  padding:28px;
-  box-shadow:0 20px 42px rgba(15,23,42,.10);
-  margin-bottom:22px;
-}
-
-.section-title{
-  margin:0 0 8px;
-  font-size:34px;
-  color:#0f172a;
-}
-
-.sub{
-  color:var(--muted);
-  line-height:1.6;
-  margin:0 0 20px;
-}
-
-.notice{
-  background:#ecfdf5;
-  border:1px solid #bbf7d0;
-  color:#166534;
-  border-radius:22px;
-  padding:16px;
-  font-weight:800;
-  line-height:1.6;
-  margin-bottom:20px;
-}
-
-.searchbox{
-  width:100%;
-  max-width:520px;
-  padding:15px 18px;
-  border-radius:999px;
-  border:1px solid #bbf7d0;
-  font-size:17px;
-  margin-bottom:20px;
-  outline:none;
-}
-
-.training-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-}
-
-.training-card{
-  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
-  border:1px solid #dbeafe;
-  border-radius:28px;
-  padding:20px;
-  box-shadow:0 14px 32px rgba(30,64,175,.10);
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  min-height:420px;
-}
-
-.icon{
-  font-size:44px;
-  margin-bottom:10px;
-}
-
-.training-card h3{
-  margin:0 0 8px;
-  font-size:24px;
-  color:#0f172a;
-}
-
-.training-card p{
-  margin:0;
-  color:#475569;
-  line-height:1.55;
-  font-size:15px;
-}
-
-.tagrow{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:12px;
-}
-
-.tag{
-  display:inline-flex;
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:900;
-  background:#ecfdf5;
-  color:#166534;
-  border:1px solid #bbf7d0;
-}
-
-.tag.blue{
-  background:#eef4ff;
-  color:#1d4ed8;
-  border-color:#bfdbfe;
-}
-
-.tag.purple{
-  background:#f5f3ff;
-  color:#6d28d9;
-  border-color:#ddd6fe;
-}
-
-.openbtn{
-  margin-top:18px;
-  width:100%;
-  min-height:46px;
-  background:linear-gradient(135deg,#16a34a,#2563eb);
-}
-
-
-.training-image{
-width:100%;
-height:140px;
-object-fit:cover;
-border-radius:16px;
-margin-bottom:12px;
-}
-
-.guide-box{
-  display:none;
-  margin-top:14px;
-  padding:14px;
-  border-radius:18px;
-  background:#f0fdf4;
-  border:1px solid #bbf7d0;
-  color:#14532d;
-  line-height:1.6;
-  font-size:14px;
-}
-
-.guide-box h4{
-  margin:0 0 8px;
-  font-size:17px;
-  color:#166534;
-}
-
-.guide-box ol{
-  margin:0;
-  padding-left:20px;
-}
-
-.guide-box li{
-  margin-bottom:6px;
-}
-
-.openbtn{
-  border:0;
-}
-
-.footer-note{
-
-  text-align:center;
-  color:#64748b;
-  font-size:14px;
-  margin-top:22px;
-}
-
-@media(max-width:950px){
-  .training-grid{grid-template-columns:1fr 1fr}
-}
-
-@media(max-width:760px){
-  .wrap{padding:14px 12px 50px}
-  .topbar{border-radius:22px;padding:12px}
-  .brand{width:100%;text-align:center;font-size:20px}
-  .actions{width:100%;justify-content:center}
-  .navbtn{flex:1 1 42%;font-size:13px;padding:10px 12px}
-  .hero{min-height:230px;border-radius:26px;padding:24px}
-  .hero h1{font-size:34px}
-  .hero p{font-size:15px}
-  .card{border-radius:26px;padding:18px}
-  .section-title{font-size:28px}
-  .training-grid{grid-template-columns:1fr}
+:root{--bg:#020913;--panel:#081b33;--line:rgba(85,158,225,.32);--text:#f7fbff;--muted:#bfd0e1;--gold:#ffd257;--cyan:#2bd5e8}
+html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 10% 0%,rgba(255,194,61,.11),transparent 28rem),radial-gradient(circle at 90% 5%,rgba(39,171,255,.13),transparent 30rem),linear-gradient(180deg,#020813,#041326 55%,#06172d)}
+.wrap{width:min(1180px,calc(100% - 18px));margin:auto;padding:8px 0 28px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:9px 13px;border:1px solid #355f92;border-radius:22px;background:rgba(4,17,39,.96)}
+.brand{font-family:Georgia,serif;font-style:italic;font-size:23px;font-weight:900} .brand small{display:block;font:9px Arial;color:#c8d7e6}
+.nav{display:flex;gap:6px;flex-wrap:wrap} .nav a{padding:8px 11px;border-radius:999px;background:#0a203c;border:1px solid rgba(255,255,255,.09);font-size:10px;font-weight:900;color:white;text-decoration:none}
+.hero{margin-top:10px;padding:25px 28px;border-radius:27px;border:1px solid rgba(104,165,255,.34);background:radial-gradient(circle at 14% 20%,rgba(255,199,73,.18),transparent 22rem),radial-gradient(circle at 88% 16%,rgba(43,213,235,.16),transparent 24rem),linear-gradient(135deg,#071b38,#123d69 50%,#4c245f);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.hero h1{font-family:Georgia,serif;font-style:italic;font-size:39px;margin:0 0 6px} .hero p{margin:0;color:#dce8f4;line-height:1.5;font-size:14px;max-width:850px}
+.stage{margin-top:10px;padding:16px;border-radius:25px;background:linear-gradient(155deg,#0b2847,#07192f);border:1px solid var(--line);box-shadow:0 16px 38px rgba(0,0,0,.22)}
+.progress{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;color:#c9d9e8;font-size:11px;font-weight:900}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end} .dot{width:9px;height:9px;border-radius:50%;border:0;background:#36526e;cursor:pointer;padding:0} .dot.active{background:var(--gold);transform:scale(1.25)}
+.training-slide{display:none} .training-slide.active{display:block}
+.training-card{display:grid;grid-template-columns:220px 1fr;gap:18px;min-height:390px;background:linear-gradient(155deg,#0d2b49,#081a30);border:1px solid rgba(79,159,230,.28);border-radius:21px;padding:17px}
+.training-card>div:first-child{display:contents}
+.icon{grid-column:1;grid-row:1;font-size:43px;z-index:2;margin:10px 0 0 12px;align-self:start}
+.training-image{grid-column:1;grid-row:1/6;width:100%;height:100%;min-height:310px;object-fit:cover;border-radius:17px;background:#dbeeff}
+.training-card h3{grid-column:2;margin:2px 0 5px;font-family:Georgia,serif;font-size:29px;color:white}
+.training-card p{grid-column:2;margin:0;color:#cfdeeb;line-height:1.55;font-size:14px}
+.tagrow{grid-column:2;display:flex;gap:6px;flex-wrap:wrap;margin-top:8px} .tag{padding:5px 9px;border-radius:999px;background:#113c54;border:1px solid #2f667f;color:#dff8ff;font-size:10px;font-weight:900}
+.guide-box{grid-column:2;display:block!important;margin-top:10px;padding:13px 14px;border-radius:16px;background:rgba(255,255,255,.055);border:1px solid rgba(255,210,87,.23);color:#dce8f4;font-size:12.5px;line-height:1.5}
+.guide-box h4{margin:0 0 6px;color:var(--gold);font-size:15px} .guide-box ol{margin:0;padding-left:20px} .guide-box li{margin-bottom:4px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:11px}
+.controls button{min-height:46px;border:0;border-radius:999px;font-weight:900;font-size:12px;cursor:pointer} #prevBtn{background:#0b2e53;border:1px solid #2c6797;color:white} #nextBtn{background:linear-gradient(135deg,#ffd257,#efa725);color:#221805}
+.footer{text-align:center;color:#8fa6bb;font-size:10px;margin-top:12px}
+@media(max-width:700px){
+ .wrap{width:calc(100% - 10px);padding-top:5px} .topbar{padding:7px;border-radius:17px} .brand{width:100%;text-align:center;font-size:19px} .nav{width:100%} .nav a{flex:1;text-align:center;padding:7px}
+ .hero{padding:18px 13px;border-radius:21px} .hero h1{font-size:31px} .hero p{font-size:12px}
+ .stage{padding:9px;border-radius:19px} .training-card{grid-template-columns:1fr;min-height:0;padding:11px;gap:8px}
+ .training-card>div:first-child{display:contents} .icon{grid-column:1;grid-row:1;font-size:32px;margin:8px 0 0 9px}
+ .training-image{grid-column:1;grid-row:1;width:100%;height:145px;min-height:145px} .training-card h3,.training-card p,.tagrow,.guide-box{grid-column:1}
+ .training-card h3{font-size:23px;margin-top:2px} .training-card p{font-size:12px;line-height:1.42} .guide-box{font-size:11px;padding:10px}
+ .progress{align-items:flex-start} .dots{max-width:100px}
 }
 </style>
-</head>
 
+<style id="section-images-premium">
+.training-card{
+  grid-template-columns:1fr!important;
+}
+.section-photo-wrap{
+  position:relative;
+  width:100%;
+  height:210px;
+  border-radius:18px;
+  overflow:hidden;
+  margin-bottom:4px;
+  border:1px solid rgba(255,255,255,.13);
+  box-shadow:0 12px 28px rgba(0,0,0,.24);
+}
+.section-photo{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.section-photo-wrap:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,transparent 45%,rgba(3,13,26,.78));
+  pointer-events:none;
+}
+.section-photo-label{
+  position:absolute;
+  left:13px;
+  bottom:11px;
+  z-index:2;
+  padding:6px 9px;
+  border-radius:999px;
+  background:rgba(3,18,35,.78);
+  border:1px solid rgba(255,255,255,.15);
+  color:#fff;
+  font-size:11px;
+  font-weight:900;
+}
+.training-card .icon{
+  display:none!important;
+}
+.training-card .training-image{
+  display:none!important;
+}
+.training-card h3,
+.training-card p,
+.training-card .tagrow,
+.training-card .guide-box{
+  grid-column:1!important;
+}
+@media(max-width:700px){
+  .section-photo-wrap{height:150px;border-radius:15px}
+  .section-photo-label{font-size:10px;left:9px;bottom:8px}
+}
+</style>
+
+
+<style id="compact-training-images">
+.section-photo-wrap{
+  width:min(100%,760px)!important;
+  height:165px!important;
+  margin:0 auto 8px!important;
+  border-radius:16px!important;
+}
+.section-photo{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+}
+@media(max-width:700px){
+  .section-photo-wrap{
+    width:100%!important;
+    height:120px!important;
+    margin-bottom:7px!important;
+    border-radius:13px!important;
+  }
+}
+</style>
+
+
+<style id="mini-training-images">
+.section-photo-wrap{
+  width:320px!important;
+  max-width:100%!important;
+  height:82px!important;
+  margin:0 auto 8px!important;
+  border-radius:12px!important;
+}
+.section-photo{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+}
+.section-photo-label{
+  font-size:9px!important;
+  padding:4px 7px!important;
+  left:7px!important;
+  bottom:6px!important;
+}
+@media(max-width:700px){
+  .section-photo-wrap{
+    width:240px!important;
+    max-width:100%!important;
+    height:68px!important;
+  }
+}
+</style>
+
+
+<style id="final-small-training-pictures">
+.section-photo-wrap{
+  width:220px!important;
+  height:105px!important;
+  max-width:220px!important;
+  min-height:0!important;
+  margin:0 auto 10px!important;
+  overflow:hidden!important;
+  border-radius:14px!important;
+}
+.section-photo{
+  display:block!important;
+  width:220px!important;
+  height:105px!important;
+  max-width:220px!important;
+  max-height:105px!important;
+  min-height:0!important;
+  object-fit:cover!important;
+}
+@media(max-width:700px){
+  .section-photo-wrap,.section-photo{
+    width:180px!important;
+    max-width:180px!important;
+    height:86px!important;
+    max-height:86px!important;
+  }
+}
+</style>
+
+</head>
 <body>
 <div class="wrap">
-
-  <div class="topbar">
-    <div class="brand">🐶 Hundene våre</div>
-    <div class="actions">
-      <a class="navbtn alt" href="index.html">🏠 Forside</a>
-      <a class="navbtn alt" href="kunnskap.html">📚 Kunnskap</a>
-      <a class="navbtn alt" href="hunderaser.html">🐶 Hunderaser</a>
-      <a class="navbtn alt" href="katteraser.html">🐱 Katteraser</a>
-      <a class="navbtn alt" href="helse.html">🏥 Helse</a>
-      <a class="navbtn admin" href="admin.html">🔧 Admin</a>
-    </div>
-  </div>
-
-  <section class="hero">
-    <h1>🎓 Trening & Hundeskole 2.1</h1>
-    <p>
-      Her samler vi enkle og praktiske treningsråd for hundeeiere.
-      Målet er å gjøre hverdagen enklere, tryggere og morsommere for både hund og eier.
-    </p>
-    <a class="mainbtn" href="kunnskap.html">⬅️ Tilbake til Kunnskapssenter</a>
-  </section>
-
-  <section class="card">
-    <h2 class="section-title">Treningstema</h2>
-    <div class="notice">
-      🐾 Trening bør være positiv, rolig og tilpasset hunden. Korte økter, gode belønninger og tålmodighet gir ofte best resultat.
-    </div>
-
-    <p class="sub">Søk etter tema som valpetrening, innkalling, båndtrening eller sosialisering.</p>
-    <input class="searchbox" id="searchInput" onkeyup="filterTraining()" placeholder="Søk i treningstema...">
-
-    <div class="training-grid" id="trainingGrid">
-
-      <div class="training-card" data-search="valpetrening valp start trening trygghet rutiner">
+<header class="topbar">
+ <div class="brand">🐾 Hundene Våre<small>Trening & Hundeskole • Premium</small></div>
+ <nav class="nav"><a href="index.html">🏠 Forsiden</a><a href="kunnskap.html">📚 Kunnskap</a><a href="hundeakademiet_ny.html">🎓 Hundeakademiet</a></nav>
+</header>
+<section class="hero">
+ <h1>🎓 Trening & Hundeskole</h1>
+ <p>Praktiske treningsråd for hundeeiere – presentert ett tema om gangen. Bruk Neste og Tilbake i stedet for å scrolle gjennom hele siden.</p>
+</section>
+<section class="stage">
+ <div class="progress"><span id="counter">Tema 1 av 9</span><div class="dots" id="dots"></div></div>
+ <div class="training-slide" data-slide="0"><div class="training-card" data-search="valpetrening valp start trening trygghet rutiner">
+      <div class="section-photo-wrap">
+        <img class="section-photo" src="https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=1200&auto=format&fit=crop" alt="Valpetrening" loading="lazy">
+        <div class="section-photo-label">🐾 Valpetrening</div>
+      </div>
         <div>
           <div class="icon">🐕</div>
-          <img class="training-image" src="https://source.unsplash.com/900x600/?puppy,dog,training" alt="Valpetrening"><h3>Valpetrening</h3><p>Valpetrening bør starte fra første dag i nytt hjem. Fokuser på trygghet, renslighet, navn, kontakt og gode rutiner. Korte økter på 2–5 minutter fungerer ofte best. Belønn ønsket adferd raskt og gjør treningen positiv. Sosialisering med mennesker, lyder og miljø er også viktig.</p>
+          <h3>Valpetrening</h3><p>Valpetrening bør starte fra første dag i nytt hjem. Fokuser på trygghet, renslighet, navn, kontakt og gode rutiner. Korte økter på 2–5 minutter fungerer ofte best. Belønn ønsket adferd raskt og gjør treningen positiv. Sosialisering med mennesker, lyder og miljø er også viktig.</p>
           <div class="tagrow">
             <span class="tag">Valp</span>
             <span class="tag blue">Start her</span>
           </div>
         </div>
-        <button class="openbtn" onclick="toggleGuide('guide-valpetrening')">📖 Les hele guiden</button>
-          <div class="guide-box" id="guide-valpetrening">
+        
+          <div class="guide-box always" id="guide-valpetrening">
             <h4>📖 Kort guide: Valpetrening</h4>
             <ol><li>Start med navn, kontakt og trygghet i hjemmet.</li><li>Tren renslighet ved å gå ut etter søvn, mat og lek.</li><li>Belønn rolig når valpen gjør riktig.</li><li>Hold øktene korte, gjerne 2–5 minutter.</li><li>Ikke mas. Avslutt mens valpen fortsatt lykkes.</li></ol>
           </div>
         
+      </div></div>
+<div class="training-slide" data-slide="1"><div class="training-card" data-search="innkalling kom hit løs hund belønning kontakt">
+      <div class="section-photo-wrap">
+        <img class="section-photo" src="https://images.unsplash.com/photo-1558788353-f76d92427f16?q=80&w=1200&auto=format&fit=crop" alt="Innkalling" loading="lazy">
+        <div class="section-photo-label">🐾 Innkalling</div>
       </div>
-
-      <div class="training-card" data-search="innkalling kom hit løs hund belønning kontakt">
         <div>
           <div class="icon">📣</div>
-          <img class="training-image" src="https://source.unsplash.com/900x600/?dog,running,owner" alt="Innkalling"><h3>Innkalling</h3><p>Start innkalling på et rolig sted uten forstyrrelser. Bruk hundens navn og et fast innkallingsord. Belønn alltid når hunden kommer. Bruk gjerne langline i starten. Unngå å rope hvis du tror hunden ikke kommer, og gjør det alltid hyggelig å komme tilbake.</p>
+          <h3>Innkalling</h3><p>Start innkalling på et rolig sted uten forstyrrelser. Bruk hundens navn og et fast innkallingsord. Belønn alltid når hunden kommer. Bruk gjerne langline i starten. Unngå å rope hvis du tror hunden ikke kommer, og gjør det alltid hyggelig å komme tilbake.</p>
           <div class="tagrow">
             <span class="tag">Kontakt</span>
             <span class="tag blue">Viktig</span>
           </div>
         </div>
-        <button class="openbtn" onclick="toggleGuide('guide-innkalling')">📖 Les hele guiden</button>
-          <div class="guide-box" id="guide-innkalling">
+        
+          <div class="guide-box always" id="guide-innkalling">
             <h4>📖 Kort guide: Innkalling</h4>
             <ol><li>Start innendørs eller på et rolig område.</li><li>Bruk et fast ord, for eksempel «kom».</li><li>Belønn ekstra godt når hunden kommer.</li><li>Tren med langline ute før hunden slippes løs.</li><li>Ikke kall inn for å gjøre noe negativt, som å avslutte all moro hver gang.</li></ol>
           </div>
         
+      </div></div>
+<div class="training-slide" data-slide="2"><div class="training-card" data-search="gå pent i bånd båndtrening tur trekking kontakt">
+      <div class="section-photo-wrap">
+        <img class="section-photo" src="https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=1200&auto=format&fit=crop" alt="Gå pent i bånd" loading="lazy">
+        <div class="section-photo-label">🐾 Gå pent i bånd</div>
       </div>
-
-      <div class="training-card" data-search="gå pent i bånd båndtrening tur trekking kontakt">
         <div>
           <div class="icon">🚶</div>
-          <img class="training-image" src="https://source.unsplash.com/900x600/?dog,leash,walk" alt="Gå pent i bånd"><h3>Gå pent i bånd</h3><p>Når hunden trekker, stopp rolig opp eller skift retning. Belønn når hunden går ved siden av deg med slakt bånd. Korte økter gir best resultat. Mange små suksesser er bedre enn lange treningsøkter.</p>
+          <h3>Gå pent i bånd</h3><p>Når hunden trekker, stopp rolig opp eller skift retning. Belønn når hunden går ved siden av deg med slakt bånd. Korte økter gir best resultat. Mange små suksesser er bedre enn lange treningsøkter.</p>
           <div class="tagrow">
             <span class="tag">Tur</span>
             <span class="tag">Hverdag</span>
           </div>
         </div>
-        <button class="openbtn" onclick="toggleGuide('guide-g-pent-i-b-nd')">📖 Les hele guiden</button>
-          <div class="guide-box" id="guide-g-pent-i-b-nd">
+        
+          <div class="guide-box always" id="guide-g-pent-i-b-nd">
             <h4>📖 Kort guide: Gå pent i bånd</h4>
             <ol><li>Start på et rolig sted uten for mange forstyrrelser.</li><li>Belønn når hunden går med slakt bånd ved siden av deg.</li><li>Stopp rolig når hunden trekker.</li><li>Gå videre når båndet blir slakt igjen.</li><li>Tren korte turer ofte i stedet for én lang kamp.</li></ol>
           </div>
         
+      </div></div>
+<div class="training-slide" data-slide="3"><div class="training-card" data-search="sosialisering valp hund mennesker miljø trygghet">
+      <div class="section-photo-wrap">
+        <img class="section-photo" src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?q=80&w=1200&auto=format&fit=crop" alt="Sosialisering" loading="lazy">
+        <div class="section-photo-label">🐾 Sosialisering</div>
       </div>
-
-      <div class="training-card" data-search="sosialisering valp hund mennesker miljø trygghet">
         <div>
           <div class="icon">🤝</div>
-          <img class="training-image" src="https://source.unsplash.com/900x600/?dogs,people,park" alt="Sosialisering"><h3>Sosialisering</h3><p>Sosialisering handler om å gi hunden positive erfaringer med mennesker, hunder, miljøer og lyder. La hunden observere i eget tempo. Unngå å presse usikre hunder inn i situasjoner de ikke er komfortable med.</p>
+          <h3>Sosialisering</h3><p>Sosialisering handler om å gi hunden positive erfaringer med mennesker, hunder, miljøer og lyder. La hunden observere i eget tempo. Unngå å presse usikre hunder inn i situasjoner de ikke er komfortable med.</p>
           <div class="tagrow">
             <span class="tag">Trygghet</span>
             <span class="tag blue">Valp</span>
           </div>
         </div>
-        <button class="openbtn" onclick="toggleGuide('guide-sosialisering')">📖 Les hele guiden</button>
-          <div class="guide-box" id="guide-sosialisering">
+        
+          <div class="guide-box always" id="guide-sosialisering">
             <h4>📖 Kort guide: Sosialisering</h4>
             <ol><li>La hunden møte nye miljøer i rolig tempo.</li><li>Gi positive opplevelser med mennesker, hunder, lyder og trafikk.</li><li>Ikke tving hunden bort til noe den er redd for.</li><li>Belønn rolig nysgjerrighet.</li><li>Husk at sosialisering handler om trygghet, ikke flest mulig møter.</li></ol>
           </div>
         
+      </div></div>
+<div class="training-slide" data-slide="4"><div class="training-card" data-search="klikkertrening klikker belønning shaping lære hund">
+      <div class="section-photo-wrap">
+        <img class="section-photo" src="https://images.unsplash.com/photo-1507146426996-ef05306b995a?q=80&w=1200&auto=format&fit=crop" alt="Klikkertrening" loading="lazy">
+        <div class="section-photo-label">🐾 Klikkertrening</div>
       </div>
-
-      <div class="training-card" data-search="klikkertrening klikker belønning shaping lære hund">
         <div>
           <div class="icon">🎯</div>
-          <img class="training-image" src="https://source.unsplash.com/900x600/?dog,training,treat" alt="Klikkertrening"><h3>Klikkertrening</h3><p>Klikkertrening gjør det lettere å fortelle hunden nøyaktig hva som var riktig. Klikk i samme øyeblikk som ønsket adferd skjer og gi deretter belønning. Metoden er effektiv for både enkle og avanserte øvelser.</p>
+          <h3>Klikkertrening</h3><p>Klikkertrening gjør det lettere å fortelle hunden nøyaktig hva som var riktig. Klikk i samme øyeblikk som ønsket adferd skjer og gi deretter belønning. Metoden er effektiv for både enkle og avanserte øvelser.</p>
           <div class="tagrow">
             <span class="tag purple">Teknikk</span>
             <span class="tag">Belønning</span>
           </div>
         </div>
-        <button class="openbtn" onclick="toggleGuide('guide-klikkertrening')">📖 Les hele guiden</button>
-          <div class="guide-box" id="guide-klikkertrening">
+        
+          <div class="guide-box always" id="guide-klikkertrening">
             <h4>📖 Kort guide: Klikkertrening</h4>
             <ol><li>Start med å klikke og gi godbit flere ganger.</li><li>Klikk akkurat når hunden gjør riktig.</li><li>Gi alltid belønning etter klikket.</li><li>Bruk klikkeren til enkle øvelser som sitt, kontakt og target.</li><li>Hold øktene korte og morsomme.</li></ol>
           </div>
         
+      </div></div>
+<div class="training-slide" data-slide="5"><div class="training-card" data-search="hjemme alene trening separasjon ro trygghet alene hjemme">
+      <div class="section-photo-wrap">
+        <img class="section-photo" src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?q=80&w=1200&auto=format&fit=crop" alt="Hjemme alene" loading="lazy">
+        <div class="section-photo-label">🐾 Hjemme alene</div>
       </div>
-
-      <div class="training-card" data-search="hjemme alene trening separasjon ro trygghet alene hjemme">
         <div>
           <div class="icon">🏠</div>
-          <img class="training-image" src="https://source.unsplash.com/900x600/?dog,bed,home" alt="Hjemme alene"><h3>Hjemme alene</h3><p>Begynn med få sekunder alene og øk gradvis. Hunden bør være rolig før du går ut døren. Ikke gjør stor sak av avskjed eller hjemkomst. Mange hunder trenger tid til å lære å være trygge alene.</p>
+          <h3>Hjemme alene</h3><p>Begynn med få sekunder alene og øk gradvis. Hunden bør være rolig før du går ut døren. Ikke gjør stor sak av avskjed eller hjemkomst. Mange hunder trenger tid til å lære å være trygge alene.</p>
           <div class="tagrow">
             <span class="tag">Hverdag</span>
             <span class="tag blue">Trygghet</span>
           </div>
         </div>
-        <button class="openbtn" onclick="toggleGuide('guide-hjemme-alene')">📖 Les hele guiden</button>
-          <div class="guide-box" id="guide-hjemme-alene">
+        
+          <div class="guide-box always" id="guide-hjemme-alene">
             <h4>📖 Kort guide: Hjemme alene</h4>
             <ol><li>La hunden ha en trygg plass, for eksempel seng eller teppe.</li><li>Start med noen sekunder alene.</li><li>Øk tiden gradvis når hunden er rolig.</li><li>Unngå store avskjeder og voldsom hilsing når du kommer tilbake.</li><li>Gi gjerne rolig aktivisering før du går.</li></ol>
           </div>
         
+      </div></div>
+<div class="training-slide" data-slide="6"><div class="training-card" data-search="aktivisering hjernetrim søk nesearbeid mental trening">
+      <div class="section-photo-wrap">
+        <img class="section-photo" src="https://images.unsplash.com/photo-1477884213360-7e9d7dcc1e48?q=80&w=1200&auto=format&fit=crop" alt="Aktivisering og hjernetrim" loading="lazy">
+        <div class="section-photo-label">🐾 Aktivisering og hjernetrim</div>
       </div>
-
-      <div class="training-card" data-search="aktivisering hjernetrim søk nesearbeid mental trening">
         <div>
           <div class="icon">🧠</div>
-          <img class="training-image" src="https://source.unsplash.com/900x600/?dog,toy,play" alt="Aktivisering og hjernetrim"><h3>Aktivisering og hjernetrim</h3><p>Mental trening kan være like viktig som fysisk aktivitet. Godbitsøk, spor, problemløsningsspill og nesearbeid gir hjernen arbeid og kan redusere kjedsomhet og stress.</p>
+          <h3>Aktivisering og hjernetrim</h3><p>Mental trening kan være like viktig som fysisk aktivitet. Godbitsøk, spor, problemløsningsspill og nesearbeid gir hjernen arbeid og kan redusere kjedsomhet og stress.</p>
           <div class="tagrow">
             <span class="tag">Hjernetrim</span>
             <span class="tag green">Moro</span>
           </div>
         </div>
-        <button class="openbtn" onclick="toggleGuide('guide-aktivisering-og-hjernetrim')">📖 Les hele guiden</button>
-          <div class="guide-box" id="guide-aktivisering-og-hjernetrim">
+        
+          <div class="guide-box always" id="guide-aktivisering-og-hjernetrim">
             <h4>📖 Kort guide: Aktivisering og hjernetrim</h4>
             <ol><li>Bruk godbitsøk inne eller ute.</li><li>La hunden lete etter mat i håndkle, snusematte eller aktivitetsleke.</li><li>Tren enkle triks som touch, snurr eller rygg.</li><li>Bruk nesearbeid for å gjøre hunden mentalt sliten.</li><li>Tilpass vanskelighetsgraden slik at hunden lykkes.</li></ol>
           </div>
         
+      </div></div>
+<div class="training-slide" data-slide="7"><div class="training-card" data-search="belønning motivasjon godbit lek ros positiv trening">
+      <div class="section-photo-wrap">
+        <img class="section-photo" src="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=1200&auto=format&fit=crop" alt="Belønning og motivasjon" loading="lazy">
+        <div class="section-photo-label">🐾 Belønning og motivasjon</div>
       </div>
-
-      <div class="training-card" data-search="belønning motivasjon godbit lek ros positiv trening">
         <div>
           <div class="icon">⭐</div>
-          <img class="training-image" src="https://source.unsplash.com/900x600/?dog,treat,hand" alt="Belønning og motivasjon"><h3>Belønning og motivasjon</h3><p>Finn ut hva hunden liker best. Noen motiveres av godbiter, andre av lek eller ros. Variasjon kan øke motivasjonen. Belønn raskt og tydelig når hunden gjør noe riktig.</p>
+          <h3>Belønning og motivasjon</h3><p>Finn ut hva hunden liker best. Noen motiveres av godbiter, andre av lek eller ros. Variasjon kan øke motivasjonen. Belønn raskt og tydelig når hunden gjør noe riktig.</p>
           <div class="tagrow">
             <span class="tag">Motivasjon</span>
             <span class="tag purple">Positiv trening</span>
           </div>
         </div>
-        <button class="openbtn" onclick="toggleGuide('guide-bel-nning-og-motivasjon')">📖 Les hele guiden</button>
-          <div class="guide-box" id="guide-bel-nning-og-motivasjon">
+        
+          <div class="guide-box always" id="guide-bel-nning-og-motivasjon">
             <h4>📖 Kort guide: Belønning og motivasjon</h4>
             <ol><li>Finn ut hva hunden liker best: godbit, leke, ros eller lek.</li><li>Bruk ekstra god belønning på vanskelige øvelser.</li><li>Belønn raskt når hunden gjør riktig.</li><li>Varier belønningene for å holde motivasjonen oppe.</li><li>Ikke spar på ros når hunden prøver.</li></ol>
           </div>
         
+      </div></div>
+<div class="training-slide" data-slide="8"><div class="training-card" data-search="kontaktøvelser fokus hund eier oppmerksomhet trening">
+      <div class="section-photo-wrap">
+        <img class="section-photo" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=1200&auto=format&fit=crop" alt="Kontaktøvelser" loading="lazy">
+        <div class="section-photo-label">🐾 Kontaktøvelser</div>
       </div>
-
-      <div class="training-card" data-search="kontaktøvelser fokus hund eier oppmerksomhet trening">
         <div>
           <div class="icon">👀</div>
-          <img class="training-image" src="https://source.unsplash.com/900x600/?dog,eye,contact" alt="Kontaktøvelser"><h3>Kontaktøvelser</h3><p>Kontaktøvelser bygger samarbeid mellom hund og eier. Belønn når hunden frivillig ser på deg. Øk gradvis vanskelighetsgraden ved å trene i miljøer med flere forstyrrelser.</p>
+          <h3>Kontaktøvelser</h3><p>Kontaktøvelser bygger samarbeid mellom hund og eier. Belønn når hunden frivillig ser på deg. Øk gradvis vanskelighetsgraden ved å trene i miljøer med flere forstyrrelser.</p>
           <div class="tagrow">
             <span class="tag">Fokus</span>
             <span class="tag blue">Grunntrening</span>
           </div>
         </div>
-        <button class="openbtn" onclick="toggleGuide('guide-kontakt-velser')">📖 Les hele guiden</button>
-          <div class="guide-box" id="guide-kontakt-velser">
+        
+          <div class="guide-box always" id="guide-kontakt-velser">
             <h4>📖 Kort guide: Kontaktøvelser</h4>
             <ol><li>Belønn når hunden frivillig ser på deg.</li><li>Si navnet én gang og belønn kontakt.</li><li>Tren først uten forstyrrelser.</li><li>Øk vanskelighetsgraden gradvis ute på tur.</li><li>Kontaktøvelser gjør båndtrening, innkalling og hverdagen enklere.</li></ol>
           </div>
         
-      </div>
-
-    </div>
-  </section>
-
-  <section class="card">
-    <h2 class="section-title">Videre plan</h2>
-    <p class="sub">
-      Neste steg kan være å lage egne artikler for hvert treningstema med konkrete øvelser, steg-for-steg forklaring og tips fra erfarne hundefolk.
-    </p>
-  </section>
-
-  <p class="footer-note">
-    Hundenevåre.com – Kunnskapssenter for hunder og katter.
-  </p>
-
+      </div></div>
+ <div class="controls"><button id="prevBtn" onclick="move(-1)">← Tilbake</button><button id="nextBtn" onclick="move(1)">Neste →</button></div>
+</section>
+<div class="footer">Hundene Våre • Trening & Hundeskole • Premium</div>
 </div>
-
 <script>
-
-function toggleGuide(id){
-  const box = document.getElementById(id);
-  if(!box) return;
-  box.style.display = box.style.display === "block" ? "none" : "block";
+const slides=[...document.querySelectorAll('.training-slide')];
+const dotsBox=document.getElementById('dots');
+let current=0;
+slides.forEach((_,i)=>{const b=document.createElement('button');b.className='dot';b.title='Tema '+(i+1);b.onclick=()=>show(i);dotsBox.appendChild(b);});
+function show(i){
+ current=Math.max(0,Math.min(i,slides.length-1));
+ slides.forEach((s,n)=>s.classList.toggle('active',n===current));
+ [...dotsBox.children].forEach((d,n)=>d.classList.toggle('active',n===current));
+ document.getElementById('counter').textContent='Tema '+(current+1)+' av '+slides.length;
+ document.getElementById('prevBtn').disabled=current===0;
+ document.getElementById('prevBtn').style.opacity=current===0?'.45':'1';
+ document.getElementById('nextBtn').textContent=current===slides.length-1?'Ferdig ✓':'Neste →';
 }
-
-function filterTraining(){
-  const input = document.getElementById("searchInput").value.toLowerCase();
-  const cards = document.querySelectorAll(".training-card");
-
-  cards.forEach(card=>{
-    const text = card.innerText.toLowerCase() + " " + card.dataset.search.toLowerCase();
-    card.style.display = text.includes(input) ? "flex" : "none";
-  });
-}
+function move(step){if(current===slides.length-1 && step>0){show(0);return;} show(current+step);}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')move(1);if(e.key==='ArrowLeft')move(-1);});
+show(0);
 </script>
-
 </body>
 </html>
