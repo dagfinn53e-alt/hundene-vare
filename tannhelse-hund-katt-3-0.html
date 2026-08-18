@@ -26,8 +26,145 @@ body{margin:0;font-family:Arial,sans-serif;color:#102033;background:linear-gradi
 ul,p{line-height:1.65}
 .footer{text-align:center;color:#64748b;margin-top:20px}
 </style>
+
+<style id="hundene-vaare-premium-health">
+:root{
+  --hv-bg:#020913;
+  --hv-panel:#07192f;
+  --hv-panel2:#0b2847;
+  --hv-line:rgba(87,158,224,.30);
+  --hv-text:#f7fbff;
+  --hv-muted:#c4d5e5;
+  --hv-gold:#ffd257;
+  --hv-cyan:#29d7ea;
+}
+html{scroll-behavior:smooth}
+body{
+  color:var(--hv-text)!important;
+  background:
+    radial-gradient(circle at 8% 0%,rgba(255,193,62,.11),transparent 28rem),
+    radial-gradient(circle at 92% 4%,rgba(38,175,255,.14),transparent 30rem),
+    linear-gradient(180deg,#020813,#041326 50%,#06172d)!important;
+}
+.wrap,.container{max-width:1250px!important;margin:auto!important;padding:10px 10px 38px!important}
+.hv-premium-top{
+  position:sticky;top:6px;z-index:60;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  padding:9px 13px;margin-bottom:10px;border-radius:22px;
+  background:rgba(4,17,39,.96);border:1px solid #355f92;
+  box-shadow:0 16px 42px rgba(0,0,0,.30)
+}
+.hv-premium-brand{
+  font-family:Georgia,serif;font-style:italic;font-weight:900;font-size:21px;color:#fff
+}
+.hv-premium-brand small{display:block;font-family:Arial;font-style:normal;font-size:10px;color:#c8d8e7}
+.hv-premium-nav{display:flex;gap:7px;flex-wrap:wrap}
+.hv-premium-nav a{
+  padding:8px 11px;border-radius:999px;background:#0a2341;border:1px solid #275985;
+  color:#dceaff!important;text-decoration:none!important;font-size:11px;font-weight:900
+}
+.hv-premium-nav a:first-child{
+  background:linear-gradient(135deg,#ffd257,#efa725);color:#211707!important;border-color:transparent
+}
+.hero{
+  border-radius:28px!important;padding:30px 22px!important;margin-bottom:12px!important;
+  color:#fff!important;
+  background:
+    radial-gradient(circle at 14% 18%,rgba(255,198,72,.18),transparent 23rem),
+    radial-gradient(circle at 86% 18%,rgba(42,209,234,.16),transparent 25rem),
+    linear-gradient(135deg,#071b38,#123d69 48%,#4c245f)!important;
+  border:1px solid rgba(105,161,255,.32)!important;
+  box-shadow:0 24px 58px rgba(0,0,0,.32)!important;
+  text-align:center!important;
+}
+.hero h1{
+  color:#fff!important;font-family:Georgia,serif!important;font-style:italic!important;
+  font-size:clamp(2rem,5vw,3.15rem)!important;margin:0 0 8px!important;
+  text-shadow:0 7px 24px rgba(0,0,0,.32)
+}
+.hero p{color:#dce8f4!important;font-size:15px!important;line-height:1.55!important;max-width:850px!important;margin:0 auto!important}
+.card,.box{
+  background:linear-gradient(155deg,#0d2b49,#081a30)!important;
+  color:#f5f9ff!important;border:1px solid var(--hv-line)!important;
+  border-radius:22px!important;box-shadow:0 15px 34px rgba(0,0,0,.22)!important;
+}
+.card{padding:18px!important;margin:11px 0!important}
+.box{padding:16px!important}
+.card h2,.box h2,.card h3,.box h3{color:#fff!important}
+.card p,.box p,.card li,.box li{color:#cbd9e7!important}
+.grid{gap:11px!important}
+.image,.image-box{
+  background:linear-gradient(145deg,#f7fbff,#d8ecff)!important;
+  color:#162a42!important;border-radius:18px!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.7),0 8px 20px rgba(0,0,0,.18)!important
+}
+.alert,.danger,.red{
+  background:linear-gradient(155deg,#42213a,#151d35)!important;
+  border-color:rgba(255,105,135,.38)!important
+}
+.orange{
+  background:linear-gradient(155deg,#3a2a18,#12233c)!important;
+  border-color:rgba(255,181,72,.34)!important
+}
+.green,.good{
+  background:linear-gradient(155deg,#12352d,#0a2434)!important;
+  border-color:rgba(74,211,159,.30)!important
+}
+.purple{
+  background:linear-gradient(155deg,#2e2450,#102039)!important;
+  border-color:rgba(166,120,255,.32)!important
+}
+.bluebox{
+  background:linear-gradient(155deg,#12335a,#0a2039)!important;
+  border-color:rgba(77,159,255,.32)!important
+}
+.warning,.tip,.good,.notice,.info{
+  color:#e7eef6!important;background:#0a2642!important;
+  border:1px solid rgba(91,159,224,.30)!important;border-radius:15px!important
+}
+.warning{background:#3a2030!important;border-color:rgba(255,97,132,.34)!important}
+.ad{
+  background:linear-gradient(135deg,#342055,#163e5c)!important;
+  border:1px dashed #8a6fc3!important;
+}
+.btn,.mainbtn{
+  border:none!important;border-radius:999px!important;
+  background:linear-gradient(135deg,#22c8df,#2985ff)!important;
+  color:#031a2c!important;font-weight:900!important;text-decoration:none!important;
+  box-shadow:0 10px 24px rgba(0,0,0,.18)!important
+}
+.btn.pink,.pink{background:linear-gradient(135deg,#ffd257,#efa725)!important;color:#211707!important}
+.footer{color:#8fa6bb!important}
+.hv-premium-footer-note{
+  margin-top:14px;padding:14px;border-radius:18px;text-align:center;
+  color:#9fb3c7;background:#07192f;border:1px solid rgba(87,158,224,.22);
+  font-size:11px
+}
+@media(max-width:760px){
+  .hv-premium-top{position:static;padding:8px;border-radius:18px}
+  .hv-premium-brand{width:100%;text-align:center;font-size:18px}
+  .hv-premium-nav{width:100%}
+  .hv-premium-nav a{flex:1 1 42%;text-align:center;font-size:10px;padding:7px}
+  .hero{padding:22px 12px!important;border-radius:22px!important}
+  .card{padding:13px!important}
+  .box{padding:13px!important}
+}
+</style>
+
 </head>
 <body>
+
+<div class="hv-premium-top">
+  <a class="hv-premium-brand" href="helse-og-sikkerhet.html">🐾 Hundene Våre
+    <small>Premium • Helse og Sikkerhet</small>
+  </a>
+  <div class="hv-premium-nav">
+    <a href="helse-og-sikkerhet.html">← Helse og Sikkerhet</a>
+    <a href="kunnskap.html">📚 Kunnskap</a>
+    <a href="index.html">🏠 Forsiden</a>
+  </div>
+</div>
+
 <div class="wrap">
 
 <section class="hero">
@@ -171,5 +308,6 @@ ul,p{line-height:1.65}
 <p class="footer">Hundenevåre.com – Kunnskap, trygghet og gode råd for hunde- og katteeiere.</p>
 
 </div>
+<div class="hv-premium-footer-note">Hundene Våre • Premium kunnskap • Ved akutte symptomer eller alvorlig sykdom: kontakt veterinær.</div>
 </body>
 </html>
