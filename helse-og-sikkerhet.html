@@ -3,261 +3,304 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Helse og Sikkerhet</title>
-
+<title>Helse og Sikkerhet – Hundene Våre Premium</title>
 <style>
-*{
-box-sizing:border-box;
+*{box-sizing:border-box}
+:root{
+  --bg:#020913;
+  --panel:#07182d;
+  --panel2:#0b2341;
+  --line:rgba(91,153,255,.30);
+  --text:#f7fbff;
+  --muted:#bfd0e1;
+  --gold:#ffd257;
+  --cyan:#28d7ea;
+  --pink:#ef5bb2;
+  --red:#ff6868;
 }
-
+html{scroll-behavior:smooth}
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:linear-gradient(180deg,#eff6ff,#ffffff,#fff7ed);
-color:#102033;
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 8% 0%,rgba(255,194,61,.11),transparent 28rem),
+    radial-gradient(circle at 92% 5%,rgba(39,171,255,.13),transparent 30rem),
+    linear-gradient(180deg,#020813,#041326 50%,#06172d);
 }
+a{text-decoration:none;color:inherit}
+.wrap{width:min(1320px,calc(100% - 20px));margin:auto;padding:10px 0 34px}
 
-.container{
-max-width:1200px;
-margin:auto;
-padding:20px;
+.topbar{
+  position:sticky;top:6px;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  padding:10px 14px;border:1px solid #355f92;border-radius:24px;
+  background:rgba(4,17,39,.96);box-shadow:0 16px 42px rgba(0,0,0,.30)
 }
+.brand{
+  font-family:Georgia,serif;font-style:italic;font-size:25px;font-weight:900
+}
+.brand small{display:block;font-family:Arial;font-style:normal;font-size:10px;color:#c9d8e7}
+.nav{display:flex;gap:7px;flex-wrap:wrap}
+.nav a{
+  padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.09);
+  background:#0a203c;font-size:11px;font-weight:900
+}
+.nav a:hover{background:#0c65f7}
 
 .hero{
-background:linear-gradient(135deg,#dc2626,#2563eb,#7c3aed);
-color:white;
-padding:40px;
-border-radius:30px;
-text-align:center;
-margin-bottom:25px;
+  margin-top:12px;padding:38px;border-radius:32px;overflow:hidden;
+  border:1px solid rgba(104,165,255,.34);
+  background:
+    radial-gradient(circle at 14% 20%,rgba(255,199,73,.18),transparent 22rem),
+    radial-gradient(circle at 88% 16%,rgba(43,213,235,.16),transparent 24rem),
+    linear-gradient(135deg,#071b38,#123d69 50%,#4c245f);
+  box-shadow:0 24px 62px rgba(0,0,0,.33)
 }
-
-.hero h1{
-margin:0;
-font-size:48px;
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:20px;align-items:center}
+.eyebrow{display:inline-flex;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);font-size:11px;font-weight:900;letter-spacing:.8px}
+.hero h1{font-family:Georgia,serif;font-style:italic;font-size:52px;line-height:1;margin:12px 0 11px}
+.hero p{max-width:760px;color:#dce8f4;font-size:17px;line-height:1.55;margin:0}
+.hero-note{
+  padding:18px;border-radius:22px;background:rgba(4,20,40,.55);
+  border:1px solid rgba(255,255,255,.12)
 }
+.hero-note strong{display:block;color:var(--gold);font-size:18px;margin-bottom:7px}
+.hero-note p{font-size:13px}
 
-.hero p{
-font-size:18px;
-line-height:1.6;
+.quick{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px
 }
-
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:20px;
+.quick div{
+  padding:13px;border-radius:17px;text-align:center;background:#081c35;border:1px solid var(--line)
 }
+.quick b{display:block;font-size:21px;color:var(--gold);margin-bottom:3px}
+.quick span{font-size:11px;color:var(--muted);font-weight:800}
 
+.section{margin-top:16px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:10px}
+.section h2{font-family:Georgia,serif;font-size:31px;margin:0}
+.section-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .card{
-background:white;
-border-radius:25px;
-padding:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
-display:flex;
-flex-direction:column;
+  min-height:390px;display:flex;flex-direction:column;
+  border-radius:24px;padding:18px;
+  background:linear-gradient(155deg,#0c2948,#081a31);
+  border:1px solid rgba(76,157,230,.28);
+  box-shadow:0 16px 38px rgba(0,0,0,.22);
+  transition:.2s
 }
-
+.card:hover{transform:translateY(-3px);border-color:#4fb9e6}
 .icon{
-font-size:70px;
-text-align:center;
-margin-bottom:15px;
+  width:72px;height:72px;border-radius:20px;display:grid;place-items:center;
+  font-size:39px;margin-bottom:12px;
+  background:linear-gradient(145deg,#fff8dc,#dbeeff);color:#102033
 }
-
-.card h2{
-text-align:center;
-color:#2563eb;
+.card h3{font-size:22px;margin:0 0 7px}
+.card .lead{color:#c8d7e6;font-size:13px;line-height:1.45;margin:0 0 10px}
+.card ul{margin:3px 0 14px;padding-left:20px;color:#d7e2ee;font-size:13px;line-height:1.7}
+.card .mini{
+  margin-top:auto;padding:10px 11px;border-radius:14px;background:rgba(255,255,255,.055);
+  color:#bcd0e2;font-size:11.5px;line-height:1.45
 }
-
-.card ul{
-line-height:1.8;
-}
-
 .btn{
-display:block;
-margin-top:auto;
-padding:14px;
-border-radius:999px;
-text-decoration:none;
-text-align:center;
-font-weight:bold;
-color:white;
-background:linear-gradient(135deg,#2563eb,#7c3aed);
+  margin-top:12px;display:flex;align-items:center;justify-content:center;
+  min-height:44px;border-radius:999px;padding:10px 14px;
+  background:linear-gradient(135deg,#22c8df,#2985ff);
+  color:#04192a;font-size:12px;font-weight:900
 }
+.card.danger .btn{background:linear-gradient(135deg,#ff7b6f,#ff4f86);color:white}
+.card.sun .btn{background:linear-gradient(135deg,#ffd257,#f0a72b);color:#241a08}
 
-.bottom{
-margin-top:30px;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:15px;
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.info-box{
+  padding:20px;border-radius:24px;background:linear-gradient(155deg,#0b2847,#07192f);
+  border:1px solid var(--line);box-shadow:0 14px 34px rgba(0,0,0,.20)
 }
+.info-box h2{margin:0 0 10px;font-family:Georgia,serif;font-size:27px}
+.info-box p{color:#c5d7e8;line-height:1.6;font-size:13px;margin:0}
+.checks{margin-top:11px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.checks span{padding:9px 10px;border-radius:13px;background:#0a2341;color:#d7e7f6;font-size:12px;font-weight:800}
 
+.notice{
+  margin-top:14px;padding:17px;border-radius:20px;
+  background:linear-gradient(135deg,#402241,#173c56);
+  border:1px solid rgba(255,113,160,.35);
+  color:#f4eaf2;font-size:13px;line-height:1.55
+}
+.notice b{color:#ffd257}
+
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
 .bottom a{
-display:flex;
-justify-content:center;
-align-items:center;
-height:60px;
-border-radius:999px;
-text-decoration:none;
-font-weight:bold;
-color:white;
+  min-height:52px;border-radius:999px;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:900
 }
+.homeBtn{background:#0b2e53;border:1px solid #2c6797}
+.compBtn{background:linear-gradient(135deg,#ffd257,#eea525);color:#211707}
 
-.homeBtn{
-background:linear-gradient(135deg,#2563eb,#7c3aed);
-}
+.footer{text-align:center;color:#8fa6bb;font-size:11px;margin-top:18px}
 
-.compBtn{
-background:linear-gradient(135deg,#f97316,#db2777);
+@media(max-width:980px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .hero-grid{grid-template-columns:1fr}
+  .quick{grid-template-columns:repeat(2,1fr)}
 }
-
-.info{
-margin-top:25px;
-background:white;
-padding:25px;
-border-radius:25px;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
-}
-
-@media(max-width:768px){
-.hero h1{
-font-size:34px;
-}
-
-.bottom{
-grid-template-columns:1fr;
-}
+@media(max-width:650px){
+  .wrap{width:calc(100% - 12px);padding-top:5px}
+  .topbar{position:static;padding:8px;border-radius:18px}
+  .brand{width:100%;text-align:center;font-size:20px}
+  .nav{width:100%}.nav a{flex:1 1 44%;text-align:center;font-size:10px;padding:7px}
+  .hero{padding:23px 14px;border-radius:24px}
+  .hero h1{font-size:36px}
+  .hero p{font-size:14px}
+  .quick{grid-template-columns:repeat(2,1fr)}
+  .cards{grid-template-columns:1fr}
+  .card{min-height:auto}
+  .info-grid,.bottom{grid-template-columns:1fr}
+  .checks{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<div class="container">
+<header class="topbar">
+  <a class="brand" href="index.html">🐾 Hundene Våre<small>Premium kunnskap for tryggere dyrehold ❤️</small></a>
+  <nav class="nav">
+    <a href="index.html">🏠 Forsiden</a>
+    <a href="kunnskap.html">📚 Kunnskap</a>
+    <a href="hundeakademiet_ny.html">🐶 Hundeakademiet</a>
+    <a href="kattakademiet.html">🐱 Kattakademiet</a>
+  </nav>
+</header>
 
-<div class="hero">
-<h1>🏥 Helse og Sikkerhet</h1>
-<p>
-Her finner du viktige guider om sykdom, skader,
-førstehjelp og forebygging for hund og katt.
-</p>
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow">HUNDENE VÅRE • PREMIUM KUNNSKAP</span>
+      <h1>🏥 Helse og Sikkerhet</h1>
+      <p>En samlet inngang til viktige guider om sykdom, skader, førstehjelp og forebygging for hund og katt. Målet er å gjøre det lettere å vite hva du bør følge med på – og hvor du finner mer informasjon.</p>
+    </div>
+    <div class="hero-note">
+      <strong>❤️ Trygg kunnskap i hverdagen</strong>
+      <p>Bruk guidene som et oppslagsverk. Ved akutt sykdom, skade eller forgiftning bør veterinær kontaktes.</p>
+    </div>
+  </div>
+</section>
+
+<div class="quick">
+  <div><b>6</b><span>temaguider</span></div>
+  <div><b>Hund + katt</b><span>samlet på ett sted</span></div>
+  <div><b>Forebygging</b><span>før problemer oppstår</span></div>
+  <div><b>Førstehjelp</b><span>raskere oversikt</span></div>
 </div>
 
-<div class="cards">
+<section class="section">
+  <div class="section-head">
+    <div>
+      <h2>Velg tema</h2>
+      <p>Åpne guiden du trenger og gå videre til mer detaljert innhold.</p>
+    </div>
+  </div>
 
-<div class="card">
-<div class="icon">☠️</div>
-<h2>Forgiftninger</h2>
-<ul>
-<li>Sjokolade</li>
-<li>Druer og rosiner</li>
-<li>Løk</li>
-<li>Medisiner</li>
-<li>Giftige planter</li>
-</ul>
-<a class="btn" href="forgiftninger-hund-katt-3-0.html">
-Åpne guide
-</a>
-</div>
+  <div class="cards">
 
-<div class="card">
-<div class="icon">🐍</div>
-<h2>Huggorm</h2>
-<ul>
-<li>Symptomer</li>
-<li>Førstehjelp</li>
-<li>Veterinærhjelp</li>
-<li>Forebygging</li>
-</ul>
-<a class="btn" href="huggorm-hund-katt-3-0.html">
-Åpne guide
-</a>
-</div>
+    <article class="card danger">
+      <div class="icon">☠️</div>
+      <h3>Forgiftninger</h3>
+      <p class="lead">Lær hvilke vanlige ting i hjemmet og hagen som kan være farlige for hund og katt, og hva du bør gjøre dersom du mistenker forgiftning.</p>
+      <ul>
+        <li>Sjokolade</li><li>Druer og rosiner</li><li>Løk</li><li>Medisiner</li><li>Giftige planter</li>
+      </ul>
+      <div class="mini">Fokus: oppdage risiko tidlig, kjenne faresignaler og finne riktig hjelp raskt.</div>
+      <a class="btn" href="forgiftninger-hund-katt-3-0.html">Åpne forgiftningsguiden →</a>
+    </article>
 
-<div class="card">
-<div class="icon">🕷️</div>
-<h2>Flått og Parasitter</h2>
-<ul>
-<li>Flått</li>
-<li>Lopper</li>
-<li>Øremidd</li>
-<li>Innvollsorm</li>
-</ul>
-<a class="btn" href="flatt-og-parasitter-3-0.html">
-Åpne guide
-</a>
-</div>
+    <article class="card danger">
+      <div class="icon">🐍</div>
+      <h3>Huggorm</h3>
+      <p class="lead">En praktisk guide til hva du bør se etter etter et mulig huggormbitt, hvilke første tiltak som er viktige og når veterinærhjelp er nødvendig.</p>
+      <ul>
+        <li>Symptomer</li><li>Førstehjelp</li><li>Veterinærhjelp</li><li>Forebygging</li>
+      </ul>
+      <div class="mini">Fokus: ro, observasjon og rask vurdering av behovet for veterinær.</div>
+      <a class="btn" href="huggorm-hund-katt-3-0.html">Åpne huggormguiden →</a>
+    </article>
 
-<div class="card">
-<div class="icon">🦷</div>
-<h2>Tannhelse</h2>
-<ul>
-<li>Tannpuss</li>
-<li>Tannstein</li>
-<li>Dårlig ånde</li>
-<li>Tannkjøttbetennelse</li>
-</ul>
-<a class="btn" href="tannhelse-hund-katt-3-0.html">
-Åpne guide
-</a>
-</div>
+    <article class="card">
+      <div class="icon">🕷️</div>
+      <h3>Flått og Parasitter</h3>
+      <p class="lead">Få oversikt over vanlige utvendige og innvendige parasitter, hva du kan se etter og hvordan god forebygging kan redusere risiko.</p>
+      <ul>
+        <li>Flått</li><li>Lopper</li><li>Øremidd</li><li>Innvollsorm</li>
+      </ul>
+      <div class="mini">Fokus: jevnlig kontroll av pels, hud, ører og allmenntilstand.</div>
+      <a class="btn" href="flatt-og-parasitter-3-0.html">Åpne parasittguiden →</a>
+    </article>
 
-<div class="card">
-<div class="icon">💉</div>
-<h2>Vaksiner</h2>
-<ul>
-<li>Valpevaksiner</li>
-<li>Kattungevaksiner</li>
-<li>Reisevaksiner</li>
-<li>Vaksineprogram</li>
-</ul>
-<a class="btn" href="vaksiner-hund-katt-3-0.html">
-Åpne guide
-</a>
-</div>
+    <article class="card">
+      <div class="icon">🦷</div>
+      <h3>Tannhelse</h3>
+      <p class="lead">God tannhelse er en viktig del av den daglige omsorgen. Guiden samler de vanligste temaene rundt munnhygiene og tannproblemer.</p>
+      <ul>
+        <li>Tannpuss</li><li>Tannstein</li><li>Dårlig ånde</li><li>Tannkjøttbetennelse</li>
+      </ul>
+      <div class="mini">Fokus: gode rutiner hjemme og å oppdage forandringer i munn og tenner tidlig.</div>
+      <a class="btn" href="tannhelse-hund-katt-3-0.html">Åpne tannhelseguiden →</a>
+    </article>
 
-<div class="card">
-<div class="icon">🌞❄️</div>
-<h2>Varme og Kulde</h2>
-<ul>
-<li>Heteslag</li>
-<li>Varm bil</li>
-<li>Frostskader</li>
-<li>Vintertips</li>
-</ul>
-<a class="btn" href="varme-og-kulde-hund-katt-3-0.html">
-Åpne guide
-</a>
-</div>
+    <article class="card">
+      <div class="icon">💉</div>
+      <h3>Vaksiner</h3>
+      <p class="lead">Her finner du inngangen til vaksineguiden for valper, kattunger og voksne dyr, samt informasjon knyttet til reise og vaksineprogram.</p>
+      <ul>
+        <li>Valpevaksiner</li><li>Kattungevaksiner</li><li>Reisevaksiner</li><li>Vaksineprogram</li>
+      </ul>
+      <div class="mini">Fokus: planlegging, oppfølging og spørsmål det kan være nyttig å ta med til veterinæren.</div>
+      <a class="btn" href="vaksiner-hund-katt-3-0.html">Åpne vaksineguiden →</a>
+    </article>
 
-</div>
+    <article class="card sun">
+      <div class="icon">🌞❄️</div>
+      <h3>Varme og Kulde</h3>
+      <p class="lead">Sommer og vinter gir ulike utfordringer. Guiden samler råd om varme, kulde og forhold som kan påvirke hundens eller kattens sikkerhet.</p>
+      <ul>
+        <li>Heteslag</li><li>Varm bil</li><li>Frostskader</li><li>Vintertips</li>
+      </ul>
+      <div class="mini">Fokus: forebygging, trygg aktivitet og å kjenne tegn på at dyret ikke har det bra.</div>
+      <a class="btn" href="varme-og-kulde-hund-katt-3-0.html">Åpne sesongguiden →</a>
+    </article>
 
-<div class="info">
-<h2>🏆 Hvorfor er dette viktig?</h2>
+  </div>
+</section>
 
-<p>
-God kunnskap kan hjelpe deg å:
-</p>
+<div class="info-grid">
+  <section class="info-box">
+    <h2>🏆 Hvorfor er dette viktig?</h2>
+    <p>God kunnskap gjør det lettere å reagere tidligere og ta bedre valg i hverdagen.</p>
+    <div class="checks">
+      <span>✅ Oppdage problemer tidlig</span>
+      <span>✅ Forebygge sykdom</span>
+      <span>✅ Gi raskere hjelp</span>
+      <span>✅ Skape en tryggere hverdag</span>
+    </div>
+  </section>
 
-<p>
-✅ Oppdage problemer tidlig<br>
-✅ Forebygge sykdom<br>
-✅ Gi raskere hjelp<br>
-✅ Gi hunden eller katten et tryggere liv
-</p>
+  <section class="info-box">
+    <h2>🔎 Slik bruker du siden</h2>
+    <p>Velg temaet som passer situasjonen, åpne den detaljerte guiden og bruk informasjonen som støtte. Ved alvorlige eller akutte symptomer er veterinær riktig neste steg.</p>
+    <div class="notice"><b>Viktig:</b> Innholdet er ment som generell kunnskap og kan ikke erstatte individuell vurdering, diagnose eller behandling hos veterinær.</div>
+  </section>
 </div>
 
 <div class="bottom">
-
-<a class="homeBtn" href="kunnskap.html">
-📚 Tilbake til Kunnskapssenteret
-</a>
-
-<a class="compBtn" href="konkurranse.html">
-🎁 Delta i konkurransen
-</a>
-
+  <a class="homeBtn" href="kunnskap.html">📚 Tilbake til Kunnskapssenteret</a>
+  <a class="compBtn" href="konkurranse.html">🎁 Delta i konkurransen</a>
 </div>
 
-</div>
+<div class="footer">Hundene Våre • Helse og Sikkerhet • Premium</div>
 
+</div>
 </body>
 </html>
