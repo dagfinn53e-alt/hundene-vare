@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Digital Hunde-ID – Hundene Våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f7f4;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#17221c}
+header{background:linear-gradient(135deg,#07563f,#073b2d);color:white;text-align:center;padding:20px 15px}
+header h1{margin:0;font-size:1.35rem}header p{margin:5px 0 0;opacity:.9}
+main{max-width:700px;margin:auto;padding:16px}
+.card{background:#fff;padding:20px;border-radius:20px;margin-bottom:15px;box-shadow:0 6px 24px #00000018;border:1px solid #e2eae5}
+.center{text-align:center}.dog{width:165px;height:165px;border-radius:50%;object-fit:cover;border:7px solid #e8f4ed;background:#eef3ef}
+.placeholder{width:165px;height:165px;border-radius:50%;border:7px solid #e8f4ed;background:#eef3ef;display:grid;place-items:center;margin:auto;font-size:64px}
+h2{margin:10px 0 3px}.muted{color:#657269}
+.badge{display:inline-block;padding:8px 13px;border-radius:999px;font-weight:850;margin:10px}
+.safe{background:#e4f5e9;color:#17603c}.missing{background:#ffe2e6;color:#b0182c}
+.banner{background:#cf2940;color:#fff;padding:12px;border-radius:12px;text-align:center;font-weight:900;margin-bottom:15px}
+label{display:block;font-weight:750;margin:12px 0 5px}
+input,textarea{width:100%;padding:12px;border:1px solid #cbd5cf;border-radius:10px;font:inherit}
+textarea{min-height:95px;resize:vertical}
+button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-size:16px;font-weight:850;cursor:pointer}
+.red{background:#cf2940;color:#fff}.outline{background:#fff;color:#07563f;border:2px solid #07563f}
+.ok{background:#e4f5e9;border:1px solid #b9dfc6;padding:13px;border-radius:11px;margin-top:12px}
+.error{background:#ffe5e8;border:1px solid #efb0ba;padding:13px;border-radius:11px;margin-top:12px}
+.hidden{display:none!important}.statusline{font-size:.9rem;color:#5d6b63;text-align:center;margin-top:7px}
+.small{font-size:.88rem;color:#66736b}
+</style>
+</head>
+<body>
+<header><h1>🐾 HUNDENE VÅRE</h1><p>Digital Hunde-ID</p></header>
+<main>
+
+<div id="loading" class="card center">
+<h2>Henter Hunde-ID …</h2>
+<p class="muted">Et lite øyeblikk.</p>
+</div>
+
+<div id="notFound" class="card hidden">
+<h2>⚠️ Hunde-ID ikke funnet</h2>
+<p>Denne QR-koden eller Hunde-ID-en finnes ikke i systemet.</p>
+</div>
+
+<section id="dogPage" class="hidden">
+<div class="card">
+<div id="missingBanner" class="banner hidden">🚨 DENNE HUNDEN ER MELDT SAVNET</div>
+<div class="center">
+<div id="photoHolder"><div class="placeholder">🐶</div></div>
+<h2 id="dogName"></h2>
+<p id="dogInfo" class="muted"></p>
+<div id="dogBadge" class="badge safe"></div>
+<p><b>Digital ID:</b> <span id="dogCode"></span></p>
+</div>
+</div>
+
+<div class="card">
+<h2>🐾 Har du funnet denne hunden?</h2>
+<p>Send en beskjed til eieren. Eierens e-postadresse vises ikke.</p>
+
+<label>Ditt navn (valgfritt)</label>
+<input id="finderName" placeholder="Navn">
+
+<label>Telefonnummer (valgfritt)</label>
+<input id="finderPhone" placeholder="Telefonnummer">
+
+<label>Melding</label>
+<textarea id="finderMessage" placeholder="For eksempel: Jeg har hunden hos meg. Den har det bra."></textarea>
+
+<input id="finderLocation" type="hidden">
+<button class="outline" onclick="getLocation()">📍 LEGG VED POSISJON</button>
+<div id="locText" class="statusline"></div>
+
+<button id="sendBtn" class="red" onclick="sendFound()">🐾 JEG HAR FUNNET DENNE HUNDEN</button>
+<div id="sendResult"></div>
+</div>
+
+<div class="card small">
+🔒 Eierens e-postadresse og private opplysninger vises ikke offentlig. Finneren sender meldingen gjennom Hundene Våre.
+</div>
+</section>
+</main>
+
+<script>
+const sb=supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+const params=new URLSearchParams(location.search);
+const DOG_CODE=(params.get("id")||"").trim();
+let currentDog=null;
+
+function esc(v){const d=document.createElement("div");d.textContent=v||"";return d.innerHTML}
+
+async function loadDog(){
+  if(!DOG_CODE){
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("notFound").classList.remove("hidden");
+    return;
+  }
+
+  const {data,error}=await sb.rpc("get_dog_public",{p_dog_code:DOG_CODE});
+  document.getElementById("loading").classList.add("hidden");
+
+  if(error || !data || !data[0]){
+    document.getElementById("notFound").classList.remove("hidden");
+    return;
+  }
+
+  currentDog=data[0];
+  document.getElementById("dogPage").classList.remove("hidden");
+  document.getElementById("dogName").textContent=currentDog.dog_name+" 🐾";
+  document.getElementById("dogInfo").textContent=[currentDog.breed,currentDog.sex,currentDog.color].filter(Boolean).join(" · ");
+  document.getElementById("dogCode").textContent=currentDog.dog_code;
+
+  const badge=document.getElementById("dogBadge");
+  badge.className="badge "+(currentDog.is_missing?"missing":"safe");
+  badge.textContent=currentDog.is_missing?"🚨 HUNDEN ER SAVNET":"🟢 HUNDEN ER IKKE MELDT SAVNET";
+  document.getElementById("missingBanner").classList.toggle("hidden",!currentDog.is_missing);
+
+  if(currentDog.photo_url){
+    document.getElementById("photoHolder").innerHTML='<img class="dog" alt="Hundens bilde" src="'+esc(currentDog.photo_url)+'">';
+  }
+}
+
+function getLocation(){
+  const txt=document.getElementById("locText");
+  txt.textContent="Henter posisjon …";
+  if(!navigator.geolocation){txt.textContent="Posisjon støttes ikke.";return}
+
+  navigator.geolocation.getCurrentPosition(
+    p=>{
+      document.getElementById("finderLocation").value=
+        "https://www.google.com/maps?q="+p.coords.latitude+","+p.coords.longitude;
+      txt.textContent="✅ Posisjon lagt ved.";
+    },
+    ()=>txt.textContent="Posisjon ble ikke delt."
+  );
+}
+
+async function sendFound(){
+  if(!currentDog)return;
+
+  const btn=document.getElementById("sendBtn");
+  const result=document.getElementById("sendResult");
+  btn.disabled=true;
+  result.innerHTML='<div class="ok">Sender varsel …</div>';
+
+  const finderName=document.getElementById("finderName").value.trim();
+  const finderPhone=document.getElementById("finderPhone").value.trim();
+  const message=document.getElementById("finderMessage").value.trim() ||
+    "Jeg har funnet "+currentDog.dog_name+".";
+  const locationUrl=document.getElementById("finderLocation").value;
+
+  const {error:dbError}=await sb.rpc("create_dog_alert",{
+    p_dog_code:currentDog.dog_code,
+    p_finder_name:finderName,
+    p_finder_phone:finderPhone,
+    p_message:message,
+    p_location_url:locationUrl
+  });
+
+  if(dbError){
+    result.innerHTML='<div class="error">Feil ved lagring: '+esc(dbError.message)+'</div>';
+    btn.disabled=false;
+    return;
+  }
+
+  const {error:mailError}=await sb.functions.invoke("send-dog-found-email",{
+    body:{
+      dogCode:currentDog.dog_code,
+      dogName:currentDog.dog_name,
+      finderName,
+      finderPhone,
+      message,
+      locationUrl
+    }
+  });
+
+  if(mailError){
+    result.innerHTML='<div class="error"><b>Varslet er lagret, men e-posten kunne ikke sendes.</b><br>'+esc(mailError.message)+'</div>';
+  }else{
+    result.innerHTML='<div class="ok"><b>✅ VARSEL SENDT</b><br>Eieren av '+esc(currentDog.dog_name)+' er varslet automatisk.</div>';
+  }
+  btn.disabled=false;
+}
+
+loadDog();
+</script>
+</body>
+</html>
