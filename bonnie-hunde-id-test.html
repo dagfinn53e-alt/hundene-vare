@@ -188,17 +188,46 @@ function getLocation(){
 
 async function sendFoundAlert(){
   const msg=document.getElementById("finderMsg");
-  msg.innerHTML="<div class='ok'>Sender …</div>";
+  msg.innerHTML="<div class='ok'>Sender varsel …</div>";
+
+  const finderName=document.getElementById("finderPerson").value;
+  const finderPhone=document.getElementById("finderPhone").value;
+  const message=document.getElementById("finderMessage").value || "Jeg har funnet Bonnie.";
+  const locationUrl=document.getElementById("finderLocation").value;
+
   const payload={
     p_dog_code:DOG_CODE,
-    p_finder_name:document.getElementById("finderPerson").value,
-    p_finder_phone:document.getElementById("finderPhone").value,
-    p_message:document.getElementById("finderMessage").value || "Jeg har funnet Bonnie.",
-    p_location_url:document.getElementById("finderLocation").value
+    p_finder_name:finderName,
+    p_finder_phone:finderPhone,
+    p_message:message,
+    p_location_url:locationUrl
   };
-  const {data,error}=await supabaseClient.rpc("create_dog_alert",payload);
-  if(error){msg.innerHTML='<div class="error">Feil: '+esc(error.message)+'</div>';return}
-  msg.innerHTML='<div class="ok"><b>✅ Varsel sendt til Hunde-ID-systemet.</b><br>Eieren kan nå hente dette varselet fra en annen telefon.</div>';
+
+  const {error}=await supabaseClient.rpc("create_dog_alert",payload);
+  if(error){
+    msg.innerHTML='<div class="error">Feil ved lagring: '+esc(error.message)+'</div>';
+    return;
+  }
+
+  const {data:emailData,error:emailError}=await supabaseClient.functions.invoke(
+    "send-dog-found-email",
+    {
+      body:{
+        dogName:"Bonnie",
+        finderName,
+        finderPhone,
+        message,
+        locationUrl
+      }
+    }
+  );
+
+  if(emailError){
+    msg.innerHTML='<div class="error"><b>⚠️ Varslet ble lagret, men e-posten kunne ikke sendes.</b><br>'+esc(emailError.message)+'</div>';
+    return;
+  }
+
+  msg.innerHTML='<div class="ok"><b>✅ VARSEL SENDT</b><br>Varslet er lagret i Hunde-ID-systemet og automatisk e-post er sendt til eieren.</div>';
 }
 
 (async()=>{
