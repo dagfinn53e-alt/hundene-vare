@@ -1,13 +1,158 @@
-<!doctype html><html lang="no"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Registrer Hunde-ID</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<style>body{margin:0;background:#f3f7f4;font-family:Arial;color:#17221c}header{background:#07563f;color:white;text-align:center;padding:22px}main{max-width:680px;margin:auto;padding:16px}.card{background:white;padding:20px;border-radius:20px;margin-bottom:15px;box-shadow:0 5px 20px #0002}label{display:block;font-weight:bold;margin:12px 0 5px}input,select{width:100%;box-sizing:border-box;padding:12px;border:1px solid #bbb;border-radius:10px;font-size:16px}button{width:100%;padding:14px;margin-top:16px;border:0;border-radius:12px;background:#07563f;color:white;font-size:16px;font-weight:bold}.hidden{display:none}.ok{background:#e4f5e9;padding:12px;border-radius:10px}.err{background:#ffe5e8;padding:12px;border-radius:10px}#qr{display:flex;justify-content:center;margin:18px}</style></head>
-<body><header><h2>🐾 HUNDENE VÅRE</h2>Registrer Digital Hunde-ID</header><main><div class="card"><h2>🐶 Registrer hund</h2>
-<label>Hundens navn *</label><input id="n"><label>Rase *</label><input id="r"><label>Kjønn</label><select id="s"><option></option><option>Tispe</option><option>Hannhund</option></select>
-<label>Farge</label><input id="c"><label>Eierens e-post *</label><input id="e" type="email"><label>Velg PIN *</label><input id="p" type="password" inputmode="numeric">
-<button onclick="reg()">🐾 OPPRETT HUNDE-ID</button><div id="m"></div></div>
-<div id="res" class="card hidden"><h2>🎉 Hunde-ID opprettet</h2><h2 id="rn"></h2><p id="ri"></p><h3 id="code"></h3><div id="qr"></div></div></main>
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Registrer Hunde-ID – Hundene Våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f2f7f4;font-family:system-ui,-apple-system,Segoe UI,Arial;color:#17221c}
+header{background:linear-gradient(135deg,#07563f,#06392b);color:#fff;text-align:center;padding:24px 16px}
+header h1{margin:0;font-size:1.55rem}header p{margin:6px 0 0;opacity:.92}
+main{max-width:760px;margin:auto;padding:18px 14px 50px}
+.card{background:#fff;border:1px solid #e1eae4;border-radius:22px;padding:20px;margin-bottom:16px;box-shadow:0 8px 28px #00000012}
+h2{margin:0 0 8px}.muted{color:#66736b;line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.full{grid-column:1/-1}
+label{font-weight:800;display:block;margin:3px 0 6px}
+input,select{width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:11px;font:inherit;background:#fff}
+button,a.btn{width:100%;display:block;text-align:center;text-decoration:none;padding:14px;border:0;border-radius:12px;font-size:16px;font-weight:850;cursor:pointer;margin-top:11px}
+.green{background:#07563f;color:#fff}.outline{background:#fff;color:#07563f;border:2px solid #07563f}
+.preview{width:150px;height:150px;border-radius:50%;object-fit:cover;border:7px solid #e7f3ec;background:#edf4ef}
+.photoBox{text-align:center;padding:15px;background:#f7faf8;border-radius:16px;border:1px dashed #bfcec4}
+.ok{background:#e5f6eb;border:1px solid #badfc7;padding:13px;border-radius:11px;margin-top:12px}
+.error{background:#ffe6e9;border:1px solid #efb3bc;padding:13px;border-radius:11px;margin-top:12px}
+.hidden{display:none!important}.id{font-size:1.3rem;font-weight:900;color:#07563f}
+#qr{display:flex;justify-content:center;margin:18px}
+.links{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.grid,.links{grid-template-columns:1fr}.full{grid-column:auto}}
+</style>
+</head>
+<body>
+<header><h1>🐾 HUNDENE VÅRE</h1><p>Digital Hunde-ID</p></header>
+<main>
+<div class="card">
+<h2>🐶 Registrer hund</h2>
+<p class="muted">Opprett en digital Hunde-ID med bilde, egen QR-kode og eier-PIN.</p>
+
+<div class="grid">
+<div><label>Hundens navn *</label><input id="dogName" placeholder="F.eks. Chiko"></div>
+<div><label>Rase *</label><input id="breed" placeholder="F.eks. Bichon Frisé"></div>
+<div><label>Kjønn</label><select id="sex"><option value="">Velg</option><option>Tispe</option><option>Hannhund</option></select></div>
+<div><label>Farge</label><input id="color" placeholder="F.eks. Hvit"></div>
+<div class="full"><label>Eierens e-post *</label><input id="email" type="email" placeholder="navn@epost.no"></div>
+<div class="full"><label>Velg PIN *</label><input id="pin" type="password" inputmode="numeric" maxlength="10" placeholder="Minst 4 tegn"></div>
+
+<div class="full photoBox">
+<img id="preview" class="preview hidden" alt="Forhåndsvisning">
+<div id="photoPlaceholder" style="font-size:56px">🐶</div>
+<label style="margin-top:10px">Bilde av hunden</label>
+<input id="photo" type="file" accept="image/*">
+<p class="muted" style="font-size:.9rem">Bildet lagres i Hundene Våre sitt eksisterende Supabase-bildelager.</p>
+</div>
+</div>
+
+<button id="saveBtn" class="green" onclick="registerDog()">🐾 OPPRETT HUNDE-ID</button>
+<div id="msg"></div>
+</div>
+
+<div id="result" class="card hidden" style="text-align:center">
+<h2>🎉 Hunde-ID opprettet</h2>
+<img id="resultPhoto" class="preview hidden" alt="Hund">
+<div id="resultPlaceholder" style="font-size:58px">🐶</div>
+<h2 id="resultName"></h2>
+<p id="resultInfo" class="muted"></p>
+<p>Digital ID</p><div id="resultCode" class="id"></div>
+<div id="qr"></div>
+<div class="links">
+<a id="finderLink" class="btn outline" target="_blank">🐾 ÅPNE FINNER-SIDE</a>
+<a id="ownerLink" class="btn green" target="_blank">🔐 ÅPNE EIERSIDE</a>
+</div>
+<button class="outline" onclick="location.reload()">Registrer en hund til</button>
+</div>
+</main>
+
 <script>
-const sb=supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
-function code(){let x="HV-",a="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";for(let i=0;i<8;i++)x+=a[Math.floor(Math.random()*a.length)];return x}
-async function reg(){let d=code(),n=document.getElementById('n').value.trim(),r=document.getElementById('r').value.trim(),s=document.getElementById('s').value,c=document.getElementById('c').value.trim(),e=document.getElementById('e').value.trim(),p=document.getElementById('p').value.trim(),m=document.getElementById('m');if(!n||!r||!e||p.length<4){m.innerHTML='<p class="err">Fyll inn navn, rase, e-post og PIN på minst 4 tegn.</p>';return}m.innerHTML='<p class="ok">Oppretter…</p>';let {error}=await sb.rpc('register_dog_id',{p_dog_code:d,p_dog_name:n,p_breed:r,p_sex:s||null,p_color:c||null,p_owner_email:e,p_owner_pin:p});if(error){m.innerHTML='<p class="err">'+error.message+'</p>';return}m.innerHTML='';document.getElementById('res').classList.remove('hidden');document.getElementById('rn').textContent=n+' 🐾';document.getElementById('ri').textContent=[r,s,c].filter(Boolean).join(' · ');document.getElementById('code').textContent=d;new QRCode(document.getElementById('qr'),{text:'https://www.xn--hundenevre-85a.com/hunde-id.html?id='+encodeURIComponent(d),width:220,height:220});}
-</script></body></html>
+const sb=supabase.createClient(
+"https://kxudiviidwwwclbzgdyx.supabase.co",
+"sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+let photoFile=null;
+document.getElementById("photo").addEventListener("change",e=>{
+  photoFile=e.target.files?.[0]||null;
+  if(photoFile){
+    const u=URL.createObjectURL(photoFile);
+    document.getElementById("preview").src=u;
+    document.getElementById("preview").classList.remove("hidden");
+    document.getElementById("photoPlaceholder").classList.add("hidden");
+  }
+});
+
+function makeCode(){
+ const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+ let s="HV-";
+ for(let i=0;i<8;i++)s+=chars[Math.floor(Math.random()*chars.length)];
+ return s;
+}
+function cleanName(n){return String(n||"bilde.jpg").replace(/[^a-zA-Z0-9._-]/g,"_")}
+async function uploadPhoto(code){
+ if(!photoFile)return "";
+ const path="hunde-id/"+code+"/"+Date.now()+"-"+cleanName(photoFile.name);
+ const {error}=await sb.storage.from("story-images").upload(path,photoFile);
+ if(error)throw new Error("Bildeopplasting feilet: "+error.message);
+ const {data}=sb.storage.from("story-images").getPublicUrl(path);
+ return data.publicUrl||"";
+}
+
+async function registerDog(){
+ const btn=document.getElementById("saveBtn"),msg=document.getElementById("msg");
+ const name=document.getElementById("dogName").value.trim();
+ const breed=document.getElementById("breed").value.trim();
+ const sex=document.getElementById("sex").value;
+ const color=document.getElementById("color").value.trim();
+ const email=document.getElementById("email").value.trim();
+ const pin=document.getElementById("pin").value.trim();
+
+ if(!name||!breed||!email||pin.length<4){
+   msg.innerHTML='<div class="error">Fyll inn navn, rase, e-post og PIN på minst 4 tegn.</div>';return;
+ }
+ btn.disabled=true;
+ try{
+   const code=makeCode();
+   msg.innerHTML='<div class="ok">Laster opp bilde og oppretter Hunde-ID …</div>';
+   const photoUrl=await uploadPhoto(code);
+
+   const {error}=await sb.rpc("register_dog_id_v2",{
+     p_dog_code:code,p_dog_name:name,p_breed:breed,p_sex:sex||null,
+     p_color:color||null,p_owner_email:email,p_owner_pin:pin,p_photo_url:photoUrl||null
+   });
+   if(error)throw new Error(error.message);
+
+   document.getElementById("result").classList.remove("hidden");
+   document.getElementById("resultName").textContent=name+" 🐾";
+   document.getElementById("resultInfo").textContent=[breed,sex,color].filter(Boolean).join(" · ");
+   document.getElementById("resultCode").textContent=code;
+
+   if(photoUrl){
+     document.getElementById("resultPhoto").src=photoUrl;
+     document.getElementById("resultPhoto").classList.remove("hidden");
+     document.getElementById("resultPlaceholder").classList.add("hidden");
+   }
+
+   const finder="https://www.xn--hundenevre-85a.com/hunde-id.html?id="+encodeURIComponent(code);
+   const owner="https://www.xn--hundenevre-85a.com/hunde-id-eier.html?id="+encodeURIComponent(code);
+   document.getElementById("finderLink").href=finder;
+   document.getElementById("ownerLink").href=owner;
+   new QRCode(document.getElementById("qr"),{text:finder,width:220,height:220});
+
+   msg.innerHTML="";
+   document.getElementById("result").scrollIntoView({behavior:"smooth"});
+ }catch(e){
+   msg.innerHTML='<div class="error"><b>Feil:</b> '+e.message+'</div>';
+ }finally{btn.disabled=false}
+}
+</script>
+</body></html>
