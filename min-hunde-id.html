@@ -4,20 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Min Hunde-ID – Hundene Våre</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-function openGuide(){
-  document.getElementById("guideModal").classList.add("open");
-  document.body.style.overflow="hidden";
-}
-function closeGuide(){
-  document.getElementById("guideModal").classList.remove("open");
-  document.body.style.overflow="";
-}
-document.addEventListener("keydown",function(e){
-  if(e.key==="Escape") closeGuide();
-});
-
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 :root{--green:#07563f;--blue:#1769d2;--bg:#f3f7f4;--line:#dfe8e2;--muted:#66736b;--red:#cf2940}
@@ -121,6 +108,11 @@ input,select{width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:11px
 }
 @media(max-width:680px){.guide-grid{grid-template-columns:1fr}.help-sheet{padding:15px}}
 
+
+.help-card{
+  width:100%;font:inherit;color:inherit;
+}
+
 </style>
 </head>
 <body>
@@ -132,11 +124,11 @@ input,select{width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:11px
   <a class="missing" href="savnet-hunder.html">🚨 Savnede hunder</a>
 </div>
 
-<div class="help-card" onclick="openGuide()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){openGuide()}">
+<button id="guideOpenBtn" class="help-card" type="button">
   <div style="font-size:32px">❓🐾</div>
   <h3>Slik fungerer Digital Hunde-ID</h3>
   <p>Trykk her for enkel steg-for-steg-veiledning</p>
-</div>
+</button>
 
 
 <div class="card intro">
@@ -274,9 +266,9 @@ function openOwner(){
 </div>
 
 
-<div id="guideModal" class="help-modal" onclick="if(event.target===this)closeGuide()">
+<div id="guideModal" class="help-modal">
   <div class="help-sheet" aria-modal="true" role="dialog" aria-labelledby="guideTitle">
-    <button class="help-close" onclick="closeGuide()" aria-label="Lukk">✕</button>
+    <button id="guideCloseBtn" class="help-close" type="button" aria-label="Lukk">✕</button>
     <h2 id="guideTitle" class="guide-title">🐾 Digital Hunde-ID – steg for steg</h2>
     <p class="guide-intro">Registrer hunden mens den er hjemme og trygg. QR-koden skal være på plass før hunden eventuelt blir borte.</p>
 
@@ -318,6 +310,35 @@ function openOwner(){
     <div class="guide-final">💚 Et føre-var-opplegg: Registrer først – bruk savnetfunksjonen bare dersom hunden faktisk blir borte.</div>
   </div>
 </div>
+
+
+<script>
+(function(){
+  const modal = document.getElementById("guideModal");
+  const openBtn = document.getElementById("guideOpenBtn");
+  const closeBtn = document.getElementById("guideCloseBtn");
+
+  function openGuide(){
+    if(!modal) return;
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeGuide(){
+    if(!modal) return;
+    modal.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  if(openBtn) openBtn.addEventListener("click", openGuide);
+  if(closeBtn) closeBtn.addEventListener("click", closeGuide);
+  if(modal) modal.addEventListener("click", function(e){
+    if(e.target === modal) closeGuide();
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape") closeGuide();
+  });
+})();
+</script>
 
 </body>
 </html>
