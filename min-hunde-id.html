@@ -4,7 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Min Hunde-ID – Hundene Våre</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+function openGuide(){
+  document.getElementById("guideModal").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+function closeGuide(){
+  document.getElementById("guideModal").classList.remove("open");
+  document.body.style.overflow="";
+}
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape") closeGuide();
+});
+
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 :root{--green:#07563f;--blue:#1769d2;--bg:#f3f7f4;--line:#dfe8e2;--muted:#66736b;--red:#cf2940}
@@ -64,6 +77,50 @@ input,select{width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:11px
   }
 }
 
+
+.help-card{
+  background:linear-gradient(135deg,#eef7ff,#ffffff);
+  border:1px solid #c8dcef;border-radius:18px;padding:16px 18px;
+  margin-bottom:16px;cursor:pointer;text-align:center;
+}
+.help-card:hover{box-shadow:0 8px 24px #00000012}
+.help-card h3{margin:3px 0 5px;color:#124b7d}
+.help-card p{margin:0;color:#5c6f80}
+.help-modal{
+  position:fixed;inset:0;background:rgba(5,18,32,.72);
+  display:none;align-items:center;justify-content:center;
+  padding:18px;z-index:9999;
+}
+.help-modal.open{display:flex}
+.help-sheet{
+  width:min(900px,96vw);max-height:92vh;overflow:auto;
+  background:#fff;border-radius:24px;padding:20px;
+  box-shadow:0 20px 60px #0005;position:relative;
+}
+.help-close{
+  position:sticky;top:0;float:right;background:#0b2742;color:#fff;
+  border:0;border-radius:999px;width:42px;height:42px;font-size:22px;
+  cursor:pointer;z-index:2
+}
+.guide-title{text-align:center;color:#0b2742;margin:8px 50px 18px}
+.guide-intro{text-align:center;color:#5c6f80;margin-bottom:18px}
+.guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.guide-step{
+  border:1px solid #d8e3eb;border-radius:16px;padding:15px;
+  background:#f9fbfd;min-width:0;
+}
+.guide-step .num{
+  width:34px;height:34px;border-radius:50%;display:inline-grid;place-items:center;
+  background:#07563f;color:#fff;font-weight:900;margin-right:8px
+}
+.guide-step h4{display:inline;margin:0;color:#17324a;font-size:1rem}
+.guide-step p{margin:9px 0 0;color:#4e6170;line-height:1.5}
+.guide-final{
+  margin-top:16px;background:#eaf6ee;border:1px solid #c8dfcf;
+  border-radius:16px;padding:15px;text-align:center;color:#07563f;font-weight:800
+}
+@media(max-width:680px){.guide-grid{grid-template-columns:1fr}.help-sheet{padding:15px}}
+
 </style>
 </head>
 <body>
@@ -74,6 +131,13 @@ input,select{width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:11px
   <a class="home" href="index.html">🏠 Til forsiden</a>
   <a class="missing" href="savnet-hunder.html">🚨 Savnede hunder</a>
 </div>
+
+<div class="help-card" onclick="openGuide()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){openGuide()}">
+  <div style="font-size:32px">❓🐾</div>
+  <h3>Slik fungerer Digital Hunde-ID</h3>
+  <p>Trykk her for enkel steg-for-steg-veiledning</p>
+</div>
+
 
 <div class="card intro">
   <div class="paw">🐶</div>
@@ -207,6 +271,52 @@ function openOwner(){
   <div id="printDogName" class="print-dog"></div>
   <div id="printDogId" class="print-id"></div>
   <div id="printQr"></div>
+</div>
+
+
+<div id="guideModal" class="help-modal" onclick="if(event.target===this)closeGuide()">
+  <div class="help-sheet" aria-modal="true" role="dialog" aria-labelledby="guideTitle">
+    <button class="help-close" onclick="closeGuide()" aria-label="Lukk">✕</button>
+    <h2 id="guideTitle" class="guide-title">🐾 Digital Hunde-ID – steg for steg</h2>
+    <p class="guide-intro">Registrer hunden mens den er hjemme og trygg. QR-koden skal være på plass før hunden eventuelt blir borte.</p>
+
+    <div class="guide-grid">
+      <div class="guide-step">
+        <span class="num">1</span><h4>Registrer hunden</h4>
+        <p>Fyll inn hundens navn, rase, kjønn, farge og legg til et tydelig bilde.</p>
+      </div>
+      <div class="guide-step">
+        <span class="num">2</span><h4>Legg inn e-post og velg PIN</h4>
+        <p>E-posten brukes til funnvarsler. PIN-koden brukes senere når du skal åpne og administrere Hunde-ID-en.</p>
+      </div>
+      <div class="guide-step">
+        <span class="num">3</span><h4>Få HV-ID og QR-kode</h4>
+        <p>Når registreringen er ferdig får hunden sin unike Digital Hunde-ID og QR-kode direkte på skjermen.</p>
+      </div>
+      <div class="guide-step">
+        <span class="num">4</span><h4>Skriv ut QR-koden</h4>
+        <p>Trykk «Skriv ut QR-kode». Fest QR-koden på halsbåndet eller bruk den senere på en fysisk Hunde-ID-brikke.</p>
+      </div>
+      <div class="guide-step">
+        <span class="num">5</span><h4>Hvis hunden blir borte</h4>
+        <p>Åpne «Min Hunde-ID», skriv HV-ID + PIN og velg «Meld hunden savnet». Da vises hunden på siden Savnede hunder.</p>
+      </div>
+      <div class="guide-step">
+        <span class="num">6</span><h4>Når noen finner hunden</h4>
+        <p>Finneren skanner QR-koden, åpner hundens offentlige side og sender navn, telefon og melding. Eieren får automatisk e-post.</p>
+      </div>
+      <div class="guide-step">
+        <span class="num">7</span><h4>Hunden er hjemme igjen</h4>
+        <p>Eieren åpner eiersiden og velger «Meld trygg». Hunden fjernes da fra oversikten over savnede hunder.</p>
+      </div>
+      <div class="guide-step">
+        <span class="num">8</span><h4>Administrer senere</h4>
+        <p>På eiersiden kan du redigere opplysninger, se eller skrive ut QR-koden på nytt og slette Hunde-ID ved behov.</p>
+      </div>
+    </div>
+
+    <div class="guide-final">💚 Et føre-var-opplegg: Registrer først – bruk savnetfunksjonen bare dersom hunden faktisk blir borte.</div>
+  </div>
 </div>
 
 </body>
