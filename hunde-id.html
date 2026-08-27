@@ -33,6 +33,38 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 .top-nav .home{background:#07563f;color:#fff}.top-nav .myid{background:#fff;color:#07563f;border:2px solid #07563f}
 .top-nav .missing{background:#fff3f4;color:#b52235;border:2px solid #cf2940}
 
+
+.finder-help{
+  width:100%;background:linear-gradient(135deg,#eef7ff,#fff);
+  border:1px solid #c8dcef;border-radius:16px;padding:14px 16px;
+  margin:0 0 16px;cursor:pointer;text-align:center;font:inherit;color:inherit;
+}
+.finder-help h3{margin:4px 0 5px;color:#124b7d}
+.finder-help p{margin:0;color:#5c6f80}
+.finder-modal{
+  position:fixed;inset:0;background:rgba(5,18,32,.72);
+  display:none;align-items:center;justify-content:center;
+  padding:18px;z-index:9999;
+}
+.finder-modal.open{display:flex}
+.finder-sheet{
+  width:min(760px,96vw);max-height:92vh;overflow:auto;
+  background:#fff;border-radius:22px;padding:20px;position:relative;
+  box-shadow:0 20px 60px #0005;
+}
+.finder-close{
+  position:sticky;top:0;float:right;background:#0b2742;color:#fff;
+  border:0;border-radius:999px;width:42px;height:42px;font-size:22px;cursor:pointer
+}
+.finder-guide-title{text-align:center;color:#0b2742;margin:8px 50px 18px}
+.finder-steps{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.finder-step{background:#f9fbfd;border:1px solid #d8e3eb;border-radius:15px;padding:14px}
+.finder-step .num{width:32px;height:32px;border-radius:50%;display:inline-grid;place-items:center;background:#1769d2;color:white;font-weight:900;margin-right:7px}
+.finder-step h4{display:inline;margin:0;color:#17324a}
+.finder-step p{margin:8px 0 0;color:#4e6170;line-height:1.45}
+.finder-final{margin-top:14px;background:#eaf6ee;border:1px solid #c8dfcf;border-radius:15px;padding:14px;text-align:center;color:#07563f;font-weight:800}
+@media(max-width:620px){.finder-steps{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -65,6 +97,13 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 <p><b>Digital ID:</b> <span id="dogCode"></span></p>
 </div>
 </div>
+
+
+<button id="finderGuideOpen" class="finder-help" type="button">
+  <div style="font-size:30px">❓🐾</div>
+  <h3>Har du funnet denne hunden?</h3>
+  <p>Trykk her for enkel steg-for-steg-veiledning</p>
+</button>
 
 <div class="card">
 <h2>🐾 Har du funnet denne hunden?</h2>
@@ -200,5 +239,55 @@ async function sendFound(){
 
 loadDog();
 </script>
+
+<div id="finderGuideModal" class="finder-modal">
+  <div class="finder-sheet" role="dialog" aria-modal="true" aria-labelledby="finderGuideTitle">
+    <button id="finderGuideClose" class="finder-close" type="button" aria-label="Lukk">✕</button>
+    <h2 id="finderGuideTitle" class="finder-guide-title">🐾 Slik hjelper du hunden hjem</h2>
+    <div class="finder-steps">
+      <div class="finder-step">
+        <span class="num">1</span><h4>Sjekk at det er riktig hund</h4>
+        <p>Se hundens navn, bilde, rase og Digital Hunde-ID på siden.</p>
+      </div>
+      <div class="finder-step">
+        <span class="num">2</span><h4>Fyll inn kontaktopplysninger</h4>
+        <p>Skriv gjerne navnet ditt og telefonnummeret ditt, slik at eieren kan kontakte deg.</p>
+      </div>
+      <div class="finder-step">
+        <span class="num">3</span><h4>Skriv en kort melding</h4>
+        <p>Fortell hvor hunden er og at den er trygg. Du kan også legge ved posisjon dersom du ønsker.</p>
+      </div>
+      <div class="finder-step">
+        <span class="num">4</span><h4>Send funnvarselet</h4>
+        <p>Trykk «Jeg har funnet denne hunden». Eieren får automatisk e-post med opplysningene du har sendt.</p>
+      </div>
+      <div class="finder-step">
+        <span class="num">5</span><h4>Ta vare på hunden</h4>
+        <p>Hold hunden trygg og rolig til eieren tar kontakt eller hunden kan leveres tilbake.</p>
+      </div>
+      <div class="finder-step">
+        <span class="num">6</span><h4>Du trenger ingen app</h4>
+        <p>Alt skjer direkte på Hundene Våre gjennom mobilens nettleser.</p>
+      </div>
+    </div>
+    <div class="finder-final">💚 Eierens private e-postadresse vises ikke. Meldingen sendes gjennom Hundene Våre.</div>
+  </div>
+</div>
+
+
+<script>
+(function(){
+  const modal=document.getElementById("finderGuideModal");
+  const openBtn=document.getElementById("finderGuideOpen");
+  const closeBtn=document.getElementById("finderGuideClose");
+  function openGuide(){if(modal){modal.classList.add("open");document.body.style.overflow="hidden";}}
+  function closeGuide(){if(modal){modal.classList.remove("open");document.body.style.overflow="";}}
+  if(openBtn) openBtn.addEventListener("click",openGuide);
+  if(closeBtn) closeBtn.addEventListener("click",closeGuide);
+  if(modal) modal.addEventListener("click",e=>{if(e.target===modal)closeGuide();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeGuide();});
+})();
+</script>
+
 </body>
 </html>
