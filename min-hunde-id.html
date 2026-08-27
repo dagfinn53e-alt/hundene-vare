@@ -38,6 +38,32 @@ input,select{width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:11px
 .print-btn{background:#6b3fd1;color:white;margin-top:10px}
 .flow{margin-top:12px;background:#edf5f0;border-radius:12px;padding:11px;font-weight:800;color:#07563f}
 @media(max-width:620px){.choice,.grid,.result-actions{grid-template-columns:1fr}.full{grid-column:auto}}
+
+#printOnly{display:none}
+@media print{
+  @page{margin:10mm}
+  body *{display:none!important}
+  #printOnly,#printOnly *{display:block!important}
+  #printOnly{
+    width:70mm;
+    margin:0 auto;
+    padding:6mm;
+    text-align:center;
+    background:#fff;
+    color:#111;
+    font-family:Arial,sans-serif;
+  }
+  #printOnly .print-brand{font-size:16pt;font-weight:800;margin-bottom:3mm}
+  #printOnly .print-dog{font-size:18pt;font-weight:900;margin:2mm 0}
+  #printOnly .print-id{font-size:11pt;font-weight:700;margin-bottom:4mm}
+  #printQr canvas,#printQr img{
+    display:block!important;
+    width:52mm!important;
+    height:52mm!important;
+    margin:0 auto!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -117,7 +143,7 @@ input,select{width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:11px
     <a id="ownerLink" class="btn green" target="_blank">🔐 Åpne eiersiden</a>
     <a id="finderLink" class="btn outline" target="_blank">🐾 Se offentlig Hunde-ID</a>
   </div>
-  <button class="print-btn" onclick="window.print()">🖨️ SKRIV UT QR-KODE</button>
+  <button class="print-btn" onclick="printOnlyQR()">🖨️ SKRIV UT QR-KODE</button>
 </section>
 </main>
 
@@ -150,6 +176,24 @@ async function registerDog(){
     result.scrollIntoView({behavior:"smooth"});
   }catch(e){regMsg.innerHTML='<div class="error">Feil: '+e.message+'</div>'}finally{saveBtn.disabled=false}
 }
+function printOnlyQR(){
+  const codeText = resultCode.textContent.replace("Digital ID: ","").trim();
+  const dogText = resultName.textContent.replace(" 🐾","").trim();
+  const finder = finderLink.href;
+
+  printDogName.textContent = dogText;
+  printDogId.textContent = "Digital ID: " + codeText;
+  printQr.innerHTML = "";
+
+  new QRCode(printQr,{
+    text: finder,
+    width: 300,
+    height: 300
+  });
+
+  setTimeout(()=>window.print(),150);
+}
+
 function openOwner(){
   const id=loginId.value.trim().toUpperCase(),pin=loginPin.value.trim();
   if(!id||!pin){loginMsg.innerHTML='<div class="error">Skriv inn både Hunde-ID og PIN.</div>';return}
@@ -157,5 +201,13 @@ function openOwner(){
   location.href="hunde-id-eier.html?id="+encodeURIComponent(id);
 }
 </script>
+
+<div id="printOnly">
+  <div class="print-brand">🐾 Hundene Våre</div>
+  <div id="printDogName" class="print-dog"></div>
+  <div id="printDogId" class="print-id"></div>
+  <div id="printQr"></div>
+</div>
+
 </body>
 </html>
