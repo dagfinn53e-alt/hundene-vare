@@ -67,6 +67,13 @@ details .inside{padding:0 0 16px}
   .pinrow{grid-template-columns:1fr}
   header{padding:18px 12px}
 }
+
+.danger-zone{border:1px solid #efb3bc;background:linear-gradient(135deg,#fff7f8,#fff);border-radius:16px;padding:16px}
+.danger-zone h3{color:#a91f32}
+.danger-zone p{color:#6f3b43;line-height:1.5}
+.delete-confirm{margin-top:12px;padding-top:12px;border-top:1px solid #efc7cd}
+.delete-confirm input{margin-top:6px}
+
 </style>
 </head>
 <body>
@@ -140,6 +147,24 @@ details .inside{padding:0 0 16px}
       <div id="editMsg"></div>
     </div>
   </details>
+</div>
+
+
+<div class="card">
+  <div class="danger-zone">
+    <h3>🗑️ Slett Hunde-ID</h3>
+    <p>Bruk dette bare hvis du vil fjerne hunden permanent fra Hundene Våre. Hundens profil, funnvarsler og lagrede hundebilder blir slettet.</p>
+    <button class="red" onclick="openDeleteConfirm()">🗑️ SLETT HUNDE-ID</button>
+
+    <div id="deleteConfirm" class="delete-confirm hidden">
+      <p><b>Er du helt sikker?</b> Denne handlingen kan ikke angres.</p>
+      <label>Skriv PIN på nytt for å bekrefte</label>
+      <input id="deletePin" type="password" inputmode="numeric" placeholder="PIN">
+      <button id="deleteFinalBtn" class="red" onclick="deleteDog()">JA – SLETT HUNDEN PERMANENT</button>
+      <button class="outline" onclick="cancelDelete()">Avbryt</button>
+      <div id="deleteMsg"></div>
+    </div>
+  </div>
 </div>
 
 <div id="qrCard" class="card hero hidden">
@@ -263,6 +288,59 @@ async function loadAlerts(){
       ${a.message?'<b>Melding:</b> '+esc(a.message)+'<br>':''}
       ${a.location_url?'<b>📍 <a target="_blank" rel="noopener" href="'+encodeURI(a.location_url)+'">Se posisjon</a></b>':''}
     </div>`).join("");
+}
+
+
+function openDeleteConfirm(){
+  document.getElementById("deleteConfirm").classList.remove("hidden");
+  document.getElementById("deletePin").value="";
+  document.getElementById("deleteMsg").innerHTML="";
+  document.getElementById("deleteConfirm").scrollIntoView({behavior:"smooth",block:"center"});
+}
+function cancelDelete(){
+  document.getElementById("deleteConfirm").classList.add("hidden");
+  document.getElementById("deletePin").value="";
+  document.getElementById("deleteMsg").innerHTML="";
+}
+
+async function deleteDog(){
+  const pin=document.getElementById("deletePin").value.trim();
+  const msg=document.getElementById("deleteMsg");
+  const btn=document.getElementById("deleteFinalBtn");
+
+  if(!pin){
+    msg.innerHTML='<div class="error">Skriv PIN for å bekrefte slettingen.</div>';
+    return;
+  }
+
+  const ok=window.confirm(
+    "Slette "+(dog?.dog_name||"denne hunden")+" permanent?\\n\\nDette kan ikke angres."
+  );
+  if(!ok)return;
+
+  btn.disabled=true;
+  btn.textContent="Sletter …";
+  msg.innerHTML='<div class="ok">Rydder bort Hunde-ID, varsler og bilder …</div>';
+
+  try{
+    const {data,error}=await sb.functions.invoke("delete-dog-id",{
+      body:{dogCode:DOG,ownerPin:pin}
+    });
+
+    if(error)throw new Error(error.message);
+    if(!data || !data.success)throw new Error(data?.error||"Slettingen kunne ikke fullføres.");
+
+    msg.innerHTML='<div class="ok"><b>✅ Hunde-ID er slettet permanent.</b><br>Du sendes tilbake til registreringssiden.</div>';
+
+    setTimeout(()=>{
+      location.href="registrer-hunde-id-test.html";
+    },1800);
+
+  }catch(e){
+    msg.innerHTML='<div class="error"><b>Feil:</b> '+esc(e.message)+'</div>';
+    btn.disabled=false;
+    btn.textContent="JA – SLETT HUNDEN PERMANENT";
+  }
 }
 
 function showQR(){
