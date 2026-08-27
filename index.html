@@ -34,6 +34,32 @@ a{text-decoration:none;color:inherit}.wrap{width:min(1500px,calc(100% - 20px));m
 .trust{display:grid;grid-template-columns:repeat(4,1fr);margin-top:13px;border:1px solid #2b4c7e;border-radius:22px;overflow:hidden;background:#06162a}.trust div{text-align:center;padding:14px;border-right:1px solid rgba(255,255,255,.08)}.trust div:last-child{border:0}.trust strong{display:block}.trust small{display:block;color:#9fb3c8;margin-top:4px}
 @media(max-width:1000px){.hero{height:390px}.academies{grid-template-columns:1fr}.academy{height:330px}.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:650px){.wrap{width:calc(100% - 10px)}.top{position:static;justify-content:center}.brand{width:100%;text-align:center}.nav{justify-content:center}.nav a{flex:1 1 43%;text-align:center}.hero{height:250px;border-radius:22px;background-position:center}.hero-buttons{bottom:12px;width:calc(100% - 24px)}.hero-buttons .btn{flex:1;font-size:12px;padding:10px}.academies{gap:8px}.academy{height:280px}.choose{padding:12px;border-radius:20px}.choose h2{font-size:23px}.grid{gap:7px}.card{min-height:130px;padding:10px}.card p{display:none}.card h3{font-size:14px}.icon{width:42px;height:42px;font-size:22px}.trust{grid-template-columns:1fr 1fr}}
+
+.hvid-logo{
+  width:76px;height:76px;border-radius:24px;
+  display:grid;place-items:center;margin:0 auto 10px;
+  background:linear-gradient(145deg,#0b65ff,#24d4f1);
+  box-shadow:0 12px 28px rgba(37,217,243,.28), inset 0 0 0 1px rgba(255,255,255,.28);
+  color:#fff;font-size:34px;font-weight:900;position:relative;
+}
+.hvid-logo::after{
+  content:"ID";position:absolute;right:8px;bottom:7px;
+  font-size:10px;letter-spacing:.5px;background:#07172d;color:#fff;
+  padding:3px 5px;border-radius:7px;border:1px solid rgba(255,255,255,.25)
+}
+.missing-logo{
+  width:76px;height:76px;border-radius:24px;
+  display:grid;place-items:center;margin:0 auto 10px;
+  background:linear-gradient(145deg,#ff415d,#ff8a3d);
+  box-shadow:0 12px 28px rgba(255,65,93,.28), inset 0 0 0 1px rgba(255,255,255,.28);
+  color:#fff;font-size:34px;font-weight:900;position:relative;
+}
+.missing-logo::after{
+  content:"SAVNET";position:absolute;left:7px;right:7px;bottom:6px;
+  font-size:8px;letter-spacing:.4px;background:#7a1021;color:#fff;
+  padding:3px 4px;border-radius:7px;border:1px solid rgba(255,255,255,.25)
+}
+
 </style>
 
 <style id="action-card-photo-upgrade">
@@ -100,7 +126,7 @@ a{text-decoration:none;color:inherit}.wrap{width:min(1500px,calc(100% - 20px));m
   <div class="grid">
     <a class="card c1" href="registrer-hunde-id-test.html">
       <div class="card-body">
-        <div class="icon">🐾</div>
+        <div class="hvid-logo">🐶</div>
         <h3>Digital Hunde-ID</h3>
         <p>Registrer hund, få QR-kode og varsling ved funn</p>
         <span class="go">→</span>
@@ -108,7 +134,7 @@ a{text-decoration:none;color:inherit}.wrap{width:min(1500px,calc(100% - 20px));m
     </a>
     <a class="card c2" href="savnet-hunder.html">
       <div class="card-body">
-        <div class="icon">🚨</div>
+        <div class="missing-logo">🔎</div>
         <h3>Savnede hunder</h3>
         <p>Se hunder som er meldt savnet</p>
         <span class="go">→</span>
