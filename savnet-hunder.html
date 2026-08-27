@@ -72,10 +72,43 @@ h2{margin:4px 0 4px;font-size:1.35rem}
   header{padding:20px 12px}
 }
 
-.page-nav{max-width:1100px;margin:14px auto 0;display:flex;gap:10px;flex-wrap:wrap;padding:0 14px}
-.page-nav a{flex:1 1 210px;text-decoration:none;text-align:center;padding:11px 14px;border-radius:999px;font-weight:850}
-.page-nav .home{background:#07563f;color:#fff}
-.page-nav .back{background:#fff;color:#07563f;border:2px solid #07563f}
+.top-nav{
+  max-width:1100px;
+  margin:14px auto 0;
+  padding:0 14px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.top-nav a{
+  flex:1 1 220px;
+  text-decoration:none;
+  text-align:center;
+  padding:12px 16px;
+  border-radius:14px;
+  font-weight:900;
+  font-size:15px;
+}
+.top-nav .home{
+  background:#07563f;
+  color:white;
+}
+.top-nav .back{
+  background:white;
+  color:#07563f;
+  border:2px solid #07563f;
+}
+
+.missing-help{width:100%;background:linear-gradient(135deg,#fff2f3,#fff);border:1px solid #efc8ce;border-radius:17px;padding:15px 17px;margin:0 0 16px;cursor:pointer;text-align:center;font:inherit;color:inherit}
+.missing-help h3{margin:4px 0 5px;color:#a91f33}.missing-help p{margin:0;color:#6b6264}
+.missing-modal{position:fixed;inset:0;background:rgba(30,8,12,.72);display:none;align-items:center;justify-content:center;padding:18px;z-index:9999}
+.missing-modal.open{display:flex}.missing-sheet{width:min(780px,96vw);max-height:92vh;overflow:auto;background:#fff;border-radius:22px;padding:20px;box-shadow:0 20px 60px #0005}
+.missing-close{position:sticky;top:0;float:right;background:#9e2032;color:#fff;border:0;border-radius:50%;width:42px;height:42px;font-size:22px;cursor:pointer}
+.missing-title{text-align:center;color:#9e2032;margin:8px 50px 18px}.missing-steps{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.missing-step{background:#fffafa;border:1px solid #efdadd;border-radius:15px;padding:14px}.missing-step .num{width:32px;height:32px;border-radius:50%;display:inline-grid;place-items:center;background:#cf2940;color:#fff;font-weight:900;margin-right:7px}
+.missing-step h4{display:inline;margin:0;color:#4c2630}.missing-step p{margin:8px 0 0;color:#65545a;line-height:1.45}
+.missing-final{margin-top:14px;background:#eaf6ee;border:1px solid #c8dfcf;border-radius:15px;padding:14px;text-align:center;color:#07563f;font-weight:800}
+@media(max-width:620px){.missing-steps{grid-template-columns:1fr}}
 
 </style>
 </head>
@@ -85,12 +118,20 @@ h2{margin:4px 0 4px;font-size:1.35rem}
   <p>Hundene Våre – Digital Hunde-ID</p>
 </header>
 
-<div class="page-nav">
-<a class="home" href="index.html">🏠 Til forsiden</a>
-<a class="back" href="registrer-hunde-id-test.html">← Tilbake til registrering</a>
+<div class="top-nav">
+  <a class="home" href="index.html">🏠 Til forsiden</a>
+  <a class="back" href="registrer-hunde-id-test.html">← Tilbake til registrering</a>
 </div>
 
+
 <main>
+
+<button id="missingGuideOpen" class="missing-help" type="button">
+  <div style="font-size:31px">❓🚨</div>
+  <h3>Hva gjør jeg hvis hunden min blir borte?</h3>
+  <p>Trykk her for enkel steg-for-steg-veiledning</p>
+</button>
+
 <div class="top">
   <div class="searchrow">
     <input id="search" placeholder="🔎 Søk på navn, rase eller Hunde-ID" oninput="render()">
@@ -202,5 +243,39 @@ function render(){
 
 loadMissing();
 </script>
+
+<div id="missingGuideModal" class="missing-modal">
+ <div class="missing-sheet" role="dialog" aria-modal="true" aria-labelledby="missingGuideTitle">
+  <button id="missingGuideClose" class="missing-close" type="button" aria-label="Lukk">✕</button>
+  <h2 id="missingGuideTitle" class="missing-title">🚨 Når hunden din blir borte</h2>
+  <div class="missing-steps">
+   <div class="missing-step"><span class="num">1</span><h4>Åpne Min Hunde-ID</h4><p>Gå til «Min Hunde-ID» og velg at du allerede har en Digital Hunde-ID.</p></div>
+   <div class="missing-step"><span class="num">2</span><h4>Logg inn på hunden</h4><p>Skriv inn hundens HV-ID og PIN-koden du valgte da hunden ble registrert.</p></div>
+   <div class="missing-step"><span class="num">3</span><h4>Meld hunden savnet</h4><p>På eiersiden trykker du «Meld hunden savnet». Hundens status endres med en gang.</p></div>
+   <div class="missing-step"><span class="num">4</span><h4>Hunden vises her</h4><p>Den savnede hunden kommer på oversikten «Savnede hunder», slik at andre kan se etter den.</p></div>
+   <div class="missing-step"><span class="num">5</span><h4>QR-koden virker fortsatt</h4><p>Den som finner hunden kan skanne QR-koden på halsbåndet og sende deg et funnvarsel gjennom Hundene Våre.</p></div>
+   <div class="missing-step"><span class="num">6</span><h4>Du får e-post</h4><p>Når en finner sender inn melding, får du automatisk e-post med opplysningene som er sendt.</p></div>
+   <div class="missing-step"><span class="num">7</span><h4>Hunden er hjemme igjen</h4><p>Åpne eiersiden på nytt og trykk «Meld trygg». Da fjernes hunden automatisk fra denne oversikten.</p></div>
+   <div class="missing-step"><span class="num">8</span><h4>Hold opplysningene oppdatert</h4><p>Pass på at bilde, e-post og andre opplysninger på Hunde-ID-en er riktige før du trenger dem.</p></div>
+  </div>
+  <div class="missing-final">💚 Digital Hunde-ID er et føre-var-opplegg: QR-koden bør være på hundens halsbånd mens hunden er hjemme og trygg.</div>
+ </div>
+</div>
+
+
+<script>
+(function(){
+ const modal=document.getElementById("missingGuideModal");
+ const openBtn=document.getElementById("missingGuideOpen");
+ const closeBtn=document.getElementById("missingGuideClose");
+ function openGuide(){if(modal){modal.classList.add("open");document.body.style.overflow="hidden";}}
+ function closeGuide(){if(modal){modal.classList.remove("open");document.body.style.overflow="";}}
+ if(openBtn)openBtn.addEventListener("click",openGuide);
+ if(closeBtn)closeBtn.addEventListener("click",closeGuide);
+ if(modal)modal.addEventListener("click",e=>{if(e.target===modal)closeGuide();});
+ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeGuide();});
+})();
+</script>
+
 </body>
 </html>
