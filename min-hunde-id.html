@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Min Hunde-ID – Hundene Våre</title>
+<style>
+:root{--green:#07563f;--bg:#f3f7f4;--line:#dfe8e2;--muted:#66736b;--red:#cf2940}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#17221c}
+header{background:linear-gradient(135deg,var(--green),#06392b);color:#fff;text-align:center;padding:24px 16px}
+header h1{margin:0;font-size:1.5rem}header p{margin:6px 0 0;opacity:.92}
+main{max-width:620px;margin:auto;padding:18px 14px 50px}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;margin-bottom:16px;box-shadow:0 8px 28px #00000012}
+.center{text-align:center}
+.icon{font-size:64px;margin-bottom:6px}
+label{display:block;font-weight:800;margin:12px 0 6px}
+input{width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:11px;font:inherit}
+button,a.btn{width:100%;padding:14px;border:0;border-radius:13px;font-size:16px;font-weight:850;text-align:center;text-decoration:none;display:block;cursor:pointer;margin-top:11px}
+.green{background:var(--green);color:#fff}.outline{background:#fff;color:var(--green);border:2px solid var(--green)}
+.error{background:#ffe6e9;border:1px solid #efb3bc;padding:12px;border-radius:11px;margin-top:12px}
+.muted{color:var(--muted);line-height:1.5}.small{font-size:.9rem;color:var(--muted)}
+.nav{display:flex;gap:10px;flex-wrap:wrap}.nav a{flex:1 1 200px}
+</style>
+</head>
+<body>
+<header>
+  <h1>🐾 HUNDENE VÅRE</h1>
+  <p>Min Digital Hunde-ID</p>
+</header>
+
+<main>
+<div class="nav">
+  <a class="btn green" href="index.html">🏠 Til forsiden</a>
+  <a class="btn outline" href="registrer-hunde-id-test.html">🐾 Registrer hund</a>
+</div>
+
+<div class="card center">
+  <div class="icon">🔐🐶</div>
+  <h2>Åpne eiersiden din</h2>
+  <p class="muted">Skriv inn hundens Digital ID og PIN. Du sendes videre til riktig eierside.</p>
+
+  <label>Digital Hunde-ID</label>
+  <input id="dogId" placeholder="F.eks. HV-AW7Y9L5W" autocomplete="off">
+
+  <label>PIN</label>
+  <input id="pin" type="password" inputmode="numeric" placeholder="PIN-koden din">
+
+  <button class="green" onclick="openOwner()">🔐 ÅPNE MIN HUNDE-ID</button>
+  <div id="msg"></div>
+</div>
+
+<div class="card">
+  <h3>Hvor finner jeg Hunde-ID-en?</h3>
+  <p class="small">Hunde-ID-en vises når hunden registreres og står også på QR-koden/profilen. Den starter med <b>HV-</b>.</p>
+</div>
+</main>
+
+<script>
+function openOwner(){
+  const id=document.getElementById("dogId").value.trim().toUpperCase();
+  const pin=document.getElementById("pin").value.trim();
+  const msg=document.getElementById("msg");
+
+  if(!id || !pin){
+    msg.innerHTML='<div class="error">Skriv inn både Hunde-ID og PIN.</div>';
+    return;
+  }
+  if(!id.startsWith("HV-")){
+    msg.innerHTML='<div class="error">Hunde-ID-en skal starte med HV-.</div>';
+    return;
+  }
+
+  // PIN brukes på eiersiden; vi sender kun Hunde-ID i URL-en.
+  sessionStorage.setItem("hundeIdPin", pin);
+  location.href="hunde-id-eier.html?id="+encodeURIComponent(id);
+}
+</script>
+</body>
+</html>
