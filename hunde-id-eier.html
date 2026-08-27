@@ -74,6 +74,18 @@ details .inside{padding:0 0 16px}
 .delete-confirm{margin-top:12px;padding-top:12px;border-top:1px solid #efc7cd}
 .delete-confirm input{margin-top:6px}
 
+
+.print-btn{background:#6b3fd1;color:#fff}
+@media print{
+  body *{visibility:hidden!important}
+  #qrCard,#qrCard *{visibility:visible!important}
+  #qrCard{
+    position:absolute;left:0;top:0;width:100%;
+    text-align:center;background:#fff;color:#111;padding:30px;
+  }
+  #qrCard .no-print{display:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -171,7 +183,8 @@ details .inside{padding:0 0 16px}
   <h3>QR-kode til <span id="qrName"></span></h3>
   <div id="qr"></div>
   <p class="muted">Denne QR-koden åpner hundens offentlige finner-side.</p>
-  <a id="finderLink" class="btn green" target="_blank">🐾 ÅPNE FINNER-SIDEN</a>
+  <a id="finderLink" class="btn green no-print" target="_blank">🐾 ÅPNE FINNER-SIDEN</a>
+<button class="print-btn no-print" onclick="window.print()">🖨️ SKRIV UT QR-KODE</button>
 </div>
 
 </section>
