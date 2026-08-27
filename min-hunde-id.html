@@ -31,6 +31,19 @@ input,select{width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:10px
 #qr{display:flex;justify-content:center;margin:18px}
 .ok{background:#e5f6eb;padding:12px;border-radius:10px;margin-top:12px}.error{background:#ffe6e9;padding:12px;border-radius:10px;margin-top:12px}
 @media(max-width:620px){.choice,.grid,.result-actions{grid-template-columns:1fr}.full{grid-column:auto}}
+
+.print-btn{background:#6b3fd1;color:#fff}
+@media print{
+  body *{visibility:hidden!important}
+  #printArea,#printArea *{visibility:visible!important}
+  #printArea{
+    position:absolute;left:0;top:0;width:100%;
+    text-align:center;background:#fff;color:#111;padding:30px;
+  }
+  #printArea .no-print{display:none!important}
+  #printArea #qr{margin:20px auto}
+}
+
 </style>
 </head>
 <body>
@@ -98,7 +111,7 @@ input,select{width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:10px
 </div>
 </section>
 
-<section id="result" class="card hidden" style="text-align:center">
+<section id="result" class="card hidden" style="text-align:center"><div id="printArea">
 <h2>🎉 Digital Hunde-ID er klar!</h2>
 <img id="resultPhoto" class="dogphoto hidden" alt="">
 <div id="resultPlaceholder" class="placeholder">🐶</div>
@@ -109,7 +122,8 @@ input,select{width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:10px
 <a id="finderLink" class="btn outline" target="_blank">🐾 Se offentlig Hunde-ID</a>
 <a id="ownerLink" class="btn green" target="_blank">🔐 Åpne eiersiden</a>
 </div>
-</section>
+<button class="print-btn no-print" style="margin-top:12px" onclick="printQR()">🖨️ SKRIV UT QR-KODE</button>
+</div></section>
 </main>
 
 <script>
@@ -136,6 +150,9 @@ const finder="https://www.xn--hundenevre-85a.com/hunde-id.html?id="+encodeURICom
 const owner="https://www.xn--hundenevre-85a.com/hunde-id-eier.html?id="+encodeURIComponent(code);
 finderLink.href=finder;ownerLink.href=owner;qr.innerHTML="";new QRCode(qr,{text:finder,width:220,height:220});result.scrollIntoView({behavior:"smooth"});
 }catch(e){regMsg.innerHTML='<div class="error">Feil: '+e.message+'</div>'}finally{saveBtn.disabled=false}}
+function printQR(){
+  window.print();
+}
 function openOwner(){const id=loginId.value.trim().toUpperCase(),pin=loginPin.value.trim();if(!id||!pin){loginMsg.innerHTML='<div class="error">Skriv inn både Hunde-ID og PIN.</div>';return}sessionStorage.setItem("hundeIdPin",pin);location.href="hunde-id-eier.html?id="+encodeURIComponent(id)}
 </script>
 </body>
