@@ -27,10 +27,21 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 .error{background:#ffe5e8;border:1px solid #efb0ba;padding:13px;border-radius:11px;margin-top:12px}
 .hidden{display:none!important}.statusline{font-size:.9rem;color:#5d6b63;text-align:center;margin-top:7px}
 .small{font-size:.88rem;color:#66736b}
+
+.top-nav{display:flex;gap:10px;flex-wrap:wrap;max-width:760px;margin:14px auto 0;padding:0 14px}
+.top-nav a{flex:1 1 180px;text-decoration:none;text-align:center;padding:12px 14px;border-radius:13px;font-weight:850}
+.top-nav .home{background:#07563f;color:#fff}.top-nav .myid{background:#fff;color:#07563f;border:2px solid #07563f}
+.top-nav .missing{background:#fff3f4;color:#b52235;border:2px solid #cf2940}
+
 </style>
 </head>
 <body>
 <header><h1>🐾 HUNDENE VÅRE</h1><p>Digital Hunde-ID</p></header>
+<div class="top-nav">
+<a class="home" href="index.html">🏠 Til forsiden</a>
+<a class="myid" href="min-hunde-id.html">🐾 Min Hunde-ID</a>
+<a class="missing" href="savnet-hunder.html">🚨 Savnede hunder</a>
+</div>
 <main>
 
 <div id="loading" class="card center">
