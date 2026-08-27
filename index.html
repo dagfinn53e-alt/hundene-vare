@@ -60,6 +60,20 @@ a{text-decoration:none;color:inherit}.wrap{width:min(1500px,calc(100% - 20px));m
   padding:3px 4px;border-radius:7px;border:1px solid rgba(255,255,255,.25)
 }
 
+
+.owner-logo{
+  width:76px;height:76px;border-radius:24px;
+  display:grid;place-items:center;margin:0 auto 10px;
+  background:linear-gradient(145deg,#7b4dff,#b35cff);
+  box-shadow:0 12px 28px rgba(123,77,255,.28), inset 0 0 0 1px rgba(255,255,255,.28);
+  color:#fff;font-size:34px;font-weight:900;position:relative;
+}
+.owner-logo::after{
+  content:"MIN";position:absolute;right:8px;bottom:7px;
+  font-size:9px;letter-spacing:.5px;background:#31146d;color:#fff;
+  padding:3px 5px;border-radius:7px;border:1px solid rgba(255,255,255,.25)
+}
+
 </style>
 
 <style id="action-card-photo-upgrade">
@@ -137,6 +151,15 @@ a{text-decoration:none;color:inherit}.wrap{width:min(1500px,calc(100% - 20px));m
         <div class="missing-logo">🔎</div>
         <h3>Savnede hunder</h3>
         <p>Se hunder som er meldt savnet</p>
+        <span class="go">→</span>
+      </div>
+    </a>
+
+    <a class="card c3" href="min-hunde-id.html">
+      <div class="card-body">
+        <div class="owner-logo">🔐</div>
+        <h3>Min Hunde-ID</h3>
+        <p>Åpne eiersiden med Hunde-ID og PIN</p>
         <span class="go">→</span>
       </div>
     </a>
