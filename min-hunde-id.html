@@ -37,6 +37,7 @@ input,select{width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:11px
 .result-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .print-btn{background:#6b3fd1;color:white;margin-top:10px}
 .flow{margin-top:12px;background:#edf5f0;border-radius:12px;padding:11px;font-weight:800;color:#07563f}
+.phone-choice{margin-top:10px;padding:12px;background:#f6faf7;border:1px solid #dfe9e2;border-radius:12px}.phone-choice label{display:flex;align-items:flex-start;gap:9px;margin:0;font-weight:750}.phone-choice input{width:auto;margin-top:4px}
 @media(max-width:620px){.choice,.grid,.result-actions{grid-template-columns:1fr}.full{grid-column:auto}}
 
 #printOnly{display:none}
@@ -165,6 +166,7 @@ input,select{width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:11px
 
     <div class="grid">
       <div class="full"><label>E-post *</label><input id="email" type="email" placeholder="Brukes til funnvarsler"></div>
+       <div class="full"><label>📞 Telefonnummer til eier</label><input id="ownerPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="F.eks. 912 34 567"><div class="phone-choice"><label><input id="showOwnerPhone" type="checkbox"> <span>Vis telefonnummeret til den som finner hunden og skanner QR-koden</span></label></div></div>
       <div><label>Velg PIN *</label><input id="regPin" type="password" inputmode="numeric" maxlength="10"></div>
       <div style="display:flex;align-items:end"><button class="soft" onclick="toggleRegPin()">Vis / skjul PIN</button></div>
     </div>
@@ -214,13 +216,15 @@ function makeCode(){const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let s="HV-";for(l
 function cleanName(n){return String(n||"bilde.jpg").replace(/[^a-zA-Z0-9._-]/g,"_")}
 async function uploadPhoto(code){if(!photoFile)return "";const path="hunde-id/"+code+"/"+Date.now()+"-"+cleanName(photoFile.name);const {error}=await sb.storage.from("story-images").upload(path,photoFile);if(error)throw new Error(error.message);return sb.storage.from("story-images").getPublicUrl(path).data.publicUrl||""}
 async function registerDog(){
-  const name=dogName.value.trim(),br=breed.value.trim(),sx=sex.value,co=color.value.trim(),em=email.value.trim(),pin=regPin.value.trim();
+  const name=dogName.value.trim(),br=breed.value.trim(),sx=sex.value,co=color.value.trim(),em=email.value.trim(),pin=regPin.value.trim(),phone=ownerPhone.value.trim(),showPhone=showOwnerPhone.checked;
   if(!name||!br||!em||pin.length<4){regMsg.innerHTML='<div class="error">Fyll inn navn, rase, e-post og PIN på minst 4 tegn.</div>';return}
   saveBtn.disabled=true;
   try{
     const code=makeCode(),photoUrl=await uploadPhoto(code);
     const {error}=await sb.rpc("register_dog_id_v2",{p_dog_code:code,p_dog_name:name,p_breed:br,p_sex:sx||null,p_color:co||null,p_owner_email:em,p_owner_pin:pin,p_photo_url:photoUrl||null});
     if(error)throw new Error(error.message);
+     const {error:phoneError}=await sb.from("dog_ids").update({owner_phone:phone||null,show_owner_phone:!!(phone&&showPhone)}).eq("dog_code",code);
+     if(phoneError)throw new Error("Hunde-ID ble opprettet, men telefonnummeret kunne ikke lagres: "+phoneError.message);
     result.classList.remove("hidden");
     resultName.textContent=name+" 🐾";
     resultInfo.textContent=[br,sx,co].filter(Boolean).join(" · ");
