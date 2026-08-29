@@ -27,6 +27,10 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 .error{background:#ffe5e8;border:1px solid #efb0ba;padding:13px;border-radius:11px;margin-top:12px}
 .hidden{display:none!important}.statusline{font-size:.9rem;color:#5d6b63;text-align:center;margin-top:7px}
 .small{font-size:.88rem;color:#66736b}
+.owner-phone-card{background:#eef8f2;border:2px solid #8fc8a5;text-align:center}
+.owner-phone-card h2{color:#07563f;margin-top:0}
+.owner-phone-link{display:block;background:#07563f;color:#fff;text-decoration:none;padding:14px;border-radius:12px;font-size:1.1rem;font-weight:900;margin-top:10px}
+.owner-phone-note{margin:8px 0 0;color:#52665a;font-size:.9rem}
 
 .top-nav{display:flex;gap:10px;flex-wrap:wrap;max-width:760px;margin:14px auto 0;padding:0 14px}
 .top-nav a{flex:1 1 180px;text-decoration:none;text-align:center;padding:12px 14px;border-radius:13px;font-weight:850}
@@ -98,6 +102,12 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 </div>
 </div>
 
+<div id="ownerPhoneCard" class="card owner-phone-card hidden">
+  <h2>📞 Kontakt eieren direkte</h2>
+  <p>Eieren har valgt å vise telefonnummeret sitt.</p>
+  <a id="ownerPhoneLink" class="owner-phone-link" href=""></a>
+  <p class="owner-phone-note">Trykk på nummeret for å ringe.</p>
+</div>
 
 <button id="finderGuideOpen" class="finder-help" type="button">
   <div style="font-size:30px">❓🐾</div>
@@ -127,7 +137,7 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 </div>
 
 <div class="card small">
-🔒 Eierens e-postadresse og private opplysninger vises ikke offentlig. Finneren sender meldingen gjennom Hundene Våre.
+🔒 Eierens e-postadresse vises ikke offentlig. Telefonnummer vises bare dersom eieren selv har valgt dette. Finneren kan alltid sende melding gjennom Hundene Våre.
 </div>
 </section>
 </main>
@@ -164,6 +174,17 @@ async function loadDog(){
   document.getElementById("dogName").textContent=currentDog.dog_name+" 🐾";
   document.getElementById("dogInfo").textContent=[currentDog.breed,currentDog.sex,currentDog.color].filter(Boolean).join(" · ");
   document.getElementById("dogCode").textContent=currentDog.dog_code;
+
+  const ownerPhone=(currentDog.owner_phone||"").trim();
+  const ownerPhoneCard=document.getElementById("ownerPhoneCard");
+  const ownerPhoneLink=document.getElementById("ownerPhoneLink");
+  if(ownerPhone){
+    ownerPhoneLink.textContent="📞 "+ownerPhone;
+    ownerPhoneLink.href="tel:"+ownerPhone.replace(/[^0-9+]/g,"");
+    ownerPhoneCard.classList.remove("hidden");
+  }else{
+    ownerPhoneCard.classList.add("hidden");
+  }
 
   const badge=document.getElementById("dogBadge");
   badge.className="badge "+(currentDog.is_missing?"missing":"safe");
