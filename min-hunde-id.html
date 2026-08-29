@@ -221,10 +221,19 @@ async function registerDog(){
   saveBtn.disabled=true;
   try{
     const code=makeCode(),photoUrl=await uploadPhoto(code);
-    const {error}=await sb.rpc("register_dog_id_v2",{p_dog_code:code,p_dog_name:name,p_breed:br,p_sex:sx||null,p_color:co||null,p_owner_email:em,p_owner_pin:pin,p_photo_url:photoUrl||null});
+    const {error}=await sb.rpc("register_dog_id_v2",{
+      p_dog_code:code,
+      p_dog_name:name,
+      p_breed:br,
+      p_sex:sx||null,
+      p_color:co||null,
+      p_owner_email:em,
+      p_owner_pin:pin,
+      p_photo_url:photoUrl||null,
+      p_owner_phone:phone||null,
+      p_show_owner_phone:!!(phone&&showPhone)
+    });
     if(error)throw new Error(error.message);
-     const {error:phoneError}=await sb.from("dog_ids").update({owner_phone:phone||null,show_owner_phone:!!(phone&&showPhone)}).eq("dog_code",code);
-     if(phoneError)throw new Error("Hunde-ID ble opprettet, men telefonnummeret kunne ikke lagres: "+phoneError.message);
     result.classList.remove("hidden");
     resultName.textContent=name+" 🐾";
     resultInfo.textContent=[br,sx,co].filter(Boolean).join(" · ");
