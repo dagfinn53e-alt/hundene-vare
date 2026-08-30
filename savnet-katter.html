@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Savnede katter – Kattene Våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --green:#07563f;--green2:#0d7657;--bg:#f3f7f4;--card:#fff;--text:#17221c;
+  --muted:#66736b;--red:#cf2940;--line:#e0e9e3;--soft:#edf5f0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--text)}
+header{
+  background:linear-gradient(135deg,#a91f32,var(--red));
+  color:white;text-align:center;padding:24px 16px 28px;
+}
+header h1{margin:0;font-size:1.6rem}
+header p{margin:7px 0 0;opacity:.95}
+main{max-width:1100px;margin:auto;padding:18px 14px 55px}
+.top{
+  background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;
+  margin-bottom:17px;box-shadow:0 8px 28px #00000012;
+}
+.searchrow{display:grid;grid-template-columns:1fr auto;gap:10px}
+input{
+  width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:11px;font:inherit;
+}
+button,a.btn{
+  border:0;border-radius:12px;padding:13px 16px;font-weight:850;font-size:15px;
+  text-decoration:none;display:inline-block;text-align:center;cursor:pointer;
+}
+.green{background:var(--green);color:#fff}
+.outline{background:#fff;color:var(--green);border:2px solid var(--green)}
+.grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;
+}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:20px;
+  overflow:hidden;box-shadow:0 8px 28px #00000012;
+}
+.photo{
+  width:100%;height:240px;object-fit:cover;background:#edf4ef;display:block;
+}
+.placeholder{
+  width:100%;height:240px;background:#edf4ef;display:grid;place-items:center;font-size:72px;
+}
+.content{padding:17px}
+.badge{
+  display:inline-block;background:#ffe3e7;color:#b0182c;border-radius:999px;
+  padding:7px 11px;font-weight:900;font-size:.86rem;margin-bottom:7px;
+}
+h2{margin:4px 0 4px;font-size:1.35rem}
+.muted{color:var(--muted);line-height:1.45}
+.code{
+  display:inline-block;background:#f6faf7;border:1px solid #dfe9e2;
+  padding:7px 10px;border-radius:10px;font-size:.9rem;font-weight:800;margin:8px 0 12px;
+}
+.actions{display:grid;grid-template-columns:1fr;gap:8px}
+.empty{
+  background:#fff;border:1px solid var(--line);border-radius:20px;padding:35px 20px;
+  text-align:center;box-shadow:0 8px 28px #00000012;
+}
+.small{font-size:.88rem;color:var(--muted)}
+.count{font-weight:900;color:var(--red)}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){
+  .grid{grid-template-columns:1fr}
+  .photo,.placeholder{height:230px}
+  .searchrow{grid-template-columns:1fr}
+  header{padding:20px 12px}
+}
+
+.top-nav{
+  max-width:1100px;
+  margin:14px auto 0;
+  padding:0 14px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.top-nav a{
+  flex:1 1 220px;
+  text-decoration:none;
+  text-align:center;
+  padding:12px 16px;
+  border-radius:14px;
+  font-weight:900;
+  font-size:15px;
+}
+.top-nav .home{
+  background:#07563f;
+  color:white;
+}
+.top-nav .back{
+  background:white;
+  color:#07563f;
+  border:2px solid #07563f;
+}
+
+.missing-help{width:100%;background:linear-gradient(135deg,#fff2f3,#fff);border:1px solid #efc8ce;border-radius:17px;padding:15px 17px;margin:0 0 16px;cursor:pointer;text-align:center;font:inherit;color:inherit}
+.missing-help h3{margin:4px 0 5px;color:#a91f33}.missing-help p{margin:0;color:#6b6264}
+.missing-modal{position:fixed;inset:0;background:rgba(30,8,12,.72);display:none;align-items:center;justify-content:center;padding:18px;z-index:9999}
+.missing-modal.open{display:flex}.missing-sheet{width:min(780px,96vw);max-height:92vh;overflow:auto;background:#fff;border-radius:22px;padding:20px;box-shadow:0 20px 60px #0005}
+.missing-close{position:sticky;top:0;float:right;background:#9e2032;color:#fff;border:0;border-radius:50%;width:42px;height:42px;font-size:22px;cursor:pointer}
+.missing-title{text-align:center;color:#9e2032;margin:8px 50px 18px}.missing-steps{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.missing-step{background:#fffafa;border:1px solid #efdadd;border-radius:15px;padding:14px}.missing-step .num{width:32px;height:32px;border-radius:50%;display:inline-grid;place-items:center;background:#cf2940;color:#fff;font-weight:900;margin-right:7px}
+.missing-step h4{display:inline;margin:0;color:#4c2630}.missing-step p{margin:8px 0 0;color:#65545a;line-height:1.45}
+.missing-final{margin-top:14px;background:#eaf6ee;border:1px solid #c8dfcf;border-radius:15px;padding:14px;text-align:center;color:#07563f;font-weight:800}
+@media(max-width:620px){.missing-steps{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<header>
+  <h1>🚨 Savnede katter</h1>
+  <p>Kattene Våre – Digital Katte-ID</p>
+</header>
+
+<div class="top-nav">
+  <a class="home" href="index.html">🏠 Til forsiden</a>
+  <a class="back" href="min-katte-id.html">← Tilbake til registrering</a>
+</div>
+
+
+<main>
+
+<button id="missingGuideOpen" class="missing-help" type="button">
+  <div style="font-size:31px">❓🚨</div>
+  <h3>Hva gjør jeg hvis katten min blir borte?</h3>
+  <p>Trykk her for enkel steg-for-steg-veiledning</p>
+</button>
+
+<div class="top">
+  <div class="searchrow">
+    <input id="search" placeholder="🔎 Søk på navn, rase eller Katte-ID" oninput="render()">
+    <button class="green" onclick="loadMissing()">Oppdater</button>
+  </div>
+  <p class="small" style="margin-bottom:0">
+    Viser katter som eieren har meldt savnet. Når katten meldes trygg igjen, forsvinner den automatisk fra denne siden.
+  </p>
+</div>
+
+<div id="status" class="top">Henter savnede katter …</div>
+<div id="list" class="grid"></div>
+<div id="empty" class="empty" style="display:none">
+  <div style="font-size:58px">🐱</div>
+  <h2>Ingen savnede katter akkurat nå</h2>
+  <p class="muted">Det er gode nyheter.</p>
+</div>
+</main>
+
+<script>
+const sb=supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+let cats=[];
+
+function esc(v){
+  const d=document.createElement("div");
+  d.textContent=v||"";
+  return d.innerHTML;
+}
+
+function formatTime(v){
+  try{
+    return new Date(v).toLocaleString("no-NO",{
+      day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"
+    });
+  }catch{return ""}
+}
+
+async function loadMissing(){
+  document.getElementById("status").style.display="block";
+  document.getElementById("status").textContent="Henter savnede katter …";
+
+  const {data,error}=await sb.rpc("get_missing_cats");
+
+  if(error){
+    document.getElementById("status").innerHTML=
+      '<b>Feil:</b> '+esc(error.message);
+    return;
+  }
+
+  cats=data||[];
+  render();
+}
+
+function render(){
+  const q=document.getElementById("search").value.trim().toLowerCase();
+  const filtered=cats.filter(d=>{
+    const text=[d.cat_name,d.breed,d.sex,d.color,d.cat_code].filter(Boolean).join(" ").toLowerCase();
+    return text.includes(q);
+  });
+
+  const status=document.getElementById("status");
+  const list=document.getElementById("list");
+  const empty=document.getElementById("empty");
+
+  if(!cats.length){
+    status.style.display="none";
+    list.innerHTML="";
+    empty.style.display="block";
+    return;
+  }
+
+  empty.style.display="none";
+  status.style.display="block";
+  status.innerHTML='<span class="count">'+filtered.length+'</span> savnet'+
+    (filtered.length===1?' katt':'e katter')+
+    (q?' passer søket.':' registrert.');
+
+  if(!filtered.length){
+    list.innerHTML='<div class="empty" style="grid-column:1/-1"><h2>Ingen treff</h2><p class="muted">Prøv et annet navn eller en annen rase.</p></div>';
+    return;
+  }
+
+  list.innerHTML=filtered.map(d=>{
+    const url="https://www.xn--kattenevre-85a.com/katte-id.html?id="+encodeURIComponent(d.cat_code);
+    const img=d.photo_url
+      ? '<img class="photo" src="'+esc(d.photo_url)+'" alt="'+esc(d.cat_name)+'">'
+      : '<div class="placeholder">🐱</div>';
+
+    return `
+      <article class="card">
+        ${img}
+        <div class="content">
+          <div class="badge">🚨 SAVNET</div>
+          <h2>${esc(d.cat_name)} 🐾</h2>
+          <p class="muted">${[d.breed,d.sex,d.color].filter(Boolean).map(esc).join(" · ")}</p>
+          <div class="code">ID: ${esc(d.cat_code)}</div>
+          <p class="small">Meldt/oppdatert: ${formatTime(d.updated_at)}</p>
+          <div class="actions">
+            <a class="btn green" href="${url}">🐾 SE HUND / JEG HAR FUNNET DEN</a>
+          </div>
+        </div>
+      </article>`;
+  }).join("");
+}
+
+loadMissing();
+</script>
+
+<div id="missingGuideModal" class="missing-modal">
+ <div class="missing-sheet" role="dialog" aria-modal="true" aria-labelledby="missingGuideTitle">
+  <button id="missingGuideClose" class="missing-close" type="button" aria-label="Lukk">✕</button>
+  <h2 id="missingGuideTitle" class="missing-title">🚨 Når katten din blir borte</h2>
+  <div class="missing-steps">
+   <div class="missing-step"><span class="num">1</span><h4>Åpne Min Katte-ID</h4><p>Gå til «Min Katte-ID» og velg at du allerede har en Digital Katte-ID.</p></div>
+   <div class="missing-step"><span class="num">2</span><h4>Logg inn på katten</h4><p>Skriv inn kattens HV-ID og PIN-koden du valgte da katten ble registrert.</p></div>
+   <div class="missing-step"><span class="num">3</span><h4>Meld katten savnet</h4><p>På eiersiden trykker du «Meld katten savnet». Kattens status endres med en gang.</p></div>
+   <div class="missing-step"><span class="num">4</span><h4>Katten vises her</h4><p>Den savnede katten kommer på oversikten «Savnede katter», slik at andre kan se etter den.</p></div>
+   <div class="missing-step"><span class="num">5</span><h4>QR-koden virker fortsatt</h4><p>Den som finner katten kan skanne QR-koden på halsbåndet og sende deg et funnvarsel gjennom Kattene Våre.</p></div>
+   <div class="missing-step"><span class="num">6</span><h4>Du får e-post</h4><p>Når en finner sender inn melding, får du automatisk e-post med opplysningene som er sendt.</p></div>
+   <div class="missing-step"><span class="num">7</span><h4>Katten er hjemme igjen</h4><p>Åpne eiersiden på nytt og trykk «Meld trygg». Da fjernes katten automatisk fra denne oversikten.</p></div>
+   <div class="missing-step"><span class="num">8</span><h4>Hold opplysningene oppdatert</h4><p>Pass på at bilde, e-post og andre opplysninger på Katte-ID-en er riktige før du trenger dem.</p></div>
+  </div>
+  <div class="missing-final">💚 Digital Katte-ID er et føre-var-opplegg: QR-koden bør være på kattens halsbånd mens katten er hjemme og trygg.</div>
+ </div>
+</div>
+
+
+<script>
+(function(){
+ const modal=document.getElementById("missingGuideModal");
+ const openBtn=document.getElementById("missingGuideOpen");
+ const closeBtn=document.getElementById("missingGuideClose");
+ function openGuide(){if(modal){modal.classList.add("open");document.body.style.overflow="hidden";}}
+ function closeGuide(){if(modal){modal.classList.remove("open");document.body.style.overflow="";}}
+ if(openBtn)openBtn.addEventListener("click",openGuide);
+ if(closeBtn)closeBtn.addEventListener("click",closeGuide);
+ if(modal)modal.addEventListener("click",e=>{if(e.target===modal)closeGuide();});
+ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeGuide();});
+})();
+</script>
+
+</body>
+</html>
