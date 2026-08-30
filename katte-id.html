@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Digital Katte-ID – Kattene Våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f7f4;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#17221c}
+header{background:linear-gradient(135deg,#07563f,#073b2d);color:white;text-align:center;padding:20px 15px}
+header h1{margin:0;font-size:1.35rem}header p{margin:5px 0 0;opacity:.9}
+main{max-width:700px;margin:auto;padding:16px}
+.card{background:#fff;padding:20px;border-radius:20px;margin-bottom:15px;box-shadow:0 6px 24px #00000018;border:1px solid #e2eae5}
+.center{text-align:center}.cat{width:165px;height:165px;border-radius:50%;object-fit:cover;border:7px solid #e8f4ed;background:#eef3ef}
+.placeholder{width:165px;height:165px;border-radius:50%;border:7px solid #e8f4ed;background:#eef3ef;display:grid;place-items:center;margin:auto;font-size:64px}
+h2{margin:10px 0 3px}.muted{color:#657269}
+.badge{display:inline-block;padding:8px 13px;border-radius:999px;font-weight:850;margin:10px}
+.safe{background:#e4f5e9;color:#17603c}.missing{background:#ffe2e6;color:#b0182c}
+.banner{background:#cf2940;color:#fff;padding:12px;border-radius:12px;text-align:center;font-weight:900;margin-bottom:15px}
+label{display:block;font-weight:750;margin:12px 0 5px}
+input,textarea{width:100%;padding:12px;border:1px solid #cbd5cf;border-radius:10px;font:inherit}
+textarea{min-height:95px;resize:vertical}
+button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-size:16px;font-weight:850;cursor:pointer}
+.red{background:#cf2940;color:#fff}.outline{background:#fff;color:#07563f;border:2px solid #07563f}
+.ok{background:#e4f5e9;border:1px solid #b9dfc6;padding:13px;border-radius:11px;margin-top:12px}
+.error{background:#ffe5e8;border:1px solid #efb0ba;padding:13px;border-radius:11px;margin-top:12px}
+.hidden{display:none!important}.statusline{font-size:.9rem;color:#5d6b63;text-align:center;margin-top:7px}
+.small{font-size:.88rem;color:#66736b}
+
+.top-nav{display:flex;gap:10px;flex-wrap:wrap;max-width:760px;margin:14px auto 0;padding:0 14px}
+.top-nav a{flex:1 1 180px;text-decoration:none;text-align:center;padding:12px 14px;border-radius:13px;font-weight:850}
+.top-nav .home{background:#07563f;color:#fff}.top-nav .myid{background:#fff;color:#07563f;border:2px solid #07563f}
+.top-nav .missing{background:#fff3f4;color:#b52235;border:2px solid #cf2940}
+
+</style>
+</head>
+<body>
+<header><h1>🐾 KATTENE VÅRE</h1><p>Digital Katte-ID</p></header>
+<div class="top-nav">
+<a class="home" href="index.html">🏠 Til forsiden</a>
+<a class="myid" href="min-katte-id.html">🐾 Min Katte-ID</a>
+<a class="missing" href="savnet-katter.html">🚨 Savnede katter</a>
+</div>
+<main>
+
+<div id="loading" class="card center">
+<h2>Henter Katte-ID …</h2>
+<p class="muted">Et lite øyeblikk.</p>
+</div>
+
+<div id="notFound" class="card hidden">
+<h2>⚠️ Katte-ID ikke funnet</h2>
+<p>Denne QR-koden eller Katte-ID-en finnes ikke i systemet.</p>
+</div>
+
+<section id="catPage" class="hidden">
+<div class="card">
+<div id="missingBanner" class="banner hidden">🚨 DENNE KATTEN ER MELDT SAVNET</div>
+<div class="center">
+<div id="photoHolder"><div class="placeholder">🐱</div></div>
+<h2 id="catName"></h2>
+<p id="catInfo" class="muted"></p>
+<div id="catBadge" class="badge safe"></div>
+<p><b>Digital ID:</b> <span id="catCode"></span></p>
+</div>
+</div>
+
+<div class="card">
+<h2>🐾 Har du funnet denne katten?</h2>
+<p>Send en beskjed til eieren. Eierens e-postadresse vises ikke.</p>
+
+<label>Ditt navn (valgfritt)</label>
+<input id="finderName" placeholder="Navn">
+
+<label>Telefonnummer (valgfritt)</label>
+<input id="finderPhone" placeholder="Telefonnummer">
+
+<label>Melding</label>
+<textarea id="finderMessage" placeholder="For eksempel: Jeg har katten hos meg. Den har det bra."></textarea>
+
+<input id="finderLocation" type="hidden">
+<button class="outline" onclick="getLocation()">📍 LEGG VED POSISJON</button>
+<div id="locText" class="statusline"></div>
+
+<button id="sendBtn" class="red" onclick="sendFound()">🐾 JEG HAR FUNNET DENNE KATTEN</button>
+<div id="sendResult"></div>
+</div>
+
+<div class="card small">
+🔒 Eierens e-postadresse og private opplysninger vises ikke offentlig. Finneren sender meldingen gjennom Kattene Våre.
+</div>
+</section>
+</main>
+
+<script>
+const sb=supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+const params=new URLSearchParams(location.search);
+const CAT_CODE=(params.get("id")||"").trim();
+let currentCat=null;
+
+function esc(v){const d=document.createElement("div");d.textContent=v||"";return d.innerHTML}
+
+async function loadCat(){
+  if(!CAT_CODE){
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("notFound").classList.remove("hidden");
+    return;
+  }
+
+  const {data,error}=await sb.rpc("get_cat_public",{p_cat_code:CAT_CODE});
+  document.getElementById("loading").classList.add("hidden");
+
+  if(error || !data || !data[0]){
+    document.getElementById("notFound").classList.remove("hidden");
+    return;
+  }
+
+  currentCat=data[0];
+  document.getElementById("catPage").classList.remove("hidden");
+  document.getElementById("catName").textContent=currentCat.cat_name+" 🐾";
+  document.getElementById("catInfo").textContent=[currentCat.breed,currentCat.sex,currentCat.color].filter(Boolean).join(" · ");
+  document.getElementById("catCode").textContent=currentCat.cat_code;
+
+  const badge=document.getElementById("catBadge");
+  badge.className="badge "+(currentCat.is_missing?"missing":"safe");
+  badge.textContent=currentCat.is_missing?"🚨 KATTEN ER SAVNET":"🟢 KATTEN ER IKKE MELDT SAVNET";
+  document.getElementById("missingBanner").classList.toggle("hidden",!currentCat.is_missing);
+
+  if(currentCat.photo_url){
+    document.getElementById("photoHolder").innerHTML='<img class="cat" alt="Kattens bilde" src="'+esc(currentCat.photo_url)+'">';
+  }
+}
+
+function getLocation(){
+  const txt=document.getElementById("locText");
+  txt.textContent="Henter posisjon …";
+  if(!navigator.geolocation){txt.textContent="Posisjon støttes ikke.";return}
+
+  navigator.geolocation.getCurrentPosition(
+    p=>{
+      document.getElementById("finderLocation").value=
+        "https://www.google.com/maps?q="+p.coords.latitude+","+p.coords.longitude;
+      txt.textContent="✅ Posisjon lagt ved.";
+    },
+    ()=>txt.textContent="Posisjon ble ikke delt."
+  );
+}
+
+async function sendFound(){
+  if(!currentCat)return;
+
+  const btn=document.getElementById("sendBtn");
+  const result=document.getElementById("sendResult");
+  btn.disabled=true;
+  result.innerHTML='<div class="ok">Sender varsel …</div>';
+
+  const finderName=document.getElementById("finderName").value.trim();
+  const finderPhone=document.getElementById("finderPhone").value.trim();
+  const message=document.getElementById("finderMessage").value.trim() ||
+    "Jeg har funnet "+currentCat.cat_name+".";
+  const locationUrl=document.getElementById("finderLocation").value;
+
+  const {error:dbError}=await sb.rpc("create_cat_alert",{
+    p_cat_code:currentCat.cat_code,
+    p_finder_name:finderName,
+    p_finder_phone:finderPhone,
+    p_message:message,
+    p_location_url:locationUrl
+  });
+
+  if(dbError){
+    result.innerHTML='<div class="error">Feil ved lagring: '+esc(dbError.message)+'</div>';
+    btn.disabled=false;
+    return;
+  }
+
+  const {error:mailError}=await sb.functions.invoke("send-cat-found-email",{
+    body:{
+      catCode:currentCat.cat_code,
+      catName:currentCat.cat_name,
+      finderName,
+      finderPhone,
+      message,
+      locationUrl
+    }
+  });
+
+  if(mailError){
+    result.innerHTML='<div class="error"><b>Varslet er lagret, men e-posten kunne ikke sendes.</b><br>'+esc(mailError.message)+'</div>';
+  }else{
+    result.innerHTML='<div class="ok"><b>✅ VARSEL SENDT</b><br>Eieren av '+esc(currentCat.cat_name)+' er varslet automatisk.</div>';
+  }
+  btn.disabled=false;
+}
+
+loadCat();
+</script>
+</body>
+</html>
