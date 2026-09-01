@@ -27,6 +27,9 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 .error{background:#ffe5e8;border:1px solid #efb0ba;padding:13px;border-radius:11px;margin-top:12px}
 .hidden{display:none!important}.statusline{font-size:.9rem;color:#5d6b63;text-align:center;margin-top:7px}
 .small{font-size:.88rem;color:#66736b}
+.welcome{background:#f2fbf6;border:1px solid #cfe8d8;padding:15px 16px;border-radius:14px;margin-bottom:15px;line-height:1.5}
+.welcome.missingwelcome{background:#fff2f4;border-color:#f0c3cb}
+.welcome strong{font-size:1.05rem}
 </style>
 </head>
 <body>
@@ -46,6 +49,7 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 <section id="dogPage" class="hidden">
 <div class="card">
 <div id="missingBanner" class="banner hidden">🚨 DENNE HUNDEN ER MELDT SAVNET</div>
+<div id="welcomeMessage" class="welcome"></div>
 <div class="center">
 <div id="photoHolder"><div class="placeholder">🐶</div></div>
 <h2 id="dogName"></h2>
@@ -119,6 +123,15 @@ async function loadDog(){
   badge.className="badge "+(currentDog.is_missing?"missing":"safe");
   badge.textContent=currentDog.is_missing?"🚨 HUNDEN ER SAVNET":"🟢 HUNDEN ER IKKE MELDT SAVNET";
   document.getElementById("missingBanner").classList.toggle("hidden",!currentDog.is_missing);
+
+  const welcome=document.getElementById("welcomeMessage");
+  if(currentDog.is_missing){
+    welcome.className="welcome missingwelcome";
+    welcome.innerHTML="<strong>❤️ Takk for at du fant meg!</strong><br>Familien min leter etter meg akkurat nå. Trykk nedenfor for å gi beskjed om hvor jeg er.";
+  }else{
+    welcome.className="welcome";
+    welcome.innerHTML="<strong>🐾 Hei! Så fint at du skannet brikken min ❤️</strong><br>Jeg heter <b>"+esc(currentDog.dog_name)+"</b>. Hvis jeg er alene, kan det hende familien min leter etter meg. Her finner du informasjon som kan hjelpe meg trygt hjem igjen.";
+  }
 
   if(currentDog.photo_url){
     document.getElementById("photoHolder").innerHTML='<img class="dog" alt="Hundens bilde" src="'+esc(currentDog.photo_url)+'">';
