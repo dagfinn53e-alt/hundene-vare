@@ -219,7 +219,7 @@ function render(){
   }
 
   list.innerHTML=filtered.map(d=>{
-    const url="https://www.xn--kattenevre-85a.com/katte-id.html?id="+encodeURIComponent(d.cat_code);
+    const url="https://www.xn--hundenevre-85a.com/katte-id.html?id="+encodeURIComponent(d.cat_code);
     const img=d.photo_url
       ? '<img class="photo" src="'+esc(d.photo_url)+'" alt="'+esc(d.cat_name)+'">'
       : '<div class="placeholder">🐱</div>';
@@ -234,7 +234,7 @@ function render(){
           <div class="code">ID: ${esc(d.cat_code)}</div>
           <p class="small">Meldt/oppdatert: ${formatTime(d.updated_at)}</p>
           <div class="actions">
-            <a class="btn green" href="${url}">🐾 SE HUND / JEG HAR FUNNET DEN</a>
+            <a class="btn green" href="${url}">🐾 SE KATT / JEG HAR FUNNET DEN</a>
           </div>
         </div>
       </article>`;
