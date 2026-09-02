@@ -186,6 +186,27 @@
 @media(max-width:600px){.vax-form{grid-template-columns:1fr}.vax-form .full,.vax-save,.vax-msg{grid-column:1}}
 </style>
 
+
+<style>
+.med-modal{display:none;position:fixed;inset:0;background:#000c;z-index:62;align-items:center;justify-content:center;padding:18px}
+.med-box{width:min(680px,96vw);max-height:90vh;overflow:auto;background:linear-gradient(145deg,#0b1a26,#061019);border:1px solid #35536a;border-radius:22px;padding:25px;box-shadow:0 25px 70px #000b}
+.med-head{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:18px}
+.med-head h2{margin:0;font-size:28px}
+.med-close{border:1px solid #35536a;background:#101d27;color:#fff;border-radius:10px;padding:9px 12px;cursor:pointer;font-weight:800}
+.med-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.med-form .full{grid-column:1/-1}
+.med-form label{display:block;font-weight:800;margin-bottom:7px;color:#dce6ed}
+.med-form input,.med-form textarea{width:100%;background:#050d14;color:#fff;border:1px solid #29445a;border-radius:10px;padding:13px;font-size:16px}
+.med-form textarea{min-height:80px;resize:vertical}
+.med-save{grid-column:1/-1;border:0;border-radius:11px;padding:14px;background:linear-gradient(135deg,#e1b955,#ad7c2d);color:#111;font-weight:900;font-size:17px;cursor:pointer}
+.med-msg{grid-column:1/-1;min-height:20px;color:#ffb8b8;font-size:14px}
+.med-history{margin-top:23px;border-top:1px solid #21394d;padding-top:18px}
+.med-row{padding:12px 0;border-bottom:1px solid #182c3b}
+.med-row strong{color:#efbd54;font-size:17px}
+.med-del{margin-top:8px;border:1px solid #704040;background:#241316;color:#ffb5b5;border-radius:8px;padding:6px 10px;cursor:pointer;font-weight:800}
+@media(max-width:600px){.med-form{grid-template-columns:1fr}.med-form .full,.med-save,.med-msg{grid-column:1}}
+</style>
+
 </head><body>
 <div id="gate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#102337 0,#06111c 42%,#030a11 100%)">
   <div id="loginCard" style="width:min(680px,94vw);background:linear-gradient(145deg,#091722,#061019);border:1px solid #244157;border-radius:28px;padding:46px 50px;box-shadow:0 20px 55px #0009">
@@ -245,7 +266,7 @@
 <div class="card" onclick="openVaxModal()" style="cursor:pointer"><h4>🛡️ Helse & vaksinering</h4><p>Vaksiner, ormekur, flått, helsesjekk og historikk.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card"><h4>❤️ Løpetid & fruktbarhet</h4><p>Syklus og fruktbare perioder når relevant.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card"><h4>🗓️ Avtaler & påminnelser</h4><p>Alle avtaler og behandlinger samlet.</p><span class="link">Se kalender →</span><img class="pet" src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
-<div class="card"><h4>💊 Medisiner & behandling</h4><p>Medisiner, doser, kurer og behandlingshistorikk.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
+<div class="card" onclick="openMedModal()" style="cursor:pointer"><h4>💊 Medisiner & behandling</h4><p>Medisiner, doser, kurer og behandlingshistorikk.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card weight-card" onclick="openWeightModal()"><h4>⚖️ Vekt & utvikling</h4><p>Vektlogg og utvikling over tid.</p><span class="link">Legg til / se vektlogg →</span><img class="pet" src="https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card"><h4>🥣 Fôr & ernæring</h4><p>Fôrtype, mengde, allergier og kosttilskudd.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card"><h4>🏃 Aktivitet & trening</h4><p>Registrer turer, trening og aktiviteter.</p><span class="link">Loggfør aktivitet →</span><img class="pet" src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
@@ -255,6 +276,49 @@
 <div class="card family"><h4>🐾 Chiko er en del av familien</h4><p>Samle det viktigste om helse, omsorg og hverdagen på ett trygt sted. ❤️</p></div>
 </div></section><div class="lock">🔒 Denne siden er kun synlig for deg som eier av denne Dyre-ID-en.</div></main>
 
+
+
+<div class="med-modal" id="medModal">
+  <div class="med-box">
+    <div class="med-head">
+      <div>
+        <div style="color:#e8b94f;font-weight:900">💊 MEDISINER & BEHANDLING</div>
+        <h2 id="medTitle">Medisiner & Behandling</h2>
+      </div>
+      <button class="med-close" type="button" onclick="closeMedModal()">Lukk ✕</button>
+    </div>
+
+    <div class="med-form">
+      <div class="full">
+        <label for="medName">Medisin eller behandling</label>
+        <input id="medName" type="text" placeholder="f.eks. øyedråper, smertestillende eller behandling">
+      </div>
+      <div>
+        <label for="medDose">Dose (valgfritt)</label>
+        <input id="medDose" type="text" placeholder="f.eks. 1 tablett morgen og kveld">
+      </div>
+      <div>
+        <label for="medStart">Startdato (valgfritt)</label>
+        <input id="medStart" type="date">
+      </div>
+      <div>
+        <label for="medEnd">Sluttdato (valgfritt)</label>
+        <input id="medEnd" type="date">
+      </div>
+      <div class="full">
+        <label for="medNote">Notat (valgfritt)</label>
+        <textarea id="medNote" placeholder="f.eks. gitt etter avtale med veterinær"></textarea>
+      </div>
+      <button class="med-save" id="medSave" type="button" onclick="saveMed()">💾 Lagre medisin / behandling</button>
+      <div class="med-msg" id="medMsg"></div>
+    </div>
+
+    <div class="med-history">
+      <h3 style="margin:0 0 8px">Historikk</h3>
+      <div id="medHistory"><div class="weight-empty">Ingen medisiner eller behandlinger registrert ennå.</div></div>
+    </div>
+  </div>
+</div>
 
 <div class="vax-modal" id="vaxModal">
   <div class="vax-box">
@@ -504,6 +568,118 @@ function logoutOwner(){
 }
 
 
+
+
+async function openMedModal(){
+  if(!currentDog) return;
+  document.getElementById("medTitle").textContent=(currentDog.dog_name||"Dyret")+" – medisiner & behandling";
+  document.getElementById("medName").value="";
+  document.getElementById("medDose").value="";
+  document.getElementById("medStart").value=todayLocalISO();
+  document.getElementById("medEnd").value="";
+  document.getElementById("medNote").value="";
+  document.getElementById("medMsg").textContent="";
+  document.getElementById("medModal").style.display="flex";
+  await loadMed();
+}
+function closeMedModal(){ document.getElementById("medModal").style.display="none"; }
+
+async function loadMed(){
+  const box=document.getElementById("medHistory");
+  const c=ownerCredentials();
+  box.innerHTML='<div class="weight-empty">Henter historikk …</div>';
+  try{
+    const {data,error}=await sb.rpc("get_dog_medications",{
+      p_dog_code:currentDog.dog_code,
+      p_owner_email:c.email,
+      p_owner_pin:c.pin
+    });
+    if(error) throw error;
+    if(!data || !data.length){
+      box.innerHTML='<div class="weight-empty">Ingen medisiner eller behandlinger registrert ennå.</div>';
+      return;
+    }
+    box.innerHTML=data.map(m=>`
+      <div class="med-row">
+        <strong>${esc(m.treatment_name||"Behandling")}</strong><br>
+        ${m.dose ? `<span>Dose: ${esc(m.dose)}</span><br>` : ""}
+        ${m.start_date ? `<span>Start: ${esc(formatDateNO(m.start_date))}</span>` : ""}
+        ${m.end_date ? `<span> · Slutt: ${esc(formatDateNO(m.end_date))}</span>` : ""}
+        ${m.note ? `<div style="color:#aebbc5;margin-top:5px">${esc(m.note)}</div>` : ""}
+        <button class="med-del" type="button" onclick="deleteMed(${Number(m.id)})">🗑️ Slett</button>
+      </div>
+    `).join("");
+  }catch(e){
+    console.error(e);
+    box.innerHTML='<div class="weight-empty" style="color:#ffb8b8">Kunne ikke hente historikken.</div>';
+  }
+}
+
+async function saveMed(){
+  const msg=document.getElementById("medMsg");
+  const btn=document.getElementById("medSave");
+  const name=document.getElementById("medName").value.trim();
+  const dose=document.getElementById("medDose").value.trim() || null;
+  const start=document.getElementById("medStart").value || null;
+  const end=document.getElementById("medEnd").value || null;
+  const note=document.getElementById("medNote").value.trim() || null;
+  const c=ownerCredentials();
+
+  msg.style.color="#ffb8b8";
+  msg.textContent="";
+  if(!name){ msg.textContent="Skriv inn medisin eller behandling."; return; }
+
+  btn.disabled=true;
+  btn.textContent="Lagrer …";
+  try{
+    const {error}=await sb.rpc("add_dog_medication",{
+      p_dog_code:currentDog.dog_code,
+      p_owner_email:c.email,
+      p_owner_pin:c.pin,
+      p_treatment_name:name,
+      p_dose:dose,
+      p_start_date:start,
+      p_end_date:end,
+      p_note:note
+    });
+    if(error) throw error;
+
+    msg.style.color="#67dc88";
+    msg.textContent="✓ Medisin / behandling er lagret.";
+    document.getElementById("medName").value="";
+    document.getElementById("medDose").value="";
+    document.getElementById("medEnd").value="";
+    document.getElementById("medNote").value="";
+    await loadMed();
+  }catch(e){
+    console.error(e);
+    msg.textContent="Kunne ikke lagre medisin / behandling.";
+  }finally{
+    btn.disabled=false;
+    btn.textContent="💾 Lagre medisin / behandling";
+  }
+}
+
+async function deleteMed(id){
+  if(!confirm("Vil du slette denne registreringen?")) return;
+  const c=ownerCredentials();
+  try{
+    const {error}=await sb.rpc("delete_dog_medication",{
+      p_medication_id:id,
+      p_dog_code:currentDog.dog_code,
+      p_owner_email:c.email,
+      p_owner_pin:c.pin
+    });
+    if(error) throw error;
+    await loadMed();
+    document.getElementById("medMsg").style.color="#67dc88";
+    document.getElementById("medMsg").textContent="✓ Registreringen er slettet.";
+  }catch(e){
+    console.error(e);
+    document.getElementById("medMsg").style.color="#ffb8b8";
+    document.getElementById("medMsg").textContent="Kunne ikke slette registreringen.";
+  }
+}
 
 async function openVaxModal(){
   if(!currentDog) return;
@@ -791,6 +967,8 @@ async function restoreOwnerSession(){
     console.error(e);
   }
 }
+
+document.getElementById("medModal").addEventListener("click",e=>{if(e.target.id==="medModal") closeMedModal();});
 
 document.getElementById("vaxModal").addEventListener("click",e=>{if(e.target.id==="vaxModal") closeVaxModal();});
 
