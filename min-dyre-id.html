@@ -343,7 +343,7 @@
   <a class="publicbtn" id="publicDogLink" href="#">🐾 Se offentlig Dyre-ID</a>
 </div>
 <main class="wrap">
-<section class="hero"><div class="avatar" id="heroAvatar">🐶</div><div><h1 id="heroDogName">Dyret mitt ✓</h1><div class="meta"><span>🐾 Rase</span><b id="heroBreed">–</b><span>♂ Kjønn</span><b id="heroSex">–</b><span>🎂 Født</span><b id="heroBirth">Legg til</b><span>▣ Mikrochip</span><b id="heroChip">Legg til</b><span>⚖ Vekt</span><b id="heroWeight">Legg til</b><span>● Farge</span><b id="heroColor">–</b></div></div><button onclick="openProfileModal()" class="edit">✎ Rediger profil</button></section>
+<section class="hero"><div class="avatar" id="heroAvatar">🐶</div><div><h1 id="heroDogName">Dyret mitt ✓</h1><div class="meta"><span>🐾 Rase</span><b id="heroBreed">–</b><span>♂ Kjønn</span><b id="heroSex">–</b><span>🎂 Født</span><b id="heroBirth">Legg til</b><span>▣ Mikrochip</span><b id="heroChip">Legg til</b><span>⚖ Vekt</span><b id="heroWeight"><span id="heroWeightTop">Legg til</span></b><span>● Farge</span><b id="heroColor">–</b></div></div><button onclick="openProfileModal()" class="edit">✎ Rediger profil</button></section>
 <div class="quick"><div class="q"><span class="ico">📄</span><b>Helsekort</b></div><div class="q"><span class="ico">🔗</span><b>Del profil</b></div><div class="q"><span class="ico">🖼️</span><b>Last opp bilde</b></div><div class="q"><span class="ico">🪪</span><b>Skriv ut ID-kort</b></div><div class="q"><span class="ico">•••</span><b>Mer</b></div></div>
 <div class="triple"><section class="panel"><h3>🔵 HURTIGINFO</h3><div class="info"><span>🏠 Adresse</span><b>Legg til</b><span>👤 Eier</span><b>Privat</b><span>☎ Telefon</span><b>Privat</b><span>✉ E-post</span><b>Privat</b><span>🩺 Veterinær</span><b id="heroVet">Legg til</b><span>▣ ID-nummer</span><b id="heroCode">–</b></div></section><section class="panel health"><h3>💙 HELSESTATUS</h3><div class="ring">100%</div><b class="green">Frisk og aktiv</b><p style="color:#8999a6">Sist helsesjekk: legg til</p></section><section class="panel"><h3>📝 KJAPPE NOTATER</h3><p class="notes">Her kan eier skrive egne private notater om Chiko.</p><p style="color:#7f909c;margin-top:45px">Kun synlig for eier.</p></section></div>
 <section class="section"><h3>🔔 VIKTIGE PÅMINNELSER</h3><div class="reminders"><div class="rem"><strong>🛡️ Vaksinering</strong><small>Neste vaksine</small><div class="date">Legg til <span class="days">Påminnelse</span></div></div><div class="rem"><strong>🪲 Flåttbehandling</strong><small>Behandling</small><div class="date"><span id="importantTick">Legg til</span></div></div><div class="rem"><strong>✂️ Kloklipp</strong><small>Stell</small><div class="date"><span id="importantNails">Legg til</span></div></div><div class="rem"><strong>🦷 Tannrens / sjekk</strong><small>Tannhelse</small><div class="date"><span id="importantDental">Legg til</span></div></div></div></section>
@@ -1450,7 +1450,7 @@ function formatKg(v){
   return n.toLocaleString("no-NO",{minimumFractionDigits:1,maximumFractionDigits:2})+" kg";
 }
 
-async function loadLatestWeight(){
+async function loadLatestWeightOriginal(){
   const hero=document.getElementById("heroWeight");
   if(!currentDog || !hero) return;
   const c=ownerCredentials();
@@ -1469,6 +1469,17 @@ async function loadLatestWeight(){
     hero.textContent="Legg til";
   }
 }
+
+async function loadLatestWeight(){
+  await loadLatestWeightOriginal();
+  const top=document.getElementById("heroWeightTop");
+  const existing=document.getElementById("heroWeight");
+  if(top && existing){
+    const txt=(existing.textContent||"").trim();
+    top.textContent=(txt && txt!=="—" && txt!=="Legg til") ? txt : "Legg til";
+  }
+}
+
 
 async function openWeightModal(){
   if(!currentDog) return;
