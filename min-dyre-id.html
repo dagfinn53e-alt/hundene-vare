@@ -8,7 +8,45 @@
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.card{padding:15px;min-height:145px;position:relative;overflow:hidden}.card h4{font-size:16px;margin:0 0 9px}.card p{font-size:13px;color:#aab8c3;line-height:1.45;max-width:68%}.card .pet{position:absolute;right:10px;bottom:10px;width:88px;height:76px;border-radius:12px;object-fit:cover;border:1px solid #385064;box-shadow:0 8px 18px #0008;filter:saturate(.9) brightness(.88)}.link{color:#61a9ff;font-size:13px;font-weight:800}.family{grid-column:span 2;background:radial-gradient(circle at 90% 60%,#5a3b0d55,#0b151c 50%);border-color:#493719}.family h4{color:#efbd54}.lock{color:#7f8f9d;font-size:13px;padding:20px 4px 30px}
 .modal{display:none;position:fixed;inset:0;background:#000b;align-items:center;justify-content:center;z-index:10}.box{width:min(410px,92%);background:#091722;border:1px solid #29455a;border-radius:18px;padding:24px}.box input{width:100%;background:#050d14;color:#fff;border:1px solid #294052;border-radius:9px;padding:12px;margin:7px 0 13px}.box button{width:100%;padding:12px;border:0;border-radius:9px;margin-top:7px;font-weight:800;background:#d7a742;color:#111}
 @media(max-width:850px){.hero{grid-template-columns:1fr;text-align:center}.avatar{margin:auto;width:140px;height:140px}.meta{max-width:400px;margin:auto;text-align:left}.quick{grid-template-columns:repeat(2,1fr)}.triple{grid-template-columns:1fr}.reminders,.cards{grid-template-columns:1fr 1fr}.family{grid-column:span 2}.nav a{display:none}}@media(max-width:520px){.reminders,.cards{grid-template-columns:1fr}.family{grid-column:span 1}}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+async function restoreOwnerSession(){
+  const savedEmail=sessionStorage.getItem("dyreid_owner_email");
+  const savedPin=sessionStorage.getItem("dyreid_owner_pin");
+  const savedDog=sessionStorage.getItem("dyreid_current_dog");
+  if(!savedEmail || !savedPin) return;
+
+  const emailEl=document.getElementById("email");
+  const pinEl=document.getElementById("pin");
+  if(emailEl) emailEl.value=savedEmail;
+  if(pinEl) pinEl.value=savedPin;
+
+  try{
+    const {data,error}=await sb.rpc("get_owner_dogs",{p_owner_email:savedEmail,p_owner_pin:savedPin});
+    if(error || !data) return;
+
+    const allowedCodes=["HV-Z3T74Z9D","HV-GN4PNUHU"];
+    ownerDogs=data.filter(d=>allowedCodes.includes((d.dog_code||"").toUpperCase()));
+    if(!ownerDogs.length) return;
+
+    if(savedDog){
+      const idx=ownerDogs.findIndex(d=>(d.dog_code||"").toUpperCase()===savedDog.toUpperCase());
+      if(idx>=0){
+        document.getElementById("loginPage").style.display="none";
+        document.getElementById("animalPage").style.display="none";
+        document.getElementById("privateApp").style.display="block";
+        openAnimal(idx);
+        return;
+      }
+    }
+
+    document.getElementById("loginPage").style.display="none";
+    document.getElementById("animalPage").style.display="block";
+    renderAnimals();
+  }catch(e){}
+}
+
+window.addEventListener("DOMContentLoaded",restoreOwnerSession);
+</script>
 <style>
 @media(max-width:600px){
   #loginCard{padding:30px 22px!important}
@@ -237,6 +275,9 @@ async function ownerLogin(){
     const allowedCodes=["HV-Z3T74Z9D","HV-GN4PNUHU"];
     ownerDogs=data.filter(d=>allowedCodes.includes((d.dog_code||"").toUpperCase()));
 
+    sessionStorage.setItem("dyreid_owner_email", email);
+    sessionStorage.setItem("dyreid_owner_pin", pin);
+
     if(!ownerDogs.length){
       msg.textContent="Fant ikke Bonnie eller Chiko på denne innloggingen.";
       return;
@@ -294,6 +335,9 @@ function renderAnimals(){
 }
 function openAnimal(index){
   currentDog=ownerDogs[index];
+  if(currentDog?.dog_code){
+    sessionStorage.setItem("dyreid_current_dog", currentDog.dog_code);
+  }
   if(!currentDog) return;
 
   document.getElementById("gate").style.display="none";
@@ -344,6 +388,9 @@ function backToAnimals(){
 }
 
 function logoutOwner(){
+  sessionStorage.removeItem("dyreid_owner_email");
+  sessionStorage.removeItem("dyreid_owner_pin");
+  sessionStorage.removeItem("dyreid_current_dog");
   ownerDogs=[];
   currentDog=null;
   sessionStorage.removeItem("dyreIdOwnerEmail");
