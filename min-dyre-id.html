@@ -342,9 +342,9 @@
 <div class="full"><label>Tittel</label><input id="docName" placeholder="f.eks. Vaksinekort 2026"></div>
 <div><label>Type</label><select id="docType"><option value="">Velg</option><option>Vaksinekort</option><option>Veterinærdokument</option><option>Forsikring</option><option>Bilde</option><option>Annet dokument</option></select></div>
 <div><label>Dato</label><input id="docDate" type="date"></div>
-<div class="full"><label>Fil / bilde</label><input id="docFile" type="file" accept="image/*,.pdf"><div style="color:#9fb0bc;font-size:13px;margin-top:6px">Filopplasting klargjøres – registreringen kan allerede lagres.</div></div>
+<div class="full"><label>Fil / bilde</label><input id="docFile" type="file" accept="image/*,.pdf"><div style="color:#9fb0bc;font-size:13px;margin-top:6px">Velg bilde eller PDF som skal lagres.</div></div>
 <div class="full"><label>Notat</label><textarea id="docNote" placeholder="Valgfritt"></textarea></div>
-<button class="doc-save" id="docSave" onclick="saveDoc()">💾 Lagre dokumentoppføring</button><div class="doc-msg" id="docMsg"></div>
+<button class="doc-save" id="docSave" onclick="saveDoc()">💾 Lagre dokument / bilde</button><div class="doc-msg" id="docMsg"></div>
 </div><div class="doc-history"><h3>Dokumenthistorikk</h3><div id="docHistory">Ingen dokumenter registrert ennå.</div></div></div></div><div class="ins-modal" id="insuranceModal"><div class="ins-box">
 <div class="ins-head"><div><div style="color:#e8b94f;font-weight:900">☂️ FORSIKRING</div><h2 id="insuranceTitle">Forsikring</h2></div><button class="ins-close" onclick="closeInsuranceModal()">Lukk ✕</button></div>
 <div class="ins-form">
@@ -696,8 +696,47 @@ function logoutOwner(){
 
 async function openDocModal(){if(!currentDog)return;docTitle.textContent=(currentDog.dog_name||"Dyret")+" – dokumenter & bilder";docName.value="";docType.value="";docDate.value=todayLocalISO();docFile.value="";docNote.value="";docMsg.textContent="";docModal.style.display="flex";await loadDocs();}
 function closeDocModal(){docModal.style.display="none";}
-async function loadDocs(){const c=ownerCredentials();docHistory.innerHTML="Henter dokumenter …";try{const {data,error}=await sb.rpc("get_dog_documents",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});if(error)throw error;if(!data?.length){docHistory.innerHTML="Ingen dokumenter registrert ennå.";return;}docHistory.innerHTML=data.map(x=>`<div class="doc-row"><strong>${esc(x.title)}</strong>${x.document_type?`<div>Type: ${esc(x.document_type)}</div>`:""}${x.document_date?`<div>Dato: ${esc(formatDateNO(x.document_date))}</div>`:""}${x.note?`<div style="color:#aebbc5;margin-top:5px">${esc(x.note)}</div>`:""}<button class="doc-del" onclick="deleteDoc(${Number(x.id)})">🗑️ Slett</button></div>`).join("");}catch(e){console.error(e);docHistory.innerHTML="Kunne ikke hente dokumentene.";}}
-async function saveDoc(){const title=docName.value.trim(),c=ownerCredentials();docMsg.textContent="";if(!title){docMsg.style.color="#ffb8b8";docMsg.textContent="Skriv inn en tittel.";return;}docSave.disabled=true;try{const {error}=await sb.rpc("add_dog_document",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin,p_title:title,p_document_type:docType.value||null,p_document_date:docDate.value||null,p_file_url:null,p_note:docNote.value.trim()||null});if(error)throw error;docMsg.style.color="#67dc88";docMsg.textContent="✓ Dokumentoppføringen er lagret.";docName.value="";docType.value="";docFile.value="";docNote.value="";await loadDocs();}catch(e){console.error(e);docMsg.style.color="#ffb8b8";docMsg.textContent="Kunne ikke lagre.";}finally{docSave.disabled=false;}}
+async function loadDocs(){
+ const c=ownerCredentials();docHistory.innerHTML="Henter dokumenter …";
+ try{
+  const {data,error}=await sb.rpc("get_dog_documents",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});
+  if(error)throw error;
+  if(!data?.length){docHistory.innerHTML="Ingen dokumenter registrert ennå.";return;}
+  docHistory.innerHTML=data.map(x=>{
+   const u=x.file_url||"";
+   const isImg=/\.(jpg|jpeg|png|gif|webp|heic)(\?|$)/i.test(u);
+   const filePart=u?(isImg
+     ?`<div style="margin-top:10px"><a href="${esc(u)}" target="_blank" rel="noopener"><img src="${esc(u)}" alt="${esc(x.title)}" style="width:120px;height:90px;object-fit:cover;border-radius:10px;border:1px solid #35536a"></a></div>`
+     :`<div style="margin-top:9px"><a href="${esc(u)}" target="_blank" rel="noopener" style="color:#efbd54;font-weight:800">📎 Åpne fil</a></div>`)
+     :"";
+   return `<div class="doc-row"><strong>${esc(x.title)}</strong>${x.document_type?`<div>Type: ${esc(x.document_type)}</div>`:""}${x.document_date?`<div>Dato: ${esc(formatDateNO(x.document_date))}</div>`:""}${x.note?`<div style="color:#aebbc5;margin-top:5px">${esc(x.note)}</div>`:""}${filePart}<button class="doc-del" onclick="deleteDoc(${Number(x.id)})">🗑️ Slett</button></div>`;
+  }).join("");
+ }catch(e){console.error(e);docHistory.innerHTML="Kunne ikke hente dokumentene.";}
+}
+async function saveDoc(){
+ const title=docName.value.trim(),c=ownerCredentials(),file=docFile.files&&docFile.files[0];
+ docMsg.textContent="";
+ if(!title){docMsg.style.color="#ffb8b8";docMsg.textContent="Skriv inn en tittel.";return;}
+ docSave.disabled=true;docSave.textContent="Lagrer …";
+ let fileUrl=null;
+ try{
+  if(file){
+   const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+   const path=`${currentDog.dog_code}/${Date.now()}-${safeName}`;
+   docMsg.style.color="#d8c28c";docMsg.textContent="Laster opp fil …";
+   const {error:upErr}=await sb.storage.from("dog-documents").upload(path,file,{cacheControl:"3600",upsert:false,contentType:file.type||undefined});
+   if(upErr)throw upErr;
+   const {data:urlData}=sb.storage.from("dog-documents").getPublicUrl(path);
+   fileUrl=urlData&&urlData.publicUrl?urlData.publicUrl:null;
+  }
+  const {error}=await sb.rpc("add_dog_document",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin,p_title:title,p_document_type:docType.value||null,p_document_date:docDate.value||null,p_file_url:fileUrl,p_note:docNote.value.trim()||null});
+  if(error)throw error;
+  docMsg.style.color="#67dc88";docMsg.textContent=file?"✓ Dokument og fil er lagret.":"✓ Dokumentoppføringen er lagret.";
+  docName.value="";docType.value="";docFile.value="";docNote.value="";await loadDocs();
+ }catch(e){
+  console.error(e);docMsg.style.color="#ffb8b8";docMsg.textContent="Kunne ikke lagre filen.";
+ }finally{docSave.disabled=false;docSave.textContent="💾 Lagre dokument / bilde";}
+}
 async function deleteDoc(id){if(!confirm("Vil du slette denne dokumentoppføringen?"))return;const c=ownerCredentials();try{const {error}=await sb.rpc("delete_dog_document",{p_document_id:id,p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});if(error)throw error;await loadDocs();}catch(e){console.error(e);}}
 async function openInsuranceModal(){
  if(!currentDog)return;
