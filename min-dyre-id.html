@@ -117,7 +117,13 @@ async function ownerLogin(){
       return;
     }
 
-    ownerDogs=data;
+    const allowedCodes=["HV-Z3T74Z9D","HV-GN4PNUHU"];
+    ownerDogs=data.filter(d=>allowedCodes.includes((d.dog_code||"").toUpperCase()));
+
+    if(!ownerDogs.length){
+      msg.textContent="Fant ikke Bonnie eller Chiko på denne innloggingen.";
+      return;
+    }
     sessionStorage.setItem("dyreIdOwnerEmail",email);
     document.getElementById("ownerWelcome").textContent=email;
     renderAnimals();
