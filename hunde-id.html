@@ -31,9 +31,36 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 .welcome.missingwelcome{background:#fff2f4;border-color:#f0c3cb}
 .welcome strong{font-size:1.05rem}
 </style>
+
+<style>
+.navvalg{
+  max-width:760px;margin:18px auto 4px;padding:0 14px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px
+}
+.navvalg a,.navvalg button{
+  min-height:48px;border-radius:12px;border:0;padding:11px 12px;
+  font-weight:800;font-size:15px;text-decoration:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;text-align:center
+}
+.navvalg .tilbake{background:#e8b94f;color:#15202a}
+.navvalg .forside{background:#174d72;color:white}
+.navvalg .minid{background:#146b4b;color:white}
+@media(max-width:620px){
+  .navvalg{grid-template-columns:1fr}
+  .navvalg a,.navvalg button{font-size:17px;min-height:52px}
+}
+</style>
+
 </head>
 <body>
 <header><h1>🐾 HUNDENE VÅRE</h1><p>Digital Hunde-ID</p></header>
+
+<div class="navvalg">
+  <button class="tilbake" type="button" onclick="history.back()">← Tilbake</button>
+  <a class="forside" href="index.html">🏠 Forsiden</a>
+  <a class="minid" href="min-dyre-id.html">🔐 Min Dyre-ID</a>
+</div>
+
 <main>
 
 <div id="loading" class="card center">
