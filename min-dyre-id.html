@@ -182,7 +182,7 @@
 .vax-msg{grid-column:1/-1;min-height:20px;color:#ffb8b8;font-size:14px}
 .vax-history{margin-top:23px;border-top:1px solid #21394d;padding-top:18px}
 .vax-row{padding:12px 0;border-bottom:1px solid #182c3b}
-.vax-row strong{color:#efbd54;font-size:17px}
+.vax-row strong{color:#efbd54;font-size:17px}.vax-del{margin-top:8px;border:1px solid #704040;background:#241316;color:#ffb5b5;border-radius:8px;padding:6px 10px;cursor:pointer;font-weight:800}
 @media(max-width:600px){.vax-form{grid-template-columns:1fr}.vax-form .full,.vax-save,.vax-msg{grid-column:1}}
 </style>
 
@@ -539,11 +539,34 @@ async function loadVax(){
         <span>${esc(formatDateNO(v.vaccine_date))}</span>
         ${v.next_vaccine_date ? ` · Neste: ${esc(formatDateNO(v.next_vaccine_date))}` : ""}
         ${v.note ? `<div style="color:#aebbc5;margin-top:5px">${esc(v.note)}</div>` : ""}
+        <button class="vax-del" type="button" onclick="deleteVax(${Number(v.id)})">🗑️ Slett</button>
       </div>
     `).join("");
   }catch(e){
     console.error(e);
     box.innerHTML='<div class="weight-empty" style="color:#ffb8b8">Kunne ikke hente vaksiner.</div>';
+  }
+}
+
+
+async function deleteVax(id){
+  if(!confirm("Vil du slette denne vaksinen?")) return;
+  const c=ownerCredentials();
+  try{
+    const {error}=await sb.rpc("delete_dog_vaccination",{
+      p_vaccination_id:id,
+      p_dog_code:currentDog.dog_code,
+      p_owner_email:c.email,
+      p_owner_pin:c.pin
+    });
+    if(error) throw error;
+    await loadVax();
+    document.getElementById("vaxMsg").style.color="#67dc88";
+    document.getElementById("vaxMsg").textContent="✓ Vaksinen er slettet.";
+  }catch(e){
+    console.error(e);
+    document.getElementById("vaxMsg").style.color="#ffb8b8";
+    document.getElementById("vaxMsg").textContent="Kunne ikke slette vaksinen.";
   }
 }
 
