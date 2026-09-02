@@ -8,45 +8,56 @@
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.card{padding:15px;min-height:145px;position:relative;overflow:hidden}.card h4{font-size:16px;margin:0 0 9px}.card p{font-size:13px;color:#aab8c3;line-height:1.45;max-width:68%}.card .pet{position:absolute;right:10px;bottom:10px;width:88px;height:76px;border-radius:12px;object-fit:cover;border:1px solid #385064;box-shadow:0 8px 18px #0008;filter:saturate(.9) brightness(.88)}.link{color:#61a9ff;font-size:13px;font-weight:800}.family{grid-column:span 2;background:radial-gradient(circle at 90% 60%,#5a3b0d55,#0b151c 50%);border-color:#493719}.family h4{color:#efbd54}.lock{color:#7f8f9d;font-size:13px;padding:20px 4px 30px}
 .modal{display:none;position:fixed;inset:0;background:#000b;align-items:center;justify-content:center;z-index:10}.box{width:min(410px,92%);background:#091722;border:1px solid #29455a;border-radius:18px;padding:24px}.box input{width:100%;background:#050d14;color:#fff;border:1px solid #294052;border-radius:9px;padding:12px;margin:7px 0 13px}.box button{width:100%;padding:12px;border:0;border-radius:9px;margin-top:7px;font-weight:800;background:#d7a742;color:#111}
 @media(max-width:850px){.hero{grid-template-columns:1fr;text-align:center}.avatar{margin:auto;width:140px;height:140px}.meta{max-width:400px;margin:auto;text-align:left}.quick{grid-template-columns:repeat(2,1fr)}.triple{grid-template-columns:1fr}.reminders,.cards{grid-template-columns:1fr 1fr}.family{grid-column:span 2}.nav a{display:none}}@media(max-width:520px){.reminders,.cards{grid-template-columns:1fr}.family{grid-column:span 1}}
-</style></head><body>
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+@media(max-width:600px){
+  #loginCard{padding:30px 22px!important}
+  #loginCard h1{font-size:34px!important}
+}
+</style>
+</head><body>
 <div id="gate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#102337 0,#06111c 42%,#030a11 100%)">
-  <div id="loginCard" style="width:min(460px,100%);background:linear-gradient(145deg,#091722,#061019);border:1px solid #244157;border-radius:22px;padding:28px;box-shadow:0 20px 55px #0009">
-    <div style="color:#e8b94f;font-weight:900;font-size:22px">🐾 HUNDENE VÅRE</div>
+  <div id="loginCard" style="width:min(680px,94vw);background:linear-gradient(145deg,#091722,#061019);border:1px solid #244157;border-radius:28px;padding:46px 50px;box-shadow:0 20px 55px #0009">
+    <div style="color:#e8b94f;font-weight:900;font-size:30px">🐾 HUNDENE VÅRE</div>
     <div style="color:#9fb0bc;margin-top:3px">Privat Dyre-ID</div>
-    <h1 style="margin:30px 0 8px;font-size:30px">🔐 Logg inn</h1>
-    <p style="color:#aebbc5;line-height:1.55">Logg inn for å se dine egne dyr og private opplysninger.</p>
+    <h1 style="margin:30px 0 8px;font-size:42px">🔐 Logg inn</h1>
+    <p style="color:#aebbc5;line-height:1.65;font-size:18px">Bruk samme e-postadresse og PIN som ble registrert på Hunde-ID-en.</p>
+
     <label style="font-weight:700">E-post</label>
-    <input type="email" value="dagfinn53e@gmail.com" style="width:100%;margin:7px 0 15px;padding:13px;border-radius:10px;border:1px solid #29445a;background:#050d14;color:white">
-    <label style="font-weight:700">Passord</label>
-    <input type="password" value="test1234" style="width:100%;margin:7px 0 18px;padding:13px;border-radius:10px;border:1px solid #29445a;background:#050d14;color:white">
-    <button onclick="showAnimals()" style="width:100%;padding:13px;border:0;border-radius:10px;background:linear-gradient(135deg,#e1b955,#ad7c2d);font-weight:900;color:#111;cursor:pointer">Logg inn</button>
-    <p style="font-size:12px;color:#6f8290;margin:14px 0 0">Testversjon – ekte sikker innlogging kobles til senere.</p>
+    <input id="ownerEmail" type="email" autocomplete="email" placeholder="din@epost.no"
+      style="width:100%;margin:9px 0 20px;padding:17px;font-size:18px;border-radius:10px;border:1px solid #29445a;background:#050d14;color:white">
+
+    <label style="font-weight:700">PIN</label>
+    <input id="ownerPin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="PIN-koden din"
+      style="width:100%;margin:9px 0 24px;padding:17px;font-size:18px;border-radius:10px;border:1px solid #29445a;background:#050d14;color:white">
+
+    <button id="loginBtn" onclick="ownerLogin()"
+      style="width:100%;padding:17px;border:0;font-size:18px;border-radius:10px;background:linear-gradient(135deg,#e1b955,#ad7c2d);font-weight:900;color:#111;cursor:pointer">
+      Logg inn
+    </button>
+    <div id="loginMsg" style="margin-top:14px;color:#ffb8b8;font-size:14px"></div>
   </div>
-  <div id="animalChooser" style="display:none;width:min(900px,100%)">
-    <div style="text-align:center;margin-bottom:25px">
-      <div style="color:#e8b94f;font-weight:900;font-size:22px">🐾 HUNDENE VÅRE</div>
-      <h1 style="font-size:36px;margin:15px 0 8px">Mine dyr</h1>
-      <p style="color:#9fb0bc">Velg dyret du vil åpne.</p>
+
+  <div id="animalChooser" style="display:none;width:min(940px,100%)">
+    <div style="display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap;margin-bottom:22px">
+      <div>
+        <div style="color:#e8b94f;font-weight:900;font-size:22px">🐾 HUNDENE VÅRE</div>
+        <h1 style="font-size:36px;margin:12px 0 5px">Mine dyr</h1>
+        <p id="ownerWelcome" style="color:#9fb0bc;margin:0"></p>
+      </div>
+      <button onclick="logoutOwner()" style="background:#101d27;border:1px solid #29445a;color:#c9d4dc;border-radius:10px;padding:10px 16px;cursor:pointer">Logg ut</button>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
-      <button onclick="openAnimal('Chiko','HV-GN4PNUHU','7,4 kg','Hannhund')" style="text-align:left;background:linear-gradient(145deg,#0b1a26,#07111a);border:1px solid #2a465a;border-radius:20px;padding:0;overflow:hidden;color:white;cursor:pointer;box-shadow:0 15px 35px #0007">
-        <div style="height:160px;background:url('https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=700&q=85') center/cover"></div>
-        <div style="padding:18px"><div style="font-size:25px;font-weight:900">Chiko ✓</div><div style="color:#aebbc5;margin-top:6px">Bichon Frisé · Hannhund</div><div style="color:#e8b94f;font-weight:800;margin-top:13px">Åpne privat Dyre-ID →</div></div>
-      </button>
-      <button onclick="openAnimal('Bonnie','HV-Z3T74Z9D','Legg til','Tispe')" style="text-align:left;background:linear-gradient(145deg,#0b1a26,#07111a);border:1px solid #2a465a;border-radius:20px;padding:0;overflow:hidden;color:white;cursor:pointer;box-shadow:0 15px 35px #0007">
-        <div style="height:160px;background:url('https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=700&q=85') center/cover"></div>
-        <div style="padding:18px"><div style="font-size:25px;font-weight:900">Bonnie ✓</div><div style="color:#aebbc5;margin-top:6px">Bichon Frisé · Tispe</div><div style="color:#e8b94f;font-weight:800;margin-top:13px">Åpne privat Dyre-ID →</div></div>
-      </button>
-    </div>
+    <div id="animalGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px"></div>
   </div>
 </div>
+
 <div id="privateApp" style="display:none">
 
-<header><div class="nav"><div class="brand">🐾 HUNDENE VÅRE<small>Min Dyre-ID</small></div><a class="active">🏠 Min side</a><a>🐾 Mine dyr</a><a>♡ Påminnelser</a><a>⚙ Innstillinger</a><button onclick="m.style.display='flex'">🔐 Logg inn</button></div></header>
+<header><div class="nav"><div class="brand">🐾 HUNDENE VÅRE<small>Min Dyre-ID</small></div><a class="active">🏠 Min side</a><a>🐾 Mine dyr</a><a>♡ Påminnelser</a><a>⚙ Innstillinger</a><button onclick="backToAnimals()">🔐 Logg inn</button></div></header>
 <main class="wrap">
-<section class="hero"><div class="avatar">🐶</div><div><h1>Chiko ✓</h1><div class="meta"><span>🐾 Rase</span><b>Bichon Frisé</b><span>♂ Kjønn</span><b>Hannhund</b><span>🎂 Født</span><b>Legg til</b><span>▣ Mikrochip</span><b>Legg til</b><span>⚖ Vekt</span><b>7,4 kg</b><span>● Farge</span><b>Hvit</b></div></div><button class="edit">✎ Rediger profil</button></section>
+<section class="hero"><div class="avatar" id="heroAvatar">🐶</div><div><h1 id="heroDogName">Dyret mitt ✓</h1><div class="meta"><span>🐾 Rase</span><b id="heroBreed">–</b><span>♂ Kjønn</span><b id="heroSex">–</b><span>🎂 Født</span><b>Legg til</b><span>▣ Mikrochip</span><b>Legg til</b><span>⚖ Vekt</span><b id="heroWeight">Legg til</b><span>● Farge</span><b id="heroColor">–</b></div></div><button class="edit">✎ Rediger profil</button></section>
 <div class="quick"><div class="q"><span class="ico">📄</span><b>Helsekort</b></div><div class="q"><span class="ico">🔗</span><b>Del profil</b></div><div class="q"><span class="ico">🖼️</span><b>Last opp bilde</b></div><div class="q"><span class="ico">🪪</span><b>Skriv ut ID-kort</b></div><div class="q"><span class="ico">•••</span><b>Mer</b></div></div>
-<div class="triple"><section class="panel"><h3>🔵 HURTIGINFO</h3><div class="info"><span>🏠 Adresse</span><b>Legg til</b><span>👤 Eier</span><b>Privat</b><span>☎ Telefon</span><b>Privat</b><span>✉ E-post</span><b>Privat</b><span>🩺 Veterinær</span><b>Legg til</b><span>▣ ID-nummer</span><b>HV-GN4PNUHU</b></div></section><section class="panel health"><h3>💙 HELSESTATUS</h3><div class="ring">100%</div><b class="green">Frisk og aktiv</b><p style="color:#8999a6">Sist helsesjekk: legg til</p></section><section class="panel"><h3>📝 KJAPPE NOTATER</h3><p class="notes">Her kan eier skrive egne private notater om Chiko.</p><p style="color:#7f909c;margin-top:45px">Kun synlig for eier.</p></section></div>
+<div class="triple"><section class="panel"><h3>🔵 HURTIGINFO</h3><div class="info"><span>🏠 Adresse</span><b>Legg til</b><span>👤 Eier</span><b>Privat</b><span>☎ Telefon</span><b>Privat</b><span>✉ E-post</span><b>Privat</b><span>🩺 Veterinær</span><b>Legg til</b><span>▣ ID-nummer</span><b id="heroCode">–</b></div></section><section class="panel health"><h3>💙 HELSESTATUS</h3><div class="ring">100%</div><b class="green">Frisk og aktiv</b><p style="color:#8999a6">Sist helsesjekk: legg til</p></section><section class="panel"><h3>📝 KJAPPE NOTATER</h3><p class="notes">Her kan eier skrive egne private notater om Chiko.</p><p style="color:#7f909c;margin-top:45px">Kun synlig for eier.</p></section></div>
 <section class="section"><h3>🔔 VIKTIGE PÅMINNELSER</h3><div class="reminders"><div class="rem"><strong>🛡️ Vaksinering</strong><small>Neste vaksine</small><div class="date">Legg til <span class="days">Påminnelse</span></div></div><div class="rem"><strong>🪲 Flåttbehandling</strong><small>Behandling</small><div class="date">Legg til</div></div><div class="rem"><strong>✂️ Kloklipp</strong><small>Stell</small><div class="date">Legg til</div></div><div class="rem"><strong>🦷 Tannrens / sjekk</strong><small>Tannhelse</small><div class="date">Legg til</div></div></div></section>
 <section class="section"><h3>🐾 ALT OM CHIKO</h3><div class="cards">
 <div class="card"><h4>🛡️ Helse & vaksinering</h4><p>Vaksiner, ormekur, flått, helsesjekk og historikk.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
@@ -64,24 +75,144 @@
 <div class="modal" id="m"><div class="box"><h2>🔐 Logg inn</h2><p>Logg inn for å åpne din private Dyre-ID.</p><label>E-post</label><input type="email"><label>Passord</label><input type="password"><button onclick="alert('Testversjon – ekte innlogging kobles til senere.')">Logg inn</button><button onclick="m.style.display='none'" style="background:#182a38;color:#fff">Lukk</button></div></div>
 </div>
 <script>
-function showAnimals(){
-  document.getElementById('loginCard').style.display='none';
-  document.getElementById('animalChooser').style.display='block';
+const sb = supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+let ownerDogs = [];
+let currentDog = null;
+
+function esc(v){
+  const d=document.createElement("div");
+  d.textContent=v==null?"":String(v);
+  return d.innerHTML;
 }
-function openAnimal(name,id,weight,gender){
-  document.getElementById('gate').style.display='none';
-  document.getElementById('privateApp').style.display='block';
-  const h1=document.querySelector('#privateApp .hero h1');
-  if(h1) h1.textContent=name+' ✓';
-  const vals=document.querySelectorAll('#privateApp .meta b');
-  if(vals[1]) vals[1].textContent=gender;
-  if(vals[4]) vals[4].textContent=weight;
-  const allB=[...document.querySelectorAll('#privateApp b')];
-  const idNode=allB.find(el=>el.textContent.trim().startsWith('HV-'));
-  if(idNode) idNode.textContent=id;
-  document.querySelectorAll('#privateApp h3,#privateApp h4,#privateApp p').forEach(el=>{
-    el.innerHTML=el.innerHTML.replaceAll('Chiko',name);
+
+async function ownerLogin(){
+  const email=document.getElementById("ownerEmail").value.trim().toLowerCase();
+  const pin=document.getElementById("ownerPin").value.trim();
+  const msg=document.getElementById("loginMsg");
+  const btn=document.getElementById("loginBtn");
+
+  msg.textContent="";
+  if(!email || !pin){
+    msg.textContent="Skriv inn både e-post og PIN.";
+    return;
+  }
+
+  btn.disabled=true;
+  btn.textContent="Henter dine dyr …";
+
+  try{
+    const {data,error}=await sb.rpc("get_owner_dogs",{
+      p_owner_email:email,
+      p_owner_pin:pin
+    });
+
+    if(error) throw error;
+
+    if(!data || !data.length){
+      msg.textContent="Fant ingen dyr med denne e-posten og PIN-koden.";
+      return;
+    }
+
+    ownerDogs=data;
+    sessionStorage.setItem("dyreIdOwnerEmail",email);
+    document.getElementById("ownerWelcome").textContent=email;
+    renderAnimals();
+
+    document.getElementById("loginCard").style.display="none";
+    document.getElementById("animalChooser").style.display="block";
+  }catch(e){
+    console.error(e);
+    msg.textContent="Kunne ikke logge inn. Kontroller e-post og PIN.";
+  }finally{
+    btn.disabled=false;
+    btn.textContent="Logg inn";
+  }
+}
+
+function renderAnimals(){
+  const grid=document.getElementById("animalGrid");
+  grid.innerHTML=ownerDogs.map((dog,i)=>{
+    const photo=dog.photo_url
+      ? `<div style="height:175px;background:url('${encodeURI(dog.photo_url)}') center/cover"></div>`
+      : `<div style="height:175px;display:grid;place-items:center;font-size:78px;background:linear-gradient(135deg,#102638,#08131e)">🐶</div>`;
+    const status=dog.is_missing
+      ? '<span style="color:#ff6d78;font-weight:800">🚨 Meldt savnet</span>'
+      : '<span style="color:#56d67b;font-weight:800">● Trygg</span>';
+    return `<button onclick="openAnimal(${i})" style="text-align:left;background:linear-gradient(145deg,#0b1a26,#07111a);border:1px solid #2a465a;border-radius:20px;padding:0;overflow:hidden;color:white;cursor:pointer;box-shadow:0 15px 35px #0007">
+      ${photo}
+      <div style="padding:18px">
+        <div style="display:flex;justify-content:space-between;gap:8px;align-items:center">
+          <div style="font-size:25px;font-weight:900">${esc(dog.dog_name)} ✓</div>
+          <div style="font-size:12px">${status}</div>
+        </div>
+        <div style="color:#aebbc5;margin-top:7px">${esc([dog.breed,dog.sex].filter(Boolean).join(" · "))}</div>
+        <div style="color:#e8b94f;font-weight:800;margin-top:14px">Åpne privat Dyre-ID →</div>
+      </div>
+    </button>`;
+  }).join("");
+}
+
+function openAnimal(index){
+  currentDog=ownerDogs[index];
+  if(!currentDog) return;
+
+  document.getElementById("gate").style.display="none";
+  document.getElementById("privateApp").style.display="block";
+
+  const name=currentDog.dog_name || "Dyret mitt";
+  const h=document.getElementById("heroDogName");
+  if(h) h.textContent=name+" ✓";
+
+  const breed=document.getElementById("heroBreed");
+  const sex=document.getElementById("heroSex");
+  const color=document.getElementById("heroColor");
+  const code=document.getElementById("heroCode");
+  if(breed) breed.textContent=currentDog.breed||"Legg til";
+  if(sex) sex.textContent=currentDog.sex||"Legg til";
+  if(color) color.textContent=currentDog.color||"Legg til";
+  if(code) code.textContent=currentDog.dog_code||"–";
+
+  const avatar=document.getElementById("heroAvatar");
+  if(avatar){
+    if(currentDog.photo_url){
+      avatar.innerHTML='<img src="'+esc(currentDog.photo_url)+'" alt="'+esc(name)+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">';
+    }else{
+      avatar.textContent="🐶";
+    }
+  }
+
+  document.querySelectorAll("#privateApp h3,#privateApp h4,#privateApp p").forEach(el=>{
+    if(el.dataset.templateText===undefined) el.dataset.templateText=el.innerHTML;
+    el.innerHTML=el.dataset.templateText.replaceAll("Chiko",esc(name));
   });
+
+  window.scrollTo({top:0,behavior:"smooth"});
 }
+
+function backToAnimals(){
+  document.getElementById("privateApp").style.display="none";
+  document.getElementById("gate").style.display="flex";
+  document.getElementById("loginCard").style.display="none";
+  document.getElementById("animalChooser").style.display="block";
+  window.scrollTo(0,0);
+}
+
+function logoutOwner(){
+  ownerDogs=[];
+  currentDog=null;
+  sessionStorage.removeItem("dyreIdOwnerEmail");
+  document.getElementById("animalChooser").style.display="none";
+  document.getElementById("loginCard").style.display="block";
+  document.getElementById("ownerPin").value="";
+  document.getElementById("loginMsg").textContent="";
+}
+
+document.getElementById("ownerPin").addEventListener("keydown",e=>{
+  if(e.key==="Enter") ownerLogin();
+});
 </script>
 </body></html>
