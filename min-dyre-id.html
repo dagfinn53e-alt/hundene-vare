@@ -260,7 +260,8 @@
 .ins-del{margin-top:8px;border:1px solid #704040;background:#241316;color:#ffb5b5;border-radius:8px;padding:6px 10px;cursor:pointer}
 @media(max-width:600px){.ins-form{grid-template-columns:1fr}.ins-form .full,.ins-save,.ins-msg{grid-column:1}}
 </style>
-</head><body>
+<style>
+.doc-modal{display:none;position:fixed;inset:0;background:#000c;z-index:74;align-items:center;justify-content:center;padding:18px}.doc-box{width:min(700px,96vw);max-height:90vh;overflow:auto;background:linear-gradient(145deg,#0b1a26,#061019);border:1px solid #35536a;border-radius:22px;padding:25px}.doc-head{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:18px}.doc-head h2{margin:0}.doc-close{border:1px solid #35536a;background:#101d27;color:#fff;border-radius:10px;padding:9px 12px;cursor:pointer;font-weight:800}.doc-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.doc-form .full{grid-column:1/-1}.doc-form label{display:block;font-weight:800;margin-bottom:7px}.doc-form input,.doc-form textarea,.doc-form select{width:100%;background:#050d14;color:#fff;border:1px solid #29445a;border-radius:10px;padding:13px;font-size:16px}.doc-form textarea{min-height:80px}.doc-save{grid-column:1/-1;border:0;border-radius:11px;padding:14px;background:linear-gradient(135deg,#e1b955,#ad7c2d);color:#111;font-weight:900;font-size:17px}.doc-msg{grid-column:1/-1;min-height:20px}.doc-history{margin-top:23px;border-top:1px solid #21394d;padding-top:18px}.doc-row{padding:12px 0;border-bottom:1px solid #182c3b}.doc-row strong{color:#efbd54}.doc-del{margin-top:8px;border:1px solid #704040;background:#241316;color:#ffb5b5;border-radius:8px;padding:6px 10px;cursor:pointer}@media(max-width:600px){.doc-form{grid-template-columns:1fr}.doc-form .full,.doc-save,.doc-msg{grid-column:1}}</style></head><body>
 <div id="gate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#102337 0,#06111c 42%,#030a11 100%)">
   <div id="loginCard" style="width:min(680px,94vw);background:linear-gradient(145deg,#091722,#061019);border:1px solid #244157;border-radius:28px;padding:46px 50px;box-shadow:0 20px 55px #0009">
     <div style="color:#e8b94f;font-weight:900;font-size:30px">🐾 HUNDENE VÅRE</div>
@@ -325,7 +326,7 @@
 <div class="card" onclick="openActivityModal()" style="cursor:pointer"><h4>🏃 Aktivitet & trening</h4><p>Registrer turer, trening og aktiviteter.</p><span class="link">Loggfør aktivitet →</span><img class="pet" src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openCareModal()" style="cursor:pointer"><h4>✂️ Stell & pleie</h4><p>Pelsstell, kloklipp, tannstell og bading.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openInsuranceModal()" style="cursor:pointer"><h4>☂️ Forsikring</h4><p>Forsikringsinfo, polise og fornyelse.</p><span class="link">Se forsikring →</span><img class="pet" src="https://images.unsplash.com/photo-1534361960057-19889db9621e?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
-<div class="card"><h4>📁 Dokumenter & bilder</h4><p>Bilder, vaksinekort, sertifikater og viktige filer.</p><span class="link">Se samling →</span><img class="pet" src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
+<div class="card" onclick="openDocModal()" style="cursor:pointer"><h4>📁 Dokumenter & bilder</h4><p>Bilder, vaksinekort, sertifikater og viktige filer.</p><span class="link">Se samling →</span><img class="pet" src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card family"><h4>🐾 Chiko er en del av familien</h4><p>Samle det viktigste om helse, omsorg og hverdagen på ett trygt sted. ❤️</p></div>
 </div></section><div class="lock">🔒 Denne siden er kun synlig for deg som eier av denne Dyre-ID-en.</div></main>
 
@@ -335,7 +336,16 @@
 
 
 
-<div class="ins-modal" id="insuranceModal"><div class="ins-box">
+<div class="doc-modal" id="docModal"><div class="doc-box">
+<div class="doc-head"><div><div style="color:#e8b94f;font-weight:900">📁 DOKUMENTER & BILDER</div><h2 id="docTitle">Dokumenter & bilder</h2></div><button class="doc-close" onclick="closeDocModal()">Lukk ✕</button></div>
+<div class="doc-form">
+<div class="full"><label>Tittel</label><input id="docName" placeholder="f.eks. Vaksinekort 2026"></div>
+<div><label>Type</label><select id="docType"><option value="">Velg</option><option>Vaksinekort</option><option>Veterinærdokument</option><option>Forsikring</option><option>Bilde</option><option>Annet dokument</option></select></div>
+<div><label>Dato</label><input id="docDate" type="date"></div>
+<div class="full"><label>Fil / bilde</label><input id="docFile" type="file" accept="image/*,.pdf"><div style="color:#9fb0bc;font-size:13px;margin-top:6px">Filopplasting klargjøres – registreringen kan allerede lagres.</div></div>
+<div class="full"><label>Notat</label><textarea id="docNote" placeholder="Valgfritt"></textarea></div>
+<button class="doc-save" id="docSave" onclick="saveDoc()">💾 Lagre dokumentoppføring</button><div class="doc-msg" id="docMsg"></div>
+</div><div class="doc-history"><h3>Dokumenthistorikk</h3><div id="docHistory">Ingen dokumenter registrert ennå.</div></div></div></div><div class="ins-modal" id="insuranceModal"><div class="ins-box">
 <div class="ins-head"><div><div style="color:#e8b94f;font-weight:900">☂️ FORSIKRING</div><h2 id="insuranceTitle">Forsikring</h2></div><button class="ins-close" onclick="closeInsuranceModal()">Lukk ✕</button></div>
 <div class="ins-form">
 <div><label>Forsikringsselskap</label><input id="insuranceCompany" placeholder="f.eks. Agria"></div>
@@ -683,6 +693,12 @@ function logoutOwner(){
 
 
 
+
+async function openDocModal(){if(!currentDog)return;docTitle.textContent=(currentDog.dog_name||"Dyret")+" – dokumenter & bilder";docName.value="";docType.value="";docDate.value=todayLocalISO();docFile.value="";docNote.value="";docMsg.textContent="";docModal.style.display="flex";await loadDocs();}
+function closeDocModal(){docModal.style.display="none";}
+async function loadDocs(){const c=ownerCredentials();docHistory.innerHTML="Henter dokumenter …";try{const {data,error}=await sb.rpc("get_dog_documents",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});if(error)throw error;if(!data?.length){docHistory.innerHTML="Ingen dokumenter registrert ennå.";return;}docHistory.innerHTML=data.map(x=>`<div class="doc-row"><strong>${esc(x.title)}</strong>${x.document_type?`<div>Type: ${esc(x.document_type)}</div>`:""}${x.document_date?`<div>Dato: ${esc(formatDateNO(x.document_date))}</div>`:""}${x.note?`<div style="color:#aebbc5;margin-top:5px">${esc(x.note)}</div>`:""}<button class="doc-del" onclick="deleteDoc(${Number(x.id)})">🗑️ Slett</button></div>`).join("");}catch(e){console.error(e);docHistory.innerHTML="Kunne ikke hente dokumentene.";}}
+async function saveDoc(){const title=docName.value.trim(),c=ownerCredentials();docMsg.textContent="";if(!title){docMsg.style.color="#ffb8b8";docMsg.textContent="Skriv inn en tittel.";return;}docSave.disabled=true;try{const {error}=await sb.rpc("add_dog_document",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin,p_title:title,p_document_type:docType.value||null,p_document_date:docDate.value||null,p_file_url:null,p_note:docNote.value.trim()||null});if(error)throw error;docMsg.style.color="#67dc88";docMsg.textContent="✓ Dokumentoppføringen er lagret.";docName.value="";docType.value="";docFile.value="";docNote.value="";await loadDocs();}catch(e){console.error(e);docMsg.style.color="#ffb8b8";docMsg.textContent="Kunne ikke lagre.";}finally{docSave.disabled=false;}}
+async function deleteDoc(id){if(!confirm("Vil du slette denne dokumentoppføringen?"))return;const c=ownerCredentials();try{const {error}=await sb.rpc("delete_dog_document",{p_document_id:id,p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});if(error)throw error;await loadDocs();}catch(e){console.error(e);}}
 async function openInsuranceModal(){
  if(!currentDog)return;
  insuranceTitle.textContent=(currentDog.dog_name||"Dyret")+" – forsikring";
