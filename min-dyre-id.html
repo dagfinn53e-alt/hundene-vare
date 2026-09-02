@@ -276,7 +276,7 @@
 .rem-head{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:18px}.rem-head h2{margin:0}
 .rem-close{border:1px solid #35536a;background:#101d27;color:#fff;border-radius:10px;padding:9px 12px;cursor:pointer;font-weight:800}
 .rem-form{display:grid;gap:14px}.rem-form label{display:block;font-weight:800;margin-bottom:7px}
-.rem-form input,.rem-form textarea{width:100%;background:#050d14;color:#fff;border:1px solid #29445a;border-radius:10px;padding:13px;font-size:16px}
+.rem-form input,.rem-form textarea,.rem-form select{width:100%;background:#050d14;color:#fff;border:1px solid #29445a;border-radius:10px;padding:13px;font-size:16px}
 .rem-form textarea{min-height:80px}.rem-save{border:0;border-radius:11px;padding:14px;background:linear-gradient(135deg,#e1b955,#ad7c2d);color:#111;font-weight:900;font-size:17px}
 .rem-msg{min-height:20px}.rem-history{margin-top:22px;border-top:1px solid #21394d;padding-top:18px}
 .rem-row{padding:12px 0;border-bottom:1px solid #182c3b}.rem-row strong{color:#efbd54}
@@ -365,7 +365,19 @@
 <div class="rem-head"><div><div style="color:#e8b94f;font-weight:900">🔔 PÅMINNELSER</div><h2 id="remTitle">Påminnelser</h2></div><button class="rem-close" onclick="closeReminderModal()">Lukk ✕</button></div>
 <div class="rem-form">
 <div><label>Dato</label><input id="remDate" type="date"></div>
-<div><label>Hva skal du huske?</label><input id="remText" type="text" placeholder="F.eks. flåttbehandling, kloklipp eller tannstell"></div>
+<div><label>Hva skal du huske?</label><select id="remText" style="width:100%;background:#050d14;color:#fff;border:1px solid #29445a;border-radius:10px;padding:13px;font-size:16px">
+<option value="">Velg behandling</option>
+<option value="✂️ Kloklipp">✂️ Kloklipp</option>
+<option value="🦷 Tannstell">🦷 Tannstell</option>
+<option value="🕷️ Flåttbehandling">🕷️ Flåttbehandling</option>
+<option value="💊 Ormekur">💊 Ormekur</option>
+<option value="💉 Vaksine">💉 Vaksine</option>
+<option value="🩺 Veterinærtime">🩺 Veterinærtime</option>
+<option value="✂️ Pelsstell">✂️ Pelsstell</option>
+<option value="🛁 Bad">🛁 Bad</option>
+<option value="💊 Medisin">💊 Medisin</option>
+<option value="📝 Annet">📝 Annet</option>
+</select></div>
 <div><label>Notat (valgfritt)</label><textarea id="remNote"></textarea></div>
 <button class="rem-save" id="remSave" onclick="saveReminder()">💾 Lagre påminnelse</button>
 <div class="rem-msg" id="remMsg"></div></div>
