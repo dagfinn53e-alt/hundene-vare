@@ -234,6 +234,19 @@
 .activity-del{margin-top:8px;border:1px solid #704040;background:#241316;color:#ffb5b5;border-radius:8px;padding:6px 10px;cursor:pointer}
 @media(max-width:600px){.activity-form{grid-template-columns:1fr}.activity-form .full,.activity-save,.activity-msg{grid-column:1}}
 </style>
+
+<style>
+.care-modal{display:none;position:fixed;inset:0;background:#000c;z-index:70;align-items:center;justify-content:center;padding:18px}
+.care-box{width:min(680px,96vw);max-height:90vh;overflow:auto;background:linear-gradient(145deg,#0b1a26,#061019);border:1px solid #35536a;border-radius:22px;padding:25px}
+.care-head{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:18px}.care-head h2{margin:0}
+.care-close{border:1px solid #35536a;background:#101d27;color:#fff;border-radius:10px;padding:9px 12px;cursor:pointer;font-weight:800}
+.care-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.care-form .full{grid-column:1/-1}
+.care-form label{display:block;font-weight:800;margin-bottom:7px}.care-form input,.care-form textarea,.care-form select{width:100%;background:#050d14;color:#fff;border:1px solid #29445a;border-radius:10px;padding:13px;font-size:16px}
+.care-form textarea{min-height:80px}.care-save{grid-column:1/-1;border:0;border-radius:11px;padding:14px;background:linear-gradient(135deg,#e1b955,#ad7c2d);color:#111;font-weight:900;font-size:17px}
+.care-msg{grid-column:1/-1;min-height:20px}.care-history{margin-top:23px;border-top:1px solid #21394d;padding-top:18px}.care-row{padding:12px 0;border-bottom:1px solid #182c3b}.care-row strong{color:#efbd54}
+.care-del{margin-top:8px;border:1px solid #704040;background:#241316;color:#ffb5b5;border-radius:8px;padding:6px 10px;cursor:pointer}
+@media(max-width:600px){.care-form{grid-template-columns:1fr}.care-form .full,.care-save,.care-msg{grid-column:1}}
+</style>
 </head><body>
 <div id="gate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#102337 0,#06111c 42%,#030a11 100%)">
   <div id="loginCard" style="width:min(680px,94vw);background:linear-gradient(145deg,#091722,#061019);border:1px solid #244157;border-radius:28px;padding:46px 50px;box-shadow:0 20px 55px #0009">
@@ -297,7 +310,7 @@
 <div class="card weight-card" onclick="openWeightModal()"><h4>⚖️ Vekt & utvikling</h4><p>Vektlogg og utvikling over tid.</p><span class="link">Legg til / se vektlogg →</span><img class="pet" src="https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openFoodModal()" style="cursor:pointer"><h4>🥣 Fôr & ernæring</h4><p>Fôrtype, mengde, allergier og kosttilskudd.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openActivityModal()" style="cursor:pointer"><h4>🏃 Aktivitet & trening</h4><p>Registrer turer, trening og aktiviteter.</p><span class="link">Loggfør aktivitet →</span><img class="pet" src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
-<div class="card"><h4>✂️ Stell & pleie</h4><p>Pelsstell, kloklipp, tannstell og bading.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
+<div class="card" onclick="openCareModal()" style="cursor:pointer"><h4>✂️ Stell & pleie</h4><p>Pelsstell, kloklipp, tannstell og bading.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card"><h4>☂️ Forsikring</h4><p>Forsikringsinfo, polise og fornyelse.</p><span class="link">Se forsikring →</span><img class="pet" src="https://images.unsplash.com/photo-1534361960057-19889db9621e?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card"><h4>📁 Dokumenter & bilder</h4><p>Bilder, vaksinekort, sertifikater og viktige filer.</p><span class="link">Se samling →</span><img class="pet" src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card family"><h4>🐾 Chiko er en del av familien</h4><p>Samle det viktigste om helse, omsorg og hverdagen på ett trygt sted. ❤️</p></div>
@@ -307,6 +320,17 @@
 
 
 
+
+<div class="care-modal" id="careModal"><div class="care-box">
+<div class="care-head"><div><div style="color:#e8b94f;font-weight:900">✂️ STELL & PLEIE</div><h2 id="careTitle">Stell & pleie</h2></div><button class="care-close" onclick="closeCareModal()">Lukk ✕</button></div>
+<div class="care-form">
+<div><label>Dato</label><input id="careDate" type="date"></div>
+<div><label>Type stell</label><select id="careType"><option value="">Velg</option><option>Kloklipp</option><option>Pelsstell / klipp</option><option>Bad</option><option>Tannstell</option><option>Ører</option><option>Øyne</option><option>Annet</option></select></div>
+<div class="full"><label>Notat</label><textarea id="careNote" placeholder="Valgfritt"></textarea></div>
+<button class="care-save" id="careSave" onclick="saveCare()">💾 Lagre stell / pleie</button><div class="care-msg" id="careMsg"></div>
+</div>
+<div class="care-history"><h3>Historikk</h3><div id="careHistory">Ingen stellregistreringer ennå.</div></div>
+</div></div>
 <div class="activity-modal" id="activityModal"><div class="activity-box">
 <div class="activity-head"><div><div style="color:#e8b94f;font-weight:900">🏃 AKTIVITET & TRENING</div><h2 id="activityTitle">Aktivitet & trening</h2></div><button class="activity-close" onclick="closeActivityModal()">Lukk ✕</button></div>
 <div class="activity-form">
@@ -631,6 +655,43 @@ function logoutOwner(){
 
 
 
+
+async function openCareModal(){
+ if(!currentDog)return;
+ careTitle.textContent=(currentDog.dog_name||"Dyret")+" – stell & pleie";
+ careDate.value=todayLocalISO();careType.value="";careNote.value="";careMsg.textContent="";
+ careModal.style.display="flex";await loadCare();
+}
+function closeCareModal(){careModal.style.display="none";}
+async function loadCare(){
+ const c=ownerCredentials();careHistory.innerHTML="Henter historikk …";
+ try{
+  const {data,error}=await sb.rpc("get_dog_care",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});
+  if(error)throw error;
+  if(!data?.length){careHistory.innerHTML="Ingen stellregistreringer ennå.";return;}
+  careHistory.innerHTML=data.map(x=>`<div class="care-row"><strong>${esc(x.care_type)}</strong><br>${esc(formatDateNO(x.care_date))}${x.note?`<div style="color:#aebbc5;margin-top:5px">${esc(x.note)}</div>`:""}<button class="care-del" onclick="deleteCare(${Number(x.id)})">🗑️ Slett</button></div>`).join("");
+ }catch(e){console.error(e);careHistory.innerHTML="Kunne ikke hente historikken.";}
+}
+async function saveCare(){
+ const type=careType.value.trim(),c=ownerCredentials();careMsg.textContent="";
+ if(!type){careMsg.style.color="#ffb8b8";careMsg.textContent="Velg type stell.";return;}
+ careSave.disabled=true;
+ try{
+  const {error}=await sb.rpc("add_dog_care",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin,p_care_date:careDate.value||todayLocalISO(),p_care_type:type,p_note:careNote.value.trim()||null});
+  if(error)throw error;
+  careMsg.style.color="#67dc88";careMsg.textContent="✓ Stell / pleie er lagret.";
+  careType.value="";careNote.value="";await loadCare();
+ }catch(e){console.error(e);careMsg.style.color="#ffb8b8";careMsg.textContent="Kunne ikke lagre.";}
+ finally{careSave.disabled=false;}
+}
+async function deleteCare(id){
+ if(!confirm("Vil du slette denne registreringen?"))return;
+ const c=ownerCredentials();
+ try{
+  const {error}=await sb.rpc("delete_dog_care",{p_care_id:id,p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});
+  if(error)throw error;await loadCare();
+ }catch(e){console.error(e);}
+}
 async function openActivityModal(){
  if(!currentDog)return;
  activityTitle.textContent=(currentDog.dog_name||"Dyret")+" – aktivitet & trening";
