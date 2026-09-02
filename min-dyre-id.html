@@ -281,6 +281,17 @@
 .rem-msg{min-height:20px}.rem-history{margin-top:22px;border-top:1px solid #21394d;padding-top:18px}
 .rem-row{padding:12px 0;border-bottom:1px solid #182c3b}.rem-row strong{color:#efbd54}
 .rem-del{margin-top:8px;border:1px solid #704040;background:#241316;color:#ffb5b5;border-radius:8px;padding:6px 10px;cursor:pointer}
+</style><style>
+.notes-modal{display:none;position:fixed;inset:0;background:#000c;z-index:84;align-items:center;justify-content:center;padding:18px}
+.notes-box{width:min(650px,96vw);max-height:90vh;overflow:auto;background:linear-gradient(145deg,#0b1a26,#061019);border:1px solid #35536a;border-radius:22px;padding:25px}
+.notes-head{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:18px}.notes-head h2{margin:0}
+.notes-close{border:1px solid #35536a;background:#101d27;color:#fff;border-radius:10px;padding:9px 12px;cursor:pointer;font-weight:800}
+.notes-form{display:grid;gap:14px}.notes-form label{display:block;font-weight:800;margin-bottom:7px}
+.notes-form input,.notes-form textarea{width:100%;background:#050d14;color:#fff;border:1px solid #29445a;border-radius:10px;padding:13px;font-size:16px}
+.notes-form textarea{min-height:100px}.notes-save{border:0;border-radius:11px;padding:14px;background:linear-gradient(135deg,#e1b955,#ad7c2d);color:#111;font-weight:900;font-size:17px}
+.notes-msg{min-height:20px}.notes-history{margin-top:22px;border-top:1px solid #21394d;padding-top:18px}
+.notes-row{padding:12px 0;border-bottom:1px solid #182c3b}.notes-row strong{color:#efbd54}
+.notes-del{margin-top:8px;border:1px solid #704040;background:#241316;color:#ffb5b5;border-radius:8px;padding:6px 10px;cursor:pointer}
 </style></head><body>
 <div id="gate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#102337 0,#06111c 42%,#030a11 100%)">
   <div id="loginCard" style="width:min(680px,94vw);background:linear-gradient(145deg,#091722,#061019);border:1px solid #244157;border-radius:28px;padding:46px 50px;box-shadow:0 20px 55px #0009">
@@ -355,7 +366,7 @@
 <div class="card" onclick="openActivityModal()" style="cursor:pointer"><h4>🏃 Aktivitet & trening</h4><p>Registrer turer, trening og aktiviteter.</p><span class="link">Loggfør aktivitet →</span><img class="pet" src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openCareModal()" style="cursor:pointer"><h4>✂️ Stell & pleie</h4><p>Pelsstell, kloklipp, tannstell og bading.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openInsuranceModal()" style="cursor:pointer"><h4>☂️ Forsikring</h4><p>Forsikringsinfo, polise og fornyelse.</p><span class="link">Se forsikring →</span><img class="pet" src="https://images.unsplash.com/photo-1534361960057-19889db9621e?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
-<div class="card" onclick="openDocModal()" style="cursor:pointer"><h4>📁 Dokumenter & bilder</h4><p>Bilder, vaksinekort, sertifikater og viktige filer.</p><span class="link">Se samling →</span><img class="pet" src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
+<div class="card" onclick="openNotesModal()" style="cursor:pointer"><h4>📝 Egne notater</h4><p>Private notater og ting du vil huske.</p></div><div class="card" onclick="openDocModal()" style="cursor:pointer"><h4>📁 Dokumenter & bilder</h4><p>Bilder, vaksinekort, sertifikater og viktige filer.</p><span class="link">Se samling →</span><img class="pet" src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card family"><h4>🐾 Chiko er en del av familien</h4><p>Samle det viktigste om helse, omsorg og hverdagen på ett trygt sted. ❤️</p></div>
 </div></section><div class="lock">🔒 Denne siden er kun synlig for deg som eier av denne Dyre-ID-en.</div></main>
 
@@ -365,7 +376,16 @@
 
 
 
-<div class="rem-modal" id="remModal"><div class="rem-box">
+<div class="notes-modal" id="notesModal"><div class="notes-box">
+<div class="notes-head"><div><div style="color:#e8b94f;font-weight:900">📝 EGNE NOTATER</div><h2 id="notesTitle">Notater</h2></div><button class="notes-close" onclick="closeNotesModal()">Lukk ✕</button></div>
+<div class="notes-form">
+<div><label>Dato</label><input id="noteDate" type="date"></div>
+<div><label>Tittel</label><input id="noteTitle" type="text" placeholder="F.eks. Oppførsel, tur, observasjon"></div>
+<div><label>Notat</label><textarea id="noteText" placeholder="Skriv det du vil huske …"></textarea></div>
+<button class="notes-save" id="noteSave" onclick="saveDogNote()">💾 Lagre notat</button>
+<div class="notes-msg" id="noteMsg"></div></div>
+<div class="notes-history"><h3>Notathistorikk</h3><div id="notesHistory">Ingen notater ennå.</div></div>
+</div></div><div class="rem-modal" id="remModal"><div class="rem-box">
 <div class="rem-head"><div><div style="color:#e8b94f;font-weight:900">🔔 PÅMINNELSER</div><h2 id="remTitle">Påminnelser</h2></div><button class="rem-close" onclick="closeReminderModal()">Lukk ✕</button></div>
 <div class="rem-form">
 <div><label>Dato</label><input id="remDate" type="date"></div>
@@ -820,6 +840,43 @@ async function loadNextReminderSummary(){
     });
     if(error)throw error;
     updateNextReminder(data||[]);
+  }catch(e){console.error(e);}
+}
+
+async function openNotesModal(){
+  if(!currentDog)return;
+  notesTitle.textContent=(currentDog.dog_name||"Dyret")+" – egne notater";
+  noteDate.value=todayLocalISO();noteTitle.value="";noteText.value="";noteMsg.textContent="";
+  notesModal.style.display="flex";await loadDogNotes();
+}
+function closeNotesModal(){notesModal.style.display="none";}
+async function loadDogNotes(){
+  const c=ownerCredentials();notesHistory.innerHTML="Henter notater …";
+  try{
+    const {data,error}=await sb.rpc("get_dog_notes",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});
+    if(error)throw error;
+    if(!data?.length){notesHistory.innerHTML="Ingen notater ennå.";return;}
+    notesHistory.innerHTML=data.map(n=>`<div class="notes-row"><strong>${esc(formatDateNO(n.note_date))} – ${esc(n.title)}</strong>${n.note?`<div style="color:#aebbc5;margin-top:5px">${esc(n.note)}</div>`:""}<button class="notes-del" onclick="deleteDogNote(${Number(n.id)})">🗑️ Slett</button></div>`).join("");
+  }catch(e){console.error(e);notesHistory.innerHTML="Kunne ikke hente notatene.";}
+}
+async function saveDogNote(){
+  const c=ownerCredentials();noteMsg.textContent="";
+  if(!noteTitle.value.trim()){noteMsg.style.color="#ffb8b8";noteMsg.textContent="Skriv en tittel.";return;}
+  noteSave.disabled=true;
+  try{
+    const {error}=await sb.rpc("add_dog_note",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin,p_note_date:noteDate.value||todayLocalISO(),p_title:noteTitle.value.trim(),p_note:noteText.value.trim()||null});
+    if(error)throw error;
+    noteMsg.style.color="#67dc88";noteMsg.textContent="✓ Notatet er lagret.";
+    noteTitle.value="";noteText.value="";await loadDogNotes();
+  }catch(e){console.error(e);noteMsg.style.color="#ffb8b8";noteMsg.textContent="Kunne ikke lagre notatet.";}
+  finally{noteSave.disabled=false;}
+}
+async function deleteDogNote(id){
+  if(!confirm("Vil du slette dette notatet?"))return;
+  const c=ownerCredentials();
+  try{
+    const {error}=await sb.rpc("delete_dog_note",{p_note_id:id,p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});
+    if(error)throw error;await loadDogNotes();
   }catch(e){console.error(e);}
 }
 async function openReminderModal(){
