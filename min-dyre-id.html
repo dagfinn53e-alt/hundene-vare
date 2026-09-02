@@ -336,7 +336,12 @@
 <div class="quick"><div class="q"><span class="ico">📄</span><b>Helsekort</b></div><div class="q"><span class="ico">🔗</span><b>Del profil</b></div><div class="q"><span class="ico">🖼️</span><b>Last opp bilde</b></div><div class="q"><span class="ico">🪪</span><b>Skriv ut ID-kort</b></div><div class="q"><span class="ico">•••</span><b>Mer</b></div></div>
 <div class="triple"><section class="panel"><h3>🔵 HURTIGINFO</h3><div class="info"><span>🏠 Adresse</span><b>Legg til</b><span>👤 Eier</span><b>Privat</b><span>☎ Telefon</span><b>Privat</b><span>✉ E-post</span><b>Privat</b><span>🩺 Veterinær</span><b id="heroVet">Legg til</b><span>▣ ID-nummer</span><b id="heroCode">–</b></div></section><section class="panel health"><h3>💙 HELSESTATUS</h3><div class="ring">100%</div><b class="green">Frisk og aktiv</b><p style="color:#8999a6">Sist helsesjekk: legg til</p></section><section class="panel"><h3>📝 KJAPPE NOTATER</h3><p class="notes">Her kan eier skrive egne private notater om Chiko.</p><p style="color:#7f909c;margin-top:45px">Kun synlig for eier.</p></section></div>
 <section class="section"><h3>🔔 VIKTIGE PÅMINNELSER</h3><div class="reminders"><div class="rem"><strong>🛡️ Vaksinering</strong><small>Neste vaksine</small><div class="date">Legg til <span class="days">Påminnelse</span></div></div><div class="rem"><strong>🪲 Flåttbehandling</strong><small>Behandling</small><div class="date">Legg til</div></div><div class="rem"><strong>✂️ Kloklipp</strong><small>Stell</small><div class="date">Legg til</div></div><div class="rem"><strong>🦷 Tannrens / sjekk</strong><small>Tannhelse</small><div class="date">Legg til</div></div></div></section>
-<section class="section"><h3>🐾 ALT OM CHIKO</h3><div class="cards">
+<section class="section"><h3>🐾 ALT OM CHIKO</h3>
+<div id="nextReminderPanel" style="margin:16px 0;padding:14px 16px;border:1px solid #35536a;border-radius:14px;background:#0a1721;display:none">
+  <div style="color:#e8b94f;font-weight:900;margin-bottom:5px">🔔 Neste påminnelse</div>
+  <div id="nextReminderText" style="font-weight:800">Ingen påminnelser</div>
+</div>
+<div class="cards">
 <div class="card" onclick="openVaxModal()" style="cursor:pointer"><h4>🛡️ Helse & vaksinering</h4><p>Vaksiner, ormekur, flått, helsesjekk og historikk.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openHeatModal()" style="cursor:pointer"><h4>❤️ Løpetid & fruktbarhet</h4><p>Syklus og fruktbare perioder når relevant.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openVetModal()" style="cursor:pointer"><h4>🗓️ Avtaler & påminnelser</h4><button type="button" onclick="event.stopPropagation();openReminderModal()" style="margin-top:10px;padding:9px 12px;border-radius:9px;border:1px solid #35536a;background:#101d27;color:#fff;font-weight:800">🔔 Påminnelser</button><p>Alle avtaler og behandlinger samlet.</p><span class="link">Se kalender →</span><img class="pet" src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
@@ -700,6 +705,7 @@ function openAnimal(index){
 
   loadLatestWeight();
   refreshPrivateProfileDisplay();
+  loadNextReminderSummary();
 
   document.querySelectorAll("#privateApp h3,#privateApp h4,#privateApp p").forEach(el=>{
     if(el.dataset.templateText===undefined) el.dataset.templateText=el.innerHTML;
@@ -742,6 +748,36 @@ function logoutOwner(){
 
 
 
+
+function updateNextReminder(items){
+  const panel=document.getElementById("nextReminderPanel");
+  const text=document.getElementById("nextReminderText");
+  if(!panel||!text)return;
+  const list=(items||[]).filter(r=>r.reminder_date);
+  if(!list.length){
+    panel.style.display="block";
+    text.textContent="Ingen kommende påminnelser";
+    return;
+  }
+  const today=todayLocalISO();
+  const upcoming=list.filter(r=>r.reminder_date>=today);
+  const r=(upcoming.length?upcoming:list)[0];
+  panel.style.display="block";
+  text.textContent=formatDateNO(r.reminder_date)+" – "+r.reminder_title;
+}
+async function loadNextReminderSummary(){
+  if(!currentDog)return;
+  const c=ownerCredentials();
+  try{
+    const {data,error}=await sb.rpc("get_dog_reminders",{
+      p_dog_code:currentDog.dog_code,
+      p_owner_email:c.email,
+      p_owner_pin:c.pin
+    });
+    if(error)throw error;
+    updateNextReminder(data||[]);
+  }catch(e){console.error(e);}
+}
 async function openReminderModal(){
   if(!currentDog)return;
   remTitle.textContent=(currentDog.dog_name||"Dyret")+" – påminnelser";
@@ -754,7 +790,12 @@ async function loadReminders(){
   try{
     const {data,error}=await sb.rpc("get_dog_reminders",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});
     if(error)throw error;
-    if(!data?.length){remHistory.innerHTML="Ingen påminnelser ennå.";return;}
+    if(!data?.length){
+      remHistory.innerHTML="Ingen påminnelser ennå.";
+      updateNextReminder([]);
+      return;
+    }
+    updateNextReminder(data);
     remHistory.innerHTML=data.map(r=>`<div class="rem-row"><strong>${esc(formatDateNO(r.reminder_date))} – ${esc(r.reminder_title)}</strong>${r.note?`<div style="color:#aebbc5;margin-top:5px">${esc(r.note)}</div>`:""}<button class="rem-del" onclick="deleteReminder(${Number(r.id)})">🗑️ Slett</button></div>`).join("");
   }catch(e){console.error(e);remHistory.innerHTML="Kunne ikke hente påminnelsene.";}
 }
@@ -766,7 +807,7 @@ async function saveReminder(){
     const {error}=await sb.rpc("add_dog_reminder",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin,p_reminder_date:remDate.value||todayLocalISO(),p_reminder_title:remText.value.trim(),p_note:remNote.value.trim()||null});
     if(error)throw error;
     remMsg.style.color="#67dc88";remMsg.textContent="✓ Påminnelsen er lagret.";
-    remText.value="";remNote.value="";await loadReminders();
+    remText.value="";remNote.value="";await loadReminders();await loadNextReminderSummary();
   }catch(e){console.error(e);remMsg.style.color="#ffb8b8";remMsg.textContent="Kunne ikke lagre påminnelsen.";}
   finally{remSave.disabled=false;}
 }
@@ -775,7 +816,7 @@ async function deleteReminder(id){
   const c=ownerCredentials();
   try{
     const {error}=await sb.rpc("delete_dog_reminder",{p_reminder_id:id,p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});
-    if(error)throw error; await loadReminders();
+    if(error)throw error; await loadReminders(); await loadNextReminderSummary();
   }catch(e){console.error(e);}
 }
 async function openProfileModal(){
