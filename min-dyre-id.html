@@ -166,6 +166,25 @@
 }
 </style>
 
+
+<style>
+.vaccine-card{cursor:pointer}
+.vaccine-card:hover{border-color:#b58a35;transform:translateY(-1px)}
+.vaccine-modal{display:none;position:fixed;inset:0;background:#000c;z-index:51;align-items:center;justify-content:center;padding:18px}
+.vaccine-box{width:min(650px,96vw);max-height:90vh;overflow:auto;background:linear-gradient(145deg,#0b1a26,#061019);border:1px solid #35536a;border-radius:22px;padding:25px;box-shadow:0 25px 70px #000b}
+.vaccine-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.vaccine-form .full{grid-column:1/-1}
+.vaccine-form label{display:block;font-weight:800;margin-bottom:7px;color:#dce6ed}
+.vaccine-form input,.vaccine-form textarea{width:100%;background:#050d14;color:#fff;border:1px solid #29445a;border-radius:10px;padding:13px;font-size:16px}
+.vaccine-form textarea{min-height:80px;resize:vertical}
+.vaccine-save{grid-column:1/-1;border:0;border-radius:11px;padding:14px;background:linear-gradient(135deg,#e1b955,#ad7c2d);color:#111;font-weight:900;font-size:17px;cursor:pointer}
+.vaccine-msg{grid-column:1/-1;min-height:20px;color:#ffb8b8;font-size:14px}
+.vaccine-history{margin-top:23px;border-top:1px solid #21394d;padding-top:18px}
+.vaccine-row{padding:12px 0;border-bottom:1px solid #182c3b}
+.vaccine-row strong{color:#efbd54;font-size:17px}
+@media(max-width:600px){.vaccine-form{grid-template-columns:1fr}.vaccine-form .full,.vaccine-save,.vaccine-msg{grid-column:1}}
+</style>
+
 </head><body>
 <div id="gate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#102337 0,#06111c 42%,#030a11 100%)">
   <div id="loginCard" style="width:min(680px,94vw);background:linear-gradient(145deg,#091722,#061019);border:1px solid #244157;border-radius:28px;padding:46px 50px;box-shadow:0 20px 55px #0009">
@@ -234,6 +253,43 @@
 <div class="card"><h4>📁 Dokumenter & bilder</h4><p>Bilder, vaksinekort, sertifikater og viktige filer.</p><span class="link">Se samling →</span><img class="pet" src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card family"><h4>🐾 Chiko er en del av familien</h4><p>Samle det viktigste om helse, omsorg og hverdagen på ett trygt sted. ❤️</p></div>
 </div></section><div class="lock">🔒 Denne siden er kun synlig for deg som eier av denne Dyre-ID-en.</div></main>
+
+
+<div class="vaccine-modal" id="vaccineModal">
+  <div class="vaccine-box">
+    <div class="weight-head">
+      <div>
+        <div style="color:#e8b94f;font-weight:900">💉 VAKSINER</div>
+        <h2 id="vaccineTitle" style="margin:0;font-size:28px">Vaksiner</h2>
+      </div>
+      <button class="weight-close" onclick="closeVaccineModal()">Lukk ✕</button>
+    </div>
+    <div class="vaccine-form">
+      <div>
+        <label for="vaccineDate">Dato gitt</label>
+        <input id="vaccineDate" type="date">
+      </div>
+      <div>
+        <label for="vaccineName">Vaksine</label>
+        <input id="vaccineName" type="text" placeholder="f.eks. Nobivac">
+      </div>
+      <div>
+        <label for="nextVaccineDate">Neste vaksine (valgfritt)</label>
+        <input id="nextVaccineDate" type="date">
+      </div>
+      <div class="full">
+        <label for="vaccineNote">Notat (valgfritt)</label>
+        <textarea id="vaccineNote" placeholder="f.eks. gitt hos veterinær"></textarea>
+      </div>
+      <button class="vaccine-save" id="vaccineSaveBtn" onclick="saveVaccine()">💾 Lagre vaksine</button>
+      <div class="vaccine-msg" id="vaccineMsg"></div>
+    </div>
+    <div class="vaccine-history">
+      <h3 style="margin:0 0 8px">Historikk</h3>
+      <div id="vaccineHistory"><div class="weight-empty">Ingen vaksiner registrert ennå.</div></div>
+    </div>
+  </div>
+</div>
 
 <div class="weight-modal" id="weightModal">
   <div class="weight-box">
@@ -445,6 +501,67 @@ function logoutOwner(){
 }
 
 
+
+async function openVaccineModal(){
+  if(!currentDog) return;
+  document.getElementById("vaccineTitle").textContent=(currentDog.dog_name||"Dyret")+" – vaksiner";
+  document.getElementById("vaccineDate").value=todayLocalISO();
+  document.getElementById("vaccineName").value="";
+  document.getElementById("nextVaccineDate").value="";
+  document.getElementById("vaccineNote").value="";
+  document.getElementById("vaccineMsg").textContent="";
+  document.getElementById("vaccineModal").style.display="flex";
+  await loadVaccineHistory();
+}
+function closeVaccineModal(){document.getElementById("vaccineModal").style.display="none";}
+
+async function loadVaccineHistory(){
+  const box=document.getElementById("vaccineHistory");
+  const c=ownerCredentials();
+  box.innerHTML='<div class="weight-empty">Henter vaksiner …</div>';
+  try{
+    const {data,error}=await sb.rpc("get_dog_vaccinations",{
+      p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin
+    });
+    if(error) throw error;
+    if(!data || !data.length){
+      box.innerHTML='<div class="weight-empty">Ingen vaksiner registrert ennå.</div>'; return;
+    }
+    box.innerHTML=data.map(v=>`
+      <div class="vaccine-row">
+        <strong>${esc(v.vaccine_name||"Vaksine")}</strong><br>
+        <span>${esc(formatDateNO(v.vaccine_date))}</span>
+        ${v.next_vaccine_date ? ` · Neste: ${esc(formatDateNO(v.next_vaccine_date))}` : ""}
+        ${v.note ? `<div style="color:#aebbc5;margin-top:5px">${esc(v.note)}</div>` : ""}
+      </div>`).join("");
+  }catch(e){console.error(e);box.innerHTML='<div class="weight-empty" style="color:#ffb8b8">Kunne ikke hente vaksiner.</div>';}
+}
+
+async function saveVaccine(){
+  const msg=document.getElementById("vaccineMsg");
+  const btn=document.getElementById("vaccineSaveBtn");
+  const name=document.getElementById("vaccineName").value.trim();
+  const date=document.getElementById("vaccineDate").value||todayLocalISO();
+  const next=document.getElementById("nextVaccineDate").value||null;
+  const note=document.getElementById("vaccineNote").value.trim()||null;
+  const c=ownerCredentials();
+  msg.style.color="#ffb8b8"; msg.textContent="";
+  if(!name){msg.textContent="Skriv inn navnet på vaksinen.";return;}
+  btn.disabled=true;btn.textContent="Lagrer …";
+  try{
+    const {error}=await sb.rpc("add_dog_vaccination",{
+      p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin,
+      p_vaccine_date:date,p_vaccine_name:name,p_next_vaccine_date:next,p_note:note
+    });
+    if(error) throw error;
+    msg.style.color="#67dc88";msg.textContent="✓ Vaksinen er lagret.";
+    document.getElementById("vaccineName").value="";
+    document.getElementById("vaccineNote").value="";
+    await loadVaccineHistory();
+  }catch(e){console.error(e);msg.textContent="Kunne ikke lagre vaksinen.";}
+  finally{btn.disabled=false;btn.textContent="💾 Lagre vaksine";}
+}
+
 function ownerCredentials(){
   return {
     email: sessionStorage.getItem("dyreid_owner_email") || "",
@@ -625,6 +742,10 @@ async function restoreOwnerSession(){
     console.error(e);
   }
 }
+
+document.getElementById("vaccineModal").addEventListener("click",e=>{
+  if(e.target.id==="vaccineModal") closeVaccineModal();
+});
 
 document.getElementById("weightModal").addEventListener("click",e=>{
   if(e.target.id==="weightModal") closeWeightModal();
