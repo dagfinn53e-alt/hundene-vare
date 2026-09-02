@@ -270,7 +270,18 @@
 .profile-form{display:grid;gap:14px}.profile-form label{display:block;font-weight:800;margin-bottom:7px}
 .profile-form input{width:100%;background:#050d14;color:#fff;border:1px solid #29445a;border-radius:10px;padding:13px;font-size:16px}
 .profile-save{border:0;border-radius:11px;padding:14px;background:linear-gradient(135deg,#e1b955,#ad7c2d);color:#111;font-weight:900;font-size:17px;cursor:pointer}
-.profile-msg{min-height:20px}</style></head><body>
+.profile-msg{min-height:20px}</style><style>
+.rem-modal{display:none;position:fixed;inset:0;background:#000c;z-index:82;align-items:center;justify-content:center;padding:18px}
+.rem-box{width:min(650px,96vw);max-height:90vh;overflow:auto;background:linear-gradient(145deg,#0b1a26,#061019);border:1px solid #35536a;border-radius:22px;padding:25px}
+.rem-head{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:18px}.rem-head h2{margin:0}
+.rem-close{border:1px solid #35536a;background:#101d27;color:#fff;border-radius:10px;padding:9px 12px;cursor:pointer;font-weight:800}
+.rem-form{display:grid;gap:14px}.rem-form label{display:block;font-weight:800;margin-bottom:7px}
+.rem-form input,.rem-form textarea{width:100%;background:#050d14;color:#fff;border:1px solid #29445a;border-radius:10px;padding:13px;font-size:16px}
+.rem-form textarea{min-height:80px}.rem-save{border:0;border-radius:11px;padding:14px;background:linear-gradient(135deg,#e1b955,#ad7c2d);color:#111;font-weight:900;font-size:17px}
+.rem-msg{min-height:20px}.rem-history{margin-top:22px;border-top:1px solid #21394d;padding-top:18px}
+.rem-row{padding:12px 0;border-bottom:1px solid #182c3b}.rem-row strong{color:#efbd54}
+.rem-del{margin-top:8px;border:1px solid #704040;background:#241316;color:#ffb5b5;border-radius:8px;padding:6px 10px;cursor:pointer}
+</style></head><body>
 <div id="gate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#102337 0,#06111c 42%,#030a11 100%)">
   <div id="loginCard" style="width:min(680px,94vw);background:linear-gradient(145deg,#091722,#061019);border:1px solid #244157;border-radius:28px;padding:46px 50px;box-shadow:0 20px 55px #0009">
     <div style="color:#e8b94f;font-weight:900;font-size:30px">🐾 HUNDENE VÅRE</div>
@@ -328,7 +339,7 @@
 <section class="section"><h3>🐾 ALT OM CHIKO</h3><div class="cards">
 <div class="card" onclick="openVaxModal()" style="cursor:pointer"><h4>🛡️ Helse & vaksinering</h4><p>Vaksiner, ormekur, flått, helsesjekk og historikk.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openHeatModal()" style="cursor:pointer"><h4>❤️ Løpetid & fruktbarhet</h4><p>Syklus og fruktbare perioder når relevant.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
-<div class="card" onclick="openVetModal()" style="cursor:pointer"><h4>🗓️ Avtaler & påminnelser</h4><p>Alle avtaler og behandlinger samlet.</p><span class="link">Se kalender →</span><img class="pet" src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
+<div class="card" onclick="openVetModal()" style="cursor:pointer"><h4>🗓️ Avtaler & påminnelser</h4><button type="button" onclick="event.stopPropagation();openReminderModal()" style="margin-top:10px;padding:9px 12px;border-radius:9px;border:1px solid #35536a;background:#101d27;color:#fff;font-weight:800">🔔 Påminnelser</button><p>Alle avtaler og behandlinger samlet.</p><span class="link">Se kalender →</span><img class="pet" src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openMedModal()" style="cursor:pointer"><h4>💊 Medisiner & behandling</h4><p>Medisiner, doser, kurer og behandlingshistorikk.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card weight-card" onclick="openWeightModal()"><h4>⚖️ Vekt & utvikling</h4><p>Vektlogg og utvikling over tid.</p><span class="link">Legg til / se vektlogg →</span><img class="pet" src="https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openFoodModal()" style="cursor:pointer"><h4>🥣 Fôr & ernæring</h4><p>Fôrtype, mengde, allergier og kosttilskudd.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
@@ -345,7 +356,16 @@
 
 
 
-<div class="profile-modal" id="profileModal"><div class="profile-box">
+<div class="rem-modal" id="remModal"><div class="rem-box">
+<div class="rem-head"><div><div style="color:#e8b94f;font-weight:900">🔔 PÅMINNELSER</div><h2 id="remTitle">Påminnelser</h2></div><button class="rem-close" onclick="closeReminderModal()">Lukk ✕</button></div>
+<div class="rem-form">
+<div><label>Dato</label><input id="remDate" type="date"></div>
+<div><label>Hva skal du huske?</label><input id="remText" type="text" placeholder="F.eks. flåttbehandling, kloklipp eller tannstell"></div>
+<div><label>Notat (valgfritt)</label><textarea id="remNote"></textarea></div>
+<button class="rem-save" id="remSave" onclick="saveReminder()">💾 Lagre påminnelse</button>
+<div class="rem-msg" id="remMsg"></div></div>
+<div class="rem-history"><h3>Mine påminnelser</h3><div id="remHistory">Ingen påminnelser ennå.</div></div>
+</div></div><div class="profile-modal" id="profileModal"><div class="profile-box">
 <div class="profile-head"><div><div style="color:#e8b94f;font-weight:900">✎ REDIGER PROFIL</div><h2 id="profileTitle">Faste opplysninger</h2></div><button class="profile-close" onclick="closeProfileModal()">Lukk ✕</button></div>
 <div class="profile-form">
 <div><label>Fødselsdato</label><input id="profileBirth" type="date"></div>
@@ -721,6 +741,43 @@ function logoutOwner(){
 
 
 
+
+async function openReminderModal(){
+  if(!currentDog)return;
+  remTitle.textContent=(currentDog.dog_name||"Dyret")+" – påminnelser";
+  remDate.value=todayLocalISO(); remText.value=""; remNote.value=""; remMsg.textContent="";
+  remModal.style.display="flex"; await loadReminders();
+}
+function closeReminderModal(){remModal.style.display="none";}
+async function loadReminders(){
+  const c=ownerCredentials(); remHistory.innerHTML="Henter påminnelser …";
+  try{
+    const {data,error}=await sb.rpc("get_dog_reminders",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});
+    if(error)throw error;
+    if(!data?.length){remHistory.innerHTML="Ingen påminnelser ennå.";return;}
+    remHistory.innerHTML=data.map(r=>`<div class="rem-row"><strong>${esc(formatDateNO(r.reminder_date))} – ${esc(r.reminder_title)}</strong>${r.note?`<div style="color:#aebbc5;margin-top:5px">${esc(r.note)}</div>`:""}<button class="rem-del" onclick="deleteReminder(${Number(r.id)})">🗑️ Slett</button></div>`).join("");
+  }catch(e){console.error(e);remHistory.innerHTML="Kunne ikke hente påminnelsene.";}
+}
+async function saveReminder(){
+  const c=ownerCredentials(); remMsg.textContent="";
+  if(!remText.value.trim()){remMsg.style.color="#ffb8b8";remMsg.textContent="Skriv hva du vil bli påminnet om.";return;}
+  remSave.disabled=true;
+  try{
+    const {error}=await sb.rpc("add_dog_reminder",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin,p_reminder_date:remDate.value||todayLocalISO(),p_reminder_title:remText.value.trim(),p_note:remNote.value.trim()||null});
+    if(error)throw error;
+    remMsg.style.color="#67dc88";remMsg.textContent="✓ Påminnelsen er lagret.";
+    remText.value="";remNote.value="";await loadReminders();
+  }catch(e){console.error(e);remMsg.style.color="#ffb8b8";remMsg.textContent="Kunne ikke lagre påminnelsen.";}
+  finally{remSave.disabled=false;}
+}
+async function deleteReminder(id){
+  if(!confirm("Vil du slette denne påminnelsen?"))return;
+  const c=ownerCredentials();
+  try{
+    const {error}=await sb.rpc("delete_dog_reminder",{p_reminder_id:id,p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});
+    if(error)throw error; await loadReminders();
+  }catch(e){console.error(e);}
+}
 async function openProfileModal(){
   if(!currentDog)return;
   profileTitle.textContent=(currentDog.dog_name||"Dyret")+" – faste opplysninger";
