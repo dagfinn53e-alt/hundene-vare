@@ -337,6 +337,10 @@
 <div class="triple"><section class="panel"><h3>🔵 HURTIGINFO</h3><div class="info"><span>🏠 Adresse</span><b>Legg til</b><span>👤 Eier</span><b>Privat</b><span>☎ Telefon</span><b>Privat</b><span>✉ E-post</span><b>Privat</b><span>🩺 Veterinær</span><b id="heroVet">Legg til</b><span>▣ ID-nummer</span><b id="heroCode">–</b></div></section><section class="panel health"><h3>💙 HELSESTATUS</h3><div class="ring">100%</div><b class="green">Frisk og aktiv</b><p style="color:#8999a6">Sist helsesjekk: legg til</p></section><section class="panel"><h3>📝 KJAPPE NOTATER</h3><p class="notes">Her kan eier skrive egne private notater om Chiko.</p><p style="color:#7f909c;margin-top:45px">Kun synlig for eier.</p></section></div>
 <section class="section"><h3>🔔 VIKTIGE PÅMINNELSER</h3><div class="reminders"><div class="rem"><strong>🛡️ Vaksinering</strong><small>Neste vaksine</small><div class="date">Legg til <span class="days">Påminnelse</span></div></div><div class="rem"><strong>🪲 Flåttbehandling</strong><small>Behandling</small><div class="date"><span id="importantTick">Legg til</span></div></div><div class="rem"><strong>✂️ Kloklipp</strong><small>Stell</small><div class="date"><span id="importantNails">Legg til</span></div></div><div class="rem"><strong>🦷 Tannrens / sjekk</strong><small>Tannhelse</small><div class="date"><span id="importantDental">Legg til</span></div></div></div></section>
 <section class="section"><h3>🐾 <span id="allAboutName">ALT OM DYRET</span></h3>
+<div id="allergyPanel" style="margin:16px 0;padding:14px 16px;border:1px solid #35536a;border-radius:14px;background:#0a1721">
+  <div style="color:#e8b94f;font-weight:900;margin-bottom:5px">⚠️ Allergier</div>
+  <div id="allergyText" style="font-weight:800">Ikke registrert</div>
+</div>
 <div id="nextReminderPanel" style="margin:16px 0;padding:14px 16px;border:1px solid #35536a;border-radius:14px;background:#0a1721;display:none">
   <div style="color:#e8b94f;font-weight:900;margin-bottom:5px">🔔 Neste påminnelse</div>
   <div id="nextReminderText" style="font-weight:800">Ingen påminnelser</div>
@@ -388,6 +392,7 @@
 <div><label>Fødselsdato</label><input id="profileBirth" type="date"></div>
 <div><label>Mikrochipnummer</label><input id="profileChip" type="text" placeholder="F.eks. 5780..."></div>
 <div><label>Veterinær / klinikk</label><input id="profileVet" type="text" placeholder="Navn på veterinær eller klinikk"></div>
+<div><label>Allergier</label><input id="profileAllergies" type="text" placeholder="F.eks. ingen kjente, kylling, pollen"></div>
 <button class="profile-save" id="profileSave" onclick="savePrivateProfile()">💾 Lagre profil</button>
 <div class="profile-msg" id="profileMsg"></div>
 </div></div></div><div class="heat-modal" id="heatModal"><div class="heat-box">
@@ -717,6 +722,7 @@ function openAnimal(index){
 
   loadLatestWeight();
   refreshPrivateProfileDisplay();
+  refreshAllergyDisplay();
   const allAbout=document.getElementById("allAboutName"); if(allAbout && currentDog) allAbout.textContent="ALT OM "+(currentDog.dog_name||"DYRET").toUpperCase();
   loadNextReminderSummary();
 
@@ -870,6 +876,7 @@ async function openProfileModal(){
     profileBirth.value=p?.birth_date||"";
     profileChip.value=p?.microchip_number||"";
     profileVet.value=p?.veterinarian||"";
+    try{const {data:aData,error:aErr}=await sb.rpc("get_dog_allergies",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});if(aErr)throw aErr;profileAllergies.value=aData||"";}catch(e){console.error(e);profileAllergies.value="";}
   }catch(e){console.error(e);profileMsg.style.color="#ffb8b8";profileMsg.textContent="Kunne ikke hente profilopplysningene.";}
 }
 function closeProfileModal(){profileModal.style.display="none";}
@@ -881,10 +888,36 @@ async function savePrivateProfile(){
       p_birth_date:profileBirth.value||null,p_microchip_number:profileChip.value.trim()||null,p_veterinarian:profileVet.value.trim()||null
     });
     if(error)throw error;
+    const {error:allergyError}=await sb.rpc("update_dog_allergies",{
+      p_dog_code:currentDog.dog_code,
+      p_owner_email:c.email,
+      p_owner_pin:c.pin,
+      p_allergies:profileAllergies.value.trim()||null
+    });
+    if(allergyError)throw allergyError;
     profileMsg.style.color="#67dc88"; profileMsg.textContent="✓ Profilen er lagret.";
     await refreshPrivateProfileDisplay();
+    await refreshAllergyDisplay();
   }catch(e){console.error(e);profileMsg.style.color="#ffb8b8";profileMsg.textContent="Kunne ikke lagre profilen.";}
   finally{profileSave.disabled=false;}
+}
+
+async function refreshAllergyDisplay(){
+  if(!currentDog)return;
+  const c=ownerCredentials();
+  const el=document.getElementById("allergyText");
+  try{
+    const {data,error}=await sb.rpc("get_dog_allergies",{
+      p_dog_code:currentDog.dog_code,
+      p_owner_email:c.email,
+      p_owner_pin:c.pin
+    });
+    if(error)throw error;
+    if(el)el.textContent=data||"Ingen kjente";
+  }catch(e){
+    console.error(e);
+    if(el)el.textContent="Ikke registrert";
+  }
 }
 async function refreshPrivateProfileDisplay(){
   if(!currentDog) return;
