@@ -221,6 +221,19 @@
 .food-del{margin-top:8px;border:1px solid #704040;background:#241316;color:#ffb5b5;border-radius:8px;padding:6px 10px;cursor:pointer}
 @media(max-width:600px){.food-form{grid-template-columns:1fr}.food-form .full,.food-save,.food-msg{grid-column:1}}
 </style>
+
+<style>
+.activity-modal{display:none;position:fixed;inset:0;background:#000c;z-index:68;align-items:center;justify-content:center;padding:18px}
+.activity-box{width:min(680px,96vw);max-height:90vh;overflow:auto;background:linear-gradient(145deg,#0b1a26,#061019);border:1px solid #35536a;border-radius:22px;padding:25px}
+.activity-head{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:18px}.activity-head h2{margin:0}
+.activity-close{border:1px solid #35536a;background:#101d27;color:#fff;border-radius:10px;padding:9px 12px;cursor:pointer;font-weight:800}
+.activity-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.activity-form .full{grid-column:1/-1}
+.activity-form label{display:block;font-weight:800;margin-bottom:7px}.activity-form input,.activity-form textarea{width:100%;background:#050d14;color:#fff;border:1px solid #29445a;border-radius:10px;padding:13px;font-size:16px}
+.activity-form textarea{min-height:80px}.activity-save{grid-column:1/-1;border:0;border-radius:11px;padding:14px;background:linear-gradient(135deg,#e1b955,#ad7c2d);color:#111;font-weight:900;font-size:17px}
+.activity-msg{grid-column:1/-1;min-height:20px}.activity-history{margin-top:23px;border-top:1px solid #21394d;padding-top:18px}.activity-row{padding:12px 0;border-bottom:1px solid #182c3b}.activity-row strong{color:#efbd54}
+.activity-del{margin-top:8px;border:1px solid #704040;background:#241316;color:#ffb5b5;border-radius:8px;padding:6px 10px;cursor:pointer}
+@media(max-width:600px){.activity-form{grid-template-columns:1fr}.activity-form .full,.activity-save,.activity-msg{grid-column:1}}
+</style>
 </head><body>
 <div id="gate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#102337 0,#06111c 42%,#030a11 100%)">
   <div id="loginCard" style="width:min(680px,94vw);background:linear-gradient(145deg,#091722,#061019);border:1px solid #244157;border-radius:28px;padding:46px 50px;box-shadow:0 20px 55px #0009">
@@ -283,7 +296,7 @@
 <div class="card" onclick="openMedModal()" style="cursor:pointer"><h4>💊 Medisiner & behandling</h4><p>Medisiner, doser, kurer og behandlingshistorikk.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card weight-card" onclick="openWeightModal()"><h4>⚖️ Vekt & utvikling</h4><p>Vektlogg og utvikling over tid.</p><span class="link">Legg til / se vektlogg →</span><img class="pet" src="https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openFoodModal()" style="cursor:pointer"><h4>🥣 Fôr & ernæring</h4><p>Fôrtype, mengde, allergier og kosttilskudd.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
-<div class="card"><h4>🏃 Aktivitet & trening</h4><p>Registrer turer, trening og aktiviteter.</p><span class="link">Loggfør aktivitet →</span><img class="pet" src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
+<div class="card" onclick="openActivityModal()" style="cursor:pointer"><h4>🏃 Aktivitet & trening</h4><p>Registrer turer, trening og aktiviteter.</p><span class="link">Loggfør aktivitet →</span><img class="pet" src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card"><h4>✂️ Stell & pleie</h4><p>Pelsstell, kloklipp, tannstell og bading.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card"><h4>☂️ Forsikring</h4><p>Forsikringsinfo, polise og fornyelse.</p><span class="link">Se forsikring →</span><img class="pet" src="https://images.unsplash.com/photo-1534361960057-19889db9621e?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card"><h4>📁 Dokumenter & bilder</h4><p>Bilder, vaksinekort, sertifikater og viktige filer.</p><span class="link">Se samling →</span><img class="pet" src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
@@ -293,6 +306,18 @@
 
 
 
+
+<div class="activity-modal" id="activityModal"><div class="activity-box">
+<div class="activity-head"><div><div style="color:#e8b94f;font-weight:900">🏃 AKTIVITET & TRENING</div><h2 id="activityTitle">Aktivitet & trening</h2></div><button class="activity-close" onclick="closeActivityModal()">Lukk ✕</button></div>
+<div class="activity-form">
+<div><label>Dato</label><input id="activityDate" type="date"></div>
+<div><label>Varighet</label><input id="activityDuration" placeholder="f.eks. 45 min"></div>
+<div class="full"><label>Aktivitet / trening</label><input id="activityName" placeholder="f.eks. tur, innkalling eller miljøtrening"></div>
+<div class="full"><label>Notat</label><textarea id="activityNote" placeholder="Valgfritt"></textarea></div>
+<button class="activity-save" id="activitySave" onclick="saveActivity()">💾 Lagre aktivitet / trening</button><div class="activity-msg" id="activityMsg"></div>
+</div>
+<div class="activity-history"><h3>Historikk</h3><div id="activityHistory">Ingen aktiviteter registrert ennå.</div></div>
+</div></div>
 <div class="food-modal" id="foodModal"><div class="food-box">
 <div class="food-head"><div><div style="color:#e8b94f;font-weight:900">🥣 FÔR & ERNÆRING</div><h2 id="foodTitle">Fôr & ernæring</h2></div><button class="food-close" onclick="closeFoodModal()">Lukk ✕</button></div>
 <div class="food-form">
@@ -605,6 +630,43 @@ function logoutOwner(){
 
 
 
+
+async function openActivityModal(){
+ if(!currentDog)return;
+ activityTitle.textContent=(currentDog.dog_name||"Dyret")+" – aktivitet & trening";
+ activityDate.value=todayLocalISO();activityDuration.value="";activityName.value="";activityNote.value="";activityMsg.textContent="";
+ activityModal.style.display="flex";await loadActivities();
+}
+function closeActivityModal(){activityModal.style.display="none";}
+async function loadActivities(){
+ const c=ownerCredentials();activityHistory.innerHTML="Henter historikk …";
+ try{
+  const {data,error}=await sb.rpc("get_dog_activities",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});
+  if(error)throw error;
+  if(!data?.length){activityHistory.innerHTML="Ingen aktiviteter registrert ennå.";return;}
+  activityHistory.innerHTML=data.map(a=>`<div class="activity-row"><strong>${esc(a.activity_name)}</strong><br>${esc(formatDateNO(a.activity_date))}${a.duration?` · ${esc(a.duration)}`:""}${a.note?`<div style="color:#aebbc5;margin-top:5px">${esc(a.note)}</div>`:""}<button class="activity-del" onclick="deleteActivity(${Number(a.id)})">🗑️ Slett</button></div>`).join("");
+ }catch(e){console.error(e);activityHistory.innerHTML="Kunne ikke hente historikken.";}
+}
+async function saveActivity(){
+ const name=activityName.value.trim(),c=ownerCredentials();activityMsg.textContent="";
+ if(!name){activityMsg.style.color="#ffb8b8";activityMsg.textContent="Skriv inn aktivitet eller trening.";return;}
+ activitySave.disabled=true;
+ try{
+  const {error}=await sb.rpc("add_dog_activity",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin,p_activity_date:activityDate.value||todayLocalISO(),p_activity_name:name,p_duration:activityDuration.value.trim()||null,p_note:activityNote.value.trim()||null});
+  if(error)throw error;
+  activityMsg.style.color="#67dc88";activityMsg.textContent="✓ Aktiviteten er lagret.";
+  activityName.value="";activityDuration.value="";activityNote.value="";await loadActivities();
+ }catch(e){console.error(e);activityMsg.style.color="#ffb8b8";activityMsg.textContent="Kunne ikke lagre.";}
+ finally{activitySave.disabled=false;}
+}
+async function deleteActivity(id){
+ if(!confirm("Vil du slette denne registreringen?"))return;
+ const c=ownerCredentials();
+ try{
+  const {error}=await sb.rpc("delete_dog_activity",{p_activity_id:id,p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});
+  if(error)throw error;await loadActivities();
+ }catch(e){console.error(e);}
+}
 async function openFoodModal(){
  if(!currentDog)return;
  foodTitle.textContent=(currentDog.dog_name||"Dyret")+" – fôr & ernæring";
