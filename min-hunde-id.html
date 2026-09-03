@@ -257,7 +257,7 @@ if(wantTag.checked){
 saveBtn.disabled=true;
 try{
 const code=makeCode(),photoUrl=await uploadPhoto(code);
-const {error}=await sb.rpc("register_dog_id_v2",{p_dog_code:code,p_dog_name:name,p_breed:br,p_sex:sx||null,p_color:co||null,p_owner_email:em,p_owner_pin:pin,p_photo_url:photoUrl||null});
+const {error}=await sb.rpc("register_dog_id_v2",{p_dog_code:code,p_dog_name:name,p_breed:br,p_sex:sx||null,p_color:co||null,p_owner_email:em,p_owner_pin:pin,p_photo_url:photoUrl||null,p_owner_phone:null,p_show_owner_phone:false});
 if(error)throw new Error(error.message);
 
 if(wantTag.checked){
