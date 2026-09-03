@@ -292,25 +292,7 @@
 .notes-msg{min-height:20px}.notes-history{margin-top:22px;border-top:1px solid #21394d;padding-top:18px}
 .notes-row{padding:12px 0;border-bottom:1px solid #182c3b}.notes-row strong{color:#efbd54}
 .notes-del{margin-top:8px;border:1px solid #704040;background:#241316;color:#ffb5b5;border-radius:8px;padding:6px 10px;cursor:pointer}
-</style>
-<style>
-/* Ren helseoversikt */
-#healthOverviewDetails{
-  margin:18px auto 0 !important;
-  max-width:330px !important;
-  display:grid !important;
-  gap:12px !important;
-  padding:0 18px !important;
-  text-align:left !important;
-  font-size:15px !important;
-  line-height:1.45 !important;
-}
-#healthOverviewDetails strong{font-weight:700}
-.health-ring,.health-circle,.status-ring,.health-score,.health-percent{
-  display:none !important;
-}
-</style>
-</head><body>
+</style></head><body>
 <div id="gate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#102337 0,#06111c 42%,#030a11 100%)">
   <div id="loginCard" style="width:min(680px,94vw);background:linear-gradient(145deg,#091722,#061019);border:1px solid #244157;border-radius:28px;padding:46px 50px;box-shadow:0 20px 55px #0009">
     <div style="color:#e8b94f;font-weight:900;font-size:30px">🐾 HUNDENE VÅRE</div>
@@ -337,7 +319,16 @@
     <div style="display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap;margin-bottom:22px">
       <div>
         <div style="color:#e8b94f;font-weight:900;font-size:22px">🐾 HUNDENE VÅRE</div>
-        <h1 style="font-size:36px;margin:12px 0 5pxy:none">
+        <h1 style="font-size:36px;margin:12px 0 5px">Mine dyr</h1>
+        <p id="ownerWelcome" style="color:#9fb0bc;margin:0"></p>
+      </div>
+      <button onclick="logoutOwner()" style="background:#101d27;border:1px solid #29445a;color:#c9d4dc;border-radius:10px;padding:10px 16px;cursor:pointer">Logg ut</button>
+    </div>
+    <div id="animalGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px"></div>
+  </div>
+</div>
+
+<div id="privateApp" style="display:none">
 
 <header><div class="nav">
 <div class="brand">🐾 HUNDENE VÅRE<small>Min Dyre-ID</small></div>
@@ -354,12 +345,7 @@
 <main class="wrap">
 <section class="hero"><div class="avatar" id="heroAvatar">🐶</div><div><h1 id="heroDogName">Dyret mitt ✓</h1><div class="meta"><span>🐾 Rase</span><b id="heroBreed">–</b><span>♂ Kjønn</span><b id="heroSex">–</b><span>🎂 Født</span><b id="heroBirth">Legg til</b><span>▣ Mikrochip</span><b id="heroChip">Legg til</b><span>⚖ Vekt</span><b id="heroWeight"><span id="heroWeightTop">Legg til</span></b><span>● Farge</span><b id="heroColor">–</b></div></div><button onclick="openProfileModal()" class="edit">✎ Rediger profil</button></section>
 <div class="quick"><div class="q"><span class="ico">📄</span><b>Helsekort</b></div><div class="q"><span class="ico">🔗</span><b>Del profil</b></div><div class="q"><span class="ico">🖼️</span><b>Last opp bilde</b></div><div class="q"><span class="ico">🪪</span><b>Skriv ut ID-kort</b></div><div class="q"><span class="ico">•••</span><b>Mer</b></div></div>
-<div class="triple"><section class="panel"><h3>🔵 HURTIGINFO</h3><div class="info"><span>🏠 Adresse</span><b>Legg til</b><span>👤 Eier</span><b>Privat</b><span>☎ Telefon</span><b>Privat</b><span>✉ E-post</span><b>Privat</b><span>🩺 Veterinær</span><b id="heroVet">Legg til</b><span>▣ ID-nummer</span><b id="heroCode">–</b></div></section><section class="panel health"><h3>💙 HELSEOVERSIKT</h3><div class="ring"><div id="healthOverviewDetails" style="margin:16px auto 10px;max-width:300px;display:grid;gap:10px;font-size:14px;line-height:1.4;text-align:left;padding:0 18px">
-  <div>💉 Siste vaksine: <strong id="healthLastVaccine">—</strong></div>
-  <div>📅 Neste vaksine: <strong id="healthNextVaccine">—</strong></div>
-  <div>🩺 Siste veterinærbesøk: <strong id="healthLastVet">—</strong></div>
-</div>
-</div><b class="green"></b><p st</p></section><section class="panel"><h3>📝 KJAPPE NOTATER</h3><p class="notes" id="quickNoteText">Ingen notater ennå.</p><p style="color:#7f909c;margin-top:45px">Kun synlig for eier.</p></section></div>
+<div class="triple"><section class="panel"><h3>🔵 HURTIGINFO</h3><div class="info"><span>🏠 Adresse</span><b>Legg til</b><span>👤 Eier</span><b>Privat</b><span>☎ Telefon</span><b>Privat</b><span>✉ E-post</span><b>Privat</b><span>🩺 Veterinær</span><b id="heroVet">Legg til</b><span>▣ ID-nummer</span><b id="heroCode">–</b></div></section><section class="panel health"><h3>💙 HELSESTATUS</h3><div class="ring">Helseoversikt</div><b class="green">Private helseopplysninger samlet på ett sted</b><p style="color:#8999a6">Sist helsesjekk: legg til</p></section><section class="panel"><h3>📝 KJAPPE NOTATER</h3><p class="notes" id="quickNoteText">Ingen notater ennå.</p><p style="color:#7f909c;margin-top:45px">Kun synlig for eier.</p></section></div>
 <section class="section"><h3>🔔 VIKTIGE PÅMINNELSER</h3><div class="reminders"><div class="rem"><strong>🛡️ Vaksinering</strong><small>Neste vaksine</small><div class="date">Legg til <span class="days">Påminnelse</span></div></div><div class="rem"><strong>🪲 Flåttbehandling</strong><small>Behandling</small><div class="date"><span id="importantTick">Legg til</span></div></div><div class="rem"><strong>✂️ Kloklipp</strong><small>Stell</small><div class="date"><span id="importantNails">Legg til</span></div></div><div class="rem"><strong>🦷 Tannrens / sjekk</strong><small>Tannhelse</small><div class="date"><span id="importantDental">Legg til</span></div></div></div></section>
 <section class="section"><h3>🐾 <span id="allAboutName">ALT OM DYRET</span></h3>
 <div id="allergyPanel" style="margin:16px 0;padding:14px 16px;border:1px solid #35536a;border-radius:14px;background:#0a1721">
@@ -383,8 +369,6 @@
 </div>
 <div class="card" onclick="openMedModal()" style="cursor:pointer"><h4>💊 Medisiner & behandling</h4><p>Medisiner, doser, kurer og behandlingshistorikk.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card weight-card" onclick="openWeightModal()"><h4>⚖️ Vekt & utvikling</h4><p>Vektlogg og utvikling over tid.</p><span class="link">Legg til / se vektlogg →</span><img class="pet" src="https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
-<div class="card" onclick="openFoodModal()" style="cursor:pointer"><h4>🥣 Fôr & ernæring</h4><p>Fôrtype, mengde, allergier og kosttilskudd.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
-<div class="card" onclick="openActivityModal()" style="cursoraturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openFoodModal()" style="cursor:pointer"><h4>🥣 Fôr & ernæring</h4><p>Fôrtype, mengde, allergier og kosttilskudd.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openActivityModal()" style="cursor:pointer"><h4>🏃 Aktivitet & trening</h4><p>Registrer turer, trening og aktiviteter.</p><span class="link">Loggfør aktivitet →</span><img class="pet" src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openCareModal()" style="cursor:pointer"><h4>✂️ Stell & pleie</h4><p>Pelsstell, kloklipp, tannstell og bading.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
@@ -769,7 +753,6 @@ function openAnimal(index){
   const allAbout=document.getElementById("allAboutName"); if(allAbout && currentDog) allAbout.textContent="ALT OM "+(currentDog.dog_name||"DYRET").toUpperCase();
   loadNextReminderSummary();
   loadQuickNote();
-  loadHealthOverview();
 
   document.querySelectorAll("#privateApp h3,#privateApp h4,#privateApp p").forEach(el=>{
     if(el.dataset.templateText===undefined) el.dataset.templateText=el.innerHTML;
@@ -902,44 +885,6 @@ async function loadNextReminderSummary(){
 }
 
 
-
-async function loadHealthOverview(){
-  if(!currentDog)return;
-  const c=ownerCredentials();
-  const lastV=document.getElementById("healthLastVaccine");
-  const nextV=document.getElementById("healthNextVaccine");
-  const lastVet=document.getElementById("healthLastVet");
-  if(!lastV||!nextV||!lastVet)return;
-  lastV.textContent="—"; nextV.textContent="—"; lastVet.textContent="—";
-  try{
-    const [vaccRes,vetRes]=await Promise.all([
-      sb.rpc("get_dog_vaccinations",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin}),
-      sb.rpc("get_dog_vet_appointments",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin})
-    ]);
-    if(!vaccRes.error && vaccRes.data?.length){
-      const vaccinations=[...vaccRes.data];
-      vaccinations.sort((a,b)=>String(b.vaccine_date||"").localeCompare(String(a.vaccine_date||"")));
-      const latest=vaccinations[0];
-      if(latest?.vaccine_date){
-        lastV.textContent=formatDate(latest.vaccine_date)+(latest.vaccine_name?" – "+latest.vaccine_name:"");
-      }
-      const upcoming=vaccinations
-        .filter(v=>v.next_vaccine_date)
-        .sort((a,b)=>String(a.next_vaccine_date).localeCompare(String(b.next_vaccine_date)))[0];
-      if(upcoming?.next_vaccine_date){
-        nextV.textContent=formatDate(upcoming.next_vaccine_date);
-      }
-    }
-    if(!vetRes.error && vetRes.data?.length){
-      const visits=[...vetRes.data].filter(v=>v.appointment_date);
-      visits.sort((a,b)=>String(b.appointment_date).localeCompare(String(a.appointment_date)));
-      const latestVet=visits[0];
-      if(latestVet?.appointment_date){
-        lastVet.textContent=formatDate(latestVet.appointment_date)+(latestVet.clinic?" – "+latestVet.clinic:"");
-      }
-    }
-  }catch(e){console.error(e);}
-}
 async function loadQuickNote(){
   if(!currentDog)return;
   const el=document.getElementById("quickNoteText");
