@@ -345,7 +345,7 @@
 <main class="wrap">
 <section class="hero"><div class="avatar" id="heroAvatar">🐶</div><div><h1 id="heroDogName">Dyret mitt ✓</h1><div class="meta"><span>🐾 Rase</span><b id="heroBreed">–</b><span>♂ Kjønn</span><b id="heroSex">–</b><span>🎂 Født</span><b id="heroBirth">Legg til</b><span>▣ Mikrochip</span><b id="heroChip">Legg til</b><span>⚖ Vekt</span><b id="heroWeight"><span id="heroWeightTop">Legg til</span></b><span>● Farge</span><b id="heroColor">–</b></div></div><button onclick="openProfileModal()" class="edit">✎ Rediger profil</button></section>
 <div class="quick"><div class="q"><span class="ico">📄</span><b>Helsekort</b></div><div class="q"><span class="ico">🔗</span><b>Del profil</b></div><div class="q"><span class="ico">🖼️</span><b>Last opp bilde</b></div><div class="q"><span class="ico">🪪</span><b>Skriv ut ID-kort</b></div><div class="q"><span class="ico">•••</span><b>Mer</b></div></div>
-<div class="triple"><section class="panel"><h3>🔵 HURTIGINFO</h3><div class="info"><span>🏠 Adresse</span><b>Legg til</b><span>👤 Eier</span><b>Privat</b><span>☎ Telefon</span><b>Privat</b><span>✉ E-post</span><b>Privat</b><span>🩺 Veterinær</span><b id="heroVet">Legg til</b><span>▣ ID-nummer</span><b id="heroCode">–</b></div></section><section class="panel health"><h3>💙 HELSESTATUS</h3><div class="ring">100%</div><b class="green">Frisk og aktiv</b><p style="color:#8999a6">Sist helsesjekk: legg til</p></section><section class="panel"><h3>📝 KJAPPE NOTATER</h3><p class="notes">Her kan eier skrive egne private notater om Chiko.</p><p style="color:#7f909c;margin-top:45px">Kun synlig for eier.</p></section></div>
+<div class="triple"><section class="panel"><h3>🔵 HURTIGINFO</h3><div class="info"><span>🏠 Adresse</span><b>Legg til</b><span>👤 Eier</span><b>Privat</b><span>☎ Telefon</span><b>Privat</b><span>✉ E-post</span><b>Privat</b><span>🩺 Veterinær</span><b id="heroVet">Legg til</b><span>▣ ID-nummer</span><b id="heroCode">–</b></div></section><section class="panel health"><h3>💙 HELSESTATUS</h3><div class="ring">100%</div><b class="green">Frisk og aktiv</b><p style="color:#8999a6">Sist helsesjekk: legg til</p></section><section class="panel"><h3>📝 KJAPPE NOTATER</h3><p class="notes" id="quickNoteText">Ingen notater ennå.</p><p style="color:#7f909c;margin-top:45px">Kun synlig for eier.</p></section></div>
 <section class="section"><h3>🔔 VIKTIGE PÅMINNELSER</h3><div class="reminders"><div class="rem"><strong>🛡️ Vaksinering</strong><small>Neste vaksine</small><div class="date">Legg til <span class="days">Påminnelse</span></div></div><div class="rem"><strong>🪲 Flåttbehandling</strong><small>Behandling</small><div class="date"><span id="importantTick">Legg til</span></div></div><div class="rem"><strong>✂️ Kloklipp</strong><small>Stell</small><div class="date"><span id="importantNails">Legg til</span></div></div><div class="rem"><strong>🦷 Tannrens / sjekk</strong><small>Tannhelse</small><div class="date"><span id="importantDental">Legg til</span></div></div></div></section>
 <section class="section"><h3>🐾 <span id="allAboutName">ALT OM DYRET</span></h3>
 <div id="allergyPanel" style="margin:16px 0;padding:14px 16px;border:1px solid #35536a;border-radius:14px;background:#0a1721">
@@ -752,6 +752,7 @@ function openAnimal(index){
   refreshAllergyDisplay();
   const allAbout=document.getElementById("allAboutName"); if(allAbout && currentDog) allAbout.textContent="ALT OM "+(currentDog.dog_name||"DYRET").toUpperCase();
   loadNextReminderSummary();
+  loadQuickNote();
 
   document.querySelectorAll("#privateApp h3,#privateApp h4,#privateApp p").forEach(el=>{
     if(el.dataset.templateText===undefined) el.dataset.templateText=el.innerHTML;
@@ -850,6 +851,20 @@ async function loadNextReminderSummary(){
   }catch(e){console.error(e);}
 }
 
+
+async function loadQuickNote(){
+  if(!currentDog)return;
+  const el=document.getElementById("quickNoteText");
+  if(!el)return;
+  const c=ownerCredentials();
+  try{
+    const {data,error}=await sb.rpc("get_dog_notes",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});
+    if(error)throw error;
+    if(!data?.length){el.textContent="Ingen notater ennå.";return;}
+    const n=data[0];
+    el.textContent=(n.title?n.title+": ":"")+(n.note||"");
+  }catch(e){console.error(e);el.textContent="Ingen notater ennå.";}
+}
 async function openNotesModal(){
   if(!currentDog)return;
   notesTitle.textContent=(currentDog.dog_name||"Dyret")+" – egne notater";
@@ -874,7 +889,7 @@ async function saveDogNote(){
     const {error}=await sb.rpc("add_dog_note",{p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin,p_note_date:noteDate.value||todayLocalISO(),p_title:noteTitle.value.trim(),p_note:noteText.value.trim()||null});
     if(error)throw error;
     noteMsg.style.color="#67dc88";noteMsg.textContent="✓ Notatet er lagret.";
-    noteTitle.value="";noteText.value="";await loadDogNotes();
+    noteTitle.value="";noteText.value="";await loadDogNotes();await loadQuickNote();
   }catch(e){console.error(e);noteMsg.style.color="#ffb8b8";noteMsg.textContent="Kunne ikke lagre notatet.";}
   finally{noteSave.disabled=false;}
 }
@@ -883,7 +898,7 @@ async function deleteDogNote(id){
   const c=ownerCredentials();
   try{
     const {error}=await sb.rpc("delete_dog_note",{p_note_id:id,p_dog_code:currentDog.dog_code,p_owner_email:c.email,p_owner_pin:c.pin});
-    if(error)throw error;await loadDogNotes();
+    if(error)throw error;await loadDogNotes();await loadQuickNote();
   }catch(e){console.error(e);}
 }
 async function openReminderModal(){
