@@ -762,11 +762,44 @@ function openAnimal(index){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 
-function backToAnimals(){
+async function backToAnimals(){
   document.getElementById("privateApp").style.display="none";
   document.getElementById("gate").style.display="flex";
-  document.getElementById("loginCard").style.display="none";
-  document.getElementById("animalChooser").style.display="block";
+
+  // Hvis dyrelisten allerede er lastet, vis den direkte.
+  if(ownerDogs && ownerDogs.length){
+    document.getElementById("loginCard").style.display="none";
+    document.getElementById("animalChooser").style.display="block";
+    renderAnimals();
+    window.scrollTo(0,0);
+    return;
+  }
+
+  // Ellers hent Bonnie og Chiko på nytt med den innloggingen som allerede er lagret.
+  const email=sessionStorage.getItem("dyreid_owner_email")||"";
+  const pin=sessionStorage.getItem("dyreid_owner_pin")||"";
+  if(email && pin){
+    try{
+      const {data,error}=await sb.rpc("get_owner_dogs",{
+        p_owner_email:email,
+        p_owner_pin:pin
+      });
+      if(error) throw error;
+      const allowedCodes=["HV-Z3T74Z9D","HV-GN4PNUHU"];
+      ownerDogs=(data||[]).filter(d=>allowedCodes.includes((d.dog_code||"").toUpperCase()));
+      if(ownerDogs.length){
+        document.getElementById("ownerWelcome").textContent=email;
+        renderAnimals();
+        document.getElementById("loginCard").style.display="none";
+        document.getElementById("animalChooser").style.display="block";
+        window.scrollTo(0,0);
+        return;
+      }
+    }catch(e){ console.error(e); }
+  }
+
+  document.getElementById("animalChooser").style.display="none";
+  document.getElementById("loginCard").style.display="block";
   window.scrollTo(0,0);
 }
 
