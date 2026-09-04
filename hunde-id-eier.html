@@ -61,6 +61,11 @@ summary{cursor:pointer;font-weight:850;padding:15px 0;color:var(--green)}
 details .inside{padding:0 0 16px}
 .statusbar{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px}
 .chip{background:#f4f8f5;border:1px solid #dfe8e2;border-radius:999px;padding:7px 11px;font-size:.9rem}
+.owner-nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.owner-nav a{flex:1 1 190px;text-decoration:none;text-align:center;padding:12px 14px;border-radius:13px;font-weight:850}
+.owner-nav .back{background:#fff;color:var(--green);border:2px solid var(--green)}
+.owner-nav .lost{background:#fff3f4;color:#b52235;border:2px solid var(--red)}
+.owner-nav .home2{background:var(--green);color:#fff}
 @media(max-width:620px){
   .quick,.grid{grid-template-columns:1fr}.full{grid-column:auto}
   .dog,.placeholder{width:145px;height:145px}.placeholder{font-size:56px}
@@ -95,6 +100,11 @@ details .inside{padding:0 0 16px}
 </header>
 
 <main>
+<div class="owner-nav">
+  <a class="back" id="backToDog" href="min-hunde-id.html">← Tilbake til Hunde-ID</a>
+  <a class="lost" href="savnet-hunder.html">🚨 Savnede hunder</a>
+  <a class="home2" href="index.html">🏠 Forsiden</a>
+</div>
 <div id="loading" class="card hero"><h2>Henter hund …</h2></div>
 <div id="missingId" class="card hidden"><h2>⚠️ Hunde-ID ikke funnet</h2><p>Kontroller lenken.</p></div>
 
@@ -196,6 +206,10 @@ const sb=supabase.createClient(
   "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
 );
 const DOG=(new URLSearchParams(location.search).get("id")||"").trim();
+const backToDog=document.getElementById("backToDog");
+if(backToDog && DOG){
+  backToDog.href="min-hunde-id.html?id="+encodeURIComponent(DOG);
+}
 let dog=null,newPhotoFile=null;
 
 document.getElementById("editPhoto").addEventListener("change",e=>newPhotoFile=e.target.files?.[0]||null);
