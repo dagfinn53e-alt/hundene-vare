@@ -281,7 +281,50 @@ finderLink.href=finder;ownerLink.href=owner;qr.innerHTML="";new QRCode(qr,{text:
 function printQR(){
   window.print();
 }
+
+async function openExistingDogFromUrl(){
+  const p=new URLSearchParams(location.search);
+  const code=(p.get("id")||"").trim().toUpperCase();
+  if(!code || !code.startsWith("HV-")) return;
+
+  try{
+    const {data,error}=await sb.rpc("get_dog_public",{p_dog_code:code});
+    if(error || !data || !data[0]) return;
+
+    const d=data[0];
+
+    // Vis kun resultatkortet, slik siden så ut rett etter registrering.
+    registerSection.classList.add("hidden");
+    loginSection.classList.add("hidden");
+    result.classList.remove("hidden");
+
+    resultName.textContent=(d.dog_name||"Hund")+" 🐾";
+    resultInfo.textContent=[d.breed,d.sex,d.color].filter(Boolean).join(" · ");
+    resultCode.textContent="Digital ID: "+code;
+
+    if(d.photo_url){
+      resultPhoto.src=d.photo_url;
+      resultPhoto.classList.remove("hidden");
+      resultPlaceholder.classList.add("hidden");
+    }else{
+      resultPhoto.classList.add("hidden");
+      resultPlaceholder.classList.remove("hidden");
+    }
+
+    const finder="https://www.xn--hundenevre-85a.com/hunde-id.html?id="+encodeURIComponent(code);
+    const owner="https://www.xn--hundenevre-85a.com/hunde-id-eier.html?id="+encodeURIComponent(code);
+
+    finderLink.href=finder;
+    ownerLink.href=owner;
+    qr.innerHTML="";
+    new QRCode(qr,{text:finder,width:220,height:220});
+  }catch(e){
+    console.warn("Kunne ikke hente Hunde-ID:",e);
+  }
+}
+
 function openOwner(){const id=loginId.value.trim().toUpperCase(),pin=loginPin.value.trim();if(!id||!pin){loginMsg.innerHTML='<div class="error">Skriv inn både Hunde-ID og PIN.</div>';return}sessionStorage.setItem("hundeIdPin",pin);location.href="hunde-id-eier.html?id="+encodeURIComponent(id)}
+openExistingDogFromUrl();
 </script>
 </body>
 </html>
