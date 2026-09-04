@@ -340,6 +340,43 @@
 }
 </style>
 
+
+<style id="mobil-paminnelser-3-kolonner">
+@media (max-width:650px){
+  /* Viktige påminnelser: 3 kolonner kun på telefon */
+  .reminders{
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:8px !important;
+  }
+  .reminders .rem{
+    min-height:128px !important;
+    padding:12px 8px !important;
+    border-radius:16px !important;
+  }
+  .reminders .rem strong{
+    display:block !important;
+    font-size:13px !important;
+    line-height:1.18 !important;
+    margin-bottom:7px !important;
+  }
+  .reminders .rem small{
+    display:block !important;
+    font-size:11px !important;
+    line-height:1.2 !important;
+    margin-bottom:8px !important;
+  }
+  .reminders .rem .date{
+    font-size:12px !important;
+    line-height:1.2 !important;
+  }
+  .reminders .rem .days{
+    display:block !important;
+    margin-top:5px !important;
+    font-size:10px !important;
+  }
+}
+</style>
+
 </head><body>
 <div id="gate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#102337 0,#06111c 42%,#030a11 100%)">
   <div id="loginCard" style="width:min(680px,94vw);background:linear-gradient(145deg,#091722,#061019);border:1px solid #244157;border-radius:28px;padding:46px 50px;box-shadow:0 20px 55px #0009">
