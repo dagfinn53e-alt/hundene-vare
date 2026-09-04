@@ -42,7 +42,7 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 <header><h1>🐾 KATTENE VÅRE</h1><p>Digital Katte-ID</p></header>
 <div class="top-nav">
 <a class="home" href="index.html">🏠 Til forsiden</a>
-<a class="myid" href="min-katte-id.html">🐾 Min Katte-ID</a>
+<a class="myid" id="minCatIdLink" href="min-katte-id.html">🐾 Min Katte-ID</a>
 <a class="missing" href="savnet-katter.html">🚨 Savnede katter</a>
 </div>
 <main>
@@ -105,6 +105,8 @@ const sb=supabase.createClient(
 
 const params=new URLSearchParams(location.search);
 const CAT_CODE=(params.get("id")||"").trim();
+const minCatIdLink=document.getElementById("minCatIdLink");
+if(minCatIdLink && CAT_CODE){minCatIdLink.href="min-katte-id.html?id="+encodeURIComponent(CAT_CODE);}
 let currentCat=null;
 
 function esc(v){const d=document.createElement("div");d.textContent=v||"";return d.innerHTML}
