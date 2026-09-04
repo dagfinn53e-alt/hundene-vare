@@ -241,7 +241,48 @@ finderLink.href=finder;ownerLink.href=owner;qr.innerHTML="";new QRCode(qr,{text:
 function printQR(){
   window.print();
 }
+
+async function openExistingCatFromUrl(){
+  const p=new URLSearchParams(location.search);
+  const code=(p.get("id")||"").trim().toUpperCase();
+  if(!code || !code.startsWith("KV-")) return;
+
+  try{
+    const {data,error}=await sb.rpc("get_cat_public",{p_cat_code:code});
+    if(error || !data || !data[0]) return;
+
+    const d=data[0];
+    registerSection.classList.add("hidden");
+    loginSection.classList.add("hidden");
+    result.classList.remove("hidden");
+
+    resultName.textContent=(d.cat_name||"Katt")+" 🐾";
+    resultInfo.textContent=[d.breed,d.sex,d.color].filter(Boolean).join(" · ");
+    resultCode.textContent="Digital ID: "+code;
+
+    if(d.photo_url){
+      resultPhoto.src=d.photo_url;
+      resultPhoto.classList.remove("hidden");
+      resultPlaceholder.classList.add("hidden");
+    }else{
+      resultPhoto.classList.add("hidden");
+      resultPlaceholder.classList.remove("hidden");
+    }
+
+    const finder="https://www.xn--hundenevre-85a.com/katte-id.html?id="+encodeURIComponent(code);
+    const owner="https://www.xn--hundenevre-85a.com/katte-id-eier.html?id="+encodeURIComponent(code);
+    finderLink.href=finder;
+    ownerLink.href=owner;
+    qr.innerHTML="";
+    new QRCode(qr,{text:finder,width:220,height:220});
+    result.scrollIntoView({behavior:"smooth"});
+  }catch(e){
+    console.warn("Kunne ikke hente Katte-ID:",e);
+  }
+}
+
 function openOwner(){const id=loginId.value.trim().toUpperCase(),pin=loginPin.value.trim();if(!id||!pin){loginMsg.innerHTML='<div class="error">Skriv inn både Katte-ID og PIN..</div>';return}sessionStorage.setItem("katteIdPin",pin);location.href="katte-id-eier.html?id="+encodeURIComponent(id)}
+openExistingCatFromUrl();
 </script>
 </body>
 </html>
