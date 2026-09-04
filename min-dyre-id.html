@@ -292,7 +292,55 @@
 .notes-msg{min-height:20px}.notes-history{margin-top:22px;border-top:1px solid #21394d;padding-top:18px}
 .notes-row{padding:12px 0;border-bottom:1px solid #182c3b}.notes-row strong{color:#efbd54}
 .notes-del{margin-top:8px;border:1px solid #704040;background:#241316;color:#ffb5b5;border-radius:8px;padding:6px 10px;cursor:pointer}
-</style></head><body>
+</style>
+<style id="mobil-dyreid-kompakt">
+@media (max-width:650px){
+  /* Skjul bare på telefon – PC beholdes som før */
+  .quick{display:none !important;}
+
+  /* Hovedboksene med funksjoner i to kolonner */
+  .cards{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:10px !important;
+  }
+  .cards .card{
+    min-height:190px !important;
+    padding:14px 12px !important;
+    border-radius:18px !important;
+    overflow:hidden !important;
+  }
+  .cards .card h4{
+    font-size:16px !important;
+    line-height:1.18 !important;
+    margin:0 0 8px !important;
+    padding-right:0 !important;
+  }
+  .cards .card p{
+    font-size:13px !important;
+    line-height:1.35 !important;
+    margin:0 0 38px !important;
+    padding-right:0 !important;
+  }
+  .cards .card .link{
+    font-size:13px !important;
+    left:12px !important;
+    bottom:12px !important;
+  }
+  .cards .card .pet{
+    width:72px !important;
+    height:58px !important;
+    right:10px !important;
+    bottom:42px !important;
+    border-radius:12px !important;
+    object-fit:cover !important;
+  }
+
+  /* Litt mindre luft mellom seksjonene på mobil */
+  .section{margin-top:14px !important;}
+}
+</style>
+
+</head><body>
 <div id="gate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#102337 0,#06111c 42%,#030a11 100%)">
   <div id="loginCard" style="width:min(680px,94vw);background:linear-gradient(145deg,#091722,#061019);border:1px solid #244157;border-radius:28px;padding:46px 50px;box-shadow:0 20px 55px #0009">
     <div style="color:#e8b94f;font-weight:900;font-size:30px">🐾 HUNDENE VÅRE</div>
