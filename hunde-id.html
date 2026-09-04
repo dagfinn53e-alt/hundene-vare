@@ -56,9 +56,9 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 <header><h1>🐾 HUNDENE VÅRE</h1><p>Digital Hunde-ID</p></header>
 
 <div class="navvalg">
-  <button class="tilbake" type="button" onclick="location.href='min-dyre-id.html'">← Tilbake</button>
+  <button class="tilbake" type="button" onclick="goToMineDyr()">← Tilbake</button>
   <a class="forside" href="index.html">🏠 Forsiden</a>
-  <a class="minid" href="min-dyre-id.html">🔐 Min Dyre-ID</a>
+  <a class="minid" href="javascript:void(0)" onclick="goToMineDyr()">🔐 Min Dyre-ID</a>
 </div>
 
 <main>
@@ -233,6 +233,14 @@ loadDog();
 <script>
 function goBackPrivate(){
   location.href="min-dyre-id.html?return=private";
+}
+</script>
+
+
+<script>
+function goToMineDyr(){
+  sessionStorage.removeItem("dyreid_current_dog");
+  location.href="min-dyre-id.html";
 }
 </script>
 
