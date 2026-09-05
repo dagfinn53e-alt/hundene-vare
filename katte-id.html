@@ -40,11 +40,7 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 </head>
 <body>
 <header><h1>🐾 KATTENE VÅRE</h1><p>Digital Katte-ID</p></header>
-<div class="top-nav">
-<a class="home" href="index.html">🏠 Til forsiden</a>
-<a class="myid" id="minCatIdLink" href="min-katte-id.html">🐾 Min Katte-ID</a>
-<a class="missing" href="savnet-katter.html">🚨 Savnede katter</a>
-</div>
+
 <main>
 
 <div id="loading" class="card center">
@@ -95,6 +91,10 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 🔒 Eierens e-postadresse og private opplysninger vises ikke offentlig. Finneren sender meldingen gjennom Kattene Våre.
 </div>
 </section>
+
+<div style="max-width:760px;margin:18px auto 8px;padding:0 14px;text-align:center">
+  <a href="index.html" style="display:inline-block;background:#174d72;color:#fff;text-decoration:none;font-weight:800;padding:11px 20px;border-radius:12px">🏠 Forsiden</a>
+</div>
 </main>
 
 <script>
@@ -105,8 +105,6 @@ const sb=supabase.createClient(
 
 const params=new URLSearchParams(location.search);
 const CAT_CODE=(params.get("id")||"").trim();
-const minCatIdLink=document.getElementById("minCatIdLink");
-if(minCatIdLink && CAT_CODE){minCatIdLink.href="min-katte-id.html?id="+encodeURIComponent(CAT_CODE);}
 let currentCat=null;
 
 function esc(v){const d=document.createElement("div");d.textContent=v||"";return d.innerHTML}
