@@ -55,11 +55,7 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 <body>
 <header><h1>🐾 HUNDENE VÅRE</h1><p>Digital Hunde-ID</p></header>
 
-<div class="navvalg">
-  <button class="tilbake" type="button" onclick="location.href='savnet-hunder.html'">← Tilbake</button>
-  <a class="forside" href="index.html">🏠 Forsiden</a>
-  <a class="minid" id="minDyreIdLink" href="min-hunde-id.html">🔐 Min Dyre-ID</a>
-</div>
+
 
 <main>
 
@@ -111,6 +107,10 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 🔒 Eierens e-postadresse og private opplysninger vises ikke offentlig. Finneren sender meldingen gjennom Hundene Våre.
 </div>
 </section>
+
+<div style="max-width:760px;margin:18px auto 8px;padding:0 14px;text-align:center">
+  <a href="index.html" style="display:inline-block;background:#174d72;color:#fff;text-decoration:none;font-weight:800;padding:11px 20px;border-radius:12px">🏠 Forsiden</a>
+</div>
 </main>
 
 <script>
@@ -121,8 +121,6 @@ const sb=supabase.createClient(
 
 const params=new URLSearchParams(location.search);
 const DOG_CODE=(params.get("id")||"").trim();
-const minDyreIdLink=document.getElementById("minDyreIdLink");
-if(minDyreIdLink && DOG_CODE){minDyreIdLink.href="min-hunde-id.html?id="+encodeURIComponent(DOG_CODE);}
 let currentDog=null;
 
 function esc(v){const d=document.createElement("div");d.textContent=v||"";return d.innerHTML}
@@ -231,12 +229,5 @@ async function sendFound(){
 
 loadDog();
 </script>
-
-<script>
-function goBackPrivate(){
-  location.href="min-dyre-id.html?return=private";
-}
-</script>
-
 </body>
 </html>
