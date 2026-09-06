@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dyre-nødkort</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#07131d;color:#fff;font-family:Arial,sans-serif;padding:18px;min-height:100vh}
+.wrap{max-width:560px;margin:auto}
+.brand{text-align:center;color:#e8b94f;font-weight:900;font-size:21px;margin:8px 0 16px}
+.card{background:#fff;color:#17212a;border-radius:22px;padding:24px;box-shadow:0 18px 55px #0008}
+h1{text-align:center;font-size:30px;margin:4px 0 8px}
+.sub{text-align:center;color:#4d5963;line-height:1.45;margin-bottom:22px}
+.pets{font-size:19px;line-height:1.7;border-top:1px solid #ddd;border-bottom:1px solid #ddd;padding:15px 4px;margin:12px 0}
+.contact{text-align:center;font-size:19px;line-height:1.6}
+.message{text-align:center;font-size:17px;margin-top:10px}
+.call{display:block;background:#e8b94f;color:#17120a;text-decoration:none;text-align:center;font-weight:900;padding:15px;border-radius:12px;margin-top:18px;font-size:18px}
+.bad{text-align:center;background:#321719;border:1px solid #8d4447;padding:18px;border-radius:16px}
+.small{text-align:center;color:#8195a3;font-size:12px;margin-top:15px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="brand">🐾 HUNDENE VÅRE · DYRE-ID</div>
+<div id="content"><div class="bad">Henter Dyre-nødkort …</div></div>
+<div class="small">Offentlig nødside – viser bare opplysninger eieren har valgt å dele.</div>
+</div>
+
+<script>
+const SUPABASE_URL="https://kxudiviidwwwclbzgdyx.supabase.co";
+const SUPABASE_KEY="sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH";
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+
+(async()=>{
+  const token=new URLSearchParams(location.search).get("t");
+  if(!token){
+    content.innerHTML='<div class="bad">Nødkortet mangler delingskode.</div>';
+    return;
+  }
+  const {data,error}=await sb.rpc("get_public_emergency_card",{p_share_token:token});
+  const row=Array.isArray(data)?data[0]:data;
+  if(error||!row){
+    content.innerHTML='<div class="bad">Dette Dyre-nødkortet er ikke tilgjengelig.</div>';
+    return;
+  }
+  const pets=Array.isArray(row.pets)?row.pets:[];
+  const petHtml=pets.length
+    ? pets.map(p=>'🐶 <b>'+esc(p.name||"Uten navn")+'</b> – '+esc(p.breed||"Rase ikke registrert")).join("<br>")
+    : "Ingen dyr registrert.";
+  const phone=String(row.contact_phone||"").replace(/[^0-9+]/g,"");
+  content.innerHTML=`
+    <div class="card">
+      <h1>🚨 JEG HAR DYR HJEMME</h1>
+      <div class="sub">Hvis noe har skjedd med meg,<br>trenger dyrene mine hjelp.</div>
+      <div class="pets">${petHtml}</div>
+      <div class="contact">
+        Nødkontakt: <b>${esc(row.contact_name||"")}</b><br>
+        Telefon: <b>${esc(row.contact_phone||"")}</b>
+      </div>
+      ${row.emergency_message?'<div class="message">'+esc(row.emergency_message)+'</div>':""}
+      ${phone?'<a class="call" href="tel:'+phone+'">📞 Ring nødkontakt</a>':""}
+    </div>`;
+})();
+</script>
+</body>
+</html>
