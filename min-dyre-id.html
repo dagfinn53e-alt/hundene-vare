@@ -377,6 +377,7 @@
 }
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head><body>
 <div id="gate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#102337 0,#06111c 42%,#030a11 100%)">
   <div id="loginCard" style="width:min(680px,94vw);background:linear-gradient(145deg,#091722,#061019);border:1px solid #244157;border-radius:28px;padding:46px 50px;box-shadow:0 20px 55px #0009">
@@ -458,7 +459,7 @@
 <div class="card" onclick="openActivityModal()" style="cursor:pointer"><h4>🏃 Aktivitet & trening</h4><p>Registrer turer, trening og aktiviteter.</p><span class="link">Loggfør aktivitet →</span><img class="pet" src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openCareModal()" style="cursor:pointer"><h4>✂️ Stell & pleie</h4><p>Pelsstell, kloklipp, tannstell og bading.</p><span class="link">Se detaljer →</span><img class="pet" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card" onclick="openInsuranceModal()" style="cursor:pointer"><h4>☂️ Forsikring</h4><p>Forsikringsinfo, polise og fornyelse.</p><span class="link">Se forsikring →</span><img class="pet" src="https://images.unsplash.com/photo-1534361960057-19889db9621e?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
-<div class="card" onclick="openNotesModal()" style="cursor:pointer"><h4>📝 Egne notater</h4><p>Private notater og ting du vil huske.</p></div><div class="card" onclick="openDocModal()" style="cursor:pointer"><h4>📁 Dokumenter & bilder</h4><p>Bilder, vaksinekort, sertifikater og viktige filer.</p><span class="link">Se samling →</span><img class="pet" src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
+<div class="card" onclick="openEmergencyCard()" style="cursor:pointer"><h4>🚨 Mitt Dyre-nødkort</h4><p>Hvis noe skjer med deg, kan nødkontakten hjelpe dyrene dine.</p><span class="link">Åpne nødkort →</span></div><div class="card" onclick="openDocModal()" style="cursor:pointer"><h4>📁 Dokumenter & bilder</h4><p>Bilder, vaksinekort, sertifikater og viktige filer.</p><span class="link">Se samling →</span><img class="pet" src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=360&q=80" alt="Naturlig hundebilde" loading="lazy"></div>
 <div class="card family"><h4>🐾 Chiko er en del av familien</h4><p>Samle det viktigste om helse, omsorg og hverdagen på ett trygt sted. ❤️</p></div>
 </div></section><div class="lock">🔒 Denne siden er kun synlig for deg som eier av denne Dyre-ID-en.</div></main>
 
@@ -1761,4 +1762,189 @@ document.getElementById("ownerPin").addEventListener("keydown",e=>{
   if(e.key==="Enter") ownerLogin();
 });
 </script>
+
+<style id="emergency-card-css">
+.emg-modal{display:none;position:fixed;inset:0;background:#000c;z-index:120;align-items:center;justify-content:center;padding:18px}
+.emg-box{width:min(650px,96vw);max-height:92vh;overflow:auto;background:linear-gradient(145deg,#0b1a26,#061019);border:1px solid #9b7937;border-radius:22px;padding:25px;color:#fff}
+.emg-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.emg-head h2{margin:0;color:#efbd54}
+.emg-close{border:1px solid #35536a;background:#101d27;color:#fff;border-radius:10px;padding:9px 12px;font-weight:800}
+.emg-alert{background:#321719;border:1px solid #8d4447;border-radius:16px;padding:15px;margin:17px 0}
+.emg-pets{background:#0c2130;border:1px solid #27485c;border-radius:14px;padding:14px;line-height:1.65}
+.emg-box label{display:block;font-weight:800;margin-top:13px}.emg-box input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;border-radius:10px;border:1px solid #36546a;background:#06111a;color:#fff;font-size:16px}
+.emg-gold{margin-top:16px;padding:13px 16px;border:0;border-radius:10px;background:#e8b94f;color:#17120a;font-weight:900;font-size:16px}
+.emg-preview{display:none;margin-top:20px;background:#fff;color:#111;border-radius:18px;padding:20px;text-align:center}.emg-preview .big{font-size:26px;font-weight:950;margin:10px 0}.emg-qr{margin:16px auto 6px;width:110px;height:110px;border:7px solid #111;display:grid;place-items:center;font-size:40px;font-weight:950}
+.emg-wallet-wrap{margin-top:22px;border-top:1px solid #ddd;padding-top:18px}.emg-wallet-card{width:323px;height:204px;max-width:100%;margin:12px auto;background:linear-gradient(145deg,#111b24,#071019);color:#fff;border:2px solid #d8aa46;border-radius:15px;padding:14px;display:grid;grid-template-columns:1fr 96px;gap:10px;text-align:left;box-shadow:0 10px 25px #0004}.emg-wallet-card h3{margin:4px 0 7px;color:#f1bd4f;font-size:19px}.emg-wallet-card p{margin:0;font-size:12px;line-height:1.35}.emg-wallet-brand{font-size:10px;font-weight:900;letter-spacing:.5px;color:#d8aa46}.emg-wallet-qr{width:92px;height:92px;background:#fff;padding:4px;align-self:center;justify-self:end}.emg-wallet-qr canvas,.emg-wallet-qr img{width:100%!important;height:100%!important;display:block;image-rendering:pixelated}.emg-print{margin:12px auto 0;padding:12px 16px;border:0;border-radius:10px;background:#e8b94f;color:#17120a;font-weight:900;font-size:15px;cursor:pointer}@media print{body *{visibility:hidden!important}#emgWalletCard,#emgWalletCard *{visibility:visible!important}#emgWalletCard{position:fixed;left:0;top:0;width:85.6mm!important;height:54mm!important;max-width:none!important;margin:0!important;border-radius:4mm!important;box-shadow:none!important;box-sizing:border-box!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:85.6mm 54mm;margin:0}}
+</style>
+<div class="emg-modal" id="emergencyModal"><div class="emg-box">
+ <div class="emg-head"><h2>🚨 Mitt Dyre-nødkort</h2><button class="emg-close" onclick="closeEmergencyCard()">Lukk ✕</button></div>
+ <p style="color:#b8c7d2">Hvis noe skjer med meg, skal den som finner kortet raskt kunne hjelpe dyrene mine.</p>
+ <div class="emg-alert"><b style="font-size:20px">🐾 JEG HAR DYR HJEMME</b><br>Vennligst kontakt personen nedenfor hvis jeg ikke kan gjøre det selv.</div>
+ <div class="emg-pets"><b>Mine registrerte dyr</b><div id="emergencyPets" style="margin-top:6px">Henter dyr …</div></div>
+ <label>Nødkontakt</label><input id="emgName" placeholder="Navn på person">
+ <label>Telefon</label><input id="emgPhone" type="tel" placeholder="Telefonnummer">
+ <label>Viktig beskjed</label><input id="emgMessage" placeholder="F.eks. nøkkel finnes hos nabo">
+ <button class="emg-gold" onclick="showEmergencyPreview()">👁️ Vis ferdig nødkort</button>
+ <div class="emg-preview" id="emgPreview">
+  <div style="font-size:13px;font-weight:900">HUNDENE VÅRE · DYRE-ID</div>
+  <div class="big">🚨 JEG HAR DYR HJEMME</div>
+  <div>Hvis noe har skjedd med meg,<br>trenger dyrene mine hjelp.</div>
+  <div id="emgPreviewPets" style="font-size:18px;font-weight:900;margin:14px 0"></div>
+  <div style="border-top:1px solid #bbb;padding-top:12px;line-height:1.6">Nødkontakt: <b id="emgPreviewName">–</b><br>Telefon: <b id="emgPreviewPhone">–</b><br><span id="emgPreviewMessage"></span></div>
+  <div id="emgRealQr" class="emg-qr" style="width:180px;height:180px;margin:18px auto;display:flex;align-items:center;justify-content:center;background:white"></div><small>Skann for digitalt Dyre-nødkort</small><a id="emgPublicLink" href="#" target="_blank" style="display:none;margin:16px auto 0;max-width:290px;padding:13px 16px;border-radius:10px;background:#0b6b3a;color:#fff;text-decoration:none;font-weight:900">🌐 Åpne offentlig nødkort</a>
+  <div class="emg-wallet-wrap"><b>🪪 Kort til plastlomme</b><div style="font-size:12px;color:#555;margin-top:4px">Bankkortstørrelse 85,6 × 54 mm</div><div class="emg-wallet-card" id="emgWalletCard"><div><div class="emg-wallet-brand">🐾 HUNDENE VÅRE · DYRE-ID</div><h3>🚨 JEG HAR DYR HJEMME</h3><p>Hvis noe har skjedd med meg, trenger dyrene mine hjelp.</p><p style="margin-top:10px;font-weight:800">Skann QR-koden for mitt offentlige Dyre-nødkort.</p></div><div><div id="emgWalletQr" class="emg-wallet-qr"></div><div style="font-size:9px;text-align:center;margin-top:4px">SKANN MEG</div></div></div><button class="emg-print" type="button" onclick="printEmergencyWalletCard()">🖨️ Skriv ut kort</button></div>
+ </div>
+</div></div>
+<script id="emergency-card-js">
+function emergencyPetLines(){
+ const dogs=(typeof ownerDogs!=="undefined"&&Array.isArray(ownerDogs))?ownerDogs:[];
+ if(!dogs.length&&typeof currentDog!=="undefined"&&currentDog) return [currentDog];
+ return dogs;
+}
+function renderEmergencyPets(){
+ const dogs=emergencyPetLines();
+ const lines=dogs.length?dogs.map(d=>"🐶 <b>"+esc(d.dog_name||"Uten navn")+"</b> – "+esc(d.breed||"Rase ikke registrert")).join("<br>"):"Ingen dyr funnet.";
+ document.getElementById("emergencyPets").innerHTML=lines;
+ document.getElementById("emgPreviewPets").innerHTML=lines;
+}
+async function openEmergencyCard(){
+ renderEmergencyPets();
+ emgName.value="";
+ emgPhone.value="";
+ emgMessage.value="";
+ emgPreview.style.display="none";
+ emergencyModal.style.display="flex";
+
+ const email=sessionStorage.getItem("dyreid_owner_email")||sessionStorage.getItem("dyreIdOwnerEmail")||"";
+ const pin=sessionStorage.getItem("dyreid_owner_pin")||"";
+ if(!email||!pin) return;
+
+ try{
+   const {data,error}=await sb.rpc("get_owner_emergency_contact",{
+     p_owner_email:email,
+     p_owner_pin:pin
+   });
+   if(error) throw error;
+   const row=Array.isArray(data)?data[0]:data;
+   if(row){
+     emgName.value=row.contact_name||"";
+     emgPhone.value=row.contact_phone||"";
+     emgMessage.value=row.emergency_message||"";
+     if(row.share_token){
+       emgPublicLink.href="https://www.xn--hundenevre-85a.com/dyre-nodkort.html?t="+encodeURIComponent(row.share_token);
+       emgPublicLink.style.display="block";
+       makeEmergencyQr(emgPublicLink.href);
+     }
+   }
+ }catch(e){
+   console.error("Kunne ikke hente nødkontakt:",e);
+ }
+}
+function makeEmergencyQr(url){
+ if(!url) return;
+ const box=document.getElementById("emgRealQr");
+ if(box){
+   box.innerHTML="";
+   new QRCode(box,{
+     text:url,
+     width:170,
+     height:170,
+     correctLevel:QRCode.CorrectLevel.M
+   });
+ }
+ const walletBox=document.getElementById("emgWalletQr");
+ if(walletBox){
+   walletBox.innerHTML="";
+   new QRCode(walletBox,{
+     text:url,
+     width:320,
+     height:320,
+     correctLevel:QRCode.CorrectLevel.M
+   });
+ }
+}
+function printEmergencyWalletCard(){
+ const card=document.getElementById("emgWalletCard");
+ const qrBox=document.getElementById("emgWalletQr");
+ if(!card||!qrBox){ alert("Kortet er ikke klart ennå."); return; }
+
+ let qrSrc="";
+ const canvas=qrBox.querySelector("canvas");
+ const img=qrBox.querySelector("img");
+ if(canvas){
+   try{ qrSrc=canvas.toDataURL("image/png"); }catch(e){}
+ }
+ if(!qrSrc&&img&&img.src) qrSrc=img.src;
+ if(!qrSrc){ alert("QR-koden er ikke klar ennå. Åpne ferdig nødkort først."); return; }
+
+ const w=window.open("","_blank","width=700,height=500");
+ if(!w){ alert("Nettleseren blokkerte utskriftsvinduet. Tillat popup-vinduer og prøv igjen."); return; }
+
+ w.document.open();
+ w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Dyre-nødkort</title>
+ <style>
+  @page{size:85.6mm 54mm;margin:0}
+  html,body{margin:0;padding:0;width:85.6mm;height:54mm;background:#fff}
+  body{display:flex;align-items:flex-start;justify-content:flex-start}
+  .card{width:85.6mm;height:54mm;box-sizing:border-box;background:linear-gradient(145deg,#111b24,#071019);color:#fff;border:0.6mm solid #d8aa46;border-radius:4mm;padding:4mm;display:grid;grid-template-columns:1fr 25mm;gap:3mm;font-family:Arial,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  h3{margin:1mm 0 2mm;color:#f1bd4f;font-size:5mm;line-height:1.05}
+  p{margin:0;font-size:3.1mm;line-height:1.3}.brand{font-size:2.5mm;font-weight:900;letter-spacing:.2mm;color:#d8aa46}
+  .qr{width:24mm;height:24mm;background:#fff;padding:1mm;box-sizing:border-box;margin-top:8mm}.qr img{width:100%;height:100%;display:block;image-rendering:pixelated}.scan{font-size:2.4mm;text-align:center;margin-top:1mm;font-weight:700}
+ </style></head><body><div class="card"><div><div class="brand">🐾 HUNDENE VÅRE · DYRE-ID</div><h3>🚨 JEG HAR DYR HJEMME</h3><p>Hvis noe har skjedd med meg, trenger dyrene mine hjelp.</p><p style="margin-top:3mm;font-weight:800">Skann QR-koden for mitt offentlige Dyre-nødkort.</p></div><div><div class="qr"><img src="${qrSrc}" alt="QR-kode"></div><div class="scan">SKANN MEG</div></div></div></body></html>`);
+ w.document.close();
+ setTimeout(()=>{ w.focus(); w.print(); },350);
+}
+function closeEmergencyCard(){emergencyModal.style.display="none"}
+
+async function showEmergencyPreview(){
+ const email=sessionStorage.getItem("dyreid_owner_email")||sessionStorage.getItem("dyreIdOwnerEmail")||"";
+ const pin=sessionStorage.getItem("dyreid_owner_pin")||"";
+ if(!email||!pin){
+   alert("Logg inn på Min Dyre-ID først.");
+   return;
+ }
+
+ try{
+   const petCodes=(Array.isArray(ownerDogs)?ownerDogs:[])
+     .map(d=>d.dog_code)
+     .filter(Boolean);
+
+   const {error}=await sb.rpc("save_owner_emergency_contact_v2",{
+     p_owner_email:email,
+     p_owner_pin:pin,
+     p_contact_name:emgName.value.trim(),
+     p_contact_phone:emgPhone.value.trim(),
+     p_emergency_message:emgMessage.value.trim(),
+     p_is_active:true,
+     p_pet_codes:petCodes
+   });
+   if(error) throw error;
+
+   const {data:cardData,error:cardError}=await sb.rpc("get_owner_emergency_contact",{
+     p_owner_email:email,
+     p_owner_pin:pin
+   });
+   if(cardError) throw cardError;
+   const cardRow=Array.isArray(cardData)?cardData[0]:cardData;
+
+   renderEmergencyPets();
+   emgPreviewName.textContent=emgName.value.trim()||"Nødkontakt";
+   emgPreviewPhone.textContent=emgPhone.value.trim()||"Telefonnummer";
+   emgPreviewMessage.textContent=emgMessage.value.trim();
+
+   if(cardRow&&cardRow.share_token){
+     emgPublicLink.href="https://www.xn--hundenevre-85a.com/dyre-nodkort.html?t="+encodeURIComponent(cardRow.share_token);
+     emgPublicLink.style.display="block";
+     makeEmergencyQr(emgPublicLink.href);
+   }
+
+   emgPreview.style.display="block";
+   emgPreview.scrollIntoView({behavior:"smooth",block:"nearest"});
+   alert("Nødkontakten er lagret i Dyre-ID.");
+ }catch(e){
+   console.error(e);
+   alert("Kunne ikke lagre nødkontakten. Prøv igjen.");
+ }
+}
+</script>
+
 </body></html>
