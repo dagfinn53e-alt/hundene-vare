@@ -65,6 +65,18 @@ input,select{width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:10px
 @media(max-width:700px){.tag-mini-grid{grid-template-columns:repeat(2,1fr)}.tag-delivery{grid-template-columns:1fr}.tag-order-lead{align-items:flex-start}}
 </style>
 
+
+<!-- OneSignal Web Push -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+OneSignalDeferred.push(async function(OneSignal) {
+  await OneSignal.init({
+    appId: "edcbc9b0-b5ad-4d37-9ebe-d5ccbe90caaa"
+  });
+});
+</script>
+
 </head>
 <body>
 <header><h1>🐾 HUNDENE VÅRE</h1><p>Min Digital Hunde-ID</p></header>
@@ -190,6 +202,12 @@ input,select{width:100%;padding:13px;border:1px solid #cbd7cf;border-radius:10px
 <a id="ownerLink" class="btn green">🔐 Åpne eiersiden</a>
 </div>
 <button class="print-btn no-print" style="margin-top:12px" onclick="printQR()">🖨️ SKRIV UT QR-KODE</button>
+<div class="no-print" style="margin-top:16px;padding:16px;border:1px solid #b9ddc8;border-radius:14px;background:#f1fbf5">
+  <h3 style="margin:0 0 7px;color:#07563f">🔔 Varsel hvis hunden blir funnet</h3>
+  <p class="muted" style="margin:0 0 12px">Aktiver gratis push-varsel på denne telefonen.</p>
+  <button id="pushBtn" class="green" type="button" onclick="activateDogPush()">🔔 AKTIVER PUSH-VARSLER</button>
+  <div id="pushMsg" style="margin-top:10px;font-weight:700"></div>
+</div>
 </div></section>
 </main>
 
@@ -272,12 +290,63 @@ try{
   console.warn("Admin-varsel kunne ikke sendes:",notifyError);
 }
 
+window.currentRegisteredDogCode=code;
+window.currentRegisteredOwnerEmail=em;
 result.classList.remove("hidden");resultName.textContent=name+" 🐾";resultInfo.textContent=[br,sx,co].filter(Boolean).join(" · ");resultCode.textContent="Digital ID: "+code;
 if(photoUrl){resultPhoto.src=photoUrl;resultPhoto.classList.remove("hidden");resultPlaceholder.classList.add("hidden")}
 const finder="https://www.xn--hundenevre-85a.com/hunde-id.html?id="+encodeURIComponent(code);
 const owner="https://www.xn--hundenevre-85a.com/hunde-id-eier.html?id="+encodeURIComponent(code);
 finderLink.href=finder;ownerLink.href=owner;qr.innerHTML="";new QRCode(qr,{text:finder,width:220,height:220});result.scrollIntoView({behavior:"smooth"});
 }catch(e){regMsg.innerHTML='<div class="error">Feil: '+e.message+'</div>'}finally{saveBtn.disabled=false}}
+
+async function activateDogPush(){
+  const msg=document.getElementById("pushMsg");
+  const btn=document.getElementById("pushBtn");
+  const em=(window.currentRegisteredOwnerEmail||"").trim().toLowerCase();
+  const code=(window.currentRegisteredDogCode||"").trim();
+
+  if(!em || !code){
+    if(msg) msg.textContent="Registrer hunden først.";
+    return;
+  }
+
+  if(btn) btn.disabled=true;
+  if(msg) msg.textContent="Venter på tillatelse …";
+
+  try{
+    await new Promise((resolve,reject)=>{
+      window.OneSignalDeferred=window.OneSignalDeferred||[];
+      window.OneSignalDeferred.push(async function(OneSignal){
+        try{
+          await OneSignal.Notifications.requestPermission();
+
+          if(!OneSignal.Notifications.permission){
+            if(msg) msg.textContent="Push-varsler ble ikke tillatt på denne enheten.";
+            if(btn) btn.disabled=false;
+            resolve();
+            return;
+          }
+
+          // Knytter denne enheten til eieren. Senere kan funnet-varselet
+          // sendes til eieren av hunden via samme e-post som ligger på Hunde-ID-en.
+          await OneSignal.login(em);
+
+          if(msg) msg.textContent="✅ Push-varsler er aktivert for denne eieren.";
+          if(btn){
+            btn.textContent="✅ PUSH-VARSLER AKTIVERT";
+            btn.disabled=true;
+          }
+          resolve();
+        }catch(err){ reject(err); }
+      });
+    });
+  }catch(err){
+    console.warn("Push-aktivering feilet:",err);
+    if(msg) msg.textContent="Kunne ikke aktivere push-varsler. Prøv igjen.";
+    if(btn) btn.disabled=false;
+  }
+}
+
 function printQR(){
   window.print();
 }
