@@ -331,6 +331,14 @@ async function activateDogPush(){
           // sendes til eieren av hunden via samme e-post som ligger på Hunde-ID-en.
           await OneSignal.login(em);
 
+          // Chrome kan fortsatt ha varsler tillatt selv om selve OneSignal-
+          // abonnementet står som Unsubscribed. optIn() aktiverer abonnementet igjen.
+          await OneSignal.User.PushSubscription.optIn();
+
+          if(!OneSignal.User.PushSubscription.optedIn){
+            throw new Error("OneSignal-abonnementet ble ikke aktivert.");
+          }
+
           if(msg) msg.textContent="✅ Push-varsler er aktivert for denne eieren.";
           if(btn){
             btn.textContent="✅ PUSH-VARSLER AKTIVERT";
