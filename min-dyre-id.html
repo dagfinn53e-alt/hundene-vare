@@ -378,6 +378,18 @@
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<!-- OneSignal Web Push -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "edcbc9b0-b5ad-4d37-9ebe-d5ccbe90caaa"
+    });
+  });
+</script>
+
 </head><body>
 <div id="gate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 0,#102337 0,#06111c 42%,#030a11 100%)">
   <div id="loginCard" style="width:min(680px,94vw);background:linear-gradient(145deg,#091722,#061019);border:1px solid #244157;border-radius:28px;padding:46px 50px;box-shadow:0 20px 55px #0009">
