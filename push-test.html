@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hundene Våre – Push-test</title>
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <style>
+    body{
+      font-family:Arial,sans-serif;
+      background:#f5f7fb;
+      margin:0;
+      padding:30px 16px;
+      color:#1f2937;
+    }
+    .box{
+      max-width:520px;
+      margin:40px auto;
+      background:#fff;
+      border-radius:18px;
+      padding:28px;
+      box-shadow:0 8px 30px rgba(0,0,0,.08);
+      text-align:center;
+    }
+    h1{margin-top:0}
+    button{
+      border:0;
+      border-radius:12px;
+      padding:14px 20px;
+      font-size:17px;
+      font-weight:700;
+      cursor:pointer;
+      background:#1d4ed8;
+      color:#fff;
+    }
+    #status{
+      margin-top:18px;
+      line-height:1.5;
+      font-weight:600;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Hundene Våre</h1>
+    <h2>Test push-varsel</h2>
+    <p>Trykk på knappen for å tillate varsler på denne telefonen eller PC-en.</p>
+    <button id="pushBtn">Aktiver varsler</button>
+    <div id="status">Klar for test.</div>
+  </div>
+
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+
+    OneSignalDeferred.push(async function(OneSignal) {
+      await OneSignal.init({
+        appId: "edcbc9b0-b5ad-4d37-9ebe-d5ccbe90caaa"
+      });
+
+      const status = document.getElementById("status");
+      const btn = document.getElementById("pushBtn");
+
+      async function refreshStatus() {
+        const optedIn = OneSignal.User.PushSubscription.optedIn;
+        status.textContent = optedIn
+          ? "✅ Varsler er aktivert på denne enheten."
+          : "Varsler er ikke aktivert ennå.";
+      }
+
+      await refreshStatus();
+
+      btn.addEventListener("click", async () => {
+        try {
+          status.textContent = "Venter på godkjenning…";
+          await OneSignal.Notifications.requestPermission();
+          await refreshStatus();
+        } catch (err) {
+          console.error(err);
+          status.textContent = "❌ Kunne ikke aktivere varsler.";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
