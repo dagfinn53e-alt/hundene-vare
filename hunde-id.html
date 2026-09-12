@@ -86,11 +86,11 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 <h2>🐾 Har du funnet denne hunden?</h2>
 <p>Send en beskjed til eieren. Eierens e-postadresse vises ikke.</p>
 
-<label>Ditt navn (valgfritt)</label>
-<input id="finderName" placeholder="Navn">
+<label>Ditt navn</label>
+<input id="finderName" placeholder="Navn" required>
 
-<label>Telefonnummer (valgfritt)</label>
-<input id="finderPhone" placeholder="Telefonnummer">
+<label>Telefonnummer</label>
+<input id="finderPhone" placeholder="Telefonnummer" inputmode="tel" required>
 
 <label>Melding</label>
 <textarea id="finderMessage" placeholder="For eksempel: Jeg har hunden hos meg. Den har det bra."></textarea>
@@ -190,6 +190,13 @@ async function sendFound(){
 
   const finderName=document.getElementById("finderName").value.trim();
   const finderPhone=document.getElementById("finderPhone").value.trim();
+
+  if(!finderName || !finderPhone){
+    result.innerHTML='<div class="error"><b>Fyll inn navn og telefonnummer før du sender varselet.</b></div>';
+    btn.disabled=false;
+    return;
+  }
+
   const message=document.getElementById("finderMessage").value.trim() ||
     "Jeg har funnet "+currentDog.dog_name+".";
   const locationUrl=document.getElementById("finderLocation").value;
