@@ -319,25 +319,25 @@ async function activateDogPush(){
       window.OneSignalDeferred=window.OneSignalDeferred||[];
       window.OneSignalDeferred.push(async function(OneSignal){
         try{
-          await OneSignal.Notifications.requestPermission();
-
+          // Be om systemtillatelse. På iPhone kan OneSignal åpne Innstillinger
+          // dersom tillatelsen allerede har blitt avslått tidligere.
           if(!OneSignal.Notifications.permission){
-            if(msg) msg.textContent="Push-varsler ble ikke tillatt på denne enheten.";
-            if(btn) btn.disabled=false;
-            resolve();
-            return;
+            await OneSignal.Notifications.requestPermission({ fallbackToSettings: true });
           }
 
           // Knytter denne enheten til eieren. Senere kan funnet-varselet
           // sendes til eieren av hunden via samme e-post som ligger på Hunde-ID-en.
           await OneSignal.login(em);
 
-          // Chrome kan fortsatt ha varsler tillatt selv om selve OneSignal-
-          // abonnementet står som Unsubscribed. optIn() aktiverer abonnementet igjen.
+          // optIn() forsøker også å opprette/aktivere selve push-abonnementet
+          // dersom nettlesertillatelsen finnes, men OneSignal-abonnementet mangler.
           await OneSignal.User.PushSubscription.optIn();
 
-          if(!OneSignal.User.PushSubscription.optedIn){
-            throw new Error("OneSignal-abonnementet ble ikke aktivert.");
+          if(!OneSignal.Notifications.permission || !OneSignal.User.PushSubscription.optedIn){
+            if(msg) msg.textContent="Push-varsler er ikke tillatt ennå. Tillat varsler for Hundene Våre og trykk knappen igjen.";
+            if(btn) btn.disabled=false;
+            resolve();
+            return;
           }
 
           if(msg) msg.textContent="✅ Push-varsler er aktivert for denne eieren.";
