@@ -269,6 +269,24 @@ Finneren skanner brikken med mobilen ved å holde telefonen inntil NFC-brikken. 
 På ID-siden kan finneren se informasjonen eieren har valgt å vise og sende beskjed om at dyret er funnet.`;
     }
 
+    if(has(q,['registrere hunde id','registrere hunde-id','hvordan registrerer jeg hunde id',
+      'hvordan registrerer jeg hunde-id','opprette hunde id','opprette hunde-id'])){
+      return `For å få Digital Hunde-ID registrerer eieren hundens opplysninger i registreringsskjemaet hos Hundene Våre. 🐶
+
+Der legges blant annet inn navn, bilde og annen informasjon eieren ønsker å bruke på ID-siden.
+
+Når registreringen er klar, får hunden sin egen digitale ID som kan kobles til ID-brikken.`;
+    }
+
+    if(has(q,['registrere katte id','registrere katte-id','hvordan registrerer jeg katte id',
+      'hvordan registrerer jeg katte-id','opprette katte id','opprette katte-id'])){
+      return `For å få Katte-ID registrerer eieren kattens opplysninger i registreringsskjemaet hos Hundene Våre. 🐱
+
+Der legges blant annet inn navn, bilde og annen informasjon eieren ønsker å bruke på ID-siden.
+
+Når registreringen er klar, får katten sin egen digitale ID som kan kobles til ID-brikken.`;
+    }
+
     if(has(q,['digital hunde-id','hunde-id','hunde id','hundens id',
       'hva er hunde id','hvordan virker hunde id','hvordan fungerer hunde id',
       'digital id hund','id til hund','registrere hunde id'])){
@@ -353,24 +371,6 @@ Dette kan fortsatt gjøres gratis, uten en betalt AI-tjeneste.`;
 Denne testfilen kjører bare i nettleseren og bruker ferdige spørsmål, nøkkelord og svar.`;
     }
 
-
-    if(has(q,['registrere hunde id','registrere hunde-id','hvordan registrerer jeg hunde id',
-      'hvordan registrerer jeg hunde-id','opprette hunde id','opprette hunde-id'])){
-      return `For å få Digital Hunde-ID registrerer eieren hundens opplysninger i registreringsskjemaet hos Hundene Våre. 🐶
-
-Der legges blant annet inn navn, bilde og annen informasjon eieren ønsker å bruke på ID-siden.
-
-Når registreringen er klar, får hunden sin egen digitale ID som kan kobles til ID-brikken.`;
-    }
-
-    if(has(q,['registrere katte id','registrere katte-id','hvordan registrerer jeg katte id',
-      'hvordan registrerer jeg katte-id','opprette katte id','opprette katte-id'])){
-      return `For å få Katte-ID registrerer eieren kattens opplysninger i registreringsskjemaet hos Hundene Våre. 🐱
-
-Der legges blant annet inn navn, bilde og annen informasjon eieren ønsker å bruke på ID-siden.
-
-Når registreringen er klar, får katten sin egen digitale ID som kan kobles til ID-brikken.`;
-    }
 
     if(has(q,['eiersiden','eier siden','eierside','pin','pin kode','pinkode',
       'hvor finner jeg eiersiden','hva er eiersiden'])){
