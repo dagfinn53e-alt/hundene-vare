@@ -178,6 +178,7 @@
           <button class="chip">Hva hvis ID-brikken blir ødelagt?</button>
           <button class="chip">Kan jeg ha flere dyr på samme eier?</button>
           <button class="chip">Kan samme telefonnummer brukes på flere ID-er?</button>
+          <button class="chip">Hva skjer når noen skanner ID-brikken?</button>
         </div>
       </div>
 
@@ -334,6 +335,17 @@ Selve Hunde-ID-en eller Katte-ID-en kan fortsatt beholdes. Det er bare den fysis
       return `Hvis ID-brikken er ødelagt eller ikke kan leses lenger, bør den erstattes med en ny brikke. 🔧🐾
 
 Den nye brikken kan kobles til den samme digitale Hunde-ID-en eller Katte-ID-en, slik at opplysningene kan beholdes.`;
+    }
+
+    if(has(q,['hva skjer når noen skanner id-brikken','hva skjer nar noen skanner id-brikken',
+      'hva skjer når noen skanner id brikken','hva skjer nar noen skanner id brikken',
+      'når noen skanner brikken','nar noen skanner brikken','skanner id-brikken',
+      'skanner id brikken'])){
+      return `Når noen skanner ID-brikken med mobilen, åpnes hundens eller kattens digitale ID-side. 📱🐾
+
+Der kan finneren se informasjonen eieren har valgt å vise. Hvis telefonnummeret er synlig, kan finneren ringe eieren direkte.
+
+Finneren kan også sende beskjed om at dyret er funnet, og eieren får automatisk SMS-varsel.`;
     }
 
     if(has(q,['id-brikke','id brikke','nfc','brikken','halsband','halsbånd',
