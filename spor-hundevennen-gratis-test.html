@@ -170,6 +170,10 @@
           <button class="chip">Må jeg ha en app for å skanne?</button>
           <button class="chip">Hva skjer når dyret blir funnet?</button>
           <button class="chip">Hvordan melder jeg dyret trygt igjen?</button>
+          <button class="chip">Kan jeg endre opplysninger på ID-en?</button>
+          <button class="chip">Hvordan bytter jeg telefonnummer?</button>
+          <button class="chip">Kan jeg bytte bilde?</button>
+          <button class="chip">Hva hvis dyret får ny eier?</button>
         </div>
       </div>
 
@@ -454,6 +458,37 @@ Når NFC-brikken registreres av telefonen, åpnes dyrets digitale ID-side. Der k
 På de fleste nyere telefoner trenger man ikke en egen app for å skanne NFC-brikken.`;
     }
 
+
+
+    if(has(q,['endre opplysninger','endre informasjon','redigere id','redigere opplysninger',
+      'oppdatere id','oppdatere opplysninger','endre hunde id','endre katte id'])){
+      return `Ja. Opplysninger på Hunde-ID eller Katte-ID kan endres fra eierens private side. ✏️
+
+Der kan eieren oppdatere informasjon som er knyttet til dyrets digitale ID.
+
+Endringer på eiersiden påvirker hva som vises på den offentlige ID-siden.`;
+    }
+
+    if(has(q,['bytte telefonnummer','endre telefonnummer','nytt telefonnummer','endre tlf',
+      'bytte tlf','oppdatere telefonnummer'])){
+      return `Hvis du får nytt telefonnummer, bør du oppdatere det på eiersiden. 📱
+
+Da vil riktig nummer brukes videre i Hundene Våre, og du kan samtidig velge om telefonnummeret skal vises offentlig på dyrets ID-side.`;
+    }
+
+    if(has(q,['bytte bilde','endre bilde','nytt bilde','oppdatere bilde','endre hundebilde',
+      'endre kattebilde'])){
+      return `Ja. Du kan oppdatere bildet som er knyttet til dyrets digitale ID. 📷
+
+Et tydelig og oppdatert bilde gjør det lettere for andre å kjenne igjen hunden eller katten dersom den blir savnet.`;
+    }
+
+    if(has(q,['ny eier','bytte eier','ny eier av hund','ny eier av katt','eierskifte',
+      'dyret får ny eier','dyret far ny eier'])){
+      return `Hvis hunden eller katten får ny eier, må eieropplysningene på den digitale ID-en oppdateres. 🐾
+
+Da skal kontaktinformasjon, telefonnummer og andre eieropplysninger endres slik at riktig person kan varsles dersom dyret blir funnet.`;
+    }
 
     if(has(q,['hvordan virker','hvordan fungerer','hva kan du','hjelpe med'])){
       return `Jeg kan foreløpig svare på spørsmål om Digital Hunde-ID, Katte-ID, savnet/funnet dyr, ID-brikken, NFC, telefonnummer til eier, automatisk SMS-varsel, Hundeakademiet, Kattakademiet og leksikonene.
