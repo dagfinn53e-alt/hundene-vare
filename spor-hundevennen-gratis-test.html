@@ -160,6 +160,10 @@
           <button class="chip">Hvordan finner jeg eieren?</button>
           <button class="chip">Hvordan skanner jeg ID-brikken?</button>
           <button class="chip">Hva kan Hundevennen hjelpe med?</button>
+          <button class="chip">Hvordan registrerer jeg Hunde-ID?</button>
+          <button class="chip">Hvordan registrerer jeg Katte-ID?</button>
+          <button class="chip">Hva er eiersiden?</button>
+          <button class="chip">Hva ser den som finner dyret?</button>
         </div>
       </div>
 
@@ -347,6 +351,43 @@ Dette kan fortsatt gjøres gratis, uten en betalt AI-tjeneste.`;
       return `Spør Hundevennen er laget for å kunne brukes gratis uten en betalt AI-API.
 
 Denne testfilen kjører bare i nettleseren og bruker ferdige spørsmål, nøkkelord og svar.`;
+    }
+
+
+    if(has(q,['registrere hunde id','registrere hunde-id','hvordan registrerer jeg hunde id',
+      'hvordan registrerer jeg hunde-id','opprette hunde id','opprette hunde-id'])){
+      return `For å få Digital Hunde-ID registrerer eieren hundens opplysninger i registreringsskjemaet hos Hundene Våre. 🐶
+
+Der legges blant annet inn navn, bilde og annen informasjon eieren ønsker å bruke på ID-siden.
+
+Når registreringen er klar, får hunden sin egen digitale ID som kan kobles til ID-brikken.`;
+    }
+
+    if(has(q,['registrere katte id','registrere katte-id','hvordan registrerer jeg katte id',
+      'hvordan registrerer jeg katte-id','opprette katte id','opprette katte-id'])){
+      return `For å få Katte-ID registrerer eieren kattens opplysninger i registreringsskjemaet hos Hundene Våre. 🐱
+
+Der legges blant annet inn navn, bilde og annen informasjon eieren ønsker å bruke på ID-siden.
+
+Når registreringen er klar, får katten sin egen digitale ID som kan kobles til ID-brikken.`;
+    }
+
+    if(has(q,['eiersiden','eier siden','eierside','pin','pin kode','pinkode',
+      'hvor finner jeg eiersiden','hva er eiersiden'])){
+      return `Eiersiden er den private siden for den som eier hunden eller katten. 🔐
+
+Der kan eieren blant annet melde dyret savnet eller trygt, hente varsler og administrere opplysninger knyttet til ID-en.
+
+Eiersiden er ikke den samme som den offentlige ID-siden som åpnes når noen skanner brikken.`;
+    }
+
+    if(has(q,['hva ser finner','hva ser den som finner','hva kan finner se','offentlig id side',
+      'offentlige id siden','hva vises','hvilke opplysninger vises','personvern'])){
+      return `Den som finner hunden eller katten ser bare informasjonen som er ment å være tilgjengelig på den digitale ID-siden.
+
+Eieren bestemmer blant annet om telefonnummeret skal være synlig.
+
+Den private eiersiden og eierens administrative funksjoner vises ikke for finneren.`;
     }
 
     if(has(q,['hvordan virker','hvordan fungerer','hva kan du','hjelpe med'])){
