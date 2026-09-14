@@ -8,7 +8,7 @@
   <style>
     :root{
       --green:#0f6b4f;
-      --green-dark:#0a4f3b;
+      --green-dark:#0a4f3b;a
       --green-soft:#e8f5ef;
       --cream:#fffaf1;
       --card:#ffffff;
@@ -174,6 +174,10 @@
           <button class="chip">Hvordan bytter jeg telefonnummer?</button>
           <button class="chip">Kan jeg bytte bilde?</button>
           <button class="chip">Hva hvis dyret får ny eier?</button>
+          <button class="chip">Hva gjør jeg hvis ID-brikken blir borte?</button>
+          <button class="chip">Hva hvis ID-brikken blir ødelagt?</button>
+          <button class="chip">Kan jeg ha flere dyr på samme eier?</button>
+          <button class="chip">Kan samme telefonnummer brukes på flere ID-er?</button>
         </div>
       </div>
 
@@ -492,6 +496,36 @@ Et tydelig og oppdatert bilde gjør det lettere for andre å kjenne igjen hunden
       return `Hvis hunden eller katten får ny eier, må eieropplysningene på den digitale ID-en oppdateres. 🐾
 
 Da skal kontaktinformasjon, telefonnummer og andre eieropplysninger endres slik at riktig person kan varsles dersom dyret blir funnet.`;
+    }
+
+
+    if(has(q,['brikken blir borte','mistet id brikke','mistet brikken','id brikken er borte',
+      'brikken er borte','mista brikken','mistet nfc brikke'])){
+      return `Hvis ID-brikken blir borte, bør eieren få laget eller bestilt en ny brikke som kobles til den samme digitale ID-en. 🐾
+
+Selve Hunde-ID-en eller Katte-ID-en kan fortsatt beholdes. Det er bare den fysiske brikken som må erstattes.`;
+    }
+
+    if(has(q,['brikken blir ødelagt','brikken er ødelagt','id brikken er ødelagt',
+      'nfc brikken virker ikke lenger','brikken er skadet','ødelagt nfc brikke'])){
+      return `Hvis ID-brikken er ødelagt eller ikke kan leses lenger, bør den erstattes med en ny brikke. 🔧🐾
+
+Den nye brikken kan kobles til den samme digitale Hunde-ID-en eller Katte-ID-en, slik at opplysningene kan beholdes.`;
+    }
+
+    if(has(q,['flere dyr samme eier','flere hunder samme eier','flere katter samme eier',
+      'kan jeg ha flere dyr','flere id på samme eier','flere id-er samme eier'])){
+      return `Ja. Samme eier kan ha flere hunder og katter registrert. 🐶🐱
+
+Hvert dyr får sin egen digitale ID og sin egen ID-side, men eieropplysningene kan være de samme.`;
+    }
+
+    if(has(q,['samme telefonnummer flere id','samme telefonnummer på flere id',
+      'samme telefonnummer flere dyr','samme tlf flere id','samme nummer flere dyr',
+      'kan samme telefonnummer brukes'])){
+      return `Ja. Det samme telefonnummeret kan brukes på flere Hunde-ID-er eller Katte-ID-er dersom dyrene har samme eier. 📱
+
+Hvert dyr har fortsatt sin egen digitale ID-side.`;
     }
 
     if(has(q,['hvordan virker','hvordan fungerer','hva kan du','hjelpe med'])){
