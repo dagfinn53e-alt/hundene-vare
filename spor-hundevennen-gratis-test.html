@@ -167,6 +167,9 @@
           <button class="chip">Hvordan får jeg ID-brikken?</button>
           <button class="chip">Hvordan bruker jeg ID-brikken?</button>
           <button class="chip">Brikken åpner ikke siden</button>
+          <button class="chip">Må jeg ha en app for å skanne?</button>
+          <button class="chip">Hva skjer når dyret blir funnet?</button>
+          <button class="chip">Hvordan melder jeg dyret trygt igjen?</button>
         </div>
       </div>
 
@@ -272,6 +275,32 @@ Hvis nummeret er synlig, kan finneren ringe eieren direkte. Hvis nummeret er skj
 • Prøv eventuelt med en annen nyere mobil.
 
 Hvis brikken fortsatt ikke reagerer, kan den eller lenken på brikken måtte kontrolleres.`;
+    }
+
+    if(has(q,['må jeg ha en app','ma jeg ha en app','trenger jeg app','egen app',
+      'app for å skanne','app for a skanne','nfc app','må finner ha app','ma finner ha app'])){
+      return `Nei. På de fleste nyere mobiltelefoner trenger du ikke en egen app for å skanne ID-brikken. 📱
+
+Hold mobilen inntil NFC-brikken. Når telefonen registrerer brikken, får du opp lenken til hundens eller kattens digitale ID-side.
+
+Trykk på lenken for å åpne ID-siden.`;
+    }
+
+    if(has(q,['hva skjer når dyret blir funnet','hva skjer nar dyret blir funnet',
+      'når hunden blir funnet','nar hunden blir funnet','når katten blir funnet',
+      'nar katten blir funnet','dyret er funnet','funnet igjen'])){
+      return `Når noen finner hunden eller katten, kan de skanne ID-brikken og åpne dyrets digitale ID-side. 🐾
+
+Der kan finneren sende beskjed om at dyret er funnet. Eieren får automatisk SMS-varsel og kan kontakte finneren.
+
+Når dyret er trygt hjemme igjen, kan eieren markere det som trygt på eiersiden.`;
+    }
+
+    if(has(q,['melde trygt','meld trygg','melde dyret trygt','markere trygg','markere som trygg',
+      'trygt igjen','hunden er hjemme','katten er hjemme','hjemme igjen'])){
+      return `Når hunden eller katten er hjemme igjen, går eieren inn på den private eiersiden. 🏠🐾
+
+Der markerer eieren dyret som trygt igjen. Da skal det ikke lenger stå som savnet.`;
     }
 
     if(has(q,['id-brikke','id brikke','nfc','brikken','halsband','halsbånd',
