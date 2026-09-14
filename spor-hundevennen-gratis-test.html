@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f6b4f" />
+  <title>🐾 Spør Hundevennen – Gratis test</title>
+  <style>
+    :root{
+      --green:#0f6b4f;
+      --green-dark:#0a4f3b;
+      --green-soft:#e8f5ef;
+      --cream:#fffaf1;
+      --card:#ffffff;
+      --text:#24312c;
+      --muted:#68756f;
+      --line:#dbe7e1;
+      --shadow:0 16px 45px rgba(17, 55, 42, .13);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:
+      radial-gradient(circle at top left, #eef9f3 0, transparent 34%),
+      linear-gradient(180deg,#fbfdfc 0%,#f4f8f6 100%);
+      color:var(--text);
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      min-height:100%;
+    }
+    body{padding:18px}
+    .app{max-width:760px;margin:0 auto}
+    .hero{
+      background:linear-gradient(135deg,var(--green),var(--green-dark));
+      color:#fff;border-radius:26px;padding:22px 20px;
+      box-shadow:var(--shadow);position:relative;overflow:hidden;
+    }
+    .hero:after{
+      content:"🐾";position:absolute;right:16px;top:2px;font-size:84px;
+      opacity:.10;transform:rotate(-10deg)
+    }
+    .hero h1{margin:0 0 8px;font-size:clamp(26px,5vw,36px)}
+    .hero p{margin:0;line-height:1.5;max-width:590px}
+    .free-badge{
+      display:inline-block;margin-top:14px;padding:7px 11px;border-radius:999px;
+      background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+      font-size:13px;font-weight:700
+    }
+
+    .chat{
+      margin-top:16px;background:var(--card);border:1px solid var(--line);
+      border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden
+    }
+    .chat-top{
+      padding:14px 16px;border-bottom:1px solid var(--line);
+      display:flex;align-items:center;gap:10px;background:#fbfefd
+    }
+    .avatar{
+      width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+      background:var(--green-soft);font-size:24px
+    }
+    .chat-top strong{display:block}
+    .status{font-size:12px;color:var(--muted);margin-top:2px}
+    .status span{color:#15965f}
+
+    .quick-wrap{
+      padding:12px 14px 0;background:#fff
+    }
+    .quick-title{font-size:12px;color:var(--muted);margin:0 0 8px}
+    .chips{display:flex;gap:8px;overflow:auto;padding-bottom:8px;scrollbar-width:thin}
+    .chip{
+      flex:0 0 auto;border:1px solid #bcd7ca;background:#f4fbf7;color:var(--green-dark);
+      padding:8px 11px;border-radius:999px;cursor:pointer;font:inherit;font-size:13px;
+      transition:.2s
+    }
+    .chip:hover,.chip:focus{background:#e8f5ef;outline:none}
+
+    .messages{
+      height:min(54vh,520px);min-height:360px;overflow-y:auto;
+      padding:16px;background:
+      linear-gradient(rgba(249,252,250,.92),rgba(249,252,250,.92)),
+      repeating-linear-gradient(45deg,#edf5f1 0 8px,#f8fbf9 8px 16px)
+    }
+    .row{display:flex;margin:10px 0}
+    .row.user{justify-content:flex-end}
+    .bubble{
+      max-width:min(82%,560px);padding:11px 13px;border-radius:18px;
+      line-height:1.48;white-space:pre-wrap;word-break:break-word;font-size:15px
+    }
+    .bot .bubble{
+      background:#fff;border:1px solid var(--line);border-top-left-radius:6px
+    }
+    .user .bubble{
+      background:var(--green);color:#fff;border-top-right-radius:6px
+    }
+    .time{display:block;font-size:10px;opacity:.62;margin-top:5px}
+    .typing .bubble{color:var(--muted);font-style:italic}
+
+    .composer{
+      padding:12px;background:#fff;border-top:1px solid var(--line);
+      display:flex;gap:9px;align-items:flex-end
+    }
+    textarea{
+      flex:1;resize:none;min-height:48px;max-height:130px;
+      border:1px solid #cbdad3;border-radius:16px;padding:12px 13px;
+      font:inherit;color:var(--text);outline:none;background:#fff
+    }
+    textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(15,107,79,.10)}
+    .send{
+      border:0;background:var(--green);color:#fff;font-weight:800;
+      min-width:86px;height:48px;border-radius:16px;cursor:pointer;padding:0 15px
+    }
+    .send:hover{background:var(--green-dark)}
+    .footnote{
+      text-align:center;color:var(--muted);font-size:12px;line-height:1.45;
+      padding:12px 6px 4px
+    }
+    .reset{
+      border:0;background:transparent;color:var(--green);font-weight:700;
+      cursor:pointer;margin-left:auto;font-size:13px
+    }
+    @media (max-width:600px){
+      body{padding:10px}
+      .hero{border-radius:20px;padding:18px 16px}
+      .chat{border-radius:18px}
+      .messages{height:55vh;min-height:320px;padding:12px}
+      .bubble{max-width:88%;font-size:14.5px}
+      .send{min-width:72px}
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <h1>🐾 Spør Hundevennen</h1>
+      <p>Gratis hjelp om Hunde-ID, Katte-ID, savnet og funnet dyr, ID-brikken, varsling og akademiene.</p>
+      <div class="free-badge">✓ Gratis test – ingen betalt AI-API</div>
+    </section>
+
+    <section class="chat" aria-label="Spør Hundevennen">
+      <div class="chat-top">
+        <div class="avatar">🐶</div>
+        <div>
+          <strong>Hundevennen</strong>
+          <div class="status"><span>●</span> Klar til å hjelpe</div>
+        </div>
+        <button class="reset" id="resetBtn" type="button">Start på nytt</button>
+      </div>
+
+      <div class="quick-wrap">
+        <p class="quick-title">Trykk på et spørsmål eller skriv selv:</p>
+        <div class="chips">
+          <button class="chip">Hva er Digital Hunde-ID?</button>
+          <button class="chip">Hvordan virker Katte-ID?</button>
+          <button class="chip">Hunden min er savnet</button>
+          <button class="chip">Jeg har funnet en hund</button>
+          <button class="chip">Hva er ID-brikken?</button>
+          <button class="chip">Blir SMS sendt automatisk?</button>
+          <button class="chip">Vises eierens telefon?</button>
+          <button class="chip">Hva er Hundeakademiet?</button>
+          <button class="chip">Hva er Kattakademiet?</button>
+        </div>
+      </div>
+
+      <div class="messages" id="messages" aria-live="polite"></div>
+
+      <form class="composer" id="chatForm">
+        <textarea id="userInput" rows="1" placeholder="Skriv spørsmålet ditt her ..." aria-label="Skriv spørsmål"></textarea>
+        <button class="send" type="submit">Send</button>
+      </form>
+    </section>
+
+    <div class="footnote">
+      Dette er en gratis, regelbasert testchat. Den bruker ingen ekstern AI-tjeneste og sender ingen data ut fra denne testfilen.
+    </div>
+  </main>
+
+<script>
+(function(){
+  const messages = document.getElementById('messages');
+  const form = document.getElementById('chatForm');
+  const input = document.getElementById('userInput');
+  const resetBtn = document.getElementById('resetBtn');
+  const chips = [...document.querySelectorAll('.chip')];
+
+  const welcome =
+`Hei! 🐾 Jeg er Hundevennen.
+
+Du kan spørre meg om:
+• Digital Hunde-ID og Katte-ID
+• savnet eller funnet hund/katt
+• ID-brikken og NFC
+• telefonnummer til eier
+• automatisk SMS-varsel
+• Hundeakademiet og Kattakademiet
+
+Skriv et spørsmål, så prøver jeg å hjelpe.`;
+
+  function now(){
+    return new Date().toLocaleTimeString('no-NO',{hour:'2-digit',minute:'2-digit'});
+  }
+
+  function addMessage(text, who='bot'){
+    const row = document.createElement('div');
+    row.className = 'row ' + who;
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = text;
+    const t = document.createElement('span');
+    t.className = 'time';
+    t.textContent = now();
+    bubble.appendChild(t);
+    row.appendChild(bubble);
+    messages.appendChild(row);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function normalize(s){
+    return s.toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/[^\wæøå\s-]/g,' ')
+      .replace(/\s+/g,' ')
+      .trim();
+  }
+
+  function has(q, words){
+    return words.some(w => q.includes(normalize(w)));
+  }
+
+  function answer(raw){
+    const q = normalize(raw);
+
+    if(!q) return 'Skriv gjerne et spørsmål, så skal jeg prøve å hjelpe deg. 🐾';
+
+    if(has(q,['hei','hallo','god dag','god kveld','hey'])){
+      return 'Hei! 🐾 Hva vil du vite om Hunde-ID, Katte-ID, savnet/funnet dyr, ID-brikken eller akademiene?';
+    }
+
+    if(has(q,['automatisk sms','sms sendt','sms varsel','sms-varsel','melding til eier','sms til eier'])){
+      return `Ja. I Hundene Våre er løsningen planlagt slik at når en finner sender inn beskjed om at en hund eller katt er funnet, skal eieren få SMS-varsel automatisk.
+
+Denne testchatten sender ikke SMS selv. Den forklarer bare hvordan funksjonen i Hundene Våre virker.`;
+    }
+
+    if(has(q,['telefon','telefonnummer','tlf','nummer til eier','ringe eier'])){
+      return `Eieren bestemmer selv om telefonnummeret skal vises på den offentlige ID-siden.
+
+Hvis eieren har valgt å vise nummeret, kan finneren kontakte eieren direkte. Hvis nummeret er skjult, kan finneren fortsatt bruke meldings-/varslingsfunksjonen uten at telefonnummeret vises offentlig.`;
+    }
+
+    if(has(q,['id-brikke','id brikke','nfc','brikken','halsband','halsbånd'])){
+      return `ID-brikken festes på hundens eller kattens halsbånd. Den kan inneholde NFC, slik at en finner kan holde mobilen inntil brikken og åpne dyrets offentlige ID-side.
+
+Der kan finneren se informasjon eieren har valgt å vise, og sende beskjed om at dyret er funnet.`;
+    }
+
+    if(has(q,['digital hunde-id','hunde-id','hunde id','hundens id'])){
+      return `Digital Hunde-ID er dyrets digitale ID-side hos Hundene Våre.
+
+Den kan vise blant annet navn, bilde, rase og annen informasjon eieren ønsker å dele. ID-brikken kan åpne siden direkte på mobilen ved skanning med NFC.`;
+    }
+
+    if(has(q,['katte-id','katte id','digital katte','kattens id'])){
+      return `Katte-ID fungerer på samme måte som Hunde-ID, men er laget for katt.
+
+Katten får en offentlig digital ID-side som kan åpnes fra ID-brikken. En finner kan da se tilgjengelig informasjon og sende varsel til eieren.`;
+    }
+
+    if((has(q,['savnet','borte','forsvunnet']) && has(q,['hund','valp'])) || q === 'hunden min er savnet'){
+      return `Hvis hunden din er savnet, kan den meldes savnet fra eiersiden for Hunde-ID.
+
+Når hunden er markert som savnet, kan dette vises på den offentlige ID-siden og i oversikten over savnede hunder. Når hunden er hjemme igjen, kan eieren markere den som trygg.`;
+    }
+
+    if((has(q,['savnet','borte','forsvunnet']) && has(q,['katt','katten']))){
+      return `Hvis katten din er savnet, kan den meldes savnet fra eiersiden for Katte-ID.
+
+Da kan katten vises som savnet på den offentlige ID-siden og i oversikten over savnede katter. Når katten er hjemme igjen, kan eieren markere den som trygg.`;
+    }
+
+    if(has(q,['funnet en hund','fant en hund','har funnet hund','hund funnet'])){
+      return `Har du funnet en hund med Hundene Våre-ID, åpner du ID-siden fra brikken.
+
+Der kan du se opplysninger eieren har valgt å vise. Du kan sende beskjed om at hunden er funnet, og løsningen kan varsle eieren automatisk med SMS.`;
+    }
+
+    if(has(q,['funnet en katt','fant en katt','har funnet katt','katt funnet'])){
+      return `Har du funnet en katt med Katte-ID, åpner du ID-siden fra brikken.
+
+Der kan du se opplysninger eieren har valgt å vise og sende beskjed om at katten er funnet. Løsningen kan varsle eieren automatisk med SMS.`;
+    }
+
+    if(has(q,['hundeakademiet','hunde akademiet','kurs hund','hundekurs'])){
+      return `Hundeakademiet er kunnskapsdelen for hundeeiere i Hundene Våre.
+
+Der kan brukeren lære om hundehold gjennom egne moduler. Etter hvert kan Hundevennen også få flere ferdige svar hentet fra innholdet i akademiet.`;
+    }
+
+    if(has(q,['kattakademiet','katteakademiet','katte akademiet','kurs katt','kattekurs'])){
+      return `Kattakademiet er kunnskapsdelen for katteeiere i Hundene Våre.
+
+Der kan brukeren lære om kattehold gjennom egne moduler. Etter hvert kan Hundevennen få flere ferdige svar hentet fra innholdet i akademiet.`;
+    }
+
+    if(has(q,['leksikon','hundeleksikon','katteleksikon','akvarieleksikon'])){
+      return `Leksikonene kan kobles inn i Hundevennen etter hvert.
+
+Da kan chatten få mange flere ferdige svar om hunderaser, katteraser og andre temaer uten at det brukes en betalt AI-tjeneste.`;
+    }
+
+    if(has(q,['pris','koster','gratis','betaling'])){
+      return `Spør Hundevennen er laget for å kunne brukes gratis uten en betalt AI-API.
+
+Denne testfilen kjører bare i nettleseren og bruker ferdige spørsmål, nøkkelord og svar.`;
+    }
+
+    if(has(q,['hvordan virker','hvordan fungerer','hva kan du','hjelpe med'])){
+      return `Jeg kan foreløpig svare på spørsmål om Digital Hunde-ID, Katte-ID, savnet/funnet dyr, ID-brikken, NFC, telefonnummer til eier, automatisk SMS-varsel, Hundeakademiet, Kattakademiet og leksikonene.
+
+Jeg er en gratis, regelbasert testutgave og bruker ikke en betalt AI-tjeneste.`;
+    }
+
+    return `Jeg fant ikke et sikkert ferdigsvar på akkurat det spørsmålet ennå. 🐾
+
+Prøv gjerne å spørre om Hunde-ID, Katte-ID, savnet eller funnet dyr, ID-brikken, SMS-varsel, telefonnummer, Hundeakademiet eller Kattakademiet.
+
+Senere kan vi legge inn mange flere ferdige svar uten betalt AI-API.`;
+  }
+
+  function send(text){
+    const clean = text.trim();
+    if(!clean) return;
+    addMessage(clean,'user');
+    input.value = '';
+    input.style.height = '48px';
+
+    const typing = document.createElement('div');
+    typing.className = 'row bot typing';
+    typing.innerHTML = '<div class="bubble">Hundevennen skriver …</div>';
+    messages.appendChild(typing);
+    messages.scrollTop = messages.scrollHeight;
+
+    setTimeout(()=>{
+      typing.remove();
+      addMessage(answer(clean),'bot');
+    }, 350);
+  }
+
+  form.addEventListener('submit', e=>{
+    e.preventDefault();
+    send(input.value);
+  });
+
+  input.addEventListener('input', ()=>{
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight,130) + 'px';
+  });
+
+  input.addEventListener('keydown', e=>{
+    if(e.key === 'Enter' && !e.shiftKey){
+      e.preventDefault();
+      form.requestSubmit();
+    }
+  });
+
+  chips.forEach(chip=>{
+    chip.addEventListener('click',()=>send(chip.textContent));
+  });
+
+  resetBtn.addEventListener('click',()=>{
+    messages.innerHTML='';
+    addMessage(welcome,'bot');
+    input.focus();
+  });
+
+  addMessage(welcome,'bot');
+})();
+</script>
+</body>
+</html>
