@@ -259,6 +259,16 @@ Skriv et spørsmål, så prøver jeg å hjelpe.`;
 Denne testchatten sender ikke SMS selv. Den forklarer bare hvordan varslingen i Hundene Våre fungerer.`;
     }
 
+    if(has(q,['bytte telefonnummer','endre telefonnummer','nytt telefonnummer','endre tlf',
+      'bytte tlf','oppdatere telefonnummer','hvordan bytter jeg telefonnummer',
+      'hvordan bytter jeg tlf','hvordan bytter til tlf nr','hvordan bytter til tlf.n r',
+      'bytte tlf nr','endre tlf nr','nytt tlf nr','bytte nummer','endre nummer',
+      'nytt nummer','oppdatere nummer'])){
+      return `Hvis du får nytt telefonnummer, bør du oppdatere det på eiersiden. 📱
+
+Da vil riktig nummer brukes videre i Hundene Våre, og du kan samtidig velge om telefonnummeret skal vises offentlig på dyrets ID-side.`;
+    }
+
     if(has(q,['telefon','telefonnummer','tlf','nummer til eier','ringe eier',
       'hvordan finner jeg eieren','hvordan finner jeg eier','finne eieren','finne eier',
       'kontakte eier','kontakte eieren','kan jeg ringe eier','kan jeg ringe eieren',
@@ -469,12 +479,6 @@ Der kan eieren oppdatere informasjon som er knyttet til dyrets digitale ID.
 Endringer på eiersiden påvirker hva som vises på den offentlige ID-siden.`;
     }
 
-    if(has(q,['bytte telefonnummer','endre telefonnummer','nytt telefonnummer','endre tlf',
-      'bytte tlf','oppdatere telefonnummer'])){
-      return `Hvis du får nytt telefonnummer, bør du oppdatere det på eiersiden. 📱
-
-Da vil riktig nummer brukes videre i Hundene Våre, og du kan samtidig velge om telefonnummeret skal vises offentlig på dyrets ID-side.`;
-    }
 
     if(has(q,['bytte bilde','endre bilde','nytt bilde','oppdatere bilde','endre hundebilde',
       'endre kattebilde'])){
