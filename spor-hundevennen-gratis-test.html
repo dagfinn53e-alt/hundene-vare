@@ -240,27 +240,29 @@ Skriv et spørsmål, så prøver jeg å hjelpe.`;
     if(has(q,['automatisk sms','sms sendt','sms varsel','sms-varsel','melding til eier','sms til eier',
       'får eier sms','far eier sms','blir eier varslet','varsles eier','eier varsel',
       'får eieren beskjed','far eieren beskjed','sendes sms automatisk'])){
-      return `Ja. I Hundene Våre er løsningen planlagt slik at når en finner sender inn beskjed om at en hund eller katt er funnet, skal eieren få SMS-varsel automatisk.
+      return `Ja. Når en finner sender beskjed om at hunden eller katten er funnet, får eieren automatisk SMS-varsel. 📱
 
-Denne testchatten sender ikke SMS selv. Den forklarer bare hvordan funksjonen i Hundene Våre virker.`;
+Denne testchatten sender ikke SMS selv. Den forklarer bare hvordan varslingen i Hundene Våre fungerer.`;
     }
 
     if(has(q,['telefon','telefonnummer','tlf','nummer til eier','ringe eier',
       'hvordan finner jeg eieren','hvordan finner jeg eier','finne eieren','finne eier',
       'kontakte eier','kontakte eieren','kan jeg ringe eier','kan jeg ringe eieren',
       'hvor er telefonnummeret','vises nummeret','skjule nummer','skjult nummer'])){
-      return `Eieren bestemmer selv om telefonnummeret skal vises på den offentlige ID-siden.
+      return `Eieren bestemmer selv om telefonnummeret skal vises på den digitale ID-siden.
 
-Hvis eieren har valgt å vise nummeret, kan finneren kontakte eieren direkte. Hvis nummeret er skjult, kan finneren fortsatt bruke meldings-/varslingsfunksjonen uten at telefonnummeret vises offentlig.`;
+Hvis nummeret er synlig, kan finneren ringe eieren direkte. Hvis nummeret er skjult, kan finneren fortsatt sende beskjed om at dyret er funnet uten at telefonnummeret vises offentlig.`;
     }
 
     if(has(q,['id-brikke','id brikke','nfc','brikken','halsband','halsbånd',
       'skanne brikke','skanner brikken','scan brikke','hvordan skanner jeg',
       'hvordan virker brikken','hvordan fungerer brikken','holde mobilen inntil',
       'brikke på halsbånd','brikke pa halsband'])){
-      return `ID-brikken festes på hundens eller kattens halsbånd. Den kan inneholde NFC, slik at en finner kan holde mobilen inntil brikken og åpne dyrets offentlige ID-side.
+      return `ID-brikken festes på hundens eller kattens halsbånd. 🐾
 
-Der kan finneren se informasjon eieren har valgt å vise, og sende beskjed om at dyret er funnet.`;
+Finneren skanner brikken med mobilen ved å holde telefonen inntil NFC-brikken. Da åpnes dyrets digitale ID-side automatisk.
+
+På ID-siden kan finneren se informasjonen eieren har valgt å vise og sende beskjed om at dyret er funnet.`;
     }
 
     if(has(q,['digital hunde-id','hunde-id','hunde id','hundens id',
