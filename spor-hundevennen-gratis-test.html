@@ -8,7 +8,7 @@
   <style>
     :root{
       --green:#0f6b4f;
-      --green-dark:#0a4f3b;a
+      --green-dark:#0a4f3b;
       --green-soft:#e8f5ef;
       --cream:#fffaf1;
       --card:#ffffff;
@@ -321,6 +321,20 @@ Når dyret er trygt hjemme igjen, kan eieren markere det som trygt på eiersiden
 Der markerer eieren dyret som trygt igjen. Da skal det ikke lenger stå som savnet.`;
     }
 
+    if(has(q,['brikken blir borte','mistet id brikke','mistet brikken','id brikken er borte',
+      'brikken er borte','mista brikken','mistet nfc brikke','mistet brikke','mista id brikken','mista id-brikken','hva gjør jeg hvis jeg mister brikken','hva gjor jeg hvis jeg mister brikken','id brikke mistet','id-brikke mistet'])){
+      return `Hvis ID-brikken blir borte, bør eieren få laget eller bestilt en ny brikke som kobles til den samme digitale ID-en. 🐾
+
+Selve Hunde-ID-en eller Katte-ID-en kan fortsatt beholdes. Det er bare den fysiske brikken som må erstattes.`;
+    }
+
+    if(has(q,['brikken blir ødelagt','brikken er ødelagt','id brikken er ødelagt',
+      'nfc brikken virker ikke lenger','brikken er skadet','ødelagt nfc brikke','ødelagt brikke','id brikke ødelagt','id-brikke ødelagt','brikken knust','brikken skadet'])){
+      return `Hvis ID-brikken er ødelagt eller ikke kan leses lenger, bør den erstattes med en ny brikke. 🔧🐾
+
+Den nye brikken kan kobles til den samme digitale Hunde-ID-en eller Katte-ID-en, slik at opplysningene kan beholdes.`;
+    }
+
     if(has(q,['id-brikke','id brikke','nfc','brikken','halsband','halsbånd',
       'skanne brikke','skanner brikken','scan brikke','hvordan skanner jeg',
       'hvordan virker brikken','hvordan fungerer brikken','holde mobilen inntil',
@@ -499,19 +513,7 @@ Da skal kontaktinformasjon, telefonnummer og andre eieropplysninger endres slik 
     }
 
 
-    if(has(q,['brikken blir borte','mistet id brikke','mistet brikken','id brikken er borte',
-      'brikken er borte','mista brikken','mistet nfc brikke'])){
-      return `Hvis ID-brikken blir borte, bør eieren få laget eller bestilt en ny brikke som kobles til den samme digitale ID-en. 🐾
 
-Selve Hunde-ID-en eller Katte-ID-en kan fortsatt beholdes. Det er bare den fysiske brikken som må erstattes.`;
-    }
-
-    if(has(q,['brikken blir ødelagt','brikken er ødelagt','id brikken er ødelagt',
-      'nfc brikken virker ikke lenger','brikken er skadet','ødelagt nfc brikke'])){
-      return `Hvis ID-brikken er ødelagt eller ikke kan leses lenger, bør den erstattes med en ny brikke. 🔧🐾
-
-Den nye brikken kan kobles til den samme digitale Hunde-ID-en eller Katte-ID-en, slik at opplysningene kan beholdes.`;
-    }
 
     if(has(q,['flere dyr samme eier','flere hunder samme eier','flere katter samme eier',
       'kan jeg ha flere dyr','flere id på samme eier','flere id-er samme eier'])){
