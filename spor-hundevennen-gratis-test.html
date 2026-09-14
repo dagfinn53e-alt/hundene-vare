@@ -157,6 +157,9 @@
           <button class="chip">Vises eierens telefon?</button>
           <button class="chip">Hva er Hundeakademiet?</button>
           <button class="chip">Hva er Kattakademiet?</button>
+          <button class="chip">Hvordan finner jeg eieren?</button>
+          <button class="chip">Hvordan skanner jeg ID-brikken?</button>
+          <button class="chip">Hva kan Hundevennen hjelpe med?</button>
         </div>
       </div>
 
@@ -234,31 +237,43 @@ Skriv et spørsmål, så prøver jeg å hjelpe.`;
       return 'Hei! 🐾 Hva vil du vite om Hunde-ID, Katte-ID, savnet/funnet dyr, ID-brikken eller akademiene?';
     }
 
-    if(has(q,['automatisk sms','sms sendt','sms varsel','sms-varsel','melding til eier','sms til eier'])){
+    if(has(q,['automatisk sms','sms sendt','sms varsel','sms-varsel','melding til eier','sms til eier',
+      'får eier sms','far eier sms','blir eier varslet','varsles eier','eier varsel',
+      'får eieren beskjed','far eieren beskjed','sendes sms automatisk'])){
       return `Ja. I Hundene Våre er løsningen planlagt slik at når en finner sender inn beskjed om at en hund eller katt er funnet, skal eieren få SMS-varsel automatisk.
 
 Denne testchatten sender ikke SMS selv. Den forklarer bare hvordan funksjonen i Hundene Våre virker.`;
     }
 
-    if(has(q,['telefon','telefonnummer','tlf','nummer til eier','ringe eier'])){
+    if(has(q,['telefon','telefonnummer','tlf','nummer til eier','ringe eier',
+      'hvordan finner jeg eieren','hvordan finner jeg eier','finne eieren','finne eier',
+      'kontakte eier','kontakte eieren','kan jeg ringe eier','kan jeg ringe eieren',
+      'hvor er telefonnummeret','vises nummeret','skjule nummer','skjult nummer'])){
       return `Eieren bestemmer selv om telefonnummeret skal vises på den offentlige ID-siden.
 
 Hvis eieren har valgt å vise nummeret, kan finneren kontakte eieren direkte. Hvis nummeret er skjult, kan finneren fortsatt bruke meldings-/varslingsfunksjonen uten at telefonnummeret vises offentlig.`;
     }
 
-    if(has(q,['id-brikke','id brikke','nfc','brikken','halsband','halsbånd'])){
+    if(has(q,['id-brikke','id brikke','nfc','brikken','halsband','halsbånd',
+      'skanne brikke','skanner brikken','scan brikke','hvordan skanner jeg',
+      'hvordan virker brikken','hvordan fungerer brikken','holde mobilen inntil',
+      'brikke på halsbånd','brikke pa halsband'])){
       return `ID-brikken festes på hundens eller kattens halsbånd. Den kan inneholde NFC, slik at en finner kan holde mobilen inntil brikken og åpne dyrets offentlige ID-side.
 
 Der kan finneren se informasjon eieren har valgt å vise, og sende beskjed om at dyret er funnet.`;
     }
 
-    if(has(q,['digital hunde-id','hunde-id','hunde id','hundens id'])){
+    if(has(q,['digital hunde-id','hunde-id','hunde id','hundens id',
+      'hva er hunde id','hvordan virker hunde id','hvordan fungerer hunde id',
+      'digital id hund','id til hund','registrere hunde id'])){
       return `Digital Hunde-ID er dyrets digitale ID-side hos Hundene Våre.
 
 Den kan vise blant annet navn, bilde, rase og annen informasjon eieren ønsker å dele. ID-brikken kan åpne siden direkte på mobilen ved skanning med NFC.`;
     }
 
-    if(has(q,['katte-id','katte id','digital katte','kattens id'])){
+    if(has(q,['katte-id','katte id','digital katte','kattens id',
+      'hva er katte id','hvordan virker katte id','hvordan fungerer katte id',
+      'digital id katt','id til katt','registrere katte id'])){
       return `Katte-ID fungerer på samme måte som Hunde-ID, men er laget for katt.
 
 Katten får en offentlig digital ID-side som kan åpnes fra ID-brikken. En finner kan da se tilgjengelig informasjon og sende varsel til eieren.`;
@@ -288,19 +303,25 @@ Da åpnes hundens digitale ID-side, hvor du kan se opplysningene eieren har valg
 Da åpnes kattens digitale ID-side, hvor du kan se opplysningene eieren har valgt å vise. Du kan også sende beskjed om at katten er funnet, og eieren får automatisk SMS-varsel.`;
     }
 
-    if(has(q,['hundeakademiet','hunde akademiet','kurs hund','hundekurs'])){
+    if(has(q,['hundeakademiet','hunde akademiet','kurs hund','hundekurs',
+      'lære om hund','laere om hund','hundekunnskap','moduler hund',
+      'kurs for hundeeiere','akademi hund'])){
       return `Hundeakademiet er kunnskapsdelen for hundeeiere i Hundene Våre.
 
 Der kan brukeren lære om hundehold gjennom egne moduler. Etter hvert kan Hundevennen også få flere ferdige svar hentet fra innholdet i akademiet.`;
     }
 
-    if(has(q,['kattakademiet','katteakademiet','katte akademiet','kurs katt','kattekurs'])){
+    if(has(q,['kattakademiet','katteakademiet','katte akademiet','kurs katt','kattekurs',
+      'lære om katt','laere om katt','kattekunnskap','moduler katt',
+      'kurs for katteeiere','akademi katt'])){
       return `Kattakademiet er kunnskapsdelen for katteeiere i Hundene Våre.
 
 Der kan brukeren lære om kattehold gjennom egne moduler. Etter hvert kan Hundevennen få flere ferdige svar hentet fra innholdet i akademiet.`;
     }
 
-    if(has(q,['leksikon','hundeleksikon','katteleksikon','akvarieleksikon'])){
+    if(has(q,['leksikon','hundeleksikon','katteleksikon','akvarieleksikon',
+      'hunderase','hunderaser','katterase','katteraser','raseinformasjon',
+      'lese om raser','informasjon om raser'])){
       return `Leksikonene kan kobles inn i Hundevennen etter hvert.
 
 Da kan chatten få mange flere ferdige svar om hunderaser, katteraser og andre temaer uten at det brukes en betalt AI-tjeneste.`;
