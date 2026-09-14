@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="no">
 <head>
@@ -164,6 +165,9 @@
           <button class="chip">Hvordan registrerer jeg Katte-ID?</button>
           <button class="chip">Hva er eiersiden?</button>
           <button class="chip">Hva ser den som finner dyret?</button>
+          <button class="chip">Hvordan får jeg ID-brikken?</button>
+          <button class="chip">Hvordan bruker jeg ID-brikken?</button>
+          <button class="chip">Brikken åpner ikke siden</button>
         </div>
       </div>
 
@@ -388,6 +392,38 @@ Eiersiden er ikke den samme som den offentlige ID-siden som åpnes når noen ska
 Eieren bestemmer blant annet om telefonnummeret skal være synlig.
 
 Den private eiersiden og eierens administrative funksjoner vises ikke for finneren.`;
+    }
+
+
+    if(has(q,['hvordan får jeg id brikken','hvordan far jeg id brikken','bestille id brikke',
+      'bestille brikke','fa id brikke','få id brikke','kjøpe id brikke','id brikke bestilling'])){
+      return `ID-brikken hører sammen med dyrets digitale Hunde-ID eller Katte-ID. 🐾
+
+Når registreringen er klar, kan brikken knyttes til dyrets ID-side slik at den som finner hunden eller katten kan skanne brikken med mobilen.
+
+Mer informasjon om bestilling og utsending kan vises i registreringen når dette er klart på Hundene Våre.`;
+    }
+
+    if(has(q,['hvordan bruker jeg id brikken','hvordan brukes id brikken','bruke brikken',
+      'hvordan bruker jeg brikken','skanne id brikke','skanne brikken med mobilen'])){
+      return `Hold mobilen inntil ID-brikken på halsbåndet. 📱🐾
+
+Når NFC-brikken registreres av telefonen, åpnes dyrets digitale ID-side. Der kan finneren se informasjonen eieren har valgt å vise og sende beskjed om at dyret er funnet.
+
+På de fleste nyere telefoner trenger man ikke en egen app for å skanne NFC-brikken.`;
+    }
+
+    if(has(q,['brikken åpner ikke siden','brikken apner ikke siden','nfc virker ikke',
+      'brikken virker ikke','id brikken virker ikke','får ikke skannet brikken',
+      'far ikke skannet brikken','telefonen leser ikke brikken'])){
+      return `Hvis ID-brikken ikke åpner siden, prøv dette:
+
+• Hold toppen av mobilen rolig helt inntil brikken i et par sekunder.
+• Flytt mobilen litt rundt over brikken hvis den ikke reagerer med en gang.
+• Sørg for at skjermen er på og telefonen er låst opp.
+• Prøv eventuelt med en annen nyere mobil.
+
+Hvis brikken fortsatt ikke reagerer, kan den eller lenken på brikken måtte kontrolleres.`;
     }
 
     if(has(q,['hvordan virker','hvordan fungerer','hva kan du','hjelpe med'])){
