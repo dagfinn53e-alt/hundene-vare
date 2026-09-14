@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="no">
 <head>
@@ -262,6 +261,19 @@ Denne testchatten sender ikke SMS selv. Den forklarer bare hvordan varslingen i 
 Hvis nummeret er synlig, kan finneren ringe eieren direkte. Hvis nummeret er skjult, kan finneren fortsatt sende beskjed om at dyret er funnet uten at telefonnummeret vises offentlig.`;
     }
 
+    if(has(q,['brikken åpner ikke siden','brikken apner ikke siden','nfc virker ikke',
+      'brikken virker ikke','id brikken virker ikke','får ikke skannet brikken',
+      'far ikke skannet brikken','telefonen leser ikke brikken','hva gjør jeg hvis nfc brikken ikke åpner siden','hva gjor jeg hvis nfc brikken ikke apner siden','nfc brikken åpner ikke siden','nfc brikken apner ikke siden','hva gjør jeg hvis brikken ikke virker','hva gjor jeg hvis brikken ikke virker'])){
+      return `Hvis ID-brikken ikke åpner siden, prøv dette:
+
+• Hold toppen av mobilen rolig helt inntil brikken i et par sekunder.
+• Flytt mobilen litt rundt over brikken hvis den ikke reagerer med en gang.
+• Sørg for at skjermen er på og telefonen er låst opp.
+• Prøv eventuelt med en annen nyere mobil.
+
+Hvis brikken fortsatt ikke reagerer, kan den eller lenken på brikken måtte kontrolleres.`;
+    }
+
     if(has(q,['id-brikke','id brikke','nfc','brikken','halsband','halsbånd',
       'skanne brikke','skanner brikken','scan brikke','hvordan skanner jeg',
       'hvordan virker brikken','hvordan fungerer brikken','holde mobilen inntil',
@@ -413,18 +425,6 @@ Når NFC-brikken registreres av telefonen, åpnes dyrets digitale ID-side. Der k
 På de fleste nyere telefoner trenger man ikke en egen app for å skanne NFC-brikken.`;
     }
 
-    if(has(q,['brikken åpner ikke siden','brikken apner ikke siden','nfc virker ikke',
-      'brikken virker ikke','id brikken virker ikke','får ikke skannet brikken',
-      'far ikke skannet brikken','telefonen leser ikke brikken'])){
-      return `Hvis ID-brikken ikke åpner siden, prøv dette:
-
-• Hold toppen av mobilen rolig helt inntil brikken i et par sekunder.
-• Flytt mobilen litt rundt over brikken hvis den ikke reagerer med en gang.
-• Sørg for at skjermen er på og telefonen er låst opp.
-• Prøv eventuelt med en annen nyere mobil.
-
-Hvis brikken fortsatt ikke reagerer, kan den eller lenken på brikken måtte kontrolleres.`;
-    }
 
     if(has(q,['hvordan virker','hvordan fungerer','hva kan du','hjelpe med'])){
       return `Jeg kan foreløpig svare på spørsmål om Digital Hunde-ID, Katte-ID, savnet/funnet dyr, ID-brikken, NFC, telefonnummer til eier, automatisk SMS-varsel, Hundeakademiet, Kattakademiet og leksikonene.
