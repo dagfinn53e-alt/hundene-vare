@@ -276,21 +276,27 @@ Finneren kan sende beskjed om at hunden er funnet, og du får automatisk SMS-var
     if(has(q,['katte-id','katte id','digital katte','kattens id',
       'hva er katte id','hvordan virker katte id','hvordan fungerer katte id',
       'digital id katt','id til katt','registrere katte id'])){
-      return `Katte-ID fungerer på samme måte som Hunde-ID, men er laget for katt.
+      return `Katte-ID er kattens digitale ID hos Hundene Våre. 🐱
 
-Katten får en offentlig digital ID-side som kan åpnes fra ID-brikken. En finner kan da se tilgjengelig informasjon og sende varsel til eieren.`;
+Hvis noen finner katten din, skanner de ID-brikken med mobilen. Da åpnes kattens digitale ID-side med informasjonen du som eier har valgt å vise.
+
+Finneren kan sende beskjed om at katten er funnet, og du får automatisk SMS-varsel. Du bestemmer selv om telefonnummeret ditt skal være synlig, slik at finneren kan ringe deg direkte.`;
     }
 
     if((has(q,['savnet','borte','forsvunnet']) && has(q,['hund','valp'])) || q === 'hunden min er savnet'){
-      return `Hvis hunden din er savnet, kan den meldes savnet fra eiersiden for Hunde-ID.
+      return `Er hunden din savnet, går du inn på eiersiden for Hunde-ID og trykker «Meld savnet». 🐶
 
-Når hunden er markert som savnet, kan dette vises på den offentlige ID-siden og i oversikten over savnede hunder. Når hunden er hjemme igjen, kan eieren markere den som trygg.`;
+Hunden blir da markert som savnet på den digitale ID-siden og kan vises i oversikten over savnede hunder.
+
+Når hunden er hjemme igjen, går du tilbake til eiersiden og markerer den som trygg.`;
     }
 
     if((has(q,['savnet','borte','forsvunnet']) && has(q,['katt','katten']))){
-      return `Hvis katten din er savnet, kan den meldes savnet fra eiersiden for Katte-ID.
+      return `Er katten din savnet, går du inn på eiersiden for Katte-ID og trykker «Meld savnet». 🐱
 
-Da kan katten vises som savnet på den offentlige ID-siden og i oversikten over savnede katter. Når katten er hjemme igjen, kan eieren markere den som trygg.`;
+Katten blir da markert som savnet på den digitale ID-siden og kan vises i oversikten over savnede katter.
+
+Når katten er hjemme igjen, går du tilbake til eiersiden og markerer den som trygg.`;
     }
 
     if(has(q,['funnet en hund','fant en hund','har funnet hund','hund funnet'])){
