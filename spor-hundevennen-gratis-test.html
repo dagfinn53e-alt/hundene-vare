@@ -28,25 +28,8 @@
     }
     body{padding:18px}
     .app{max-width:760px;margin:0 auto}
-    .hero{
-      background:linear-gradient(135deg,var(--green),var(--green-dark));
-      color:#fff;border-radius:26px;padding:22px 20px;
-      box-shadow:var(--shadow);position:relative;overflow:hidden;
-    }
-    .hero:after{
-      content:"🐾";position:absolute;right:16px;top:2px;font-size:84px;
-      opacity:.10;transform:rotate(-10deg)
-    }
-    .hero h1{margin:0 0 8px;font-size:clamp(26px,5vw,36px)}
-    .hero p{margin:0;line-height:1.5;max-width:590px}
-    .free-badge{
-      display:inline-block;margin-top:14px;padding:7px 11px;border-radius:999px;
-      background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
-      font-size:13px;font-weight:700
-    }
-
-    .chat{
-      margin-top:16px;background:var(--card);border:1px solid var(--line);
+.chat{
+      margin-top:0;background:var(--card);border:1px solid var(--line);
       border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden
     }
     .chat-top{
@@ -115,18 +98,12 @@
     font-weight:800; text-decoration:none;
   }
   .guide-link:hover{ text-decoration:underline; }
-
-  .footnote{
-      text-align:center;color:var(--muted);font-size:12px;line-height:1.45;
-      padding:12px 6px 4px
-    }
-    .reset{
+.reset{
       border:0;background:transparent;color:var(--green);font-weight:700;
       cursor:pointer;margin-left:auto;font-size:13px
     }
     @media (max-width:600px){
       body{padding:10px}
-      .hero{border-radius:20px;padding:18px 16px}
       .chat{border-radius:18px}
       .messages{height:62vh;min-height:320px;padding:12px}
       .bubble{max-width:88%;font-size:14.5px}
@@ -214,8 +191,9 @@
     bubble.className = 'bubble';
     if(who === 'bot'){
       bubble.innerHTML = text;
-      bubble.querySelectorAll('a.guide-link').forEach(link => {
+      bubble.querySelectorAll('a').forEach(link => {
         link.setAttribute('target', '_top');
+        link.setAttribute('rel', 'noopener');
       });
     } else {
       bubble.textContent = text;
@@ -255,23 +233,9 @@
       'får eieren beskjed','far eieren beskjed','sendes sms automatisk'])){
       return `Ja. Når en finner sender beskjed om at hunden eller katten er funnet, får eieren automatisk SMS-varsel. 📱
 
-Denne testchatten sender ikke SMS selv. Den forklarer bare hvordan varslingen i Hundene Våre fungerer.
+Denne chatten sender ikke SMS selv. Den forklarer hvordan varslingen i Hundene Våre fungerer.
 
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/min-dyre-id.html" target="_blank" rel="noopener">🐾 Åpne Min Dyre-ID</a>
-
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/min-katte-id.html#registrer-katt">🐱 Registrer Katte-ID</a>
-
-Du kan gå direkte til en modul:
-
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul1-bli-kjent-med-hunden.html">🐕 Modul 1 – Bli kjent med hunden</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul2-valpen-den-viktige-starten.html">🐶 Modul 2 – Valp</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul3-grunnleggende-lydighet.html">🎓 Modul 3 – Grunnleggende lydighet</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul4-atferd-og-problemlosning.html">💜 Modul 4 – Atferd og problemløsning</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul5-trening-i-praksis.html">🚶 Modul 5 – Trening i praksis</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul6-hverdagsliv-og-gode-vaner.html">🐕‍🦺 Modul 6 – Aktivisering og mental trening</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul7-aktivisering-lek-og-mental-stimulering.html">🥣 Modul 7 – Helse og ernæring</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul8-helse-stell-og-forstehjelp-premium.html">🧰 Modul 8 – Førstehjelp og trygghet</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul9-hundeeieren-som-ekspert-premium.html">🏅 Modul 9 – Avslutning og sertifisering</a>`;
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/min-dyre-id.html">🐾 Åpne Min Dyre-ID</a>`;
     }
 
     if(has(q,['bytte telefonnummer','endre telefonnummer','nytt telefonnummer','endre tlf',
@@ -444,27 +408,45 @@ Da åpnes kattens digitale ID-side, hvor du kan se opplysningene eieren har valg
     }
 
     if(has(q,['hundeakademiet','hunde akademiet','kurs hund','hundekurs',
-      'lære om hund','laere om hund','hundekunnskap','moduler hund',
-      'kurs for hundeeiere','akademi hund'])){
+      'lære om hund','laere om hund','hundekunnskap','moduler hund','kurs for hundeeiere','akademi hund'])){
       return `Hundeakademiet er kunnskapsdelen for hundeeiere i Hundene Våre. 🐶📚
 
-Der finner du egne moduler om hundehold, stell, helse, trening og andre viktige temaer.
+Her finner du 9 moduler om hundehold, valp, lydighet, atferd, trening, hverdagsliv, aktivisering, helse, stell og førstehjelp.
 
-Hundevennen kan etter hvert bruke innhold fra Hundeakademiet til å gi flere nyttige svar direkte i chatten.
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/hundeakademiet_ny.html">🎓 Åpne Hundeakademiet</a>
 
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/hundeakademiet_ny.html" target="_blank" rel="noopener">🎓 Åpne Hundeakademiet</a>`;
+Du kan også gå direkte til en modul:
+
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul1-bli-kjent-med-hunden.html">🐕 Modul 1 – Bli kjent med hunden</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul2-valpen-den-viktige-starten.html">🐶 Modul 2 – Valpen – den viktige starten</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul3-grunnleggende-lydighet.html">🎓 Modul 3 – Grunnleggende lydighet</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul4-atferd-og-problemlosning.html">💜 Modul 4 – Atferd og problemløsning</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul5-trening-i-praksis.html">🚶 Modul 5 – Trening i praksis</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul6-hverdagsliv-og-gode-vaner.html">🏡 Modul 6 – Hverdagsliv og gode vaner</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul7-aktivisering-lek-og-mental-stimulering.html">🧠 Modul 7 – Aktivisering, lek og mental stimulering</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul8-helse-stell-og-forstehjelp-premium.html">🧰 Modul 8 – Helse, stell og førstehjelp</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/modul9-hundeeieren-som-ekspert-premium.html">🏅 Modul 9 – Hundeeieren som ekspert</a>`;
     }
 
     if(has(q,['kattakademiet','katteakademiet','katte akademiet','kurs katt','kattekurs',
-      'lære om katt','laere om katt','kattekunnskap','moduler katt',
-      'kurs for katteeiere','akademi katt'])){
+      'lære om katt','laere om katt','kattekunnskap','moduler katt','kurs for katteeiere','akademi katt'])){
       return `Kattakademiet er kunnskapsdelen for katteeiere i Hundene Våre. 🐱📚
 
-Der finner du egne moduler om kattehold, stell, helse, adferd og andre viktige temaer.
+Her finner du 9 moduler om kattehold, den viktige starten, språk, atferd, ernæring, helse, stell, aktivisering og seniorkatten.
 
-Hundevennen kan etter hvert bruke innhold fra Kattakademiet til å gi flere nyttige svar direkte i chatten.
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html">🎓 Åpne Kattakademiet</a>
 
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html" target="_blank" rel="noopener">🎓 Åpne Kattakademiet</a>`;
+Du kan også gå direkte til en modul:
+
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-1">🐱 Modul 1 – Bli kjent med katten</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-2">🏡 Modul 2 – Den viktige starten</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-3">💬 Modul 3 – Kattens språk</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-4">🧠 Modul 4 – Atferd og problemløsning</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-5">🍖 Modul 5 – Ernæring og fôring</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-6">🩺 Modul 6 – Helse og førstehjelp</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-7">🪮 Modul 7 – Kattestell og pelspleie</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-8">🎾 Modul 8 – Aktivisering og lek</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-9">🧓 Modul 9 – Seniorkatten og spesielle behov</a>`;
     }
 
     if(has(q,['afghansk mynde'])){
@@ -1343,25 +1325,14 @@ Her finner du alle modulene samlet på én side.
     }
 
     if(has(q,['leksikon','hundeleksikon','katteleksikon','akvarieleksikon',
-      'hunderase','hunderaser','katterase','katteraser','raseinformasjon',
-      'lese om raser','informasjon om raser'])){
-      return `Leksikonene kan etter hvert kobles direkte til Hundevennen. 📖
+      'hunderase','hunderaser','katterase','katteraser','raseinformasjon','lese om raser','informasjon om raser'])){
+      return `Hos Hundene Våre finner du egne leksikon for hund, katt og akvariefisk. 📖🐾
 
-Da kan chatten gi ferdige svar om blant annet hunderaser, katteraser og andre temaer fra Hundene Våre.
+Du kan også skrive navnet på en hunderase, katterase eller akvariefisk direkte i chatten.
 
-Dette kan fortsatt gjøres gratis, uten en betalt AI-tjeneste.
-
-Du kan gå direkte til en modul:
-
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-1">🐱 Modul 1 – Bli kjent med katten</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-2">🏡 Modul 2 – Den viktige starten</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-3">💬 Modul 3 – Kattens språk</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-4">🧠 Modul 4 – Atferd og problemløsning</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-5">🍖 Modul 5 – Ernæring og fôring</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-6">🩺 Modul 6 – Helse og førstehjelp</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-7">🪮 Modul 7 – Kattestell og pelspleie</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-8">🎾 Modul 8 – Aktivisering og lek</a>
-<a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-9">🧓 Modul 9 – Seniorkatten og spesielle behov</a>`;
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/hundeleksikon.html">🐶 Åpne Hundeleksikonet</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/katteleksikon.html">🐱 Åpne Katteleksikonet</a>
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/akvarieleksikon.html">🐠 Åpne Akvarieleksikonet</a>`;
     }
 
     if(has(q,['pris','koster','gratis','betaling'])){
@@ -1511,16 +1482,14 @@ Unngå å gjøre avskjed og hjemkomst til en stor hendelse.
     }
 
     if(has(q,['hvordan virker','hvordan fungerer','hva kan du','hjelpe med'])){
-      return `Jeg kan foreløpig svare på spørsmål om Digital Hunde-ID, Katte-ID, savnet/funnet dyr, ID-brikken, NFC, telefonnummer til eier, automatisk SMS-varsel, Hundeakademiet, Kattakademiet og leksikonene.
+      return `Jeg kan hjelpe med Digital Hunde-ID og Katte-ID, savnet/funnet dyr, ID-brikken og NFC, SMS-varsel, eiersiden, Hundeakademiet, Kattakademiet, hunde- og katteraser, akvariefisk, trening, Hundevelgeren, Kattevelgeren, Akvarieakademiet og Pelsstell. 🐾
 
-Jeg er en gratis, regelbasert testutgave og bruker ikke en betalt AI-tjeneste.`;
+Skriv bare det du lurer på, for eksempel «Hvordan får jeg en Hunde-ID?», «Bichon Frisé», «Guppy» eller «Hvordan trener jeg innkalling?»`;
     }
 
     return `Jeg fant ikke et sikkert ferdigsvar på akkurat det spørsmålet ennå. 🐾
 
-Prøv gjerne å spørre om Hunde-ID, Katte-ID, savnet eller funnet dyr, ID-brikken, SMS-varsel, telefonnummer, Hundeakademiet eller Kattakademiet.
-
-Senere kan vi legge inn mange flere ferdige svar uten betalt AI-API.`;
+Prøv gjerne å spørre om Hunde-ID, Katte-ID, savnet eller funnet dyr, ID-brikken, SMS-varsel, akademiene, en hunderase, katterase, akvariefisk, trening, Hundevelgeren, Kattevelgeren eller Pelsstell.`;
   }
 
   function send(text){
