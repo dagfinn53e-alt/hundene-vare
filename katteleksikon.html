@@ -2692,5 +2692,27 @@ window.addEventListener("resize",()=>{if(window.innerWidth>650)document.body.cla
 Utstyrs- og enkelte rasebilder: Wikimedia Commons (bilder brukes i henhold til lisensen på den enkelte bildefilen).
 </div>
 
+
+<script id="hundevennen-direct-cat-link">
+(function(){
+  function openCatFromUrl(){
+    const p = new URLSearchParams(location.search);
+    const wanted = (p.get("rase") || "").trim();
+    if(!wanted) return;
+    const btn = document.getElementById(wanted);
+    if(btn){
+      setTimeout(function(){
+        btn.click();
+        setTimeout(function(){
+          const active = document.querySelector("main.content[style*='display: block'], main.content:not([style*='display: none'])");
+          if(active) active.scrollIntoView({behavior:"smooth",block:"start"});
+        },80);
+      },80);
+    }
+  }
+  window.addEventListener("DOMContentLoaded",openCatFromUrl);
+})();
+</script>
+
 </body>
 </html>
