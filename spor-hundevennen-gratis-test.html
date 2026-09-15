@@ -449,6 +449,31 @@ Du kan også gå direkte til en modul:
 <a class="guide-link" href="https://www.xn--hundenevre-85a.com/kattakademiet.html#modul-9">🧓 Modul 9 – Seniorkatten og spesielle behov</a>`;
     }
 
+    // Hovedleksikon – må ligge før rase- og artsreglene
+    if(has(q,['hundeleksikon','hunde leksikon','hundeleksikonet'])){
+      return `I Hundeleksikonet finner du informasjon om mange forskjellige hunderaser. 🐶📖
+
+Du kan åpne hele Hundeleksikonet, eller skrive navnet på rasen du vil lese om, for eksempel «Bichon Frisé» eller «Golden Retriever».
+
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/hundeleksikon.html">🐶 Åpne Hundeleksikonet</a>`;
+    }
+
+    if(has(q,['katteleksikon','katte leksikon','katteleksikonet'])){
+      return `I Katteleksikonet finner du informasjon om mange forskjellige katteraser. 🐱📖
+
+Du kan åpne hele Katteleksikonet, eller skrive navnet på rasen du vil lese om, for eksempel «Ragdoll» eller «Maine Coon».
+
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/katteleksikon.html">🐱 Åpne Katteleksikonet</a>`;
+    }
+
+    if(has(q,['akvarieleksikon','akvarie leksikon','akvarieleksikonet','fiskleksikon'])){
+      return `I Akvarieleksikonet finner du informasjon om mange forskjellige akvariefisk. 🐠📖
+
+Du kan åpne hele Akvarieleksikonet, eller skrive navnet på fisken du vil lese om, for eksempel «Guppy» eller «Neontetra».
+
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/akvarieleksikon.html">🐠 Åpne Akvarieleksikonet</a>`;
+    }
+
     if(has(q,['afghansk mynde'])){
       return `Du finner en egen Premium-raseprofil for Afghansk mynde i Hundeleksikonet. 🐶📖
 
@@ -1324,7 +1349,7 @@ Her finner du alle modulene samlet på én side.
 <a class="guide-link" href="https://www.xn--hundenevre-85a.com/pelsstell.html">✂️ Åpne Pelsstell</a>`;
     }
 
-    if(has(q,['leksikon','hundeleksikon','katteleksikon','akvarieleksikon',
+    if(has(q,['leksikon','hunderase','hunderaser','katterase','katteraser',
       'hunderase','hunderaser','katterase','katteraser','raseinformasjon','lese om raser','informasjon om raser'])){
       return `Hos Hundene Våre finner du egne leksikon for hund, katt og akvariefisk. 📖🐾
 
