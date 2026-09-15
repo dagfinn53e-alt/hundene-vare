@@ -325,5 +325,18 @@ function showAcademy(){course.style.display="none";academy.style.display="block"
 function startCourse(){const n=modules.find(m=>!moduleDone(m.num));openModule(n?n.num:1)}
 function updateAcademy(){let l=0,q=0,m=0;modules.forEach(x=>{l+=(completed[x.num]||[]).length;if(quizzes[x.num])q++;if(moduleDone(x.num))m++});const p=Math.round((l+q)/81*100);percent.textContent=p+"%";ring.style.background=`conic-gradient(var(--p) ${p*3.6}deg,#eee7ef 0)`;ldone.textContent=`${l} / 72`;qdone.textContent=`${q} / 9`;mdone.textContent=`${m} / 9`;const ok=m===9;diploma.textContent=ok?"Låst opp":"Ikke låst opp";certificate.classList.toggle("show",ok)}
 renderModules();
-showAcademy();
+
+function openDirectModuleFromHash(){
+  const match=location.hash.match(/^#modul-(\d)$/);
+  if(match){
+    const n=Number(match[1]);
+    if(n>=1 && n<=9){
+      openModule(n);
+      return;
+    }
+  }
+  showAcademy();
+}
+window.addEventListener("hashchange",openDirectModuleFromHash);
+openDirectModuleFromHash();
 </script></body></html>
