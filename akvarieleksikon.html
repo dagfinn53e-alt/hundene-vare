@@ -703,6 +703,11 @@ function removeSpeciesWithoutImage(img,name){
 }
 function render(){let q=query.toLowerCase().trim(),list=fish.filter(f=>(filter==='alle'||f.cats.includes(filter))&&(!q||[f.name,f.latin,...f.cats,f.temper,(f.origin||[]).join(' '),f.level,f.size,f.tank].join(' ').toLowerCase().includes(q)));grid.innerHTML=list.map(f=>`<article class="card" onclick="openFish('${f.name}')"><div class="art"><button class="favorite-btn" data-name="${f.name}" onclick="toggleFavorite(event,'${f.name}')">♡</button><img src="${f.image}" alt="${f.name}" loading="lazy" onerror="removeSpeciesWithoutImage(this,'${f.name}')"></div><div class="body"><h3>${f.name}</h3><div class="latin">${f.latin}</div><div class="tags">${f.cats.map(c=>`<span class="tag">${c}</span>`).join('')}</div><div class="meta"><span>📏 ${f.size}</span><span>🌡️ ${f.temp}</span><span>🏠 ${f.tank}</span><span>⭐ ${f.level}</span></div><button class="open">Åpne artskort</button></div></article>`).join('');empty.style.display=list.length?'none':'block';updateSpeciesCount();updateFavoriteButtons()}document.querySelectorAll('.filter').forEach(b=>b.onclick=()=>{document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.f;render()});search.oninput=e=>{query=e.target.value;render()};search.onkeydown=e=>{if(e.key==='Enter')doSearch()};function doSearch(){query=search.value;filter='alle';document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x.dataset.f==='alle'));render();document.getElementById('arter').scrollIntoView({behavior:'smooth'})}function openFish(name){
 selected=fish.find(f=>f.name===name);
+if(selected){
+  const u=new URL(location.href);
+  u.searchParams.set("art",selected.name);
+  history.replaceState(null,"",u.pathname+u.search+u.hash);
+}
 heroFishImage.onerror=()=>{heroFishImage.style.display='none';document.querySelector('.species-hero').style.background='linear-gradient(135deg,#041c33,#0877b9,#10b9c7)'};heroFishImage.style.display='block';heroFishImage.src=selected.image;
 heroFishImage.alt=selected.name;
 mName.textContent=selected.name;
@@ -730,4 +735,14 @@ storeTip.textContent=selected.storeTip||'Praktiske råd kommer her.';
 modal.classList.add('show');
 document.body.style.overflow='hidden';
 }function closeModal(){modal.classList.remove('show');document.body.style.overflow=''}function quiz(){alert(`Mini-quiz om ${selected.name}:\n\nHva er anbefalt temperatur?\n\nSvar: ${selected.temp}`)}function getFavorites(){try{return JSON.parse(localStorage.getItem('akvarieFavoritter')||'[]')}catch(e){return[]}}function saveFavorites(a){localStorage.setItem('akvarieFavoritter',JSON.stringify(a))}function toggleFavorite(e,name){e.stopPropagation();let a=getFavorites();a=a.includes(name)?a.filter(x=>x!==name):[...a,name];saveFavorites(a);updateFavoriteButtons()}function updateFavoriteButtons(){let a=getFavorites();document.querySelectorAll('.favorite-btn').forEach(b=>{let active=a.includes(b.dataset.name);b.textContent=active?'♥':'♡';b.classList.toggle('active',active)})}function currentIndex(){return fish.findIndex(f=>f.name===selected.name)}function nextFish(){let i=(currentIndex()+1)%fish.length;openFish(fish[i].name)}function prevFish(){let i=(currentIndex()-1+fish.length)%fish.length;openFish(fish[i].name)}window.addEventListener('scroll',()=>scrollTopBtn.classList.toggle('show',window.scrollY>500));document.onkeydown=e=>{if(e.key==='Escape')closeModal();if(modal.classList.contains('show')&&e.key==='ArrowRight')nextFish();if(modal.classList.contains('show')&&e.key==='ArrowLeft')prevFish()};render();
+
+function openDirectFishFromUrl(){
+  const p=new URLSearchParams(location.search);
+  const wanted=(p.get("art")||p.get("fisk")||"").trim().toLowerCase();
+  if(!wanted) return;
+  const match=fish.find(f=>f.name.toLowerCase()===wanted);
+  if(match) setTimeout(()=>openFish(match.name),80);
+}
+window.addEventListener("DOMContentLoaded",openDirectFishFromUrl);
+
 </script></body></html>
