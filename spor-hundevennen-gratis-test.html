@@ -109,7 +109,14 @@
       min-width:86px;height:48px;border-radius:16px;cursor:pointer;padding:0 15px
     }
     .send:hover{background:var(--green-dark)}
-    .footnote{
+    .guide-link{
+    display:inline-block; margin-top:10px; padding:10px 14px; border-radius:12px;
+    background:#eef8f1; border:1px solid #b9ddc3; color:#176b35;
+    font-weight:800; text-decoration:none;
+  }
+  .guide-link:hover{ text-decoration:underline; }
+
+  .footnote{
       text-align:center;color:var(--muted);font-size:12px;line-height:1.45;
       padding:12px 6px 4px
     }
@@ -541,6 +548,38 @@ Hvert dyr får sin egen digitale ID og sin egen ID-side, men eieropplysningene k
       return `Ja. Det samme telefonnummeret kan brukes på flere Hunde-ID-er eller Katte-ID-er dersom dyrene har samme eier. 📱
 
 Hvert dyr har fortsatt sin egen digitale ID-side.`;
+    }
+
+    if(has(q,['hjemme alene','alene hjemme','være alene','vere alene','valpen alene'])){
+      return `Start med svært korte perioder alene og øk tiden gradvis når hunden er rolig. 🏠🐶
+
+Unngå å gjøre avskjed og hjemkomst til en stor hendelse.
+
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/trening.html" target="_blank" rel="noopener">📘 Les hele guiden: Hjemme alene</a>`;
+    }
+
+    if(has(q,['innkalling','lære hunden å komme','laere hunden a komme','hunden kommer ikke'])){
+      return `Start innkalling på et rolig sted. Bruk hundens navn og ett fast innkallingsord, og belønn godt når hunden kommer. 📣🐶
+
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/trening.html" target="_blank" rel="noopener">📘 Les hele guiden: Innkalling</a>`;
+    }
+
+    if(has(q,['gå pent i bånd','ga pent i band','trekker i bånd','trekker i band','båndtrening','bandtrening'])){
+      return `Når hunden trekker, stopp rolig eller skift retning. Belønn når hunden går med slakt bånd ved siden av deg. 🚶🐶
+
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/trening.html" target="_blank" rel="noopener">📘 Les hele guiden: Gå pent i bånd</a>`;
+    }
+
+    if(has(q,['sosialisering','sosialisere valp','sosialisere hund'])){
+      return `La hunden få positive erfaringer med mennesker, hunder, lyder og nye miljøer i sitt eget tempo. Ikke press en usikker hund. 🤝🐶
+
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/trening.html" target="_blank" rel="noopener">📘 Les hele guiden: Sosialisering</a>`;
+    }
+
+    if(has(q,['valpetrening','trene valp','trening av valp','ny valp trening'])){
+      return `Valpetrening kan starte fra første dag hjemme. Fokuser på trygghet, navn, kontakt, renslighet og gode rutiner, med korte positive økter. 🐾🐶
+
+<a class="guide-link" href="https://www.xn--hundenevre-85a.com/trening.html" target="_blank" rel="noopener">📘 Les hele guiden: Valpetrening</a>`;
     }
 
     if(has(q,['hvordan virker','hvordan fungerer','hva kan du','hjelpe med'])){
