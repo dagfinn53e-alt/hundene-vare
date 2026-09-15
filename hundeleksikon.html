@@ -2743,6 +2743,24 @@ const editorNotes = {"golden": "Svært familievennlig og lærevillig, men trenge
   "mops": "En svært sosial selskapshund. Fri pust, øyne, hudfolder, normal kroppsvekt og beskyttelse mot sterk varme bør få særlig oppmerksomhet."
 };
 
+
+function directBreedKey(){
+  const p = new URLSearchParams(location.search);
+  const raw = (p.get("rase") || p.get("breed") || p.get("hund") || location.hash.replace(/^#/,"")).trim().toLowerCase();
+  if(!raw) return null;
+  const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/æ/g,"ae").replace(/ø/g,"o").replace(/å/g,"a")
+    .replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,"");
+  if(breeds[raw]) return raw;
+  if(breeds[norm(raw)]) return norm(raw);
+  for(const [key,b] of Object.entries(breeds)){
+    if(norm(b.name.toLowerCase()) === norm(raw)) return key;
+  }
+  return null;
+}
+const directBreed = directBreedKey();
+if(directBreed) current = directBreed;
+
 function stars(n){ return "🐾".repeat(n) + "•".repeat(5-n); }
 
 function renderBreedList(){
@@ -2757,6 +2775,7 @@ function renderBreedList(){
   list.querySelectorAll(".breed-btn").forEach(btn=>{
     btn.addEventListener("click",()=>{
       current = btn.dataset.key;
+      history.replaceState(null,"",location.pathname+"?rase="+encodeURIComponent(current));
       render();
       window.scrollTo({top:0,behavior:"smooth"});
     });
