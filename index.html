@@ -276,5 +276,80 @@ a{text-decoration:none;color:inherit}.wrap{width:min(1500px,calc(100% - 20px));m
   <div><strong>👥 Fellesskap</strong><small>Sammen for dyrene våre</small></div>
 </section>
 </div>
+
+<!-- SPØR HUNDEVENNEN – flytende chat nederst til høyre -->
+<style>
+#hundevennen-float{
+  position:fixed;right:18px;bottom:18px;z-index:9998;
+  border:0;border-radius:999px;padding:14px 18px;
+  background:linear-gradient(135deg,#16a34a,#0b7a38);
+  color:#fff;font:800 15px Arial,sans-serif;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);cursor:pointer;
+}
+#hundevennen-float:hover{transform:translateY(-1px)}
+#hundevennen-panel{
+  position:fixed;right:18px;bottom:78px;z-index:9999;
+  width:min(410px,calc(100vw - 24px));height:min(650px,calc(100vh - 105px));
+  background:#fff;border:1px solid rgba(0,0,0,.18);border-radius:22px;
+  overflow:hidden;box-shadow:0 22px 60px rgba(0,0,0,.45);
+  display:none;
+}
+#hundevennen-panel.open{display:block}
+#hundevennen-bar{
+  height:46px;background:#0b7a38;color:#fff;display:flex;
+  align-items:center;justify-content:space-between;padding:0 12px;
+  font:800 14px Arial,sans-serif;
+}
+#hundevennen-close{
+  border:0;background:rgba(255,255,255,.18);color:#fff;
+  width:32px;height:32px;border-radius:50%;font-size:20px;cursor:pointer;
+}
+#hundevennen-frame{width:100%;height:calc(100% - 46px);border:0;background:#fff}
+@media(max-width:600px){
+  #hundevennen-float{right:10px;bottom:10px}
+  #hundevennen-panel{right:6px;bottom:68px;width:calc(100vw - 12px);height:calc(100vh - 82px);border-radius:18px}
+}
+</style>
+
+<button id="hundevennen-float" type="button" aria-controls="hundevennen-panel" aria-expanded="false">
+  🐾 Hva kan jeg hjelpe deg med?
+</button>
+
+<div id="hundevennen-panel" aria-hidden="true">
+  <div id="hundevennen-bar">
+    <span>🐾 Spør Hundevennen</span>
+    <button id="hundevennen-close" type="button" aria-label="Lukk">×</button>
+  </div>
+  <iframe id="hundevennen-frame" title="Spør Hundevennen" data-src="spor-hundevennen.html"></iframe>
+</div>
+
+<script>
+(function(){
+  const btn=document.getElementById('hundevennen-float');
+  const panel=document.getElementById('hundevennen-panel');
+  const close=document.getElementById('hundevennen-close');
+  const frame=document.getElementById('hundevennen-frame');
+
+  function openChat(){
+    if(!frame.src) frame.src=frame.dataset.src;
+    panel.classList.add('open');
+    panel.setAttribute('aria-hidden','false');
+    btn.setAttribute('aria-expanded','true');
+    btn.textContent='🐾 Hundevennen er åpen';
+  }
+  function closeChat(){
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden','true');
+    btn.setAttribute('aria-expanded','false');
+    btn.textContent='🐾 Hva kan jeg hjelpe deg med?';
+  }
+  btn.addEventListener('click',function(){
+    panel.classList.contains('open') ? closeChat() : openChat();
+  });
+  close.addEventListener('click',closeChat);
+})();
+</script>
+<!-- /SPØR HUNDEVENNEN -->
+
 </body>
 </html>
