@@ -232,7 +232,11 @@ Skriv et spørsmål, så prøver jeg å hjelpe.`;
     row.className = 'row ' + who;
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
-    bubble.textContent = text;
+    if(who === 'bot'){
+      bubble.innerHTML = text;
+    } else {
+      bubble.textContent = text;
+    }
     const t = document.createElement('span');
     t.className = 'time';
     t.textContent = now();
