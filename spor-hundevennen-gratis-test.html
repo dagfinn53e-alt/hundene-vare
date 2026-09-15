@@ -128,7 +128,7 @@
       body{padding:10px}
       .hero{border-radius:20px;padding:18px 16px}
       .chat{border-radius:18px}
-      .messages{height:55vh;min-height:320px;padding:12px}
+      .messages{height:62vh;min-height:320px;padding:12px}
       .bubble{max-width:88%;font-size:14.5px}
       .send{min-width:72px}
     }
@@ -136,13 +136,7 @@
 </head>
 <body>
   <main class="app">
-    <section class="hero">
-      <h1>🐾 Spør Hundevennen</h1>
-      <p>Gratis hjelp om Hunde-ID, Katte-ID, savnet og funnet dyr, ID-brikken, varsling og akademiene.</p>
-      <div class="free-badge">✓ Gratis test – ingen betalt AI-API</div>
-    </section>
-
-    <section class="chat" aria-label="Spør Hundevennen">
+<section class="chat" aria-label="Spør Hundevennen">
       <div class="chat-top">
         <div class="avatar">🐶</div>
         <div>
@@ -196,11 +190,7 @@
         <button class="send" type="submit">Send</button>
       </form>
     </section>
-
-    <div class="footnote">
-      Dette er en gratis, regelbasert testchat. Den bruker ingen ekstern AI-tjeneste og sender ingen data ut fra denne testfilen.
-    </div>
-  </main>
+</main>
 
 <script>
 (function(){
@@ -211,17 +201,7 @@
   const chips = [...document.querySelectorAll('.chip')];
 
   const welcome =
-`Hei! 🐾 Jeg er Hundevennen.
-
-Du kan spørre meg om:
-• Digital Hunde-ID og Katte-ID
-• savnet eller funnet hund/katt
-• ID-brikken og NFC
-• telefonnummer til eier
-• automatisk SMS-varsel
-• Hundeakademiet og Kattakademiet
-
-Skriv et spørsmål, så prøver jeg å hjelpe.`;
+`Hei! 🐾 Hva kan jeg hjelpe deg med?`;
 
   function now(){
     return new Date().toLocaleTimeString('no-NO',{hour:'2-digit',minute:'2-digit'});
@@ -387,7 +367,9 @@ På ID-siden kan finneren se informasjonen eieren har valgt å vise og sende bes
     }
 
     if(has(q,['registrere hunde id','registrere hunde-id','hvordan registrerer jeg hunde id',
-      'hvordan registrerer jeg hunde-id','opprette hunde id','opprette hunde-id'])){
+      'hvordan registrerer jeg hunde-id','opprette hunde id','opprette hunde-id',
+      'hvordan får jeg hunde id','hvordan får jeg hunde-id','hvordan får jeg en hunde id',
+      'hvordan får jeg en hunde-id','få hunde id','få hunde-id'])){
       return `For å få Digital Hunde-ID registrerer eieren hundens opplysninger i registreringsskjemaet hos Hundene Våre. 🐶
 
 Der legges blant annet inn navn, bilde og annen informasjon eieren ønsker å bruke på ID-siden.
@@ -398,7 +380,9 @@ Når registreringen er klar, får hunden sin egen digitale ID som kan kobles til
     }
 
     if(has(q,['registrere katte id','registrere katte-id','hvordan registrerer jeg katte id',
-      'hvordan registrerer jeg katte-id','opprette katte id','opprette katte-id'])){
+      'hvordan registrerer jeg katte-id','opprette katte id','opprette katte-id',
+      'hvordan får jeg katte id','hvordan får jeg katte-id','hvordan får jeg en katte id',
+      'hvordan får jeg en katte-id','få katte id','få katte-id'])){
       return `For å få Katte-ID registrerer eieren kattens opplysninger i registreringsskjemaet hos Hundene Våre. 🐱
 
 Der legges blant annet inn navn, bilde og annen informasjon eieren ønsker å bruke på ID-siden.
