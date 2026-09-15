@@ -2924,6 +2924,18 @@ function checkQuiz(){
 }
 
 renderModules();
+
+function openDirectModuleFromHash(){
+  const match=location.hash.match(/^#modul-(\d{1,2})$/);
+  if(match){
+    const n=Number(match[1]);
+    if(n>=1 && n<=modules.length){
+      setTimeout(()=>openModule(n-1),80);
+    }
+  }
+}
+window.addEventListener("hashchange",openDirectModuleFromHash);
+openDirectModuleFromHash();
 </script>
 
 </body>
