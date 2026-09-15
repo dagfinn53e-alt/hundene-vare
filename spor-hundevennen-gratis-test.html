@@ -214,6 +214,9 @@
     bubble.className = 'bubble';
     if(who === 'bot'){
       bubble.innerHTML = text;
+      bubble.querySelectorAll('a.guide-link').forEach(link => {
+        link.setAttribute('target', '_top');
+      });
     } else {
       bubble.textContent = text;
     }
