@@ -102,7 +102,7 @@ OneSignalDeferred.push(async function(OneSignal) {
 </div>
 </div>
 
-<section id="registerSection">
+<section id="registerSection" data-direct-anchor="registrer-hund">
 <div class="card">
 <h2>🐶 Registrer hund</h2>
 <div class="grid">
@@ -213,6 +213,14 @@ const sb=supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_pu
 let photoFile=null;
 function showRegister(){registerSection.classList.remove("hidden");loginSection.classList.add("hidden")}
 function showLogin(){loginSection.classList.remove("hidden");registerSection.classList.add("hidden")}
+function openDirectSectionFromHash(){
+  if(location.hash === "#registrer-hund"){
+    showRegister();
+    setTimeout(()=>registerSection.scrollIntoView({behavior:"smooth",block:"start"}),50);
+  }
+}
+window.addEventListener("hashchange",openDirectSectionFromHash);
+openDirectSectionFromHash();
 function toggleRegPin(){regPin.type=regPin.type==="password"?"text":"password"}
 photo.addEventListener("change",e=>{photoFile=e.target.files?.[0]||null;if(photoFile){preview.src=URL.createObjectURL(photoFile);preview.classList.remove("hidden");photoPlaceholder.classList.add("hidden")}})
 function makeCode(){const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let s="HV-";for(let i=0;i<8;i++)s+=c[Math.floor(Math.random()*c.length)];return s}
