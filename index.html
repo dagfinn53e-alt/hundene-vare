@@ -347,6 +347,18 @@ a{text-decoration:none;color:inherit}.wrap{width:min(1500px,calc(100% - 20px));m
     panel.classList.contains('open') ? closeChat() : openChat();
   });
   close.addEventListener('click',closeChat);
+
+  // Åpne Hundevennen automatisk når en side sender brukeren tilbake til /#hundevennen
+  if(window.location.hash === '#hundevennen'){
+    openChat();
+  }
+
+  // Åpne også hvis #hundevennen settes mens forsiden allerede er åpen
+  window.addEventListener('hashchange',function(){
+    if(window.location.hash === '#hundevennen'){
+      openChat();
+    }
+  });
 })();
 </script>
 <!-- /SPØR HUNDEVENNEN -->
