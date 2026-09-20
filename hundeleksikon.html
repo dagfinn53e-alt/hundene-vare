@@ -862,6 +862,16 @@ color:#f2cf75;
   }
 }
 
+
+/* ===== Tale-test: Bichon Frisé ===== */
+.voice-breed-box{margin:10px 0;padding:16px 18px;border:1px solid rgba(215,163,59,.45);border-radius:18px;background:linear-gradient(135deg,rgba(215,163,59,.14),rgba(255,255,255,.03));display:none;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.voice-breed-box.show{display:flex}
+.voice-breed-copy strong{display:block;color:var(--gold2);font-family:Georgia,serif;font-size:1.25rem;margin-bottom:4px}
+.voice-breed-copy span{color:#d4dcde;font-size:.9rem}
+.voice-controls{display:flex;gap:8px;flex-wrap:wrap}
+.voice-btn{border:1px solid rgba(215,163,59,.65);border-radius:999px;padding:10px 15px;font-weight:900;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#111}
+.voice-btn.secondary{background:#0b1d27;color:#fff}
+@media(max-width:760px){.voice-breed-box{padding:14px}.voice-controls,.voice-btn{width:100%}}
 </style>
 <style id="desktop-breed-grid-test">
 @media (min-width:1160px){
@@ -954,6 +964,14 @@ color:#f2cf75;
     <main class="content">
       <section class="panel quickfacts" id="quickfacts"></section>
       <section class="premium-stats" id="premiumStats"></section>
+      <section class="voice-breed-box" id="bichonVoiceBox" aria-live="polite">
+        <div class="voice-breed-copy"><strong>🎙️ Hør om Bichon Frisé</strong><span>Test: historie, personlighet, aktivitet, pelsstell og helse.</span></div>
+        <div class="voice-controls">
+          <button class="voice-btn" id="voicePlay" type="button">🔊 Spill av</button>
+          <button class="voice-btn secondary" id="voicePause" type="button">⏸ Pause</button>
+          <button class="voice-btn secondary" id="voiceStop" type="button">⏹ Stopp</button>
+        </div>
+      </section>
       <nav class="section-nav" aria-label="Raseinnhold">
         <button data-scroll="historyCard" class="active">Historie</button>
         <button data-scroll="healthHero">Helse</button>
@@ -2891,6 +2909,9 @@ function render(){
   else{guide.style.display="none";}
 
   document.getElementById("editorNote").textContent = editorNotes[current] || "En rase med tydelig personlighet, egne behov og mye å gi når den får riktig oppfølging.";
+  const vb=document.getElementById("bichonVoiceBox");
+  if(vb) vb.classList.toggle("show", current==="bichon");
+  if(current!=="bichon" && "speechSynthesis" in window) window.speechSynthesis.cancel();
   renderBreedList();
 }
 
@@ -2918,6 +2939,24 @@ const observer = new IntersectionObserver(entries=>{
 },{threshold:.08});
 
 document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+
+const bichonVoiceText = `Velkommen. Nå skal vi bli bedre kjent med Bichon Frisé, den lille hvite hunden med de mørke øynene, den sorte nesen og den flotte, krøllete pelsen. Men bak den vakre pelsen finnes det mye mer enn bare en pen hund. Bichon Frisé har en historie som går flere hundre år tilbake. Forfedrene til rasen forbindes med små selskapshunder som levde rundt Middelhavet. Hundene fulgte sjøfolk og handelsmenn på reisene deres, og en hundetype ble etter hvert særlig knyttet til Tenerife på Kanariøyene. Senere kom disse små hundene til det europeiske fastlandet og ble populære blant adelige familier. Etter perioder hvor rasen nesten ble glemt, begynte oppdrettere i Frankrike og Belgia å arbeide systematisk med den. I 1933 kom en offisiell rasestandard, og året etter ble Bichon Frisé registrert i den franske stamboken. Først og fremst er dette en selskapshund. Den liker mennesker og ønsker gjerne å være der familien er. Den er ofte glad, sosial, leken og nysgjerrig. Bichon Frisé er lærevillig og responderer gjerne godt på positiv trening, ros og belønning. Selv om hunden er liten, trenger den aktivitet. Daglige turer, lek og hjernetrim er viktig. Og så er det pelsen. Den flotte hvite pelsen krever arbeid. Den må børstes og gres regelmessig for å unngå floker. Mange eiere velger regelmessig klipp hos hundefrisør. Øyne, ører, klør og tenner bør også kontrolleres jevnlig. Som hos alle hunderaser finnes det enkelte helseproblemer man bør være oppmerksom på, og derfor er det viktig å velge en seriøs oppdretter som arbeider med helse og godt temperament. Bichon Frisé passer godt for mennesker som ønsker en liten hund som virkelig blir en del av familien. Man må være forberedt på pelsstellet og på at dette er en hund som setter stor pris på selskap og nærhet. Til gjengjeld får man gjerne en liten hund med mye personlighet, som følger med, ønsker å delta og ofte har små påfunn. Gjennom flere hundre år har den først og fremst hatt én viktig oppgave: å være menneskets lille følgesvenn. Det er Bichon Frisé.`;
+let bichonUtterance=null;
+function speakBichon(){
+  if(!("speechSynthesis" in window)){ alert("Denne nettleseren støtter ikke taleopplesning."); return; }
+  window.speechSynthesis.cancel();
+  bichonUtterance=new SpeechSynthesisUtterance(bichonVoiceText);
+  bichonUtterance.lang="nb-NO"; bichonUtterance.rate=0.92; bichonUtterance.pitch=1;
+  const voices=window.speechSynthesis.getVoices();
+  const noVoice=voices.find(v=>/^nb|^no/i.test(v.lang)); if(noVoice) bichonUtterance.voice=noVoice;
+  window.speechSynthesis.speak(bichonUtterance);
+}
+document.getElementById("voicePlay").addEventListener("click",()=>{
+  if(window.speechSynthesis.paused){ window.speechSynthesis.resume(); } else { speakBichon(); }
+});
+document.getElementById("voicePause").addEventListener("click",()=>{ if("speechSynthesis" in window) window.speechSynthesis.pause(); });
+document.getElementById("voiceStop").addEventListener("click",()=>{ if("speechSynthesis" in window) window.speechSynthesis.cancel(); });
 
 render();
 </script>
