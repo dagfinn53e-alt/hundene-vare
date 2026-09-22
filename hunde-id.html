@@ -145,7 +145,7 @@ async function loadDog(){
 
   if(error || !data || !data[0]){
     document.getElementById("activateCode").textContent=DOG_CODE;
-    document.getElementById("activateLink").href="min-hunde-id.html#registrer-hund?id="+encodeURIComponent(DOG_CODE);
+    document.getElementById("activateLink").href="min-hunde-id.html?id="+encodeURIComponent(DOG_CODE)+"#registrer-hund";
     document.getElementById("activateCard").classList.remove("hidden");
     return;
   }
