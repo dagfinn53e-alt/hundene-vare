@@ -69,6 +69,13 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 <p>Denne QR-koden eller Hunde-ID-en finnes ikke i systemet.</p>
 </div>
 
+<div id="activateCard" class="card hidden center">
+<h2>🐾 Aktiver din Hundene Våre ID</h2>
+<p>Denne ID-brikken er klar til å registreres på hunden din.</p>
+<p><b>Digital ID:</b> <span id="activateCode"></span></p>
+<a id="activateLink" href="#" style="display:block;background:#146b4b;color:#fff;text-decoration:none;font-weight:850;padding:15px 18px;border-radius:12px;margin-top:15px">🐾 AKTIVER DENNE BRIKKEN</a>
+</div>
+
 <section id="dogPage" class="hidden">
 <div class="card">
 <div id="missingBanner" class="banner hidden">🚨 DENNE HUNDEN ER MELDT SAVNET</div>
@@ -137,7 +144,9 @@ async function loadDog(){
   document.getElementById("loading").classList.add("hidden");
 
   if(error || !data || !data[0]){
-    document.getElementById("notFound").classList.remove("hidden");
+    document.getElementById("activateCode").textContent=DOG_CODE;
+    document.getElementById("activateLink").href="min-hunde-id.html#registrer-hund?id="+encodeURIComponent(DOG_CODE);
+    document.getElementById("activateCard").classList.remove("hidden");
     return;
   }
 
