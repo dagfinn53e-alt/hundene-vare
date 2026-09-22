@@ -82,6 +82,12 @@ OneSignalDeferred.push(async function(OneSignal) {
 <body>
 <header><h1>🐾 HUNDENE VÅRE</h1><p>Min Digital Hunde-ID</p></header>
 <main>
+<div id="reservedTagBanner" class="card hidden" style="border:2px solid #07563f;background:#eef9f3;text-align:center">
+  <h2>🐾 Aktiver din Hundene Våre ID</h2>
+  <p>Denne ID-brikken er klar til å registreres på hunden din.</p>
+  <div id="reservedTagCode" class="idbox"></div>
+  <p class="muted" style="margin-bottom:0">Fyll inn opplysningene nedenfor. Digital ID er allerede koblet til denne brikken.</p>
+</div>
 <div class="nav">
 <a class="home" href="index.html#hundevennen" style="background:#e8b94f;color:#15202a">← 🐾 Tilbake til Hundevennen</a>
 <a class="home" href="index.html">🏠 Til forsiden</a>
@@ -213,6 +219,19 @@ OneSignalDeferred.push(async function(OneSignal) {
 const sb=supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
 let photoFile=null;
 function showRegister(){registerSection.classList.remove("hidden");loginSection.classList.add("hidden")}
+function prepareReservedTag(){
+  const p=new URLSearchParams(location.search);
+  const code=(p.get("id")||"").trim().toUpperCase();
+  if(!code.startsWith("HV-"))return;
+  // Hvis ID-en ikke finnes ennå, er dette en ubrukt/forhåndsprogrammert brikke.
+  sb.rpc("get_dog_public",{p_dog_code:code}).then(({data,error})=>{
+    if(error || (data && data[0])) return;
+    reservedTagCode.textContent="Digital ID: "+code;
+    reservedTagBanner.classList.remove("hidden");
+    showRegister();
+    setTimeout(()=>reservedTagBanner.scrollIntoView({behavior:"smooth",block:"start"}),80);
+  }).catch(()=>{});
+}
 function showLogin(){loginSection.classList.remove("hidden");registerSection.classList.add("hidden")}
 function openDirectSectionFromHash(){
   if(location.hash === "#registrer-hund"){
@@ -411,6 +430,7 @@ async function openExistingDogFromUrl(){
 
 function openOwner(){const id=loginId.value.trim().toUpperCase(),pin=loginPin.value.trim();if(!id||!pin){loginMsg.innerHTML='<div class="error">Skriv inn både Hunde-ID og PIN.</div>';return}sessionStorage.setItem("hundeIdPin",pin);location.href="hunde-id-eier.html?id="+encodeURIComponent(id)}
 openExistingDogFromUrl();
+prepareReservedTag();
 </script>
 </body>
 </html>
