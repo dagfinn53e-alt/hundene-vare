@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Digital Hunde-ID – Hundene Våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f7f4;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#17221c}
+header{background:linear-gradient(135deg,#07563f,#073b2d);color:white;text-align:center;padding:20px 15px}
+header h1{margin:0;font-size:1.35rem}header p{margin:5px 0 0;opacity:.9}
+main{max-width:700px;margin:auto;padding:16px}
+.card{background:#fff;padding:20px;border-radius:20px;margin-bottom:15px;box-shadow:0 6px 24px #00000018;border:1px solid #e2eae5}
+.center{text-align:center}.dog{width:165px;height:165px;border-radius:50%;object-fit:cover;border:7px solid #e8f4ed;background:#eef3ef}
+.placeholder{width:165px;height:165px;border-radius:50%;border:7px solid #e8f4ed;background:#eef3ef;display:grid;place-items:center;margin:auto;font-size:64px}
+h2{margin:10px 0 3px}.muted{color:#657269}
+.badge{display:inline-block;padding:8px 13px;border-radius:999px;font-weight:850;margin:10px}
+.safe{background:#e4f5e9;color:#17603c}.missing{background:#ffe2e6;color:#b0182c}
+.banner{background:#cf2940;color:#fff;padding:12px;border-radius:12px;text-align:center;font-weight:900;margin-bottom:15px}
+label{display:block;font-weight:750;margin:12px 0 5px}
+input,textarea{width:100%;padding:12px;border:1px solid #cbd5cf;border-radius:10px;font:inherit}
+textarea{min-height:95px;resize:vertical}
+button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-size:16px;font-weight:850;cursor:pointer}
+.red{background:#cf2940;color:#fff}.outline{background:#fff;color:#07563f;border:2px solid #07563f}
+.ok{background:#e4f5e9;border:1px solid #b9dfc6;padding:13px;border-radius:11px;margin-top:12px}
+.error{background:#ffe5e8;border:1px solid #efb0ba;padding:13px;border-radius:11px;margin-top:12px}
+.hidden{display:none!important}.statusline{font-size:.9rem;color:#5d6b63;text-align:center;margin-top:7px}
+.small{font-size:.88rem;color:#66736b}
+.activate{background:#eef8ff;border:2px solid #78b7df;padding:20px;border-radius:20px;text-align:center}
+.activate h2{color:#174d72}.activatecode{font-size:1.35rem;font-weight:900;letter-spacing:.04em;color:#07563f;background:#fff;padding:10px;border-radius:12px;margin:12px 0}.green{background:#146b4b;color:#fff}
+.welcome{background:#f2fbf6;border:1px solid #cfe8d8;padding:15px 16px;border-radius:14px;margin-bottom:15px;line-height:1.5}
+.welcome.missingwelcome{background:#fff2f4;border-color:#f0c3cb}
+.welcome strong{font-size:1.05rem}
+</style>
+
+<style>
+.navvalg{
+  max-width:760px;margin:18px auto 4px;padding:0 14px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px
+}
+.navvalg a,.navvalg button{
+  min-height:48px;border-radius:12px;border:0;padding:11px 12px;
+  font-weight:800;font-size:15px;text-decoration:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;text-align:center
+}
+.navvalg .tilbake{background:#e8b94f;color:#15202a}
+.navvalg .forside{background:#174d72;color:white}
+.navvalg .minid{background:#146b4b;color:white}
+@media(max-width:620px){
+  .navvalg{grid-template-columns:1fr}
+  .navvalg a,.navvalg button{font-size:17px;min-height:52px}
+}
+</style>
+
+</head>
+<body>
+<header><h1>🐾 HUNDENE VÅRE</h1><p>Digital Hunde-ID</p></header>
+
+
+
+<main>
+
+<div id="loading" class="card center">
+<h2>Henter Hunde-ID …</h2>
+<p class="muted">Et lite øyeblikk.</p>
+</div>
+
+<div id="notFound" class="card hidden">
+<h2>⚠️ Hunde-ID ikke funnet</h2>
+<p>Denne QR-koden eller Hunde-ID-en finnes ikke i systemet.</p>
+</div>
+
+<div id="activatePage" class="card activate hidden">
+<h2>🐾 Aktiver din Hundene Våre ID</h2>
+<p>Denne NFC-brikken er klar, men er ikke koblet til en hund ennå.</p>
+<div class="activatecode" id="activateCode"></div>
+<p>Registrer hunden for å aktivere brikken. Etter aktivering vil denne samme NFC-brikken åpne hundens ID-side automatisk.</p>
+<button class="green" id="activateBtn">AKTIVER DENNE BRIKKEN</button>
+<p class="small">Testfunksjon – dagens fungerende Hunde-ID er ikke endret.</p>
+</div>
+
+<section id="dogPage" class="hidden">
+<div class="card">
+<div id="missingBanner" class="banner hidden">🚨 DENNE HUNDEN ER MELDT SAVNET</div>
+<div id="welcomeMessage" class="welcome"></div>
+<div class="center">
+<div id="photoHolder"><div class="placeholder">🐶</div></div>
+<h2 id="dogName"></h2>
+<p id="dogInfo" class="muted"></p>
+<div id="dogBadge" class="badge safe"></div>
+<p><b>Digital ID:</b> <span id="dogCode"></span></p>
+</div>
+</div>
+
+<div class="card">
+<h2>🐾 Har du funnet denne hunden?</h2>
+<p>Send en beskjed til eieren. Eierens e-postadresse vises ikke.</p>
+
+<label>Ditt navn</label>
+<input id="finderName" placeholder="Navn" required>
+
+<label>Telefonnummer</label>
+<input id="finderPhone" placeholder="Telefonnummer" inputmode="tel" required>
+
+<label>Melding</label>
+<textarea id="finderMessage" placeholder="For eksempel: Jeg har hunden hos meg. Den har det bra."></textarea>
+
+<input id="finderLocation" type="hidden">
+<button class="outline" onclick="getLocation()">📍 LEGG VED POSISJON</button>
+<div id="locText" class="statusline"></div>
+
+<button id="sendBtn" class="red" onclick="sendFound()">🐾 JEG HAR FUNNET DENNE HUNDEN</button>
+<div id="sendResult"></div>
+</div>
+
+<div class="card small">
+🔒 Eierens e-postadresse og private opplysninger vises ikke offentlig. Finneren sender meldingen gjennom Hundene Våre.
+</div>
+</section>
+
+<div style="max-width:760px;margin:18px auto 8px;padding:0 14px;text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+  <a href="index.html#hundevennen" style="display:inline-block;background:#e8b94f;color:#15202a;text-decoration:none;font-weight:800;padding:11px 20px;border-radius:12px">← 🐾 Tilbake til Hundevennen</a>
+  <a href="index.html" style="display:inline-block;background:#174d72;color:#fff;text-decoration:none;font-weight:800;padding:11px 20px;border-radius:12px">🏠 Forsiden</a>
+</div>
+</main>
+
+<script>
+const sb=supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+
+const params=new URLSearchParams(location.search);
+const DOG_CODE=(params.get("id")||"").trim();
+let currentDog=null;
+
+function esc(v){const d=document.createElement("div");d.textContent=v||"";return d.innerHTML}
+
+async function loadDog(){
+  if(!DOG_CODE){
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("notFound").classList.remove("hidden");
+    return;
+  }
+
+  const {data,error}=await sb.rpc("get_dog_public",{p_dog_code:DOG_CODE});
+  document.getElementById("loading").classList.add("hidden");
+
+  if(error){
+    document.getElementById("notFound").classList.remove("hidden");
+    return;
+  }
+
+  if(!data || !data[0]){
+    // NY TESTFLYT: En ukjent, men gyldig HV-kode behandles som en ubrukt brikke.
+    // Vi rører ikke eksisterende registrerte Hunde-ID-er.
+    if(/^HV-[A-Z0-9-]{3,}$/i.test(DOG_CODE)){
+      document.getElementById("activateCode").textContent=DOG_CODE.toUpperCase();
+      const btn=document.getElementById("activateBtn");
+      btn.onclick=()=>{
+        // Bytt denne adressen til det endelige aktiveringsskjemaet når det er klart.
+        location.href="min-hunde-id.html#registrer-hund";
+      };
+      document.getElementById("activatePage").classList.remove("hidden");
+    }else{
+      document.getElementById("notFound").classList.remove("hidden");
+    }
+    return;
+  }
+
+  currentDog=data[0];
+  document.getElementById("dogPage").classList.remove("hidden");
+  document.getElementById("dogName").textContent=currentDog.dog_name+" 🐾";
+  document.getElementById("dogInfo").textContent=[currentDog.breed,currentDog.sex,currentDog.color].filter(Boolean).join(" · ");
+  document.getElementById("dogCode").textContent=currentDog.dog_code;
+
+  const badge=document.getElementById("dogBadge");
+  badge.className="badge "+(currentDog.is_missing?"missing":"safe");
+  badge.textContent=currentDog.is_missing?"🚨 HUNDEN ER SAVNET":"🟢 HUNDEN ER IKKE MELDT SAVNET";
+  document.getElementById("missingBanner").classList.toggle("hidden",!currentDog.is_missing);
+
+  const welcome=document.getElementById("welcomeMessage");
+  if(currentDog.is_missing){
+    welcome.className="welcome missingwelcome";
+    welcome.innerHTML="<strong>❤️ Takk for at du fant meg!</strong><br>Familien min leter etter meg akkurat nå. Trykk nedenfor for å gi beskjed om hvor jeg er.";
+  }else{
+    welcome.className="welcome";
+    welcome.innerHTML="<strong>🐾 Hei! Så fint at du skannet brikken min ❤️</strong><br>Jeg heter <b>"+esc(currentDog.dog_name)+"</b>. Hvis jeg er alene, kan det hende familien min leter etter meg. Her finner du informasjon som kan hjelpe meg trygt hjem igjen.";
+  }
+
+  if(currentDog.photo_url){
+    document.getElementById("photoHolder").innerHTML='<img class="dog" alt="Hundens bilde" src="'+esc(currentDog.photo_url)+'">';
+  }
+}
+
+function getLocation(){
+  const txt=document.getElementById("locText");
+  txt.textContent="Henter posisjon …";
+  if(!navigator.geolocation){txt.textContent="Posisjon støttes ikke.";return}
+
+  navigator.geolocation.getCurrentPosition(
+    p=>{
+      document.getElementById("finderLocation").value=
+        "https://www.google.com/maps?q="+p.coords.latitude+","+p.coords.longitude;
+      txt.textContent="✅ Posisjon lagt ved.";
+    },
+    ()=>txt.textContent="Posisjon ble ikke delt."
+  );
+}
+
+async function sendFound(){
+  if(!currentDog)return;
+
+  const btn=document.getElementById("sendBtn");
+  const result=document.getElementById("sendResult");
+  btn.disabled=true;
+  result.innerHTML='<div class="ok">Sender varsel …</div>';
+
+  const finderName=document.getElementById("finderName").value.trim();
+  const finderPhone=document.getElementById("finderPhone").value.trim();
+
+  if(!finderName || !finderPhone){
+    result.innerHTML='<div class="error"><b>Fyll inn navn og telefonnummer før du sender varselet.</b></div>';
+    btn.disabled=false;
+    return;
+  }
+
+  const message=document.getElementById("finderMessage").value.trim() ||
+    "Jeg har funnet "+currentDog.dog_name+".";
+  const locationUrl=document.getElementById("finderLocation").value;
+
+  const {error:dbError}=await sb.rpc("create_dog_alert",{
+    p_dog_code:currentDog.dog_code,
+    p_finder_name:finderName,
+    p_finder_phone:finderPhone,
+    p_message:message,
+    p_location_url:locationUrl
+  });
+
+  if(dbError){
+    result.innerHTML='<div class="error">Feil ved lagring: '+esc(dbError.message)+'</div>';
+    btn.disabled=false;
+    return;
+  }
+
+  const {error:mailError}=await sb.functions.invoke("send-dog-found-email",{
+    body:{
+      dogCode:currentDog.dog_code,
+      dogName:currentDog.dog_name,
+      finderName,
+      finderPhone,
+      message,
+      locationUrl
+    }
+  });
+
+  if(mailError){
+    result.innerHTML='<div class="error"><b>Varslet er lagret, men e-posten kunne ikke sendes.</b><br>'+esc(mailError.message)+'</div>';
+  }else{
+    result.innerHTML='<div class="ok"><b>✅ VARSEL SENDT</b><br>Eieren av '+esc(currentDog.dog_name)+' er varslet automatisk.</div>';
+  }
+  btn.disabled=false;
+}
+
+loadDog();
+</script>
+</body>
+</html>
