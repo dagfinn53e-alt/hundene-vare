@@ -303,8 +303,8 @@ async function sendTagOrder(code,name,em){
 }
 
 async function registerDog(){
-const name=dogName.value.trim(),br=breed.value.trim(),sx=sex.value,co=color.value.trim(),owner=ownerName.value.trim(),em=email.value.trim(),ph=ownerPhone.value.trim(),pin=regPin.value.trim();
-if(!name||!br||!owner||!em||!ph||pin.length<4){regMsg.innerHTML='<div class="error">Fyll inn hundens navn, rase, eiers navn, e-post, telefon og PIN på minst 4 tegn.</div>';return}
+const name=dogName.value.trim(),br=breed.value.trim(),sx=sex.value,co=color.value.trim(),ownerNameValue=ownerName.value.trim(),em=email.value.trim(),ph=ownerPhone.value.trim(),pin=regPin.value.trim();
+if(!name||!br||!ownerNameValue||!em||!ph||pin.length<4){regMsg.innerHTML='<div class="error">Fyll inn hundens navn, rase, eiers navn, e-post, telefon og PIN på minst 4 tegn.</div>';return}
 if(wantTag.checked){
   const delivery=document.querySelector('input[name="tagDelivery"]:checked')?.value||"";
   if(!tagPhone.value.trim()){regMsg.innerHTML='<div class="error">Skriv inn telefonnummer for brikkebestillingen.</div>';return}
@@ -313,7 +313,7 @@ if(wantTag.checked){
 saveBtn.disabled=true;
 try{
 const code=getReservedCodeFromUrl()||makeCode(),photoUrl=await uploadPhoto(code);
-const {error}=await sb.rpc("register_dog_id_v2",{p_dog_code:code,p_dog_name:name,p_breed:br,p_sex:sx||null,p_color:co||null,p_owner_email:em,p_owner_pin:pin,p_photo_url:photoUrl||null,p_owner_phone:ph,p_show_owner_phone:false,p_owner_name:owner});
+const {error}=await sb.rpc("register_dog_id_v2",{p_dog_code:code,p_dog_name:name,p_breed:br,p_sex:sx||null,p_color:co||null,p_owner_email:em,p_owner_pin:pin,p_photo_url:photoUrl||null,p_owner_phone:ph,p_show_owner_phone:false,p_owner_name:ownerNameValue});
 if(error)throw new Error(error.message);
 
 if(wantTag.checked){
