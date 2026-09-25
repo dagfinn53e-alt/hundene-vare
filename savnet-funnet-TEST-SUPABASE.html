@@ -26,7 +26,7 @@ textarea{min-height:95px;resize:vertical}.full{grid-column:1/-1}
 .petimg{width:100%;height:240px;object-fit:cover;border-radius:13px;margin:8px 0 13px;background:#e9eef4}.card{background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 15px #0001;border-top:6px solid var(--blue)}
 .badge{display:inline-block;color:#fff;font-weight:bold;padding:6px 10px;border-radius:20px;margin-bottom:10px}.badge.l{background:var(--red)}.badge.f{background:var(--green)}
 .card h3{margin:4px 0 8px}.meta{line-height:1.55;color:#485463}
-.testtools{text-align:center;margin:8px 0 16px}.clearbtn{border:0;background:#e9edf2;color:#444;padding:9px 13px;border-radius:10px;cursor:pointer;font-weight:700}.resultinfo{text-align:center;font-weight:700;color:#52606d;margin:4px 0 12px}.resolved{opacity:.62}.resolved:after{content:'✓ GJENFORENT';display:block;background:#198754;color:white;text-align:center;font-weight:800;padding:9px;border-radius:10px;margin-top:12px}.cardactions{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:13px}.cardbtn{border:0;border-radius:10px;padding:11px 8px;font-weight:700;cursor:pointer;font-size:14px}.seen{background:#123f73;color:#fff}.share{background:#e8eef6;color:#123f73}.home{background:#198754;color:#fff}.idbox{margin-top:14px;padding:14px;border-radius:13px;background:#edf6ff;border:1px solid #b9d9f7}
+.testtools{text-align:center;margin:8px 0 16px}.clearbtn{border:0;background:#e9edf2;color:#444;padding:9px 13px;border-radius:10px;cursor:pointer;font-weight:700}.resultinfo{text-align:center;font-weight:700;color:#52606d;margin:4px 0 12px}.resolved{opacity:1}.photoWrap{position:relative}.reunitedBanner{position:absolute;left:10px;right:10px;top:50%;transform:translateY(-50%);background:rgba(25,135,84,.94);color:#fff;text-align:center;font-weight:900;font-size:20px;padding:14px 8px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.25)}.resolved .badge{opacity:.65}.cardactions{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:13px}.cardbtn{border:0;border-radius:10px;padding:11px 8px;font-weight:700;cursor:pointer;font-size:14px}.seen{background:#123f73;color:#fff}.share{background:#e8eef6;color:#123f73}.home{background:#198754;color:#fff}.delete{background:#b42318;color:#fff}.resolvednote{margin-top:12px;background:#e8f7ee;border:1px solid #8bd3a8;color:#126b39;padding:12px;border-radius:10px;text-align:center;font-weight:900}.idbox{margin-top:14px;padding:14px;border-radius:13px;background:#edf6ff;border:1px solid #b9d9f7}
 .chip{background:#fff;border-radius:20px;padding:22px;margin:26px 0;box-shadow:0 4px 15px #0001}
 .chip h2{color:var(--blue);margin-top:0}.chiprow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .chipitem{padding:17px;border-radius:14px;background:#f6f8fb}
@@ -189,20 +189,45 @@ function renderAds(){
  const box=document.getElementById('cards');box.innerHTML='';
  savedAds.forEach(ad=>{
   const card=document.createElement('article');card.className='card'+(ad.resolved?' resolved':'');card.dataset.id=ad.id;card.dataset.type=ad.type;card.dataset.status=ad.status;card.dataset.county=ad.county;card.dataset.place=(ad.place||'').toLowerCase();
-  card.innerHTML=`<span class="badge ${ad.status==='SAVNET'?'l':'f'}">${ad.status==='SAVNET'?'🔴':'🟢'} ${esc(ad.status)}</span>${ad.img?`<img class="petimg" src="${ad.img}" alt="Bilde av ${esc(ad.name)}">`:''}<h3>${ad.type==='Hund'?'🐕':'🐈'} ${esc(ad.name)}</h3><div class="meta"><b>Sted:</b> ${esc(ad.place)}, ${esc(ad.county)}<br><b>Dato:</b> ${esc(ad.date)}<br>${esc(ad.desc)}</div>${ad.digital==='Ja'?`<div class="idbox"><b>📱 Digital Dyre-ID aktiv</b>${ad.idcode?'<br>ID: '+esc(ad.idcode):''}</div>`:''}${ad.resolved?'':`<div class="cardactions"><button class="cardbtn seen" type="button" onclick="contactOwner('${esc(ad.phone)}','${esc(ad.name)}')">👀 Jeg har sett/funnet dyret</button><button class="cardbtn share" type="button" onclick="shareAd('${esc(ad.name)}','${esc(ad.status)}','${esc(ad.place)}')">f&nbsp; Del på Facebook</button><button class="cardbtn home" type="button" onclick="resolveAd(${ad.id},'${esc(ad.name)}')">✓ Dyret er hjemme</button></div>`}`;
+  const photo=ad.img?`<div class="photoWrap"><img class="petimg" src="${ad.img}" alt="Bilde av ${esc(ad.name)}">${ad.resolved?'<div class="reunitedBanner">✓ GJENFORENT<br>DYRET ER HJEMME</div>':''}</div>`:(ad.resolved?'<div class="resolvednote">✓ GJENFORENT – DYRET ER HJEMME</div>':'');
+  const normalActions=`<div class="cardactions"><button class="cardbtn seen" type="button" onclick="contactOwner('${esc(ad.phone)}','${esc(ad.name)}')">👀 Jeg har sett/funnet dyret</button><button class="cardbtn share" type="button" onclick="shareAd('${esc(ad.name)}','${esc(ad.status)}','${esc(ad.place)}')">f&nbsp; Del på Facebook</button><button class="cardbtn home" type="button" onclick="resolveAd(${ad.id},'${esc(ad.name)}')">✓ Dyret er hjemme</button><button class="cardbtn delete" type="button" onclick="deleteAd(${ad.id},'${esc(ad.name)}')">🗑️ Slett annonse</button></div>`;
+  const resolvedActions=`<div class="cardactions"><button class="cardbtn share" type="button" onclick="shareAd('${esc(ad.name)}','GJENFORENT','${esc(ad.place)}')">f&nbsp; Del på Facebook</button><button class="cardbtn delete" type="button" onclick="deleteAd(${ad.id},'${esc(ad.name)}')">🗑️ Slett annonse</button></div>`;
+  card.innerHTML=`<span class="badge ${ad.status==='SAVNET'?'l':'f'}">${ad.status==='SAVNET'?'🔴':'🟢'} ${esc(ad.status)}</span>${photo}<h3>${ad.type==='Hund'?'🐕':'🐈'} ${esc(ad.name)}</h3><div class="meta"><b>Sted:</b> ${esc(ad.place)}, ${esc(ad.county)}<br><b>Dato:</b> ${esc(ad.date)}<br>${esc(ad.desc)}</div>${ad.digital==='Ja'?`<div class="idbox"><b>📱 Digital Dyre-ID aktiv</b>${ad.idcode?'<br>ID: '+esc(ad.idcode):''}</div>`:''}${ad.resolved?'<div class="resolvednote">✓ GJENFORENT – DYRET ER HJEMME</div>'+resolvedActions:normalActions}`;
   box.appendChild(card);
  }); filterCards();
 }
-async function resolveAd(id,name){
- const pin=prompt('Skriv eier-PIN for '+name+':');
- if(pin===null)return;
- if(!/^\d{4}$/.test(pin)){alert('PIN-koden skal være 4 siffer.');return;}
- const {data,error}=await sb.rpc('resolve_lost_found_ad',{p_ad_id:id,p_pin:pin});
- if(error){console.error(error);alert('Kunne ikke oppdatere annonsen.');return;}
- if(!data){alert('Feil PIN-kode. Annonsen ble ikke endret.');return;}
- await loadAds();
- alert(name+' er nå merket som GJENFORENT.');
+let pinAction=null;
+function ensurePinModal(){
+ if(document.getElementById('ownerPinModal'))return;
+ const wrap=document.createElement('div');
+ wrap.id='ownerPinModal';wrap.style.cssText='display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99999;align-items:center;justify-content:center;padding:18px';
+ wrap.innerHTML=`<div style="background:#fff;width:min(420px,100%);border-radius:16px;padding:22px;box-shadow:0 12px 40px rgba(0,0,0,.3)"><h3 id="ownerPinTitle" style="margin:0 0 8px;color:#123f73">Eier-PIN</h3><p id="ownerPinText" style="margin:0 0 14px"></p><input id="ownerPinInput" inputmode="numeric" maxlength="4" placeholder="4-sifret PIN" style="width:100%;box-sizing:border-box;padding:13px;border:1px solid #bbb;border-radius:10px;font-size:18px;text-align:center"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px"><button type="button" onclick="closeOwnerPin()" style="padding:12px;border:0;border-radius:10px;background:#e9edf2;font-weight:800">Avbryt</button><button id="ownerPinOk" type="button" onclick="submitOwnerPin()" style="padding:12px;border:0;border-radius:10px;background:#198754;color:#fff;font-weight:900">Bekreft</button></div></div>`;
+ document.body.appendChild(wrap);
+ document.getElementById('ownerPinInput').addEventListener('keydown',e=>{if(e.key==='Enter')submitOwnerPin()});
 }
+function openOwnerPin(action,id,name){
+ ensurePinModal();pinAction={action,id,name};
+ document.getElementById('ownerPinTitle').textContent=action==='delete'?'🗑️ Slett annonse':'✓ Dyret er hjemme';
+ document.getElementById('ownerPinText').textContent='Skriv eier-PIN for '+name+'.';
+ const inp=document.getElementById('ownerPinInput');inp.value='';
+ const ok=document.getElementById('ownerPinOk');ok.textContent=action==='delete'?'Fortsett':'Merk som gjenforent';ok.style.background=action==='delete'?'#b42318':'#198754';
+ document.getElementById('ownerPinModal').style.display='flex';setTimeout(()=>inp.focus(),50);
+}
+function closeOwnerPin(){const m=document.getElementById('ownerPinModal');if(m)m.style.display='none';pinAction=null;}
+async function submitOwnerPin(){
+ if(!pinAction)return; const pin=document.getElementById('ownerPinInput').value.trim();
+ if(!/^\d{4}$/.test(pin)){alert('PIN-koden skal være 4 siffer.');return;}
+ const a=pinAction;
+ if(a.action==='delete'&&!confirm('Er du sikker på at du vil slette annonsen til '+a.name+'? Dette kan ikke angres.'))return;
+ const fn=a.action==='delete'?'delete_lost_found_ad':'resolve_lost_found_ad';
+ const {data,error}=await sb.rpc(fn,{p_ad_id:a.id,p_pin:pin});
+ if(error){console.error(error);alert(a.action==='delete'?'Kunne ikke slette annonsen.':'Kunne ikke oppdatere annonsen.');return;}
+ if(!data){alert('Feil PIN-kode. Ingen endring ble gjort.');return;}
+ closeOwnerPin();await loadAds();
+ alert(a.action==='delete'?'Annonsen til '+a.name+' er slettet.':a.name+' er nå merket som GJENFORENT – DYRET ER HJEMME.');
+}
+function resolveAd(id,name){openOwnerPin('resolve',id,name)}
+function deleteAd(id,name){openOwnerPin('delete',id,name)}
 let currentContact={phone:'',name:''};
 function contactOwner(phone,name){currentContact={phone:phone||'',name:name||'dyret'};document.getElementById('contactTitle').textContent='👀 Har du sett eller funnet '+currentContact.name+'?';const clean=(currentContact.phone||'').replace(/\s/g,'');const call=document.getElementById('callOwner'),sms=document.getElementById('smsOwner');if(clean){call.href='tel:'+clean;sms.href='sms:'+clean;call.style.display='block';sms.style.display='block'}else{call.style.display='none';sms.style.display='none'}document.getElementById('seenPlace').value='';document.getElementById('contactModal').classList.add('show');}
 function closeContact(){document.getElementById('contactModal').classList.remove('show');}
