@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Del annonse – Hundene Våre</title>
+
+<!-- Standard metadata. Per-annonsedata fylles inn i nettleseren for testen. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hundene Våre">
+<meta property="og:title" content="Savnet & Funnet – Hundene Våre">
+<meta property="og:description" content="Hjelp et savnet eller funnet dyr hjem igjen.">
+<meta property="og:url" content="https://www.xn--hundenevre-85a.com/del-annonse-FACEBOOK-TEST.html">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--blue:#123f73;--bg:#f4f7fb;--green:#198754;--red:#d83a3a}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:#17202a}
+header{background:linear-gradient(135deg,#0b2e55,var(--blue));color:white;text-align:center;padding:26px 15px}
+.wrap{max-width:720px;margin:auto;padding:18px}
+.card{background:white;border-radius:20px;padding:18px;box-shadow:0 5px 18px #0002}
+img{width:100%;max-height:520px;object-fit:cover;border-radius:14px}
+.badge{display:inline-block;color:white;font-weight:900;padding:8px 13px;border-radius:20px;margin:10px 0}
+.red{background:var(--red)} .green{background:var(--green)}
+h2{color:var(--blue)}
+.meta{font-size:17px;line-height:1.55}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+a.btn{display:block;text-align:center;text-decoration:none;padding:14px;border-radius:12px;font-weight:800}
+.open{background:var(--blue);color:white}.fb{background:#1877f2;color:white}
+.note{margin-top:15px;font-size:14px;color:#5b6570;line-height:1.45}
+@media(max-width:560px){.btns{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><h1>🐾 Hundene Våre</h1><div>Savnet & Funnet – Facebook-test</div></header>
+<main class="wrap">
+<div id="card" class="card"><h2>Laster annonse …</h2></div>
+</main>
+<script>
+const sb=supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
+const id=new URLSearchParams(location.search).get('id');
+
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+
+async function load(){
+ const box=document.getElementById('card');
+ if(!id){box.innerHTML='<h2>Mangler annonse-ID</h2><p>Bruk for eksempel <b>?id=5</b>.</p>';return;}
+ const {data,error}=await sb.from('lost_found_ads')
+   .select('id,status,animal_type,animal_name,county,place,event_date,description,image_url,resolved')
+   .eq('id',id).maybeSingle();
+ if(error||!data){box.innerHTML='<h2>Fant ikke annonsen</h2><p>Kontroller annonse-ID-en.</p>';return;}
+
+ const status=data.resolved?'GJENFORENT':String(data.status||'').toUpperCase();
+ const target=new URL('savnet-funnet.html',location.href); target.hash='annonse-'+data.id;
+ const thisUrl=location.href;
+ const fb='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(thisUrl);
+
+ document.title=status+' – '+(data.animal_name||'dyr')+' | Hundene Våre';
+ const title=status+' – '+(data.animal_name||'dyr');
+ const desc=(data.place?data.place+', ':'')+(data.description||'Se hele annonsen på Hundene Våre.');
+ document.querySelector('meta[property="og:title"]').setAttribute('content',title);
+ document.querySelector('meta[property="og:description"]').setAttribute('content',desc);
+ document.querySelector('meta[property="og:url"]').setAttribute('content',thisUrl);
+ if(data.image_url){
+   const m=document.createElement('meta');m.setAttribute('property','og:image');m.setAttribute('content',data.image_url);document.head.appendChild(m);
+ }
+
+ box.innerHTML=
+   (data.image_url?`<img src="${data.image_url}" alt="Bilde av ${esc(data.animal_name)}">`:'')+
+   `<div class="badge ${status==='SAVNET'?'red':'green'}">${esc(status)}</div>`+
+   `<h2>${esc(data.animal_name||'Ukjent dyr')}</h2>`+
+   `<div class="meta"><b>Sted:</b> ${esc(data.place)}, ${esc(data.county)}<br>`+
+   `<b>Dato:</b> ${esc(data.event_date||'')}<br><br>${esc(data.description||'')}</div>`+
+   `<div class="btns"><a class="btn open" href="${target}">Åpne hele annonsen</a>`+
+   `<a class="btn fb" target="_blank" rel="noopener" href="${fb}">Del på Facebook</a></div>`+
+   `<div class="note"><b>Testside:</b> Denne siden lar oss kontrollere Facebook-flyten uten å endre den fungerende Savnet & Funnet-siden.</div>`;
+}
+load();
+</script>
+</body>
+</html>
