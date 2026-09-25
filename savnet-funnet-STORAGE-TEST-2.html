@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">a
+<title>TEST 2 – Savnet & Funnet – Storage</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--blue:#123f73;--blue2:#0b2e55;--gold:#f3b52b;--bg:#f4f7fb;--green:#198754;--red:#d83a3a;--text:#17202a}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+header{background:linear-gradient(135deg,var(--blue2),var(--blue));color:#fff;text-align:center;padding:30px 16px 26px}
+header h1{margin:0 0 8px;font-size:clamp(30px,6vw,52px)} header p{margin:0 auto;max-width:760px;font-size:18px;line-height:1.5}
+.wrap{max-width:1050px;margin:auto;padding:18px}
+.notice{background:#fff7d7;border:2px solid var(--gold);border-radius:18px;padding:18px;margin:4px 0 20px;text-align:center;line-height:1.5}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+.big{border:0;border-radius:18px;padding:22px 14px;color:#fff;font-size:21px;font-weight:700;cursor:pointer;box-shadow:0 5px 15px #0002}
+.lost{background:var(--red)} .found{background:var(--green)}
+.panel{display:none;background:#fff;border-radius:20px;padding:22px;box-shadow:0 5px 18px #0001;margin:18px 0}
+.panel.show{display:block}.panel h2{margin-top:0;color:var(--blue)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{font-weight:700;display:block;margin-bottom:5px} input,select,textarea{width:100%;padding:12px;border:1px solid #bbc5d1;border-radius:10px;font:inherit}
+textarea{min-height:95px;resize:vertical}.full{grid-column:1/-1}
+.submit{background:var(--blue);color:white;border:0;padding:14px 20px;border-radius:12px;font-size:17px;font-weight:bold;cursor:pointer}
+.filters{background:#fff;border-radius:18px;padding:16px;box-shadow:0 4px 15px #0001;margin:22px 0 14px}.filters h3{margin:0 0 12px;color:var(--blue);text-align:center}.filtergrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.cards-title{text-align:center;color:var(--blue);margin:30px 0 15px}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.petimg{width:100%;height:240px;object-fit:cover;border-radius:13px;margin:8px 0 13px;background:#e9eef4}.card{background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 15px #0001;border-top:6px solid var(--blue)}
+.badge{display:inline-block;color:#fff;font-weight:bold;padding:6px 10px;border-radius:20px;margin-bottom:10px}.badge.l{background:var(--red)}.badge.f{background:var(--green)}
+.card h3{margin:4px 0 8px}.meta{line-height:1.55;color:#485463}
+.testtools{text-align:center;margin:8px 0 16px}.clearbtn{border:0;background:#e9edf2;color:#444;padding:9px 13px;border-radius:10px;cursor:pointer;font-weight:700}.resultinfo{text-align:center;font-weight:700;color:#52606d;margin:4px 0 12px}.resolved{opacity:1}.photoWrap{position:relative}.reunitedBanner{position:absolute;left:10px;right:10px;top:50%;transform:translateY(-50%);background:rgba(25,135,84,.94);color:#fff;text-align:center;font-weight:900;font-size:20px;padding:14px 8px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.25)}.resolved .badge{opacity:.65}.cardactions{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:13px}.cardbtn{border:0;border-radius:10px;padding:11px 8px;font-weight:700;cursor:pointer;font-size:14px}.seen{background:#123f73;color:#fff}.share{background:#e8eef6;color:#123f73}.home{background:#198754;color:#fff}.delete{background:#b42318;color:#fff}.resolvednote{margin-top:12px;background:#e8f7ee;border:1px solid #8bd3a8;color:#126b39;padding:12px;border-radius:10px;text-align:center;font-weight:900}.idbox{margin-top:14px;padding:14px;border-radius:13px;background:#edf6ff;border:1px solid #b9d9f7}
+.chip{background:#fff;border-radius:20px;padding:22px;margin:26px 0;box-shadow:0 4px 15px #0001}
+.chip h2{color:var(--blue);margin-top:0}.chiprow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.chipitem{padding:17px;border-radius:14px;background:#f6f8fb}
+.back{display:inline-block;margin:10px 0 30px;padding:12px 18px;background:var(--blue);color:#fff;text-decoration:none;border-radius:12px;font-weight:bold}
+.small{font-size:13px;color:#68737e} footer{text-align:center;padding:25px;color:#667}
+@media(max-width:700px){.actions,.grid,.cards,.chiprow{grid-template-columns:1fr}.filtergrid{grid-template-columns:1fr 1fr}.cardactions{grid-template-columns:1fr}.full{grid-column:auto}.wrap{padding:12px}header{padding-top:24px}}
+
+.contactmodal{display:none;position:fixed;inset:0;background:#0008;z-index:9999;padding:18px;align-items:center;justify-content:center}
+.contactmodal.show{display:flex}.contactbox{background:#fff;width:min(520px,100%);border-radius:20px;padding:22px;box-shadow:0 10px 35px #0005}
+.contactbox h2{margin-top:0;color:var(--blue)}.contactbox textarea{margin:10px 0}.contactchoices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.contactchoices a,.copybtn,.closebtn{display:block;text-align:center;text-decoration:none;border:0;border-radius:11px;padding:12px;font-weight:700;cursor:pointer}
+.callbtn{background:#198754;color:#fff}.smsbtn{background:#123f73;color:#fff}.copybtn{background:#f3b52b;color:#17202a;width:100%;margin-top:10px}.closebtn{background:#e9edf2;color:#333;width:100%;margin-top:10px}
+@media(max-width:500px){.contactchoices{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+<h1>🐾 Savnet & Funnet</h1>
+<p>En gratis tjeneste fra <b>Hundene Våre</b> for hunder og katter i hele Norge. Hjelp dyrene raskere hjem.</p>
+</header>
+<main class="wrap">
+<div class="notice"><b>🧪 TEST 2 – offentlig bilde-URL</b><br>Ikke erstatt produksjonssiden med denne ennå.</div><div class="notice"><b>Har du mistet eller funnet et dyr?</b><br>Registrer det her. Annonsen blir synlig for andre slik at flere kan hjelpe dyret raskere hjem.</div>
+
+<div class="actions">
+<button class="big lost" onclick="openForm('SAVNET')">🔴 Dyret mitt er savnet</button>
+<button class="big found" onclick="openForm('FUNNET')">🟢 Jeg har funnet et dyr</button>
+</div>
+
+<section id="formPanel" class="panel">
+<h2 id="formTitle">Registrer</h2>
+<form id="animalForm">
+<div class="grid">
+<div><label>Hund eller katt</label><select id="type"><option>Hund</option><option>Katt</option></select></div>
+<div><label>Navn på dyret (hvis kjent)</label><input id="name" placeholder="F.eks. Bella"></div>
+<div><label>Fylke</label><select id="county"><option>Rogaland</option><option>Vestland</option><option>Agder</option><option>Telemark</option><option>Vestfold</option><option>Buskerud</option><option>Akershus</option><option>Oslo</option><option>Østfold</option><option>Innlandet</option><option>Trøndelag</option><option>Møre og Romsdal</option><option>Nordland</option><option>Troms</option><option>Finnmark</option></select></div>
+<div><label>Sted / kommune</label><input id="place" placeholder="F.eks. Karmøy"></div>
+<div><label>Dato</label><input id="date" type="date"></div>
+<div><label>Har dyret Digital Dyre-ID?</label><select id="digital"><option>Vet ikke</option><option>Ja</option><option>Nei</option></select></div>
+<div class="full"><label>📷 Bilde av dyret</label><input id="photo" type="file" accept="image/*"><div class="small">Velg gjerne et tydelig bilde av dyret.</div></div>
+<div class="full"><label>Beskrivelse</label><textarea id="desc" placeholder="Farge, rase, hvor dyret sist ble sett/funnet, kjennetegn ..."></textarea></div>
+<div><label>Kontaktperson</label><input id="contact" placeholder="Navn"></div>
+<div><label>Telefon</label><input id="phone" type="tel" placeholder="Telefonnummer"></div>
+<div class="full"><label>Digital ID (valgfritt)</label><input id="idcode" placeholder="F.eks. HV-YY63R5SE"></div>
+<div class="full"><label>🔐 Eier-PIN</label><input id="ownerPin" type="password" inputmode="numeric" pattern="[0-9]{4}" minlength="4" maxlength="4" required placeholder="Velg 4 siffer"><div class="small">Husk denne PIN-koden. Den brukes når du senere skal merke dyret som GJENFORENT.</div></div>
+<div class="full"><button class="submit" type="submit">Legg inn annonse</button></div>
+</div>
+</form>
+<p class="small">I en ferdig versjon bør personvern, moderering og sletting av annonser bygges inn før publisering.</p>
+</section>
+
+<section class="filters">
+<h3>🔎 Finn savnet eller funnet dyr</h3>
+<div class="filtergrid">
+<select id="fType" onchange="filterCards()"><option value="">Hund + katt</option><option>Hund</option><option>Katt</option></select>
+<select id="fStatus" onchange="filterCards()"><option value="">Savnet + funnet</option><option value="SAVNET">Savnet</option><option value="FUNNET">Funnet</option></select>
+<select id="fCounty" onchange="filterCards()"><option value="">Alle fylker</option><option>Rogaland</option><option>Vestland</option><option>Agder</option><option>Telemark</option><option>Vestfold</option><option>Buskerud</option><option>Akershus</option><option>Oslo</option><option>Østfold</option><option>Innlandet</option><option>Trøndelag</option><option>Møre og Romsdal</option><option>Nordland</option><option>Troms</option><option>Finnmark</option></select>
+<input id="fPlace" oninput="filterCards()" placeholder="Kommune / sted">
+</div></section>
+<h2 class="cards-title">Siste savnet & funnet</h2>
+<div id="resultInfo" class="resultinfo">Laster annonser ...</div><div class="testtools"><button class="clearbtn" type="button" onclick="loadAds()">↻ Oppdater annonser</button></div><div id="cards" class="cards"></div>
+
+
+<section class="chip">
+<h2>🐾 «Dyret mitt er jo chippet – hvorfor trenger jeg ID-brikke?»</h2>
+<p>Chip og Digital Dyre-ID har forskjellige oppgaver og kan brukes sammen.</p>
+<div class="chiprow">
+<div class="chipitem"><b>💉 Mikrochip</b><br>Permanent identifikasjon under huden. Den krever en egnet chipleser for å bli lest.</div>
+<div class="chipitem"><b>📱 Digital ID-brikke</b><br>Kan skannes av en finner med mobiltelefonen og kan gi rask tilgang til kontaktinformasjonen eieren har valgt å vise.</div>
+</div>
+<p><b>Har dyret allerede chip? Flott.</b> Digital Dyre-ID er et tillegg som kan gjøre det enklere for finneren å kontakte eieren raskt.</p>
+</section>
+
+<a class="back" href="index.html">← Tilbake til Hundene Våre</a>
+</main>
+
+<div id="contactModal" class="contactmodal" role="dialog" aria-modal="true">
+ <div class="contactbox">
+  <h2 id="contactTitle">👀 Har du sett eller funnet dyret?</h2>
+  <p>Du kan kontakte eieren direkte. Du kan også skrive hvor dyret ble sett og kopiere meldingen.</p>
+  <div class="contactchoices">
+   <a id="callOwner" class="callbtn" href="#">📞 Ring eier</a>
+   <a id="smsOwner" class="smsbtn" href="#">💬 Send SMS</a>
+  </div>
+  <label for="seenPlace" style="margin-top:14px">📍 Hvor så/fant du dyret?</label>
+  <textarea id="seenPlace" placeholder="Skriv sted og gjerne tidspunkt ..."></textarea>
+  <button class="copybtn" type="button" onclick="copySeenMessage()">📋 Kopier melding til eier</button>
+  <button class="closebtn" type="button" onclick="closeContact()">Lukk</button>
+ </div>
+</div>
+<footer>Hundene Våre • Savnet & Funnet – hele Norge</footer>
+<script>
+const sb=supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
+let status='SAVNET';
+let savedAds=[];
+function openForm(s){status=s;document.getElementById('formTitle').textContent=s==='SAVNET'?'🔴 Registrer savnet dyr':'🟢 Registrer funnet dyr';document.getElementById('formPanel').classList.add('show');document.getElementById('formPanel').scrollIntoView({behavior:'smooth'});}
+document.getElementById('date').value=new Date().toISOString().slice(0,10);
+
+async function compressImageToBlob(file){
+ if(!file)return null;
+ return new Promise((resolve,reject)=>{
+  const r=new FileReader(); r.onerror=reject;
+  r.onload=()=>{const im=new Image(); im.onerror=reject;
+   im.onload=()=>{const max=1100,scale=Math.min(1,max/Math.max(im.width,im.height));
+    const c=document.createElement('canvas');c.width=Math.round(im.width*scale);c.height=Math.round(im.height*scale);
+    c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+    c.toBlob(b=>b?resolve(b):reject(new Error('Kunne ikke komprimere bildet.')),'image/jpeg',0.72);
+   }; im.src=r.result;
+  }; r.readAsDataURL(file);
+ });
+}
+async function uploadLostFoundImage(file){
+ if(!file)return '';
+ const blob=await compressImageToBlob(file);
+ const path=`annonser/${Date.now()}-${Math.random().toString(36).slice(2,9)}.jpg`;
+ const {error}=await sb.storage.from('lost-found-images').upload(path,blob,{contentType:'image/jpeg',cacheControl:'3600',upsert:false});
+ if(error)throw new Error('Bildeopplasting feilet: '+error.message);
+ const publicUrl='https://kxudiviidwwwclbzgdyx.supabase.co/storage/v1/object/public/lost-found-images/'+
+   path.split('/').map(encodeURIComponent).join('/');
+ return publicUrl;
+}
+
+document.getElementById('animalForm').addEventListener('submit',async function(e){
+ e.preventDefault();
+ const btn=this.querySelector('.submit'); const old=btn.textContent; btn.disabled=true; btn.textContent='Lagrer ...';
+ try{
+  const type=document.getElementById('type').value;
+  const name=document.getElementById('name').value.trim()||('Ukjent '+type.toLowerCase());
+  const file=document.getElementById('photo').files[0];
+  const image_url=await uploadLostFoundImage(file);
+  const row={
+   status:status==='SAVNET'?'Savnet':'Funnet', animal_type:type, animal_name:name,
+   county:document.getElementById('county').value, place:document.getElementById('place').value.trim()||'Sted ikke oppgitt',
+   event_date:document.getElementById('date').value||null, description:document.getElementById('desc').value.trim()||'Ingen beskrivelse.',
+   contact_name:document.getElementById('contact').value.trim(), phone:document.getElementById('phone').value.trim(),
+   digital_id_status:document.getElementById('digital').value, digital_id_code:document.getElementById('idcode').value.trim(),
+   image_url, resolved:false, owner_pin:document.getElementById('ownerPin').value
+  };
+  const {error}=await sb.from('lost_found_ads').insert(row);
+  if(error)throw error;
+  this.reset(); document.getElementById('date').value=new Date().toISOString().slice(0,10); document.getElementById('formPanel').classList.remove('show');
+  await loadAds();
+  window.scrollTo({top:document.getElementById('cards').offsetTop-120,behavior:'smooth'});
+  alert('Annonsen er lagret på nettet.');
+ }catch(err){console.error(err);alert('Kunne ikke lagre annonsen. Feil: '+(err.message||err));}
+ finally{btn.disabled=false;btn.textContent=old;}
+});
+
+async function loadAds(){
+ document.getElementById('resultInfo').textContent='Laster annonser ...';
+ const {data,error}=await sb.from('lost_found_ads').select('id,created_at,status,animal_type,animal_name,county,place,event_date,description,contact_name,phone,digital_id_status,digital_id_code,image_url,resolved').order('created_at',{ascending:false});
+ if(error){console.error(error);document.getElementById('resultInfo').textContent='Kunne ikke hente annonser';return;}
+ savedAds=(data||[]).map(r=>({
+  id:r.id,status:String(r.status||'').toUpperCase(),type:r.animal_type||'Hund',name:r.animal_name||'Ukjent',county:r.county||'',place:r.place||'',date:r.event_date||'',desc:r.description||'',contact:r.contact_name||'',phone:r.phone||'',digital:r.digital_id_status||'Vet ikke',idcode:r.digital_id_code||'',img:r.image_url||'',resolved:!!r.resolved
+ }));
+ renderAds();
+}
+function filterCards(){
+ const t=document.getElementById('fType').value,st=document.getElementById('fStatus').value,c=document.getElementById('fCounty').value,p=document.getElementById('fPlace').value.trim().toLowerCase();
+ document.querySelectorAll('#cards .card').forEach(x=>{const ok=(!t||x.dataset.type===t)&&(!st||x.dataset.status===st)&&(!c||x.dataset.county===c)&&(!p||(x.dataset.place||'').includes(p));x.style.display=ok?'':'none';});
+ const visible=[...document.querySelectorAll('#cards .card')].filter(x=>x.style.display!=='none').length,total=document.querySelectorAll('#cards .card').length;
+ document.getElementById('resultInfo').textContent=total===0?'Ingen annonser ennå':`${visible} av ${total} annonser vises`;
+}
+function renderAds(){
+ const box=document.getElementById('cards');box.innerHTML='';
+ savedAds.forEach(ad=>{
+  const card=document.createElement('article');card.className='card'+(ad.resolved?' resolved':'');card.id='annonse-'+ad.id;card.dataset.id=ad.id;card.dataset.type=ad.type;card.dataset.status=ad.status;card.dataset.county=ad.county;card.dataset.place=(ad.place||'').toLowerCase();
+  const photo=ad.img?`<div class="photoWrap"><img class="petimg" src="${ad.img}" alt="Bilde av ${esc(ad.name)}">${ad.resolved?'<div class="reunitedBanner">✓ GJENFORENT<br>DYRET ER HJEMME</div>':''}</div>`:(ad.resolved?'<div class="resolvednote">✓ GJENFORENT – DYRET ER HJEMME</div>':'');
+  const homeLabel=String(ad.status||'').toLowerCase()==='funnet'?'✓ Dyret er gjenforent med eier':'✓ Dyret er hjemme';
+  const normalActions=`<div class="cardactions"><button class="cardbtn seen" type="button" onclick="contactOwner('${esc(ad.phone)}','${esc(ad.name)}')">👀 Jeg har sett/funnet dyret</button><button class="cardbtn share" type="button" onclick="shareAd('${esc(ad.name)}','${esc(ad.status)}','${esc(ad.place)}',${ad.id},'${esc(ad.img)}','${esc(ad.desc)}')">📤 Del annonsen</button><button class="cardbtn home" type="button" onclick="resolveAd(${ad.id},'${esc(ad.name)}','${esc(ad.status)}')">${homeLabel}</button><button class="cardbtn delete" type="button" onclick="deleteAd(${ad.id},'${esc(ad.name)}')">🗑️ Slett annonse</button></div>`;
+  const resolvedActions=`<div class="cardactions"><button class="cardbtn share" type="button" onclick="shareAd('${esc(ad.name)}','GJENFORENT','${esc(ad.place)}',${ad.id},'${esc(ad.img)}','${esc(ad.desc)}')">📤 Del annonsen</button><button class="cardbtn delete" type="button" onclick="deleteAd(${ad.id},'${esc(ad.name)}')">🗑️ Slett annonse</button></div>`;
+  card.innerHTML=`<span class="badge ${ad.status==='SAVNET'?'l':'f'}">${ad.status==='SAVNET'?'🔴':'🟢'} ${esc(ad.status)}</span>${photo}<h3>${ad.type==='Hund'?'🐕':'🐈'} ${esc(ad.name)}</h3><div class="meta"><b>Sted:</b> ${esc(ad.place)}, ${esc(ad.county)}<br><b>Dato:</b> ${esc(ad.date)}<br>${esc(ad.desc)}</div>${ad.digital==='Ja'?`<div class="idbox"><b>📱 Digital Dyre-ID aktiv</b>${ad.idcode?'<br>ID: '+esc(ad.idcode):''}</div>`:''}${ad.resolved?'<div class="resolvednote">✓ GJENFORENT – DYRET ER HJEMME</div>'+resolvedActions:normalActions}`;
+  box.appendChild(card);
+ }); filterCards();
+}
+let pinAction=null;
+function ensurePinModal(){
+ if(document.getElementById('ownerPinModal'))return;
+ const wrap=document.createElement('div');
+ wrap.id='ownerPinModal';wrap.style.cssText='display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99999;align-items:center;justify-content:center;padding:18px';
+ wrap.innerHTML=`<div style="background:#fff;width:min(420px,100%);border-radius:16px;padding:22px;box-shadow:0 12px 40px rgba(0,0,0,.3)"><h3 id="ownerPinTitle" style="margin:0 0 8px;color:#123f73">Eier-PIN</h3><p id="ownerPinText" style="margin:0 0 14px"></p><input id="ownerPinInput" inputmode="numeric" maxlength="4" placeholder="4-sifret PIN" style="width:100%;box-sizing:border-box;padding:13px;border:1px solid #bbb;border-radius:10px;font-size:18px;text-align:center"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px"><button type="button" onclick="closeOwnerPin()" style="padding:12px;border:0;border-radius:10px;background:#e9edf2;font-weight:800">Avbryt</button><button id="ownerPinOk" type="button" onclick="submitOwnerPin()" style="padding:12px;border:0;border-radius:10px;background:#198754;color:#fff;font-weight:900">Bekreft</button></div></div>`;
+ document.body.appendChild(wrap);
+ document.getElementById('ownerPinInput').addEventListener('keydown',e=>{if(e.key==='Enter')submitOwnerPin()});
+}
+function openOwnerPin(action,id,name){
+ ensurePinModal();pinAction={action,id,name};
+ document.getElementById('ownerPinTitle').textContent=action==='delete'?'🗑️ Slett annonse':(String(window.currentResolveStatus||'').toLowerCase()==='funnet'?'✓ Dyret er gjenforent med eier':'✓ Dyret er hjemme');
+ document.getElementById('ownerPinText').textContent='Skriv eier-PIN for '+name+'.';
+ const inp=document.getElementById('ownerPinInput');inp.value='';
+ const ok=document.getElementById('ownerPinOk');ok.textContent=action==='delete'?'Fortsett':'Merk som gjenforent';ok.style.background=action==='delete'?'#b42318':'#198754';
+ document.getElementById('ownerPinModal').style.display='flex';setTimeout(()=>inp.focus(),50);
+}
+function closeOwnerPin(){const m=document.getElementById('ownerPinModal');if(m)m.style.display='none';pinAction=null;}
+async function submitOwnerPin(){
+ if(!pinAction)return; const pin=document.getElementById('ownerPinInput').value.trim();
+ if(!/^\d{4}$/.test(pin)){alert('PIN-koden skal være 4 siffer.');return;}
+ const a=pinAction;
+ if(a.action==='delete'&&!confirm('Er du sikker på at du vil slette annonsen til '+a.name+'? Dette kan ikke angres.'))return;
+ const fn=a.action==='delete'?'delete_lost_found_ad':'resolve_lost_found_ad';
+ const {data,error}=await sb.rpc(fn,{p_ad_id:a.id,p_pin:pin});
+ if(error){console.error(error);alert(a.action==='delete'?'Kunne ikke slette annonsen.':'Kunne ikke oppdatere annonsen.');return;}
+ if(!data){alert('Feil PIN-kode. Ingen endring ble gjort.');return;}
+ closeOwnerPin();await loadAds();
+ alert(a.action==='delete'?'Annonsen til '+a.name+' er slettet.':a.name+' er nå merket som GJENFORENT – DYRET ER HJEMME.');
+}
+function resolveAd(id,name){openOwnerPin('resolve',id,name)}
+function deleteAd(id,name){openOwnerPin('delete',id,name)}
+let currentContact={phone:'',name:''};
+function contactOwner(phone,name){currentContact={phone:phone||'',name:name||'dyret'};document.getElementById('contactTitle').textContent='👀 Har du sett eller funnet '+currentContact.name+'?';const clean=(currentContact.phone||'').replace(/\s/g,'');const call=document.getElementById('callOwner'),sms=document.getElementById('smsOwner');if(clean){call.href='tel:'+clean;sms.href='sms:'+clean;call.style.display='block';sms.style.display='block'}else{call.style.display='none';sms.style.display='none'}document.getElementById('seenPlace').value='';document.getElementById('contactModal').classList.add('show');}
+function closeContact(){document.getElementById('contactModal').classList.remove('show');}
+function copySeenMessage(){const where=document.getElementById('seenPlace').value.trim();const msg='Hei! Jeg har sett/funnet '+currentContact.name+(where?' ved '+where:'')+'. Jeg fant annonsen på Hundene Våre – Savnet & Funnet.';if(navigator.clipboard&&location.protocol!=='file:'){navigator.clipboard.writeText(msg).then(()=>alert('Meldingen er kopiert.'))}else{const ta=document.createElement('textarea');ta.value=msg;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();alert('Meldingen er kopiert.')}}
+async function shareAd(name,st,place,id,imageUrl,description){
+ const u=new URL('savnet-funnet.html',location.href);u.search='';u.hash='annonse-'+id;
+ const status=(st||'SAVNET / FUNNET').toUpperCase();
+ const desc=(description||'').trim();
+ try{
+  const W=1080,H=1350,c=document.createElement('canvas');c.width=W;c.height=H;
+  const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,W,H);
+  if(imageUrl){
+   try{
+    const im=new Image();await new Promise((ok,bad)=>{im.onload=ok;im.onerror=bad;im.src=imageUrl});
+    const ih=700,scale=Math.max(W/im.width,ih/im.height),sw=W/scale,sh=ih/scale;
+    x.drawImage(im,(im.width-sw)/2,(im.height-sh)/2,sw,sh,0,0,W,ih);
+   }catch(e){}
+  }
+  x.fillStyle=status==='SAVNET'?'#d83a3a':status==='FUNNET'?'#198754':'#198754';x.fillRect(0,700,W,135);
+  x.fillStyle='#fff';x.textAlign='center';x.font='bold 62px Arial';x.fillText(status+' – '+(name||'DYR').toUpperCase(),W/2,788);
+  x.fillStyle='#17324d';x.textAlign='left';x.font='bold 48px Arial';x.fillText('Sted: '+(place||'Ikke oppgitt'),60,920);
+  x.fillStyle='#222';x.font='38px Arial';
+  const words=(desc||'Se hele annonsen for mer informasjon.').split(/\s+/);let line='',y=1000;
+  for(const word of words){const t=line+word+' ';if(x.measureText(t).width>960){x.fillText(line,60,y);line=word+' ';y+=55;if(y>1135){line+='…';break}}else line=t}
+  if(line)x.fillText(line,60,y);
+  x.fillStyle='#f4f7f9';x.fillRect(0,1190,W,160);x.fillStyle='#123f73';x.textAlign='center';x.font='bold 40px Arial';
+  x.fillText('Hundene Våre – Savnet & Funnet',W/2,1260);x.font='bold 31px Arial';x.fillText('Hjelp dyret hjem – del annonsen videre',W/2,1312);
+  const blob=await new Promise(ok=>c.toBlob(ok,'image/jpeg',.92));
+  const file=new File([blob],`${status}-${name||'dyr'}.jpg`,{type:'image/jpeg'});
+  const shareText=`${status}: ${name||'dyr'}${place?' – '+place:''}\n${desc}\n\nSe hele annonsen:\n${u}`;
+  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+   await navigator.share({title:`${status} – ${name}`,text:shareText,files:[file]});
+  }else if(navigator.share){
+   await navigator.share({title:`${status} – ${name}`,text:shareText,url:u.toString()});
+  }else{
+   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${status}-${name||'dyr'}.jpg`;a.click();
+   setTimeout(()=>URL.revokeObjectURL(a.href),1000);await navigator.clipboard?.writeText(shareText);
+   alert('Annonsekortet er laget. Tekst og lenke er kopiert.');
+  }
+ }catch(err){if(err&&err.name!=='AbortError'){console.error(err);alert('Kunne ikke dele annonsekortet.');}}
+}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+loadAds();
+</script>
+</body></html>
