@@ -70,6 +70,7 @@ textarea{min-height:95px;resize:vertical}.full{grid-column:1/-1}
 <div><label>Kontaktperson</label><input id="contact" placeholder="Navn"></div>
 <div><label>Telefon</label><input id="phone" type="tel" placeholder="Telefonnummer"></div>
 <div class="full"><label>Digital ID (valgfritt)</label><input id="idcode" placeholder="F.eks. HV-TEST002"></div>
+<div class="full"><label>🔐 Eier-PIN</label><input id="ownerPin" type="password" inputmode="numeric" pattern="[0-9]{4}" minlength="4" maxlength="4" required placeholder="Velg 4 siffer"><div class="small">Husk denne PIN-koden. Den brukes når du senere skal merke dyret som GJENFORENT.</div></div>
 <div class="full"><button class="submit" type="submit">Legg inn annonse</button></div>
 </div>
 </form>
@@ -157,7 +158,7 @@ document.getElementById('animalForm').addEventListener('submit',async function(e
    event_date:document.getElementById('date').value||null, description:document.getElementById('desc').value.trim()||'Ingen beskrivelse.',
    contact_name:document.getElementById('contact').value.trim(), phone:document.getElementById('phone').value.trim(),
    digital_id_status:document.getElementById('digital').value, digital_id_code:document.getElementById('idcode').value.trim(),
-   image_url, resolved:false
+   image_url, resolved:false, owner_pin:document.getElementById('ownerPin').value
   };
   const {error}=await sb.from('lost_found_ads').insert(row);
   if(error)throw error;
@@ -171,7 +172,7 @@ document.getElementById('animalForm').addEventListener('submit',async function(e
 
 async function loadAds(){
  document.getElementById('resultInfo').textContent='Laster annonser ...';
- const {data,error}=await sb.from('lost_found_ads').select('*').order('created_at',{ascending:false});
+ const {data,error}=await sb.from('lost_found_ads').select('id,created_at,status,animal_type,animal_name,county,place,event_date,description,contact_name,phone,digital_id_status,digital_id_code,image_url,resolved').order('created_at',{ascending:false});
  if(error){console.error(error);document.getElementById('resultInfo').textContent='Kunne ikke hente annonser';return;}
  savedAds=(data||[]).map(r=>({
   id:r.id,status:String(r.status||'').toUpperCase(),type:r.animal_type||'Hund',name:r.animal_name||'Ukjent',county:r.county||'',place:r.place||'',date:r.event_date||'',desc:r.description||'',contact:r.contact_name||'',phone:r.phone||'',digital:r.digital_id_status||'Vet ikke',idcode:r.digital_id_code||'',img:r.image_url||'',resolved:!!r.resolved
@@ -188,11 +189,20 @@ function renderAds(){
  const box=document.getElementById('cards');box.innerHTML='';
  savedAds.forEach(ad=>{
   const card=document.createElement('article');card.className='card'+(ad.resolved?' resolved':'');card.dataset.id=ad.id;card.dataset.type=ad.type;card.dataset.status=ad.status;card.dataset.county=ad.county;card.dataset.place=(ad.place||'').toLowerCase();
-  card.innerHTML=`<span class="badge ${ad.status==='SAVNET'?'l':'f'}">${ad.status==='SAVNET'?'🔴':'🟢'} ${esc(ad.status)}</span>${ad.img?`<img class="petimg" src="${ad.img}" alt="Bilde av ${esc(ad.name)}">`:''}<h3>${ad.type==='Hund'?'🐕':'🐈'} ${esc(ad.name)}</h3><div class="meta"><b>Sted:</b> ${esc(ad.place)}, ${esc(ad.county)}<br><b>Dato:</b> ${esc(ad.date)}<br>${esc(ad.desc)}</div>${ad.digital==='Ja'?`<div class="idbox"><b>📱 Digital Dyre-ID aktiv</b>${ad.idcode?'<br>ID: '+esc(ad.idcode):''}</div>`:''}${ad.resolved?'':`<div class="cardactions"><button class="cardbtn seen" type="button" onclick="contactOwner('${esc(ad.phone)}','${esc(ad.name)}')">👀 Jeg har sett/funnet dyret</button><button class="cardbtn share" type="button" onclick="shareAd('${esc(ad.name)}','${esc(ad.status)}','${esc(ad.place)}')">f&nbsp; Del på Facebook</button><button class="cardbtn home" type="button" onclick="ownerCloseInfo()">✓ Dyret er hjemme</button></div>`}`;
+  card.innerHTML=`<span class="badge ${ad.status==='SAVNET'?'l':'f'}">${ad.status==='SAVNET'?'🔴':'🟢'} ${esc(ad.status)}</span>${ad.img?`<img class="petimg" src="${ad.img}" alt="Bilde av ${esc(ad.name)}">`:''}<h3>${ad.type==='Hund'?'🐕':'🐈'} ${esc(ad.name)}</h3><div class="meta"><b>Sted:</b> ${esc(ad.place)}, ${esc(ad.county)}<br><b>Dato:</b> ${esc(ad.date)}<br>${esc(ad.desc)}</div>${ad.digital==='Ja'?`<div class="idbox"><b>📱 Digital Dyre-ID aktiv</b>${ad.idcode?'<br>ID: '+esc(ad.idcode):''}</div>`:''}${ad.resolved?'':`<div class="cardactions"><button class="cardbtn seen" type="button" onclick="contactOwner('${esc(ad.phone)}','${esc(ad.name)}')">👀 Jeg har sett/funnet dyret</button><button class="cardbtn share" type="button" onclick="shareAd('${esc(ad.name)}','${esc(ad.status)}','${esc(ad.place)}')">f&nbsp; Del på Facebook</button><button class="cardbtn home" type="button" onclick="resolveAd(${ad.id},'${esc(ad.name)}')">✓ Dyret er hjemme</button></div>`}`;
   box.appendChild(card);
  }); filterCards();
 }
-function ownerCloseInfo(){alert('Denne knappen blir aktivert når eierbeskyttelsen er koblet på. Ingen andre skal kunne markere dyret som GJENFORENT.');}
+async function resolveAd(id,name){
+ const pin=prompt('Skriv eier-PIN for '+name+':');
+ if(pin===null)return;
+ if(!/^\d{4}$/.test(pin)){alert('PIN-koden skal være 4 siffer.');return;}
+ const {data,error}=await sb.rpc('resolve_lost_found_ad',{p_ad_id:id,p_pin:pin});
+ if(error){console.error(error);alert('Kunne ikke oppdatere annonsen.');return;}
+ if(!data){alert('Feil PIN-kode. Annonsen ble ikke endret.');return;}
+ await loadAds();
+ alert(name+' er nå merket som GJENFORENT.');
+}
 let currentContact={phone:'',name:''};
 function contactOwner(phone,name){currentContact={phone:phone||'',name:name||'dyret'};document.getElementById('contactTitle').textContent='👀 Har du sett eller funnet '+currentContact.name+'?';const clean=(currentContact.phone||'').replace(/\s/g,'');const call=document.getElementById('callOwner'),sms=document.getElementById('smsOwner');if(clean){call.href='tel:'+clean;sms.href='sms:'+clean;call.style.display='block';sms.style.display='block'}else{call.style.display='none';sms.style.display='none'}document.getElementById('seenPlace').value='';document.getElementById('contactModal').classList.add('show');}
 function closeContact(){document.getElementById('contactModal').classList.remove('show');}
