@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">a
-<title>TEST 2 – Savnet & Funnet – Storage</title>
+<title>TEST 3 – Savnet & Funnet – Storage + deling</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--blue:#123f73;--blue2:#0b2e55;--gold:#f3b52b;--bg:#f4f7fb;--green:#198754;--red:#d83a3a;--text:#17202a}
@@ -48,7 +48,7 @@ textarea{min-height:95px;resize:vertical}.full{grid-column:1/-1}
 <p>En gratis tjeneste fra <b>Hundene Våre</b> for hunder og katter i hele Norge. Hjelp dyrene raskere hjem.</p>
 </header>
 <main class="wrap">
-<div class="notice"><b>🧪 TEST 2 – offentlig bilde-URL</b><br>Ikke erstatt produksjonssiden med denne ennå.</div><div class="notice"><b>Har du mistet eller funnet et dyr?</b><br>Registrer det her. Annonsen blir synlig for andre slik at flere kan hjelpe dyret raskere hjem.</div>
+<div class="notice"><b>🧪 TEST 3 – Storage + deling</b><br>Ikke erstatt produksjonssiden med denne ennå.</div><div class="notice"><b>Har du mistet eller funnet et dyr?</b><br>Registrer det her. Annonsen blir synlig for andre slik at flere kan hjelpe dyret raskere hjem.</div>
 
 <div class="actions">
 <button class="big lost" onclick="openForm('SAVNET')">🔴 Dyret mitt er savnet</button>
@@ -246,7 +246,7 @@ async function shareAd(name,st,place,id,imageUrl,description){
   const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,W,H);
   if(imageUrl){
    try{
-    const im=new Image();await new Promise((ok,bad)=>{im.onload=ok;im.onerror=bad;im.src=imageUrl});
+    const im=new Image();im.crossOrigin='anonymous';await new Promise((ok,bad)=>{im.onload=ok;im.onerror=bad;im.src=imageUrl});
     const ih=700,scale=Math.max(W/im.width,ih/im.height),sw=W/scale,sh=ih/scale;
     x.drawImage(im,(im.width-sw)/2,(im.height-sh)/2,sw,sh,0,0,W,ih);
    }catch(e){}
