@@ -177,6 +177,47 @@ a{text-decoration:none;color:inherit}.wrap{width:min(1500px,calc(100% - 20px));m
   .trust strong{font-size:12px}
   .trust small{font-size:10px}
 }
+
+/* SAVNET & FUNNET – tydelig knapp på forsiden */
+.lost-found-home{
+  margin-top:12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:18px 22px;
+  border:1px solid rgba(255,194,61,.72);
+  border-radius:24px;
+  background:linear-gradient(135deg,rgba(120,20,35,.96),rgba(176,35,43,.94));
+  box-shadow:0 16px 38px rgba(0,0,0,.28);
+}
+.lost-found-home .lf-text strong{
+  display:block;
+  font-size:24px;
+  line-height:1.1;
+  margin-bottom:5px;
+}
+.lost-found-home .lf-text span{
+  color:#fff;
+  font-size:14px;
+  font-weight:700;
+}
+.lost-found-home .lf-go{
+  flex:0 0 auto;
+  padding:12px 18px;
+  border-radius:999px;
+  background:#ffd257;
+  color:#17120a;
+  font-weight:900;
+  white-space:nowrap;
+}
+@media(max-width:600px){
+  .lost-found-home{padding:14px;gap:10px;border-radius:18px}
+  .lost-found-home .lf-text strong{font-size:19px}
+  .lost-found-home .lf-text span{font-size:12px}
+  .lost-found-home .lf-go{padding:10px 12px;font-size:12px}
+}
+
 </style>
 
 </head>
@@ -192,6 +233,15 @@ a{text-decoration:none;color:inherit}.wrap{width:min(1500px,calc(100% - 20px));m
 <section class="hero">
   <div class="hero-buttons"><a href="#valg" class="btn gold">🐾 Utforsk nå →</a><a href="#akademier" class="btn light">🎓 Akademiene</a></div>
 </section>
+
+
+<a class="lost-found-home" href="savnet-funnet.html" aria-label="Åpne Savnet og Funnet – hele Norge">
+  <div class="lf-text">
+    <strong>🚨 Savnet &amp; Funnet – hele Norge</strong>
+    <span>Meld et dyr savnet eller funnet – og hjelp dyr hjem igjen.</span>
+  </div>
+  <span class="lf-go">Åpne →</span>
+</a>
 
 <section class="academies" id="akademier">
   <article class="academy dog"><div class="academy-body"><h2>HUNDEAKADEMIET</h2><p>Lær • Tren • Utvikle</p><a class="btn" href="hundeakademiet_ny.html">Gå til Hundeakademiet →</a></div></article>
