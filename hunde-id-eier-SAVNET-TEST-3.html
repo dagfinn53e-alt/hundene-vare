@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Min Hunde-ID – Hundene Våre</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{
+  --green:#07563f;--green2:#0d7657;--bg:#f3f7f4;--card:#fff;--text:#17221c;
+  --muted:#66736b;--red:#cf2940;--line:#e0e9e3;--soft:#edf5f0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--text)}
+header{
+  background:linear-gradient(135deg,var(--green),#06392b);
+  color:#fff;text-align:center;padding:22px 15px 25px;
+}
+header h1{margin:0;font-size:1.45rem}
+header p{margin:5px 0 0;opacity:.9}
+main{max-width:820px;margin:auto;padding:16px 14px 52px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;
+  margin-bottom:16px;box-shadow:0 8px 28px #00000012;
+}
+.hero{text-align:center;padding-top:24px}
+.dog{width:175px;height:175px;border-radius:50%;object-fit:cover;border:7px solid #e7f3ec;box-shadow:0 6px 20px #0002}
+.placeholder{width:175px;height:175px;border-radius:50%;border:7px solid #e7f3ec;background:#edf4ef;display:grid;place-items:center;margin:auto;font-size:66px}
+h2,h3{margin:8px 0}.muted{color:var(--muted);line-height:1.5}
+.badge{display:inline-block;padding:8px 14px;border-radius:999px;font-weight:850;margin:11px}
+.safe{background:#e5f6eb;color:#17603c}.missing{background:#ffe3e7;color:#b0182c}
+.idbox{display:inline-block;background:#f6faf7;border:1px solid #dfe9e2;border-radius:12px;padding:10px 14px;font-weight:800}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+button,a.btn{
+  width:100%;padding:14px;border:0;border-radius:13px;font-size:16px;font-weight:850;
+  cursor:pointer;text-decoration:none;text-align:center;display:block;
+}
+.green{background:var(--green);color:#fff}
+.green:hover{background:var(--green2)}
+.red{background:var(--red);color:#fff}
+.outline{background:#fff;color:var(--green);border:2px solid var(--green)}
+.soft{background:var(--soft);color:var(--green)}
+.pinrow{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:end}
+label{font-weight:800;display:block;margin:5px 0 6px}
+input,select{
+  width:100%;padding:12px;border:1px solid #cbd7cf;border-radius:10px;font:inherit;background:#fff
+}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.full{grid-column:1/-1}
+.ok{background:#e5f6eb;border:1px solid #badfc7;padding:12px;border-radius:11px;margin-top:11px}
+.error{background:#ffe6e9;border:1px solid #efb3bc;padding:12px;border-radius:11px;margin-top:11px}
+.alert{background:#f7faf8;border:1px solid #dfe8e2;padding:14px;border-radius:14px;margin:10px 0}
+.alert b.title{font-size:1.02rem;color:var(--green)}
+.hidden{display:none!important}
+#qr{display:flex;justify-content:center;margin:18px}
+.sectionHead{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.sectionHead h3{margin:0}
+.mini{font-size:.88rem;color:var(--muted)}
+details{border:1px solid var(--line);border-radius:16px;background:#fbfdfc;padding:0 15px}
+summary{cursor:pointer;font-weight:850;padding:15px 0;color:var(--green)}
+details .inside{padding:0 0 16px}
+.statusbar{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+.chip{background:#f4f8f5;border:1px solid #dfe8e2;border-radius:999px;padding:7px 11px;font-size:.9rem}
+.owner-nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.owner-nav a{flex:1 1 190px;text-decoration:none;text-align:center;padding:12px 14px;border-radius:13px;font-weight:850}
+.owner-nav .back{background:#fff;color:var(--green);border:2px solid var(--green)}
+.owner-nav .lost{background:#fff3f4;color:#b52235;border:2px solid var(--red)}
+.owner-nav .home2{background:var(--green);color:#fff}
+@media(max-width:620px){
+  .quick,.grid{grid-template-columns:1fr}.full{grid-column:auto}
+  .dog,.placeholder{width:145px;height:145px}.placeholder{font-size:56px}
+  .pinrow{grid-template-columns:1fr}
+  header{padding:18px 12px}
+}
+
+.danger-zone{border:1px solid #efb3bc;background:linear-gradient(135deg,#fff7f8,#fff);border-radius:16px;padding:16px}
+.danger-zone h3{color:#a91f32}
+.danger-zone p{color:#6f3b43;line-height:1.5}
+.delete-confirm{margin-top:12px;padding-top:12px;border-top:1px solid #efc7cd}
+.delete-confirm input{margin-top:6px}
+
+
+.print-btn{background:#6b3fd1;color:#fff}
+@media print{
+  body *{visibility:hidden!important}
+  #qrCard,#qrCard *{visibility:visible!important}
+  #qrCard{
+    position:absolute;left:0;top:0;width:100%;
+    text-align:center;background:#fff;color:#111;padding:30px;
+  }
+  #qrCard .no-print{display:none!important}
+}
+
+</style>
+</head>
+<body>
+<header>
+  <h1>🐾 HUNDENE VÅRE</h1>
+  <p>Min Digital Hunde-ID</p>
+</header>
+
+<main>
+<div class="owner-nav">
+  <a class="back" id="backToDog" href="min-hunde-id.html">← Tilbake til Hunde-ID</a>
+  <a class="lost" href="savnet-hunder.html">🚨 Savnede hunder</a>
+  <a class="home2" href="index.html">🏠 Forsiden</a>
+</div>
+<div id="loading" class="card hero"><h2>Henter hund …</h2></div>
+<div id="missingId" class="card hidden"><h2>⚠️ Hunde-ID ikke funnet</h2><p>Kontroller lenken.</p></div>
+
+<section id="page" class="hidden">
+
+<div class="card hero">
+  <div id="photoHolder"><div class="placeholder">🐶</div></div>
+  <h2 id="dogName"></h2>
+  <p id="dogInfo" class="muted"></p>
+  <div id="badge" class="badge safe"></div><br>
+  <div class="idbox">Digital ID: <span id="code"></span></div>
+  <div class="statusbar">
+    <span class="chip">🔒 Eierbeskyttet</span>
+    <span class="chip">📱 QR-klar</span>
+    <span class="chip">🔔 Funnvarsler</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="sectionHead">
+    <h3>🔐 Eierkontroll</h3>
+    <span class="mini">PIN kreves</span>
+  </div>
+  <p class="muted">Skriv PIN-koden du valgte ved registrering.</p>
+  <div class="pinrow">
+    <div>
+      <label>PIN</label>
+      <input id="pin" type="password" inputmode="numeric" placeholder="PIN-koden din">
+    </div>
+    <button class="soft" style="width:auto" onclick="togglePin()">Vis PIN</button>
+  </div>
+
+  <div class="quick">
+    <button class="red" onclick="reportMissingAndOpenLostFound()">🔴 MELD HUNDEN SAVNET</button>
+    <button class="outline" onclick="setSafeAndResolve()">✅ MELD TRYGG</button>
+    <button class="green" onclick="loadAlerts()">🔔 HENT VARSLER</button>
+    <button class="outline" onclick="showQR()">▦ VIS QR-KODE</button>
+  </div>
+  <div id="ownerMsg"></div>
+</div>
+
+<div class="card" id="funnvarsler">
+  <div class="sectionHead">
+    <h3>🔔 Funnvarsler</h3>
+    <button class="soft" style="width:auto;padding:9px 12px" onclick="loadAlerts()">Oppdater</button>
+  </div>
+  <div id="alerts"><p class="muted">Skriv PIN og trykk «Hent varsler».</p></div>
+</div>
+
+<div class="card">
+  <details>
+    <summary>✏️ Rediger hundens profil</summary>
+    <div class="inside">
+      <div class="grid">
+        <div><label>Navn</label><input id="editName"></div>
+        <div><label>Rase</label><input id="editBreed"></div>
+        <div><label>Kjønn</label><select id="editSex"><option value=""></option><option>Tispe</option><option>Hannhund</option></select></div>
+        <div><label>Farge</label><input id="editColor"></div>
+        <div class="full"><label>Nytt bilde (valgfritt)</label><input id="editPhoto" type="file" accept="image/*"></div>
+      </div>
+      <button class="green" style="margin-top:12px" onclick="saveProfile()">💾 LAGRE ENDRINGER</button>
+      <div id="editMsg"></div>
+    </div>
+  </details>
+</div>
+
+
+<div class="card">
+  <div class="danger-zone">
+    <h3>🗑️ Slett Hunde-ID</h3>
+    <p>Bruk dette bare hvis du vil fjerne hunden permanent fra Hundene Våre. Hundens profil, funnvarsler og lagrede hundebilder blir slettet.</p>
+    <button class="red" onclick="openDeleteConfirm()">🗑️ SLETT HUNDE-ID</button>
+
+    <div id="deleteConfirm" class="delete-confirm hidden">
+      <p><b>Er du helt sikker?</b> Denne handlingen kan ikke angres.</p>
+      <label>Skriv PIN på nytt for å bekrefte</label>
+      <input id="deletePin" type="password" inputmode="numeric" placeholder="PIN">
+      <button id="deleteFinalBtn" class="red" onclick="deleteDog()">JA – SLETT HUNDEN PERMANENT</button>
+      <button class="outline" onclick="cancelDelete()">Avbryt</button>
+      <div id="deleteMsg"></div>
+    </div>
+  </div>
+</div>
+
+<div id="qrCard" class="card hero hidden">
+  <h3>QR-kode til <span id="qrName"></span></h3>
+  <div id="qr"></div>
+  <p class="muted">Denne QR-koden åpner hundens offentlige finner-side.</p>
+  <a id="finderLink" class="btn green no-print" target="_blank">🐾 ÅPNE FINNER-SIDEN</a>
+<button class="print-btn no-print" onclick="window.print()">🖨️ SKRIV UT QR-KODE</button>
+</div>
+
+</section>
+</main>
+
+<script>
+const sb=supabase.createClient(
+  "https://kxudiviidwwwclbzgdyx.supabase.co",
+  "sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH"
+);
+const DOG=(new URLSearchParams(location.search).get("id")||"").trim();
+const backToDog=document.getElementById("backToDog");
+if(backToDog && DOG){
+  backToDog.href="min-hunde-id.html?id="+encodeURIComponent(DOG);
+}
+let dog=null,newPhotoFile=null;
+
+document.getElementById("editPhoto").addEventListener("change",e=>newPhotoFile=e.target.files?.[0]||null);
+
+function esc(v){const d=document.createElement("div");d.textContent=v||"";return d.innerHTML}
+function clean(n){return String(n||"bilde.jpg").replace(/[^a-zA-Z0-9._-]/g,"_")}
+function fmt(v){try{return new Date(v).toLocaleString("no-NO")}catch{return v}}
+
+function togglePin(){
+  const p=document.getElementById("pin");
+  p.type=p.type==="password"?"text":"password";
+}
+
+async function loadDog(){
+  if(!DOG){fail();return}
+  const {data,error}=await sb.rpc("get_dog_public",{p_dog_code:DOG});
+  document.getElementById("loading").classList.add("hidden");
+  if(error||!data||!data[0]){fail();return}
+  dog=data[0];
+  document.getElementById("page").classList.remove("hidden");
+  render();
+}
+function fail(){
+  document.getElementById("loading").classList.add("hidden");
+  document.getElementById("missingId").classList.remove("hidden");
+}
+function render(){
+  document.getElementById("dogName").textContent=dog.dog_name+" 🐾";
+  document.getElementById("dogInfo").textContent=[dog.breed,dog.sex,dog.color].filter(Boolean).join(" · ");
+  document.getElementById("code").textContent=dog.dog_code;
+  document.getElementById("qrName").textContent=dog.dog_name;
+  const b=document.getElementById("badge");
+  b.className="badge "+(dog.is_missing?"missing":"safe");
+  b.textContent=dog.is_missing?"🚨 HUNDEN ER SAVNET":"🟢 HUNDEN ER TRYGG";
+  document.getElementById("editName").value=dog.dog_name||"";
+  document.getElementById("editBreed").value=dog.breed||"";
+  document.getElementById("editSex").value=dog.sex||"";
+  document.getElementById("editColor").value=dog.color||"";
+  if(dog.photo_url){
+    document.getElementById("photoHolder").innerHTML='<img class="dog" src="'+dog.photo_url+'" alt="Hund">';
+  }
+}
+async function refresh(){
+  const {data}=await sb.rpc("get_dog_public",{p_dog_code:DOG});
+  if(data&&data[0]){dog=data[0];render()}
+}
+
+async function reportMissingAndOpenLostFound(){
+  const pin=document.getElementById("pin").value.trim();
+  const m=document.getElementById("ownerMsg");
+  if(!pin){
+    m.innerHTML='<div class="error">Skriv PIN først.</div>';
+    return;
+  }
+
+  m.innerHTML='<div class="ok">Melder hunden savnet …</div>';
+  const {data,error}=await sb.rpc("set_dog_missing",{
+    p_dog_code:DOG,
+    p_owner_pin:pin,
+    p_is_missing:true
+  });
+
+  if(error){
+    m.innerHTML='<div class="error">'+esc(error.message)+'</div>';
+    return;
+  }
+  if(!data){
+    m.innerHTML='<div class="error">PIN stemmer ikke.</div>';
+    return;
+  }
+
+  await refresh();
+  m.innerHTML='<div class="ok">🚨 Hunden er meldt savnet. Åpner Savnet &amp; Funnet …</div>';
+
+  setTimeout(()=>{
+    location.href="savnet-funnet-DYRE-ID-TEST-1.html?id="+encodeURIComponent(DOG);
+  },700);
+}
+
+async function setSafeAndResolve(){
+  const pin=document.getElementById("pin").value.trim();
+  const m=document.getElementById("ownerMsg");
+  if(!pin){
+    m.innerHTML='<div class="error">Skriv PIN først.</div>';
+    return;
+  }
+
+  m.innerHTML='<div class="ok">Melder hunden trygg og avslutter Savnet &amp; Funnet-annonsen …</div>';
+
+  const {data,error}=await sb.rpc("set_dog_safe_and_resolve_lost_found",{
+    p_dog_code:DOG,
+    p_owner_pin:pin
+  });
+
+  if(error){
+    m.innerHTML='<div class="error">'+esc(error.message)+'</div>';
+    return;
+  }
+  if(!data){
+    m.innerHTML='<div class="error">PIN stemmer ikke.</div>';
+    return;
+  }
+
+  await refresh();
+  m.innerHTML='<div class="ok"><b>✅ Hunden er meldt trygg.</b><br>Savnet &amp; Funnet-annonsen er samtidig merket som gjenforent.</div>';
+}
+
+async function setMissing(v){
+  const pin=document.getElementById("pin").value.trim(),m=document.getElementById("ownerMsg");
+  if(!pin){m.innerHTML='<div class="error">Skriv PIN først.</div>';return}
+  const {data,error}=await sb.rpc("set_dog_missing",{p_dog_code:DOG,p_owner_pin:pin,p_is_missing:v});
+  if(error){m.innerHTML='<div class="error">'+esc(error.message)+'</div>';return}
+  if(!data){m.innerHTML='<div class="error">PIN stemmer ikke.</div>';return}
+  m.innerHTML='<div class="ok">'+(v?'🚨 Hunden er meldt savnet.':'✅ Hunden er meldt trygg.')+'</div>';
+  await refresh();
+}
+
+async function uploadNew(){
+  if(!newPhotoFile)return dog.photo_url||"";
+  const path="hunde-id/"+DOG+"/"+Date.now()+"-"+clean(newPhotoFile.name);
+  const {error}=await sb.storage.from("story-images").upload(path,newPhotoFile);
+  if(error)throw new Error(error.message);
+  return sb.storage.from("story-images").getPublicUrl(path).data.publicUrl||"";
+}
+
+async function saveProfile(){
+  const pin=document.getElementById("pin").value.trim(),m=document.getElementById("editMsg");
+  if(!pin){m.innerHTML='<div class="error">Skriv PIN under Eierkontroll først.</div>';return}
+  try{
+    m.innerHTML='<div class="ok">Lagrer …</div>';
+    const photo=await uploadNew();
+    const {data,error}=await sb.rpc("update_dog_profile",{
+      p_dog_code:DOG,p_owner_pin:pin,
+      p_dog_name:document.getElementById("editName").value.trim(),
+      p_breed:document.getElementById("editBreed").value.trim(),
+      p_sex:document.getElementById("editSex").value,
+      p_color:document.getElementById("editColor").value.trim(),
+      p_photo_url:photo
+    });
+    if(error)throw new Error(error.message);
+    if(!data){m.innerHTML='<div class="error">PIN stemmer ikke.</div>';return}
+    m.innerHTML='<div class="ok">✅ Profilen er oppdatert.</div>';
+    newPhotoFile=null;document.getElementById("editPhoto").value="";
+    await refresh();
+  }catch(e){m.innerHTML='<div class="error">Feil: '+esc(e.message)+'</div>'}
+}
+
+async function loadAlerts(){
+  const pin=document.getElementById("pin").value.trim(),box=document.getElementById("alerts");
+  if(!pin){box.innerHTML='<div class="error">Skriv PIN først.</div>';return}
+  box.innerHTML='<p class="muted">Henter varsler …</p>';
+  const {data,error}=await sb.rpc("get_dog_alerts",{p_dog_code:DOG,p_owner_pin:pin});
+  if(error){box.innerHTML='<div class="error">'+esc(error.message)+'</div>';return}
+  if(!data||!data.length){
+    box.innerHTML='<p class="muted">Ingen varsler ennå – eller PIN er feil.</p>';return;
+  }
+  box.innerHTML=data.map(a=>`
+    <div class="alert">
+      <b class="title">🐾 ${esc(dog.dog_name)} er funnet</b><br>
+      <span class="mini">${fmt(a.created_at)}</span><br><br>
+      ${a.finder_name?'<b>Finner:</b> '+esc(a.finder_name)+'<br>':''}
+      ${a.finder_phone?'<b>Telefon:</b> '+esc(a.finder_phone)+'<br>':''}
+      ${a.message?'<b>Melding:</b> '+esc(a.message)+'<br>':''}
+      ${a.location_url?'<b>📍 <a target="_blank" rel="noopener" href="'+encodeURI(a.location_url)+'">Se posisjon</a></b>':''}
+    </div>`).join("");
+}
+
+
+function openDeleteConfirm(){
+  document.getElementById("deleteConfirm").classList.remove("hidden");
+  document.getElementById("deletePin").value="";
+  document.getElementById("deleteMsg").innerHTML="";
+  document.getElementById("deleteConfirm").scrollIntoView({behavior:"smooth",block:"center"});
+}
+function cancelDelete(){
+  document.getElementById("deleteConfirm").classList.add("hidden");
+  document.getElementById("deletePin").value="";
+  document.getElementById("deleteMsg").innerHTML="";
+}
+
+async function deleteDog(){
+  const pin=document.getElementById("deletePin").value.trim();
+  const msg=document.getElementById("deleteMsg");
+  const btn=document.getElementById("deleteFinalBtn");
+
+  if(!pin){
+    msg.innerHTML='<div class="error">Skriv PIN for å bekrefte slettingen.</div>';
+    return;
+  }
+
+  const ok=window.confirm(
+    "Slette "+(dog?.dog_name||"denne hunden")+" permanent?\\n\\nDette kan ikke angres."
+  );
+  if(!ok)return;
+
+  btn.disabled=true;
+  btn.textContent="Sletter …";
+  msg.innerHTML='<div class="ok">Rydder bort Hunde-ID, varsler og bilder …</div>';
+
+  try{
+    const {data,error}=await sb.functions.invoke("delete-dog-id",{
+      body:{dogCode:DOG,ownerPin:pin}
+    });
+
+    if(error)throw new Error(error.message);
+    if(!data || !data.success)throw new Error(data?.error||"Slettingen kunne ikke fullføres.");
+
+    msg.innerHTML='<div class="ok"><b>✅ Hunde-ID er slettet permanent.</b><br>Du sendes tilbake til registreringssiden.</div>';
+
+    setTimeout(()=>{
+      location.href="registrer-hunde-id-test.html";
+    },1800);
+
+  }catch(e){
+    msg.innerHTML='<div class="error"><b>Feil:</b> '+esc(e.message)+'</div>';
+    btn.disabled=false;
+    btn.textContent="JA – SLETT HUNDEN PERMANENT";
+  }
+}
+
+function showQR(){
+  document.getElementById("qrCard").classList.remove("hidden");
+  const q=document.getElementById("qr");q.innerHTML="";
+  const url="https://www.xn--hundenevre-85a.com/hunde-id.html?id="+encodeURIComponent(DOG);
+  document.getElementById("finderLink").href=url;
+  new QRCode(q,{text:url,width:220,height:220});
+  document.getElementById("qrCard").scrollIntoView({behavior:"smooth"});
+}
+loadDog();
+</script>
+</body>
+</html>
