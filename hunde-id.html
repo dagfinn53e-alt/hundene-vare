@@ -30,6 +30,9 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 .welcome{background:#f2fbf6;border:1px solid #cfe8d8;padding:15px 16px;border-radius:14px;margin-bottom:15px;line-height:1.5}
 .welcome.missingwelcome{background:#fff2f4;border-color:#f0c3cb}
 .welcome strong{font-size:1.05rem}
+.lostfound-link{display:block;background:#cf2940;color:#fff;text-decoration:none;font-weight:900;
+padding:15px 18px;border-radius:12px;text-align:center;margin:12px 0 15px}
+.lostfound-link:hover{filter:brightness(.96)}
 </style>
 
 <style>
@@ -79,6 +82,7 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;font-
 <section id="dogPage" class="hidden">
 <div class="card">
 <div id="missingBanner" class="banner hidden">🚨 DENNE HUNDEN ER MELDT SAVNET</div>
+<a id="lostFoundLink" class="lostfound-link hidden" href="#">🔴 SE SAVNET &amp; FUNNET-ANNONSEN</a>
 <div id="welcomeMessage" class="welcome"></div>
 <div class="center">
 <div id="photoHolder"><div class="placeholder">🐶</div></div>
@@ -172,6 +176,30 @@ async function loadDog(){
 
   if(currentDog.photo_url){
     document.getElementById("photoHolder").innerHTML='<img class="dog" alt="Hundens bilde" src="'+esc(currentDog.photo_url)+'">';
+  }
+  if(currentDog.is_missing) loadLostFoundLink();
+}
+
+
+async function loadLostFoundLink(){
+  const link=document.getElementById("lostFoundLink");
+  if(!link || !currentDog || !currentDog.is_missing)return;
+
+  const {data,error}=await sb
+    .from("lost_found_ads")
+    .select("id")
+    .eq("digital_id_code",currentDog.dog_code)
+    .eq("resolved",false)
+    .order("created_at",{ascending:false})
+    .limit(1);
+
+  if(!error && data && data[0]){
+    link.href="savnet-funnet.html#annonse-"+data[0].id;
+    link.classList.remove("hidden");
+  }else{
+    link.href="savnet-funnet.html";
+    link.textContent="🔴 ÅPNE SAVNET & FUNNET";
+    link.classList.remove("hidden");
   }
 }
 
