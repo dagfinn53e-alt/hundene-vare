@@ -2,8 +2,8 @@
 <html lang="no">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">a
-<title>TEST 5 – Savnet & Funnet – Annonse-ID</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Savnet & Funnet – Hundene Våre</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--blue:#123f73;--blue2:#0b2e55;--gold:#f3b52b;--bg:#f4f7fb;--green:#198754;--red:#d83a3a;--text:#17202a}
@@ -65,7 +65,12 @@ textarea{min-height:95px;resize:vertical}.full{grid-column:1/-1}
 <div><label>Sted / kommune</label><input id="place" placeholder="F.eks. Karmøy"></div>
 <div><label>Dato</label><input id="date" type="date"></div>
 <div><label>Har dyret Digital Dyre-ID?</label><select id="digital"><option>Vet ikke</option><option>Ja</option><option>Nei</option></select></div>
-<div class="full"><label>📷 Bilde av dyret</label><input id="photo" type="file" accept="image/*"><div class="small">Velg gjerne et tydelig bilde av dyret.</div></div>
+<div class="full"><label>📷 Bilde av dyret</label>
+<div id="dyreIdPhotoBox" style="display:none;margin:0 0 10px">
+<img id="dyreIdPhoto" alt="Bilde fra Digital Dyre-ID" style="max-width:220px;max-height:220px;border-radius:14px;object-fit:cover;border:1px solid #d7e0e8">
+<div class="small">Bilde hentet fra Digital Dyre-ID. Velger du et nytt bilde under, brukes det nye bildet.</div>
+</div>
+<input id="photo" type="file" accept="image/*"><div class="small">Velg gjerne et tydelig bilde av dyret.</div></div>
 <div class="full"><label>Beskrivelse</label><textarea id="desc" placeholder="Farge, rase, hvor dyret sist ble sett/funnet, kjennetegn ..."></textarea></div>
 <div><label>Kontaktperson</label><input id="contact" placeholder="Navn"></div>
 <div><label>Telefon</label><input id="phone" type="tel" placeholder="Telefonnummer"></div>
@@ -74,7 +79,7 @@ textarea{min-height:95px;resize:vertical}.full{grid-column:1/-1}
 <div class="full"><button class="submit" type="submit">Legg inn annonse</button></div>
 </div>
 </form>
-<p class="small">Ikke legg inn opplysninger du ikke ønsker skal være synlige i en offentlig Savnet &amp; Funnet-annonse.</p>
+<p class="small">I en ferdig versjon bør personvern, moderering og sletting av annonser bygges inn før publisering.</p>
 </section>
 
 <section class="filters">
@@ -121,8 +126,48 @@ textarea{min-height:95px;resize:vertical}.full{grid-column:1/-1}
 const sb=supabase.createClient("https://kxudiviidwwwclbzgdyx.supabase.co","sb_publishable_EaSgrgWqXKnaRRRkKparWA_ZmmRG8QH");
 let status='SAVNET';
 let savedAds=[];
+let importedDyreIdPhoto='';
 function openForm(s){status=s;document.getElementById('formTitle').textContent=s==='SAVNET'?'🔴 Registrer savnet dyr':'🟢 Registrer funnet dyr';document.getElementById('formPanel').classList.add('show');document.getElementById('formPanel').scrollIntoView({behavior:'smooth'});}
 document.getElementById('date').value=new Date().toISOString().slice(0,10);
+
+async function importDogFromDigitalId(){
+ const p=new URLSearchParams(location.search);
+ const code=(p.get('id')||p.get('dyreid')||'').trim().toUpperCase();
+ if(!code || !code.startsWith('HV-')) return;
+
+ try{
+  const {data,error}=await sb.rpc('get_dog_public',{p_dog_code:code});
+  if(error || !data || !data[0]){
+   alert('Fant ikke denne Digital Hunde-ID-en.');
+   return;
+  }
+  const d=data[0];
+  status='SAVNET';
+  document.getElementById('formTitle').textContent='🔴 Registrer savnet hund fra Digital Dyre-ID';
+  document.getElementById('formPanel').classList.add('show');
+  document.getElementById('type').value='Hund';
+  document.getElementById('name').value=d.dog_name||'';
+  document.getElementById('digital').value='Ja';
+  document.getElementById('idcode').value=code;
+
+  const details=[d.breed,d.sex,d.color].filter(Boolean).join(' · ');
+  if(details && !document.getElementById('desc').value){
+    document.getElementById('desc').value=details;
+  }
+
+  if(d.photo_url){
+    importedDyreIdPhoto=d.photo_url;
+    document.getElementById('dyreIdPhoto').src=d.photo_url;
+    document.getElementById('dyreIdPhotoBox').style.display='block';
+  }
+
+  document.getElementById('formPanel').scrollIntoView({behavior:'smooth'});
+ }catch(e){
+  console.warn('Kunne ikke hente Digital Hunde-ID:',e);
+ }
+}
+importDogFromDigitalId();
+
 
 async function compressImageToBlob(file){
  if(!file)return null;
@@ -155,7 +200,7 @@ document.getElementById('animalForm').addEventListener('submit',async function(e
   const type=document.getElementById('type').value;
   const name=document.getElementById('name').value.trim()||('Ukjent '+type.toLowerCase());
   const file=document.getElementById('photo').files[0];
-  const image_url=await uploadLostFoundImage(file);
+  const image_url=file ? await uploadLostFoundImage(file) : importedDyreIdPhoto;
   const row={
    status:status==='SAVNET'?'Savnet':'Funnet', animal_type:type, animal_name:name,
    county:document.getElementById('county').value, place:document.getElementById('place').value.trim()||'Sted ikke oppgitt',
