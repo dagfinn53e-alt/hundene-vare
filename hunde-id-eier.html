@@ -138,8 +138,8 @@ details .inside{padding:0 0 16px}
   </div>
 
   <div class="quick">
-    <button class="red" onclick="setMissing(true)">🚨 MELD SAVNET</button>
-    <button class="outline" onclick="setMissing(false)">✅ MELD TRYGG</button>
+    <button class="red" onclick="reportMissingAndOpenLostFound()">🔴 MELD HUNDEN SAVNET</button>
+    <button class="outline" onclick="setSafeAndResolve()">✅ MELD TRYGG</button>
     <button class="green" onclick="loadAlerts()">🔔 HENT VARSLER</button>
     <button class="outline" onclick="showQR()">▦ VIS QR-KODE</button>
   </div>
@@ -255,6 +255,66 @@ function render(){
 async function refresh(){
   const {data}=await sb.rpc("get_dog_public",{p_dog_code:DOG});
   if(data&&data[0]){dog=data[0];render()}
+}
+
+async function reportMissingAndOpenLostFound(){
+  const pin=document.getElementById("pin").value.trim();
+  const m=document.getElementById("ownerMsg");
+  if(!pin){
+    m.innerHTML='<div class="error">Skriv PIN først.</div>';
+    return;
+  }
+
+  m.innerHTML='<div class="ok">Melder hunden savnet …</div>';
+  const {data,error}=await sb.rpc("set_dog_missing",{
+    p_dog_code:DOG,
+    p_owner_pin:pin,
+    p_is_missing:true
+  });
+
+  if(error){
+    m.innerHTML='<div class="error">'+esc(error.message)+'</div>';
+    return;
+  }
+  if(!data){
+    m.innerHTML='<div class="error">PIN stemmer ikke.</div>';
+    return;
+  }
+
+  await refresh();
+  m.innerHTML='<div class="ok">🚨 Hunden er meldt savnet. Åpner Savnet &amp; Funnet …</div>';
+
+  setTimeout(()=>{
+    location.href="savnet-funnet.html?id="+encodeURIComponent(DOG);
+  },700);
+}
+
+async function setSafeAndResolve(){
+  const pin=document.getElementById("pin").value.trim();
+  const m=document.getElementById("ownerMsg");
+  if(!pin){
+    m.innerHTML='<div class="error">Skriv PIN først.</div>';
+    return;
+  }
+
+  m.innerHTML='<div class="ok">Melder hunden trygg og avslutter Savnet &amp; Funnet-annonsen …</div>';
+
+  const {data,error}=await sb.rpc("set_dog_safe_and_resolve_lost_found",{
+    p_dog_code:DOG,
+    p_owner_pin:pin
+  });
+
+  if(error){
+    m.innerHTML='<div class="error">'+esc(error.message)+'</div>';
+    return;
+  }
+  if(!data){
+    m.innerHTML='<div class="error">PIN stemmer ikke.</div>';
+    return;
+  }
+
+  await refresh();
+  m.innerHTML='<div class="ok"><b>✅ Hunden er meldt trygg.</b><br>Savnet &amp; Funnet-annonsen er samtidig merket som gjenforent.</div>';
 }
 
 async function setMissing(v){
