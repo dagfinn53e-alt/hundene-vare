@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">a
-<title>Savnet & Funnet – Hundene Våre</title>
+<title>TEST 5 – Savnet & Funnet – Annonse-ID</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--blue:#123f73;--blue2:#0b2e55;--gold:#f3b52b;--bg:#f4f7fb;--green:#198754;--red:#d83a3a;--text:#17202a}
@@ -74,7 +74,7 @@ textarea{min-height:95px;resize:vertical}.full{grid-column:1/-1}
 <div class="full"><button class="submit" type="submit">Legg inn annonse</button></div>
 </div>
 </form>
-<p class="small">I en ferdig versjon bør personvern, moderering og sletting av annonser bygges inn før publisering.</p>
+<p class="small">Ikke legg inn opplysninger du ikke ønsker skal være synlige i en offentlig Savnet &amp; Funnet-annonse.</p>
 </section>
 
 <section class="filters">
@@ -124,24 +124,28 @@ let savedAds=[];
 function openForm(s){status=s;document.getElementById('formTitle').textContent=s==='SAVNET'?'🔴 Registrer savnet dyr':'🟢 Registrer funnet dyr';document.getElementById('formPanel').classList.add('show');document.getElementById('formPanel').scrollIntoView({behavior:'smooth'});}
 document.getElementById('date').value=new Date().toISOString().slice(0,10);
 
-async function fileToCompressedDataUrl(file){
- if(!file)return '';
+async function compressImageToBlob(file){
+ if(!file)return null;
  return new Promise((resolve,reject)=>{
-  const r=new FileReader();
-  r.onerror=reject;
-  r.onload=()=>{
-   const im=new Image();
-   im.onerror=reject;
-   im.onload=()=>{
-    const max=1100, scale=Math.min(1,max/Math.max(im.width,im.height));
+  const r=new FileReader(); r.onerror=reject;
+  r.onload=()=>{const im=new Image(); im.onerror=reject;
+   im.onload=()=>{const max=1100,scale=Math.min(1,max/Math.max(im.width,im.height));
     const c=document.createElement('canvas');c.width=Math.round(im.width*scale);c.height=Math.round(im.height*scale);
     c.getContext('2d').drawImage(im,0,0,c.width,c.height);
-    resolve(c.toDataURL('image/jpeg',0.72));
-   };
-   im.src=r.result;
-  };
-  r.readAsDataURL(file);
+    c.toBlob(b=>b?resolve(b):reject(new Error('Kunne ikke komprimere bildet.')),'image/jpeg',0.72);
+   }; im.src=r.result;
+  }; r.readAsDataURL(file);
  });
+}
+async function uploadLostFoundImage(file){
+ if(!file)return '';
+ const blob=await compressImageToBlob(file);
+ const path=`annonser/${Date.now()}-${Math.random().toString(36).slice(2,9)}.jpg`;
+ const {error}=await sb.storage.from('lost-found-images').upload(path,blob,{contentType:'image/jpeg',cacheControl:'3600',upsert:false});
+ if(error)throw new Error('Bildeopplasting feilet: '+error.message);
+ const publicUrl='https://kxudiviidwwwclbzgdyx.supabase.co/storage/v1/object/public/lost-found-images/'+
+   path.split('/').map(encodeURIComponent).join('/');
+ return publicUrl;
 }
 
 document.getElementById('animalForm').addEventListener('submit',async function(e){
@@ -151,7 +155,7 @@ document.getElementById('animalForm').addEventListener('submit',async function(e
   const type=document.getElementById('type').value;
   const name=document.getElementById('name').value.trim()||('Ukjent '+type.toLowerCase());
   const file=document.getElementById('photo').files[0];
-  const image_url=await fileToCompressedDataUrl(file);
+  const image_url=await uploadLostFoundImage(file);
   const row={
    status:status==='SAVNET'?'Savnet':'Funnet', animal_type:type, animal_name:name,
    county:document.getElementById('county').value, place:document.getElementById('place').value.trim()||'Sted ikke oppgitt',
@@ -191,9 +195,9 @@ function renderAds(){
   const card=document.createElement('article');card.className='card'+(ad.resolved?' resolved':'');card.id='annonse-'+ad.id;card.dataset.id=ad.id;card.dataset.type=ad.type;card.dataset.status=ad.status;card.dataset.county=ad.county;card.dataset.place=(ad.place||'').toLowerCase();
   const photo=ad.img?`<div class="photoWrap"><img class="petimg" src="${ad.img}" alt="Bilde av ${esc(ad.name)}">${ad.resolved?'<div class="reunitedBanner">✓ GJENFORENT<br>DYRET ER HJEMME</div>':''}</div>`:(ad.resolved?'<div class="resolvednote">✓ GJENFORENT – DYRET ER HJEMME</div>':'');
   const homeLabel=String(ad.status||'').toLowerCase()==='funnet'?'✓ Dyret er gjenforent med eier':'✓ Dyret er hjemme';
-  const normalActions=`<div class="cardactions"><button class="cardbtn seen" type="button" onclick="contactOwner('${esc(ad.phone)}','${esc(ad.name)}')">👀 Jeg har sett/funnet dyret</button><button class="cardbtn share" type="button" onclick="shareAd('${esc(ad.name)}','${esc(ad.status)}','${esc(ad.place)}',${ad.id},'${esc(ad.img)}','${esc(ad.desc)}')">📤 Del annonsen</button><button class="cardbtn home" type="button" onclick="resolveAd(${ad.id},'${esc(ad.name)}','${esc(ad.status)}')">${homeLabel}</button><button class="cardbtn delete" type="button" onclick="deleteAd(${ad.id},'${esc(ad.name)}')">🗑️ Slett annonse</button></div>`;
-  const resolvedActions=`<div class="cardactions"><button class="cardbtn share" type="button" onclick="shareAd('${esc(ad.name)}','GJENFORENT','${esc(ad.place)}',${ad.id},'${esc(ad.img)}','${esc(ad.desc)}')">📤 Del annonsen</button><button class="cardbtn delete" type="button" onclick="deleteAd(${ad.id},'${esc(ad.name)}')">🗑️ Slett annonse</button></div>`;
-  card.innerHTML=`<span class="badge ${ad.status==='SAVNET'?'l':'f'}">${ad.status==='SAVNET'?'🔴':'🟢'} ${esc(ad.status)}</span>${photo}<h3>${ad.type==='Hund'?'🐕':'🐈'} ${esc(ad.name)}</h3><div class="meta"><b>Sted:</b> ${esc(ad.place)}, ${esc(ad.county)}<br><b>Dato:</b> ${esc(ad.date)}<br>${esc(ad.desc)}</div>${ad.digital==='Ja'?`<div class="idbox"><b>📱 Digital Dyre-ID aktiv</b>${ad.idcode?'<br>ID: '+esc(ad.idcode):''}</div>`:''}${ad.resolved?'<div class="resolvednote">✓ GJENFORENT – DYRET ER HJEMME</div>'+resolvedActions:normalActions}`;
+  const normalActions=`<div class="cardactions"><button class="cardbtn seen" type="button" onclick="contactOwner('${esc(ad.phone)}','${esc(ad.name)}')">👀 Jeg har sett/funnet dyret</button><button class="cardbtn share" type="button" onclick="shareFacebook(${ad.id})">🔵 Del på Facebook</button><button class="cardbtn share" type="button" onclick="openGroupShare(${ad.id})">👥 Del til grupper</button><button class="cardbtn share" type="button" onclick="shareAd('${esc(ad.name)}','${esc(ad.status)}','${esc(ad.place)}',${ad.id},'${esc(ad.img)}','${esc(ad.desc)}')">📤 Del annonsen</button><button class="cardbtn home" type="button" onclick="resolveAd(${ad.id},'${esc(ad.name)}','${esc(ad.status)}')">${homeLabel}</button><button class="cardbtn delete" type="button" onclick="deleteAd(${ad.id},'${esc(ad.name)}')">🗑️ Slett annonse</button></div>`;
+  const resolvedActions=`<div class="cardactions"><button class="cardbtn share" type="button" onclick="shareFacebook(${ad.id})">🔵 Del på Facebook</button><button class="cardbtn share" type="button" onclick="openGroupShare(${ad.id})">👥 Del til grupper</button><button class="cardbtn share" type="button" onclick="shareAd('${esc(ad.name)}','GJENFORENT','${esc(ad.place)}',${ad.id},'${esc(ad.img)}','${esc(ad.desc)}')">📤 Del annonsen</button><button class="cardbtn delete" type="button" onclick="deleteAd(${ad.id},'${esc(ad.name)}')">🗑️ Slett annonse</button></div>`;
+  card.innerHTML=`<span class="badge ${ad.status==='SAVNET'?'l':'f'}">${ad.status==='SAVNET'?'🔴':'🟢'} ${esc(ad.status)}</span>${photo}<h3>${ad.type==='Hund'?'🐕':'🐈'} ${esc(ad.name)}</h3><div style="font-weight:800;color:#123f73;margin:0 0 8px">Annonse nr. ${ad.id}</div><div class="meta"><b>Sted:</b> ${esc(ad.place)}, ${esc(ad.county)}<br><b>Dato:</b> ${esc(ad.date)}<br>${esc(ad.desc)}</div>${ad.digital==='Ja'?`<div class="idbox"><b>📱 Digital Dyre-ID aktiv</b>${ad.idcode?'<br>ID: '+esc(ad.idcode):''}</div>`:''}${ad.resolved?'<div class="resolvednote">✓ GJENFORENT – DYRET ER HJEMME</div>'+resolvedActions:normalActions}`;
   box.appendChild(card);
  }); filterCards();
 }
@@ -233,6 +237,155 @@ let currentContact={phone:'',name:''};
 function contactOwner(phone,name){currentContact={phone:phone||'',name:name||'dyret'};document.getElementById('contactTitle').textContent='👀 Har du sett eller funnet '+currentContact.name+'?';const clean=(currentContact.phone||'').replace(/\s/g,'');const call=document.getElementById('callOwner'),sms=document.getElementById('smsOwner');if(clean){call.href='tel:'+clean;sms.href='sms:'+clean;call.style.display='block';sms.style.display='block'}else{call.style.display='none';sms.style.display='none'}document.getElementById('seenPlace').value='';document.getElementById('contactModal').classList.add('show');}
 function closeContact(){document.getElementById('contactModal').classList.remove('show');}
 function copySeenMessage(){const where=document.getElementById('seenPlace').value.trim();const msg='Hei! Jeg har sett/funnet '+currentContact.name+(where?' ved '+where:'')+'. Jeg fant annonsen på Hundene Våre – Savnet & Funnet.';if(navigator.clipboard&&location.protocol!=='file:'){navigator.clipboard.writeText(msg).then(()=>alert('Meldingen er kopiert.'))}else{const ta=document.createElement('textarea');ta.value=msg;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();alert('Meldingen er kopiert.')}}
+
+
+let groupShareAd=null;
+
+function ensureGroupShareModal(){
+ if(document.getElementById('groupShareModal'))return;
+ const wrap=document.createElement('div');
+ wrap.id='groupShareModal';
+ wrap.style.cssText='display:none;position:fixed;inset:0;background:rgba(0,0,0,.58);z-index:100000;align-items:center;justify-content:center;padding:16px;overflow:auto';
+ wrap.innerHTML=`
+ <div style="background:#fff;width:min(560px,100%);border-radius:18px;padding:22px;box-shadow:0 14px 45px rgba(0,0,0,.32);margin:auto">
+   <div style="display:flex;justify-content:space-between;gap:12px;align-items:start">
+     <div>
+       <h3 style="margin:0;color:#123f73;font-size:24px">👥 Del til Facebook-grupper</h3>
+       <p id="groupShareInfo" style="margin:8px 0 0;color:#52606d"></p>
+     </div>
+     <button type="button" onclick="closeGroupShare()" aria-label="Lukk" style="border:0;background:#eef2f6;border-radius:50%;width:38px;height:38px;font-size:22px;cursor:pointer">×</button>
+   </div>
+
+   <div style="background:#fff6d8;border:1px solid #f0d889;border-radius:12px;padding:12px;margin:16px 0;font-size:14px;line-height:1.45">
+     Velg en relevant Facebook-gruppe. Annonselenken kopieres automatisk, gruppen åpnes, og du limer inn lenken og publiserer selv. Sjekk alltid gruppens regler før publisering.
+   </div>
+
+   <div id="groupShareChoices" style="display:grid;gap:10px"></div>
+
+   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px">
+     <button type="button" onclick="copyGroupShareLink()" style="border:0;border-radius:11px;padding:13px;background:#e8eef6;color:#123f73;font-weight:900;cursor:pointer">🔗 Kopier annonselenke</button>
+     <button type="button" onclick="shareFacebook(groupShareAd?.id)" style="border:0;border-radius:11px;padding:13px;background:#1877f2;color:#fff;font-weight:900;cursor:pointer">🔵 Vanlig Facebook-deling</button>
+   </div>
+ </div>`;
+ document.body.appendChild(wrap);
+ wrap.addEventListener('click',e=>{if(e.target===wrap)closeGroupShare()});
+}
+
+function openGroupShare(id){
+ ensureGroupShareModal();
+ const ad=savedAds.find(a=>String(a.id)===String(id));
+ if(!ad){alert('Fant ikke annonsen.');return;}
+ groupShareAd=ad;
+ const county=String(ad.county||'').trim(), place=String(ad.place||'').trim(), animal=String(ad.type||'').toLowerCase();
+ const groups=[
+  {name:'Savnede dyr i Haugesund, Karmøy og Haugalandet ellers...',url:'https://www.facebook.com/groups/115431040273',region:'Rogaland',area:'Haugesund / Karmøy / Haugalandet',species:'all'},
+  {name:'Etne og Vindafjord - Dyr savnet og funnet',url:'https://www.facebook.com/groups/1691998480979905',region:'Haugalandet',area:'Etne / Vindafjord',species:'all'},
+  {name:'Dyr savnet og funnet Stavanger Omegn',url:'https://www.facebook.com/groups/301164143342521',region:'Rogaland',area:'Stavanger og omegn',species:'all'},
+  {name:'Dyr Savnet/funnet Jæren',url:'https://www.facebook.com/groups/1491198204437172',region:'Rogaland',area:'Jæren',species:'all'},
+  {name:'Dyr savnet og funnet i Rogaland',url:'https://www.facebook.com/groups/195142020661509',region:'Rogaland',area:'Hele Rogaland',species:'all'},
+  {name:'Dyr savnet og funnet Øyane (Hundvåg, Buøy, B/R/O).',url:'https://www.facebook.com/groups/162857310863435',region:'Rogaland',area:'Hundvåg / Buøy / Øyane',species:'all'},
+  {name:'Funnet og savna dyr Fitjar/Stord',url:'https://www.facebook.com/groups/510487262367967',region:'Vestland',area:'Fitjar / Stord',species:'all'},
+  {name:'Dyr savnet/funnet Bergen og Vestland (tidl. Hordaland, Sogn og Fjordane)',url:'https://www.facebook.com/groups/dyrsavnetfunnetvestland',region:'Vestland',area:'Bergen / Vestland',species:'all'},
+  {name:'Dyr savnet og funnet i Arna (Bergen)',url:'https://www.facebook.com/groups/310599182752317',region:'Vestland',area:'Arna / Bergen',species:'all'},
+  {name:'Funnet og savna dyr i Sunnhordland',url:'https://www.facebook.com/groups/471682902990020',region:'Vestland',area:'Sunnhordland',species:'all'},
+  {name:'Bortkomne hunder her i Bergensdistriktet.',url:'https://www.facebook.com/groups/118770334914660',region:'Vestland',area:'Bergen',species:'dog'},
+  {name:'Dyr savnet / funnet i søndre Fana i Bergen Kommune',url:'https://www.facebook.com/groups/1173950482739932',region:'Vestland',area:'Søndre Fana / Bergen',species:'all'},
+  {name:'Husdyr som er savnet i Førde',url:'https://www.facebook.com/groups/735997363188532',region:'Vestland',area:'Førde',species:'all'},
+  {name:'Dyr Savnet Funnet På Voss',url:'https://www.facebook.com/groups/690164151069498',region:'Vestland',area:'Voss',species:'all'},
+  {name:'Hunder, Katter og andre dyr Funnet/Savnet i Østfold',url:'https://www.facebook.com/groups/650142078336550',region:'Østfold',area:'Østfold',species:'all'},
+  {name:'Dyr savnet/funnet i Vestfold',url:'https://www.facebook.com/groups/458035074253300',region:'Vestfold',area:'Vestfold',species:'all'},
+  {name:'Dyr Savnet Funnet Larvik',url:'https://www.facebook.com/groups/1754366854800464',region:'Vestfold',area:'Larvik',species:'all'},
+  {name:'HUND SAVNET & FUNNET I TRØNDELAG',url:'https://www.facebook.com/groups/145408572196534',region:'Trøndelag',area:'Trøndelag',species:'dog'},
+  {name:'Hunder og katter (og andre kjæledyr) funnet/savnet Årnes',url:'https://www.facebook.com/groups/301692313730510',region:'Akershus',area:'Årnes / Nes',species:'all'},
+  {name:'Savnede hunder og katter Gausdal, Lillehammer, Øyer omegn.',url:'https://www.facebook.com/groups/1688089818090785',region:'Innlandet',area:'Gausdal / Lillehammer / Øyer',species:'all'},
+  {name:'HUND SAVNET & FUNNET I HEDMARK',url:'https://www.facebook.com/groups/hundhedmark',region:'Innlandet',area:'Hedmark',species:'dog'},
+  {name:'Savnede Katter, Hunder Og Andre Dyr I Ballangen',url:'https://www.facebook.com/groups/478377106011452',region:'Nordland',area:'Ballangen',species:'all'},
+  {name:'Vivis letegruppe for savnede hunder',url:'https://www.facebook.com/groups/606501064278228',region:'Andre / landsdekkende',area:'Savnede hunder',species:'dog'},
+  {name:'RØMLINGEN',url:'https://www.facebook.com/groups/359007507816005',region:'Andre / landsdekkende',area:'Savnet / funnet dyr',species:'all'}
+ ];
+ const isCat=animal.includes('katt');
+ let filtered=groups.filter(g=>!(isCat && g.species==='dog'));
+ function score(g){
+   let s=0, hay=(g.region+' '+g.area+' '+g.name).toLowerCase(), c=county.toLowerCase(), p=place.toLowerCase();
+   if(c && hay.includes(c))s+=100;
+   if(p && hay.includes(p))s+=120;
+   if(c==='rogaland' && (g.region==='Rogaland'||g.region==='Haugalandet'))s+=90;
+   if(c==='vestland' && g.region==='Vestland')s+=90;
+   if(c==='innlandet' && g.region==='Innlandet')s+=90;
+   if(c==='vestfold' && g.region==='Vestfold')s+=90;
+   if(c==='østfold' && g.region==='Østfold')s+=90;
+   if(c==='trøndelag' && g.region==='Trøndelag')s+=90;
+   if(c==='akershus' && g.region==='Akershus')s+=90;
+   if(c==='nordland' && g.region==='Nordland')s+=90;
+
+   // Ekstra lokal prioritering. Dette gjør at de mest nærliggende gruppene
+   // kommer først innen samme fylke/region.
+   if(c==='rogaland'){
+     if(/avaldsnes|karmøy|karmoy|haugesund|kopervik|åkrahamn|akrehamn|vea/.test(p)){
+       if(/haugesund|karmøy|karmoy|haugalandet/.test(hay))s+=300;
+       if(/etne|vindafjord/.test(hay))s+=180;
+       if(/stord|fitjar|sunnhordland/.test(hay))s+=130;
+       if(/stavanger|jæren|jaren|hundvåg|hundvag|buøy|buoy/.test(hay))s+=70;
+     } else if(/stavanger|hundvåg|hundvag|buøy|buoy/.test(p)){
+       if(/stavanger|hundvåg|hundvag|buøy|buoy/.test(hay))s+=300;
+       if(/jæren|jaren|rogaland/.test(hay))s+=150;
+     } else if(/sandnes|klepp|bryne|time|hå|ha|jæren|jaren|sola/.test(p)){
+       if(/jæren|jaren/.test(hay))s+=300;
+       if(/stavanger|rogaland/.test(hay))s+=150;
+     }
+   }
+   if(c==='vestland'){
+     if(/stord|fitjar|bømlo|bomlo|sveio/.test(p)){
+       if(/stord|fitjar|sunnhordland/.test(hay))s+=300;
+       if(/haugalandet|etne|vindafjord/.test(hay))s+=130;
+     } else if(/bergen|fana|arna/.test(p)){
+       if(/bergen|fana|arna/.test(hay))s+=300;
+     } else if(/voss/.test(p) && /voss/.test(hay))s+=300;
+     else if(/førde|forde/.test(p) && /førde|forde/.test(hay))s+=300;
+   }
+   return s;
+ }
+ filtered=filtered.map(g=>({...g,_score:score(g)})).sort((a,b)=>b._score-a._score||a.region.localeCompare(b.region,'no')||a.name.localeCompare(b.name,'no'));
+ document.getElementById('groupShareInfo').textContent=`${ad.name} – ${ad.type} – ${place}${county?', '+county:''}`;
+ let current='',out='<div style="font-size:13px;color:#687684;line-height:1.45;margin-bottom:8px">De mest lokale gruppene vises først, deretter resten av fylket og nærliggende områder. Grupper som bare gjelder hund skjules automatisk for katt.</div>';
+ filtered.forEach(g=>{
+   if(g.region!==current){current=g.region;out+=`<div style="margin:14px 0 6px;padding:8px 10px;background:#eef5fb;border-radius:10px;font-weight:900;color:#123f73">📍 ${esc(current)}</div>`;}
+   const mark=g.species==='dog'?' 🐕':' 🐕🐈';
+   out+=`<button type="button" onclick="openChosenFacebookGroup('${g.url}')" style="width:100%;border:1px solid #cbd6e2;border-radius:12px;padding:13px;text-align:left;background:#fff;color:#123f73;font-weight:900;font-size:14px;cursor:pointer;margin-bottom:7px">👥 ${esc(g.name)}${mark}<span style="display:block;font-weight:600;color:#687684;font-size:12px;margin-top:3px">${esc(g.area)}</span></button>`;
+ });
+ document.getElementById('groupShareChoices').innerHTML=out;
+ document.getElementById('groupShareModal').style.display='flex';
+}
+
+function closeGroupShare(){
+ const m=document.getElementById('groupShareModal');
+ if(m)m.style.display='none';
+}
+
+async function copyGroupShareLink(){
+ if(!groupShareAd)return;
+ const sharePage='https://kxudiviidwwwclbzgdyx.supabase.co/functions/v1/del-annonse?id='+encodeURIComponent(groupShareAd.id);
+ const text=`${groupShareAd.status}: ${groupShareAd.name} – ${groupShareAd.place}, ${groupShareAd.county}\n${sharePage}`;
+ try{
+   await navigator.clipboard.writeText(text);
+   alert('Annonselenken er kopiert. Nå kan du lime den inn i Facebook-gruppen.');
+ }catch(e){
+   const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();
+   alert('Annonselenken er kopiert. Nå kan du lime den inn i Facebook-gruppen.');
+ }
+}
+
+function openChosenFacebookGroup(url){
+ if(groupShareAd) copyGroupShareLink();
+ window.open(url,'_blank','noopener');
+}
+
+function shareFacebook(id){
+ const sharePage='https://kxudiviidwwwclbzgdyx.supabase.co/functions/v1/del-annonse?id='+encodeURIComponent(id);
+ const fb='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(sharePage);
+ window.open(fb,'facebook-share','width=720,height=720,resizable=yes,scrollbars=yes');
+}
+
 async function shareAd(name,st,place,id,imageUrl,description){
  const u=new URL('savnet-funnet.html',location.href);u.search='';u.hash='annonse-'+id;
  const status=(st||'SAVNET / FUNNET').toUpperCase();
@@ -242,7 +395,7 @@ async function shareAd(name,st,place,id,imageUrl,description){
   const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,W,H);
   if(imageUrl){
    try{
-    const im=new Image();await new Promise((ok,bad)=>{im.onload=ok;im.onerror=bad;im.src=imageUrl});
+    const im=new Image();im.crossOrigin='anonymous';await new Promise((ok,bad)=>{im.onload=ok;im.onerror=bad;im.src=imageUrl});
     const ih=700,scale=Math.max(W/im.width,ih/im.height),sw=W/scale,sh=ih/scale;
     x.drawImage(im,(im.width-sw)/2,(im.height-sh)/2,sw,sh,0,0,W,ih);
    }catch(e){}
