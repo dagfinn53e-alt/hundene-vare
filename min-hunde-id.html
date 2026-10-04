@@ -273,31 +273,33 @@ async function sendTagOrder(code,name,em){
   const delivery=document.querySelector('input[name="tagDelivery"]:checked')?.value||"";
   const phone=tagPhone.value.trim();
   if(!phone)throw new Error("Skriv inn telefonnummer for bestilling av brikken.");
-  if(delivery==="Sendes med Posten" && !tagAddress.value.trim())throw new Error("Skriv inn adresse når brikken skal sendes med Posten.");
-  const color=document.querySelector('input[name="tagColor"]:checked')?.value||"Sort";
+  if(delivery==="Sendes med Posten"){
+    if(!tagAddress.value.trim())throw new Error("Skriv inn adresse når brikken skal sendes med Posten.");
+    if(!/^\d{4}$/.test(tagPostcode.value.trim()))throw new Error("Postnummer må bestå av 4 siffer.");
+    if(!tagCity.value.trim())throw new Error("Skriv inn poststed.");
+  }
+
   const payload={
-    "Hunde-ID":code,
-    "Dyrets navn":name,
-    "E-post":em,
-    "Telefon":phone,
-    "Farge":color,
-    "Størrelse":"Standard",
-    "Levering":delivery,
-    "Adresse":tagAddress.value.trim(),
-    "Postnummer":tagPostcode.value.trim(),
-    "Poststed":tagCity.value.trim(),
-    "Pris":"Kr. 99,- + eventuell porto",
-    "_subject":"Ny bestilling – Hunde-ID-brikke"
+    dogCode:code,
+    dogName:name,
+    ownerEmail:em,
+    phone:phone,
+    color:document.querySelector('input[name="tagColor"]:checked')?.value||"Sort",
+    size:"Standard",
+    delivery:delivery,
+    address:tagAddress.value.trim(),
+    postcode:tagPostcode.value.trim(),
+    city:tagCity.value.trim(),
+    price:"Kr. 99,- + eventuell porto"
   };
-  try{
-    const r=await fetch("https://formsubmit.co/ajax/dagfinn53e@gmail.com",{
-      method:"POST",
-      headers:{"Content-Type":"application/json","Accept":"application/json"},
-      body:JSON.stringify(payload)
-    });
-    if(!r.ok)throw new Error("Bestillingen kunne ikke sendes.");
-  }catch(err){
-    console.warn("Brikkebestilling kunne ikke sendes:",err);
+
+  const {data,error}=await sb.functions.invoke(
+    "send-admin-dog-tag-order-email",
+    {body:payload}
+  );
+
+  if(error || !data?.ok){
+    console.warn("Brikkebestilling kunne ikke sendes:",error||data);
     throw new Error("Hunden ble registrert, men brikkebestillingen kunne ikke sendes. Prøv igjen.");
   }
 }
@@ -308,7 +310,11 @@ if(!name||!br||!ownerNameValue||!em||!ph||pin.length<4){regMsg.innerHTML='<div c
 if(wantTag.checked){
   const delivery=document.querySelector('input[name="tagDelivery"]:checked')?.value||"";
   if(!tagPhone.value.trim()){regMsg.innerHTML='<div class="error">Skriv inn telefonnummer for brikkebestillingen.</div>';return}
-  if(delivery==="Sendes med Posten"&&!tagAddress.value.trim()){regMsg.innerHTML='<div class="error">Skriv inn adresse når brikken skal sendes med Posten.</div>';return}
+  if(delivery==="Sendes med Posten"){
+    if(!tagAddress.value.trim()){regMsg.innerHTML='<div class="error">Skriv inn adresse når brikken skal sendes med Posten.</div>';return}
+    if(!/^\\d{4}$/.test(tagPostcode.value.trim())){regMsg.innerHTML='<div class="error">Postnummer må bestå av 4 siffer.</div>';return}
+    if(!tagCity.value.trim()){regMsg.innerHTML='<div class="error">Skriv inn poststed.</div>';return}
+  }
 }
 saveBtn.disabled=true;
 try{
