@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="no"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hunde-ID – bestillingstest</title>
+<style>:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#17324b;background:#edf3f8}*{box-sizing:border-box}body{margin:0}header{background:linear-gradient(110deg,#123b60,#087b8f);color:#fff;padding:28px 18px}header div,main{max-width:820px;margin:auto}h1{margin:0;font-size:clamp(1.5rem,4vw,2.3rem)}header p{margin:8px 0 0}main{padding:20px 14px 45px}.panel{background:white;border:1px solid #dce7ef;border-radius:16px;padding:22px;margin:0 0 16px;box-shadow:0 4px 18px #17324b0b}h2{font-size:1.18rem;margin:0 0 14px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}label{display:block;font-weight:650;margin:0 0 5px}input,select{width:100%;padding:12px;border:1px solid #adc2d1;border-radius:9px;background:white;color:#17324b;font:inherit}input:focus,select:focus{outline:2px solid #087b8f;outline-offset:1px}.hint{color:#597285;font-size:.93rem}button{background:#087b8f;color:white;border:0;border-radius:10px;padding:14px 20px;font:inherit;font-weight:700;cursor:pointer}button:disabled{opacity:.6;cursor:wait}.note{border-left:4px solid #087b8f;padding:10px 14px;background:#eff8fa;border-radius:8px}.error{color:#a51d35}.success{color:#116644}#result{white-space:pre-wrap;font-weight:650}a{color:#087b8f}@media(max-width:500px){.panel{padding:16px}} .photo-wrap{margin-top:18px;border-top:1px solid #dce7ef;padding-top:16px}#bildePreview{display:block;width:min(100%,270px);max-height:270px;object-fit:cover;border-radius:12px;margin-top:10px;border:1px solid #dce7ef}#bildePreview[hidden]{display:none}</style></head>
+<body><header><div><h1>🐕 Bestill Hunde-ID-brikke</h1><p>TESTSIDE – ikke publisert som ordinær bestilling ennå</p></div></header>
+<main><p class="note">Du mottar brikken ferdig programmert, testet og klar til bruk. Ingen app og ingen abonnement. <strong>Dette er en test av bestillingsflyten – ingen betaling tas her.</strong></p>
+<form id="orderForm">
+<section class="panel"><h2>1. Om hunden</h2><div class="grid">
+<div><label for="hundenavn">Hundens navn *</label><input id="hundenavn" maxlength="100" required></div>
+<div><label for="rase">Rase *</label><input id="rase" maxlength="100" required></div>
+<div><label for="kjonn">Kjønn</label><select id="kjonn"><option value="">Velg</option><option>Hannhund</option><option>Tispe</option></select></div>
+<div><label for="hundefarge">Hundens farge</label><input id="hundefarge" maxlength="100"></div>
+</div><div class="photo-wrap"><label for="bilde">📷 Bilde av hunden (valgfritt)</label><input id="bilde" type="file" accept="image/*"><p class="hint">Velg et bilde fra mobilen eller PC-en. Bildet tilpasses automatisk før innsending.</p><img id="bildePreview" alt="Forhåndsvisning av hundebildet" hidden><p id="bildeMsg" class="hint" role="status"></p></div></section>
+<section class="panel"><h2>2. Eier og sikkerhet</h2><div class="grid">
+<div><label for="epost">E-post *</label><input id="epost" type="email" maxlength="254" autocomplete="email" required></div>
+<div><label for="telefon">Telefon *</label><input id="telefon" type="tel" maxlength="30" autocomplete="tel" required></div>
+<div><label for="pin">Velg PIN (6–12 sifre) *</label><input id="pin" type="password" inputmode="numeric" pattern="[0-9]{6,12}" minlength="6" maxlength="12" autocomplete="new-password" required></div>
+<div><label for="pin2">Gjenta PIN *</label><input id="pin2" type="password" inputmode="numeric" pattern="[0-9]{6,12}" minlength="6" maxlength="12" autocomplete="new-password" required></div>
+</div><p class="hint">PIN sendes ikke på e-post og vises ikke i administrasjonsoversikten. Ikke bruk en PIN du benytter andre steder.</p></section>
+<section class="panel"><h2>3. Brikke og levering</h2><div class="grid">
+<div><label for="brikkefarge">Brikkefarge *</label><select id="brikkefarge" required><option value="">Velg farge</option><option>Blå</option><option>Rosa</option><option>Svart</option><option>Hvit</option><option>Rød</option></select></div>
+<div><label for="storrelse">Størrelse *</label><select id="storrelse" required><option value="">Velg størrelse</option><option>Standard</option><option>Liten</option></select></div>
+<div><label for="leveringsmate">Levering *</label><select id="leveringsmate" required><option value="">Velg levering</option><option value="Posten">Sendes med Posten</option><option value="Henting">Hentes etter avtale</option></select></div>
+</div><div id="addressFields" class="grid" style="margin-top:15px">
+<div><label for="adresse">Adresse *</label><input id="adresse" maxlength="200"></div>
+<div><label for="postnummer">Postnummer *</label><input id="postnummer" inputmode="numeric" maxlength="10"></div>
+<div><label for="poststed">Poststed *</label><input id="poststed" maxlength="100"></div>
+</div></section>
+<section class="panel"><button id="submitBtn" type="submit">Send testbestilling</button><p id="result" role="status" aria-live="polite"></p><p class="hint">Bestillingen lagres i Supabase hvis serverfunksjonen er tilgjengelig. Det sendes foreløpig ingen automatisk ordrebekreftelse.</p></section>
+</form></main>
+<script>
+const ENDPOINT='https://kxudiviidwwwclbzgdyx.supabase.co/functions/v1/quick-hunde-id-ny-bestilling';
+const $=id=>document.getElementById(id);
+let bildeData='';
+$('bilde').addEventListener('change', async()=>{
+  bildeData='';$('bildePreview').hidden=true;$('bildeMsg').textContent='';
+  const file=$('bilde').files?.[0];if(!file)return;
+  if(!file.type.startsWith('image/')){$('bildeMsg').textContent='Velg en bildefil.';$('bilde').value='';return;}
+  if(file.size>15000000){$('bildeMsg').textContent='Bildet er for stort (maks 15 MB før tilpasning).';$('bilde').value='';return;}
+  try{
+    const bitmap=await createImageBitmap(file);
+    const scale=Math.min(1,900/Math.max(bitmap.width,bitmap.height));
+    const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));
+    canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
+    bildeData=canvas.toDataURL('image/jpeg',0.78);
+    if(bildeData.length>2700000)throw Error('Bildet er fortsatt for stort. Velg et mindre bilde.');
+    $('bildePreview').src=bildeData;$('bildePreview').hidden=false;$('bildeMsg').textContent='Bildet er klart til innsending.';
+  }catch(e){bildeData='';$('bilde').value='';$('bildeMsg').textContent='Kunne ikke lese bildet: '+e.message;}
+});const ids=['hundenavn','rase','kjonn','hundefarge','epost','telefon','pin','brikkefarge','storrelse','leveringsmate','adresse','postnummer','poststed'];
+function delivery(){const postal=$('leveringsmate').value==='Posten';$('addressFields').hidden=!postal;for(const id of ['adresse','postnummer','poststed'])$(id).required=postal;}
+$('leveringsmate').addEventListener('change',delivery);delivery();
+$('orderForm').addEventListener('submit',async e=>{e.preventDefault();const result=$('result');result.className='';if($('pin').value!==$('pin2').value){result.className='error';result.textContent='PIN-kodene er ikke like.';return}const data={};for(const id of ids)data[id]=$(id).value.trim();if($('bilde').files?.length&&!bildeData){result.className='error';result.textContent='Vent til bildet er klart, eller velg et annet bilde.';return;}if(bildeData)data.bilde=bildeData;const btn=$('submitBtn');btn.disabled=true;result.textContent='Sender bestillingen …';try{const response=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});let payload;try{payload=await response.json()}catch{throw new Error('Serveren svarte ikke med gyldig JSON (HTTP '+response.status+').')}if(!response.ok||!payload.ok)throw new Error(payload.error||'HTTP '+response.status);result.className='success';result.textContent='Bestillingen er registrert! Bestillingsnummer: #'+payload.bestillingsnummer+'. Du kan nå kontrollere den i administrasjonssiden.';$('orderForm').reset();bildeData='';$('bildePreview').hidden=true;$('bildePreview').removeAttribute('src');$('bildeMsg').textContent='';delivery();}catch(err){result.className='error';result.textContent='Bestillingen ble ikke lagret: '+err.message+'. Kontroller at Edge Function er publisert og at Verify JWT er slått av for denne offentlige testfunksjonen.';}finally{btn.disabled=false;}});
+</script></body></html>
