@@ -46,6 +46,18 @@ async function loadNewDogOrders(){
     field(details,'Adresse',[r.adresse,r.postnummer,r.poststed].filter(Boolean).join(', '));
     field(details,'HV-ID',r.dyre_id||'Ikke opprettet');
     card.append(details);
+     // Bilder vises kun når administrator-RPC-en returnerer bilde_sti.
+     if(r.bilde_sti){
+       const pictureBox=el('div');pictureBox.style.marginTop='14px';
+       const pictureLabel=el('div','hint','🐶 Hundebilde');pictureBox.append(pictureLabel);
+       const pictureMsg=el('div','hint','Henter bilde …');pictureBox.append(pictureMsg);
+       card.append(pictureBox);
+       const {data:pictureData,error:pictureError}=await sb.storage.from('hunde-id-bestillingsbilder').createSignedUrl(r.bilde_sti,3600);
+       if(pictureError||!pictureData?.signedUrl){pictureMsg.textContent='Bildet er lagret, men administrasjonen har ikke tilgang til å vise det.';}
+       else {const img=el('img');img.alt='Hundebilde for bestilling #'+r.id;img.loading='lazy';img.style.cssText='display:block;max-width:260px;width:100%;height:auto;max-height:280px;object-fit:contain;border-radius:10px;margin-top:8px;border:1px solid #d9e5ec';img.src=pictureData.signedUrl;img.onerror=()=>{pictureMsg.textContent='Bildet kunne ikke åpnes.';img.remove()};pictureMsg.remove();pictureBox.append(img);}
+     }else{
+       const pictureNote=el('div','hint','Hundebilde: Bildesti er ikke tilgjengelig i administrasjonens bestillingsdata.');pictureNote.style.marginTop='12px';card.append(pictureNote);
+     }
      const actions=el('div','actions');
      if(r.dyre_id){
        const url='https://www.xn--hundenevre-85a.com/hunde-id.html?id='+encodeURIComponent(r.dyre_id);
