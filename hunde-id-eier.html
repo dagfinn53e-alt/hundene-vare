@@ -214,6 +214,19 @@ let dog=null,newPhotoFile=null;
 
 document.getElementById("editPhoto").addEventListener("change",e=>newPhotoFile=e.target.files?.[0]||null);
 
+// Sikker PIN-kontroll for både eldre Hunde-ID og nye bestillinger.
+async function ownerAction(action,pin,profile){
+  const body={action,dogCode:DOG,pin};
+  if(profile)body.profile=profile;
+  const {data,error}=await sb.functions.invoke('hunde-id-pin-bro',{body});
+  if(error){
+    let message='PIN-tjenesten kunne ikke kontaktes.';
+    try{const response=error.context;if(response?.json){const result=await response.json();message=result.error||message}}catch(_e){}
+    throw new Error(message);
+  }
+  if(!data?.ok||data.data===false)throw new Error(data?.error||'Handlingen ble ikke utført.');
+  return data.data;
+}
 function esc(v){const d=document.createElement("div");d.textContent=v||"";return d.innerHTML}
 function clean(n){return String(n||"bilde.jpg").replace(/[^a-zA-Z0-9._-]/g,"_")}
 function fmt(v){try{return new Date(v).toLocaleString("no-NO")}catch{return v}}
@@ -258,73 +271,31 @@ async function refresh(){
 }
 
 async function reportMissingAndOpenLostFound(){
-  const pin=document.getElementById("pin").value.trim();
-  const m=document.getElementById("ownerMsg");
-  if(!pin){
-    m.innerHTML='<div class="error">Skriv PIN først.</div>';
-    return;
-  }
-
+  const pin=document.getElementById('pin').value.trim(),m=document.getElementById('ownerMsg');
+  if(!pin){m.innerHTML='<div class="error">Skriv PIN først.</div>';return}
   m.innerHTML='<div class="ok">Melder hunden savnet …</div>';
-  const {data,error}=await sb.rpc("set_dog_missing",{
-    p_dog_code:DOG,
-    p_owner_pin:pin,
-    p_is_missing:true
-  });
-
-  if(error){
-    m.innerHTML='<div class="error">'+esc(error.message)+'</div>';
-    return;
-  }
-  if(!data){
-    m.innerHTML='<div class="error">PIN stemmer ikke.</div>';
-    return;
-  }
-
-  await refresh();
-  m.innerHTML='<div class="ok">🚨 Hunden er meldt savnet. Åpner Savnet &amp; Funnet …</div>';
-
-  setTimeout(()=>{
-    location.href="savnet-funnet.html?id="+encodeURIComponent(DOG);
-  },700);
+  try{
+    await ownerAction('missing',pin);
+    await refresh();
+    m.innerHTML='<div class="ok">🚨 Hunden er meldt savnet. Åpner Savnet &amp; Funnet …</div>';
+    setTimeout(()=>{location.href='savnet-funnet.html?id='+encodeURIComponent(DOG)},700);
+  }catch(e){m.innerHTML='<div class="error">'+esc(e.message)+'</div>'}
 }
 
 async function setSafeAndResolve(){
-  const pin=document.getElementById("pin").value.trim();
-  const m=document.getElementById("ownerMsg");
-  if(!pin){
-    m.innerHTML='<div class="error">Skriv PIN først.</div>';
-    return;
-  }
-
-  m.innerHTML='<div class="ok">Melder hunden trygg og avslutter Savnet &amp; Funnet-annonsen …</div>';
-
-  const {data,error}=await sb.rpc("set_dog_safe_and_resolve_lost_found",{
-    p_dog_code:DOG,
-    p_owner_pin:pin
-  });
-
-  if(error){
-    m.innerHTML='<div class="error">'+esc(error.message)+'</div>';
-    return;
-  }
-  if(!data){
-    m.innerHTML='<div class="error">PIN stemmer ikke.</div>';
-    return;
-  }
-
-  await refresh();
-  m.innerHTML='<div class="ok"><b>✅ Hunden er meldt trygg.</b><br>Savnet &amp; Funnet-annonsen er samtidig merket som gjenforent.</div>';
+  const pin=document.getElementById('pin').value.trim(),m=document.getElementById('ownerMsg');
+  if(!pin){m.innerHTML='<div class="error">Skriv PIN først.</div>';return}
+  m.innerHTML='<div class="ok">Melder hunden trygg …</div>';
+  try{
+    await ownerAction('safe',pin);
+    await refresh();
+    m.innerHTML='<div class="ok"><b>✅ Hunden er meldt trygg.</b><br>Savnet &amp; Funnet-annonsen er samtidig merket som gjenforent.</div>';
+  }catch(e){m.innerHTML='<div class="error">'+esc(e.message)+'</div>'}
 }
 
 async function setMissing(v){
-  const pin=document.getElementById("pin").value.trim(),m=document.getElementById("ownerMsg");
-  if(!pin){m.innerHTML='<div class="error">Skriv PIN først.</div>';return}
-  const {data,error}=await sb.rpc("set_dog_missing",{p_dog_code:DOG,p_owner_pin:pin,p_is_missing:v});
-  if(error){m.innerHTML='<div class="error">'+esc(error.message)+'</div>';return}
-  if(!data){m.innerHTML='<div class="error">PIN stemmer ikke.</div>';return}
-  m.innerHTML='<div class="ok">'+(v?'🚨 Hunden er meldt savnet.':'✅ Hunden er meldt trygg.')+'</div>';
-  await refresh();
+  if(v)return reportMissingAndOpenLostFound();
+  return setSafeAndResolve();
 }
 
 async function uploadNew(){
@@ -336,23 +307,19 @@ async function uploadNew(){
 }
 
 async function saveProfile(){
-  const pin=document.getElementById("pin").value.trim(),m=document.getElementById("editMsg");
+  const pin=document.getElementById('pin').value.trim(),m=document.getElementById('editMsg');
   if(!pin){m.innerHTML='<div class="error">Skriv PIN under Eierkontroll først.</div>';return}
   try{
     m.innerHTML='<div class="ok">Lagrer …</div>';
-    const photo=await uploadNew();
-    const {data,error}=await sb.rpc("update_dog_profile",{
-      p_dog_code:DOG,p_owner_pin:pin,
-      p_dog_name:document.getElementById("editName").value.trim(),
-      p_breed:document.getElementById("editBreed").value.trim(),
-      p_sex:document.getElementById("editSex").value,
-      p_color:document.getElementById("editColor").value.trim(),
-      p_photo_url:photo
-    });
-    if(error)throw new Error(error.message);
-    if(!data){m.innerHTML='<div class="error">PIN stemmer ikke.</div>';return}
+    // Kontroller PIN før bildet lastes opp for å unngå unødvendige opplastinger.
+    const profile={p_dog_name:document.getElementById('editName').value.trim(),p_breed:document.getElementById('editBreed').value.trim(),p_sex:document.getElementById('editSex').value,p_color:document.getElementById('editColor').value.trim(),p_photo_url:dog.photo_url||''};
+    await ownerAction('profile',pin,profile);
+    if(newPhotoFile){
+      const photo=await uploadNew();
+      await ownerAction('profile',pin,{...profile,p_photo_url:photo});
+    }
     m.innerHTML='<div class="ok">✅ Profilen er oppdatert.</div>';
-    newPhotoFile=null;document.getElementById("editPhoto").value="";
+    newPhotoFile=null;document.getElementById('editPhoto').value='';
     await refresh();
   }catch(e){m.innerHTML='<div class="error">Feil: '+esc(e.message)+'</div>'}
 }
@@ -361,8 +328,8 @@ async function loadAlerts(){
   const pin=document.getElementById("pin").value.trim(),box=document.getElementById("alerts");
   if(!pin){box.innerHTML='<div class="error">Skriv PIN først.</div>';return}
   box.innerHTML='<p class="muted">Henter varsler …</p>';
-  const {data,error}=await sb.rpc("get_dog_alerts",{p_dog_code:DOG,p_owner_pin:pin});
-  if(error){box.innerHTML='<div class="error">'+esc(error.message)+'</div>';return}
+  let data;
+  try{data=await ownerAction('alerts',pin)}catch(e){box.innerHTML='<div class="error">'+esc(e.message)+'</div>';return}
   if(!data||!data.length){
     box.innerHTML='<p class="muted">Ingen varsler ennå – eller PIN er feil.</p>';return;
   }
@@ -438,6 +405,8 @@ function showQR(){
   new QRCode(q,{text:url,width:220,height:220});
   document.getElementById("qrCard").scrollIntoView({behavior:"smooth"});
 }
+const transferredPin=sessionStorage.getItem('hundeIdPin');
+if(transferredPin){document.getElementById('pin').value=transferredPin;sessionStorage.removeItem('hundeIdPin')}
 loadDog();
 </script>
 </body>
